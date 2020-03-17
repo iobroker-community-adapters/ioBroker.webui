@@ -1,0 +1,8 @@
+{
+    "elements":
+    [
+      {"tag" : "wc-marquee", "import": "/node_modules/@vanillawc/wc-marquee/index.js", "type" : "polymer", "defaultContent": "This is a sample Marquee Text" },
+      "lit-datepicker"
+    ]
+  }
+  
