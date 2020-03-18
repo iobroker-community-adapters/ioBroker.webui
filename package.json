@@ -20,12 +20,12 @@
   },
   "homepage": "https://github.com/node-projects/web-component-designer-demo#readme",
   "devDependencies": {
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.3"
   },
   "dependencies": {
     "@doubletrade/lit-datepicker": "^0.2.1",
+    "@node-projects/web-component-designer": "git+https://git@github.com/node-projects/web-component-designer.git",
     "@vanillawc/wc-marquee": "^1.0.16",
-    "dock-spawn-ts": "^2.38.0",
-	  "web-component-designer": "^0.0.1"
+    "dock-spawn-ts": "^2.42.0"
   }
 }

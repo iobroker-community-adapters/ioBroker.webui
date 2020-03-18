@@ -1,11 +1,9 @@
-import { BaseCustomWebComponent, html, css, JsonElementsService, ISelectionChangedEvent, TreeView, PaletteView, AttributeEditor } from 'web-component-designer';
-import serviceContainer from '../elements/services/DefaultServiceBootstrap';
+import { BaseCustomWebComponent, html, css, JsonElementsService, ISelectionChangedEvent, TreeView, PaletteView, AttributeEditor, DocumentContainer } from '@node-projects/web-component-designer';
+import serviceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
-DockSpawnTsWebcomponent.cssRootDirectory = "./assets/css/";
-
-import { SampleDocument } from './sample-document.js';
+DockSpawnTsWebcomponent.cssRootDirectory = "../node_modules/dock-spawn-ts/lib/css/";
 
 export class AppShell extends BaseCustomWebComponent {
   activeElement: HTMLElement;
@@ -149,11 +147,11 @@ export class AppShell extends BaseCustomWebComponent {
   }
 
   private _setupServiceContainer() {
-    serviceContainer.register('elementsService', new JsonElementsService('native', 'https://raw.githubusercontent.com/node-projects/web-component-designer/master/src/sample/elements-native.json'));
-    serviceContainer.register('elementsService', new JsonElementsService('samples', 'https://raw.githubusercontent.com/node-projects/web-component-designer/master/src/sample/elements-samples.json'));
+    //serviceContainer.register('elementsService', new JsonElementsService('native', 'https://raw.githubusercontent.com/node-projects/web-component-designer/master/src/sample/elements-native.json'));
+    //serviceContainer.register('elementsService', new JsonElementsService('samples', 'https://raw.githubusercontent.com/node-projects/web-component-designer/master/src/sample/elements-samples.json'));
 
-    serviceContainer.register('elementsService', new JsonElementsService('native', './src/sample/elements-native.json'));
-    serviceContainer.register('elementsService', new JsonElementsService('samples', './src/sample/elements-samples.json'));
+    //serviceContainer.register('elementsService', new JsonElementsService('native', '../src/sample/elements-native.json'));
+    serviceContainer.register('elementsService', new JsonElementsService('demo', '../src/elements-demo.json'));
 
     this._paletteView.loadControls(serviceContainer.elementsServices);
     this._attributeEditor.serviceContainer = serviceContainer;
