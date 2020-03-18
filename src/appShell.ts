@@ -89,7 +89,7 @@ export class AppShell extends BaseCustomWebComponent {
       <div class="app-body">
         <dock-spawn-ts id="dock" style="width: 100%; height: 100%; position: relative;">
           
-          <div title="Tree" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2" style="position: absolute; overflow: hidden;">
+          <div title="Tree" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2" style="position: absolute; overflow: hidden; width: 100%;">
             <node-projects-tree-view name="tree" id="treeView"></node-projects-tree-view>
           </div>
 
@@ -123,7 +123,7 @@ export class AppShell extends BaseCustomWebComponent {
       onActivePanelChange: (manager, panel) => {
         if (panel) {
           let element = ((<HTMLSlotElement><any>panel.elementContent).assignedElements()[0]);
-          if (element && element.localName == "node-projects-sample-document") {
+          if (element && element instanceof DocumentContainer) {
             let sampleDocument = element as DocumentContainer;
 
             sampleDocument.instanceServiceContainer.selectionService.onSelectionChanged.on((e) => this._selectionChanged(e));
