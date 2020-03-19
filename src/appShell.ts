@@ -95,8 +95,6 @@ export class AppShell extends BaseCustomWebComponent {
 
           <div id="attributeDock" title="Properties" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.2">
             <node-projects-attribute-editor id="attributeEditor"></node-projects-attribute-editor>
-            <!--<canvas-controls id="canvasControls"></canvas-controls>
-            <element-view id="elementView"></element-view>-->
           </div>
           <div title="Elements" dock-spawn-dock-type="down" dock-spawn-dock-to="attributeDock" dock-spawn-dock-ratio="0.4">
             <node-projects-palette-view id="paletteView"></node-projects-palette-view>
