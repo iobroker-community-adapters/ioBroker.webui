@@ -1,4 +1,4 @@
-import { BaseCustomWebComponent, html, css, JsonElementsService, ISelectionChangedEvent, TreeView, PaletteView, AttributeEditor, DocumentContainer } from '@node-projects/web-component-designer';
+import { BaseCustomWebComponent, html, css, JsonElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, AttributeEditor, DocumentContainer } from '@node-projects/web-component-designer';
 import serviceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
@@ -15,6 +15,7 @@ export class AppShell extends BaseCustomWebComponent {
   _paletteView: PaletteView;
   _attributeEditor: AttributeEditor;
   _treeView: TreeView;
+  _treeViewExtended: TreeViewExtended;
 
   static get style() {
     return css`
@@ -90,8 +91,12 @@ export class AppShell extends BaseCustomWebComponent {
       <div class="app-body">
         <dock-spawn-ts id="dock" style="width: 100%; height: 100%; position: relative;">
           
-          <div title="Tree" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2" style="overflow: hidden; width: 100%;">
+          <div id="treeUpper" title="Tree" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2" style="overflow: hidden; width: 100%;">
             <node-projects-tree-view name="tree" id="treeView"></node-projects-tree-view>
+          </div>
+
+          <div title="TreeExtended" dock-spawn-dock-type="down" dock-spawn-dock-to="treeUpper" dock-spawn-dock-ratio="0.5" style="overflow: hidden; width: 100%;">
+            <node-projects-tree-view-extended name="tree" id="treeViewExtended"></node-projects-tree-view-extended>
           </div>
 
           <div id="attributeDock" title="Properties" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.2">
@@ -105,15 +110,16 @@ export class AppShell extends BaseCustomWebComponent {
     `;
   }
 
-  constructor() {
-    super();
+  ready() {
+    //super();
 
-    this._dock = this.shadowRoot.getElementById('dock') as DockSpawnTsWebcomponent;
-    this._paletteView = this.shadowRoot.getElementById('paletteView') as PaletteView;
-    this._treeView = this.shadowRoot.getElementById('treeView') as TreeView;
-    this._attributeEditor = this.shadowRoot.getElementById('attributeEditor') as AttributeEditor;
+    this._dock = this._getDomElement('dock');
+    this._paletteView = this._getDomElement('paletteView');
+    this._treeView = this._getDomElement('treeView');
+    this._treeViewExtended = this._getDomElement('treeViewExtended');
+    this._attributeEditor = this._getDomElement('attributeEditor');
 
-    let newButton = this.shadowRoot.getElementById('newButton') as HTMLButtonElement;
+    let newButton = this._getDomElement<HTMLButtonElement>('newButton');
     newButton.onclick = () => this.newDocument();
 
     this._dockManager = this._dock.dockManager;
@@ -130,6 +136,7 @@ export class AppShell extends BaseCustomWebComponent {
             let selection = sampleDocument.instanceServiceContainer.selectionService.selectedElements;
             this._attributeEditor.selectedElements = selection;
             this._treeView.createTree(sampleDocument.instanceServiceContainer.contentService.rootDesignItem);
+            this._treeViewExtended.createTree(sampleDocument.instanceServiceContainer.contentService.rootDesignItem);
           }
         }
       }

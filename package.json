@@ -23,6 +23,9 @@
     "@doubletrade/lit-datepicker": "^0.3.2",
     "@node-projects/web-component-designer": "git+https://git@github.com/node-projects/web-component-designer.git",
     "@vanillawc/wc-marquee": "^1.0.18",
-    "dock-spawn-ts": "^2.43.0"
+    "construct-style-sheets-polyfill": "^2.3.5",
+    "dock-spawn-ts": "^2.43.0",
+    "jquery": "^3.5.1",
+    "jquery.fancytree": "^2.35.0"
   }
 }
