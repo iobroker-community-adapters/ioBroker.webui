@@ -56,6 +56,7 @@ export class AppShell extends BaseCustomWebComponent {
       flex-direction: row;
       padding-top: 60px;
       height: 100%;
+      overflow: hidden;
     }
 
     .heavy {
@@ -89,7 +90,7 @@ export class AppShell extends BaseCustomWebComponent {
       <div class="app-body">
         <dock-spawn-ts id="dock" style="width: 100%; height: 100%; position: relative;">
           
-          <div title="Tree" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2" style="position: absolute; overflow: hidden; width: 100%;">
+          <div title="Tree" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2" style="overflow: hidden; width: 100%;">
             <node-projects-tree-view name="tree" id="treeView"></node-projects-tree-view>
           </div>
 
