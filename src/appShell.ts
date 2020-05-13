@@ -129,7 +129,7 @@ export class AppShell extends BaseCustomWebComponent {
 
             let selection = sampleDocument.instanceServiceContainer.selectionService.selectedElements;
             this._attributeEditor.selectedElements = selection;
-            this._treeView.createTree(sampleDocument.instanceServiceContainer.contentService.rootElement, null);
+            this._treeView.createTree(sampleDocument.instanceServiceContainer.contentService.rootDesignItem);
           }
         }
       }
