@@ -36,8 +36,6 @@ jobs:
         npx copyfiles ./node_modules/**/*.css build/default
         npx copyfiles ./node_modules/**/*.json build/default
         npx copyfiles ./node_modules/ace-builds/**/*.js build/default
-    - name: npm install polymer-cli
-      run: npm install polymer-cli
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
