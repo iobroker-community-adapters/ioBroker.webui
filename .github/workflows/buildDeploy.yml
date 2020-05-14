@@ -23,7 +23,7 @@ jobs:
       run: npm i git+https://git@github.com/node-projects/web-component-designer.git
     - name: Compile web-component-designer
       run: |
-        cd .\node_modules\@node-projects\web-component-designer\
+        cd ./node_modules/@node-projects/web-component-designer
         npm install
         npx tsc
     - name: Typescript
