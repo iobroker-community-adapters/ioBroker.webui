@@ -20,4 +20,4 @@ jobs:
     - name: npm install polymer-cli
       run: npm install polymer-cli
     - name: Polymer
-      run: polymer build
+      run: npx polymer build
