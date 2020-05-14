@@ -155,11 +155,8 @@ export class AppShell extends BaseCustomWebComponent {
   }
 
   private _setupServiceContainer() {
-    //serviceContainer.register('elementsService', new JsonElementsService('native', 'https://raw.githubusercontent.com/node-projects/web-component-designer/master/src/sample/elements-native.json'));
-    //serviceContainer.register('elementsService', new JsonElementsService('samples', 'https://raw.githubusercontent.com/node-projects/web-component-designer/master/src/sample/elements-samples.json'));
-
-    //serviceContainer.register('elementsService', new JsonElementsService('native', '../src/sample/elements-native.json'));
-    serviceContainer.register('elementsService', new JsonElementsService('demo', '../src/elements-demo.json'));
+    serviceContainer.register('elementsService', new JsonElementsService('demo', './src/elements-demo.json'));
+    serviceContainer.register('elementsService', new JsonElementsService('native', './node_modules/@node-projects/web-component-designer/src/config/elements-native.json'));
 
     this._paletteView.loadControls(serviceContainer.elementsServices);
     this._attributeEditor.serviceContainer = serviceContainer;
