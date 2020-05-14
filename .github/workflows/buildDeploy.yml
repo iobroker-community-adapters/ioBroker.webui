@@ -30,6 +30,12 @@ jobs:
       run: npx tsc
     - name: Polymer
       run: npx polymer build
+    - name: Copy css and rest
+      run: |
+        npm i copyfiles
+        npx copyfiles ./node_modules/**/*.css build/default
+        npx copyfiles ./node_modules/**/*.json build/default
+        npx copyfiles ./node_modules/ace-builds/**/*.js build/default
     - name: npm install polymer-cli
       run: npm install polymer-cli
     - name: Deploy 🚀
