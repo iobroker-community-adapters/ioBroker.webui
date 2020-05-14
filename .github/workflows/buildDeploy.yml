@@ -22,8 +22,14 @@ jobs:
     - name: web-component-designer upgrade
       run: npm i git+https://git@github.com/node-projects/web-component-designer.git
     - name: Typescript
-      run: npx tsc build
+      run: npx tsc
     - name: Polymer
       run: npx polymer build
     - name: npm install polymer-cli
       run: npm install polymer-cli
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: build/default # The folder the action should deploy.
