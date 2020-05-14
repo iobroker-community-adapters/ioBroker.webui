@@ -4,7 +4,7 @@ import serviceContainer from '@node-projects/web-component-designer/dist/element
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
 import { DocumentContainer } from './documentContainer';
-DockSpawnTsWebcomponent.cssRootDirectory = "../node_modules/dock-spawn-ts/lib/css/";
+DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
 export class AppShell extends BaseCustomWebComponent {
   activeElement: HTMLElement;
