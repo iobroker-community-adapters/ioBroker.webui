@@ -15,6 +15,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install
+    - name: npm install
+      run: npm install
+    - name: npm install polymer-cli
+      run: npm install polymer-cli
     - name: Polymer
       run: polymer build
