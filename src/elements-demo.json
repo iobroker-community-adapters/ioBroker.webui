@@ -1,8 +1,9 @@
 {
     "elements":
     [
-      {"tag" : "wc-marquee", "import": "/node_modules/@vanillawc/wc-marquee/index.js", "type" : "polymer", "defaultContent": "This is a sample Marquee Text" },
+      {"tag" : "wc-marquee", "import": "/node_modules/@vanillawc/wc-marquee/index.js", "type" : "polymer", "defaultWidth": "100px", "defaultContent": "This is a sample Marquee Text" },
       {"tag" : "lit-datepicker", "import": "/node_modules/@doubletrade/lit-datepicker/lit-datepicker.js", "type" : "lit" },
+      {"tag" : "button", "defaultWidth": "100px", "defaultHeight": "30px", "defaultContent": "Button" },
       "lit-datepicker"
     ]
   }
