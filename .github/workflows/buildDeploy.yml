@@ -19,5 +19,9 @@ jobs:
       run: npm install
     - name: npm install polymer-cli
       run: npm install polymer-cli
+    - name: web-component-designer upgrade
+      run: npm i git+https://git@github.com/node-projects/web-component-designer.git
     - name: Polymer
       run: npx polymer build
+    - name: npm install polymer-cli
+      run: npm install polymer-cli
