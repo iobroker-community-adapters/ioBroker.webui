@@ -20,6 +20,7 @@
     "typescript": "^3.9.2"
   },
   "dependencies": {
+    "ace-builds": "^1.4.11",
     "@doubletrade/lit-datepicker": "^0.3.2",
     "@node-projects/web-component-designer": "git+https://git@github.com/node-projects/web-component-designer.git",
     "@vanillawc/wc-marquee": "^1.0.18",

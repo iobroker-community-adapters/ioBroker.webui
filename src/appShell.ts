@@ -1,9 +1,8 @@
-import { BaseCustomWebComponent, html, css, JsonElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, AttributeEditor } from '@node-projects/web-component-designer';
+import { BaseCustomWebComponent, html, css, JsonElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, AttributeEditor, DocumentContainer } from '@node-projects/web-component-designer';
 import serviceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
-import { DocumentContainer } from './documentContainer';
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
 export class AppShell extends BaseCustomWebComponent {
@@ -18,8 +17,7 @@ export class AppShell extends BaseCustomWebComponent {
   _treeView: TreeView;
   _treeViewExtended: TreeViewExtended;
 
-  static get style() {
-    return css`
+  static readonly style = css`
     :host {
       display: block;
       box-sizing: border-box;
@@ -80,10 +78,8 @@ export class AppShell extends BaseCustomWebComponent {
       width: 100%;
     }
     `;
-  }
 
-  static get template() {
-    return html`
+  static readonly template = html`
       <div class="app-header">
         <span class="heavy">web-component-designer <span class="lite">// a design framework for web-components using
             web-components</span></span>
@@ -112,7 +108,6 @@ export class AppShell extends BaseCustomWebComponent {
         </dock-spawn-ts>
       </div>
     `;
-  }
 
   ready() {
     this._dock = this._getDomElement('dock');
