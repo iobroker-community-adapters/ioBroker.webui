@@ -1,0 +1,7 @@
+{
+  "name": "wc-designer",
+  "short_name": "wc-designer",
+  "description": "node projects - web-component-designer ",
+  "start_url": "/",
+  "display": "standalone"
+}
