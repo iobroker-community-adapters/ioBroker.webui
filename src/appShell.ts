@@ -1,4 +1,4 @@
-import { BaseCustomWebComponent, html, css, JsonElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, AttributeEditor, DocumentContainer } from '@node-projects/web-component-designer';
+import { BaseCustomWebComponent, html, css, JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer } from '@node-projects/web-component-designer';
 import serviceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
@@ -13,7 +13,7 @@ export class AppShell extends BaseCustomWebComponent {
   private _dock: DockSpawnTsWebcomponent;
   private _dockManager: DockManager;
   _paletteView: PaletteView;
-  _attributeEditor: AttributeEditor;
+  _propertyGrid: PropertyGrid;
   _treeView: TreeView;
   _treeViewExtended: TreeViewExtended;
 
@@ -100,7 +100,7 @@ export class AppShell extends BaseCustomWebComponent {
           </div>
       
           <div id="attributeDock" title="Properties" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.2">
-            <node-projects-attribute-editor id="attributeEditor"></node-projects-attribute-editor>
+            <node-projects-property-grid id="propertyGrid"></node-projects-attribute-editor>
           </div>
           <div title="Elements" dock-spawn-dock-type="down" dock-spawn-dock-to="attributeDock" dock-spawn-dock-ratio="0.4">
             <node-projects-palette-view id="paletteView"></node-projects-palette-view>
@@ -114,7 +114,7 @@ export class AppShell extends BaseCustomWebComponent {
     this._paletteView = this._getDomElement('paletteView');
     this._treeView = this._getDomElement('treeView');
     this._treeViewExtended = this._getDomElement('treeViewExtended');
-    this._attributeEditor = this._getDomElement('attributeEditor');
+    this._propertyGrid = this._getDomElement('propertyGrid');
 
     let newButton = this._getDomElement<HTMLButtonElement>('newButton');
     newButton.onclick = () => this.newDocument();
@@ -131,7 +131,7 @@ export class AppShell extends BaseCustomWebComponent {
             sampleDocument.instanceServiceContainer.selectionService.onSelectionChanged.on((e) => this._selectionChanged(e));
 
             let selection = sampleDocument.instanceServiceContainer.selectionService.selectedElements;
-            this._attributeEditor.selectedElements = selection;
+            this._propertyGrid.selectedItems = selection;
             this._treeView.createTree(sampleDocument.instanceServiceContainer.contentService.rootDesignItem);
             this._treeViewExtended.createTree(sampleDocument.instanceServiceContainer.contentService.rootDesignItem);
           }
@@ -145,16 +145,16 @@ export class AppShell extends BaseCustomWebComponent {
   }
 
   private _selectionChanged(e: ISelectionChangedEvent) {
-    this._attributeEditor.selectedElements = e.selectedElements;
+    this._propertyGrid.selectedItems = e.selectedElements;
     this._treeView.selectionChanged(e);
   }
 
   private _setupServiceContainer() {
-    serviceContainer.register('elementsService', new JsonElementsService('demo', './src/elements-demo.json'));
-    serviceContainer.register('elementsService', new JsonElementsService('native', './node_modules/@node-projects/web-component-designer/src/config/elements-native.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('demo', './src/elements-demo.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/src/config/elements-native.json'));
 
     this._paletteView.loadControls(serviceContainer.elementsServices);
-    this._attributeEditor.serviceContainer = serviceContainer;
+    this._propertyGrid.serviceContainer = serviceContainer;
   }
 
   public newDocument() {
