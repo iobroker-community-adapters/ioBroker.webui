@@ -25,6 +25,7 @@ jobs:
       run: |
         npm i copyfiles
         npx copyfiles ./node_modules/**/*.js build/default
+        npx copyfiles ./node_modules/**/*.json build/default
     - name: Compile web-component-designer
       run: |
         cd ./node_modules/@node-projects/web-component-designer
