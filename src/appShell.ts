@@ -147,6 +147,7 @@ export class AppShell extends BaseCustomWebComponent {
   private _selectionChanged(e: ISelectionChangedEvent) {
     this._propertyGrid.selectedItems = e.selectedElements;
     this._treeView.selectionChanged(e);
+    this._treeViewExtended.selectionChanged(e);
   }
 
   private _setupServiceContainer() {
