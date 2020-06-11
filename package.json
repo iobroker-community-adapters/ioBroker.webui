@@ -4,7 +4,8 @@
   "description": "Demonstration Project using web-component-designer",
   "type": "module",
   "scripts": {
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "serve": "polymer serve"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/node-projects/web-component-designer-demo#readme",
   "devDependencies": {
+    "polymer-cli": "^1.9.11",
     "typescript": "^3.9.3"
   },
   "dependencies": {
