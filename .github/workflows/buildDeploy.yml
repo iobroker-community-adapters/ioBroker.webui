@@ -40,6 +40,9 @@ jobs:
         npm i copyfiles
         npx copyfiles ./node_modules/**/*.css build/default
         npx copyfiles ./node_modules/**/*.json build/default
+        npx copyfiles ./node_modules/**/*.png build/default
+        npx copyfiles ./node_modules/**/*.gif build/default
+        npx copyfiles ./node_modules/**/*.jpg build/default
         npx copyfiles ./*.json build/default
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@releases/v3
