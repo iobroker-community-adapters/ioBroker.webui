@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@doubletrade/lit-datepicker": "^0.3.2",
+    "@node-projects/base-custom-webcomponent": "0.0.4",
     "@node-projects/web-component-designer": "git+https://github.com/node-projects/web-component-designer.git",
     "@vanillawc/wc-marquee": "^1.0.18",
     "ace-builds": "^1.4.11",

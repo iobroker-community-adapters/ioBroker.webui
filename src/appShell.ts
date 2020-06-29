@@ -1,8 +1,9 @@
-import { BaseCustomWebComponent, html, css, JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer } from '@node-projects/web-component-designer';
+import { JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer } from '@node-projects/web-component-designer';
 import serviceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
+import { BaseCustomWebComponent, html, css } from '@node-projects/base-custom-webcomponent';
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
 export class AppShell extends BaseCustomWebComponent {
