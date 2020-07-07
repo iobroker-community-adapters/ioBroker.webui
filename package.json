@@ -19,15 +19,16 @@
   "homepage": "https://github.com/node-projects/web-component-designer-demo#readme",
   "devDependencies": {
     "polymer-cli": "^1.9.11",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.6"
   },
   "dependencies": {
     "@doubletrade/lit-datepicker": "^0.3.2",
+    "@node-projects/base-custom-webcomponent": "0.0.8",
     "@node-projects/web-component-designer": "git+https://github.com/node-projects/web-component-designer.git",
-    "@vanillawc/wc-marquee": "^1.0.18",
+    "@vanillawc/wc-marquee": "^1.0.27",
     "ace-builds": "^1.4.11",
     "construct-style-sheets-polyfill": "^2.3.5",
-    "dock-spawn-ts": "^2.44.0",
+    "dock-spawn-ts": "^2.49.0",
     "jquery": "^3.5.1",
     "jquery.fancytree": "^2.35.0",
     "mobile-drag-drop": "^2.3.0-rc.2"

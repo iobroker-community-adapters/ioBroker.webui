@@ -1,8 +1,10 @@
-import { BaseCustomWebComponent, html, css, JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer } from '@node-projects/web-component-designer';
+import { JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer } from '@node-projects/web-component-designer';
 import serviceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
+import { BaseCustomWebComponent, css, html } from '@node-projects/base-custom-webcomponent';
+
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
 export class AppShell extends BaseCustomWebComponent {
@@ -102,12 +104,18 @@ export class AppShell extends BaseCustomWebComponent {
           <div id="attributeDock" title="Properties" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.2">
             <node-projects-property-grid id="propertyGrid"></node-projects-attribute-editor>
           </div>
-          <div title="Elements" dock-spawn-dock-type="down" dock-spawn-dock-to="attributeDock" dock-spawn-dock-ratio="0.4">
+          <div id="p" title="Elements" dock-spawn-dock-type="down" dock-spawn-dock-to="attributeDock" dock-spawn-dock-ratio="0.4">
             <node-projects-palette-view id="paletteView"></node-projects-palette-view>
           </div>
         </dock-spawn-ts>
       </div>
     `;
+
+constructor() {
+  super();
+  //let paletteView = new PaletteView();
+  //this._getDomElement('p').appendChild(paletteView);
+}
 
   ready() {
     this._dock = this._getDomElement('dock');
