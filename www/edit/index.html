@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" style="height: 100%;">
+  <head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
+    <link rel="manifest" href="./manifest.json">
+
+    <title>web-component-designer-demo</title>
+
+    <script src="./node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js"></script>
+
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/jquery.fancytree/dist/jquery.fancytree-all-deps.min.js"></script>
+    
+    <!-- Drag/Drop support on touch devices -->
+    <link rel="stylesheet" href="./node_modules/mobile-drag-drop/default.css">
+    <script src="./node_modules/mobile-drag-drop/index.js"></script>
+    <script src="./node_modules/@node-projects/web-component-designer/dist/polyfill/mobileDragDrop.js"></script>
+
+    <script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+
+    <script type="module">
+      import './node_modules/@node-projects/web-component-designer/dist/index.js';      
+      import './dist/frontend/designer/shell.js'; 
+    </script>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        line-height: 1.5;
+        background-color: white;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+  </head>
+  <body style="height: 100%;">
+    <node-projects-app-shell id="shell" style="height: 100%;">
+    </node-projects-app-shell>   
+  </body>
+</html>
