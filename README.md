@@ -1,2 +1,2 @@
-# ioBroker.webUi
+# ioBroker.webui
 UI using WebComponents
