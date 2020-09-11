@@ -25,7 +25,7 @@
     "construct-style-sheets-polyfill": "^2.4.0",
     "dock-spawn-ts": "^2.49.0",
     "jquery": "^3.5.1",
-    "jquery.fancytree": "^2.36.1",
+    "jquery.fancytree": "^2.37.0",
     "mobile-drag-drop": "^2.3.0-rc.2",
     "monaco-editor": "^0.20.0"
   }
