@@ -3,11 +3,11 @@ import serviceContainer from '@node-projects/web-component-designer/dist/element
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
-import { BaseCustomWebComponent, css, html } from '@node-projects/base-custom-webcomponent';
+import { BaseCustomWebComponentConstructorAppend, css, html } from '@node-projects/base-custom-webcomponent';
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
-export class AppShell extends BaseCustomWebComponent {
+export class AppShell extends BaseCustomWebComponentConstructorAppend {
   activeElement: HTMLElement;
   mainPage = 'designer';
 
@@ -86,6 +86,7 @@ export class AppShell extends BaseCustomWebComponent {
         <span class="heavy">web-component-designer <span class="lite">// a design framework for web-components using
             web-components</span></span>
         <button id="newButton" style="margin-left: 50px;">new</button>
+        <button id="newFixedButton" style="margin-left: 50px;">new fixed</button>
       </div>
       
       <div class="app-body">
@@ -102,20 +103,22 @@ export class AppShell extends BaseCustomWebComponent {
           </div>
       
           <div id="attributeDock" title="Properties" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.2">
-            <node-projects-property-grid id="propertyGrid"></node-projects-attribute-editor>
+            <node-projects-property-grid id="propertyGrid">
+              </node-projects-attribute-editor>
           </div>
-          <div id="p" title="Elements" dock-spawn-dock-type="down" dock-spawn-dock-to="attributeDock" dock-spawn-dock-ratio="0.4">
+          <div id="p" title="Elements" dock-spawn-dock-type="down" dock-spawn-dock-to="attributeDock"
+            dock-spawn-dock-ratio="0.4">
             <node-projects-palette-view id="paletteView"></node-projects-palette-view>
           </div>
         </dock-spawn-ts>
       </div>
     `;
 
-constructor() {
-  super();
-  //let paletteView = new PaletteView();
-  //this._getDomElement('p').appendChild(paletteView);
-}
+  constructor() {
+    super();
+    //let paletteView = new PaletteView();
+    //this._getDomElement('p').appendChild(paletteView);
+  }
 
   ready() {
     this._dock = this._getDomElement('dock');
@@ -125,7 +128,9 @@ constructor() {
     this._propertyGrid = this._getDomElement('propertyGrid');
 
     let newButton = this._getDomElement<HTMLButtonElement>('newButton');
-    newButton.onclick = () => this.newDocument();
+    newButton.onclick = () => this.newDocument(false);
+    let newFixedButton = this._getDomElement<HTMLButtonElement>('newFixedButton');
+    newFixedButton.onclick = () => this.newDocument(true);
 
     this._dockManager = this._dock.dockManager;
 
@@ -166,11 +171,15 @@ constructor() {
     this._propertyGrid.serviceContainer = serviceContainer;
   }
 
-  public newDocument() {
+  public newDocument(fixedWidth: boolean) {
     this._documentNumber++;
     let sampleDocument = new DocumentContainer(serviceContainer);
     sampleDocument.title = "document-" + this._documentNumber;
     this._dock.appendChild(sampleDocument);
+    if (fixedWidth) {
+      sampleDocument.designerView.designerWidth = '400px';
+      sampleDocument.designerView.designerHeight = '400px';
+    }
   }
 }
 
