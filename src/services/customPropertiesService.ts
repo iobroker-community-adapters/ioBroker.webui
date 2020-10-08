@@ -2,6 +2,9 @@ import { IProperty, IPropertiesService, IDesignItem } from '@node-projects/web-c
 import { ValueType } from '@node-projects/web-component-designer/dist/elements/services/propertiesService/ValueType';
 
 export class CustomPropertiesService implements IPropertiesService {
+    clearValue(designItems: IDesignItem[], property: IProperty) {
+      // throw new Error('Method not implemented.');
+    }
     isSet(designItems: IDesignItem[], property: IProperty): ValueType {
       throw new Error("Method not implemented.");
     }
