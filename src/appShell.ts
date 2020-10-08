@@ -103,8 +103,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
           </div>
       
           <div id="attributeDock" title="Properties" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.2">
-            <node-projects-property-grid id="propertyGrid">
-              </node-projects-attribute-editor>
+            <node-projects-property-grid id="propertyGrid"></node-projects-property-grid>
           </div>
           <div id="p" title="Elements" dock-spawn-dock-type="down" dock-spawn-dock-to="attributeDock"
             dock-spawn-dock-ratio="0.4">
@@ -154,7 +153,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
 
     this._setupServiceContainer();
 
-    this.newDocument();
+    this.newDocument(false);
   }
 
   private _selectionChanged(e: ISelectionChangedEvent) {
