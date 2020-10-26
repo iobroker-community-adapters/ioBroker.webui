@@ -20,7 +20,7 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "@node-projects/base-custom-webcomponent": "0.0.10",
+    "@node-projects/base-custom-webcomponent": "0.0.60",
     "@node-projects/web-component-designer": "git+https://github.com/node-projects/web-component-designer.git",
     "construct-style-sheets-polyfill": "^2.4.0",
     "dock-spawn-ts": "^2.49.0",
