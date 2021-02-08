@@ -22,7 +22,7 @@
   "dependencies": {
     "@node-projects/base-custom-webcomponent": "0.0.10",
     "@node-projects/web-component-designer": "git+https://github.com/node-projects/web-component-designer.git",
-    "construct-style-sheets-polyfill": "^2.4.0",
+    "construct-style-sheets-polyfill": "^2.4.9",
     "dock-spawn-ts": "^2.49.0",
     "jquery": "^3.5.1",
     "jquery.fancytree": "^2.36.1",
