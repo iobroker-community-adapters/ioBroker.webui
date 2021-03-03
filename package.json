@@ -24,7 +24,7 @@
     "@node-projects/web-component-designer": "git+https://github.com/node-projects/web-component-designer.git",
     "construct-style-sheets-polyfill": "^2.4.0",
     "dock-spawn-ts": "^2.49.0",
-    "jquery": "^3.5.1",
+    "jquery": "^3.6.0",
     "jquery.fancytree": "^2.36.1",
     "mobile-drag-drop": "^2.3.0-rc.2",
     "monaco-editor": "^0.20.0"
