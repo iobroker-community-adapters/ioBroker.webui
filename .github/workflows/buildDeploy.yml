@@ -32,7 +32,7 @@ jobs:
       run: npx tsc
     - name: Polymer
       run: npx polymer build
-    - name LS Node...
+    - name: LS Node...
       run: ls -r node_modules/dock-spawn-ts
     - name: Copy css and rest
       run: |
