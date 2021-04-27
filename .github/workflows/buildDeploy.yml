@@ -21,8 +21,8 @@ jobs:
       run: npm i git+https://git@github.com/node-projects/web-component-designer.git
     - name: Copy js
       run: |
-        npx copyfiles --verbose ./node_modules/**/*.js build/default
-        npx copyfiles --verbose ./node_modules/**/*.json build/default
+        npx copyfiles --verbose "node_modules/**/*.js" build/default
+        npx copyfiles --verbose "node_modules/**/*.json" build/default
     - name: Compile web-component-designer
       run: |
         cd ./node_modules/@node-projects/web-component-designer
@@ -36,14 +36,14 @@ jobs:
       run: ls -r node_modules/dock-spawn-ts
     - name: Copy css and rest
       run: |
-        npx copyfiles --verbose ./node_modules/**/*.css build/default
-        npx copyfiles --verbose ./node_modules/**/*.json build/default
-        npx copyfiles --verbose ./node_modules/**/*.png build/default
-        npx copyfiles --verbose ./node_modules/**/*.gif build/default
-        npx copyfiles --verbose ./node_modules/**/*.jpg build/default
-        npx copyfiles --verbose ./*.json build/default
-    - name: Setup upterm session (for debugging, see https://github.com/marketplace/actions/debugging-with-ssh)
-      uses: lhotari/action-upterm@v1
+        npx copyfiles --verbose "node_modules/**/*.css" build/default
+        npx copyfiles --verbose "node_modules/**/*.json" build/default
+        npx copyfiles --verbose "node_modules/**/*.png" build/default
+        npx copyfiles --verbose "node_modules/**/*.gif" build/default
+        npx copyfiles --verbose "node_modules/**/*.jpg" build/default
+        npx copyfiles --verbose "*.json" build/default
+    #- name: Setup upterm session (for debugging, see https://github.com/marketplace/actions/debugging-with-ssh)
+    #  uses: lhotari/action-upterm@v1
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@4.1.1
       with:
