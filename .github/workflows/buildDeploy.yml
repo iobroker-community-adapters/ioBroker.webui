@@ -17,15 +17,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: npm install
       run: npm install
-    - name: npm install polymer-cli
-      run: npm install polymer-cli
     - name: web-component-designer upgrade
       run: npm i git+https://git@github.com/node-projects/web-component-designer.git
     - name: Copy js
       run: |
-        npm i copyfiles
-        npx copyfiles ./node_modules/**/*.js build/default
-        npx copyfiles ./node_modules/**/*.json build/default
+        npx copyfiles --verbose ./node_modules/**/*.js build/default
+        npx copyfiles --verbose ./node_modules/**/*.json build/default
     - name: Compile web-component-designer
       run: |
         cd ./node_modules/@node-projects/web-component-designer
@@ -37,13 +34,12 @@ jobs:
       run: npx polymer build
     - name: Copy css and rest
       run: |
-        npm i copyfiles
-        npx copyfiles ./node_modules/**/*.css build/default
-        npx copyfiles ./node_modules/**/*.json build/default
-        npx copyfiles ./node_modules/**/*.png build/default
-        npx copyfiles ./node_modules/**/*.gif build/default
-        npx copyfiles ./node_modules/**/*.jpg build/default
-        npx copyfiles ./*.json build/default
+        npx copyfiles --verbose ./node_modules/**/*.css build/default
+        npx copyfiles --verbose ./node_modules/**/*.json build/default
+        npx copyfiles --verbose ./node_modules/**/*.png build/default
+        npx copyfiles --verbose ./node_modules/**/*.gif build/default
+        npx copyfiles --verbose ./node_modules/**/*.jpg build/default
+        npx copyfiles --verbose ./*.json build/default
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
