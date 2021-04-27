@@ -17,6 +17,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: npm install
       run: npm install
+    - name: Setup upterm session (for debugging, see https://github.com/marketplace/actions/debugging-with-ssh)
+      uses: lhotari/action-upterm@v1
     - name: web-component-designer upgrade
       run: npm i git+https://git@github.com/node-projects/web-component-designer.git
     - name: Copy js
