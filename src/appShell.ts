@@ -1,6 +1,7 @@
-import { JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService } from '@node-projects/web-component-designer';
+import { JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce } from '@node-projects/web-component-designer';
 import serviceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 serviceContainer.register("htmlParserService", new NodeHtmlParserService());
+serviceContainer.config.codeViewWidget = CodeViewAce;
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
