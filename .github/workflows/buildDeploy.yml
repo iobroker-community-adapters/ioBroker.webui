@@ -19,7 +19,7 @@ jobs:
       run: npm install
     - name: web-component-designer upgrade
       run: npm i git+https://git@github.com/node-projects/web-component-designer.git
-    - name: Copy js
+    - name: Copy js & json
       run: |
         npx copyfiles --verbose "node_modules/**/*.js" build/default
         npx copyfiles --verbose "node_modules/**/*.json" build/default
@@ -42,8 +42,11 @@ jobs:
         npx copyfiles --verbose "node_modules/**/*.gif" build/default
         npx copyfiles --verbose "node_modules/**/*.jpg" build/default
         npx copyfiles --verbose "*.json" build/default
-    - name: Setup upterm session (for debugging, see https://github.com/marketplace/actions/debugging-with-ssh)
-      uses: lhotari/action-upterm@v1
+    - name: Copy ace js again (why????)
+      run: |
+        npx copyfiles --verbose "node_modules/ace-builds/**/*.js" build/default
+    #- name: Setup upterm session (for debugging, see https://github.com/marketplace/actions/debugging-with-ssh)
+    #  uses: lhotari/action-upterm@v1
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@4.1.1
       with:
