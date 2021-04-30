@@ -7,6 +7,13 @@ import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockS
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
 import { BaseCustomWebComponentConstructorAppend, css, html } from '@node-projects/base-custom-webcomponent';
 
+/* imports without usage, for polymer bundler or he will not modify impirt paths */
+import './demo/demoData'
+import './demo/DemoElement'
+import './demo/DemoEnum'
+import './demo/DemoStringEnum'
+import '@vanillawc/wc-marquee'
+
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
 export class AppShell extends BaseCustomWebComponentConstructorAppend {

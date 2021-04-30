@@ -23,7 +23,7 @@ export class DemoElement extends BaseCustomWebComponentConstructorAppend {
     <div>[[this.numberProp]]</div>
     <div>[[this.specialText]]</div>
     <div>[[this.enumProperty]]</div>
-    <div id="cnt">Test JS Access</div>
+    <div id="cnt" style="background: lightblue;">Test JS Access</div>
     <!--<div>[[DemoEnum[this.enumProperty] ]]</div>-->
   </div>`
 
