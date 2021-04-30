@@ -42,8 +42,8 @@ jobs:
         npx copyfiles --verbose "node_modules/**/*.gif" build/default
         npx copyfiles --verbose "node_modules/**/*.jpg" build/default
         npx copyfiles --verbose "*.json" build/default
-    #- name: Setup upterm session (for debugging, see https://github.com/marketplace/actions/debugging-with-ssh)
-    #  uses: lhotari/action-upterm@v1
+    - name: Setup upterm session (for debugging, see https://github.com/marketplace/actions/debugging-with-ssh)
+      uses: lhotari/action-upterm@v1
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@4.1.1
       with:
