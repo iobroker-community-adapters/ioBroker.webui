@@ -1,11 +1,12 @@
-import { JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce } from '@node-projects/web-component-designer';
+import { JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce, ListPropertiesService } from '@node-projects/web-component-designer';
 import serviceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 serviceContainer.register("htmlParserService", new NodeHtmlParserService());
 serviceContainer.config.codeViewWidget = CodeViewAce;
+LazyLoader.LoadText('/src/custom-element-properties.json').then(data => serviceContainer.register("propertyService", new ListPropertiesService(JSON.parse(data))));
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
-import { BaseCustomWebComponentConstructorAppend, css, html } from '@node-projects/base-custom-webcomponent';
+import { BaseCustomWebComponentConstructorAppend, css, html, LazyLoader } from '@node-projects/base-custom-webcomponent';
 
 /* imports without usage, for polymer bundler or he will not modify impirt paths */
 import './demo/demoData'

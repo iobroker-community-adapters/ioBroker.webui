@@ -20,7 +20,7 @@
   "devDependencies": {
     "copyfiles": "^2.4.1",
     "polymer-cli": "^1.9.11",
-    "typescript": "^4.2.4"
+    "typescript": "^4.3.0-dev.20210501"
   },
   "dependencies": {
     "@doubletrade/lit-datepicker": "^0.7.0",
