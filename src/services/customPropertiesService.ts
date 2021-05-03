@@ -2,6 +2,7 @@ import { IProperty, IPropertiesService, IDesignItem } from '@node-projects/web-c
 import { ValueType } from '@node-projects/web-component-designer/dist/elements/services/propertiesService/ValueType';
 
 export class CustomPropertiesService implements IPropertiesService {
+    
     clearValue(designItems: IDesignItem[], property: IProperty) {
       // throw new Error('Method not implemented.');
     }
@@ -25,6 +26,10 @@ export class CustomPropertiesService implements IPropertiesService {
         if (designItem.element.nodeName == "test-element")
             return true;
         return false;
+    }
+
+    getProperty(designItem: IDesignItem, name: string): IProperty {
+      return this.getProperties(designItem)[name];
     }
 
     getProperties(designItem: IDesignItem): IProperty[] {
