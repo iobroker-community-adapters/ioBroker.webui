@@ -7,6 +7,7 @@ LazyLoader.LoadText('./src/custom-element-properties.json').then(data => service
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
 import { BaseCustomWebComponentConstructorAppend, css, html, LazyLoader } from '@node-projects/base-custom-webcomponent';
+import { CommandHandling } from './CommandHandling'
 
 /* imports without usage, for polymer bundler or he will not modify impirt paths */
 import './demo/demoData'
@@ -66,7 +67,6 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
       box-sizing: border-box;
       display: flex;
       flex-direction: row;
-      padding-top: 60px;
       height: 100%;
       overflow: hidden;
     }
@@ -92,13 +92,6 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
     `;
 
   static readonly template = html`
-      <div class="app-header">
-        <span class="heavy">web-component-designer <span class="lite">// a design framework for web-components using
-            web-components</span></span>
-        <button id="newButton" style="margin-left: 50px;">new</button>
-        <button id="newFixedButton" style="margin-left: 50px;">new fixed</button>
-      </div>
-      
       <div class="app-body">
         <dock-spawn-ts id="dock" style="width: 100%; height: 100%; position: relative;">
       
@@ -136,12 +129,8 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
     this._treeViewExtended = this._getDomElement('treeViewExtended');
     this._propertyGrid = this._getDomElement('propertyGrid');
 
-    let newButton = this._getDomElement<HTMLButtonElement>('newButton');
-    newButton.onclick = () => this.newDocument(false);
-    let newFixedButton = this._getDomElement<HTMLButtonElement>('newFixedButton');
-    newFixedButton.onclick = () => this.newDocument(true);
-
     this._dockManager = this._dock.dockManager;
+    new CommandHandling(this._dockManager, this);
 
     this._dockManager.addLayoutListener({
       onActivePanelChange: (manager, panel) => {
@@ -156,6 +145,14 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
             this._propertyGrid.selectedItems = selection;
             this._treeView.createTree(sampleDocument.instanceServiceContainer.contentService.rootDesignItem);
             this._treeViewExtended.createTree(sampleDocument.instanceServiceContainer.contentService.rootDesignItem);
+          }
+        }
+      },
+      onClosePanel: (manager, panel) => {
+        if (panel) {
+          let element = ((<HTMLSlotElement><any>panel.elementContent).assignedElements()[0]);
+          if (element && element instanceof DocumentContainer) {
+            element.dispose();
           }
         }
       }
@@ -183,6 +180,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
   public newDocument(fixedWidth: boolean) {
     this._documentNumber++;
     let sampleDocument = new DocumentContainer(serviceContainer);
+    sampleDocument.setAttribute('dock-spawn-panel-type', 'document');
     sampleDocument.title = "document-" + this._documentNumber;
     this._dock.appendChild(sampleDocument);
     if (fixedWidth) {

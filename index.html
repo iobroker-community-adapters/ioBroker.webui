@@ -1,48 +1,127 @@
 <!doctype html>
 <html lang="en" style="height: 100%;">
-  <head>
-    <meta charset="utf-8">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
-    <link rel="manifest" href="./manifest.json">
 
-    <title>web-component-designer-demo</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
+  <link rel="manifest" href="./manifest.json">
 
-    <script src="./node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js"></script>
+  <title>web-component-designer-demo</title>
 
-    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="./node_modules/jquery.fancytree/dist/jquery.fancytree-all-deps.min.js"></script>
-    <script src="./node_modules/jquery.fancytree/dist/modules/jquery.fancytree.table.js"></script>
-    
-    <!-- Drag/Drop support on touch devices -->
-    <link rel="stylesheet" href="./node_modules/mobile-drag-drop/default.css">
-    <script src="./node_modules/mobile-drag-drop/index.js"></script>
-    <script src="./node_modules/@node-projects/web-component-designer/dist/polyfill/mobileDragDrop.js"></script>
+  <script src="./node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js"></script>
 
-    <!-- if you use Moacco Editor -->
-    <script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+  <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="./node_modules/jquery.fancytree/dist/jquery.fancytree-all-deps.min.js"></script>
+  <script src="./node_modules/jquery.fancytree/dist/modules/jquery.fancytree.table.js"></script>
 
-    <!-- if you use ACE Editor -->
-    <script src="./node_modules/ace-builds/src-min-noconflict/ace.js"></script>
-    <script src="./node_modules/ace-builds/src-min-noconflict/ext-language_tools.js"></script>
+  <link rel="stylesheet" href="/node_modules/metro4-dist/css/metro-all.min.css">
 
-    <script type="module">
-      import './node_modules/@node-projects/web-component-designer/dist/index.js';      
-      import './dist/appShell.js'; 
-    </script>
+  <!-- Drag/Drop support on touch devices -->
+  <link rel="stylesheet" href="./node_modules/mobile-drag-drop/default.css">
+  <script src="./node_modules/mobile-drag-drop/index.js"></script>
+  <script src="./node_modules/@node-projects/web-component-designer/dist/polyfill/mobileDragDrop.js"></script>
 
-    <style>
-      body {
-        margin: 0;
-        font-family: 'Roboto', 'Noto', sans-serif;
-        line-height: 1.5;
-        background-color: white;
-        -webkit-font-smoothing: antialiased;
-      }
-    </style>
-  </head>
-  <body style="height: 100%;">
-    <node-projects-app-shell id="shell" style="height: 100%;">
-    </node-projects-app-shell>   
-  </body>
+  <!-- if you use Moacco Editor -->
+  <script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+
+  <!-- if you use ACE Editor -->
+  <script src="./node_modules/ace-builds/src-min-noconflict/ace.js"></script>
+  <script src="./node_modules/ace-builds/src-min-noconflict/ext-language_tools.js"></script>
+
+  <script type="module">
+    import './node_modules/@node-projects/web-component-designer/dist/index.js';
+    import './dist/appShell.js';
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', 'Noto', sans-serif;
+      line-height: 1.5;
+      background-color: white;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+
+<body style="height: 100%;">
+  <nav id="configRibbonHeader" data-role="ribbonmenu" class="ribbon-menu" data-role-ribbonmenu="true"
+    style="width: 100%; background: rgb(245, 246, 247); border-bottom:solid 1px rgb(218, 219, 220);">
+    <div class="content-holder">
+      <div class="section active" style="height: 120px;">
+        <div class="group">
+          <button class="ribbon-button" data-command="new" disabled>
+            <span class="icon">
+              <span class="mif-file-empty fg-cyan"></span>
+            </span>
+            <span class="caption">new</span>
+          </button>
+          <button class="ribbon-button" data-command="save" disabled>
+            <span class="icon">
+              <span class="mif-floppy-disk fg-cyan"></span>
+            </span>
+            <span class="caption">save</span>
+          </button>
+          <span class="title">file</span>
+        </div>
+        <div class="group">
+          <button class="ribbon-button" data-command="paste" disabled>
+            <span class="icon">
+              <span class="mif-paste fg-cyan"></span>
+            </span>
+            <span class="caption">paste</span>
+          </button>
+          <div class="group flex-column">
+            <button class="ribbon-icon-button" data-command="cut" disabled>
+              <span class="icon">
+                <span class="mif-cut fg-cyan"></span>
+              </span>
+              <span class="caption">cut</span>
+            </button>
+            <button class="ribbon-icon-button" data-command="copy" disabled>
+              <span class="icon">
+                <span class="mif-copy fg-cyan"></span>
+              </span>
+              <span class="caption">copy</span>
+            </button>
+          </div>
+          <span class="title">clipboard</span>
+        </div>
+        <div class="group flex-column">
+          <button class="ribbon-icon-button" data-command="undo" disabled>
+            <span class="icon">
+              <span class="mif-undo fg-cyan"></span>
+            </span>
+            <span class="caption">undo</span>
+          </button>
+          <button class="ribbon-icon-button" data-command="redo" disabled>
+            <span class="icon">
+              <span class="mif-redo fg-cyan"></span>
+            </span>
+            <span class="caption">redo</span>
+          </button>
+          <span class="title">edit</span>
+        </div>
+        <div class="group flex-column">
+          <div class="group">
+            <button class="tool-button" data-command="arrangeLeft"
+              style="background-image: url('../assets/images/layout/arrange-left.png'); background-size: cover;"
+              disabled></button>
+            <button class="tool-button" data-command="arrangeCenter"
+              style="background-image: url('../assets/images/layout/arrange-center.png'); background-size: cover;"
+              disabled></button>
+            <button class="tool-button" data-command="arrangeRight"
+              style="background-image: url('../assets/images/layout/arrange-right.png'); background-size: cover;"
+              disabled></button>
+          </div>
+          <span class="title">layout</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <node-projects-app-shell id="shell" style="height: calc(100% - 121px); width: 100%; position: absolute;"></node-projects-app-shell>
+</body>
+
 </html>
