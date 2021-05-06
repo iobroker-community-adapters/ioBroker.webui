@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@doubletrade/lit-datepicker": "^0.7.0",
-    "@node-projects/base-custom-webcomponent": "0.0.180",
+    "@node-projects/base-custom-webcomponent": "0.0.200",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^2.2.2",
     "@node-projects/web-component-designer": "git+https://git@github.com/node-projects/web-component-designer.git",
