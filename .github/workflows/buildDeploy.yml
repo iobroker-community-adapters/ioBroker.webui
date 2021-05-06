@@ -42,6 +42,10 @@ jobs:
         npx copyfiles --verbose "node_modules/**/*.png" build/default
         npx copyfiles --verbose "node_modules/**/*.gif" build/default
         npx copyfiles --verbose "node_modules/**/*.jpg" build/default
+        npx copyfiles --verbose "node_modules/**/*.woff" build/default
+        npx copyfiles --verbose "node_modules/**/*.ttf" build/default
+        npx copyfiles --verbose "assets/**/*.png" build/default
+        npx copyfiles --verbose "assets/**/*.css" build/default
         npx copyfiles --verbose "*.json" build/default
     - name: Copy ace js again (why????)
       run: |
