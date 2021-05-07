@@ -173,7 +173,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
     serviceContainer.register('elementsService', new JsonFileElementsService('demo', './src/elements-demo.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/src/config/elements-native.json'));
 
-    this._paletteView.loadControls(serviceContainer.elementsServices);
+    this._paletteView.loadControls(serviceContainer, serviceContainer.elementsServices);
     this._propertyGrid.serviceContainer = serviceContainer;
   }
 
