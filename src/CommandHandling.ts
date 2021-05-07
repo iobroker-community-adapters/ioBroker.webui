@@ -1,3 +1,4 @@
+import { IUiCommandHandler } from '@node-projects/web-component-designer/dist/commandHandling/IUiCommandHandler';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
 import { AppShell } from './appShell';
 //Command Handling..
@@ -19,6 +20,10 @@ export class CommandHandling {
 
     if (commandName === 'new')
       this.appShell.newDocument(false);
+    else if (commandName === 'newFixedWidth')
+      this.appShell.newDocument(true);
+    else if (commandName === 'github')
+      window.location.href = 'https://github.com/node-projects/web-component-designer';
     else if (this.dockManager.activeDocument) {
       let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
       if (target.executeCommand) {
@@ -37,31 +42,27 @@ export class CommandHandling {
       if (this.dockManager.activeDocument) {
         let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
         if (target.canExecuteCommand) {
-          buttons.forEach(b => {
-            let command = b.dataset['command'];
-            if (command === 'new')
-              b.disabled = false;
-            else
-              b.disabled = !target.canExecuteCommand({ type: command });
-          });
+          this.handleCommand(buttons, target);
         } else {
-          buttons.forEach(b => {
-            let command = b.dataset['command'];
-            if (command === 'new')
-              b.disabled = false;
-            else
-              b.disabled = true;
-          });
+          this.handleCommand(buttons, null);
         }
       } else {
-        buttons.forEach(b => {
-          let command = b.dataset['command'];
-          if (command === 'new')
-            b.disabled = false;
-          else
-            b.disabled = true;
-        });
+        this.handleCommand(buttons, null);
       }
     }, 100);
+  }
+
+  handleCommand(buttons: HTMLButtonElement[], target: IUiCommandHandler) {
+    buttons.forEach(b => {
+      let command = b.dataset['command'];
+      if (command === 'new')
+        b.disabled = false;
+      else if (command === 'newFixedWidth')
+        b.disabled = false;
+      else if (command === 'github')
+        b.disabled = false;
+      else
+        b.disabled = !target ? true : !target.canExecuteCommand({ type: <any>command });
+    });
   }
 }

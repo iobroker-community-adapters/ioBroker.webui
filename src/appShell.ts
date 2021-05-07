@@ -116,12 +116,6 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
       </div>
     `;
 
-  constructor() {
-    super();
-    //let paletteView = new PaletteView();
-    //this._getDomElement('p').appendChild(paletteView);
-  }
-
   ready() {
     this._dock = this._getDomElement('dock');
     this._paletteView = this._getDomElement('paletteView');
@@ -159,7 +153,6 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
     });
 
     this._setupServiceContainer();
-
     this.newDocument(false);
   }
 
