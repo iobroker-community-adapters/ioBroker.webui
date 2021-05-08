@@ -1,6 +1,7 @@
 {
     "elements":
     [
+      {"tag" : "div", "name": "info", "defaultContent": "material web components - visit: <a href=\"https://github.com/material-components/material-components-web-components\">https://github.com/material-components/material-components-web-components</a>", "type" : "wired" },
       {"tag" : "mwc-button", "import": "./node_modules/@material/mwc-button/mwc-button.js", "defaultWidth": "200px", "defaultHeight": "50px", "type" : "mwc" },
       {"tag" : "mwc-checkbox", "import": "./node_modules/@material/mwc-checkbox/mwc-checkbox.js", "defaultWidth": "200px", "defaultHeight": "50px", "type" : "mwc" },
       {"tag" : "mwc-circular-progress", "import": "./node_modules/@material/mwc-circular-progress/mwc-circular-progress.js", "defaultWidth": "200px", "defaultHeight": "50px", "type" : "mwc" },
