@@ -9,18 +9,7 @@ import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
 import { BaseCustomWebComponentConstructorAppend, css, html, LazyLoader } from '@node-projects/base-custom-webcomponent';
 import { CommandHandling } from './CommandHandling'
 
-/* imports without usage, for polymer bundler or he will not modify impirt paths */
-import './demo/demoData'
-import './demo/DemoElement'
-import './demo/DemoEnum'
-import './demo/DemoStringEnum'
-import '@vanillawc/wc-marquee'
-import '@doubletrade/lit-datepicker'
-import '@material/mwc-button'
-import '@material/mwc-checkbox'
-import '@material/mwc-circular-progress'
-import '@material/mwc-textfield'
-import 'wired-elements'
+import './loadElements';
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
