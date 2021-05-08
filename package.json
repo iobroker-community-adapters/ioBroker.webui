@@ -24,6 +24,10 @@
   },
   "dependencies": {
     "@doubletrade/lit-datepicker": "^0.7.0",
+    "@material/mwc-button": "^0.21.0",
+    "@material/mwc-checkbox": "^0.21.0",
+    "@material/mwc-circular-progress": "^0.21.0",
+    "@material/mwc-textfield": "^0.21.0",
     "@node-projects/base-custom-webcomponent": "0.0.200",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^2.2.2",
@@ -37,6 +41,7 @@
     "jquery.fancytree": "^2.38.0",
     "metro4-dist": "^4.4.3",
     "mobile-drag-drop": "^2.3.0-rc.2",
-    "monaco-editor": "^0.23.0"
+    "monaco-editor": "^0.23.0",
+    "wired-elements": "*"
   }
 }
