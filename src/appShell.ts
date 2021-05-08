@@ -15,6 +15,12 @@ import './demo/DemoElement'
 import './demo/DemoEnum'
 import './demo/DemoStringEnum'
 import '@vanillawc/wc-marquee'
+import '@doubletrade/lit-datepicker'
+import '@material/mwc-button'
+import '@material/mwc-checkbox'
+import '@material/mwc-circular-progress'
+import '@material/mwc-textfield'
+import 'wired-elements'
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
