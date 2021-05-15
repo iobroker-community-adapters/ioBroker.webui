@@ -125,6 +125,11 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
     this._treeViewExtended = this._getDomElement('treeViewExtended');
     this._propertyGrid = this._getDomElement('propertyGrid');
 
+    const linkElement = document.createElement("link");
+    linkElement.rel = "stylesheet";
+    linkElement.href = "./assets/dockspawn.css";
+    this._dock.shadowRoot.appendChild(linkElement);
+
     this._dockManager = this._dock.dockManager;
     new CommandHandling(this._dockManager, this);
 
