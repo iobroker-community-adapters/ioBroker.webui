@@ -1,4 +1,4 @@
-import { JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce, ListPropertiesService, PaletteTreeView } from '@node-projects/web-component-designer';
+import { JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce, ListPropertiesService, PaletteTreeView, OldCustomElementsManifestLoader } from '@node-projects/web-component-designer';
 import serviceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 serviceContainer.register("htmlParserService", new NodeHtmlParserService());
 serviceContainer.config.codeViewWidget = CodeViewAce;
@@ -117,7 +117,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
       </div>
     `;
 
-  ready() {
+  async ready() {
     this._dock = this._getDomElement('dock');
     this._paletteView = this._getDomElement('paletteView');
     this._paletteTree = this._getDomElement('paletteTree');
@@ -159,7 +159,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
       }
     });
 
-    this._setupServiceContainer();
+    await this._setupServiceContainer();
     this.newDocument(false);
   }
 
@@ -169,13 +169,15 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
     this._treeViewExtended.selectionChanged(e);
   }
 
-  private _setupServiceContainer() {
+  private async _setupServiceContainer() {
     serviceContainer.register('elementsService', new JsonFileElementsService('demo', './src/elements-demo.json'));
+    await OldCustomElementsManifestLoader.loadManifest(serviceContainer, '@spectrum-web-components/button', { name: '@spectrum' });
     serviceContainer.register('elementsService', new JsonFileElementsService('wired', './src/elements-wired.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('elix', './src/elements-elix.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('patternfly', './src/elements-pfe.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('mwc', './src/elements-mwc.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/src/config/elements-native.json'));
+
 
     this._paletteView.loadControls(serviceContainer, serviceContainer.elementsServices);
     this._paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);
