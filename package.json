@@ -20,7 +20,7 @@
   "devDependencies": {
     "copyfiles": "^2.4.1",
     "polymer-cli": "^1.9.11",
-    "typescript": "^4.3.0-dev.20210501"
+    "typescript": "^4.3.2"
   },
   "dependencies": {
     "@doubletrade/lit-datepicker": "^0.7.0",
@@ -29,17 +29,17 @@
     "@material/mwc-checkbox": "^0.21.0",
     "@material/mwc-circular-progress": "^0.21.0",
     "@material/mwc-textfield": "^0.21.0",
-    "@node-projects/base-custom-webcomponent": "0.0.200",
+    "@node-projects/base-custom-webcomponent": "0.0.230",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^2.2.2",
     "@node-projects/web-component-designer": "git+https://git@github.com/node-projects/web-component-designer.git",
-    "@patternfly/pfe-badge": "^1.6.0",
-    "@patternfly/pfe-button": "^1.6.0",
-    "@patternfly/pfe-codeblock": "^1.6.0",
-    "@spectrum-web-components/button": "^0.13.7",
-    "@vanillawc/wc-marquee": "^1.0.27",
+    "@patternfly/pfe-badge": "^1.9.1",
+    "@patternfly/pfe-button": "^1.9.1",
+    "@patternfly/pfe-codeblock": "^1.9.1",
+    "@spectrum-web-components/button": "^0.14.0",
+    "@vanillawc/wc-marquee": "^1.0.31",
     "ace-builds": "^1.4.12",
-    "codemirror": "^5.61.0",
+    "codemirror": "^5.61.1",
     "construct-style-sheets-polyfill": "^2.4.16",
     "dock-spawn-ts": "^2.210.0",
     "elix": "^15.0.0",
@@ -47,7 +47,7 @@
     "jquery.fancytree": "^2.38.0",
     "metro4-dist": "^4.4.3",
     "mobile-drag-drop": "^2.3.0-rc.2",
-    "monaco-editor": "^0.23.0",
+    "monaco-editor": "^0.24.0",
     "wired-elements": "*"
   }
 }

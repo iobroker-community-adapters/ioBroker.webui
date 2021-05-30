@@ -1,4 +1,4 @@
-import { JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce, ListPropertiesService, PaletteTreeView, OldCustomElementsManifestLoader } from '@node-projects/web-component-designer';
+import { JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce, ListPropertiesService, PaletteTreeView, OldCustomElementsManifestLoader, PointerTool } from '@node-projects/web-component-designer';
 import serviceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 serviceContainer.register("htmlParserService", new NodeHtmlParserService());
 serviceContainer.config.codeViewWidget = CodeViewAce;
@@ -178,6 +178,18 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
     serviceContainer.register('elementsService', new JsonFileElementsService('mwc', './src/elements-mwc.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/src/config/elements-native.json'));
 
+    serviceContainer.globalContext.onToolChanged.on((e) => {
+      let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue).map(([k]) => k)[0];
+      if (e.newValue == null)
+        name = "Pointer"
+      const buttons = Array.from<HTMLButtonElement>(document.getElementById('tools').querySelectorAll('[data-command]'));
+      for (const b of buttons) {
+        if (b.dataset.commandParameter == name)
+          b.style.background = "green"
+        else
+          b.style.background = ""
+      }
+    });
 
     this._paletteView.loadControls(serviceContainer, serviceContainer.elementsServices);
     this._paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);
