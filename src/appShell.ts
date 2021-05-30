@@ -153,7 +153,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
         if (panel) {
           let element = this._dock.getElementInSlot((<HTMLSlotElement><any>panel.elementContent));
           if (element && element instanceof DocumentContainer) {
-            element.dispose();
+            (<DocumentContainer>element).dispose();
           }
         }
       }

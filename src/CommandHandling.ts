@@ -17,6 +17,7 @@ export class CommandHandling {
   handleCommandButtonClick(e) {
     let button = e.currentTarget;
     let commandName = button.dataset['command'];
+    let commandParameter = button.dataset['commandParameter'];
 
     if (commandName === 'new')
       this.appShell.newDocument(false);
@@ -27,7 +28,7 @@ export class CommandHandling {
     else if (this.dockManager.activeDocument) {
       let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
       if (target.executeCommand) {
-        target.executeCommand({ type: commandName })
+        target.executeCommand({ type: commandName, parameter: commandParameter })
       }
     }
   }
