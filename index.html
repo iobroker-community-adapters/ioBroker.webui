@@ -184,17 +184,28 @@
         </div>
         <div class="group flex-column">
           <div class="toolbar" id="tools">
-              <button class="tool-button" data-command="setTool" data-command-parameter="Pointer"><i class="fas fa-mouse-pointer"></i></button>
+              <button style="background: green;" class="tool-button" data-command="setTool" data-command-parameter="Pointer"><i class="fas fa-mouse-pointer"></i></button>
               <button class="tool-button" data-command="setTool" data-command-parameter="RectangleSelector"><i class="far fa-object-group"></i></button>
               <button class="tool-button" data-command="setTool" data-command-parameter="MagicWandSelector"><i class="fas fa-magic"></i></button>
               <button class="tool-button" data-command="setTool" data-command-parameter="DrawPath"><i class="fas fa-draw-polygon"></i></button>
               <button class="tool-button" data-command="setTool" data-command-parameter="PickColor"><i class="fas fa-eye-dropper"></i></button>
               <button class="tool-button" data-command="setTool" data-command-parameter="Zoom"><i class="fas fa-search-plus"></i></button>
               <button class="tool-button" data-command="setTool" data-command-parameter="Text"><i class="fas fa-i-cursor"></i></button>
-              
+          </div>
+          <div class="toolbar" id="color">
+            <div style="width:20px; height:20px; background: black; margin-right: 5px;"></div>
+            <div style="width:20px; height:20px; background: white; margin-right: 5px;"></div>   
           </div>
           <span class="title">Tools</span>
-      </div>
+        </div>
+        <div class="group flex-column">
+          <button class="ribbon-button" id="btnLogoff" data-command="screenshot">
+            <span class="icon">
+              <span class="mif-image fg-cyan"></span>
+            </span>
+          </button>
+          <span class="title">screenshot</span>
+        </div>
         <div style="position: absolute; right: 0;">
           <div class="group" style="height: 111px; border-left: 1px solid #dadbdc; inline-size: fit-content;">
             <button class="ribbon-button" id="btnLogoff" data-command="github">
