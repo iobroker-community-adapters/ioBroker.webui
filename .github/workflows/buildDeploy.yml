@@ -29,6 +29,11 @@ jobs:
         npm install
         npx tsc
         rm -r node_modules
+    - name: Compile Paint
+      run: |
+        cd ./node_modules/paint
+        npm install
+        npm run build
     - name: Typescript
       run: npx tsc
     - name: Polymer
