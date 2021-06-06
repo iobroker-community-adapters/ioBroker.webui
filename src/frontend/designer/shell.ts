@@ -1,25 +1,28 @@
-import { JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer } from '@node-projects/web-component-designer';
+import { JsonFileElementsService, ISelectionChangedEvent, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce, ListPropertiesService, OldCustomElementsManifestLoader } from '@node-projects/web-component-designer';
 import serviceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
+serviceContainer.register("htmlParserService", new NodeHtmlParserService());
+serviceContainer.config.codeViewWidget = CodeViewAce;
+LazyLoader.LoadText('./src/custom-element-properties.json').then(data => serviceContainer.register("propertyService", new ListPropertiesService(JSON.parse(data))));
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
-import { BaseCustomWebComponentConstructorAppend, css, html } from '@node-projects/base-custom-webcomponent';
+import { BaseCustomWebComponentConstructorAppend, css, html, LazyLoader } from '@node-projects/base-custom-webcomponent';
+import { CommandHandling } from './CommandHandling'
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
 export class AppShell extends BaseCustomWebComponentConstructorAppend {
-    activeElement: HTMLElement;
-    mainPage = 'designer';
+  activeElement: HTMLElement;
+  mainPage = 'designer';
 
-    private _documentNumber: number = 0;
-    private _dock: DockSpawnTsWebcomponent;
-    private _dockManager: DockManager;
-    _paletteView: PaletteView;
-    _propertyGrid: PropertyGrid;
-    _treeView: TreeView;
-    _treeViewExtended: TreeViewExtended;
+  private _documentNumber: number = 0;
+  private _dock: DockSpawnTsWebcomponent;
+  private _dockManager: DockManager;
+  _paletteView: PaletteView;
+  _propertyGrid: PropertyGrid;
+  _treeViewExtended: TreeViewExtended;
 
-    static readonly style = css`
+  static readonly style = css`
     :host {
       display: block;
       box-sizing: border-box;
@@ -56,7 +59,6 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
       box-sizing: border-box;
       display: flex;
       flex-direction: row;
-      padding-top: 60px;
       height: 100%;
       overflow: hidden;
     }
@@ -81,95 +83,117 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
     }
     `;
 
-    static readonly template = html`
-      <div class="app-header">
-        <span class="heavy">web-component-designer <span class="lite">// a design framework for web-components using
-            web-components</span></span>
-        <button id="newButton" style="margin-left: 50px;">new</button>
-      </div>
-      
+  static readonly template = html`
       <div class="app-body">
         <dock-spawn-ts id="dock" style="width: 100%; height: 100%; position: relative;">
       
-          <div id="treeUpper" title="Tree" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2"
+          <div title="Views" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2"
             style="overflow: hidden; width: 100%;">
-            <node-projects-tree-view name="tree" id="treeView"></node-projects-tree-view>
+            <web-ui-list-views name="views" id="views"></web-ui-list-views>
           </div>
       
-          <div title="TreeExtended" dock-spawn-dock-type="down" dock-spawn-dock-to="treeUpper" dock-spawn-dock-ratio="0.5"
+          <div title="TreeExtended" dock-spawn-dock-type="down" dock-spawn-dock-to="treeUpper2" dock-spawn-dock-ratio="0.7"
             style="overflow: hidden; width: 100%;">
             <node-projects-tree-view-extended name="tree" id="treeViewExtended"></node-projects-tree-view-extended>
           </div>
       
           <div id="attributeDock" title="Properties" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.2">
-            <node-projects-property-grid id="propertyGrid"></node-projects-attribute-editor>
+            <node-projects-property-grid id="propertyGrid"></node-projects-property-grid>
           </div>
-          <div title="Elements" dock-spawn-dock-type="down" dock-spawn-dock-to="attributeDock" dock-spawn-dock-ratio="0.4">
+          <div id="p" title="Elements" dock-spawn-dock-type="down" dock-spawn-dock-to="attributeDock"
+            dock-spawn-dock-ratio="0.4">
             <node-projects-palette-view id="paletteView"></node-projects-palette-view>
           </div>
         </dock-spawn-ts>
       </div>
     `;
 
-    constructor() {
-        super();
+  async ready() {
+    this._dock = this._getDomElement('dock');
+    this._paletteView = this._getDomElement('paletteView');
+    this._treeViewExtended = this._getDomElement('treeViewExtended');
+    this._propertyGrid = this._getDomElement('propertyGrid');
+
+    const linkElement = document.createElement("link");
+    linkElement.rel = "stylesheet";
+    linkElement.href = "./assets/dockspawn.css";
+    this._dock.shadowRoot.appendChild(linkElement);
+
+    this._dockManager = this._dock.dockManager;
+    new CommandHandling(this._dockManager, this);
+
+    this._dockManager.addLayoutListener({
+      onActivePanelChange: (manager, panel) => {
+        if (panel) {
+          let element = this._dock.getElementInSlot((<HTMLSlotElement><any>panel.elementContent));
+          if (element && element instanceof DocumentContainer) {
+            let sampleDocument = element as DocumentContainer;
+
+            sampleDocument.instanceServiceContainer.selectionService.onSelectionChanged.on((e) => this._selectionChanged(e));
+
+            let selection = sampleDocument.instanceServiceContainer.selectionService.selectedElements;
+            this._propertyGrid.selectedItems = selection;
+            this._treeViewExtended.createTree(sampleDocument.instanceServiceContainer.contentService.rootDesignItem);
+          }
+        }
+      },
+      onClosePanel: (manager, panel) => {
+        if (panel) {
+          let element = this._dock.getElementInSlot((<HTMLSlotElement><any>panel.elementContent));
+          if (element && element instanceof DocumentContainer) {
+            (<DocumentContainer>element).dispose();
+          }
+        }
+      }
+    });
+
+    await this._setupServiceContainer();
+    this.newDocument(false);
+  }
+
+  private _selectionChanged(e: ISelectionChangedEvent) {
+    this._propertyGrid.selectedItems = e.selectedElements;
+    this._treeViewExtended.selectionChanged(e);
+  }
+
+  private async _setupServiceContainer() {
+    serviceContainer.register('elementsService', new JsonFileElementsService('demo', './src/elements-demo.json'));
+    await OldCustomElementsManifestLoader.loadManifest(serviceContainer, '@spectrum-web-components/button', { name: '@spectrum' });
+    serviceContainer.register('elementsService', new JsonFileElementsService('paint', './src/elements-paint.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('wired', './src/elements-wired.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('elix', './src/elements-elix.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('patternfly', './src/elements-pfe.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('mwc', './src/elements-mwc.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/src/config/elements-native.json'));
+
+    serviceContainer.globalContext.onToolChanged.on((e) => {
+      let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue).map(([k]) => k)[0];
+      if (e.newValue == null)
+        name = "Pointer"
+      const buttons = Array.from<HTMLButtonElement>(document.getElementById('tools').querySelectorAll('[data-command]'));
+      for (const b of buttons) {
+        if (b.dataset.commandParameter == name)
+          b.style.background = "green"
+        else
+          b.style.background = ""
+      }
+    });
+
+    this._paletteView.loadControls(serviceContainer, serviceContainer.elementsServices);
+    this._propertyGrid.serviceContainer = serviceContainer;
+  }
+
+  public newDocument(fixedWidth: boolean) {
+    this._documentNumber++;
+    let sampleDocument = new DocumentContainer(serviceContainer);
+    sampleDocument.setAttribute('dock-spawn-panel-type', 'document');
+    sampleDocument.title = "document-" + this._documentNumber;
+    this._dock.appendChild(sampleDocument);
+    if (fixedWidth) {
+      sampleDocument.designerView.designerWidth = '400px';
+      sampleDocument.designerView.designerHeight = '400px';
     }
-
-    ready() {
-        this._dock = this._getDomElement('dock');
-        this._paletteView = this._getDomElement('paletteView');
-        this._treeView = this._getDomElement('treeView');
-        this._treeViewExtended = this._getDomElement('treeViewExtended');
-        this._propertyGrid = this._getDomElement('propertyGrid');
-
-        let newButton = this._getDomElement<HTMLButtonElement>('newButton');
-        newButton.onclick = () => this.newDocument();
-
-        this._dockManager = this._dock.dockManager;
-
-        this._dockManager.addLayoutListener({
-            onActivePanelChange: (manager, panel) => {
-                if (panel) {
-                    let element = ((<HTMLSlotElement><any>panel.elementContent).assignedElements()[0]);
-                    if (element && element instanceof DocumentContainer) {
-                        let sampleDocument = element as DocumentContainer;
-
-                        sampleDocument.instanceServiceContainer.selectionService.onSelectionChanged.on((e) => this._selectionChanged(e));
-
-                        let selection = sampleDocument.instanceServiceContainer.selectionService.selectedElements;
-                        this._propertyGrid.selectedItems = selection;
-                        this._treeView.createTree(sampleDocument.instanceServiceContainer.contentService.rootDesignItem);
-                        this._treeViewExtended.createTree(sampleDocument.instanceServiceContainer.contentService.rootDesignItem);
-                    }
-                }
-            }
-        });
-
-        this._setupServiceContainer();
-
-        this.newDocument();
-    }
-
-    private _selectionChanged(e: ISelectionChangedEvent) {
-        this._propertyGrid.selectedItems = e.selectedElements;
-        this._treeView.selectionChanged(e);
-        this._treeViewExtended.selectionChanged(e);
-    }
-
-    private _setupServiceContainer() {
-        serviceContainer.register('elementsService', new JsonFileElementsService('demo', './src/elements-demo.json'));
-        serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/src/config/elements-native.json'));
-
-        this._paletteView.loadControls(serviceContainer.elementsServices);
-        this._propertyGrid.serviceContainer = serviceContainer;
-    }
-
-    public newDocument() {
-        this._documentNumber++;
-        let sampleDocument = new DocumentContainer(serviceContainer);
-        sampleDocument.title = "page-" + this._documentNumber;
-        this._dock.appendChild(sampleDocument);
-    }
+  }
 }
 
 window.customElements.define('node-projects-app-shell', AppShell);

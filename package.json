@@ -17,16 +17,21 @@
   },
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.webui#readme",
   "devDependencies": {
-    "typescript": "^4.2.3"
+    "typescript": "^4.3.2"
   },
   "dependencies": {
-    "@node-projects/base-custom-webcomponent": "0.0.10",
-    "@node-projects/web-component-designer": "git+https://github.com/node-projects/web-component-designer.git",
-    "construct-style-sheets-polyfill": "^2.4.0",
-    "dock-spawn-ts": "^2.49.0",
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@node-projects/base-custom-webcomponent": "0.0.230",
+    "@node-projects/lean-he-esm": "^3.3.0",
+    "@node-projects/node-html-parser-esm": "^2.2.2",
+    "@node-projects/web-component-designer": "0.0.2",
+    "construct-style-sheets-polyfill": "^2.4.16",
+    "dock-spawn-ts": "^2.210.0",
+    "esprima": "^4.0.1",
     "jquery": "^3.6.0",
-    "jquery.fancytree": "^2.36.1",
+    "jquery.fancytree": "^2.38.0",
+    "metro4-dist": "^4.4.3",
     "mobile-drag-drop": "^2.3.0-rc.2",
-    "monaco-editor": "^0.20.0"
+    "monaco-editor": "^0.24.0"
   }
 }
