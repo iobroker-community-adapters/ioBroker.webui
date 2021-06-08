@@ -17,5 +17,9 @@ export class WebUiBindingComponent extends BaseCustomWebComponentNoAttachedTempl
     @property(Boolean)
     invert?: boolean;
 
-    //converter?: any //todo 
+    constructor() {
+        super();
+
+        this.style.display = 'none';
+    }
 }

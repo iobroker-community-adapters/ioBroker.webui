@@ -1,26 +1,31 @@
-import { JsonFileElementsService, ISelectionChangedEvent, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce, ListPropertiesService, OldCustomElementsManifestLoader } from '@node-projects/web-component-designer';
+import { JsonFileElementsService, ISelectionChangedEvent, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce } from '@node-projects/web-component-designer';
 import serviceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 serviceContainer.register("htmlParserService", new NodeHtmlParserService());
 serviceContainer.config.codeViewWidget = CodeViewAce;
-LazyLoader.LoadText('./src/custom-element-properties.json').then(data => serviceContainer.register("propertyService", new ListPropertiesService(JSON.parse(data))));
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
-import { BaseCustomWebComponentConstructorAppend, css, html, LazyLoader } from '@node-projects/base-custom-webcomponent';
+import { BaseCustomWebComponentConstructorAppend, css, html } from '@node-projects/base-custom-webcomponent';
 import { CommandHandling } from './CommandHandling'
+
+import '../SetupConnection';
+import './WebUiListViews';
+import '../views/WebUiDisplayView';
+import { IView } from '../views/IView';
+import { WebUiListViews } from './WebUiListViews';
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
 export class AppShell extends BaseCustomWebComponentConstructorAppend {
-  activeElement: HTMLElement;
-  mainPage = 'designer';
 
-  private _documentNumber: number = 0;
+  public activeElement: HTMLElement;
+  public mainPage = 'designer';
+
   private _dock: DockSpawnTsWebcomponent;
   private _dockManager: DockManager;
-  _paletteView: PaletteView;
-  _propertyGrid: PropertyGrid;
-  _treeViewExtended: TreeViewExtended;
+  private _paletteView: PaletteView;
+  private _propertyGrid: PropertyGrid;
+  private _treeViewExtended: TreeViewExtended;
 
   static readonly style = css`
     :host {
@@ -87,12 +92,12 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
       <div class="app-body">
         <dock-spawn-ts id="dock" style="width: 100%; height: 100%; position: relative;">
       
-          <div title="Views" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2"
+          <div id="viewsDock" title="Views" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2"
             style="overflow: hidden; width: 100%;">
             <web-ui-list-views name="views" id="views"></web-ui-list-views>
           </div>
       
-          <div title="TreeExtended" dock-spawn-dock-type="down" dock-spawn-dock-to="treeUpper2" dock-spawn-dock-ratio="0.7"
+          <div title="TreeExtended" dock-spawn-dock-type="down" dock-spawn-dock-to="viewsDock" dock-spawn-dock-ratio="0.7"
             style="overflow: hidden; width: 100%;">
             <node-projects-tree-view-extended name="tree" id="treeViewExtended"></node-projects-tree-view-extended>
           </div>
@@ -107,16 +112,19 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
         </dock-spawn-ts>
       </div>
     `;
+  private _views: WebUiListViews;
 
   async ready() {
     this._dock = this._getDomElement('dock');
     this._paletteView = this._getDomElement('paletteView');
     this._treeViewExtended = this._getDomElement('treeViewExtended');
     this._propertyGrid = this._getDomElement('propertyGrid');
+    this._views = this._getDomElement<WebUiListViews>('views');
+    this._views.shell = this;
 
     const linkElement = document.createElement("link");
     linkElement.rel = "stylesheet";
-    linkElement.href = "./assets/dockspawn.css";
+    linkElement.href = "../../assets/dockspawn.css";
     this._dock.shadowRoot.appendChild(linkElement);
 
     this._dockManager = this._dock.dockManager;
@@ -148,7 +156,6 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
     });
 
     await this._setupServiceContainer();
-    this.newDocument(false);
   }
 
   private _selectionChanged(e: ISelectionChangedEvent) {
@@ -157,14 +164,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
   }
 
   private async _setupServiceContainer() {
-    serviceContainer.register('elementsService', new JsonFileElementsService('demo', './src/elements-demo.json'));
-    await OldCustomElementsManifestLoader.loadManifest(serviceContainer, '@spectrum-web-components/button', { name: '@spectrum' });
-    serviceContainer.register('elementsService', new JsonFileElementsService('paint', './src/elements-paint.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('wired', './src/elements-wired.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('elix', './src/elements-elix.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('patternfly', './src/elements-pfe.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('mwc', './src/elements-mwc.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/src/config/elements-native.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('native', '../../assets/edit/elements.json'));
 
     serviceContainer.globalContext.onToolChanged.on((e) => {
       let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue).map(([k]) => k)[0];
@@ -183,16 +183,38 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
     this._propertyGrid.serviceContainer = serviceContainer;
   }
 
-  public newDocument(fixedWidth: boolean) {
-    this._documentNumber++;
-    let sampleDocument = new DocumentContainer(serviceContainer);
+  public newDocument() {
+    //@ts-ignore
+    Metro.dialog.create({
+      title: "Screen Name?",
+      content: '<input autofocus type="text" data-role="input" data-prepend="Name: ">',
+      closeButton: true,
+      actions: [
+        {
+          caption: "Agree",
+          cls: "js-dialog-close alert",
+          onclick: (r) => {
+            const ip = r[0].querySelector('input');
+
+            let sampleDocument = new DocumentContainer(serviceContainer);
+            sampleDocument.setAttribute('dock-spawn-panel-type', 'document');
+            sampleDocument.title = ip.value;
+            this._dock.appendChild(sampleDocument);
+          }
+        },
+        {
+          caption: "Disagree",
+          cls: "js-dialog-close",
+        }
+      ]
+    });
+  }
+
+  public openDocument(view: IView) {
+    let sampleDocument = new DocumentContainer(serviceContainer, view.html);
     sampleDocument.setAttribute('dock-spawn-panel-type', 'document');
-    sampleDocument.title = "document-" + this._documentNumber;
+    sampleDocument.title = view.name;
     this._dock.appendChild(sampleDocument);
-    if (fixedWidth) {
-      sampleDocument.designerView.designerWidth = '400px';
-      sampleDocument.designerView.designerHeight = '400px';
-    }
   }
 }
 

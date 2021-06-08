@@ -1,0 +1,16 @@
+{
+  "elements":
+  [
+    { "tag": "web-ui-display-view", "defaultWidth": "400px", "defaultHeight": "300px" },
+    { "tag": "a" },
+    "p",
+    "span",
+    "div",
+    "input",
+    {"tag" : "button", "defaultWidth": "80px", "defaultHeight": "30px", "defaultContent": "Button" },
+    "form",
+    "img",
+    "h1",
+    "iframe"
+  ]
+}

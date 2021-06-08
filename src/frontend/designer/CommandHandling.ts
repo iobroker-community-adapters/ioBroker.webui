@@ -1,6 +1,10 @@
+import { DocumentContainer } from '@node-projects/web-component-designer';
 import { IUiCommandHandler } from '@node-projects/web-component-designer/dist/commandHandling/IUiCommandHandler';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
 import { AppShell } from './shell';
+import Connection from '../SetupConnection';
+import { screensPrefix } from '../Constants';
+import { IBinding } from '../views/IBinding';
 //Command Handling..
 // Setup commands
 
@@ -14,22 +18,34 @@ export class CommandHandling {
     this.init();
   }
 
-  handleCommandButtonClick(e) {
-    let button = e.currentTarget;
-    let commandName = button.dataset['command'];
-    let commandParameter = button.dataset['commandParameter'];
+  async handleCommandButtonClick(e) {
+    const button = e.currentTarget;
+    const commandName = button.dataset['command'];
+    const commandParameter = button.dataset['commandParameter'];
 
     if (commandName === 'new')
-      this.appShell.newDocument(false);
-    else if (commandName === 'newFixedWidth')
-      this.appShell.newDocument(true);
-    else if (commandName === 'github')
-      window.location.href = 'https://github.com/node-projects/web-component-designer';
+      this.appShell.newDocument();
     else if (this.dockManager.activeDocument) {
-      let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
-      if (target.executeCommand) {
-        target.executeCommand({ type: commandName, parameter: commandParameter })
+      const target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
+      if (commandName == 'save') {
+        const cont = target as DocumentContainer;
+        const html = cont.content;
+        const name = cont.title;
+        const bindings: IBinding[] = [];
+        await Connection.setObject(screensPrefix + name, {
+          type: 'state', common: {
+            name: name,
+            type: 'string',
+            role: 'state',
+            read: false,
+            write: false
+          }, native: { html: html, bindings: JSON.stringify(bindings) }
+        });
       }
+      else
+        if (target.executeCommand) {
+          target.executeCommand({ type: commandName, parameter: commandParameter })
+        }
     }
   }
 
@@ -57,10 +73,6 @@ export class CommandHandling {
     buttons.forEach(b => {
       let command = b.dataset['command'];
       if (command === 'new')
-        b.disabled = false;
-      else if (command === 'newFixedWidth')
-        b.disabled = false;
-      else if (command === 'github')
         b.disabled = false;
       else
         b.disabled = !target ? true : !target.canExecuteCommand({ type: <any>command });
