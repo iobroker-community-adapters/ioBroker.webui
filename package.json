@@ -24,7 +24,7 @@
     "@types/codemirror": "^5.60.0",
     "@types/jquery": "^3.5.5",
     "@types/jquery.fancytree": "^0.0.6",
-    "@web/dev-server": "^0.1.17",
+    "@web/dev-server": "^0.1.18",
     "del": "^6.0.0",
     "gulp": "^4.0.2",
     "through2": "^2.0.5",
