@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.webui#readme",
   "devDependencies": {
-    "@types/codemirror": "^5.60.0",
+    "@types/codemirror": "^5.60.2",
     "@types/jquery": "^3.5.5",
     "@types/jquery.fancytree": "^0.0.6",
     "@web/dev-server": "^0.1.20",
