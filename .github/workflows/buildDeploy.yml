@@ -17,18 +17,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: npm install
       run: npm install
-    - name: web-component-designer upgrade
-      run: npm i git+https://git@github.com/node-projects/web-component-designer.git
     - name: Copy js & json
       run: |
         npx copyfiles --verbose "node_modules/**/*.js" build/default
         npx copyfiles --verbose "node_modules/**/*.json" build/default
-    - name: Compile web-component-designer
-      run: |
-        cd ./node_modules/@node-projects/web-component-designer
-        npm install
-        npx tsc
-        rm -r node_modules
     - name: Compile Paint
       run: |
         cd ./node_modules/paint

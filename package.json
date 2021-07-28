@@ -32,7 +32,7 @@
     "@node-projects/base-custom-webcomponent": "0.0.230",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^2.2.2",
-    "@node-projects/web-component-designer": "git+https://git@github.com/node-projects/web-component-designer.git",
+    "@node-projects/web-component-designer": "^0.0.10",
     "@patternfly/pfe-badge": "^1.10.1",
     "@patternfly/pfe-button": "^1.10.1",
     "@patternfly/pfe-codeblock": "^1.10.1",
