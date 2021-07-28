@@ -172,7 +172,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
 
   private async _setupServiceContainer() {
     serviceContainer.register('elementsService', new JsonFileElementsService('demo', './src/elements-demo.json'));
-    await OldCustomElementsManifestLoader.loadManifest(serviceContainer, '@spectrum-web-components/button', { name: '@spectrum' });
+    //await OldCustomElementsManifestLoader.loadManifest(serviceContainer, '@spectrum-web-components/button', { name: '@spectrum' });
     serviceContainer.register('elementsService', new JsonFileElementsService('paint', './src/elements-paint.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('wired', './src/elements-wired.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('elix', './src/elements-elix.json'));
