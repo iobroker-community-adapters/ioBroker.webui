@@ -45,6 +45,7 @@
     "elix": "^15.0.0",
     "jquery": "^3.6.0",
     "jquery.fancytree": "^2.38.0",
+    "lit": "*",
     "metro4-dist": "^4.4.3",
     "mobile-drag-drop": "^2.3.0-rc.2",
     "monaco-editor": "^0.26.1",
