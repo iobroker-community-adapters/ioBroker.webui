@@ -44,7 +44,7 @@
     "jquery": "^3.6.0",
     "jquery-ui-dist": "^1.12.1",
     "jquery.fancytree": "^2.38.0",
-    "metro4-dist": "^4.4.3",
+    "metro4-dist": "^4.5.0",
     "mobile-drag-drop": "^2.3.0-rc.2"
   }
 }
