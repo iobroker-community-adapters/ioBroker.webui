@@ -20,7 +20,7 @@ jobs:
     - name: Typescript
       run: npx tsc
     - name: Transform imports
-      run: node .\node_modules\gulp\bin\gulp.js
+      run: node ./node_modules/gulp/bin/gulp.js
     - name: Copy js & json
       run: |
         npx copyfiles --verbose "node_modules/**/*.js" build/default
