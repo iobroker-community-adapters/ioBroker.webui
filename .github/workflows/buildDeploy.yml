@@ -27,6 +27,7 @@ jobs:
         npx copyfiles --verbose "node_modules/**/*.json" build/default
         npx copyfiles --verbose "dist/**/*.js" build/default
         npx copyfiles --verbose "dist/**/*.json" build/default
+        npx copyfiles --verbose "*.html" build/default
     - name: Copy css and rest
       run: |
         npx copyfiles --verbose "node_modules/**/*.css" build/default
