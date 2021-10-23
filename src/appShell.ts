@@ -177,7 +177,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
     serviceContainer.register('elementsService', new JsonFileElementsService('elix', './src/elements-elix.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('patternfly', './src/elements-pfe.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('mwc', './src/elements-mwc.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/src/config/elements-native.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
 
     serviceContainer.globalContext.onToolChanged.on((e) => {
       let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue).map(([k]) => k)[0];

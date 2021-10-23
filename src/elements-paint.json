@@ -2,7 +2,7 @@
     "elements":
     [
       {"tag" : "div", "name": "info", "defaultContent": "paint - visit: <a href=\"https://github.com/christianliebel/paint\">https://github.com/christianliebel/paint</a>", "type" : "wired" },
-      {"tag" : "paint-app", "import": "./node_modules/paint/build/dist/index.js", "defaultWidth": "400px", "defaultHeight": "200px", "type" : "paint" }
+      {"tag" : "paint-app", "import": "./node_modules/@christianliebel/paint/dist/elements/index.js", "defaultWidth": "400px", "defaultHeight": "200px", "type" : "paint" }
     ]
   }
   

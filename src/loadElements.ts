@@ -1,9 +1,9 @@
-/* imports without usage, for polymer bundler or he will not modify impirt paths */
+/* imports without usage, for polymer bundler or he will not modify import paths */
 import './demo/demoData'
 import './demo/DemoElement'
 import './demo/DemoEnum'
 import './demo/DemoStringEnum'
-/*import '@vanillawc/wc-marquee'
+import '@vanillawc/wc-marquee'
 import '@doubletrade/lit-datepicker'
 import '@material/mwc-button'
 import '@material/mwc-checkbox'
@@ -15,4 +15,4 @@ import '@patternfly/pfe-badge/dist/pfe-badge'
 import '@patternfly/pfe-button'
 import '@patternfly/pfe-codeblock'
 import '@spectrum-web-components/button/sp-button.js'
-import '../node_modules/paint/build/dist/index.js'*/
+import '../node_modules/@christianliebel/paint/dist/elements/index.js'
