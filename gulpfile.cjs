@@ -64,7 +64,7 @@ function buildImportName(importText, dirName = '') {
     }
     resFile = buildImportFileName('./node_modules/' + importText);
     if (resFile != null) {
-        return '/node_modules/' + importText + resFile;
+        return './node_modules/' + importText + resFile;
     }
     return importText;
 }

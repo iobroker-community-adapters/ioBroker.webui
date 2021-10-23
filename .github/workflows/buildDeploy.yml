@@ -36,6 +36,7 @@ jobs:
         npx copyfiles --verbose "node_modules/**/*.gif" build/default
         npx copyfiles --verbose "node_modules/**/*.jpg" build/default
         npx copyfiles --verbose "node_modules/**/*.woff" build/default
+        npx copyfiles --verbose "node_modules/**/*.woff2" build/default
         npx copyfiles --verbose "node_modules/**/*.ttf" build/default
         npx copyfiles --soft --verbose "node_modules/**/*.js" build/default
         npx copyfiles --verbose "assets/**/*.png" build/default
