@@ -10,7 +10,7 @@ import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
 import { BaseCustomWebComponentConstructorAppend, css, html, LazyLoader } from '@node-projects/base-custom-webcomponent';
 import { CommandHandling } from './CommandHandling'
 
-import './loadElements';
+//import './loadElements';
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
