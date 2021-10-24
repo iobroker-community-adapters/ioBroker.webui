@@ -65,7 +65,8 @@
   },
   "include": [
     "./src/**/*",
-    "./src/**/*.js"
+    "./src/**/*.js",
+    "./src/**/*.json"
   ],
   "exclude": [
     "node_modules",

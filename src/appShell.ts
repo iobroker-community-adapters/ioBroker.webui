@@ -171,12 +171,12 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
   }
 
   private async _setupServiceContainer() {
-    serviceContainer.register('elementsService', new JsonFileElementsService('demo', './src/elements-demo.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('paint', './src/elements-paint.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('wired', './src/elements-wired.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('elix', './src/elements-elix.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('patternfly', './src/elements-pfe.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('mwc', './src/elements-mwc.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('demo', './dist/elements-demo.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('paint', './dist/elements-paint.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('wired', './dist/elements-wired.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('elix', './dist/elements-elix.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('patternfly', './dist/elements-pfe.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('mwc', './dist/elements-mwc.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
 
     serviceContainer.globalContext.onToolChanged.on((e) => {
