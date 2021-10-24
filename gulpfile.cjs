@@ -3,6 +3,8 @@ const path = require('path');
 const fs = require('fs');
 const through2 = require('through2');
 
+const rootPath = '/web-component-designer-demo/';
+
 function fixJsImports() {
     return src('**/*.js')
         .pipe(
@@ -64,7 +66,7 @@ function buildImportName(importText, dirName = '') {
     }
     resFile = buildImportFileName('./node_modules/' + importText);
     if (resFile != null) {
-        return './node_modules/' + importText + resFile;
+        return rootPath + '/node_modules/' + importText + resFile;
     }
     return importText;
 }
