@@ -56,6 +56,7 @@ export class CommandHandling {
   handleCommand(buttons: HTMLButtonElement[], target: IUiCommandHandler) {
     buttons.forEach(b => {
       let command = b.dataset['command'];
+      let commandParameter = b.dataset['commandParameter'];
       if (command === 'new')
         b.disabled = false;
       else if (command === 'newFixedWidth')
@@ -63,7 +64,7 @@ export class CommandHandling {
       else if (command === 'github')
         b.disabled = false;
       else
-        b.disabled = !target ? true : !target.canExecuteCommand({ type: <any>command });
+        b.disabled = !target ? true : !target.canExecuteCommand({ type: <any>command, parameter: commandParameter });
     });
   }
 }
