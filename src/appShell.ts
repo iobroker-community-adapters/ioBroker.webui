@@ -1,7 +1,8 @@
-import { JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce, ListPropertiesService, PaletteTreeView } from '@node-projects/web-component-designer';
+import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce, ListPropertiesService, PaletteTreeView } from '@node-projects/web-component-designer';
 import createDefaultServiceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 let serviceContainer = createDefaultServiceContainer();
-serviceContainer.register("htmlParserService", new NodeHtmlParserService());
+serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
+serviceContainer.register("htmlParserService", new NodeHtmlParserService('/node_modules/@node-projects/node-html-parser-esm/dist/index.js'));
 serviceContainer.config.codeViewWidget = CodeViewAce;
 LazyLoader.LoadText('./dist/custom-element-properties.json').then(data => serviceContainer.register("propertyService", new ListPropertiesService(JSON.parse(data))));
 
@@ -120,11 +121,11 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
 
   async ready() {
     this._dock = this._getDomElement('dock');
-    this._paletteView = this._getDomElement('paletteView');
-    this._paletteTree = this._getDomElement('paletteTree');
-    this._treeView = this._getDomElement('treeView');
-    this._treeViewExtended = this._getDomElement('treeViewExtended');
-    this._propertyGrid = this._getDomElement('propertyGrid');
+    this._paletteView = this._getDomElement<PaletteView>('paletteView');
+    this._paletteTree = this._getDomElement<PaletteTreeView>('paletteTree');
+    this._treeView = this._getDomElement<TreeView>('treeView');
+    this._treeViewExtended = this._getDomElement<TreeViewExtended>('treeViewExtended');
+    this._propertyGrid = this._getDomElement<PropertyGrid>('propertyGrid');
 
     const linkElement = document.createElement("link");
     linkElement.rel = "stylesheet";

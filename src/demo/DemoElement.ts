@@ -34,7 +34,6 @@ export class DemoElement extends BaseCustomWebComponentConstructorAppend {
     super();
 
     this._parseAttributesToProperties();
-    this._createObservableProperties();
     this._bindingsParse();
 
     setInterval(() => {
