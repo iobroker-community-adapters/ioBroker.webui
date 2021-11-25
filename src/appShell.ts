@@ -2,7 +2,7 @@ import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, ISelect
 import createDefaultServiceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 let serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
-if (window.location.hostname == 'localhost')
+if (window.location.hostname == 'localhost' || window.location.hostname == '127.0.0.1')
   serviceContainer.register("htmlParserService", new NodeHtmlParserService('/node_modules/@node-projects/node-html-parser-esm/dist/index.js'));
 else
   serviceContainer.register("htmlParserService", new NodeHtmlParserService('/web-component-designer-demo/node_modules/@node-projects/node-html-parser-esm/dist/index.js'));
