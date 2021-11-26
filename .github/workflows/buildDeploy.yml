@@ -40,6 +40,7 @@ jobs:
         npx copyfiles --verbose "node_modules/**/*.ttf" build/default
         npx copyfiles --soft --verbose "node_modules/**/*.js" build/default
         npx copyfiles --verbose "assets/**/*.png" build/default
+        npx copyfiles --verbose "assets/**/*.svg" build/default
         npx copyfiles --verbose "assets/**/*.css" build/default
         npx copyfiles --verbose "*.json" build/default
     #- name: Setup upterm session (for debugging, see https://github.com/marketplace/actions/debugging-with-ssh)
