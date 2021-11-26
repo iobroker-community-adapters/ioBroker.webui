@@ -33,6 +33,7 @@ jobs:
         npx copyfiles --verbose "node_modules/**/*.css" build/default
         npx copyfiles --verbose "node_modules/**/*.json" build/default
         npx copyfiles --verbose "node_modules/**/*.png" build/default
+        npx copyfiles --verbose "node_modules/**/*.svg" build/default
         npx copyfiles --verbose "node_modules/**/*.gif" build/default
         npx copyfiles --verbose "node_modules/**/*.jpg" build/default
         npx copyfiles --verbose "node_modules/**/*.woff" build/default
