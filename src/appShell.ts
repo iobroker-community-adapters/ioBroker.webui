@@ -1,4 +1,4 @@
-import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, ISelectionChangedEvent, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce, ListPropertiesService, PaletteTreeView } from '@node-projects/web-component-designer';
+import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce, ListPropertiesService, PaletteTreeView } from '@node-projects/web-component-designer';
 import createDefaultServiceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 let serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
@@ -95,7 +95,6 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
   static readonly template = html`
       <div class="app-body">
         <dock-spawn-ts id="dock" style="width: 100%; height: 100%; position: relative;">
-      
           <div id="treeUpper" title="Palette" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2"
             style="overflow: hidden; width: 100%;">
             <node-projects-palette-tree-view name="paletteTree" id="paletteTree"></node-projects-palette-tree-view>
@@ -112,7 +111,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
           </div>
       
           <div id="attributeDock" title="Properties" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.2">
-            <node-projects-property-grid id="propertyGrid"></node-projects-property-grid>
+            <node-projects-property-grid-with-header id="propertyGrid"></node-projects-property-grid-with-header>
           </div>
           <div id="p" title="Elements" dock-spawn-dock-type="down" dock-spawn-dock-to="attributeDock"
             dock-spawn-dock-ratio="0.4">
@@ -145,12 +144,9 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
           if (element && element instanceof DocumentContainer) {
             let sampleDocument = element as DocumentContainer;
 
-            sampleDocument.instanceServiceContainer.selectionService.onSelectionChanged.on((e) => this._selectionChanged(e));
-
-            let selection = sampleDocument.instanceServiceContainer.selectionService.selectedElements;
-            this._propertyGrid.selectedItems = selection;
-            this._treeView.createTree(sampleDocument.instanceServiceContainer.contentService.rootDesignItem);
-            this._treeViewExtended.createTree(sampleDocument.instanceServiceContainer.contentService.rootDesignItem);
+            this._propertyGrid.instanceServiceContainer = sampleDocument.instanceServiceContainer;
+            this._treeViewExtended.instanceServiceContainer = sampleDocument.instanceServiceContainer;
+            this._treeView.instanceServiceContainer = sampleDocument.instanceServiceContainer;
           }
         }
       },
@@ -166,12 +162,6 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
 
     await this._setupServiceContainer();
     this.newDocument(false);
-  }
-
-  private _selectionChanged(e: ISelectionChangedEvent) {
-    this._propertyGrid.selectedItems = e.selectedElements;
-    this._treeView.selectionChanged(e);
-    this._treeViewExtended.selectionChanged(e);
   }
 
   private async _setupServiceContainer() {

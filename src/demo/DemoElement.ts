@@ -25,7 +25,6 @@ export class DemoElement extends BaseCustomWebComponentConstructorAppend {
     <div>[[this.enumProperty]]</div>
     <div id="cnt" style="background: lightblue;">Test JS Access</div>
     <slot></slot>
-    <!--<div>[[DemoEnum[this.enumProperty] ]]</div>-->
   </div>`
 
   private _cnt: HTMLDivElement;
