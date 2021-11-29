@@ -138,7 +138,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
     new CommandHandling(this._dockManager, this);
 
     this._dockManager.addLayoutListener({
-      onActivePanelChange: (manager, panel) => {
+      onActiveDocumentChange: (manager, panel) => {
         if (panel) {
           let element = this._dock.getElementInSlot((<HTMLSlotElement><any>panel.elementContent));
           if (element && element instanceof DocumentContainer) {
