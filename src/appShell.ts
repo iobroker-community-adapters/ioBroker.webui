@@ -1,5 +1,7 @@
 import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce, ListPropertiesService, PaletteTreeView } from '@node-projects/web-component-designer';
 import createDefaultServiceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
+//import { DesignerViewUseOverlayScollbars } from '@node-projects/web-component-designer/dist/elements/widgets/designerView/DesignerViewUseOverlayScollbars';
+
 let serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
 if (window.location.hostname == 'localhost' || window.location.hostname == '127.0.0.1')
@@ -7,14 +9,13 @@ if (window.location.hostname == 'localhost' || window.location.hostname == '127.
 else
   serviceContainer.register("htmlParserService", new NodeHtmlParserService('/web-component-designer-demo/node_modules/@node-projects/node-html-parser-esm/dist/index.js'));
 serviceContainer.config.codeViewWidget = CodeViewAce;
+//serviceContainer.designViewConfigButtons.push(new DesignerViewUseOverlayScollbars())
 LazyLoader.LoadText('./dist/custom-element-properties.json').then(data => serviceContainer.register("propertyService", new ListPropertiesService(JSON.parse(data))));
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
 import { BaseCustomWebComponentConstructorAppend, css, html, LazyLoader } from '@node-projects/base-custom-webcomponent';
 import { CommandHandling } from './CommandHandling'
-
-//import './loadElements';
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
@@ -135,7 +136,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
     this._dock.shadowRoot.appendChild(linkElement);
 
     this._dockManager = this._dock.dockManager;
-    new CommandHandling(this._dockManager, this);
+    new CommandHandling(this._dockManager, this, serviceContainer);
 
     this._dockManager.addLayoutListener({
       onActiveDocumentChange: (manager, panel) => {

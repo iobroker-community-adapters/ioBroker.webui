@@ -1,3 +1,4 @@
+import { ServiceContainer } from '@node-projects/web-component-designer';
 import { IUiCommandHandler } from '@node-projects/web-component-designer/dist/commandHandling/IUiCommandHandler';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
 import { AppShell } from './appShell';
@@ -8,10 +9,10 @@ export class CommandHandling {
   dockManager: DockManager;
   appShell: AppShell;
 
-  constructor(dockManager: DockManager, appShell: AppShell) {
+  constructor(dockManager: DockManager, appShell: AppShell, serviceContainer: ServiceContainer) {
     this.dockManager = dockManager;
     this.appShell = appShell;
-    this.init();
+    this.init(serviceContainer);
   }
 
   handleCommandButtonClick(e) {
@@ -33,10 +34,32 @@ export class CommandHandling {
     }
   }
 
-  init() {
-    let buttons = Array.from<HTMLButtonElement>(document.querySelectorAll('[data-command]'));
+  handleInputValueChanged(e) {
+    let input = e.currentTarget as HTMLInputElement;
+    let commandName = input.dataset['command'];
+    let commandParameter = input.value;
+
+    if (this.dockManager.activeDocument) {
+      let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
+      if (target.executeCommand) {
+        target.executeCommand({ type: commandName, parameter: commandParameter })
+      }
+    }
+  }
+
+  init(serviceContainer: ServiceContainer) {
+    let buttons = Array.from<(HTMLButtonElement | HTMLInputElement)>(document.querySelectorAll('[data-command]'));
     buttons.forEach(b => {
-      b.onclick = (e) => this.handleCommandButtonClick(e);
+      if (b instanceof HTMLButtonElement) {
+        b.onclick = (e) => this.handleCommandButtonClick(e);
+      } else {
+        b.onchange = (e) => this.handleInputValueChanged(e);
+        let commandName = b.dataset['command'];
+        if (commandName == 'setStrokeColor')
+          serviceContainer.globalContext.onStrokeColorChanged.on(e => b.value = e.newValue);
+        if (commandName == 'setFillBrush')
+          serviceContainer.globalContext.onFillBrushChanged.on(e => b.value = e.newValue);
+      }
     });
 
     setInterval(() => {

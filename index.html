@@ -15,6 +15,7 @@
   <script src="./node_modules/jquery/dist/jquery.min.js"></script>
   <script src="./node_modules/jquery.fancytree/dist/jquery.fancytree-all-deps.min.js"></script>
   <script src="./node_modules/jquery.fancytree/dist/modules/jquery.fancytree.table.js"></script>
+  <script src="./node_modules/overlayscrollbars/js/OverlayScrollbars.min.js"></script>
 
   <link rel="stylesheet" href="./node_modules/metro4-dist/css/metro-all.min.css">
   <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css">
@@ -193,8 +194,9 @@
               <button class="tool-button" data-command="setTool" data-command-parameter="Text"><i class="fas fa-i-cursor"></i></button>
           </div>
           <div class="toolbar" id="color">
-            <div style="width:20px; height:20px; background: black; margin-right: 5px;"></div>
-            <div style="width:20px; height:20px; background: white; margin-right: 5px;"></div>   
+            <input type="color" title="stroke color" data-command="setStrokeColor" value="#000000" style="padding: 0; width:20px; height:20px; margin-right: 5px;">
+            <input type="color" title="fill brush" data-command="setFillBrush" value="#ffffff" style="padding: 0; width:20px; height:20px; margin-right: 5px;">   
+            <input type="range" title="stroke thickness" data-command="setStrokeThickness" min="1" max="20" value="3" style="padding: 0; width:80px; height:20px; margin-right: 5px;">   
           </div>
           <span class="title">Tools</span>
         </div>
