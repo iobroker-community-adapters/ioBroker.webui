@@ -21,7 +21,7 @@
     "@web/dev-server": "^0.1.28",
     "copyfiles": "^2.4.1",
     "gulp": "^4.0.2",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.3"
   },
   "dependencies": {
     "@christianliebel/paint": "^1.1.0",
@@ -34,7 +34,7 @@
     "@node-projects/base-custom-webcomponent": "0.3.7",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^2.4.1",
-    "@node-projects/web-component-designer": "^0.0.63",
+    "@node-projects/web-component-designer": "^0.0.64",
     "@patternfly/pfe-badge": "^1.12.2",
     "@patternfly/pfe-button": "^1.12.2",
     "@patternfly/pfe-codeblock": "^1.12.2",
@@ -42,7 +42,7 @@
     "@vanillawc/wc-marquee": "^1.0.31",
     "ace-builds": "^1.4.13",
     "codemirror": "^5.64.0",
-    "construct-style-sheets-polyfill": "^3.0.4",
+    "construct-style-sheets-polyfill": "^3.0.5",
     "dock-spawn-ts": "^2.301.0",
     "elix": "^15.0.1",
     "jquery": "^3.6.0",
@@ -50,7 +50,7 @@
     "lit": "*",
     "metro4-dist": "^4.5.0",
     "mobile-drag-drop": "^2.3.0-rc.2",
-    "monaco-editor": "^0.30.1",
+    "monaco-editor": "^0.31.0",
     "overlayscrollbars": "^1.13.1",
     "wired-elements": "*"
   }
