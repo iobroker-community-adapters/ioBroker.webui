@@ -31,7 +31,7 @@
     "@material/mwc-checkbox": "^0.25.3",
     "@material/mwc-circular-progress": "^0.25.3",
     "@material/mwc-textfield": "^0.25.3",
-    "@node-projects/base-custom-webcomponent": "0.3.7",
+    "@node-projects/base-custom-webcomponent": "0.3.8",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^2.4.1",
     "@node-projects/web-component-designer": "^0.0.64",
