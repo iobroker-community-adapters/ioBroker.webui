@@ -1,0 +1,14 @@
+{
+    "elements": [
+        { "tag": "node-projects-default-configured-designer-view", "import": "./node_modules/@node-projects/web-component-designer/dist/index.js", "defaultWidth": "300px", "defaultHeight": "200px", "defaultContent": "<button></button>" },
+        { "tag": "demo-element", "import": "./dist/demo/DemoElement.js", "defaultWidth": "200px", "defaultHeight": "130px", "defaultAttributes": { "enum-property": "1" } },
+        { "tag": "wc-marquee", "import": "./node_modules/@vanillawc/wc-marquee/index.js", "type": "polymer", "defaultWidth": "100px", "defaultContent": "This is a sample Marquee Text" },
+        { "tag": "lit-datepicker", "import": "./node_modules/@doubletrade/lit-datepicker/lit-datepicker.js", "type": "lit" },
+        { "tag": "button", "defaultWidth": "100px", "defaultHeight": "30px", "defaultContent": "Button" },
+        "div",
+        { "tag": "div", "defaultContent": "Default Text 1" },
+        { "tag": "div", "name": "div with text", "defaultContent": "Default Text 2", "ghostElement": "<div style='background: red; width:40px; height:40px'></div>" },
+        { "tag": "div", "name": "div red", "defaultStyles": { "background": "red", "width": "20px", "height": "20px" } },
+        { "tag": "div", "name": "div", "defaultStyles": { "width": "20px", "height": "20px" } }
+    ]
+}
