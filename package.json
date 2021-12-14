@@ -19,6 +19,8 @@
   "homepage": "https://github.com/node-projects/web-component-designer-demo#readme",
   "devDependencies": {
     "@types/iobroker": "^3.3.4",
+    "@types/jquery": "^3.5.10",
+    "@types/jquery.fancytree": "^0.0.7",
     "@web/dev-server": "^0.1.28",
     "copyfiles": "^2.4.1",
     "gulp": "^4.0.2",

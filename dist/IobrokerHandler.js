@@ -17,6 +17,10 @@ class IobrokerHandler {
         const screens = await this.adminConnection.readDir(this.adapterName, "screens");
         return screens.map(x => x.file);
     }
+    async getScreen(name) {
+        const screen = await this.adminConnection.readFile(this.adapterName, "screens/" + name);
+        return screen.file;
+    }
     async saveScreens(name, content) {
         await this.adminConnection.writeFile64(this.adapterName, "screens/" + name, content);
     }

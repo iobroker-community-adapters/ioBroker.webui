@@ -1,6 +1,6 @@
 {
     "elements": [
-        { "tag": "node-projects-default-configured-designer-view", "import": "./node_modules/@node-projects/web-component-designer/dist/index.js", "defaultWidth": "300px", "defaultHeight": "200px", "defaultContent": "<button></button>" },
+        { "tag": "iobroker-webui-screen-viewer", "defaultWidth": "300px", "defaultHeight": "200px" },
         { "tag": "demo-element", "import": "./dist/demo/DemoElement.js", "defaultWidth": "200px", "defaultHeight": "130px", "defaultAttributes": { "enum-property": "1" } },
         { "tag": "wc-marquee", "import": "./node_modules/@vanillawc/wc-marquee/index.js", "type": "polymer", "defaultWidth": "100px", "defaultContent": "This is a sample Marquee Text" },
         { "tag": "lit-datepicker", "import": "./node_modules/@doubletrade/lit-datepicker/lit-datepicker.js", "type": "lit" },

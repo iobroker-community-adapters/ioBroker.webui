@@ -18,7 +18,6 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     constructor() {
         super(...arguments);
         this.mainPage = 'designer';
-        this._documentNumber = 0;
     }
     async ready() {
         this._dock = this._getDomElement('dock');
@@ -56,9 +55,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         //this.newDocument();
     }
     async _setupServiceContainer() {
-        serviceContainer.register('elementsService', new JsonFileElementsService('demo', './dist/elements-demo.json'));
-        serviceContainer.register('elementsService', new JsonFileElementsService('wired', './dist/elements-wired.json'));
+        serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/elements-webui.json'));
         serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
+        serviceContainer.register('elementsService', new JsonFileElementsService('wired', './dist/elements-wired.json'));
         serviceContainer.globalContext.onToolChanged.on((e) => {
             let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue).map(([k]) => k)[0];
             if (e.newValue == null)
@@ -74,12 +73,14 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         this._paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);
         this._propertyGrid.serviceContainer = serviceContainer;
     }
-    newDocument() {
-        this._documentNumber++;
+    newDocument(name, content) {
         let sampleDocument = new DocumentContainer(serviceContainer);
         sampleDocument.setAttribute('dock-spawn-panel-type', 'document');
-        sampleDocument.title = "document-" + this._documentNumber;
+        sampleDocument.title = name;
         this._dock.appendChild(sampleDocument);
+        if (content) {
+            sampleDocument.designerView.parseHTML(content);
+        }
     }
 }
 IobrokerWebuiAppShell.style = css `
