@@ -17,6 +17,9 @@ import { CommandHandling } from './CommandHandling'
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
+import "./IobrokerHandler.js"
+import "./widgets/IobrokerSolutionExplorer.js"
+
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
   activeElement: HTMLElement;
   mainPage = 'designer';
@@ -92,9 +95,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   static readonly template = html`
       <div class="app-body">
         <dock-spawn-ts id="dock" style="width: 100%; height: 100%; position: relative;">
-          <div id="treeUpper" title="Palette" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2"
+          <div id="treeUpper" title="Project" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2"
             style="overflow: hidden; width: 100%;">
-            <div></div>
+            <iobroker-solution-explorer></iobroker-solution-explorer>
           </div>
       
           <div title="TreeExtended" dock-spawn-dock-type="down" dock-spawn-dock-to="treeUpper" dock-spawn-dock-ratio="0.5"

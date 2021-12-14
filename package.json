@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/node-projects/web-component-designer-demo#readme",
   "devDependencies": {
+    "@types/iobroker": "^3.3.4",
     "@web/dev-server": "^0.1.28",
     "copyfiles": "^2.4.1",
     "gulp": "^4.0.2",
@@ -25,7 +26,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
-    "@iobroker/socket-client": "^1.0.8",
+    "@iobroker/socket-client": "github:iobroker/socket-client",
     "@node-projects/base-custom-webcomponent": "0.3.8",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^2.4.1",
@@ -38,6 +39,7 @@
     "metro4-dist": "^4.5.0",
     "mobile-drag-drop": "^2.3.0-rc.2",
     "monaco-editor": "^0.31.0",
+    "socket.io": "^4.4.0",
     "wired-elements": "*"
   }
 }
