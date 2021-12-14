@@ -4,12 +4,17 @@ export class CommandHandling {
         this.iobrokerWebuiAppShell = iobrokerWebuiAppShell;
         this.init(serviceContainer);
     }
-    handleCommandButtonClick(e) {
+    async handleCommandButtonClick(e) {
         let button = e.currentTarget;
         let commandName = button.dataset['command'];
         let commandParameter = button.dataset['commandParameter'];
         if (commandName === 'new')
             this.iobrokerWebuiAppShell.newDocument();
+        else if (commandName === 'save') {
+            let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
+            let html = target.designerView.getHTML();
+            await window.iobrokerHandler.saveScreens("test", html);
+        }
         else if (this.dockManager.activeDocument) {
             let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
             if (target.executeCommand) {
