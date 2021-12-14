@@ -18,12 +18,15 @@ export class CommandHandling {
     let commandName = button.dataset['command'];
     let commandParameter = button.dataset['commandParameter'];
 
-    if (commandName === 'new')
-      this.iobrokerWebuiAppShell.newDocument();
+    if (commandName === 'new') {
+      let screen = prompt("New Screen Name:");
+      if (screen)
+        this.iobrokerWebuiAppShell.newDocument(screen, null);
+    }
     else if (commandName === 'save') {
       let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
       let html = (<DocumentContainer>target).designerView.getHTML();
-      await window.iobrokerHandler.saveScreens("test", html);
+      await window.iobrokerHandler.saveScreens(target.title, html);
     }
     else if (this.dockManager.activeDocument) {
       let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
