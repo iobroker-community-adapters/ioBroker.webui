@@ -1,17 +1,15 @@
 import { ServiceContainer } from '@node-projects/web-component-designer';
 import { IUiCommandHandler } from '@node-projects/web-component-designer/dist/commandHandling/IUiCommandHandler';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
-import { AppShell } from './appShell';
-//Command Handling..
-// Setup commands
+import { IobrokerWebuiAppShell } from './IobrokerWebuiAppShell';
 
 export class CommandHandling {
   dockManager: DockManager;
-  appShell: AppShell;
+  iobrokerWebuiAppShell: IobrokerWebuiAppShell;
 
-  constructor(dockManager: DockManager, appShell: AppShell, serviceContainer: ServiceContainer) {
+  constructor(dockManager: DockManager, iobrokerWebuiAppShell: IobrokerWebuiAppShell, serviceContainer: ServiceContainer) {
     this.dockManager = dockManager;
-    this.appShell = appShell;
+    this.iobrokerWebuiAppShell = iobrokerWebuiAppShell;
     this.init(serviceContainer);
   }
 
@@ -21,11 +19,7 @@ export class CommandHandling {
     let commandParameter = button.dataset['commandParameter'];
 
     if (commandName === 'new')
-      this.appShell.newDocument(false);
-    else if (commandName === 'newFixedWidth')
-      this.appShell.newDocument(true);
-    else if (commandName === 'github')
-      window.location.href = 'https://github.com/node-projects/web-component-designer';
+      this.iobrokerWebuiAppShell.newDocument();
     else if (this.dockManager.activeDocument) {
       let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
       if (target.executeCommand) {
@@ -81,10 +75,6 @@ export class CommandHandling {
       let command = b.dataset['command'];
       let commandParameter = b.dataset['commandParameter'];
       if (command === 'new')
-        b.disabled = false;
-      else if (command === 'newFixedWidth')
-        b.disabled = false;
-      else if (command === 'github')
         b.disabled = false;
       else
         b.disabled = !target ? true : !target.canExecuteCommand({ type: <any>command, parameter: commandParameter });

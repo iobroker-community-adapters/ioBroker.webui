@@ -1,6 +1,5 @@
-import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, TreeView, TreeViewExtended, PaletteView, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewAce, ListPropertiesService, PaletteTreeView } from '@node-projects/web-component-designer';
+import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, TreeViewExtended, PropertyGrid, DocumentContainer, NodeHtmlParserService, ListPropertiesService, PaletteTreeView, CodeViewMonaco } from '@node-projects/web-component-designer';
 import createDefaultServiceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
-//import { DesignerViewUseOverlayScollbars } from '@node-projects/web-component-designer/dist/elements/widgets/designerView/DesignerViewUseOverlayScollbars';
 
 let serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
@@ -8,8 +7,7 @@ if (window.location.hostname == 'localhost' || window.location.hostname == '127.
   serviceContainer.register("htmlParserService", new NodeHtmlParserService('/node_modules/@node-projects/node-html-parser-esm/dist/index.js'));
 else
   serviceContainer.register("htmlParserService", new NodeHtmlParserService('/web-component-designer-demo/node_modules/@node-projects/node-html-parser-esm/dist/index.js'));
-serviceContainer.config.codeViewWidget = CodeViewAce;
-//serviceContainer.designViewConfigButtons.push(new DesignerViewUseOverlayScollbars())
+serviceContainer.config.codeViewWidget = CodeViewMonaco;
 LazyLoader.LoadText('./dist/custom-element-properties.json').then(data => serviceContainer.register("propertyService", new ListPropertiesService(JSON.parse(data))));
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
@@ -19,17 +17,15 @@ import { CommandHandling } from './CommandHandling'
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
-export class AppShell extends BaseCustomWebComponentConstructorAppend {
+export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
   activeElement: HTMLElement;
   mainPage = 'designer';
 
   private _documentNumber: number = 0;
   private _dock: DockSpawnTsWebcomponent;
   private _dockManager: DockManager;
-  _paletteView: PaletteView;
   _paletteTree: PaletteTreeView
   _propertyGrid: PropertyGrid;
-  _treeView: TreeView;
   _treeViewExtended: TreeViewExtended;
 
   static readonly style = css`
@@ -98,15 +94,10 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
         <dock-spawn-ts id="dock" style="width: 100%; height: 100%; position: relative;">
           <div id="treeUpper" title="Palette" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2"
             style="overflow: hidden; width: 100%;">
-            <node-projects-palette-tree-view name="paletteTree" id="paletteTree"></node-projects-palette-tree-view>
+            <div></div>
           </div>
       
-          <div id="treeUpper2" title="Tree" ock-spawn-dock-type="down" dock-spawn-dock-to="treeUpper"
-            dock-spawn-dock-ratio="0.2" style="overflow: hidden; width: 100%;">
-            <node-projects-tree-view name="tree" id="treeView"></node-projects-tree-view>
-          </div>
-      
-          <div title="TreeExtended" dock-spawn-dock-type="down" dock-spawn-dock-to="treeUpper2" dock-spawn-dock-ratio="0.5"
+          <div title="TreeExtended" dock-spawn-dock-type="down" dock-spawn-dock-to="treeUpper" dock-spawn-dock-ratio="0.5"
             style="overflow: hidden; width: 100%;">
             <node-projects-tree-view-extended name="tree" id="treeViewExtended"></node-projects-tree-view-extended>
           </div>
@@ -116,7 +107,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
           </div>
           <div id="p" title="Elements" dock-spawn-dock-type="down" dock-spawn-dock-to="attributeDock"
             dock-spawn-dock-ratio="0.4">
-            <node-projects-palette-view id="paletteView"></node-projects-palette-view>
+            <node-projects-palette-tree-view name="paletteTree" id="paletteTree"></node-projects-palette-tree-view>
           </div>
         </dock-spawn-ts>
       </div>
@@ -124,9 +115,7 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
 
   async ready() {
     this._dock = this._getDomElement('dock');
-    this._paletteView = this._getDomElement<PaletteView>('paletteView');
     this._paletteTree = this._getDomElement<PaletteTreeView>('paletteTree');
-    this._treeView = this._getDomElement<TreeView>('treeView');
     this._treeViewExtended = this._getDomElement<TreeViewExtended>('treeViewExtended');
     this._propertyGrid = this._getDomElement<PropertyGrid>('propertyGrid');
 
@@ -143,11 +132,9 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
         if (panel) {
           let element = this._dock.getElementInSlot((<HTMLSlotElement><any>panel.elementContent));
           if (element && element instanceof DocumentContainer) {
-            let sampleDocument = element as DocumentContainer;
-
-            this._propertyGrid.instanceServiceContainer = sampleDocument.instanceServiceContainer;
-            this._treeViewExtended.instanceServiceContainer = sampleDocument.instanceServiceContainer;
-            this._treeView.instanceServiceContainer = sampleDocument.instanceServiceContainer;
+            const document = element as DocumentContainer;
+            this._propertyGrid.instanceServiceContainer = document.instanceServiceContainer;
+            this._treeViewExtended.instanceServiceContainer = document.instanceServiceContainer;
           }
         }
       },
@@ -155,23 +142,20 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
         if (panel) {
           let element = this._dock.getElementInSlot((<HTMLSlotElement><any>panel.elementContent));
           if (element && element instanceof DocumentContainer) {
-            (<DocumentContainer>element).dispose();
+            const document = element as DocumentContainer;
+            document.dispose();
           }
         }
       }
     });
 
     await this._setupServiceContainer();
-    this.newDocument(false);
+    //this.newDocument();
   }
 
   private async _setupServiceContainer() {
     serviceContainer.register('elementsService', new JsonFileElementsService('demo', './dist/elements-demo.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('paint', './dist/elements-paint.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('wired', './dist/elements-wired.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('elix', './dist/elements-elix.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('patternfly', './dist/elements-pfe.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('mwc', './dist/elements-mwc.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
 
     serviceContainer.globalContext.onToolChanged.on((e) => {
@@ -187,22 +171,17 @@ export class AppShell extends BaseCustomWebComponentConstructorAppend {
       }
     });
 
-    this._paletteView.loadControls(serviceContainer, serviceContainer.elementsServices);
     this._paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);
     this._propertyGrid.serviceContainer = serviceContainer;
   }
 
-  public newDocument(fixedWidth: boolean) {
+  public newDocument() {
     this._documentNumber++;
     let sampleDocument = new DocumentContainer(serviceContainer);
     sampleDocument.setAttribute('dock-spawn-panel-type', 'document');
     sampleDocument.title = "document-" + this._documentNumber;
     this._dock.appendChild(sampleDocument);
-    if (fixedWidth) {
-      sampleDocument.designerView.designerWidth = '400px';
-      sampleDocument.designerView.designerHeight = '400px';
-    }
   }
 }
 
-window.customElements.define('node-projects-app-shell', AppShell);
+window.customElements.define('iobroker-webui-app-shell', IobrokerWebuiAppShell);

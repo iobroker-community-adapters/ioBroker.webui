@@ -1,13 +1,10 @@
 {
     "elements":
     [
-      {"tag" : "div", "name": "info", "defaultContent": "wired elements - visit: <a href=\"https://wiredjs.com/\">https://wiredjs.com/</a>", "type" : "wired" },
       {"tag" : "wired-button", "import": "./node_modules/wired-elements/lib/wired-elements.js", "defaultContent": "Click me", "type" : "wired" },
-      {"tag" : "wired-calendar", "import": "./node_modules/wired-elements/lib/wired-elements.js", "defaultContent": "", "defaultWidth": "200px", "defaultHeight": "50px", "type" : "wired" },
       {"tag" : "wired-card", "import": "./node_modules/wired-elements/lib/wired-elements.js", "defaultContent": "Card", "defaultWidth": "300px", "defaultHeight": "450px", "type" : "wired" },
       {"tag" : "wired-checkbox", "import": "./node_modules/wired-elements/lib/wired-elements.js", "defaultContent": "Checkbox", "type" : "wired" },
       {"tag" : "wired-combo", "import": "./node_modules/wired-elements/lib/wired-elements.js", "defaultContent": "Combobox", "type" : "wired" },
-      {"tag" : "wired-dialog", "import": "./node_modules/wired-elements/lib/wired-elements.js", "defaultContent": "Click me", "defaultWidth": "200px", "defaultHeight": "50px", "type" : "wired" },
       {"tag" : "wired-divider", "import": "./node_modules/wired-elements/lib/wired-elements.js", "defaultContent": "Click me", "defaultWidth": "200px", "type" : "wired" },
       {"tag" : "wired-fab", "import": "./node_modules/wired-elements/lib/wired-elements.js", "type" : "wired" },
       {"tag" : "wired-icon-button", "import": "./node_modules/wired-elements/lib/wired-elements.js", "defaultContent": "Click me", "defaultWidth": "200px", "defaultHeight": "50px", "type" : "wired" },
