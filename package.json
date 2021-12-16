@@ -20,6 +20,5 @@
   },
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.webui#readme",
   "dependencies": {
-    "@iobroker/adapter-core": "^2.5.1"
   }
 }
