@@ -14,6 +14,7 @@ import { CommandHandling } from './CommandHandling.js';
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 import "./IobrokerHandler.js";
 import "./widgets/IobrokerSolutionExplorer.js";
+import "./runtime/ScreenViewer.js";
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super(...arguments);
@@ -52,7 +53,6 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             }
         });
         await this._setupServiceContainer();
-        //this.newDocument();
     }
     async _setupServiceContainer() {
         serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/elements-webui.json'));

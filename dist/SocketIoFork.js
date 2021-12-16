@@ -33,7 +33,7 @@ const ERRORS = {
     1015: 'TLS handshake fail', // Transport Layer Security handshake failure
 };
 // possible events: connect, disconnect, reconnect, error, connect_error
-export class SocketClient {
+export class SocketIoFork {
     constructor() {
         this.handlers = {};
         this.lastPong = 0;
@@ -338,3 +338,5 @@ export class SocketClient {
     }
     ;
 }
+SocketIoFork.instance = new SocketIoFork();
+export const socketIoFork = SocketIoFork.instance;

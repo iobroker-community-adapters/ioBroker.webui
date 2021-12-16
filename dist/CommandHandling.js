@@ -1,3 +1,4 @@
+import { iobrokerHandler } from './IobrokerHandler.js';
 export class CommandHandling {
     constructor(dockManager, iobrokerWebuiAppShell, serviceContainer) {
         this.dockManager = dockManager;
@@ -16,7 +17,7 @@ export class CommandHandling {
         else if (commandName === 'save') {
             let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
             let html = target.designerView.getHTML();
-            await window.iobrokerHandler.saveScreens(target.title, html);
+            await iobrokerHandler.saveScreen(target.title, html);
         }
         else if (this.dockManager.activeDocument) {
             let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
