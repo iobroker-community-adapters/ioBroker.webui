@@ -1,5 +1,6 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
-import "../Socket.js"
+import { iobrokerHandler } from "../IobrokerHandler.js";
+import "../SocketIoFork.js"
 
 export class IobrokerSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
 
@@ -24,35 +25,37 @@ export class IobrokerSolutionExplorer extends BaseCustomWebComponentConstructorA
     private async createTreeNodes() {
         let screensNode: Fancytree.NodeData = { title: 'Screens', folder: true }
 
-        let screens = await window.iobrokerHandler.getScreens();
+        let screens = await iobrokerHandler.getScreenNames();
         screensNode.children = screens.map(x => ({ title: x, folder: false, data: { type: 'screen', name: x } }));
 
         return [screensNode];
     }
 
-    private loadTree() {
-
-        $(this._treeDiv).fancytree(<Fancytree.FancytreeOptions>{
-            icon: false,
-            source: this.createTreeNodes(),
-            copyFunctionsToData: true,
-            extensions: ['filter'],
-            dblclick: (e, d) => {
-                if (d.node.data && d.node.data.type == 'screen') {
-                    window.iobrokerHandler.getScreen(d.node.data.name).then((content) => {
-                        window.appShell.newDocument(d.node.data.name, content);
-                    });
+    private _loadTree() {
+        if (!this._tree) {
+            $(this._treeDiv).fancytree(<Fancytree.FancytreeOptions>{
+                icon: false,
+                source: this.createTreeNodes(),
+                copyFunctionsToData: true,
+                extensions: ['filter'],
+                dblclick: (e, d) => {
+                    if (d.node.data && d.node.data.type == 'screen') {
+                        window.appShell.newDocument(d.node.data.name, iobrokerHandler.getScreen(d.node.data.name));
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
+            });
 
-        $(this._treeDiv).fancytree('getRootNode');
-        this._tree = $(this._treeDiv).fancytree('getTree');
+            $(this._treeDiv).fancytree('getRootNode');
+            this._tree = $(this._treeDiv).fancytree('getTree');
+        } else {
+            this._tree.reload(this.createTreeNodes());
+        }
     }
 
     async ready() {
-        this.loadTree()
+        this._loadTree()
+        iobrokerHandler.screensChanged.on(() => this._loadTree());
     }
 }
 

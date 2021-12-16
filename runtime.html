@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" style="height: 100%;">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
+  <link rel="manifest" href="./manifest.json">
+
+  <title>runtime</title>
+
+  <script src="./node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js"></script>
+
+  <script type="module">
+    import './dist/IobrokerWebuiAppShell.js';
+    import './dist/runtime/ScreenViewer.js';
+  </script>
+</head>
+
+<body style="height: 100%; height: 100%;">
+  <iobroker-webui-screen-viewer screen-name="start"></iobroker-webui-screen-viewer>
+</script>
+
+</html>

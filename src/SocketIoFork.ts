@@ -37,7 +37,10 @@ const ERRORS: { [code: number]: string } = {
 };
 
 // possible events: connect, disconnect, reconnect, error, connect_error
-export class SocketClient {
+export class SocketIoFork {
+
+    static instance = new SocketIoFork();
+
     public handlers: { [name: string]: ((...args: any) => void)[] } = {};
     public lastPong: number = 0;
     public socket: WebSocket | null = null;
@@ -355,3 +358,5 @@ export class SocketClient {
         }
     };
 }
+
+export const socketIoFork = SocketIoFork.instance;

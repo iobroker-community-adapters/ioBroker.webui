@@ -19,6 +19,7 @@ DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css
 
 import "./IobrokerHandler.js"
 import "./widgets/IobrokerSolutionExplorer.js"
+import "./runtime/ScreenViewer.js"
 
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
   activeElement: HTMLElement;
@@ -152,7 +153,6 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     });
 
     await this._setupServiceContainer();
-    //this.newDocument();
   }
 
   private async _setupServiceContainer() {

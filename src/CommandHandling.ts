@@ -1,6 +1,7 @@
 import { DocumentContainer, ServiceContainer } from '@node-projects/web-component-designer';
 import { IUiCommandHandler } from '@node-projects/web-component-designer/dist/commandHandling/IUiCommandHandler';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
+import { iobrokerHandler } from './IobrokerHandler';
 import { IobrokerWebuiAppShell } from './IobrokerWebuiAppShell';
 
 export class CommandHandling {
@@ -26,7 +27,7 @@ export class CommandHandling {
     else if (commandName === 'save') {
       let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
       let html = (<DocumentContainer>target).designerView.getHTML();
-      await window.iobrokerHandler.saveScreens(target.title, html);
+      await iobrokerHandler.saveScreen(target.title, html);
     }
     else if (this.dockManager.activeDocument) {
       let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
