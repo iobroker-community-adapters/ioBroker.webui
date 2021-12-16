@@ -16,7 +16,7 @@ webui for ioBroker
 
   * Run the app in a local server
 ```
-  $ npm run start
+  $ npm start --prefix www
 ```
 
   * Navigate Chrome to [localhost:8000]() to see the app.
