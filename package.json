@@ -6,7 +6,7 @@
   "scripts": {
     "tsc": "cd www && npm run tsc",
     "start": "www/npm run start",
-    "prepare": "cd www && npm i",
+    "prepare": "cd www && npm i --only=production",
     "prepublishOnly": ""
   },
   "repository": {
