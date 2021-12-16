@@ -48,4 +48,8 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         }
         return this._states[name];
     }
+
+    set(name: string, value: ioBroker.StateValue) {
+        iobrokerHandler.adminConnection.setState(name, value);
+    }
 }
