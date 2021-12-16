@@ -36,6 +36,7 @@ function doScoreFuzzy2Single(target, query, patternStart, wordStart) {
     }
     return [score[0], createFuzzyMatches(score)];
 }
+const NO_ITEM_SCORE = Object.freeze({ score: 0 });
 function normalizeMatches(matches) {
     // sort matches by start to be able to normalize
     const sortedMatches = matches.sort((matchA, matchB) => {

@@ -44,6 +44,9 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
         }
         return this._states[name];
     }
+    set(name, value) {
+        iobrokerHandler.adminConnection.setState(name, value);
+    }
 };
 __decorate([
     property()
