@@ -3,10 +3,10 @@ const path = require('path');
 const fs = require('fs');
 const through2 = require('through2');
 
-const rootPath = '/web-component-designer-demo';
+const rootPath = '/www';
 
 function fixJsImports() {
-    return src('**/*.js')
+    return src('www/**/*.js')
         .pipe(
             through2.obj(function (file, _, cb) {
                 if (file.isBuffer()) {

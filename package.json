@@ -6,7 +6,8 @@
   "scripts": {
     "tsc": "cd www && npm run tsc",
     "start": "www/npm run start",
-    "prepublish": ""
+    "prepare": "cd www && npm i",
+    "prepublishOnly": ""
   },
   "repository": {
     "type": "git",
