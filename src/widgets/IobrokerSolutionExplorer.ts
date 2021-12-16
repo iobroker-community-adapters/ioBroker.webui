@@ -1,4 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
+import { IElementDefinition } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../IobrokerHandler.js";
 import "../SocketIoFork.js"
 
@@ -37,12 +38,31 @@ export class IobrokerSolutionExplorer extends BaseCustomWebComponentConstructorA
                 icon: false,
                 source: this.createTreeNodes(),
                 copyFunctionsToData: true,
-                extensions: ['filter'],
+                extensions: ['dnd5'],
                 dblclick: (e, d) => {
                     if (d.node.data && d.node.data.type == 'screen') {
                         window.appShell.newDocument(d.node.data.name, iobrokerHandler.getScreen(d.node.data.name));
                     }
                     return true;
+                },
+                dnd5: {
+                    dropMarkerParent: this.shadowRoot,
+                    preventRecursion: true, // Prevent dropping nodes on own descendants
+                    preventVoidMoves: false,
+                    dropMarkerOffsetX: -24,
+                    dropMarkerInsertOffsetX: -16,
+
+                    dragStart: (node, data) => {
+                        const screen = data.node.data.name;
+                        const elementDef: IElementDefinition = { tag: "iobroker-webui-screen-viewer", defaultAttributes: { 'screen-name': screen }, defaultWidth: '300px', defaultHeight: '200px' }
+                        data.effectAllowed = "all";
+                        data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
+                        data.dropEffect = "copy";
+                        return true;
+                    },
+                    dragEnter: (node, data) => {
+                        return false;
+                    }
                 }
             });
 

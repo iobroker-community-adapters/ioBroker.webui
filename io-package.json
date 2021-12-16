@@ -1,0 +1,56 @@
+{
+    "common": {
+        "name": "webui",
+        "version": "0.0.1",
+        "title": "webui",
+        "desc": {
+            "en": "Graphical user interface for iobroker using Webcomponents"
+        },
+        "platform": "Javascript/Node.js",
+        "loglevel": "info",
+        "enabled": true,
+        "keywords": [
+            "GUI",
+            "graphical",
+            "scada",
+            "webcompoents",
+            "HTML"
+        ],
+        "readme": "",
+        "authors": [
+            "jogibear9988 <jochen.kuehner@gmx.de>"
+        ],
+        "localLink": "%web_protocol%://%ip%:%web_port%/runtime.html",
+        "license": "MIT",
+        "dependencies": [
+            {
+                "web": ">=3.0.12"
+            }
+        ],
+        "restartAdapters": [
+            "webui"
+        ],
+        "serviceStates": "lib/states.js",
+        "singleton": true,
+        "type": "visualization",
+        "highlight": true,
+        "noConfig": true,
+        "materialize": true,
+        "onlyWWW": true,
+        "mode": "extension",
+        "welcomeScreen": {
+            "link": "runtime.html",
+            "name": "runtime",
+            "img": "vis/img/favicon.png",
+            "color": "#ffe9c8",
+            "order": 0
+        },
+        "welcomeScreenPro": {
+            "link": "index.html",
+            "name": "vis editor",
+            "img": "vis/img/faviconEdit.png",
+            "color": "#c8ffe1",
+            "order": 1
+        }
+    }
+}

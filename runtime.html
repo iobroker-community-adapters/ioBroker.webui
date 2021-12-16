@@ -19,7 +19,17 @@
 </head>
 
 <body style="height: 100%; height: 100%;">
-  <iobroker-webui-screen-viewer screen-name="start"></iobroker-webui-screen-viewer>
-</script>
+  <iobroker-webui-screen-viewer screen-name="start" id="viewer"></iobroker-webui-screen-viewer>
+  <script type="module">
+    const screen = (new URLSearchParams(location.search)).get('screenName');
+    if (screen) {
+      const viewer = document.getElementById('viewer');
+      await customElements.whenDefined(viewer.localName);
+      viewer.screenName = screen;
+    }
+  </script>
+</body>
+
+<body>
 
 </html>

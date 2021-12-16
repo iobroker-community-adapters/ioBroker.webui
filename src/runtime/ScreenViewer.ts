@@ -19,6 +19,8 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         }
     }
 
+    public objects: any;
+
     constructor() {
         super();
     }
@@ -27,21 +29,38 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         this._parseAttributesToProperties();
         iobrokerHandler.screensChanged.on(() => this._loadScreen());
         this._loadScreen();
+
+        const target = {};
+
+        const proxyHandler = {
+            get: (target, prop, receiver) => {
+                return this.state(prop);
+            },
+            set: (obj, prop, value) => {
+                this.set(prop, value);
+                return true;
+            }
+        };
+
+        this.objects = new Proxy(target, proxyHandler);
     }
 
     private _loadScreen() {
-        const template = htmlFromString(iobrokerHandler.getScreen(this.screenName));
-        const documentFragment = template.content.cloneNode(true);
-        this._bindingsParse(documentFragment);
         DomHelper.removeAllChildnodes(this.shadowRoot);
-        this.shadowRoot.appendChild(documentFragment);
+        const screen = iobrokerHandler.getScreen(this.screenName)
+        if (screen) {
+            const template = htmlFromString(screen);
+            const documentFragment = template.content.cloneNode(true);
+            this._bindingsParse(documentFragment);
+            this.shadowRoot.appendChild(documentFragment);
+        }
     }
 
     state(name: string) {
         if (!this._subscriptions.has(name)) {
             this._subscriptions.add(name);
             this._states[name] = null;
-            iobrokerHandler.adminConnection.subscribeState(name, (id, state) => {
+            iobrokerHandler.connection.subscribeState(name, (id, state) => {
                 this._states[name] = state.val;
                 this._bindingsRefresh();
             })
@@ -50,6 +69,6 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     }
 
     set(name: string, value: ioBroker.StateValue) {
-        iobrokerHandler.adminConnection.setState(name, value);
+        iobrokerHandler.connection.setState(name, value);
     }
 }
