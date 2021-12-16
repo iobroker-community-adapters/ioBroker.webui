@@ -4,9 +4,9 @@
   "description": "ioBroker webui",
   "type": "module",
   "scripts": {
-    "tsc": "cd www && npm run tsc",
-    "start": "www/npm run start",
-    "prepare": "cd www && npm i --only=production",
+    "tsc": "tsc",
+    "start": "web-dev-server --node-resolve --open",
+    "prepare": "",
     "prepublishOnly": ""
   },
   "repository": {
@@ -19,6 +19,31 @@
     "url": "https://github.com/iobroker-community-adapters/ioBroker.webui/issues"
   },
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.webui#readme",
+  "devDependencies": {
+    "@types/iobroker": "^3.3.4",
+    "@types/jquery": "^3.5.10",
+    "@types/jquery.fancytree": "^0.0.7",
+    "@web/dev-server": "^0.1.28",
+    "copyfiles": "^2.4.1",
+    "gulp": "^4.0.2",
+    "typescript": "^4.5.4"
+  },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "@iobroker/socket-client": "github:iobroker/socket-client",
+    "@node-projects/base-custom-webcomponent": "0.4.0",
+    "@node-projects/lean-he-esm": "^3.3.0",
+    "@node-projects/node-html-parser-esm": "^2.4.1",
+    "@node-projects/web-component-designer": "^0.0.65",
+    "construct-style-sheets-polyfill": "^3.0.5",
+    "dock-spawn-ts": "^2.301.0",
+    "jquery": "^3.6.0",
+    "jquery.fancytree": "^2.38.0",
+    "lit": "*",
+    "metro4-dist": "^4.5.0",
+    "mobile-drag-drop": "^2.3.0-rc.2",
+    "monaco-editor": "^0.31.1",
+    "socket.io": "^4.4.0",
+    "wired-elements": "*"
   }
 }
