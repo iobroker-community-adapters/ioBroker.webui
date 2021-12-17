@@ -1,6 +1,6 @@
 {
   "name": "iobroker.webui",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "ioBroker webui",
   "type": "module",
   "scripts": {
@@ -8,7 +8,7 @@
     "start": "web-dev-server --node-resolve --open",
     "startwww": "cd www && web-dev-server --node-resolve --open",
     "prepublishOnly": "npm run build",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider && tsc && gulp && rollup --config rollup.config.js && rollup --config rollup.config-runtime.js && rm www/sw.js*"
+    "build": "tsc && gulp"
   },
   "repository": {
     "type": "git",
@@ -21,18 +21,12 @@
   },
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.webui#readme",
   "devDependencies": {
-    "@open-wc/building-rollup": "^2.0.1",
-    "@rollup/plugin-url": "^6.1.0",
     "@types/iobroker": "^3.3.4",
     "@types/jquery": "^3.5.10",
     "@types/jquery.fancytree": "^0.0.7",
     "@web/dev-server": "^0.1.28",
-    "copyfiles": "^2.4.1",
-    "deepmerge": "^4.2.2",
-    "es-dev-server": "^2.1.0",
+    "copy-node-modules": "^1.1.1",
     "gulp": "^4.0.2",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.61.1",
     "typescript": "^4.5.4"
   },
   "dependencies": {
@@ -45,11 +39,8 @@
     "dock-spawn-ts": "^2.301.0",
     "jquery": "^3.6.0",
     "jquery.fancytree": "^2.38.0",
-    "lit": "*",
     "metro4-dist": "^4.5.0",
     "mobile-drag-drop": "^2.3.0-rc.2",
-    "monaco-editor": "^0.31.1",
-    "socket.io": "^4.4.0",
-    "wired-elements": "*"
+    "monaco-editor": "^0.31.1"
   }
 }

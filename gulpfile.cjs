@@ -2,6 +2,7 @@ const { src, dest, series } = require('gulp');
 const path = require('path');
 const fs = require('fs');
 const through2 = require('through2');
+const copyNodeModules = require('copy-node-modules');
 
 const rootPath = '/www';
 
@@ -112,73 +113,24 @@ function buildImportFileName(importText, dirName = '') {
     return null;
 }
 
-function copyAssets() {
-    return src('./assets/**/*')
-        .pipe(dest('./www/assets'));
+function copyNode() {
+    copyNodeModules('.', 'www', { devDependencies: false }, () => {});
+    return Promise.resolve(true);
 }
 
-function copyCss() {
-    return src('./node_modules/**/dock*.css')
-        .pipe(dest('./www/node_modules'));
-}
-
-function copyCssMonaco() {
-    return src('./node_modules/monaco-editor/**/*.css')
-        .pipe(dest('./www/node_modules/monaco-editor'));
-}
-
-function copySvg() {
-    return src('./node_modules/**/*.svg')
-        .pipe(dest('./www/node_modules'));
-}
-
-function copyGif() {
-    return src('./node_modules/**/*.gif')
-        .pipe(dest('./www/node_modules'));
-}
-
-function copyPng() {
-    return src('./node_modules/**/*.png')
-        .pipe(dest('./www/node_modules'));
-}
-
-function copyJson() {
-    return src('./dist/**/*.json')
+function copyDist() {
+    return src('./dist/**/*.*')
         .pipe(dest('./www/dist'));
 }
 
-function copyFiles2() {
-    return src(
-        [
-            './node_modules/metro4-dist/mif/metro.woff',
-        ])
-        .pipe(dest('./www/mif'));
+function copyAssets() {
+    return src('./assets/**/*.*')
+        .pipe(dest('./www/assets'));
 }
 
-function copyFiles3() {
-    return src(
-        [
-            './node_modules/jquery.fancytree/dist/skin-win8/ui.fancytree.css',
-        ])
-        .pipe(dest('./www/node_modules/jquery.fancytree/dist/skin-win8'));
+function copyHtml() {
+    return src('./*.html')
+        .pipe(dest('./www'));
 }
 
-function copyFiles4() {
-    return src(
-        [
-            './node_modules/@node-projects/web-component-designer/config/elements-native.json',
-        ])
-        .pipe(dest('./www/node_modules/@node-projects/web-component-designer/config'));
-}
-
-function copyNodeParser() {
-    return src('./node_modules/@node-projects/node-html-parser-esm/dist/**/*.*')
-        .pipe(dest('./www/node_modules/@node-projects/node-html-parser-esm/dist'));
-}
-
-function copyMonaco() {
-    return src('./node_modules/monaco-editor/min/vs/**/*.*')
-        .pipe(dest('./www/node_modules/monaco-editor/min/vs'));
-}
-
-exports.default = series(copyAssets, copyCss, copyCssMonaco, copySvg, copyPng, copyGif, copyJson, copyFiles3, copyFiles4, copyNodeParser, copyMonaco);
+exports.default = series(copyNode, copyDist, copyAssets, copyHtml);
