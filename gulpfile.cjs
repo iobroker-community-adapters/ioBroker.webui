@@ -4,7 +4,7 @@ const fs = require('fs');
 const through2 = require('through2');
 const copyNodeModules = require('copy-node-modules');
 
-const rootPath = '/www';
+const rootPath = '';
 
 function fixJsImports() {
     return src('www/**/*.js')
@@ -20,6 +20,7 @@ function fixJsImports() {
                     var res = '';
                     while ((m = checkImportRegex.exec(code)) !== null) {
                         var currentValue = m[4];
+                       
                         var newValue = buildImportName(currentValue, file.dirname);
                         if (newValue != currentValue) {
                             res += code.substr(pos, m.index - pos);
@@ -49,7 +50,7 @@ function fixJsImports() {
                 cb(null, file);
             }),
         )
-        .pipe(dest('.'));
+        .pipe(dest('www/'));
 }
 
 function buildImportName(importText, dirName = '') {
@@ -133,4 +134,4 @@ function copyHtml() {
         .pipe(dest('./www'));
 }
 
-exports.default = series(copyNode, copyDist, copyAssets, copyHtml);
+exports.default = series(copyNode, copyDist, copyAssets, copyHtml, fixJsImports);
