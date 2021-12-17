@@ -2,9 +2,9 @@ const { src, dest, series } = require('gulp');
 const path = require('path');
 const fs = require('fs');
 const through2 = require('through2');
-const copyNodeModules = require('copy-node-modules');
+const gnf = require('gulp-npm-files');
 
-const rootPath = '';
+const rootPath = '/webui';
 
 function fixJsImports() {
     return src('www/**/*.js')
@@ -21,7 +21,7 @@ function fixJsImports() {
                     while ((m = checkImportRegex.exec(code)) !== null) {
                         var currentValue = m[4];
                        
-                        var newValue = buildImportName(currentValue, file.dirname);
+                        var newValue = buildImportName(currentValue, file.dirname, file.path);
                         if (newValue != currentValue) {
                             res += code.substr(pos, m.index - pos);
                             res += m[1] + m[2] + "'" + newValue + "'";
@@ -35,7 +35,7 @@ function fixJsImports() {
                     res = '';
                     while ((m = checkRelativeImportRegex.exec(code)) !== null) {
                         var currentValue = m[4];
-                        var newValue = buildImportName(currentValue, file.dirname);
+                        var newValue = buildImportName(currentValue, file.dirname, file.path);
                         if (newValue != currentValue) {
                             res += code.substr(pos, m.index - pos);
                             res += m[1] + m[2] + "'" + newValue + "'";
@@ -53,7 +53,7 @@ function fixJsImports() {
         .pipe(dest('www/'));
 }
 
-function buildImportName(importText, dirName = '') {
+function buildImportName(importText, dirName, path) {
     if (importText[0] == '.' || importText[0] == '/') {
         var file = buildImportFileName(importText, dirName);
         if (file != null) {
@@ -61,7 +61,6 @@ function buildImportName(importText, dirName = '') {
         }
         return importText;
     }
-
     var resFile = buildImportFileName('./' + importText);
     if (resFile != null) {
         return '/' + importText + resFile;
@@ -78,6 +77,7 @@ function buildImportFileName(importText, dirName = '') {
     if (fs.existsSync(path.join(dirName, iPath)) && !fs.lstatSync(path.join(dirName, iPath)).isDirectory()) {
         return '';
     }
+    //console.log('1', path.join(dirName, iPath + '.js'))
     if (fs.existsSync(path.join(dirName, iPath + '.js'))) {
         return '.js';
     }
@@ -114,9 +114,9 @@ function buildImportFileName(importText, dirName = '') {
     return null;
 }
 
-function copyNode() {
-    copyNodeModules('.', 'www', { devDependencies: false }, () => {});
-    return Promise.resolve(true);
+function copyNodeModules() {
+    return src(gnf(), {base:'./'})
+      .pipe(dest('./www'));
 }
 
 function copyDist() {
@@ -134,4 +134,4 @@ function copyHtml() {
         .pipe(dest('./www'));
 }
 
-exports.default = series(copyNode, copyDist, copyAssets, copyHtml, fixJsImports);
+exports.default = series(copyNodeModules, copyDist, copyAssets, copyHtml, fixJsImports);
