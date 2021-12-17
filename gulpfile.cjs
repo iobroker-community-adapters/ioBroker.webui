@@ -84,21 +84,20 @@ function buildImportFileName(importText, dirName = '') {
     }
     if (fs.existsSync(path.join(dirName, iPath, 'package.json'))) {
         var json = JSON.parse(fs.readFileSync(path.join(dirName, iPath, 'package.json'), 'utf8'));
-        if (json.module)
-		{
-			var module = json.module.toString();
-			if (fs.existsSync(path.join(dirName, iPath, module)) && !fs.lstatSync(path.join(dirName, iPath, module)).isDirectory()) {
-				return importText.endsWith('/') ? module : '/' + module;
-			}
-			if (fs.existsSync(path.join(dirName, iPath, module + '.js'))) {
-				return importText.endsWith('/') ? module + '.js' : '/' + module + '.js';
-			}
-			if (fs.existsSync(path.join(dirName, iPath, module, 'index.js'))) {
-				return importText.endsWith('/') ? module + '/index.js' : '/' + module + '/index.js';
-			}
-		}
-		
-		var main = json.main.toString();
+        if (json.module) {
+            var module = json.module.toString();
+            if (fs.existsSync(path.join(dirName, iPath, module)) && !fs.lstatSync(path.join(dirName, iPath, module)).isDirectory()) {
+                return importText.endsWith('/') ? module : '/' + module;
+            }
+            if (fs.existsSync(path.join(dirName, iPath, module + '.js'))) {
+                return importText.endsWith('/') ? module + '.js' : '/' + module + '.js';
+            }
+            if (fs.existsSync(path.join(dirName, iPath, module, 'index.js'))) {
+                return importText.endsWith('/') ? module + '/index.js' : '/' + module + '/index.js';
+            }
+        }
+
+        var main = json.main.toString();
         if (fs.existsSync(path.join(dirName, iPath, main)) && !fs.lstatSync(path.join(dirName, iPath, main)).isDirectory()) {
             return importText.endsWith('/') ? main : '/' + main;
         }
@@ -113,4 +112,82 @@ function buildImportFileName(importText, dirName = '') {
     return null;
 }
 
-exports.default = series(fixJsImports);
+function copyAssets() {
+    return src('./assets/**/*')
+        .pipe(dest('./www/assets'));
+}
+
+function copyCss() {
+    return src('./node_modules/**/dock*.css')
+        .pipe(dest('./www/node_modules'));
+}
+
+function copyCssMonaco() {
+    return src('./node_modules/monaco-editor/**/*.css')
+        .pipe(dest('./www/node_modules/monaco-editor'));
+}
+
+function copySvg() {
+    return src('./node_modules/**/*.svg')
+        .pipe(dest('./www/node_modules'));
+}
+
+function copyGif() {
+    return src('./node_modules/**/*.gif')
+        .pipe(dest('./www/node_modules'));
+}
+
+function copyPng() {
+    return src('./node_modules/**/*.png')
+        .pipe(dest('./www/node_modules'));
+}
+
+function copyJson() {
+    return src('./dist/**/*.json')
+        .pipe(dest('./www/dist'));
+}
+
+function copyFiles1() {
+    return src(
+        [
+            './node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2',
+            './node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2',
+        ])
+        .pipe(dest('./www/webfonts'));
+}
+
+function copyFiles2() {
+    return src(
+        [
+            './node_modules/metro4-dist/mif/metro.woff',
+        ])
+        .pipe(dest('./www/mif'));
+}
+
+function copyFiles3() {
+    return src(
+        [
+            './node_modules/jquery.fancytree/dist/skin-win8/ui.fancytree.css',
+        ])
+        .pipe(dest('./www/node_modules/jquery.fancytree/dist/skin-win8'));
+}
+
+function copyFiles4() {
+    return src(
+        [
+            './node_modules/@node-projects/web-component-designer/config/elements-native.json',
+        ])
+        .pipe(dest('./www/node_modules/@node-projects/web-component-designer/config'));
+}
+
+function copyNodeParser() {
+    return src('./node_modules/@node-projects/node-html-parser-esm/dist/**/*.*')
+        .pipe(dest('./www/node_modules/@node-projects/node-html-parser-esm/dist'));
+}
+
+function copyMonaco() {
+    return src('./node_modules/monaco-editor/min/vs/**/*.*')
+        .pipe(dest('./www/node_modules/monaco-editor/min/vs'));
+}
+
+exports.default = series(copyAssets, copyCss, copyCssMonaco, copySvg, copyPng, copyGif, copyJson, copyFiles1, copyFiles2, copyFiles3, copyFiles4, copyNodeParser, copyMonaco);

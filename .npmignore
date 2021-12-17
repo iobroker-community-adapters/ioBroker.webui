@@ -1,0 +1,10 @@
+/.github
+/.vs
+/assets
+/dist
+/node_modules
+/src
+.gitignore
+.gulp.json
+index.html
+runtime.html

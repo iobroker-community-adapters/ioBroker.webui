@@ -1,13 +1,15 @@
 {
   "name": "iobroker.webui",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "ioBroker webui",
   "type": "module",
   "scripts": {
     "tsc": "tsc",
     "start": "web-dev-server --node-resolve --open",
+    "startwww": "cd www && web-dev-server --node-resolve --open",
     "prepare": "",
-    "prepublishOnly": ""
+    "prepublishOnly": "npm run build",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider && tsc && gulp && rollup --config rollup.config.js && rollup --config rollup.config-runtime.js"
   },
   "repository": {
     "type": "git",
@@ -20,12 +22,17 @@
   },
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.webui#readme",
   "devDependencies": {
+    "@open-wc/building-rollup": "^2.0.1",
     "@types/iobroker": "^3.3.4",
     "@types/jquery": "^3.5.10",
     "@types/jquery.fancytree": "^0.0.7",
     "@web/dev-server": "^0.1.28",
     "copyfiles": "^2.4.1",
+    "deepmerge": "^4.2.2",
+    "es-dev-server": "^2.1.0",
     "gulp": "^4.0.2",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.61.1",
     "typescript": "^4.5.4"
   },
   "dependencies": {
