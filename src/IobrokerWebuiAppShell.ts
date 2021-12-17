@@ -3,12 +3,11 @@ import '../node_modules/@node-projects/web-component-designer/dist/index.js'
 import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, TreeViewExtended, PropertyGrid, DocumentContainer, NodeHtmlParserService, PaletteTreeView, CodeViewMonaco } from '@node-projects/web-component-designer';
 import createDefaultServiceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 
+const rootPath = new URL(import.meta.url).pathname.split('/').slice(0,-2).join('/'); // -2 remove file & dist
+
 let serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
-if (window.location.hostname == 'localhost' || window.location.hostname == '127.0.0.1')
-  serviceContainer.register("htmlParserService", new NodeHtmlParserService('/node_modules/@node-projects/node-html-parser-esm/dist/index.js'));
-else
-  serviceContainer.register("htmlParserService", new NodeHtmlParserService('/web-component-designer-demo/node_modules/@node-projects/node-html-parser-esm/dist/index.js'));
+serviceContainer.register("htmlParserService", new NodeHtmlParserService(rootPath + '/node_modules/@node-projects/node-html-parser-esm/dist/index.js'));
 serviceContainer.config.codeViewWidget = CodeViewMonaco;
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
