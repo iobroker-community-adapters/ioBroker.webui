@@ -8,7 +8,7 @@
     "start": "web-dev-server --node-resolve --open",
     "startwww": "cd www && web-dev-server --node-resolve --open",
     "prepublishOnly": "npm run build",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider && tsc && gulp && rollup --config rollup.config.js && rollup --config rollup.config-runtime.js"
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider && tsc && gulp && rollup --config rollup.config.js && rollup --config rollup.config-runtime.js && rm www/sw.js*"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.webui#readme",
   "devDependencies": {
     "@open-wc/building-rollup": "^2.0.1",
+    "@rollup/plugin-url": "^6.1.0",
     "@types/iobroker": "^3.3.4",
     "@types/jquery": "^3.5.10",
     "@types/jquery.fancytree": "^0.0.7",
@@ -35,7 +36,6 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.4",
     "@iobroker/socket-client": "github:iobroker/socket-client",
     "@node-projects/base-custom-webcomponent": "0.4.0",
     "@node-projects/lean-he-esm": "^3.3.0",

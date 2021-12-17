@@ -147,15 +147,6 @@ function copyJson() {
         .pipe(dest('./www/dist'));
 }
 
-function copyFiles1() {
-    return src(
-        [
-            './node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2',
-            './node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2',
-        ])
-        .pipe(dest('./www/webfonts'));
-}
-
 function copyFiles2() {
     return src(
         [
@@ -190,4 +181,4 @@ function copyMonaco() {
         .pipe(dest('./www/node_modules/monaco-editor/min/vs'));
 }
 
-exports.default = series(copyAssets, copyCss, copyCssMonaco, copySvg, copyPng, copyGif, copyJson, copyFiles1, copyFiles2, copyFiles3, copyFiles4, copyNodeParser, copyMonaco);
+exports.default = series(copyAssets, copyCss, copyCssMonaco, copySvg, copyPng, copyGif, copyJson, copyFiles3, copyFiles4, copyNodeParser, copyMonaco);

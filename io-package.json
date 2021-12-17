@@ -44,18 +44,18 @@
         },
         "welcomeScreen": [
             {
-                "link": "webui/runtime.html",
-                "name": "webui runtime",
-                "img": "vis/img/favicon.png",
-                "color": "#ffe9c8",
-                "order": 0
-            },
-            {
                 "link": "webui/index.html",
                 "name": "webui editor",
                 "img": "vis/img/faviconEdit.png",
                 "color": "#c8ffe1",
                 "order": 1
+            },
+            {
+                "link": "webui/runtime.html",
+                "name": "webui runtime",
+                "img": "vis/img/favicon.png",
+                "color": "#ffe9c8",
+                "order": 0
             }
         ]
     }
