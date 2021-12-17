@@ -37,18 +37,22 @@
         "noConfig": true,
         "materialize": true,
         "onlyWWW": true,
+        "nogit": true,
         "mode": "extension",
+        "native": {
+            "webInstance": "*"
+        },
         "welcomeScreen": [
             {
                 "link": "webui/runtime.html",
-                "name": "runtime",
+                "name": "webui runtime",
                 "img": "vis/img/favicon.png",
                 "color": "#ffe9c8",
                 "order": 0
             },
             {
                 "link": "webui/index.html",
-                "name": "vis editor",
+                "name": "webui editor",
                 "img": "vis/img/faviconEdit.png",
                 "color": "#c8ffe1",
                 "order": 1

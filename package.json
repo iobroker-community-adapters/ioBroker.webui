@@ -1,13 +1,12 @@
 {
   "name": "iobroker.webui",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ioBroker webui",
   "type": "module",
   "scripts": {
     "tsc": "tsc",
     "start": "web-dev-server --node-resolve --open",
     "startwww": "cd www && web-dev-server --node-resolve --open",
-    "prepare": "",
     "prepublishOnly": "npm run build",
     "build": "export NODE_OPTIONS=--openssl-legacy-provider && tsc && gulp && rollup --config rollup.config.js && rollup --config rollup.config-runtime.js"
   },

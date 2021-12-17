@@ -9,6 +9,7 @@ class IobrokerHandler {
     host: ioBroker.HostObject;
     connection: Connection;
     adapterName = "webui";
+    configPath = "config/";
 
     private _screens: string[] = [];
 
@@ -33,8 +34,8 @@ class IobrokerHandler {
     }
 
     async readAllScreens() {
-        const screenNames = await (await this.connection.readDir(this.adapterName, "screens")).map(x => x.file);
-        const screenPromises = screenNames.map(x => this.connection.readFile(this.adapterName, "screens/" + x))
+        const screenNames = await (await this.connection.readDir(this.adapterName, this.configPath + "screens")).map(x => x.file);
+        const screenPromises = screenNames.map(x => this.connection.readFile(this.adapterName, this.configPath + "screens/" + x))
         const screensLoaded = await Promise.all(screenPromises);
         this._screens = [];
         screenNames.map((x, i) => this._screens[x.toLocaleLowerCase()] = screensLoaded[i].file);
@@ -42,7 +43,7 @@ class IobrokerHandler {
     }
 
     async saveScreen(name: string, content: string) {
-        await this.connection.writeFile64(this.adapterName, "screens/" + name.toLocaleLowerCase(), btoa(content));
+        await this.connection.writeFile64(this.adapterName, this.configPath + "screens/" + name.toLocaleLowerCase(), btoa(content));
         this.readAllScreens();
     }
 
