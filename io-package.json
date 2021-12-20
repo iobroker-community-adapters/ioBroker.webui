@@ -1,11 +1,23 @@
 {
     "common": {
         "name": "webui",
-        "version": "0.0.1",
+        "version": "0.0.10",
         "title": "webui",
+		"titleLang": {
+			"en": "webui"
+		},
         "desc": {
             "en": "Graphical user interface for iobroker using Webcomponents"
         },
+		"news": {
+			"0.0.10": {
+				"en": "initial version"
+			}
+		},
+		"icon": "logo.png",
+        "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.webui/master/admin/logo.png",
+		"connectionType": "none",
+		"dataSource": "none",
         "platform": "Javascript/Node.js",
         "loglevel": "info",
         "enabled": true,
@@ -39,10 +51,7 @@
         "onlyWWW": true,
         "nogit": true,
         "mode": "extension",
-        "native": {
-            "webInstance": "*"
-        },
-        "welcomeScreen": [
+		"welcomeScreen": [
             {
                 "link": "webui/index.html",
                 "name": "webui editor",
@@ -58,5 +67,7 @@
                 "order": 0
             }
         ]
-    }
+    },
+	native: {
+	}
 }
