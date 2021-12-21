@@ -27,3 +27,16 @@ It's only an early beta. At the moment it communicates with "Admin" on Port "808
 
 You need to create a screen "start", this is the first one called when you open runtime.html, but you can change this via query parameter:
 runtime.html?screenName=screen2
+
+## Changelog
+<!--
+	Placeholder for the next version (at the beginning of the line):
+	### __WORK IN PROGRESS__
+-->
+### 0.0.10 (2021-12-21)
+* initial version
+
+## License
+The MIT License (MIT)
+
+Copyright (c) 2021-2022 jogibear9988 <jochen.kuehner@gmx.de>

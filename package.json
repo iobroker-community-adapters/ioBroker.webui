@@ -1,6 +1,6 @@
 {
   "name": "iobroker.webui",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "description": "ioBroker webui",
   "type": "module",
   "scripts": {
@@ -14,7 +14,7 @@
     "type": "git",
     "url": "git+https://github.com/iobroker-community-adapters/ioBroker.webui.git"
   },
-  "author": "",
+  "author": "jochen.kuehner@gmx.de",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/iobroker-community-adapters/ioBroker.webui/issues"
