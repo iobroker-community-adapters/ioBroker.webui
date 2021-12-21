@@ -1,6 +1,7 @@
 import { Connection } from "@iobroker/socket-client";
 import { TypedEvent } from "@node-projects/base-custom-webcomponent";
-import { socketIoFork } from "./SocketIoFork";
+import { IScreen } from "./interfaces/IScreen";
+import { IStyle } from "./interfaces/IStyle";
 
 class IobrokerHandler {
 
@@ -11,39 +12,41 @@ class IobrokerHandler {
     adapterName = "webui";
     configPath = "config/";
 
-    private _screens: string[] = [];
+    private _screens: Record<string, IScreen> = {};
+    private _styles: Record<string, IStyle> = {};
+    private _screenTemplateMap = new WeakMap<IScreen, HTMLTemplateElement>();
+    private _styleSheetMap = new WeakMap<IStyle, CSSStyleSheet>();
 
     screensChanged = new TypedEvent<void>();
+    stylesChanged = new TypedEvent<void>();
 
     constructor() {
         this.init();
     }
 
     async init() {
-        //@ts-ignore
-        window.io = socketIoFork;
-        //@ts-ignore
-        this.connection = new Connection({ protocol: 'ws', host: '192.168.1.2', port: 8081, admin5only: false, autoSubscribes: [] });
+        //this.connection = new Connection({ protocol: 'ws', host: '192.168.1.2', port: 8082, admin5only: false, autoSubscribes: [] });
+        this.connection = new Connection({ protocol: 'ws', host: window.location.host, port: window.location.port, admin5only: false, autoSubscribes: [] });
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
 
-        //this.host = await this.adminConnection.getHosts()[0];
         await this.readAllScreens();
+        await this.readAllStyles();
 
         console.log("ioBroker handler ready.")
     }
 
     async readAllScreens() {
         const screenNames = await (await this.connection.readDir(this.adapterName, this.configPath + "screens")).map(x => x.file);
-        const screenPromises = screenNames.map(x => this.connection.readFile(this.adapterName, this.configPath + "screens/" + x))
+        const screenPromises = screenNames.map(x => this.connection.readFile(this.adapterName, this.configPath + "screens/" + x, false))
         const screensLoaded = await Promise.all(screenPromises);
-        this._screens = [];
-        screenNames.map((x, i) => this._screens[x.toLocaleLowerCase()] = screensLoaded[i].file);
+        this._screens = {};
+        screenNames.map((x, i) => this._screens[x.toLocaleLowerCase()] = JSON.parse(atob(screensLoaded[i].file)));
         this.screensChanged.emit();
     }
 
-    async saveScreen(name: string, content: string) {
-        await this.connection.writeFile64(this.adapterName, this.configPath + "screens/" + name.toLocaleLowerCase(), btoa(content));
+    async saveScreen(name: string, screen: IScreen) {
+        await this.connection.writeFile64(this.adapterName, this.configPath + "screens/" + name.toLocaleLowerCase(), btoa(JSON.stringify(screen)));
         this.readAllScreens();
     }
 
@@ -51,8 +54,31 @@ class IobrokerHandler {
         return Object.keys(this._screens);
     }
 
-    getScreen(name: string): string {
+    getScreen(name: string): IScreen {
         return this._screens[name.toLocaleLowerCase()];
+    }
+
+
+    async readAllStyles() {
+        const styleNames = await (await this.connection.readDir(this.adapterName, this.configPath + "styles")).map(x => x.file);
+        const stylePromises = styleNames.map(x => this.connection.readFile(this.adapterName, this.configPath + "styles/" + x))
+        const stylesLoaded = await Promise.all(stylePromises);
+        this._styles = {};
+        styleNames.map((x, i) => this._styles[x.toLocaleLowerCase()] = JSON.parse(stylesLoaded[i].file));
+        this.screensChanged.emit();
+    }
+
+    async saveStyle(name: string, style: IStyle) {
+        await this.connection.writeFile64(this.adapterName, this.configPath + "styles/" + name.toLocaleLowerCase(), btoa(JSON.stringify(style)));
+        this.readAllStyles();
+    }
+
+    getStyleNames() {
+        return Object.keys(this._styles);
+    }
+
+    getStyle(name: string): IStyle {
+        return this._styles[name.toLocaleLowerCase()];
     }
 }
 

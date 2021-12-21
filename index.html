@@ -15,6 +15,9 @@
 
   <script src="./node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js"></script>
 
+  <!--<script src="http://192.168.1.2:8082/lib/js/socket.io.js"></script>-->
+  <script src="../lib/js/socket.io.js"></script>
+
   <script src="./node_modules/jquery/dist/jquery.min.js"></script>
   <script src="./node_modules/jquery.fancytree/dist/jquery.fancytree-all-deps.min.js"></script>
   <script src="./node_modules/jquery.fancytree/dist/modules/jquery.fancytree.table.js"></script>
@@ -163,14 +166,27 @@
         </div>
         <div class="group flex-column">
           <div class="toolbar" id="tools">
-              <button style="background: green;" class="tool-button" data-command="setTool" data-command-parameter="Pointer"><i class="fas fa-mouse-pointer"></i></button>
-              <button class="tool-button" data-command="setTool" data-command-parameter="RectangleSelector"><i class="far fa-object-group"></i></button>
-              <button class="tool-button" data-command="setTool" data-command-parameter="MagicWandSelector"><i class="fas fa-magic"></i></button>
-              <button class="tool-button" data-command="setTool" data-command-parameter="DrawPath"><i class="fas fa-draw-polygon"></i></button>
-              <button class="tool-button" data-command="setTool" data-command-parameter="PickColor"><i class="fas fa-eye-dropper"></i></button>
-              <button class="tool-button" data-command="setTool" data-command-parameter="Zoom"><i class="fas fa-search-plus"></i></button>
-              <button class="tool-button" data-command="setTool" data-command-parameter="Text"><i class="fas fa-i-cursor"></i></button>
-          </div>
+            <button class="tool-button" data-command="setTool" data-command-parameter="Pointer" title="Pointer tool"
+            style="background: green; background-image: url('./assets/images/layout/PointerTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="MagicWandSelector" title="Magic Wand Selector"
+            style="background-image: url('./assets/images/layout/MagicWandTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="DrawLine" title="Draw Line"
+            style="background-image: url('./assets/images/layout/DrawLineTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="DrawPath" title="Draw Path"
+            style="background-image: url('./assets/images/layout/DrawPathTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="DrawRect" title="Draw Rectangle"
+            style="background-image: url('./assets/images/layout/DrawRectTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="DrawEllipsis" title="Draw Ellipsis"
+            style="background-image: url('./assets/images/layout/DrawEllipTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="PickColor" title="Color picker"
+            style="background-image: url('./assets/images/layout/ColorPickerTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="Zoom" title="Zoom tool"
+            style="background-image: url('./assets/images/layout/ZoomTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="Text" title="Text tool"
+            style="background-image: url('./assets/images/layout/TextTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="TextBoc" title="Textbox Tool"
+            style="background-image: url('./assets/images/layout/TextBoxTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+        </div>
           <div class="toolbar" id="color">
             <input type="color" title="stroke color" data-command="setStrokeColor" value="#000000" style="padding: 0; width:20px; height:20px; margin-right: 5px;">
             <input type="color" title="fill brush" data-command="setFillBrush" value="#ffffff" style="padding: 0; width:20px; height:20px; margin-right: 5px;">   

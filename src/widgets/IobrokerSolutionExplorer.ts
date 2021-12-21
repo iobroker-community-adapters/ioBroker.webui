@@ -1,7 +1,6 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
 import { IElementDefinition } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../IobrokerHandler.js";
-import "../SocketIoFork.js"
 
 export class IobrokerSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
 
@@ -41,7 +40,7 @@ export class IobrokerSolutionExplorer extends BaseCustomWebComponentConstructorA
                 extensions: ['dnd5'],
                 dblclick: (e, d) => {
                     if (d.node.data && d.node.data.type == 'screen') {
-                        window.appShell.newDocument(d.node.data.name, iobrokerHandler.getScreen(d.node.data.name));
+                        window.appShell.newDocument(d.node.data.name, iobrokerHandler.getScreen(d.node.data.name).html);
                     }
                     return true;
                 },
