@@ -17,7 +17,7 @@ export class CommandHandling {
         else if (commandName === 'save') {
             let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
             let html = target.designerView.getHTML();
-            let screen = { html, styles: null, settings: {} };
+            let screen = { html, style: null, settings: {} };
             await iobrokerHandler.saveScreen(target.title, screen);
         }
         else if (this.dockManager.activeDocument) {

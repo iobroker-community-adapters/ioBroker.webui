@@ -1,4 +1,4 @@
-import '../node_modules/@node-projects/web-component-designer/dist/index.js';
+import '/webui/node_modules/@node-projects/web-component-designer/./dist/index.js';
 import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, DocumentContainer, NodeHtmlParserService, CodeViewMonaco } from '/webui/node_modules/@node-projects/web-component-designer/./dist/index.js';
 import createDefaultServiceContainer from '/webui/node_modules/@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap.js';
 import { IobrokerWebuiBindableObjectsService } from './services/IobrokerWebuiBindableObjectsService.js';
@@ -17,6 +17,7 @@ DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css
 import "./IobrokerHandler.js";
 import "./widgets/IobrokerWebuiSolutionExplorer.js";
 import "./runtime/ScreenViewer.js";
+import "./widgets/IobrokerWebuiStyleEditor.js";
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super(...arguments);
@@ -67,9 +68,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             const buttons = Array.from(document.getElementById('tools').querySelectorAll('[data-command]'));
             for (const b of buttons) {
                 if (b.dataset.commandParameter == name)
-                    b.style.background = "green";
+                    b.style.backgroundColor = "green";
                 else
-                    b.style.background = "";
+                    b.style.backgroundColor = "";
             }
         });
         this._paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);
@@ -104,21 +105,6 @@ IobrokerWebuiAppShell.style = css `
       --input-border-color: #596c7a;
     }
 
-    .app-header {
-      background-color: var(--almost-black);
-      color: white;
-      height: 60px;
-      width: 100%;
-      position: fixed;
-      z-index: 100;
-      display: flex;
-      font-size: var(--app-toolbar-font-size, 20px);
-      align-items: center;
-      font-weight: 900;
-      letter-spacing: 2px;
-      padding-left: 10px;
-    }
-
     .app-body {
       box-sizing: border-box;
       display: flex;
@@ -127,39 +113,24 @@ IobrokerWebuiAppShell.style = css `
       overflow: hidden;
     }
 
-    .heavy {
-      font-weight: 900;
-      letter-spacing: 2px;
-    }
-    .lite {
-      font-weight: 100;
-      opacity: 0.5;
-      letter-spacing: normal;
-    }
-
     dock-spawn-ts > div {
       height: 100%;
-    }
-
-    attribute-editor {
-      height: 100%;
-      width: 100%;
     }
     `;
 IobrokerWebuiAppShell.template = html `
       <div class="app-body">
         <dock-spawn-ts id="dock" style="width: 100%; height: 100%; position: relative;">
-          <div id="treeUpper" title="Project" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2"
+          <div id="treeUpper" title="project" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2"
             style="overflow: hidden; width: 100%;">
             <iobroker-webui-solution-explorer></iobroker-solution-explorer>
           </div>
 
-          <div id="treeObjects" title="Objects" dock-spawn-dock-type="down" dock-spawn-dock-to="treeUpper" dock-spawn-dock-ratio="0.66"
+          <div id="treeObjects" title="objects" dock-spawn-dock-type="down" dock-spawn-dock-to="treeUpper" dock-spawn-dock-ratio="0.66"
           style="overflow: hidden; width: 100%;">
             <node-projects-bindable-objects-browser id="bindableObjectsBrowser"></node-projects-bindable-objects-browser>
           </div>
       
-          <div title="TreeExtended" dock-spawn-dock-type="down" dock-spawn-dock-to="treeObjects" dock-spawn-dock-ratio="0.33"
+          <div title="outline" dock-spawn-dock-type="down" dock-spawn-dock-to="treeObjects" dock-spawn-dock-ratio="0.33"
             style="overflow: hidden; width: 100%;">
             <node-projects-tree-view-extended name="tree" id="treeViewExtended"></node-projects-tree-view-extended>
           </div>
@@ -170,6 +141,10 @@ IobrokerWebuiAppShell.template = html `
           <div id="p" title="Elements" dock-spawn-dock-type="down" dock-spawn-dock-to="attributeDock"
             dock-spawn-dock-ratio="0.4">
             <node-projects-palette-tree-view name="paletteTree" id="paletteTree"></node-projects-palette-tree-view>
+          </div>
+
+          <div id="lower" title="style" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.25" style="overflow: hidden; width: 100%;">
+            <iobroker-webui-style-editor></iobroker-webui-style-editor>
           </div>
         </dock-spawn-ts>
       </div>
