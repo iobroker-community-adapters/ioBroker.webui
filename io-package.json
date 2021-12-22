@@ -49,7 +49,7 @@
         "noConfig": true,
         "materialize": true,
         "onlyWWW": true,
-        "nogit": true,
+        "nogit": false,
         "mode": "extension",
 		"welcomeScreen": [
             {
