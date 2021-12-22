@@ -3,12 +3,20 @@
   "version": "0.0.11",
   "description": "ioBroker webui",
   "type": "module",
+  "main": "",
   "scripts": {
     "tsc": "tsc",
     "start": "web-dev-server --node-resolve --open",
     "startwww": "cd www && web-dev-server --node-resolve --open",
     "prepublishOnly": "npm run build",
-    "build": "rm -r -f www && rm -r -f dist && tsc && gulp"
+    "build": "rm -r -f www && rm -r -f dist && tsc && gulp",
+    "test:ts": "mocha --config test/mocharc.custom.json test/tests/*.js",
+    "test:package": "mocha test/package --exit",
+    "test:unit": "mocha test/unit --exit",
+    "test:integration": "mocha test/integration --exit",
+    "test": "npm run test:ts && npm run test:package",
+    "check": "tsc --noEmit",
+    "coverage": "nyc npm run test:ts"
   },
   "repository": {
     "type": "git",
@@ -21,11 +29,18 @@
   },
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.webui#readme",
   "devDependencies": {
+    "@iobroker/testing": "^2.5.2",
     "@types/iobroker": "^3.3.4",
     "@types/jquery": "^3.5.10",
     "@types/jquery.fancytree": "^0.0.7",
     "@web/dev-server": "^0.1.28",
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
     "gulp": "^4.0.2",
+    "mocha": "^9.1.1",
+    "nyc": "^15.1.0",
+    "sinon-chai": "^3.7.0",
+    "ts-node": "^10.2.1",
     "typescript": "^4.5.4"
   },
   "dependencies": {

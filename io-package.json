@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "webui",
-        "version": "0.0.10",
+        "version": "0.0.11",
         "title": "webui",
 		"titleLang": {
 			"en": "webui"
@@ -10,6 +10,9 @@
             "en": "Graphical user interface for iobroker using Webcomponents"
         },
 		"news": {
+            "0.0.11": {
+				"en": "wip"
+			},
 			"0.0.10": {
 				"en": "initial version"
 			}
