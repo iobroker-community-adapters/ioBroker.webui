@@ -1,7 +1,6 @@
 import { Connection } from "@iobroker/socket-client";
 import { TypedEvent } from "@node-projects/base-custom-webcomponent";
 import { IScreen } from "./interfaces/IScreen";
-import { IStyle } from "./interfaces/IStyle";
 
 class IobrokerHandler {
 
@@ -13,7 +12,7 @@ class IobrokerHandler {
     configPath = "config/";
 
     private _screens: Record<string, IScreen> = {};
-    private _styles: Record<string, IStyle> = {};
+    //private _styles: Record<string, IStyle> = {};
     //private _screenTemplateMap = new WeakMap<IScreen, HTMLTemplateElement>();
     //private _styleSheetMap = new WeakMap<IStyle, CSSStyleSheet>();
 
@@ -29,19 +28,17 @@ class IobrokerHandler {
         this.connection = new Connection({ protocol: 'ws', host: window.location.hostname, port: window.location.port, admin5only: false, autoSubscribes: [] });
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
-
         await this.readAllScreens();
-        await this.readAllStyles();
 
         console.log("ioBroker handler ready.")
     }
 
     async readAllScreens() {
-        const screenNames = await (await this.connection.readDir(this.adapterName, this.configPath + "screens")).map(x => x.file);
+        const screenNames =  (await this.connection.readDir(this.adapterName, this.configPath + "screens")).map(x => x.file);
         const screenPromises = screenNames.map(x => this.connection.readFile(this.adapterName, this.configPath + "screens/" + x, false))
         const screensLoaded = await Promise.all(screenPromises);
         this._screens = {};
-        screenNames.map((x, i) => this._screens[x.toLocaleLowerCase()] = JSON.parse(atob(screensLoaded[i].file)));
+        screenNames.forEach((x, i) => this._screens[x.toLocaleLowerCase()] = JSON.parse(atob(screensLoaded[i].file)));
         this.screensChanged.emit();
     }
 
@@ -59,12 +56,12 @@ class IobrokerHandler {
     }
 
 
-    async readAllStyles() {
-        const styleNames = await (await this.connection.readDir(this.adapterName, this.configPath + "styles")).map(x => x.file);
+    /*async readAllStyles() {
+        const styleNames = (await this.connection.readDir(this.adapterName, this.configPath + "styles")).map(x => x.file);
         const stylePromises = styleNames.map(x => this.connection.readFile(this.adapterName, this.configPath + "styles/" + x))
         const stylesLoaded = await Promise.all(stylePromises);
         this._styles = {};
-        styleNames.map((x, i) => this._styles[x.toLocaleLowerCase()] = JSON.parse(stylesLoaded[i].file));
+        styleNames.forEach((x, i) => this._styles[x.toLocaleLowerCase()] = JSON.parse(stylesLoaded[i].file));
         this.screensChanged.emit();
     }
 
@@ -79,7 +76,7 @@ class IobrokerHandler {
 
     getStyle(name: string): IStyle {
         return this._styles[name.toLocaleLowerCase()];
-    }
+    }*/
 }
 
 export const iobrokerHandler = IobrokerHandler.instance;

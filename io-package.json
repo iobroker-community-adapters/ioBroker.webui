@@ -4,7 +4,8 @@
         "version": "0.0.12",
         "title": "webui",
         "titleLang": {
-            "en": "webui"
+            "en": "webui",
+            "de": "webui"
         },
         "desc": {
             "en": "Graphical user interface for iobroker using Webcomponents"
