@@ -1,6 +1,6 @@
 {
   "name": "iobroker.webui",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "ioBroker webui",
   "type": "module",
   "scripts": {
@@ -33,7 +33,7 @@
     "@node-projects/base-custom-webcomponent": "0.4.0",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^2.4.1",
-    "@node-projects/web-component-designer": "^0.0.66",
+    "@node-projects/web-component-designer": "^0.0.67",
     "construct-style-sheets-polyfill": "^3.0.5",
     "dock-spawn-ts": "^2.301.0",
     "gulp-npm-files": "^0.1.3",

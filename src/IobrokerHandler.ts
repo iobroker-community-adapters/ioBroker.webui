@@ -14,8 +14,8 @@ class IobrokerHandler {
 
     private _screens: Record<string, IScreen> = {};
     private _styles: Record<string, IStyle> = {};
-    private _screenTemplateMap = new WeakMap<IScreen, HTMLTemplateElement>();
-    private _styleSheetMap = new WeakMap<IStyle, CSSStyleSheet>();
+    //private _screenTemplateMap = new WeakMap<IScreen, HTMLTemplateElement>();
+    //private _styleSheetMap = new WeakMap<IStyle, CSSStyleSheet>();
 
     screensChanged = new TypedEvent<void>();
     stylesChanged = new TypedEvent<void>();
@@ -25,8 +25,8 @@ class IobrokerHandler {
     }
 
     async init() {
-        //this.connection = new Connection({ protocol: 'ws', host: '192.168.1.2', port: 8082, admin5only: false, autoSubscribes: [] });
-        this.connection = new Connection({ protocol: 'ws', host: window.location.host, port: window.location.port, admin5only: false, autoSubscribes: [] });
+        this.connection = new Connection({ protocol: 'ws', host: '192.168.1.2', port: 8082, admin5only: false, autoSubscribes: [] });
+        //this.connection = new Connection({ protocol: 'ws', host: window.location.host, port: window.location.port, admin5only: false, autoSubscribes: [] });
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
 

@@ -2,7 +2,7 @@ import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projec
 import { IElementDefinition } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../IobrokerHandler.js";
 
-export class IobrokerSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
+export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
 
     public static override template = html`
         <style>
@@ -78,4 +78,4 @@ export class IobrokerSolutionExplorer extends BaseCustomWebComponentConstructorA
     }
 }
 
-customElements.define("iobroker-solution-explorer", IobrokerSolutionExplorer)
+customElements.define("iobroker-webui-solution-explorer", IobrokerWebuiSolutionExplorer)
