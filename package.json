@@ -9,7 +9,7 @@
     "start": "web-dev-server --node-resolve --open",
     "startwww": "cd www && web-dev-server --node-resolve --open",
     "prepublishOnly": "npm run build",
-    "build": "rm -r -f www && rm -r -f dist && tsc && gulp",
+    "build": "npm i && rm -r -f www && rm -r -f dist && tsc && gulp",
     "test:ts": "mocha --config test/mocharc.custom.json test/tests/*.js",
     "test:package": "mocha test/package --exit",
     "test:unit": "mocha test/unit --exit",
