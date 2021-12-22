@@ -19,6 +19,17 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         }
     }
 
+    _relativeStatesPath: string;
+    @property()
+    get relativeStatesPath() {
+        return this._relativeStatesPath;
+    }
+    set relativeStatesPath(value: string) {
+        if (this._relativeStatesPath != value) {
+            this._relativeStatesPath = value;
+        }
+    }
+
     public objects: any;
 
     constructor() {

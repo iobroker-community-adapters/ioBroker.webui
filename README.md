@@ -39,4 +39,4 @@ runtime.html?screenName=screen2
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2021-2022 jogibear9988 <jochen.kuehner@gmx.de>
+Copyright (c) 2021 jogibear9988 <jochen.kuehner@gmx.de>
