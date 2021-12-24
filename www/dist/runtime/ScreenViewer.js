@@ -5,6 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { BaseCustomWebComponentConstructorAppend, customElement, DomHelper, htmlFromString, property } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
+import { IobrokerWebuiBindingsHelper } from '../helper/IobrokerWebuiBindingsHelper.js';
 import { iobrokerHandler } from '../IobrokerHandler.js';
 let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     constructor() {
@@ -44,6 +45,7 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
             }
         };
         this.objects = new Proxy(target, proxyHandler);
+        IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot);
     }
     _loadScreen() {
         DomHelper.removeAllChildnodes(this.shadowRoot);
@@ -51,7 +53,7 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
         if (screen) {
             const template = htmlFromString(screen.html);
             const documentFragment = template.content.cloneNode(true);
-            this._bindingsParse(documentFragment, true);
+            //this._bindingsParse(documentFragment, true);
             this.shadowRoot.appendChild(documentFragment);
         }
     }
