@@ -1,4 +1,5 @@
 import { TypedEvent } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
+import { PropertiesHelper } from '/webui/node_modules/@node-projects/web-component-designer/./dist/index.js';
 import { BindingTarget } from '/webui/node_modules/@node-projects/web-component-designer/dist/elements/item/BindingTarget.js';
 import { iobrokerHandler } from '../IobrokerHandler.js';
 //;,[ are not allowed in bindings, so they could be used for a short form...
@@ -16,7 +17,7 @@ export class IobrokerWebuiBindingsHelper {
                 binding.signal = value.substring(1);
                 binding.inverted = true;
             }
-            return [name.substring(prefix.length), binding];
+            return [PropertiesHelper.dashToCamelCase(name.substring(prefix.length)), binding];
         }
         let binding = JSON.parse(value);
         binding.target = bindingTarget;
@@ -28,7 +29,7 @@ export class IobrokerWebuiBindingsHelper {
             else
                 binding.events = [name + '-changed'];
         }
-        return [name.substring(prefix.length), binding];
+        return [PropertiesHelper.dashToCamelCase(name.substring(prefix.length)), binding];
     }
     static serializeBinding(element, name, binding) {
         if (binding.target == BindingTarget.property &&
@@ -49,11 +50,22 @@ export class IobrokerWebuiBindingsHelper {
                 delete bindingCopy.events;
         }
         delete bindingCopy.target;
+        if (binding.target == BindingTarget.content)
+            return [bindingPrefixProperty + PropertiesHelper.camelToDashCase('innerHTML'), JSON.stringify(bindingCopy)];
         if (binding.target == BindingTarget.attribute)
-            return [bindingPrefixAttribute + name, JSON.stringify(bindingCopy)];
+            return [bindingPrefixAttribute + PropertiesHelper.camelToDashCase(name), JSON.stringify(bindingCopy)];
         if (binding.target == BindingTarget.css)
-            return [bindingPrefixCss + name, JSON.stringify(bindingCopy)];
-        return [bindingPrefixProperty + name, JSON.stringify(bindingCopy)];
+            return [bindingPrefixCss + PropertiesHelper.camelToDashCase(name), JSON.stringify(bindingCopy)];
+        return [bindingPrefixProperty + PropertiesHelper.camelToDashCase(name), JSON.stringify(bindingCopy)];
+    }
+    static getBindingAttributeName(element, propertyName, propertyTarget) {
+        if (propertyTarget == BindingTarget.attribute) {
+            return bindingPrefixAttribute + PropertiesHelper.camelToDashCase(propertyName);
+        }
+        if (propertyTarget == BindingTarget.css) {
+            return bindingPrefixCss + PropertiesHelper.camelToDashCase(propertyName);
+        }
+        return bindingPrefixProperty + PropertiesHelper.camelToDashCase(propertyName);
     }
     static *getBindings(element) {
         for (let a of element.attributes) {

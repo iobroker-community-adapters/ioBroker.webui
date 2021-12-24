@@ -26,7 +26,8 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
     ready() {
         this._parseAttributesToProperties();
         iobrokerHandler.screensChanged.on(() => this._loadScreen());
-        this._loadScreen();
+        if (this._screenName)
+            this._loadScreen();
         /*
         const target = {};
         const proxyHandler = {
@@ -49,12 +50,15 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
         DomHelper.removeAllChildnodes(this.shadowRoot);
         const screen = iobrokerHandler.getScreen(this.screenName);
         if (screen) {
-            const template = htmlFromString(screen.html);
-            const documentFragment = template.content.cloneNode(true);
-            //this._bindingsParse(documentFragment, true);
-            this.shadowRoot.appendChild(documentFragment);
-            this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot);
+            this.loadScreenData(screen.html);
         }
+    }
+    loadScreenData(html) {
+        const template = htmlFromString(html);
+        const documentFragment = template.content.cloneNode(true);
+        //this._bindingsParse(documentFragment, true);
+        this.shadowRoot.appendChild(documentFragment);
+        this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot);
     }
 };
 __decorate([

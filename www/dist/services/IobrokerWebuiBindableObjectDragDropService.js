@@ -37,6 +37,16 @@ export class IobrokerWebuiBindableObjectDragDropService {
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {
             // Add binding to drop target...
+            if (element instanceof HTMLInputElement) {
+                const binding = { signal: bindableObject.fullName, target: BindingTarget.property };
+                const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(element, element.type == 'checkbox' ? 'checked' : 'value', binding);
+                designItem.setAttribute(serializedBinding[0], serializedBinding[1]);
+            }
+            else {
+                const binding = { signal: bindableObject.fullName, target: BindingTarget.content };
+                const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(element, null, binding);
+                designItem.setAttribute(serializedBinding[0], serializedBinding[1]);
+            }
         }
         else {
             const position = designerCanvas.getNormalizedEventCoordinates(event);
@@ -44,7 +54,11 @@ export class IobrokerWebuiBindableObjectDragDropService {
             const di = DesignItem.createDesignItemFromInstance(input, designerCanvas.serviceContainer, designerCanvas.instanceServiceContainer);
             const grp = di.openGroup("Insert");
             const binding = { signal: bindableObject.fullName, target: BindingTarget.property };
-            const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value', binding);
+            let serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value', binding);
+            if (bindableObject.originalObject.val === true || bindableObject.originalObject.val === false) {
+                serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'checked', binding);
+                di.setAttribute("type", "checkbox");
+            }
             di.setAttribute(serializedBinding[0], serializedBinding[1]);
             di.setStyle('position', 'absolute');
             di.setStyle('left', position.x + 'px');

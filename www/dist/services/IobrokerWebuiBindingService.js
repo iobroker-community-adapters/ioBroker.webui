@@ -13,4 +13,9 @@ export class IobrokerWebuiBindingService {
     setBinding(designItem, binding) {
         return true;
     }
+    clearBinding(designItem, propertyName, propertyTarget) {
+        const name = IobrokerWebuiBindingsHelper.getBindingAttributeName(designItem.element, propertyName, propertyTarget);
+        designItem.removeAttribute(name);
+        return true;
+    }
 }
