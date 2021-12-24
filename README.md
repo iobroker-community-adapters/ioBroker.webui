@@ -2,6 +2,8 @@
 
 webui for ioBroker
 
+![image](https://user-images.githubusercontent.com/364896/147159584-e0e43d37-9e63-409d-867b-458c5dd8be4e.png)
+
 ## Developing
 
   * Install dependencies
