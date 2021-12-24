@@ -1,4 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, customElement, DomHelper, htmlFromString, property } from "@node-projects/base-custom-webcomponent";
+import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper";
 import { iobrokerHandler } from "../IobrokerHandler";
 
 @customElement("iobroker-webui-screen-viewer")
@@ -54,6 +55,8 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         };
 
         this.objects = new Proxy(target, proxyHandler);
+
+        IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot);
     }
 
     private _loadScreen() {
@@ -62,7 +65,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         if (screen) {
             const template = htmlFromString(screen.html);
             const documentFragment = template.content.cloneNode(true);
-            this._bindingsParse(documentFragment, true);
+            //this._bindingsParse(documentFragment, true);
             this.shadowRoot.appendChild(documentFragment);
         }
     }

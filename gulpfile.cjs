@@ -2,7 +2,7 @@ const { src, dest, series } = require('gulp');
 const path = require('path');
 const fs = require('fs');
 const through2 = require('through2');
-const gnf = require('gulp-npm-files');
+const del = require('del');
 
 const rootPath = '/webui';
 
@@ -20,7 +20,7 @@ function fixJsImports() {
                     var res = '';
                     while ((m = checkImportRegex.exec(code)) !== null) {
                         var currentValue = m[4];
-                       
+
                         var newValue = buildImportName(currentValue, file.dirname, file.path);
                         if (newValue != currentValue) {
                             res += code.substr(pos, m.index - pos);
@@ -115,8 +115,52 @@ function buildImportFileName(importText, dirName = '') {
 }
 
 function copyNodeModules() {
-    return src(gnf(), {base:'./'})
-      .pipe(dest('./www'));
+    let runtimeModules = [
+        "@iobroker/socket-client",
+        "@node-projects/base-custom-webcomponent",
+        "@node-projects/lean-he-esm",
+        "@node-projects/node-html-parser-esm",
+        "@node-projects/web-component-designer",
+        "construct-style-sheets-polyfill",
+        "dock-spawn-ts",
+        //"jquery",
+        //"jquery.fancytree",
+        //"metro4-dist",
+        "mobile-drag-drop",
+        "monaco-editor",
+
+        "jquery.fancytree/dist/skin-win8",
+    ]
+
+    runtimeModules = runtimeModules.map(x => './node_modules/' + x + '/**/*')
+
+    return src(runtimeModules, { base: './' })
+        .pipe(dest('./www'));
+}
+
+function copyNodeFiles() {
+    let runtimeModules = [
+        "metro4-dist/js/metro.min.js",
+        "metro4-dist/mif/metro.woff",
+        "jquery/dist/jquery.min.js",
+        "jquery.fancytree/dist/jquery.fancytree-all-deps.min.js",
+        "jquery.fancytree/dist/modules/jquery.fancytree.table.js",
+    ]
+
+    runtimeModules = runtimeModules.map(x => './node_modules/' + x)
+
+    return src(runtimeModules, { base: './' })
+        .pipe(dest('./www'));
+}
+
+function cleanupNodeModules() {
+    let notUsed = [
+        "./www/node_modules/monaco-editor/dev",
+        "./www/node_modules/monaco-editor/esm",
+        "./www/node_modules/monaco-editor/min-maps"
+    ]
+
+    return del(notUsed);
 }
 
 function copyDist() {
@@ -134,4 +178,4 @@ function copyHtml() {
         .pipe(dest('./www'));
 }
 
-exports.default = series(copyNodeModules, copyDist, copyAssets, copyHtml, fixJsImports);
+exports.default = series(copyNodeModules, copyNodeFiles, cleanupNodeModules, copyDist, copyAssets, copyHtml, fixJsImports);

@@ -34,7 +34,7 @@ class IobrokerHandler {
     }
 
     async readAllScreens() {
-        const screenNames =  (await this.connection.readDir(this.adapterName, this.configPath + "screens")).map(x => x.file);
+        const screenNames = (await this.connection.readDir(this.adapterName, this.configPath + "screens")).map(x => x.file);
         const screenPromises = screenNames.map(x => this.connection.readFile(this.adapterName, this.configPath + "screens/" + x, false))
         const screensLoaded = await Promise.all(screenPromises);
         this._screens = {};
