@@ -43,11 +43,12 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
         this.objects = new Proxy(target, proxyHandler);
         */
     }
-    _loadScreen() {
+    async _loadScreen() {
         if (this._iobBindings)
             this._iobBindings.forEach(x => x());
         this._iobBindings = null;
         DomHelper.removeAllChildnodes(this.shadowRoot);
+        await iobrokerHandler.connection.waitForFirstConnection();
         const screen = iobrokerHandler.getScreen(this.screenName);
         if (screen) {
             this.loadScreenData(screen.html);

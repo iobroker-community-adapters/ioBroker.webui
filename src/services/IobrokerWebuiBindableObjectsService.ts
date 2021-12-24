@@ -19,8 +19,10 @@ export class IobrokerWebuiBindableObjectsService implements IBindableObjectsServ
   }
 
   async getBindableObjects(parent?: IBindableObject<ioBroker.State>): Promise<IBindableObject<ioBroker.State>[]> {
-    if (!this._states)
+    if (!this._states) {
+      await iobrokerHandler.connection.waitForFirstConnection();
       this._states = await iobrokerHandler.connection.getStates();
+    }
 
     let start = "";
     if (parent)

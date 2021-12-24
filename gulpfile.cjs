@@ -181,4 +181,13 @@ function copyHtml() {
         .pipe(dest('./www'));
 }
 
-exports.default = series(copyNodeModules, copyNodeFiles, cleanupNodeModules, copyDist, copyAssets, copyHtml, fixJsImports);
+function copyManifest() {
+    return src('./manifest.json')
+        .pipe(dest('./www'));
+}
+
+function copyConfigJs() {
+    return src('./config/config.js')
+        .pipe(dest('./www'));
+}
+exports.default = series(copyNodeModules, copyNodeFiles, cleanupNodeModules, copyDist, copyAssets, copyHtml, copyManifest, copyConfigJs, fixJsImports);

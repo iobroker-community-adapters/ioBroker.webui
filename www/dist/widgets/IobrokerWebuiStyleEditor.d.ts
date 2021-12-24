@@ -20,7 +20,7 @@ export declare class IobrokerWebuiStyleEditor extends BaseCustomWebComponentCons
     private static _initalized;
     constructor();
     static initMonacoEditor(): Promise<unknown>;
-    ready(): Promise<void>;
+    ready(): void;
     undo(): void;
     redo(): void;
     copy(): void;

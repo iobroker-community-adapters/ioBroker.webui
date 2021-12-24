@@ -18,7 +18,6 @@ import { DockSpawnTsWebcomponent } from '/webui/node_modules/dock-spawn-ts/lib/j
 import { BaseCustomWebComponentConstructorAppend, css, html } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
 import { CommandHandling } from './CommandHandling.js';
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
-import "./IobrokerHandler.js";
 import "./widgets/IobrokerWebuiSolutionExplorer.js";
 import "./runtime/ScreenViewer.js";
 import "./widgets/IobrokerWebuiStyleEditor.js";

@@ -4,19 +4,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
-  
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
+  <link rel="manifest" href="/manifest.json">
+
   <link rel="stylesheet" href="./node_modules/metro4-dist/css/metro-all.min.css">
 
   <!-- Drag/Drop support on touch devices -->
   <link rel="stylesheet" href="./node_modules/mobile-drag-drop/default.css">
 
-  <title>web-component-designer-demo</title>
+  <title>iobroker-webui designer</title>
 
   <script src="./node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js"></script>
 
-  <!--<script src="http://192.168.1.2:8082/lib/js/socket.io.js"></script>-->
-  <script src="../lib/js/socket.io.js"></script>
+  <script src="config.js"></script>
+  <script type="module">
+    import { iobrokerHandler } from './dist/IobrokerHandler.js';
+
+    const script = document.createElement("script");
+    script.src = window.iobrokerSocketScriptUrl;
+    script.onload = () => iobrokerHandler.init();
+    document.head.appendChild(script);
+  </script>
 
   <script src="./node_modules/jquery/dist/jquery.min.js"></script>
   <script src="./node_modules/jquery.fancytree/dist/jquery.fancytree-all-deps.min.js"></script>
@@ -25,8 +34,14 @@
   <script src="./node_modules/mobile-drag-drop/index.js"></script>
   <script src="./node_modules/@node-projects/web-component-designer/dist/polyfill/mobileDragDrop.js"></script>
 
-  <!-- if you use Moacco Editor -->
-  <script src="./node_modules/monaco-editor/min/vs/loader.js"></script>
+  <script type="module"> //monaco has an require wich destorys loading of some modules, fix this with a monaco esm version
+    setTimeout(() => {
+      const script = document.createElement("script");
+      script.src = './node_modules/monaco-editor/min/vs/loader.js';
+      document.head.appendChild(script);
+    }, 500);
+  </script>
+
 
   <script type="module">
     import './dist/IobrokerWebuiAppShell.js';
@@ -167,30 +182,35 @@
         <div class="group flex-column">
           <div class="toolbar" id="tools">
             <button class="tool-button" data-command="setTool" data-command-parameter="Pointer" title="Pointer tool"
-            style="background: green; background-image: url('./assets/images/layout/PointerTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
-            <button class="tool-button" data-command="setTool" data-command-parameter="MagicWandSelector" title="Magic Wand Selector"
-            style="background-image: url('./assets/images/layout/MagicWandTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+              style="background: green; background-image: url('./assets/images/layout/PointerTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="MagicWandSelector"
+              title="Magic Wand Selector"
+              style="background-image: url('./assets/images/layout/MagicWandTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="DrawLine" title="Draw Line"
-            style="background-image: url('./assets/images/layout/DrawLineTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+              style="background-image: url('./assets/images/layout/DrawLineTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="DrawPath" title="Draw Path"
-            style="background-image: url('./assets/images/layout/DrawPathTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+              style="background-image: url('./assets/images/layout/DrawPathTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="DrawRect" title="Draw Rectangle"
-            style="background-image: url('./assets/images/layout/DrawRectTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
-            <button class="tool-button" data-command="setTool" data-command-parameter="DrawEllipsis" title="Draw Ellipsis"
-            style="background-image: url('./assets/images/layout/DrawEllipTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+              style="background-image: url('./assets/images/layout/DrawRectTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="DrawEllipsis"
+              title="Draw Ellipsis"
+              style="background-image: url('./assets/images/layout/DrawEllipTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="PickColor" title="Color picker"
-            style="background-image: url('./assets/images/layout/ColorPickerTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+              style="background-image: url('./assets/images/layout/ColorPickerTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="Zoom" title="Zoom tool"
-            style="background-image: url('./assets/images/layout/ZoomTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+              style="background-image: url('./assets/images/layout/ZoomTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="Text" title="Text tool"
-            style="background-image: url('./assets/images/layout/TextTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+              style="background-image: url('./assets/images/layout/TextTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="TextBoc" title="Textbox Tool"
-            style="background-image: url('./assets/images/layout/TextBoxTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
-        </div>
+              style="background-image: url('./assets/images/layout/TextBoxTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+          </div>
           <div class="toolbar" id="color">
-            <input type="color" title="stroke color" data-command="setStrokeColor" value="#000000" style="padding: 0; width:20px; height:20px; margin-right: 5px;">
-            <input type="color" title="fill brush" data-command="setFillBrush" value="#ffffff" style="padding: 0; width:20px; height:20px; margin-right: 5px;">   
-            <input type="range" title="stroke thickness" data-command="setStrokeThickness" min="1" max="20" value="3" style="padding: 0; width:80px; height:20px; margin-right: 5px;">   
+            <input type="color" title="stroke color" data-command="setStrokeColor" value="#000000"
+              style="padding: 0; width:20px; height:20px; margin-right: 5px;">
+            <input type="color" title="fill brush" data-command="setFillBrush" value="#ffffff"
+              style="padding: 0; width:20px; height:20px; margin-right: 5px;">
+            <input type="range" title="stroke thickness" data-command="setStrokeThickness" min="1" max="20" value="3"
+              style="padding: 0; width:80px; height:20px; margin-right: 5px;">
           </div>
           <span class="title">Tools</span>
         </div>
@@ -210,8 +230,10 @@
       </div>
     </div>
   </nav>
-  <iobroker-webui-app-shell id="shell" style="height: calc(100% - 121px); width: 100%; position: absolute;"></iobroker-webui-app-shell>
-  <div id="load" style="position: absolute; width: 100%; height: 100%; z-index: 9999999999; top: 0; left: 0; background: white;">
+  <iobroker-webui-app-shell id="shell" style="height: calc(100% - 121px); width: 100%; position: absolute;">
+  </iobroker-webui-app-shell>
+  <div id="load"
+    style="position: absolute; width: 100%; height: 100%; z-index: 9999999999; top: 0; left: 0; background: white;">
     <div class="lds-facebook">
       <div></div>
       <div></div>

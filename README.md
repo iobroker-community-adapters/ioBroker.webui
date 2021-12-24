@@ -13,12 +13,19 @@ webui for ioBroker
 
   * Compile Typescript after doing changes
 ```
-  $ npm run build
+  $ npm run tsc
+```
+
+  * Adjust 'config.js' to match you ip-adress and port for your iobroker
+```
+    window.iobrokerHost = '192.168.1.2';
+    window.iobrokerPort = '8082';
+    window.iobrokerSocketScriptUrl = 'http://' + window.iobrokerHost + ':' + window.iobrokerPort + '/lib/js/socket.io.js';
 ```
 
   * Run the app in a local server
 ```
-  $ npm start --prefix www
+  $ npm start
 ```
 
   * Navigate Chrome to [localhost:8000]() to see the app.

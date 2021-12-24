@@ -42,28 +42,30 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
             }
         });
     }
-    async ready() {
+    ready() {
         this._container = this._getDomElement('container');
-        await IobrokerWebuiStyleEditor.initMonacoEditor();
-        //@ts-ignore
-        this._editor = monaco.editor.create(this._container, {
-            automaticLayout: true,
-            value: this.text,
-            language: 'css',
-            minimap: {
-                //@ts-ignore
-                size: 'fill'
-            },
-            readOnly: this.readOnly
-        });
-        this._getDomElement('loading').style.display = 'none';
-        if (this._text)
-            this._editor.setValue(this._text);
-        this._model = this._editor.getModel();
-        this._model.onDidChangeContent((e) => {
-            if (this.onTextChanged)
-                this.onTextChanged(e);
-        });
+        setTimeout(async () => {
+            await IobrokerWebuiStyleEditor.initMonacoEditor();
+            //@ts-ignore
+            this._editor = monaco.editor.create(this._container, {
+                automaticLayout: true,
+                value: this.text,
+                language: 'css',
+                minimap: {
+                    //@ts-ignore
+                    size: 'fill'
+                },
+                readOnly: this.readOnly
+            });
+            this._getDomElement('loading').style.display = 'none';
+            if (this._text)
+                this._editor.setValue(this._text);
+            this._model = this._editor.getModel();
+            this._model.onDidChangeContent((e) => {
+                if (this.onTextChanged)
+                    this.onTextChanged(e);
+            });
+        }, 1000);
     }
     undo() {
         this._editor.trigger('', 'undo', null);

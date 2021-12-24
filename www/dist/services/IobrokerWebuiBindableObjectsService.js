@@ -15,8 +15,10 @@ export class IobrokerWebuiBindableObjectsService {
         return result;
     }
     async getBindableObjects(parent) {
-        if (!this._states)
+        if (!this._states) {
+            await iobrokerHandler.connection.waitForFirstConnection();
             this._states = await iobrokerHandler.connection.getStates();
+        }
         let start = "";
         if (parent)
             start = parent.fullName;
