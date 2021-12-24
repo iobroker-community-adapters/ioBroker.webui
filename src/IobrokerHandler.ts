@@ -24,8 +24,8 @@ class IobrokerHandler {
     }
 
     async init() {
-        this.connection = new Connection({ protocol: 'ws', host: '192.168.1.2', port: 8082, admin5only: false, autoSubscribes: [] });
-        //this.connection = new Connection({ protocol: 'ws', host: window.location.hostname, port: window.location.port, admin5only: false, autoSubscribes: [] });
+        //this.connection = new Connection({ protocol: 'ws', host: '192.168.1.2', port: 8082, admin5only: false, autoSubscribes: [] });
+        this.connection = new Connection({ protocol: 'ws', host: window.location.hostname, port: window.location.port, admin5only: false, autoSubscribes: [] });
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
         await this.readAllScreens();
