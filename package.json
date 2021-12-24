@@ -35,7 +35,7 @@
     "@node-projects/base-custom-webcomponent": "0.4.0",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^2.4.1",
-    "@node-projects/web-component-designer": "^0.0.69",
+    "@node-projects/web-component-designer": "^0.0.71",
     "@types/iobroker": "^3.3.4",
     "@types/jquery": "^3.5.11",
     "@types/jquery.fancytree": "^0.0.7",
@@ -43,8 +43,8 @@
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
     "construct-style-sheets-polyfill": "^3.0.5",
-    "dock-spawn-ts": "^2.301.0",
     "del": "^6.0.0",
+    "dock-spawn-ts": "^2.301.0",
     "eslint": "^8.5.0",
     "esprima-next": "^5.7.0",
     "gulp": "^4.0.2",
@@ -58,5 +58,8 @@
     "sinon-chai": "^3.7.0",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "tslib": "^2.3.1"
   }
 }

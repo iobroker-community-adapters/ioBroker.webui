@@ -1,4 +1,7 @@
 import { OverlayLayer, DesignItem, IBindableObject, IBindableObjectDragDropService, IDesignerCanvas, InsertAction } from "@node-projects/web-component-designer";
+import { BindingTarget } from "@node-projects/web-component-designer/dist/elements/item/BindingTarget";
+import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper";
+import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding";
 
 export class IobrokerWebuiBindableObjectDragDropService implements IBindableObjectDragDropService {
     rectMap = new Map<Element, SVGRectElement>();
@@ -45,7 +48,9 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
             const input = document.createElement('input');
             const di = DesignItem.createDesignItemFromInstance(input, designerCanvas.serviceContainer, designerCanvas.instanceServiceContainer);
             const grp = di.openGroup("Insert");
-            di.setAttribute('value', "[[this.objects['" + bindableObject.fullName + "']]]")
+            const binding: IIobrokerWebuiBinding = { signal: bindableObject.fullName, target: BindingTarget.property };
+            const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value', binding);
+            di.setAttribute(serializedBinding[0], serializedBinding[1]);
             di.setStyle('position', 'absolute');
             di.setStyle('left', position.x + 'px');
             di.setStyle('top', position.y + 'px');

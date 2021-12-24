@@ -126,6 +126,7 @@ function copyNodeModules() {
         //"jquery",
         //"jquery.fancytree",
         //"metro4-dist",
+        //"tslib"
         "mobile-drag-drop",
         "monaco-editor",
 
@@ -145,6 +146,7 @@ function copyNodeFiles() {
         "jquery/dist/jquery.min.js",
         "jquery.fancytree/dist/jquery.fancytree-all-deps.min.js",
         "jquery.fancytree/dist/modules/jquery.fancytree.table.js",
+        "tslib/tslib.es6.js",
     ]
 
     runtimeModules = runtimeModules.map(x => './node_modules/' + x)

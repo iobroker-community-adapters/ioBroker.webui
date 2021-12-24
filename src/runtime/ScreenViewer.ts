@@ -5,8 +5,7 @@ import { iobrokerHandler } from "../IobrokerHandler";
 @customElement("iobroker-webui-screen-viewer")
 export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
-    _states: { [name: string]: any } = {};
-    _subscriptions = new Set<string>();
+    private _iobBindings: (() => void)[];
 
     _screenName: string;
     @property()
@@ -41,9 +40,8 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         this._parseAttributesToProperties();
         iobrokerHandler.screensChanged.on(() => this._loadScreen());
         this._loadScreen();
-
+        /*
         const target = {};
-
         const proxyHandler = {
             get: (target, prop, receiver) => {
                 return this.state(prop);
@@ -55,11 +53,13 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         };
 
         this.objects = new Proxy(target, proxyHandler);
-
-        IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot);
+        */
     }
 
     private _loadScreen() {
+        if (this._iobBindings)
+            this._iobBindings.forEach(x => x());
+        this._iobBindings = null;
         DomHelper.removeAllChildnodes(this.shadowRoot);
         const screen = iobrokerHandler.getScreen(this.screenName)
         if (screen) {
@@ -67,8 +67,13 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             const documentFragment = template.content.cloneNode(true);
             //this._bindingsParse(documentFragment, true);
             this.shadowRoot.appendChild(documentFragment);
+            this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot);
         }
     }
+
+    /*
+    _states: { [name: string]: any } = {};
+    _subscriptions = new Set<string>();
 
     state(name: string) {
         if (!this._subscriptions.has(name)) {
@@ -85,4 +90,5 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     set(name: string, value: ioBroker.StateValue) {
         iobrokerHandler.connection.setState(name, value);
     }
+    */
 }

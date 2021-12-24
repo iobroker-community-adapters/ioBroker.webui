@@ -4,14 +4,16 @@ import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, TreeVie
 import createDefaultServiceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 import { IobrokerWebuiBindableObjectsService } from './services/IobrokerWebuiBindableObjectsService.js';
 import { IobrokerWebuiBindableObjectDragDropService } from './services/IobrokerWebuiBindableObjectDragDropService.js';
+import { IobrokerWebuiBindingService } from './services/IobrokerWebuiBindingService.js';
 
-const rootPath = new URL(import.meta.url).pathname.split('/').slice(0,-2).join('/'); // -2 remove file & dist
+const rootPath = new URL(import.meta.url).pathname.split('/').slice(0, -2).join('/'); // -2 remove file & dist
 
 let serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
 serviceContainer.register("htmlParserService", new NodeHtmlParserService(rootPath + '/node_modules/@node-projects/node-html-parser-esm/dist/index.js'));
 serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableObjectsService());
 serviceContainer.register("bindableObjectDragDropService", new IobrokerWebuiBindableObjectDragDropService())
+serviceContainer.register("bindingService", new IobrokerWebuiBindingService())
 serviceContainer.config.codeViewWidget = CodeViewMonaco;
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
@@ -21,10 +23,10 @@ import { CommandHandling } from './CommandHandling'
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
-import "./IobrokerHandler.js"
-import "./widgets/IobrokerWebuiSolutionExplorer.js"
-import "./runtime/ScreenViewer.js"
-import "./widgets/IobrokerWebuiStyleEditor.js"
+import "./IobrokerHandler.js";
+import "./widgets/IobrokerWebuiSolutionExplorer.js";
+import "./runtime/ScreenViewer.js";
+import "./widgets/IobrokerWebuiStyleEditor.js";
 
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
   activeElement: HTMLElement;
@@ -144,7 +146,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   private async _setupServiceContainer() {
     serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/elements-webui.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
-    
+
     serviceContainer.globalContext.onToolChanged.on((e) => {
       let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue).map(([k]) => k)[0];
       if (e.newValue == null)
@@ -177,7 +179,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
 window.customElements.define('iobroker-webui-app-shell', IobrokerWebuiAppShell);
 
 declare global {
-    interface Window {
-        appShell: IobrokerWebuiAppShell;
-    }
+  interface Window {
+    appShell: IobrokerWebuiAppShell;
+  }
 }
