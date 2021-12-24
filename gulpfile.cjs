@@ -141,6 +141,7 @@ function copyNodeModules() {
 
 function copyNodeFiles() {
     let runtimeModules = [
+        "metro4-dist/css/metro-all.min.css",
         "metro4-dist/js/metro.min.js",
         "metro4-dist/mif/metro.woff",
         "jquery/dist/jquery.min.js",
