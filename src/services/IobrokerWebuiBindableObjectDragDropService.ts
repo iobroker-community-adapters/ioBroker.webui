@@ -33,7 +33,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
         return 'copy';
     }
 
-    async drop(designerCanvas: IDesignerCanvas, event: DragEvent, bindableObject: IBindableObject<void>) {
+    async drop(designerCanvas: IDesignerCanvas, event: DragEvent, bindableObject: IBindableObject<ioBroker.State>) {
         for (let r of this.rectMap.values()) {
             designerCanvas.overlayLayer.removeOverlay(r);
         }
@@ -43,13 +43,27 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {
             // Add binding to drop target...
+            if (element instanceof HTMLInputElement) {
+                const binding: IIobrokerWebuiBinding = { signal: bindableObject.fullName, target: BindingTarget.property };
+                const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(element, element.type == 'checkbox' ? 'checked' : 'value', binding);
+                designItem.setAttribute(serializedBinding[0], serializedBinding[1]);
+            }
+            else {
+                const binding = { signal: bindableObject.fullName, target: BindingTarget.content };
+                const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(element, null, binding);
+                designItem.setAttribute(serializedBinding[0], serializedBinding[1]);
+            }
         } else {
             const position = designerCanvas.getNormalizedEventCoordinates(event);
             const input = document.createElement('input');
             const di = DesignItem.createDesignItemFromInstance(input, designerCanvas.serviceContainer, designerCanvas.instanceServiceContainer);
             const grp = di.openGroup("Insert");
             const binding: IIobrokerWebuiBinding = { signal: bindableObject.fullName, target: BindingTarget.property };
-            const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value', binding);
+            let serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value', binding);
+            if (bindableObject.originalObject.val === true ||bindableObject.originalObject.val === false) {
+                serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'checked', binding);
+                di.setAttribute("type", "checkbox");    
+            }
             di.setAttribute(serializedBinding[0], serializedBinding[1]);
             di.setStyle('position', 'absolute');
             di.setStyle('left', position.x + 'px');

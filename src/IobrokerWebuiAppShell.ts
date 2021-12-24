@@ -5,6 +5,7 @@ import createDefaultServiceContainer from '@node-projects/web-component-designer
 import { IobrokerWebuiBindableObjectsService } from './services/IobrokerWebuiBindableObjectsService.js';
 import { IobrokerWebuiBindableObjectDragDropService } from './services/IobrokerWebuiBindableObjectDragDropService.js';
 import { IobrokerWebuiBindingService } from './services/IobrokerWebuiBindingService.js';
+import { IobrokerWebuiDemoProviderService } from './services/IobrokerWebuiDemoProviderService.js';
 
 const rootPath = new URL(import.meta.url).pathname.split('/').slice(0, -2).join('/'); // -2 remove file & dist
 
@@ -14,6 +15,7 @@ serviceContainer.register("htmlParserService", new NodeHtmlParserService(rootPat
 serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableObjectsService());
 serviceContainer.register("bindableObjectDragDropService", new IobrokerWebuiBindableObjectDragDropService())
 serviceContainer.register("bindingService", new IobrokerWebuiBindingService())
+serviceContainer.register("demoProviderService", new IobrokerWebuiDemoProviderService())
 serviceContainer.config.codeViewWidget = CodeViewMonaco;
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';

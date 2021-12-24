@@ -1,4 +1,5 @@
 import { TypedEvent } from "@node-projects/base-custom-webcomponent";
+import { PropertiesHelper } from "@node-projects/web-component-designer";
 import { BindingTarget } from "@node-projects/web-component-designer/dist/elements/item/BindingTarget";
 import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding";
 import { iobrokerHandler } from "../IobrokerHandler";
@@ -23,7 +24,7 @@ export class IobrokerWebuiBindingsHelper {
                 binding.inverted = true;
             }
 
-            return [name.substring(prefix.length), binding];
+            return [PropertiesHelper.dashToCamelCase(name.substring(prefix.length)), binding];
         }
 
         let binding: IIobrokerWebuiBinding = JSON.parse(value);
@@ -37,7 +38,7 @@ export class IobrokerWebuiBindingsHelper {
             else
                 binding.events = [name + '-changed'];
         }
-        return [name.substring(prefix.length), binding];
+        return [PropertiesHelper.dashToCamelCase(name.substring(prefix.length)), binding];
 
 
     }
@@ -63,11 +64,23 @@ export class IobrokerWebuiBindingsHelper {
         }
         delete bindingCopy.target;
 
+        if (binding.target == BindingTarget.content)
+            return [bindingPrefixProperty + PropertiesHelper.camelToDashCase('innerHTML'), JSON.stringify(bindingCopy)];
         if (binding.target == BindingTarget.attribute)
-            return [bindingPrefixAttribute + name, JSON.stringify(bindingCopy)];
+            return [bindingPrefixAttribute + PropertiesHelper.camelToDashCase(name), JSON.stringify(bindingCopy)];
         if (binding.target == BindingTarget.css)
-            return [bindingPrefixCss + name, JSON.stringify(bindingCopy)];
-        return [bindingPrefixProperty + name, JSON.stringify(bindingCopy)];
+            return [bindingPrefixCss + PropertiesHelper.camelToDashCase(name), JSON.stringify(bindingCopy)];
+        return [bindingPrefixProperty + PropertiesHelper.camelToDashCase(name), JSON.stringify(bindingCopy)];
+    }
+
+    static getBindingAttributeName(element: Element, propertyName: string, propertyTarget: BindingTarget) {
+        if (propertyTarget == BindingTarget.attribute) {
+            return bindingPrefixAttribute + PropertiesHelper.camelToDashCase(propertyName);
+        }
+        if (propertyTarget == BindingTarget.css) {
+            return bindingPrefixCss + PropertiesHelper.camelToDashCase(propertyName);
+        }
+        return bindingPrefixProperty + PropertiesHelper.camelToDashCase(propertyName);
     }
 
     static * getBindings(element: Element) {
