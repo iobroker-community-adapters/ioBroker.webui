@@ -21,6 +21,13 @@ DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css
 import "./widgets/IobrokerWebuiSolutionExplorer.js";
 import "./runtime/ScreenViewer.js";
 import "./widgets/IobrokerWebuiStyleEditor.js";
+try {
+    let configWidgets = await import(window.iobrokerWebuiRootUrl + './configWidgets.js');
+    configWidgets.registerWidgets(serviceContainer);
+}
+catch (err) {
+    console.error(err);
+}
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
     activeElement;
     mainPage = 'designer';

@@ -87,7 +87,6 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
                 readOnly: this.readOnly,
                 fixedOverflowWidgets: true
             });
-            this._getDomElement('loading').style.display = 'none';
             if (this._text)
                 this._editor.setValue(this._text);
             this._model = this._editor.getModel();

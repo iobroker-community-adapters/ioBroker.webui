@@ -6,6 +6,7 @@ declare global {
     interface Window {
         iobrokerHost: string;
         iobrokerPort: number;
+        iobrokerWebuiRootUrl: string;
     }
 }
 declare class IobrokerHandler {
@@ -19,6 +20,7 @@ declare class IobrokerHandler {
     stylesChanged: TypedEvent<void>;
     constructor();
     init(): Promise<void>;
+    loadWidgets(): Promise<void>;
     readAllScreens(): Promise<void>;
     saveScreen(name: string, screen: IScreen): Promise<void>;
     getScreenNames(): string[];
