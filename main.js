@@ -25,9 +25,9 @@ adapter.on('ready', () => main());
 
 function upload() {
     return new Promise(resolve => {
-        adapter.log.info(`Upload ${adapter.name} anew, while changes detected...`);
+        adapter.log.info(`Upload ${adapter.name}, changes detected...`);
         const file = utils.controllerDir + '/iobroker.js';
-        const child = require('child_process').spawn('node', [file, 'upload', adapter.name, 'widgets']);
+        const child = import('child_process').spawn('node', [file, 'upload', adapter.name, 'widgets']);
         let count = 0;
         child.stdout.on('data', data => {
             count++;
@@ -76,6 +76,8 @@ async function main() {
     const filesChanged = await updateWebuiConfig();
     if (filesChanged) {
         await upload();
+    } else {
+        adapter.log.info(`No upload ${adapter.name}, no changes...`);
     }
     adapter.stop();
 }
