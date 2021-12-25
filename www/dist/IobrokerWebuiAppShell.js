@@ -22,7 +22,7 @@ import "./widgets/IobrokerWebuiSolutionExplorer.js";
 import "./runtime/ScreenViewer.js";
 import "./widgets/IobrokerWebuiStyleEditor.js";
 try {
-    let configWidgets = await import(window.iobrokerWebuiRootUrl + './configWidgets.js');
+    let configWidgets = await import(window.iobrokerWebuiRootUrl + 'webui-widgets/configWidgets.js');
     configWidgets.registerWidgets(serviceContainer);
 }
 catch (err) {

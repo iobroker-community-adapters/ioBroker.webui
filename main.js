@@ -13,6 +13,7 @@
 /* jslint node: true */
 
 import utils from '@iobroker/adapter-core';
+import { spawn } from 'child_process';
 import webuiWidgetSync from './lib/webuiWidgetSync.js';
 
 import fs from 'fs';
@@ -27,7 +28,7 @@ function upload() {
     return new Promise(resolve => {
         adapter.log.info(`Upload ${adapter.name}, changes detected...`);
         const file = utils.controllerDir + '/iobroker.js';
-        const child = import('child_process').spawn('node', [file, 'upload', adapter.name, 'widgets']);
+        const child = spawn('node', [file, 'upload', adapter.name, 'widgets']);
         let count = 0;
         child.stdout.on('data', data => {
             count++;
