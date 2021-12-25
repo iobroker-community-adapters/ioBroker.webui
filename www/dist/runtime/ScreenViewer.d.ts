@@ -4,9 +4,9 @@ export declare class ScreenViewer extends BaseCustomWebComponentConstructorAppen
     _screenName: string;
     get screenName(): string;
     set screenName(value: string);
-    _relativeStatesPath: string;
-    get relativeStatesPath(): string;
-    set relativeStatesPath(value: string);
+    _relativeSignalsPath: string;
+    get relativeSignalsPath(): string;
+    set relativeSignalsPath(value: string);
     objects: any;
     constructor();
     ready(): void;

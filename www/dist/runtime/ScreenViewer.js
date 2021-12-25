@@ -15,12 +15,12 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
             this._loadScreen();
         }
     }
-    get relativeStatesPath() {
-        return this._relativeStatesPath;
+    get relativeSignalsPath() {
+        return this._relativeSignalsPath;
     }
-    set relativeStatesPath(value) {
-        if (this._relativeStatesPath != value) {
-            this._relativeStatesPath = value;
+    set relativeSignalsPath(value) {
+        if (this._relativeSignalsPath != value) {
+            this._relativeSignalsPath = value;
         }
     }
     ready() {
@@ -67,7 +67,7 @@ __decorate([
 ], ScreenViewer.prototype, "screenName", null);
 __decorate([
     property()
-], ScreenViewer.prototype, "relativeStatesPath", null);
+], ScreenViewer.prototype, "relativeSignalsPath", null);
 ScreenViewer = __decorate([
     customElement("iobroker-webui-screen-viewer")
 ], ScreenViewer);

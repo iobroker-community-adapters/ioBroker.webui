@@ -52,10 +52,10 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
                 value: this.text,
                 language: 'css',
                 minimap: {
-                    //@ts-ignore
                     size: 'fill'
                 },
-                readOnly: this.readOnly
+                readOnly: this.readOnly,
+                fixedOverflowWidgets: true
             });
             this._getDomElement('loading').style.display = 'none';
             if (this._text)
@@ -99,7 +99,7 @@ IobrokerWebuiStyleEditor.style = css `
     `;
 IobrokerWebuiStyleEditor.template = html `
         <style>@import "/node_modules/monaco-editor/min/vs/editor/editor.main.css";</style>
-        <div id="container" style="width: 100%; height: 100%;"></div>
+        <div id="container" style="width: 100%; height: 100%; position: absolute;"></div>
         <mcc-loading id="loading" text="loading monaco code editor" style="width: 100%;  height: 100%; position: absolute; top: 0; left: 0;"></mcc-loading>
     `;
 IobrokerWebuiStyleEditor.properties = {
