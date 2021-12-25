@@ -19,14 +19,14 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         }
     }
 
-    _relativeStatesPath: string;
+    _relativeSignalsPath: string;
     @property()
-    get relativeStatesPath() {
-        return this._relativeStatesPath;
+    get relativeSignalsPath() {
+        return this._relativeSignalsPath;
     }
-    set relativeStatesPath(value: string) {
-        if (this._relativeStatesPath != value) {
-            this._relativeStatesPath = value;
+    set relativeSignalsPath(value: string) {
+        if (this._relativeSignalsPath != value) {
+            this._relativeSignalsPath = value;
         }
     }
 
