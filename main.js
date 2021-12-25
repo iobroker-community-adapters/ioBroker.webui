@@ -11,13 +11,15 @@
 /* jshint -W097 */
 /* jshint strict: false */
 /* jslint node: true */
-'use strict';
 
-const adapterName = require('./package.json').name.split('.').pop();
+import utils from '@iobroker/adapter-core';
+import webuiWidgetSync from './lib/webuiWidgetSync.js';
 
-const utils = require('@iobroker/adapter-core'); // Get common adapter utils
+import fs from 'fs';
+const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url)).toString());
+const adapterName = pkg.name.split('.').pop();
+
 const adapter = new utils.Adapter(adapterName);
-const webuiWidgetSync = require('./lib/webuiWidgetSync.js');
 
 adapter.on('ready', () => main());
 
