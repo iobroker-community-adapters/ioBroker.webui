@@ -49,7 +49,7 @@
         "highlight": true,
         "noConfig": true,
         "materialize": true,
-        "onlyWWW": true,
+        "onlyWWW": false,
         "nogit": false,
         "mode": "once",
         "welcomeScreen": {
