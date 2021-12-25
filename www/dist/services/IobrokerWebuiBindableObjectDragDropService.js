@@ -2,9 +2,8 @@ import { OverlayLayer, DesignItem, InsertAction } from '/webui/node_modules/@nod
 import { BindingTarget } from '/webui/node_modules/@node-projects/web-component-designer/dist/elements/item/BindingTarget.js';
 import { IobrokerWebuiBindingsHelper } from '../helper/IobrokerWebuiBindingsHelper.js';
 export class IobrokerWebuiBindableObjectDragDropService {
-    constructor() {
-        this.rectMap = new Map();
-    }
+    rectMap = new Map();
+    rect;
     dragEnter(designerCanvas, event) {
         const element = event.composedPath()[0];
         const designItem = DesignItem.GetDesignItem(element);

@@ -117,11 +117,13 @@ export class IobrokerWebuiBindingsHelper {
                 const evt = element[e];
                 if (evt instanceof TypedEvent) {
                     evt.on(() => {
-
+                        if (binding[1].target == BindingTarget.property)
+                            iobrokerHandler.connection.setState(binding[1].signal, element[binding[0]]);
                     })
                 } else {
                     element.addEventListener(e, () => {
-
+                        if (binding[1].target == BindingTarget.property)
+                            iobrokerHandler.connection.setState(binding[1].signal, element[binding[0]]);
                     });
                 }
             }

@@ -1,9 +1,20 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
 import { iobrokerHandler } from "../IobrokerHandler.js";
+//@ts-ignore
+import fancyTreeStyleSheet from '/webui/node_modules/jquery.fancytree/dist/skin-win8/ui.fancytree.css' assert { type: 'css' };
 export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
+    static template = html `
+        <div id="treeDiv" class="" style="overflow: auto; width:100%">
+        </div>`;
+    static style = css ``;
+    _treeDiv;
+    //@ts-ignore
+    _tree;
     constructor() {
         super();
         this._treeDiv = this._getDomElement('treeDiv');
+        //@ts-ignore
+        this.shadowRoot.adoptedStyleSheets = [fancyTreeStyleSheet];
     }
     async createTreeNodes() {
         let screensNode = { title: 'Screens', folder: true };
@@ -55,11 +66,4 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         iobrokerHandler.screensChanged.on(() => this._loadTree());
     }
 }
-IobrokerWebuiSolutionExplorer.template = html `
-        <style>
-            @import url("./node_modules/jquery.fancytree/dist/skin-win8/ui.fancytree.css");
-        </style>
-        <div id="treeDiv" class="" style="overflow: auto; width:100%">
-        </div>`;
-IobrokerWebuiSolutionExplorer.style = css ``;
 customElements.define("iobroker-webui-solution-explorer", IobrokerWebuiSolutionExplorer);

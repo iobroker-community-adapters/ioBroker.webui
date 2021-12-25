@@ -8,6 +8,7 @@ export class IobrokerWebuiDemoProviderService {
             screenViewer.style.height = '100%';
             screenViewer.style.border = 'none';
             screenViewer.style.display = 'none';
+            screenViewer.style.overflow = 'auto';
             screenViewer.style.position = 'absolute';
             DomHelper.removeAllChildnodes(container);
             container.appendChild(screenViewer);

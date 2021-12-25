@@ -1,13 +1,12 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
 import { IElementDefinition } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../IobrokerHandler.js";
+//@ts-ignore
+import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
 
 export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
 
     public static override template = html`
-        <style>
-            @import url("./node_modules/jquery.fancytree/dist/skin-win8/ui.fancytree.css");
-        </style>
         <div id="treeDiv" class="" style="overflow: auto; width:100%">
         </div>`
 
@@ -20,6 +19,8 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     constructor() {
         super();
         this._treeDiv = this._getDomElement<HTMLDivElement>('treeDiv');
+        //@ts-ignore
+        this.shadowRoot.adoptedStyleSheets = [fancyTreeStyleSheet];
     }
 
     private async createTreeNodes() {

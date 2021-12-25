@@ -1,5 +1,7 @@
 import { iobrokerHandler } from './IobrokerHandler.js';
 export class CommandHandling {
+    dockManager;
+    iobrokerWebuiAppShell;
     constructor(dockManager, iobrokerWebuiAppShell, serviceContainer) {
         this.dockManager = dockManager;
         this.iobrokerWebuiAppShell = iobrokerWebuiAppShell;

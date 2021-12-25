@@ -1,9 +1,21 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
 export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorAppend {
-    constructor() {
-        super();
-        this._parseAttributesToProperties();
-    }
+    static style = css `
+        :host {
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+
+        .errorDecoration {
+            background-color: red !important;
+        }
+    `;
+    static template = html `
+        <div id="container" style="width: 100%; height: 100%; position: absolute;"></div>
+    `;
+    _text;
+    _model;
     get text() {
         if (this._editor)
             return this._editor.getValue();
@@ -14,6 +26,7 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
             this._editor.setValue(value == null ? '' : value);
         this._text = value;
     }
+    _errorLine;
     get errorLine() {
         return this._errorLine;
     }
@@ -25,6 +38,19 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
             ]);
         }
         this._errorLine = value;
+    }
+    readOnly;
+    onTextChanged;
+    static properties = {
+        text: String,
+        readOnly: Boolean
+    };
+    _container;
+    _editor;
+    static _initalized;
+    constructor() {
+        super();
+        this._parseAttributesToProperties();
     }
     static initMonacoEditor() {
         return new Promise(async (resolve) => {
@@ -42,7 +68,11 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
             }
         });
     }
-    ready() {
+    async ready() {
+        //@ts-ignore
+        const style = await import("monaco-editor/min/vs/editor/editor.main.css", { assert: { type: 'css' } });
+        //@ts-ignore
+        this.shadowRoot.adoptedStyleSheets = [style.default, this.constructor.style];
         this._container = this._getDomElement('container');
         setTimeout(async () => {
             await IobrokerWebuiStyleEditor.initMonacoEditor();
@@ -86,24 +116,4 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
         this._editor.trigger('', 'editor.action.clipboardDeleteAction', null);
     }
 }
-IobrokerWebuiStyleEditor.style = css `
-        :host {
-            display: block;
-            height: 100%;
-            width: 100%;
-        }
-
-        .errorDecoration {
-            background-color: red !important;
-        }
-    `;
-IobrokerWebuiStyleEditor.template = html `
-        <style>@import "/node_modules/monaco-editor/min/vs/editor/editor.main.css";</style>
-        <div id="container" style="width: 100%; height: 100%; position: absolute;"></div>
-        <mcc-loading id="loading" text="loading monaco code editor" style="width: 100%;  height: 100%; position: absolute; top: 0; left: 0;"></mcc-loading>
-    `;
-IobrokerWebuiStyleEditor.properties = {
-    text: String,
-    readOnly: Boolean
-};
 customElements.define('iobroker-webui-style-editor', IobrokerWebuiStyleEditor);

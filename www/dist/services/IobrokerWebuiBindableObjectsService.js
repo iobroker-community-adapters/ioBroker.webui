@@ -1,9 +1,8 @@
 import { BindableObjectType } from '/webui/node_modules/@node-projects/web-component-designer/./dist/index.js';
 import { iobrokerHandler } from '../IobrokerHandler.js';
 export class IobrokerWebuiBindableObjectsService {
-    constructor() {
-        this.name = 'iobroker';
-    }
+    name = 'iobroker';
+    _states;
     async getBindableObject(fullName) {
         let objs = await this.getBindableObjects();
         let parts = fullName.split('.');

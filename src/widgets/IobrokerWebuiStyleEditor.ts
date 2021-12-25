@@ -16,9 +16,7 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
     `;
 
     static readonly template = html`
-        <style>@import "/node_modules/monaco-editor/min/vs/editor/editor.main.css";</style>
         <div id="container" style="width: 100%; height: 100%; position: absolute;"></div>
-        <mcc-loading id="loading" text="loading monaco code editor" style="width: 100%;  height: 100%; position: absolute; top: 0; left: 0;"></mcc-loading>
     `;
 
     private _text: string;
@@ -83,7 +81,12 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
         });
     }
 
-    ready() {
+    async ready() {
+    //@ts-ignore
+    const style = await import("monaco-editor/min/vs/editor/editor.main.css", { assert: { type: 'css' } });
+    //@ts-ignore
+    this.shadowRoot.adoptedStyleSheets = [style.default, this.constructor.style];
+
         this._container = this._getDomElement<HTMLDivElement>('container')
 
         setTimeout(async () => {

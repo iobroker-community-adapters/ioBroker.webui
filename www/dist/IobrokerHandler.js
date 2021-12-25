@@ -1,15 +1,18 @@
 import { Connection } from '/webui/node_modules/@iobroker/socket-client/dist/esm/index.js';
 import { TypedEvent } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
 class IobrokerHandler {
+    static instance = new IobrokerHandler();
+    host;
+    connection;
+    adapterName = "webui";
+    configPath = "config/";
+    _screens = {};
+    //private _styles: Record<string, IStyle> = {};
+    //private _screenTemplateMap = new WeakMap<IScreen, HTMLTemplateElement>();
+    //private _styleSheetMap = new WeakMap<IStyle, CSSStyleSheet>();
+    screensChanged = new TypedEvent();
+    stylesChanged = new TypedEvent();
     constructor() {
-        this.adapterName = "webui";
-        this.configPath = "config/";
-        this._screens = {};
-        //private _styles: Record<string, IStyle> = {};
-        //private _screenTemplateMap = new WeakMap<IScreen, HTMLTemplateElement>();
-        //private _styleSheetMap = new WeakMap<IStyle, CSSStyleSheet>();
-        this.screensChanged = new TypedEvent();
-        this.stylesChanged = new TypedEvent();
     }
     async init() {
         this.connection = new Connection({ protocol: 'ws', host: window.iobrokerHost, port: window.iobrokerPort, admin5only: false, autoSubscribes: [] });
@@ -37,5 +40,4 @@ class IobrokerHandler {
         return this._screens[name.toLocaleLowerCase()];
     }
 }
-IobrokerHandler.instance = new IobrokerHandler();
 export const iobrokerHandler = IobrokerHandler.instance;

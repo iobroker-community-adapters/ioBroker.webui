@@ -17,7 +17,8 @@
     "test": "npm run test:ts && npm run test:package",
     "check": "tsc --noEmit",
     "coverage": "nyc npm run test:ts",
-    "lint": "eslint --ext .ts src/"
+    "lint": "eslint --ext .ts src/",
+    "reflection": "typescript-json-schema './src/scripting/ScriptCommands.ts' '*' --ignoreErrors --strictNullChecks > ./src/reflection/ScriptCommands.json"
   },
   "repository": {
     "type": "git",
@@ -35,7 +36,7 @@
     "@node-projects/base-custom-webcomponent": "0.4.0",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^2.4.1",
-    "@node-projects/web-component-designer": "^0.0.73",
+    "@node-projects/web-component-designer": "^0.0.74",
     "@types/iobroker": "^3.3.4",
     "@types/jquery": "^3.5.11",
     "@types/jquery.fancytree": "^0.0.7",
@@ -57,9 +58,8 @@
     "nyc": "^15.1.0",
     "sinon-chai": "^3.7.0",
     "ts-node": "^10.4.0",
-    "typescript": "^4.5.4"
-  },
-  "dependencies": {
-    "tslib": "^2.3.1"
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.4",
+    "typescript-json-schema": "^0.52.0"
   }
 }

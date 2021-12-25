@@ -190,4 +190,9 @@ function copyConfigJs() {
     return src('./config/config.js')
         .pipe(dest('./www'));
 }
+
+//const tjs = require('typescript-json-schema');
+/*function aaa() {
+    return tjs.exec('./src/scripting/ScriptCommands.ts', '*', {ignoreErrors:true})
+}*/
 exports.default = series(copyNodeModules, copyNodeFiles, cleanupNodeModules, copyDist, copyAssets, copyHtml, copyManifest, copyConfigJs, fixJsImports);

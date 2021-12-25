@@ -1,0 +1,227 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "ClearBit": {
+            "properties": {
+                "bitNumber": {
+                    "type": "number"
+                },
+                "signal": {
+                    "type": "string"
+                },
+                "type": {
+                    "default": "clearBit",
+                    "enum": [
+                        "clearBit"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "DecreaseSignal": {
+            "properties": {
+                "signal": {
+                    "type": "string"
+                },
+                "type": {
+                    "default": "decreaseSignal",
+                    "enum": [
+                        "decreaseSignal"
+                    ],
+                    "type": "string"
+                },
+                "value": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/ScriptMultiplexValue"
+                        },
+                        {
+                            "type": [
+                                "string",
+                                "number",
+                                "boolean"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "IncreaseSignal": {
+            "properties": {
+                "signal": {
+                    "type": "string"
+                },
+                "type": {
+                    "default": "increaseSignal",
+                    "enum": [
+                        "increaseSignal"
+                    ],
+                    "type": "string"
+                },
+                "value": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/ScriptMultiplexValue"
+                        },
+                        {
+                            "type": [
+                                "string",
+                                "number",
+                                "boolean"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "Javascript": {
+            "properties": {
+                "script": {
+                    "type": "string"
+                },
+                "type": {
+                    "default": "javascript",
+                    "enum": [
+                        "javascript"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "OpenScreen": {
+            "properties": {
+                "openInDialog": {
+                    "type": "boolean"
+                },
+                "relativeSignalsPath": {
+                    "type": "string"
+                },
+                "screen": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/ScriptMultiplexValue"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "type": {
+                    "default": "openScreen",
+                    "enum": [
+                        "openScreen"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "ScriptCommands": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/OpenScreen"
+                },
+                {
+                    "$ref": "#/definitions/SetSignal"
+                },
+                {
+                    "$ref": "#/definitions/IncreaseSignal"
+                },
+                {
+                    "$ref": "#/definitions/DecreaseSignal"
+                },
+                {
+                    "$ref": "#/definitions/SetBit"
+                },
+                {
+                    "$ref": "#/definitions/ClearBit"
+                },
+                {
+                    "$ref": "#/definitions/ToggleBit"
+                },
+                {
+                    "$ref": "#/definitions/Javascript"
+                }
+            ]
+        },
+        "ScriptMultiplexValue": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "SetBit": {
+            "properties": {
+                "bitNumber": {
+                    "default": 0,
+                    "type": "number"
+                },
+                "signal": {
+                    "type": "string"
+                },
+                "type": {
+                    "default": "setBit",
+                    "enum": [
+                        "setBit"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "SetSignal": {
+            "properties": {
+                "signal": {
+                    "type": "string"
+                },
+                "type": {
+                    "default": "setSignal",
+                    "enum": [
+                        "setSignal"
+                    ],
+                    "type": "string"
+                },
+                "value": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/ScriptMultiplexValue"
+                        },
+                        {
+                            "type": [
+                                "string",
+                                "number",
+                                "boolean"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "ToggleBit": {
+            "properties": {
+                "bitNumber": {
+                    "type": "number"
+                },
+                "signal": {
+                    "type": "string"
+                },
+                "type": {
+                    "default": "toggleBit",
+                    "enum": [
+                        "toggleBit"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    }
+}
+

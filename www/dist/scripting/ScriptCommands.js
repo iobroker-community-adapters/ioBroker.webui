@@ -1,97 +1,40 @@
-import { iobrokerHandler } from '../IobrokerHandler.js';
-import { ScreenViewer } from '../runtime/ScreenViewer.js';
-class OpenScreen {
-    constructor() {
-        this.type = 'openScreen';
-    }
+export class OpenScreen {
+    type = 'openScreen';
+    screen;
+    relativeSignalsPath;
+    openInDialog;
 }
-class SetSignal {
-    constructor() {
-        this.type = 'setSignal';
-    }
+export class SetSignal {
+    type = 'setSignal';
+    signal;
+    value;
 }
-class IncreaseSignal {
-    constructor() {
-        this.type = 'increaseSignal';
-    }
+export class IncreaseSignal {
+    type = 'increaseSignal';
+    signal;
+    value;
 }
-class DecreaseSignal {
-    constructor() {
-        this.type = 'decreaseSignal';
-    }
+export class DecreaseSignal {
+    type = 'decreaseSignal';
+    signal;
+    value;
 }
-class SetBit {
-    constructor() {
-        this.type = 'setBit';
-    }
+export class SetBit {
+    type = 'setBit';
+    signal;
+    bitNumber = 0;
 }
-class ClearBit {
-    constructor() {
-        this.type = 'clearBit';
-    }
+export class ClearBit {
+    type = 'clearBit';
+    signal;
+    bitNumber = 0;
 }
-class ToggleBit {
-    constructor() {
-        this.type = 'toggleBit';
-    }
+export class ToggleBit {
+    type = 'toggleBit';
+    signal;
+    bitNumber = 0;
 }
-class Javascript {
-    constructor() {
-        this.type = 'javascript';
-    }
-}
-export class ScriptSystem {
-    async execute(scriptCommands, context) {
-        for (let c of scriptCommands) {
-            switch (c.type) {
-                case 'openScreen': {
-                    if (!c.openInDialog) {
-                        document.getElementById('viewer').relativeSignalsPath = c.relativeSignalsPath;
-                        document.getElementById('viewer').screenName = this.getValue(c.screen, context);
-                    }
-                    else {
-                        let sv = new ScreenViewer();
-                        sv.relativeSignalsPath = c.relativeSignalsPath;
-                        sv.screenName = this.getValue(c.screen, context);
-                    }
-                    break;
-                }
-                case 'setSignal': {
-                    await iobrokerHandler.connection.setState(c.signal, this.getValue(c.value, context));
-                    break;
-                }
-                case 'increaseSignal': {
-                    let state = await iobrokerHandler.connection.getState(c.signal);
-                    await iobrokerHandler.connection.setState(c.signal, state.val + this.getValue(c.value, context));
-                    break;
-                }
-                case 'decreaseSignal': {
-                    let state = await iobrokerHandler.connection.getState(c.signal);
-                    await iobrokerHandler.connection.setState(c.signal, state.val - this.getValue(c.value, context));
-                    break;
-                }
-                case 'setBit': {
-                    await iobrokerHandler.connection.setState(c.signal, true);
-                    break;
-                }
-                case 'clearBit': {
-                    await iobrokerHandler.connection.setState(c.signal, false);
-                    break;
-                }
-                case 'toggleBit': {
-                    let state = await iobrokerHandler.connection.getState(c.signal);
-                    await iobrokerHandler.connection.setState(c.signal, !state.val);
-                    break;
-                }
-                case 'javascript': {
-                    var context = context; // make context accessible from script
-                    eval(c.script);
-                    break;
-                }
-            }
-        }
-    }
-    getValue(value, context) {
-        return value;
-    }
+export class Javascript {
+    type = 'javascript';
+    script;
 }

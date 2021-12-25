@@ -37,7 +37,7 @@ export class IobrokerWebuiBindingsHelper {
             (binding.events == null || binding.events.length == 0) &&
             !binding.twoWay)
             return [bindingPrefixProperty + name, (binding.inverted ? '!' : '') + binding.signal];
-        let bindingCopy = Object.assign({}, binding); //can be removed with custom serialization
+        let bindingCopy = { ...binding }; //can be removed with custom serialization
         //todo custom serialization
         //let str='{"signal":"'+binding.signal+'",'+binding.
         //remove default event name, not needed
@@ -99,10 +99,14 @@ export class IobrokerWebuiBindingsHelper {
                 const evt = element[e];
                 if (evt instanceof TypedEvent) {
                     evt.on(() => {
+                        if (binding[1].target == BindingTarget.property)
+                            iobrokerHandler.connection.setState(binding[1].signal, element[binding[0]]);
                     });
                 }
                 else {
                     element.addEventListener(e, () => {
+                        if (binding[1].target == BindingTarget.property)
+                            iobrokerHandler.connection.setState(binding[1].signal, element[binding[0]]);
                     });
                 }
             }

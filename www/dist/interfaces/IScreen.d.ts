@@ -6,4 +6,5 @@ export interface IScreen {
 export interface IScreenSettings {
     width?: number;
     height?: number;
+    scale?: null | 'noneNoScroll' | 'fit';
 }

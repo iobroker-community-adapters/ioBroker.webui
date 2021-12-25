@@ -58,11 +58,12 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     }
 
     private async _loadScreen() {
+        await iobrokerHandler.connection.waitForFirstConnection();
+
         if (this._iobBindings)
             this._iobBindings.forEach(x => x());
         this._iobBindings = null;
         DomHelper.removeAllChildnodes(this.shadowRoot);
-        await iobrokerHandler.connection.waitForFirstConnection();
         const screen = iobrokerHandler.getScreen(this.screenName)
         if (screen) {
             this.loadScreenData(screen.html);

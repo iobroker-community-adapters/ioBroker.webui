@@ -3,9 +3,8 @@ import { BaseCustomWebComponentConstructorAppend, customElement, DomHelper, html
 import { IobrokerWebuiBindingsHelper } from '../helper/IobrokerWebuiBindingsHelper.js';
 import { iobrokerHandler } from '../IobrokerHandler.js';
 let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
-    constructor() {
-        super();
-    }
+    _iobBindings;
+    _screenName;
     get screenName() {
         return this._screenName;
     }
@@ -15,6 +14,7 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
             this._loadScreen();
         }
     }
+    _relativeSignalsPath;
     get relativeSignalsPath() {
         return this._relativeSignalsPath;
     }
@@ -22,6 +22,10 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
         if (this._relativeSignalsPath != value) {
             this._relativeSignalsPath = value;
         }
+    }
+    objects;
+    constructor() {
+        super();
     }
     ready() {
         this._parseAttributesToProperties();
@@ -44,11 +48,11 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
         */
     }
     async _loadScreen() {
+        await iobrokerHandler.connection.waitForFirstConnection();
         if (this._iobBindings)
             this._iobBindings.forEach(x => x());
         this._iobBindings = null;
         DomHelper.removeAllChildnodes(this.shadowRoot);
-        await iobrokerHandler.connection.waitForFirstConnection();
         const screen = iobrokerHandler.getScreen(this.screenName);
         if (screen) {
             this.loadScreenData(screen.html);
