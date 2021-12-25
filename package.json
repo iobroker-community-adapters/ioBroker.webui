@@ -3,7 +3,7 @@
   "version": "0.0.12",
   "description": "ioBroker webui",
   "type": "module",
-  "main": "",
+  "main": "main.js",
   "scripts": {
     "tsc": "tsc",
     "start": "web-dev-server --node-resolve --open",
