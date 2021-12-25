@@ -160,7 +160,9 @@ function cleanupNodeModules() {
     let notUsed = [
         "./www/node_modules/monaco-editor/dev",
         "./www/node_modules/monaco-editor/esm",
-        "./www/node_modules/monaco-editor/min-maps"
+        "./www/node_modules/monaco-editor/min-maps",
+        "./www/**/*.d.ts",
+        "./www/**/*.map"
     ]
 
     return del(notUsed);

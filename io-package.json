@@ -51,7 +51,7 @@
         "materialize": true,
         "onlyWWW": true,
         "nogit": false,
-        "mode": "extension",
+        "mode": "once",
         "welcomeScreen": {
             "link": "webui/index.html",
             "name": "webui editor",
