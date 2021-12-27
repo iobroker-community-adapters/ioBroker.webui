@@ -1,6 +1,6 @@
 import utils from '@iobroker/adapter-core';
 import { spawn } from 'child_process';
-import fixJsImports from './lib/fixEs6Imports';
+import fixJsImports from './lib/fixEs6Imports.js';
 import path from 'path';
 import fs from 'fs';
 
@@ -36,12 +36,12 @@ function runUpload() {
 }
 
 function cleanupWWW() {
-    "./www/**/*.d.ts",
-    "./www/**/*.map"
+    //"./www/**/*.d.ts",
+    //"./www/**/*.map"
 }
 
 function refreshWWW() {
-    //await fixJsImports(__dirname + 'www/widgets', '/webui/widgets');
+    await fixJsImports(__dirname + 'www/widgets', '/webui/widgets');
     //runUpload();
 }
 
@@ -97,6 +97,8 @@ async function stateChange(id, state) {
         return;
     }
 
+    adapter.log.info(`recieved state: ${id}, value: ${state.val}`);
+
     states[id] = state.val;
     await runCommand(states["control.command"], states["control.data"])
     await adapter.setStateAsync(id, state, true);
@@ -150,4 +152,5 @@ async function main() {
     if (!fs.existsSync(__dirname + 'www/widgets/package.json') && adapter.fileExists('webui', 'widgets/package.json')) {
         adapter.log.info(`Adadpter updated, restore packages.json`);
     }
+    await createObjects();
 }
