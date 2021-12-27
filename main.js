@@ -40,7 +40,7 @@ function cleanupWWW() {
     //"./www/**/*.map"
 }
 
-function refreshWWW() {
+async function refreshWWW() {
     await fixJsImports(__dirname + 'www/widgets', '/webui/widgets');
     //runUpload();
 }
@@ -149,8 +149,10 @@ async function createObjects() {
 
 async function main() {
     adapter.log.info(`dirName: ` + __dirname);
-    if (!fs.existsSync(__dirname + 'www/widgets/package.json') && adapter.fileExists('webui', 'widgets/package.json')) {
+    if (!fs.existsSync(__dirname + 'www/widgets/package.json') && adapter.fileExists(adapterName, 'widgets/package.json')) {
         adapter.log.info(`Adadpter updated, restore packages.json`);
+        let data = await adapter.readFileAsync(adapterName, 'widgets/package.json')
+        await fs.promises.writeFile(__dirname + 'www/widgets/package.json', data);
     }
     await createObjects();
 }
