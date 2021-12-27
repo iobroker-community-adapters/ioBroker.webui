@@ -15,6 +15,7 @@ declare class IobrokerHandler {
     connection: Connection;
     adapterName: string;
     configPath: string;
+    namespace: string;
     private _screens;
     screensChanged: TypedEvent<void>;
     stylesChanged: TypedEvent<void>;
@@ -25,6 +26,7 @@ declare class IobrokerHandler {
     saveScreen(name: string, screen: IScreen): Promise<void>;
     getScreenNames(): string[];
     getScreen(name: string): IScreen;
+    sendCommand(command: 'addNpm' | 'removeNpm', data: string): Promise<void>;
 }
 export declare const iobrokerHandler: IobrokerHandler;
 export {};

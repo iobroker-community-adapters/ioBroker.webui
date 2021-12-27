@@ -20,7 +20,15 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         let screensNode = { title: 'Screens', folder: true };
         let screens = await iobrokerHandler.getScreenNames();
         screensNode.children = screens.map(x => ({ title: x, folder: false, data: { type: 'screen', name: x } }));
-        return [screensNode];
+        let npmsNode = { title: 'NPM', folder: true };
+        try {
+            let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "package.json", false)).file);
+            npmsNode.children = Object.keys(packageJson.dependencies).map(x => ({ title: x + ' (' + packageJson.dependencies[x] + ')', folder: false, data: { type: 'npm', name: x } }));
+        }
+        catch (err) {
+            console.warn("error loading package.json, may not yet exist", err);
+        }
+        return [screensNode, npmsNode];
     }
     _loadTree() {
         if (!this._tree) {

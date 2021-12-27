@@ -77,7 +77,6 @@ function buildImportFileName(importText, dirName = '') {
     if (fs.existsSync(path.join(dirName, iPath)) && !fs.lstatSync(path.join(dirName, iPath)).isDirectory()) {
         return '';
     }
-    //console.log('1', path.join(dirName, iPath + '.js'))
     if (fs.existsSync(path.join(dirName, iPath + '.js'))) {
         return '.js';
     }

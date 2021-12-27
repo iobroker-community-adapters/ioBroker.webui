@@ -6,6 +6,7 @@ class IobrokerHandler {
     connection;
     adapterName = "webui";
     configPath = "config/";
+    namespace = "webui.0";
     _screens = {};
     //private _styles: Record<string, IStyle> = {};
     //private _screenTemplateMap = new WeakMap<IScreen, HTMLTemplateElement>();
@@ -49,6 +50,10 @@ class IobrokerHandler {
     }
     getScreen(name) {
         return this._screens[name.toLocaleLowerCase()];
+    }
+    async sendCommand(command, data) {
+        await this.connection.setState(this.namespace + '.control.data', { val: data });
+        await this.connection.setState(this.namespace + '.control.command', { val: command });
     }
 }
 export const iobrokerHandler = IobrokerHandler.instance;

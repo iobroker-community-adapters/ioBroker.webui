@@ -1,30 +1,19 @@
-/**
- *
- *      iobroker vis Adapter
- *
- *      Copyright (c) 2014-2021, bluefox
- *      Copyright (c) 2014, hobbyquaker
- *
- *      CC-NC-BY 4.0 License
- *
- */
-/* jshint -W097 */
-/* jshint strict: false */
-/* jslint node: true */
-
 import utils from '@iobroker/adapter-core';
 import { spawn } from 'child_process';
-import webuiWidgetSync from './lib/webuiWidgetSync.js';
-
+import fixJsImports from './lib/fixEs6Imports';
+import path from 'path';
 import fs from 'fs';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url)).toString());
 const adapterName = pkg.name.split('.').pop();
 
 const adapter = new utils.Adapter(adapterName);
 
 adapter.on('ready', () => main());
+adapter.on('stateChange', () => stateChange());
 
-function upload() {
+function runUpload() {
     return new Promise(resolve => {
         adapter.log.info(`Upload ${adapter.name}, changes detected...`);
         const file = utils.controllerDir + '/iobroker.js';
@@ -46,39 +35,119 @@ function upload() {
     });
 }
 
-async function updateWebuiConfig() {
-    let changed = !!webuiWidgetSync(false);
+function cleanupWWW() {
+    "./www/**/*.d.ts",
+    "./www/**/*.map"
+}
 
-    // create command variable
-    /*const obj = await adapter.getObjectAsync('control.command');
+function refreshWWW() {
+    //await fixJsImports(__dirname + 'www/widgets', '/webui/widgets');
+    //runUpload();
+}
+
+var npmRunning = false;
+function installNpm(name) {
+    return new Promise(resolve => {
+        if (npmRunning) {
+            adapter.error.info(`NPM already running`);
+            resolve();
+        }
+        npmRunning = true;
+        adapter.log.info(`Install NPM package (${name})...`);
+        const child = spawn('npm', ['install', '--only=prod', name], { cwd: __dirname + 'www/widgets' });
+        child.stdout.on('data', data => {
+            adapter.log.debug(data.toString().replace('\n', ''));
+        });
+        child.stderr.on('data', data => adapter.log.error(data.toString().replace('\n', '')));
+        child.on('exit', exitCode => {
+            adapter.log.info(`Installed NPM packge (${name}). ${exitCode ? 'Exit - ' + exitCode : 0}`);
+            npmRunning = false;
+            resolve(exitCode);
+        });
+    });
+}
+
+function removeNpm(name) {
+    return new Promise(resolve => {
+        if (npmRunning) {
+            adapter.error.info(`NPM already running`);
+            resolve();
+        }
+        npmRunning = true;
+        adapter.log.info(`Install NPM package (${name})...`);
+        const child = spawn('npm', ['remove', name], { cwd: __dirname + 'www/widgets' });
+        child.stdout.on('data', data => {
+            adapter.log.debug(data.toString().replace('\n', ''));
+        });
+        child.stderr.on('data', data => adapter.log.error(data.toString().replace('\n', '')));
+        child.on('exit', exitCode => {
+            adapter.log.info(`Installed NPM packge (${name}). ${exitCode ? 'Exit - ' + exitCode : 0}`);
+            npmRunning = false;
+            resolve(exitCode);
+        });
+    });
+}
+
+const states = {}
+
+async function stateChange(id, state) {
+    if (!id || !state) return;
+
+    if (state.ack) {
+        return;
+    }
+
+    states[id] = state.val;
+    await runCommand(states["control.command"], states["control.data"])
+    await adapter.setStateAsync(id, state, true);
+}
+
+async function runCommand(command, parameter) {
+    switch (command) {
+        case 'addNpm':
+            await installNpm(parameter);
+            await refreshWWW();
+            break;
+        case 'removeNpm':
+            await removeNpm(parameter);
+            await refreshWWW();
+            break;
+    }
+}
+
+async function createObjects() {
+    const obj = await adapter.getObjectAsync('control.command');
     if (!obj) {
+        await adapter.setObjectAsync('control.data',
+            {
+                type: 'text',
+                common: {
+                    name: 'data for command for webui',
+                    type: 'string',
+                    desc: 'additional data when running the command, needs to be set before setting the command.'
+                },
+                native: {}
+            });
         await adapter.setObjectAsync('control.command',
             {
                 type: 'state',
                 common: {
-                    name: 'Command for webui',
+                    name: 'command for webui',
                     type: 'string',
-                    desc: 'Writing this variable akt as the trigger. Instance and data must be preset before \'command\' will be written. \'changedView\' will be signalled too',
+                    desc: 'Writing this variable akt as the trigger. Instance and data must be preset before \'command\' will be written.',
                     states: {
-                        changeView: 'changeView',
-                        refresh: 'refresh',
-                        reload: 'reload',
-                        changedView: 'changedView'
+                        addNpm: 'addNpm',
+                        removeNpm: 'removeNpm'
                     }
                 },
                 native: {}
             });
-    }*/
-
-    return changed;
+    }
 }
 
 async function main() {
-    const filesChanged = await updateWebuiConfig();
-    if (filesChanged) {
-        await upload();
-    } else {
-        adapter.log.info(`No upload ${adapter.name}, no changes...`);
+    adapter.log.info(`dirName: ` + __dirname);
+    if (!fs.existsSync(__dirname + 'www/widgets/package.json') && adapter.fileExists('webui', 'widgets/package.json')) {
+        adapter.log.info(`Adadpter updated, restore packages.json`);
     }
-    adapter.stop();
 }

@@ -51,7 +51,7 @@
         "materialize": true,
         "onlyWWW": false,
         "nogit": false,
-        "mode": "once",
+        "mode": "daemon",
         "welcomeScreen": {
             "link": "webui/index.html",
             "name": "webui editor",
