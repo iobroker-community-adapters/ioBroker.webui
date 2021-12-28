@@ -36,19 +36,15 @@ function runUpload() {
     });
 }
 
-function cleanupWWW() {
-    //"./www/**/*.d.ts",
-    //"./www/**/*.map"
-}
-
 async function refreshWWW() {
     await fixJsImports(__dirname + '/www/widgets', '/webui/widgets');
-    //runUpload();
+    await runUpload();
+    adapter.setState('webui.0.control.command', { val: 'uiReloadPackages', ack: true });
 }
 
 var npmRunning = false;
 function installNpm(name) {
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
         if (npmRunning) {
             adapter.error.info(`NPM already running`);
             resolve();
@@ -152,7 +148,9 @@ async function createObjects() {
                     desc: 'Writing this variable akt as the trigger. Instance and data must be preset before \'command\' will be written.',
                     states: {
                         addNpm: 'addNpm',
-                        removeNpm: 'removeNpm'
+                        removeNpm: 'removeNpm',
+                        refreshWww: 'refreshWww',
+                        uiReloadPackages: 'uiReloadPackages'
                     },
                     read: true,
                     write: true,

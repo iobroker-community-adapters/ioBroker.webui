@@ -1,4 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
+import { ContextMenuHelper } from '/webui/node_modules/@node-projects/web-component-designer/./dist/index.js';
 import { iobrokerHandler } from "../IobrokerHandler.js";
 //@ts-ignore
 import fancyTreeStyleSheet from '/webui/node_modules/jquery.fancytree/dist/skin-win8/ui.fancytree.css' assert { type: 'css' };
@@ -20,7 +21,17 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         let screensNode = { title: 'Screens', folder: true };
         let screens = await iobrokerHandler.getScreenNames();
         screensNode.children = screens.map(x => ({ title: x, folder: false, data: { type: 'screen', name: x } }));
-        let npmsNode = { title: 'NPM', folder: true };
+        let npmsNode = {
+            title: 'NPM', folder: true, contextMenu: (event) => {
+                ContextMenuHelper.showContextMenu(null, event, null, [{
+                        title: 'Add Package', action: () => {
+                            const packageName = prompt("NPM Package Name");
+                            if (packageName)
+                                iobrokerHandler.sendCommand("addNpm", packageName);
+                        }
+                    }]);
+            }
+        };
         try {
             let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "package.json", false)).file);
             npmsNode.children = Object.keys(packageJson.dependencies).map(x => ({ title: x + ' (' + packageJson.dependencies[x] + ')', folder: false, data: { type: 'npm', name: x } }));
@@ -42,6 +53,16 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         window.appShell.newDocument(d.node.data.name, iobrokerHandler.getScreen(d.node.data.name).html);
                     }
                     return true;
+                },
+                createNode: (event, data) => {
+                    let span = data.node.span;
+                    span.oncontextmenu = (e) => {
+                        data.node.setActive();
+                        if (data.node.data.contextMenu)
+                            data.node.data.contextMenu(e, data);
+                        e.preventDefault();
+                        return false;
+                    };
                 },
                 dnd5: {
                     dropMarkerParent: this.shadowRoot,

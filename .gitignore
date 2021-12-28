@@ -4,3 +4,6 @@
 debug.log
 /build
 #/www
+
+# ioBroker dev-server
+.dev-server/
