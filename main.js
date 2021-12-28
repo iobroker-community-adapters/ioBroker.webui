@@ -3,6 +3,7 @@ import { spawn } from 'child_process';
 import fixJsImports from './lib/fixEs6Imports.js';
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url)).toString());
@@ -41,7 +42,7 @@ function cleanupWWW() {
 }
 
 async function refreshWWW() {
-    await fixJsImports(__dirname + 'www/widgets', '/webui/widgets');
+    await fixJsImports(__dirname + '/www/widgets', '/webui/widgets');
     //runUpload();
 }
 
@@ -54,7 +55,7 @@ function installNpm(name) {
         }
         npmRunning = true;
         adapter.log.info(`Install NPM package (${name})...`);
-        const child = spawn('npm', ['install', '--only=prod', name], { cwd: __dirname + 'www/widgets' });
+        const child = spawn('npm', ['install', '--only=prod', name], { cwd: __dirname + '/www/widgets' });
         child.stdout.on('data', data => {
             adapter.log.debug(data.toString().replace('\n', ''));
         });
@@ -75,7 +76,7 @@ function removeNpm(name) {
         }
         npmRunning = true;
         adapter.log.info(`Install NPM package (${name})...`);
-        const child = spawn('npm', ['remove', name], { cwd: __dirname + 'www/widgets' });
+        const child = spawn('npm', ['remove', name], { cwd: __dirname + '/www/widgets' });
         child.stdout.on('data', data => {
             adapter.log.debug(data.toString().replace('\n', ''));
         });
@@ -91,13 +92,16 @@ function removeNpm(name) {
 const states = {}
 
 async function stateChange(id, state) {
+    
     if (!id || !state) return;
+
+    adapter.log.info(`recieved state: ${id}, value: ${state.val}, ack: ${state.ack}`);
 
     if (state.ack) {
         return;
     }
 
-    adapter.log.info(`recieved state: ${id}, value: ${state.val}`);
+    
 
     states[id] = state.val;
     await runCommand(states["control.command"], states["control.data"])
@@ -114,6 +118,9 @@ async function runCommand(command, parameter) {
             await removeNpm(parameter);
             await refreshWWW();
             break;
+        case 'refreshWww':
+            await refreshWWW();
+            break;
     }
 }
 
@@ -122,7 +129,7 @@ async function createObjects() {
     if (!obj) {
         await adapter.setObjectAsync('control.data',
             {
-                type: 'text',
+                type: 'state',
                 common: {
                     name: 'data for command for webui',
                     type: 'string',
@@ -149,10 +156,17 @@ async function createObjects() {
 
 async function main() {
     adapter.log.info(`dirName: ` + __dirname);
-    if (!fs.existsSync(__dirname + 'www/widgets/package.json') && adapter.fileExists(adapterName, 'widgets/package.json')) {
-        adapter.log.info(`Adadpter updated, restore packages.json`);
-        let data = await adapter.readFileAsync(adapterName, 'widgets/package.json')
-        await fs.promises.writeFile(__dirname + 'www/widgets/package.json', data);
+    if (!fs.existsSync(__dirname + '/www/widgets/package.json')) {
+        adapter.log.info(`No package.json for widgets found, look if one was uploaded.`);
+        if (await adapter.fileExistsAsync(adapterName, 'widgets/package.json')) {
+            adapter.log.info(`adapter was updated, restore packages.json`);
+            let data = await adapter.readFileAsync(adapterName, 'widgets/package.json')
+            await fs.promises.writeFile(__dirname + '/www/widgets/package.json', data);
+        }
     }
+    adapter.log.info(`create adapter objects`);
     await createObjects();
+    adapter.log.info(`subscribe adapter states`);
+    await adapter.subscribeStatesAsync('*');
+    adapter.log.info(`adapter ready`);
 }

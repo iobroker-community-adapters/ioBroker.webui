@@ -1,5 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
-import { IElementDefinition } from "@node-projects/web-component-designer";
+import { ContextMenuHelper, IElementDefinition } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../IobrokerHandler.js";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
@@ -29,7 +29,17 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         let screens = await iobrokerHandler.getScreenNames();
         screensNode.children = screens.map(x => ({ title: x, folder: false, data: { type: 'screen', name: x } }));
 
-        let npmsNode: Fancytree.NodeData = { title: 'NPM', folder: true }
+        let npmsNode: Fancytree.NodeData & { contextMenu: (event) => void } = {
+            title: 'NPM', folder: true, contextMenu: (event) => {
+                ContextMenuHelper.showContextMenu(null, event, null, [{
+                    title: 'Add Package', action: () => {
+                        const packageName = prompt("NPM Package Name");
+                        if (packageName)
+                            iobrokerHandler.sendCommand("addNpm", packageName);
+                    }
+                }]);
+            }
+        }
         try {
             let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "package.json", false)).file);
             npmsNode.children = Object.keys(packageJson.dependencies).map(x => ({ title: x + ' (' + packageJson.dependencies[x] + ')', folder: false, data: { type: 'npm', name: x } }));
@@ -53,6 +63,17 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     }
                     return true;
                 },
+                createNode: (event, data) => {
+                    let span = data.node.span as HTMLSpanElement;
+                    span.oncontextmenu = (e) => {
+                        data.node.setActive();
+                        if (data.node.data.contextMenu)
+                            data.node.data.contextMenu(e, data);
+                        e.preventDefault();
+                        return false;
+                    }
+                },
+
                 dnd5: {
                     dropMarkerParent: this.shadowRoot,
                     preventRecursion: true, // Prevent dropping nodes on own descendants
