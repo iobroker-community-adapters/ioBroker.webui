@@ -12,7 +12,7 @@ const adapterName = pkg.name.split('.').pop();
 const adapter = new utils.Adapter(adapterName);
 
 adapter.on('ready', () => main());
-adapter.on('stateChange', () => stateChange());
+adapter.on('stateChange', stateChange);
 
 function runUpload() {
     return new Promise(resolve => {
@@ -54,6 +54,10 @@ function installNpm(name) {
             resolve();
         }
         npmRunning = true;
+        if (!fs.existsSync(__dirname + '/www/widgets'))
+            await fs.promises.mkdir(__dirname + '/www/widgets')
+        if (!fs.existsSync(__dirname + '/www/widgets/package.json'))
+            await fs.promises.writeFile(__dirname + '/www/widgets/package.json', '{}');
         adapter.log.info(`Install NPM package (${name})...`);
         const child = spawn('npm', ['install', '--only=prod', name], { cwd: __dirname + '/www/widgets' });
         child.stdout.on('data', data => {
@@ -92,23 +96,22 @@ function removeNpm(name) {
 const states = {}
 
 async function stateChange(id, state) {
-    
-    if (!id || !state) return;
 
-    adapter.log.info(`recieved state: ${id}, value: ${state.val}, ack: ${state.ack}`);
+    if (!id || !state) return;
 
     if (state.ack) {
         return;
     }
 
-    
-
     states[id] = state.val;
-    await runCommand(states["control.command"], states["control.data"])
+    if (id === 'webui.0.control.command')
+        await runCommand(states["webui.0.control.command"], states["webui.0.control.data"])
     await adapter.setStateAsync(id, state, true);
 }
 
 async function runCommand(command, parameter) {
+    adapter.log.info(`runCommand: ${command}, parameter: ${parameter}`);
+
     switch (command) {
         case 'addNpm':
             await installNpm(parameter);
@@ -133,7 +136,10 @@ async function createObjects() {
                 common: {
                     name: 'data for command for webui',
                     type: 'string',
-                    desc: 'additional data when running the command, needs to be set before setting the command.'
+                    desc: 'additional data when running the command, needs to be set before setting the command.',
+                    read: true,
+                    write: true,
+                    role: 'text'
                 },
                 native: {}
             });
@@ -147,7 +153,10 @@ async function createObjects() {
                     states: {
                         addNpm: 'addNpm',
                         removeNpm: 'removeNpm'
-                    }
+                    },
+                    read: true,
+                    write: true,
+                    role: 'text'
                 },
                 native: {}
             });
@@ -167,6 +176,6 @@ async function main() {
     adapter.log.info(`create adapter objects`);
     await createObjects();
     adapter.log.info(`subscribe adapter states`);
-    await adapter.subscribeStatesAsync('*');
+    await adapter.subscribeStatesAsync('*', {});
     adapter.log.info(`adapter ready`);
 }
