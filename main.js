@@ -124,41 +124,46 @@ async function runCommand(command, parameter) {
 }
 
 async function createObjects() {
+
     const obj = await adapter.getObjectAsync('control.command');
     if (!obj) {
-        await adapter.setObjectAsync('control.data',
-            {
-                type: 'state',
-                common: {
-                    name: 'data for command for webui',
-                    type: 'string',
-                    desc: 'additional data when running the command, needs to be set before setting the command.',
-                    read: true,
-                    write: true,
-                    role: 'text'
-                },
-                native: {}
-            });
-        await adapter.setObjectAsync('control.command',
-            {
-                type: 'state',
-                common: {
-                    name: 'command for webui',
-                    type: 'string',
-                    desc: 'Writing this variable akt as the trigger. Instance and data must be preset before \'command\' will be written.',
-                    states: {
-                        addNpm: 'addNpm',
-                        removeNpm: 'removeNpm',
-                        refreshWww: 'refreshWww',
-                        uiReloadPackages: 'uiReloadPackages'
-                    },
-                    read: true,
-                    write: true,
-                    role: 'text'
-                },
-                native: {}
-            });
+        await adapter.delObjectAsync('control.data');
+        await adapter.delObjectAsync('control.command');
     }
+
+    await adapter.setObjectAsync('control.data',
+        {
+            type: 'state',
+            common: {
+                name: 'data for command for webui',
+                type: 'string',
+                desc: 'additional data when running the command, needs to be set before setting the command.',
+                read: true,
+                write: true,
+                role: 'text'
+            },
+            native: {}
+        });
+    await adapter.setObjectAsync('control.command',
+        {
+            type: 'state',
+            common: {
+                name: 'command for webui',
+                type: 'string',
+                desc: 'Writing this variable akt as the trigger. Instance and data must be preset before \'command\' will be written.',
+                states: {
+                    addNpm: 'addNpm',
+                    removeNpm: 'removeNpm',
+                    updateNpm: 'updateNpm',
+                    refreshWww: 'refreshWww',
+                    uiReloadPackages: 'uiReloadPackages'
+                },
+                read: true,
+                write: true,
+                role: 'text'
+            },
+            native: {}
+        });
 }
 
 async function main() {
@@ -169,6 +174,8 @@ async function main() {
             adapter.log.info(`adapter was updated, restore packages.json`);
             let data = await adapter.readFileAsync(adapterName, 'widgets/package.json')
             await fs.promises.writeFile(__dirname + '/www/widgets/package.json', data);
+            adapter.log.info(`run NPM install`);
+            await installNpm('');
         }
     }
     adapter.log.info(`create adapter objects`);
