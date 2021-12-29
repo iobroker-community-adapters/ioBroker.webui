@@ -173,7 +173,7 @@ async function main() {
         if (await adapter.fileExistsAsync(adapterName, 'widgets/package.json')) {
             adapter.log.info(`adapter was updated, restore packages.json`);
             let data = await adapter.readFileAsync(adapterName, 'widgets/package.json')
-            await fs.promises.writeFile(__dirname + '/www/widgets/package.json', data);
+            await fs.promises.writeFile(__dirname + '/www/widgets/package.json', data.file);
             adapter.log.info(`run NPM install`);
             await installNpm('');
         }
