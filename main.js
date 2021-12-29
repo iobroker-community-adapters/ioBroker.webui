@@ -172,6 +172,8 @@ async function main() {
         adapter.log.info(`No package.json for widgets found, look if one was uploaded.`);
         if (await adapter.fileExistsAsync(adapterName, 'widgets/package.json')) {
             adapter.log.info(`adapter was updated, restore packages.json`);
+            if (!fs.existsSync(__dirname + '/www/widgets'))
+                await fs.promises.mkdir(__dirname + '/www/widgets')
             let data = await adapter.readFileAsync(adapterName, 'widgets/package.json')
             await fs.promises.writeFile(__dirname + '/www/widgets/package.json', data.file);
             adapter.log.info(`run NPM install`);
