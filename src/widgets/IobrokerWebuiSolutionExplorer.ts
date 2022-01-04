@@ -7,7 +7,7 @@ import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.cs
 export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
 
     public static override template = html`
-        <div id="treeDiv" class="" style="overflow: auto; width:100%">
+        <div id="treeDiv" class="" style="overflow: auto; width:100%; height: 100%;">
         </div>`
 
     public static override style = css``
@@ -24,11 +24,32 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
 
     private async createTreeNodes() {
+        const result = await Promise.allSettled([this._createscreensNode(), this._createNpmsNode(), this._createChartsNode()]);
+        return result.map(x => x.status == 'fulfilled' ? x.value : null);
+    }
+
+    private async _createscreensNode() {
+        let screenNodeCtxMenu = (event, packageName) => {
+            ContextMenuHelper.showContextMenu(null, event, null, [{
+                title: 'Remove Screen', action: () => {
+                    //todo
+                }
+            }]);
+        }
+
         let screensNode: Fancytree.NodeData = { title: 'Screens', folder: true }
 
         let screens = await iobrokerHandler.getScreenNames();
-        screensNode.children = screens.map(x => ({ title: x, folder: false, data: { type: 'screen', name: x } }));
+        screensNode.children = screens.map(x => ({
+            title: x,
+            folder: false,
+            contextMenu: (event => screenNodeCtxMenu(event, x)),
+            data: { type: 'screen', name: x }
+        }));
+        return screensNode;
+    }
 
+    private async _createNpmsNode() {
         let npmNodeCtxMenu = (event, packageName) => {
             ContextMenuHelper.showContextMenu(null, event, null, [{
                 title: 'Update Package', action: () => {
@@ -61,11 +82,61 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 contextMenu: (event => npmNodeCtxMenu(event, x)),
                 data: { type: 'npm', name: x }
             }));
+
+            //todo
+            //search every package for a package JsonFileElementsService, and look if it contains a customElements definition
+            //if so, load the file, if not, try load "custom-elements.json"
         }
         catch (err) {
             console.warn("error loading package.json, may not yet exist", err);
         }
-        return [screensNode, npmsNode];
+
+        return npmsNode;
+    }
+
+    private async _createChartsNode() {
+
+        let chartsNode: Fancytree.NodeData = {
+            title: 'Charts', folder: true, children: []
+        }
+
+        try {
+            let objs = await iobrokerHandler.connection.getObjectView('flot.', 'flot.\u9999', 'chart');
+            if (Object.keys(objs).length > 0) {
+                let flotNode: Fancytree.NodeData = {
+                    title: 'Flot', folder: true
+                }
+                chartsNode.children.push(flotNode);
+                flotNode.children = Object.keys(objs).map(x => ({
+                    title: x.split('.').pop(),
+                    folder: false,
+                    data: { type: 'flot', name: objs[x].native.url }
+                }));
+            }
+        }
+        catch (err) {
+            console.warn("error loading package.json, may not yet exist", err);
+        }
+
+        try {
+            let objs = await iobrokerHandler.connection.getObjectView('echarts.', 'echarts.\u9999', 'chart');
+            if (Object.keys(objs).length > 0) {
+                let flotNode: Fancytree.NodeData = {
+                    title: 'ECharts', folder: true
+                }
+                chartsNode.children.push(flotNode);
+                flotNode.children = Object.keys(objs).map(x => ({
+                    title: x.split('.').pop(),
+                    folder: false,
+                    data: { type: 'echart', name: x }
+                }));
+            }
+        }
+        catch (err) {
+            console.warn("error loading package.json, may not yet exist", err);
+        }
+
+        return chartsNode;
     }
 
     private _loadTree() {
@@ -100,12 +171,29 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     dropMarkerInsertOffsetX: -16,
 
                     dragStart: (node, data) => {
-                        const screen = data.node.data.name;
-                        const elementDef: IElementDefinition = { tag: "iobroker-webui-screen-viewer", defaultAttributes: { 'screen-name': screen }, defaultWidth: '300px', defaultHeight: '200px' }
-                        data.effectAllowed = "all";
-                        data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
-                        data.dropEffect = "copy";
-                        return true;
+                        if (data.node.data.type == 'screen') {
+                            const screen = data.node.data.name;
+                            const elementDef: IElementDefinition = { tag: "iobroker-webui-screen-viewer", defaultAttributes: { 'screen-name': screen }, defaultWidth: '300px', defaultHeight: '200px' }
+                            data.effectAllowed = "all";
+                            data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
+                            data.dropEffect = "copy";
+                            return true;
+                        } else if (data.node.data.type == 'flot') {
+                            const url = 'http://' + window.iobrokerHost + ':' + window.iobrokerPort + '/flot/index.html?' + data.node.data.name;
+                            const elementDef: IElementDefinition = { tag: "iframe", defaultAttributes: { 'src': url }, defaultStyles: { 'border': '1px solid black;' }, defaultWidth: '400px', defaultHeight: '300px' }
+                            data.effectAllowed = "all";
+                            data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
+                            data.dropEffect = "copy";
+                            return true;
+                        } else if (data.node.data.type == 'echart') {
+                            const url = 'http://' + window.iobrokerHost + ':' + window.iobrokerPort + '/adapter/echarts/chart/index.html?preset=' + data.node.data.name;
+                            const elementDef: IElementDefinition = { tag: "iframe", defaultAttributes: { 'src': url }, defaultStyles: { 'border': '1px solid black;' }, defaultWidth: '400px', defaultHeight: '300px' }
+                            data.effectAllowed = "all";
+                            data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
+                            data.dropEffect = "copy";
+                            return true;
+                        }
+                        return false;
                     },
                     dragEnter: (node, data) => {
                         return false;

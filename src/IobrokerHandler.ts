@@ -1,7 +1,6 @@
 import { Connection } from "@iobroker/socket-client";
 import { TypedEvent } from "@node-projects/base-custom-webcomponent";
 import { IScreen } from "./interfaces/IScreen";
-import { IWidgetConfig } from "./interfaces/IWidgetConfig";
 
 declare global {
     interface Window {
@@ -34,25 +33,12 @@ class IobrokerHandler {
     }
 
     async init() {
-        //this.loadWidgets();
-
         this.connection = new Connection({ protocol: 'ws', host: window.iobrokerHost, port: window.iobrokerPort, admin5only: false, autoSubscribes: [] });
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
         await this.readAllScreens();
 
         console.log("ioBroker handler ready.")
-    }
-
-    async loadWidgets() {
-        //@ts-ignore
-        const widgetsConfig: IWidgetConfig = (await import(window.iobrokerWebuiRootUrl + "webui-widgets/config.json", { assert: { type: 'json' } })).default;
-        for (let name of Object.keys(widgetsConfig)) {
-            const w = widgetsConfig[name];
-            for (let i of w.imports) {
-                import(window.iobrokerWebuiRootUrl + "webui-widgets/" + i);
-            }
-        }
     }
 
     async readAllScreens() {

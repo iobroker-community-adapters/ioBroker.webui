@@ -50,6 +50,7 @@ function installNpm(name) {
             resolve();
         }
         npmRunning = true;
+        adapter.log.info(`Install NPM package (${name}), check dirs...`);
         if (!fs.existsSync(__dirname + '/www/widgets'))
             await fs.promises.mkdir(__dirname + '/www/widgets')
         if (!fs.existsSync(__dirname + '/www/widgets/package.json'))
@@ -110,6 +111,10 @@ async function runCommand(command, parameter) {
 
     switch (command) {
         case 'addNpm':
+            await installNpm(parameter);
+            await refreshWWW();
+            break;
+        case 'updateNpm':
             await installNpm(parameter);
             await refreshWWW();
             break;

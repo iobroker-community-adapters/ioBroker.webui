@@ -1,6 +1,6 @@
 import '@node-projects/web-component-designer'
 
-import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, TreeViewExtended, PropertyGrid, DocumentContainer, NodeHtmlParserService, PaletteTreeView, CodeViewMonaco, BindableObjectsBrowser } from '@node-projects/web-component-designer';
+import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, TreeViewExtended, PropertyGrid, DocumentContainer, NodeHtmlParserService, PaletteTreeView, CodeViewMonaco, BindableObjectsBrowser, WebcomponentManifestParserService } from '@node-projects/web-component-designer';
 import createDefaultServiceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
 import { IobrokerWebuiBindableObjectsService } from './services/IobrokerWebuiBindableObjectsService.js';
 import { IobrokerWebuiBindableObjectDragDropService } from './services/IobrokerWebuiBindableObjectDragDropService.js';
@@ -28,6 +28,7 @@ DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css
 import "./widgets/IobrokerWebuiSolutionExplorer.js";
 import "./runtime/ScreenViewer.js";
 import "./widgets/IobrokerWebuiStyleEditor.js";
+import { iobrokerHandler } from './IobrokerHandler.js';
 
 try {
   let configWidgets = await import(window.iobrokerWebuiRootUrl + 'webui-widgets/configWidgets.js');
@@ -155,7 +156,6 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   private async _setupServiceContainer() {
     serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/elements-webui.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
-
     serviceContainer.globalContext.onToolChanged.on((e) => {
       let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue).map(([k]) => k)[0];
       if (e.newValue == null)
@@ -169,9 +169,48 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       }
     });
 
+    await this.loadNpmPackages();
     this._paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);
     this._bindableObjectsBrowser.initialize(serviceContainer);
     this._propertyGrid.serviceContainer = serviceContainer;
+  }
+
+  async loadNpmPackages() {
+    let promises: Promise<void>[] = [];
+    try {
+      let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/package.json", false)).file);
+      for (let name of Object.keys(packageJson.dependencies)) {
+        promises.push(this.loadNpmPackage(name))
+      }
+      await Promise.allSettled(promises);
+    }
+    catch (err) {
+      console.warn("error loading package.json, may not yet exist", err);
+    }
+  }
+
+  private async loadNpmPackage(name: string) {
+    try {
+      let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/node_modules/" + name + "/package.json", false)).file);
+      let customElementsJsonName = "custom-elements.json";
+      if (packageJson["customElements"])
+        customElementsJsonName = packageJson["customElements"];
+      try {
+        let manifest = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/node_modules/" + name + "/" + customElementsJsonName, false)).file);
+        try {
+          serviceContainer.registerMultiple(['elementsService', 'propertyService'], new WebcomponentManifestParserService(name, manifest, "/webui/widgets/node_modules/" + name + ""));
+        }
+        catch (err) {
+          console.warn("error parsing manifest: " + name + "/" + customElementsJsonName, err);
+        }
+      }
+      catch (err) {
+        console.warn("error loading " + name + "/" + customElementsJsonName + ", may not yet exist", err);
+      }
+    }
+    catch (err) {
+      console.warn("error loading " + name + "/package.json, may not yet exist", err);
+    }
   }
 
   public newDocument(name: string, content: string) {
