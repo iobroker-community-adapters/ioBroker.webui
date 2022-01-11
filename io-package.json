@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "webui",
-        "version": "0.0.12",
+        "version": "0.0.13",
         "title": "webui",
         "titleLang": {
             "en": "webui",
@@ -22,6 +22,7 @@
         "platform": "Javascript/Node.js",
         "loglevel": "info",
         "enabled": true,
+        "compact": true,
         "keywords": [
             "GUI",
             "graphical",

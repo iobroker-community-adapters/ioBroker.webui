@@ -135,7 +135,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
 
         for (let d of dirList) {
             if (d.file.endsWith('.svg'))
-                icons.children.push({ title: d.file.substring(0, d.file.length - 4) });
+                icons.children.push({ title: d.file.substring(0, d.file.length - 4), icon: './assets/icons/' + dirName + '/' + d.file, data: { type: 'icon' } });
         }
 
         return icons;
