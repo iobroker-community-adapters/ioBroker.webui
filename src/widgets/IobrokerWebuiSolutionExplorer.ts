@@ -41,6 +41,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 this._createNpmsNode(),
                 this._createControlsNode(),
                 this._createChartsNode(),
+                this._createIconsNode(),
                 this._createObjectsNode()
             ]);
         return result.map(x => x.status == 'fulfilled' ? x.value : null);
@@ -112,8 +113,35 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         return npmsNode;
     }
 
-    private async _createChartsNode() {
+    private async _createIconsNode() {
+        let iconsNode: Fancytree.NodeData = {
+            title: 'Icons', folder: true, children: []
+        }
+        const iconDirs = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons");
 
+        let results = await Promise.allSettled(iconDirs.filter(x => x.isDir).map(x => this._readIconsDir(x.file)));
+
+        for (let r of results) {
+            if (r.status == 'fulfilled')
+                iconsNode.children.push(r.value);
+        }
+
+        return iconsNode;
+    }
+
+    private async _readIconsDir(dirName: string) {
+        let icons: Fancytree.NodeData = { title: dirName, children: [] };
+        const dirList = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons/" + dirName);
+
+        for (let d of dirList) {
+            if (d.file.endsWith('.svg'))
+                icons.children.push({ title: d.file.substring(0, d.file.length - 4) });
+        }
+
+        return icons;
+    }
+
+    private async _createChartsNode() {
         let chartsNode: Fancytree.NodeData = {
             title: 'Charts', folder: true, children: []
         }
