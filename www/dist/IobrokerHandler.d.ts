@@ -21,12 +21,11 @@ declare class IobrokerHandler {
     stylesChanged: TypedEvent<void>;
     constructor();
     init(): Promise<void>;
-    loadWidgets(): Promise<void>;
     readAllScreens(): Promise<void>;
     saveScreen(name: string, screen: IScreen): Promise<void>;
     getScreenNames(): string[];
     getScreen(name: string): IScreen;
-    sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm', data: string): Promise<void>;
+    sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm', data: string, clientId?: string): Promise<void>;
 }
 export declare const iobrokerHandler: IobrokerHandler;
 export {};

@@ -1,5 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
-import { ContextMenuHelper, IElementDefinition } from "@node-projects/web-component-designer";
+import { dragDropFormatNameBindingObject, ContextMenuHelper, IBindableObject, IBindableObjectsService, IElementDefinition, ServiceContainer, dragDropFormatNameElementDefinition } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../IobrokerHandler.js";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
@@ -15,6 +15,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     private _treeDiv: HTMLDivElement;
     //@ts-ignore
     private _tree: Fancytree.Fancytree;
+    serviceContainer: ServiceContainer;
 
     constructor() {
         super();
@@ -23,8 +24,25 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         this.shadowRoot.adoptedStyleSheets = [fancyTreeStyleSheet];
     }
 
+    async ready() {
+
+    }
+
+    initialize(serviceContainer: ServiceContainer) {
+        this.serviceContainer = serviceContainer;
+        this._loadTree()
+        iobrokerHandler.screensChanged.on(() => this._loadTree());
+    }
+
     private async createTreeNodes() {
-        const result = await Promise.allSettled([this._createscreensNode(), this._createNpmsNode(), this._createChartsNode()]);
+        const result = await Promise.allSettled(
+            [
+                this._createscreensNode(),
+                this._createNpmsNode(),
+                this._createControlsNode(),
+                this._createChartsNode(),
+                this._createObjectsNode()
+            ]);
         return result.map(x => x.status == 'fulfilled' ? x.value : null);
     }
 
@@ -64,7 +82,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         }
 
         let npmsNode: Fancytree.NodeData & { contextMenu: (event) => void } = {
-            title: 'NPM', folder: true, contextMenu: (event) => {
+            title: 'Packages', folder: true, contextMenu: (event) => {
                 ContextMenuHelper.showContextMenu(null, event, null, [{
                     title: 'Add Package', action: () => {
                         const packageName = prompt("NPM Package Name");
@@ -139,11 +157,75 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         return chartsNode;
     }
 
+    private async _createControlsNode() {
+        let controlsNode: Fancytree.NodeData = {
+            title: 'Controls', folder: true, children: []
+        }
+
+        for (const s of this.serviceContainer.elementsServices) {
+            const newNode: Fancytree.NodeData = {
+                title: s.name,
+                folder: true,
+                children: []
+            };
+            controlsNode.children.push(newNode);
+
+            try {
+                let elements = await s.getElements();
+                for (let e of elements) {
+                    newNode.children.push({
+                        title: e.name ?? e.tag,
+                        folder: false,
+                        data: {
+                            type: 'control',
+                            ref: e
+                        }
+                    });
+                }
+            } catch (err) {
+                console.warn('Error loading elements', err);
+            }
+        }
+
+        return controlsNode;
+    }
+
+    private async _createObjectsNode() {
+        const s = this.serviceContainer.bindableObjectsServices[0];
+        const objectsNode: Fancytree.NodeData = {
+            title: 'Objects', folder: true, lazy: true, data: { service: s }
+        }
+        return objectsNode;
+    }
+
+    private lazyLoad(event: any, data: any) {
+        data.result = new Promise(async resolve => {
+            const service: IBindableObjectsService = data.node.data.service;
+            const bindable: IBindableObject<any> = data.node.data.bindable;
+            let children: IBindableObject<any>[];
+            if (bindable?.children)
+                children = bindable.children;
+            else
+                children = await service.getBindableObjects(bindable);
+            resolve(children.map(x => ({
+                service,
+                title: x.name,
+                data: {
+                    type: 'object',
+                    bindable: x
+                },
+                folder: x.children !== false,
+                lazy: x.children !== false
+            })));
+        });
+    }
+
     private _loadTree() {
         if (!this._tree) {
             $(this._treeDiv).fancytree(<Fancytree.FancytreeOptions>{
                 icon: false,
                 source: this.createTreeNodes(),
+                lazyLoad: this.lazyLoad,
                 copyFunctionsToData: true,
                 extensions: ['dnd5'],
                 dblclick: (e, d) => {
@@ -192,6 +274,16 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
                             data.dropEffect = "copy";
                             return true;
+                        } else if (data.node.data.type == 'object') {
+                            data.effectAllowed = "all";
+                            data.dataTransfer.setData(dragDropFormatNameBindingObject, JSON.stringify(node.data.bindable));
+                            data.dropEffect = "copy";
+                            return true;
+                        } else if (data.node.data.type == 'control') {
+                            data.effectAllowed = "all";
+                            data.dataTransfer.setData(dragDropFormatNameElementDefinition, JSON.stringify(node.data.ref));
+                            data.dropEffect = "copy";
+                            return true;
                         }
                         return false;
                     },
@@ -206,11 +298,6 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         } else {
             this._tree.reload(this.createTreeNodes());
         }
-    }
-
-    async ready() {
-        this._loadTree()
-        iobrokerHandler.screensChanged.on(() => this._loadTree());
     }
 }
 

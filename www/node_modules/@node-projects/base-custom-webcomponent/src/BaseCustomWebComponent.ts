@@ -151,37 +151,37 @@ export class BaseCustomWebComponentNoAttachedTemplate extends HTMLElement {
         if (!node)
             node = this.shadowRoot.childNodes.length > 0 ? this.shadowRoot : this._rootDocumentFragment;
         if (node instanceof Element) { //node.nodeType === 1
-            let attributes = Array.from(node.attributes);
+            const attributes = Array.from(node.attributes);
             for (let a of attributes) {
                 if (a.name.startsWith('css:') && a.value.startsWith('[[') && a.value.endsWith(']]')) {
-                    let value = a.value.substring(2, a.value.length - 2).replaceAll('&amp;', '&');
-                    let camelCased = a.name.substring(4, a.name.length).replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+                    const value = a.value.substring(2, a.value.length - 2).replaceAll('&amp;', '&');
+                    const camelCased = a.name.substring(4, a.name.length).replace(/-([a-z])/g, (g) => g[1].toUpperCase());
                     this._bindings.push(() => this._bindingSetElementCssValue(<HTMLElement | SVGElement>node, camelCased, value, repeatBindingItems, host, context));
                     this._bindings[this._bindings.length - 1](true);
                 } else if (a.name.startsWith('class:') && a.value.startsWith('[[') && a.value.endsWith(']]')) {
-                    let value = a.value.substring(2, a.value.length - 2).replaceAll('&amp;', '&');
-                    let camelCased = a.name.substring(6, a.name.length).replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+                    const value = a.value.substring(2, a.value.length - 2).replaceAll('&amp;', '&');
+                    const camelCased = a.name.substring(6, a.name.length).replace(/-([a-z])/g, (g) => g[1].toUpperCase());
                     this._bindings.push(() => this._bindingSetElementClass(<HTMLElement | SVGElement>node, camelCased, value, repeatBindingItems, host, context));
                     this._bindings[this._bindings.length - 1](true);
                 } else if (a.name == 'repeat-changed-item-callback') {
                     //do nothing
                 } else if (a.name.startsWith('repeat:') && a.value.startsWith('[[') && a.value.endsWith(']]')) {
-                    let value = a.value.substring(2, a.value.length - 2).replaceAll('&amp;', '&');
-                    let bindingItemVariableName = a.name.substring(7, a.name.length).replace(/-([a-z])/g, (g) => g[1].toUpperCase());
-                    let elementsCache: Node[] = [];
+                    const value = a.value.substring(2, a.value.length - 2).replaceAll('&amp;', '&');
+                    const bindingItemVariableName = a.name.substring(7, a.name.length).replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+                    const elementsCache: Node[] = [];
                     let bindingIndexname = 'index';
                     let changeItemCallback = null;
-                    let indexNameAttribute = attributes.find(x => x.name == 'repeat-index');
+                    const indexNameAttribute = attributes.find(x => x.name == 'repeat-index');
                     if (indexNameAttribute)
                         bindingIndexname = indexNameAttribute.value;
-                    let changeItemCallbackAttribute = attributes.find(x => x.name == 'repeat-changed-item-callback');
+                    const changeItemCallbackAttribute = attributes.find(x => x.name == 'repeat-changed-item-callback');
                     if (changeItemCallbackAttribute)
                         changeItemCallback = changeItemCallbackAttribute.value;
                     this._bindings.push(() => this._bindingRepeat(<HTMLTemplateElement>node, bindingItemVariableName, bindingIndexname, value, changeItemCallback, repeatBindingItems, elementsCache, host, context));
                     this._bindings[this._bindings.length - 1](true);
                 } else if (a.name.startsWith('@') && a.value.startsWith('[[') && a.value.endsWith(']]')) { //todo remove events on repeat refresh
-                    let value = a.value.substring(2, a.value.length - 2).replaceAll('&amp;', '&');
-                    let camelCased = a.name.substring(1, a.name.length).replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+                    const value = a.value.substring(2, a.value.length - 2).replaceAll('&amp;', '&');
+                    const camelCased = a.name.substring(1, a.name.length).replace(/-([a-z])/g, (g) => g[1].toUpperCase());
                     if (a.name == "@touch:contextmenu")
                         addTouchFriendlyContextMenu(node, (e) => this._bindingRunEval(value, repeatBindingItems, e, host, context));
                     else {
@@ -193,7 +193,7 @@ export class BaseCustomWebComponentNoAttachedTemplate extends HTMLElement {
                     }
                 } else if (a.value.startsWith('[[') && a.value.endsWith(']]')) {
                     let value = a.value.substring(2, a.value.length - 2).replaceAll('&amp;', '&');
-                    let camelCased = a.name.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+                    const camelCased = a.name.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
                     let noNull = false;
                     if (value.startsWith('?')) {
                         value = value.substring(1);
@@ -207,38 +207,29 @@ export class BaseCustomWebComponentNoAttachedTemplate extends HTMLElement {
                     let event = 'input';
                     if (attributeValues.length > 1 && attributeValues[1])
                         event = attributeValues[1];
-                    let camelCased = a.name.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
-                    if (camelCased.startsWith('set:')) {
-                        const pName = camelCased.substring(4);
-                        event.split(';').forEach(x => node.addEventListener(x, (e) => {
-                            let ctx = { value: node[pName] };
-                            ctx[pName] = node[pName]; //value is in value or property-name
-                            this._bindingRunEval(value, repeatBindingItems, e, host, { value: node[pName] })
-                        }));
-                    } else {
-                        let noNull = false;
-                        if (value.startsWith('?')) {
-                            value = value.substring(1);
-                            noNull = true;
-                        }
-                        this._bindings.push((firstRun?: boolean) => this._bindingSetNodeValue(firstRun, node, a, camelCased, value, repeatBindingItems, removeAttributes, host, context, noNull));
-                        this._bindings[this._bindings.length - 1](true);
-                        if (event) {
-                            event.split(';').forEach(x => node.addEventListener(x, (e) => this._bindingsSetValue(this, value, (<HTMLInputElement>node)[camelCased])));
-                        }
+                    const camelCased = a.name.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+                    let noNull = false;
+                    if (value.startsWith('?')) {
+                        value = value.substring(1);
+                        noNull = true;
+                    }
+                    this._bindings.push((firstRun?: boolean) => this._bindingSetNodeValue(firstRun, node, a, camelCased, value, repeatBindingItems, removeAttributes, host, context, noNull));
+                    this._bindings[this._bindings.length - 1](true);
+                    if (event) {
+                        event.split(';').forEach(x => node.addEventListener(x, (e) => this._bindingsSetValue(this, value, (<HTMLInputElement>node)[camelCased])));
                     }
                 }
             }
         } else if (node.nodeType === 3) {
             if (node.nodeValue.indexOf('[[') >= 0) {
                 const text = node.nodeValue;
-                let matches = text.matchAll((<RegExp>(<any>this.constructor)._bindingRegex));
+                const matches = text.matchAll((<RegExp>(<any>this.constructor)._bindingRegex));
                 let lastindex = 0;
                 let fragment: DocumentFragment;
                 for (let m of matches) {
                     if (m.index == 0 && m[0].length == text.length && node.parentNode.childNodes.length == 1) {
-                        let value = m[0].substr(2, m[0].length - 4);
-                        let parent = node.parentNode;
+                        const value = m[0].substr(2, m[0].length - 4);
+                        const parent = node.parentNode;
                         node.parentNode.removeChild(node);
                         this._bindings.push((firstRun?: boolean) => this._bindingSetNodeValue(firstRun, parent, null, 'innerHTML', value, repeatBindingItems, removeAttributes, host, context, false));
                         this._bindings[this._bindings.length - 1](true);
@@ -246,11 +237,11 @@ export class BaseCustomWebComponentNoAttachedTemplate extends HTMLElement {
                         if (!fragment)
                             fragment = document.createDocumentFragment();
                         if (m.index - lastindex > 0) {
-                            let tn = document.createTextNode(text.substr(lastindex, m.index - lastindex));
+                            const tn = document.createTextNode(text.substr(lastindex, m.index - lastindex));
                             fragment.appendChild(tn);
                         }
                         const newNode = document.createElement('span');
-                        let value = m[0].substr(2, m[0].length - 4);
+                        const value = m[0].substr(2, m[0].length - 4);
                         this._bindings.push((firstRun?: boolean) => this._bindingSetNodeValue(firstRun, newNode, null, 'innerHTML', value, repeatBindingItems, removeAttributes, host, context, false));
                         this._bindings[this._bindings.length - 1](true);
                         fragment.appendChild(newNode);

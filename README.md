@@ -4,6 +4,10 @@ webui for ioBroker
 
 ![image](https://user-images.githubusercontent.com/364896/147159584-e0e43d37-9e63-409d-867b-458c5dd8be4e.png)
 
+## Sponsoring
+
+If you want to help the development, sponsor this project at https://github.com/sponsors/jogibear9988
+
 ## Developing
 
   * Install dependencies

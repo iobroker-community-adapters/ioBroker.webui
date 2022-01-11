@@ -39,7 +39,6 @@ The Bindings are heavily inspired by polymer
 use [[expression]] for one way bindings
 
 use {{this.property::change;paste}} for two way bindings which listens to events 'change 'and 'paste'
-use "set:name="{{this.property::change;paste}}"" as setter only property Binding, so you can define different code for get & set.
 
 css:cssPropertyName="[[expression]]" to bind to a css property
 

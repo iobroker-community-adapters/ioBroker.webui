@@ -1,0 +1,292 @@
+import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
+import scriptCommandsTypeInfo from "../reflection/ScriptCommands.json" assert {type: 'json'};
+import { ICommandHandler } from "@node-projects/web-component-designer";
+import { Script } from "../scripting/Script";
+//@ts-ignore
+import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
+
+export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructorAppend implements ICommandHandler {
+    static readonly style = css`
+        .list{
+            display: grid;
+            grid-template-columns: 1fr 150px;
+            margin:5px 19px;
+        }
+
+        .reverselist{
+            display: grid;
+            grid-template-columns: min-content 1fr;
+            margin:5px 19px;
+        }
+
+        .list button{
+            padding: 5px 10px;
+        }
+    `;
+
+    static readonly template = html`
+        <div style="width:100%; height:100%">
+            <split-layout style="height: 100%; width: 100%; position: relative;" orientation="horizontal">
+                <div style="width: 100%;  position: relative;">
+                    <div style="width:100%; height:100%">
+                        <div class="reverselist">
+                            Name: <input class="title" type="text" value="[[this._scriptDTO.Name]]" id="titleInput" placeholder="Title"/>
+                        </div>
+                        <div id="treeDiv" style="overflow: hidden; width:100%"></div>
+                        <div class="list">
+                            <select id="listAddDropdown">  
+                                <option> ---Add New--- </option>
+                            </select>  
+                            <button @click="[[this.addNew()]]">Add</button>
+                        </div>
+                    </div> 
+                </div>
+                <div style="width: 100%; position: relative;">
+                    <mcc-property-grid id="propertygrid" style="width: 100%; height: 100%;  position: relative;"></mcc-property-grid>
+                </div>
+            </split-layout>
+        </div>
+    `;
+
+    static readonly is = 'vscript-editor';
+
+    private _script: Script;
+    private _propertygrid: MccPropertyGrid;
+    private listAddDropdown: HTMLSelectElement;
+    private _treeDiv: HTMLDivElement;
+    private _tree: IConfigTreeItem[];
+    private _fancyTree: Fancytree.FancytreeNode;
+
+    constructor() {
+        super();
+        this._treeDiv = this._getDomElement<HTMLDivElement>('treeDiv');
+        this._propertygrid = this._getDomElement<MccPropertyGrid>('propertygrid');
+        //@ts-ignore
+        this.shadowRoot.adoptedStyleSheets = [fancyTreeStyleSheet, IobrokerWebuiScriptEditor.style];
+    }
+
+    loadScript(script: Script) {
+        this._script = script;
+        this._loadScriptData();
+    }
+
+    async ready() {
+        let commands = Object.keys(scriptCommandsTypeInfo.definitions);
+
+        /*this._propertygrid.typeName = ScriptDTO.Type;
+        this._propertygrid.hideProperties = 'Parent;Children;ParentId;Id;MccEntityState;StrippedDownDTO;Name';
+        this._propertygrid.getSpecialPropertyEditor = this.getSpecialPropertyEditor;
+        this._propertygrid.expanded = true;*/
+
+        this._getDomElement("titleInput").addEventListener('input', this.onTitleInputChange.bind(this));
+        this.addListOptions();
+
+        this._parseAttributesToProperties();
+        this._bindingsParse(null, true);
+        this._assignEvents();
+    }
+
+    /*
+    private getSpecialPropertyEditor(property: IPropertyInfo, currentValue, propertyPath: string, valueChangedCallback: (newValue) => void): HTMLElement {
+        if (propertyPath.endsWith('Value')) {
+            let tagTreeView = new TagTree();
+            tagTreeView.style.width = '100%';
+            tagTreeView.selection = currentValue;
+            tagTreeView.tagChanged.on((tag) => {
+                valueChangedCallback(tag);
+            })
+
+            let elem = document.createElement("div");
+            elem.style.display = 'flex';
+            elem.appendChild(tagTreeView);
+
+            return elem;
+        }
+        return null;
+    }
+    */
+
+    private addListOptions() {
+        const tp = mccReflection.getTypeInfo(VScriptCommand.Type)
+        let VScriptCommands = mccReflection.getAllTypesWithBaseType(tp.info.TypeName)
+
+        this.listAddDropdown = this._getDomElement("listAddDropdown")
+        VScriptCommands.forEach(command => {
+            let option: HTMLOptionElement = new Option(command.TypeName, null);
+            this.listAddDropdown.add(option)
+        })
+    }
+
+    private async removeItem(configTreeItem: IConfigTreeItem, currentItem, data: Fancytree.EventData) {
+        this.scriptList.remove(currentItem)
+        data.node.remove();
+    }
+
+    private createTitle(currentItem) {
+        const cloneItem = JSON.parse(JSON.stringify(currentItem));
+        delete cloneItem["$type"];
+        delete cloneItem["$id"];
+        let title = `<b>${cloneItem.Name}</b> ${JSON.stringify(cloneItem)}`;
+        return title;
+    }
+
+    private createTreeItem(currentItem) {
+        let cti = { title: this.createTitle(currentItem), data: { dto: currentItem } };
+        /*cti.contextMenu = (e, data) => {
+            contextMenuHelper_createMenu(e, [
+                { title: 'Remove Item', callback: (e) => this.removeItem(cti, currentItem, data) }
+            ], this.shadowRoot)
+        }*/
+        return cti;
+    }
+
+    private _loadScriptData() {
+        let menuItems = [];
+
+        this._script.commands.forEach((i, index) => {
+            let treeItem = this.createTreeItem(i);
+            menuItems.push(treeItem);
+        });
+        this._tree = menuItems;
+
+        $(this._treeDiv).fancytree(<Fancytree.FancytreeOptions>{
+            icon: false,
+            source: this._tree,
+            copyFunctionsToData: true,
+            extensions: ['dnd5'],
+
+            activate: (event, data) => {
+                let node = data.node;
+                this._propertygrid.selectedObject = node.data.dto;
+            },
+
+            createNode: (event, data) => {
+                let span = data.node.span as HTMLSpanElement;
+                span.oncontextmenu = (e) => {
+                    data.node.setActive();
+                    if (data.node.data.contextMenu)
+                        data.node.data.contextMenu(e, data);
+                    e.preventDefault();
+                    return false;
+                }
+            },
+
+            dnd5: {
+                dropMarkerParent: this.shadowRoot,
+                preventRecursion: true,
+                preventVoidMoves: false,
+                dropMarkerOffsetX: -24,
+                dropMarkerInsertOffsetX: -16,
+
+                dragStart: (node, data) => {
+                    data.effectAllowed = "all";
+                    data.dropEffect = "move";
+                    return true;
+                },
+                dragEnter: (node, data) => {
+                    return true;
+                },
+                dragOver: (node, data) => {
+                    if (data.hitMode == 'over')
+                        data.dropEffect = 'none';
+                    else
+                        data.dropEffect = data.dropEffectSuggested;
+                },
+                dragDrop: (node, data) => {
+                    if (!(node.getLevel() == 1 && (data.hitMode == 'after' || data.hitMode == 'before'))) {
+                        return;
+                    }
+
+
+                    let newNode,
+                        transfer = data.dataTransfer,
+                        sourceNodes = data.otherNodeList,
+                        mode = data.dropEffect;
+
+                    if (data.hitMode === "after") {
+                        sourceNodes.reverse();
+                    }
+                    if (data.otherNode) {
+                        if (mode === "move") {
+                            data.otherNode.moveTo(node, data.hitMode);
+                        } else {
+                            newNode = data.otherNode.copyTo(node, data.hitMode);
+                            if (mode === "link") {
+                                newNode.setTitle("Link to " + newNode.title);
+                            } else {
+                                newNode.setTitle("Copy of " + newNode.title);
+                            }
+                        }
+                    } else if (data.otherNodeData) {
+                        //@ts-ignore
+                        node.addChild(data.otherNodeData, data.hitMode);
+                    } else if (data.files.length) {
+                        for (let i = 0; i < data.files.length; i++) {
+                            let file = data.files[i];
+                            node.addNode({ title: "'" + file.name + "' (" + file.size + " bytes)" }, data.hitMode);
+                        }
+                    } else {
+                        node.addNode({ title: transfer.getData("text") }, data.hitMode);
+                    }
+                    node.setExpanded();
+                },
+            },
+        });
+
+        this._fancyTree = $(this._treeDiv).fancytree('getRootNode');
+    }
+
+    onTitleInputChange(e) {
+        this._script.name = e.target.value;
+    }
+
+    addNew() {
+        /*let dropdownvalue = this.listAddDropdown.options[this.listAddDropdown.selectedIndex].text;
+        let command = mccReflection.createObject(dropdownvalue);
+        command.Name = dropdownvalue;
+        this.scriptList.push(command);
+        if (this.scriptList.length == 1) {
+            this._fancyTree.removeChildren();
+        }
+        let ti = this.createTreeItem(command);
+        this._fancyTree.addNode(<any>ti);*/
+    }
+
+    sortListBeforeSave() {
+        let children = this._fancyTree.children;
+        let sortedList = [];
+        children.forEach(c => {
+            let temp = this._script.commands.find(i => c.data.dto == i);
+            sortedList.push(temp);
+        })
+        this._script.commands = sortedList;
+    }
+
+
+
+    setDto(dto: BasicDTO, dtoType: string) {
+        this._scriptDTO = <ScriptDTO>dto;
+        this.loadScriptData();
+        this._bindingsRefresh();
+    }
+
+    async executeCommand(command: IUiCommand) {
+        if (command.type === CommandType.save) {
+            this._scriptDTO.Script = JSON.stringify(this.sortListBeforeSave());
+            if (this._scriptDTO.MccEntityState != MccEntityState.Added)
+                this._scriptDTO.MccEntityState = MccEntityState.Modified;
+            let res = await commonClient.commitObjectT(ScriptDTO, this._scriptDTO, null, ServiceType.CommonService);
+
+            if (checkSecurityAnswerCodeDirect(res)) {
+                this._scriptDTO.MccEntityState = MccEntityState.Unchanged;
+            }
+        }
+    }
+
+    canExecuteCommand(command: IUiCommand) {
+        if (command.type === CommandType.save) {
+            return true;
+        }
+        return false;
+    }
+}

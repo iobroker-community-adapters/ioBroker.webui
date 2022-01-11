@@ -1,7 +1,7 @@
 {
   "description": "Base Custom Webcomponent",
   "name": "@node-projects/base-custom-webcomponent",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "type": "module",
   "main": "./dist/index.js",
   "author": "",
@@ -10,7 +10,7 @@
     "tsc": "tsc"
   },
   "devDependencies": {
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.4"
   },
   "repository": {
     "type": "git",

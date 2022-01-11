@@ -63,8 +63,9 @@ class IobrokerHandler {
         return this._screens[name.toLocaleLowerCase()];
     }
 
-    async sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm', data: string): Promise<void> {
+    async sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm', data: string, clientId: string = ''): Promise<void> {
         await this.connection.setState(this.namespace + '.control.data', { val: data });
+        await this.connection.setState(this.namespace + '.control.clientIds', { val: clientId });
         await this.connection.setState(this.namespace + '.control.command', { val: command });
     }
 

@@ -16,22 +16,11 @@ class IobrokerHandler {
     constructor() {
     }
     async init() {
-        //this.loadWidgets();
         this.connection = new Connection({ protocol: 'ws', host: window.iobrokerHost, port: window.iobrokerPort, admin5only: false, autoSubscribes: [] });
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
         await this.readAllScreens();
         console.log("ioBroker handler ready.");
-    }
-    async loadWidgets() {
-        //@ts-ignore
-        const widgetsConfig = (await import(window.iobrokerWebuiRootUrl + "webui-widgets/config.json", { assert: { type: 'json' } })).default;
-        for (let name of Object.keys(widgetsConfig)) {
-            const w = widgetsConfig[name];
-            for (let i of w.imports) {
-                import(window.iobrokerWebuiRootUrl + "webui-widgets/" + i);
-            }
-        }
     }
     async readAllScreens() {
         const screenNames = (await this.connection.readDir(this.adapterName, this.configPath + "screens")).map(x => x.file);
@@ -51,8 +40,9 @@ class IobrokerHandler {
     getScreen(name) {
         return this._screens[name.toLocaleLowerCase()];
     }
-    async sendCommand(command, data) {
+    async sendCommand(command, data, clientId = '') {
         await this.connection.setState(this.namespace + '.control.data', { val: data });
+        await this.connection.setState(this.namespace + '.control.clientIds', { val: clientId });
         await this.connection.setState(this.namespace + '.control.command', { val: command });
     }
 }
