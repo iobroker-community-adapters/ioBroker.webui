@@ -70,7 +70,7 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
     }
     async ready() {
         //@ts-ignore
-        const style = await import("monaco-editor/min/vs/editor/editor.main.css", { assert: { type: 'css' } });
+        const style = await import('/webui/node_modules/monaco-editor/min/vs/editor/editor.main.css', { assert: { type: 'css' } });
         //@ts-ignore
         this.shadowRoot.adoptedStyleSheets = [style.default, this.constructor.style];
         this._container = this._getDomElement('container');
