@@ -12,6 +12,8 @@ export declare class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponen
     private createTreeNodes;
     private _createscreensNode;
     private _createNpmsNode;
+    private _createIconsNode;
+    private _readIconsDir;
     private _createChartsNode;
     private _createControlsNode;
     private _createObjectsNode;
