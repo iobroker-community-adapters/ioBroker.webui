@@ -22,13 +22,6 @@ import "./widgets/IobrokerWebuiSolutionExplorer.js";
 import "./runtime/ScreenViewer.js";
 import "./widgets/IobrokerWebuiStyleEditor.js";
 import { iobrokerHandler } from './IobrokerHandler.js';
-try {
-    let configWidgets = await import(window.iobrokerWebuiRootUrl + 'webui-widgets/configWidgets.js');
-    configWidgets.registerWidgets(serviceContainer);
-}
-catch (err) {
-    console.error(err);
-}
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
     activeElement;
     mainPage = 'designer';

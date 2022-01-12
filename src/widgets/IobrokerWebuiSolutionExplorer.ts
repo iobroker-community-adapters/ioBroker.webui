@@ -328,8 +328,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 }
             });
 
-            $(this._treeDiv).fancytree('getRootNode');
-            this._tree = $(this._treeDiv).fancytree('getTree');
+            this._tree = $.ui.fancytree.getTree(this._treeDiv);
         } else {
             this._tree.reload(this.createTreeNodes());
         }
