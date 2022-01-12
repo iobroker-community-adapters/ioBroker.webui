@@ -112,7 +112,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         const dirList = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons/" + dirName);
         for (let d of dirList) {
             if (d.file.endsWith('.svg'))
-                icons.children.push({ title: d.file.substring(0, d.file.length - 4) });
+                icons.children.push({ title: d.file.substring(0, d.file.length - 4), icon: './assets/icons/' + dirName + '/' + d.file, data: { type: 'icon', file: './assets/icons/' + dirName + '/' + d.file } });
         }
         return icons;
     }
@@ -278,6 +278,13 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         else if (data.node.data.type == 'control') {
                             data.effectAllowed = "all";
                             data.dataTransfer.setData(dragDropFormatNameElementDefinition, JSON.stringify(node.data.ref));
+                            data.dropEffect = "copy";
+                            return true;
+                        }
+                        else if (data.node.data.type == 'icon') {
+                            const elementDef = { tag: "img", defaultAttributes: { 'src': data.node.data.file }, defaultWidth: '32px', defaultHeight: '32px' };
+                            data.effectAllowed = "all";
+                            data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
                             data.dropEffect = "copy";
                             return true;
                         }

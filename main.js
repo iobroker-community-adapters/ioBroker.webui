@@ -56,7 +56,7 @@ class WebUi extends utils.Adapter {
 
     npmRunning = false;
     installNpm(name) {
-        return new Promise<number | null>(async resolve => {
+        return new Promise(async resolve => {
             if (this.npmRunning) {
                 this.log.info(`NPM already running`);
                 resolve(null);
@@ -82,7 +82,7 @@ class WebUi extends utils.Adapter {
     }
 
     removeNpm(name) {
-        return new Promise<number | null>(resolve => {
+        return new Promise(resolve => {
             if (this.npmRunning) {
                 this.log.info(`NPM already running`);
                 resolve(null);
@@ -229,13 +229,4 @@ class WebUi extends utils.Adapter {
     }
 }
 
-if (require.main !== module) {
-    // Export the constructor in compact mode
-    /**
-     * @param {Partial<utils.AdapterOptions>} [options={}]
-     */
-    module.exports = (options) => new WebUi(options);
-} else {
-    // otherwise start the instance directly
-    new WebUi();
-}
+new WebUi();
