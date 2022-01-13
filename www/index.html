@@ -166,43 +166,77 @@
           <span class="title">edit</span>
         </div>
         <div class="group flex-column">
-          <div class="group">
-            <button class="tool-button" data-command="arrangeLeft"
-              style="background-image: url('./assets/images/layout/arrange-left.png'); background-size: cover;"
+          <div class="group" style="display: grid; grid-template-columns: auto auto auto auto auto auto auto;">
+            <button class="tool-button" data-command="arrangeLeft" title="align left"
+              style="background-image: url('./assets/images/layout/AlignLeft.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
               disabled></button>
-            <button class="tool-button" data-command="arrangeCenter"
-              style="background-image: url('./assets/images/layout/arrange-center.png'); background-size: cover;"
+            <button class="tool-button" data-command="arrangeCenter" title="align center vertically"
+              style="background-image: url('./assets/images/layout/AlignCenter.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
               disabled></button>
-            <button class="tool-button" data-command="arrangeRight"
-              style="background-image: url('./assets/images/layout/arrange-right.png'); background-size: cover;"
+            <button class="tool-button" data-command="arrangeRight" title="align right"
+              style="background-image: url('./assets/images/layout/AlignRight.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
+              disabled></button>
+            <button class="tool-button" data-command="arrangeTop" title="align top"
+              style="background-image: url('./assets/images/layout/AlignTop.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
+              disabled></button>
+            <button class="tool-button" data-command="arrangeCenterHorizontal" title="align center horizontally"
+              style="background-image: url('./assets/images/layout/AlignCenterHorizontal.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
+              disabled></button>
+            <button class="tool-button" data-command="arrangeBot" title="align bottom"
+              style="background-image: url('./assets/images/layout/AlignBot.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
+              disabled></button>
+            <button class="tool-button" data-command="rotateClockwise" title="rotate clockwise"
+              style="background-image: url('./assets/images/layout/RotatClockwise.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
+              disabled></button>
+
+            <button class="tool-button" data-command="mirrorHorizontal" title="mirror horizontal"
+              style="background-image: url('./assets/images/layout/MirrowHorizontal.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
+              disabled></button>
+            <button class="tool-button" data-command="mirrotVertical" title="mirror vertical"
+              style="background-image: url('./assets/images/layout/MirrowVertical.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
+              disabled></button>
+            <button class="tool-button" data-command="bringToBack" title="bring to back"
+              style="background-image: url('./assets/images/layout/BringToBack.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
+              disabled></button>
+            <button class="tool-button" data-command="bringToFront" title="bring to front"
+              style="background-image: url('./assets/images/layout/BringToFront.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
+              disabled></button>
+            <button class="tool-button" data-command="bringOneToBack" title="bring one to back"
+              style="background-image: url('./assets/images/layout/BringOneToBack.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
+              disabled></button>
+            <button class="tool-button" data-command="bringOneToFront" title="bring one to front"
+              style="background-image: url('./assets/images/layout/BringOneToFront.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
+              disabled></button>
+            <button class="tool-button" data-command="rotateCounterClockwise" title="rotate counter clockwise"
+              style="background-image: url('./assets/images/layout/RotatCounterClockwise.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
               disabled></button>
           </div>
           <span class="title">layout</span>
         </div>
         <div class="group flex-column">
           <div class="toolbar" id="tools">
+            <!-- Is the Rectangle Selector necssary, when the Pointer tool does the same thing? -->
+            <!-- <button class="tool-button" data-command="setTool" data-command-parameter="RectangleSelector" title="Rectangle Selector"><i class="far fa-object-group"></i></button> -->
             <button class="tool-button" data-command="setTool" data-command-parameter="Pointer" title="Pointer tool"
-              style="background: green; background-image: url('./assets/images/layout/PointerTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
-            <button class="tool-button" data-command="setTool" data-command-parameter="MagicWandSelector"
-              title="Magic Wand Selector"
-              style="background-image: url('./assets/images/layout/MagicWandTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background: green; background-image: url('./assets/images/layout/PointerTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="MagicWandSelector" title="Magic Wand Selector"
+            style="background-image: url('./assets/images/layout/MagicWandTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="DrawLine" title="Draw Line"
-              style="background-image: url('./assets/images/layout/DrawLineTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background-image: url('./assets/images/layout/DrawLineTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="DrawPath" title="Draw Path"
-              style="background-image: url('./assets/images/layout/DrawPathTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background-image: url('./assets/images/layout/DrawPathTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="DrawRect" title="Draw Rectangle"
-              style="background-image: url('./assets/images/layout/DrawRectTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
-            <button class="tool-button" data-command="setTool" data-command-parameter="DrawEllipsis"
-              title="Draw Ellipsis"
-              style="background-image: url('./assets/images/layout/DrawEllipTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background-image: url('./assets/images/layout/DrawRectTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="DrawEllipsis" title="Draw Ellipsis"
+            style="background-image: url('./assets/images/layout/DrawEllipTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="PickColor" title="Color picker"
-              style="background-image: url('./assets/images/layout/ColorPickerTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background-image: url('./assets/images/layout/ColorPickerTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="Zoom" title="Zoom tool"
-              style="background-image: url('./assets/images/layout/ZoomTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background-image: url('./assets/images/layout/ZoomTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="Text" title="Text tool"
-              style="background-image: url('./assets/images/layout/TextTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background-image: url('./assets/images/layout/TextTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="TextBoc" title="Textbox Tool"
-              style="background-image: url('./assets/images/layout/TextBoxTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background-image: url('./assets/images/layout/TextBoxTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
           </div>
           <div class="toolbar" id="color">
             <input type="color" title="stroke color" data-command="setStrokeColor" value="#000000"
