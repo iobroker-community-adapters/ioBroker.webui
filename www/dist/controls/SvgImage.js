@@ -1,7 +1,7 @@
-import { BaseCustomWebComponentConstructorAppend, css, property } from "@node-projects/base-custom-webcomponent";
-
+import { __decorate } from '/webui/node_modules/tslib/tslib.es6.js';
+import { BaseCustomWebComponentConstructorAppend, css, property } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
 export class SvgImage extends BaseCustomWebComponentConstructorAppend {
-    public static readonly style = css`
+    static style = css `
         :host {
             display: block;
             height: 100%;
@@ -14,26 +14,23 @@ export class SvgImage extends BaseCustomWebComponentConstructorAppend {
             width: 100%;
         }
     `;
-
-    public static readonly is = 'iobroker-webui-svg-image';
-
+    static is = 'iobroker-webui-svg-image';
     constructor() {
         super();
         this._parseAttributesToProperties();
     }
-
-    private _src: string;
-    @property(String)
-    public get src() {
+    _src;
+    get src() {
         return this._src;
     }
-
-    public set src(value: string) {
+    set src(value) {
         this._src = value;
-        fetch(value).then(async x => {
+        fetch(value).then(async (x) => {
             this.shadowRoot.innerHTML = await x.text();
-        })
+        });
     }
 }
-
+__decorate([
+    property(String)
+], SvgImage.prototype, "src", null);
 customElements.define(SvgImage.is, SvgImage);

@@ -1,6 +1,7 @@
 {
     "elements": [
         { "tag": "iobroker-webui-screen-viewer", "defaultWidth": "300px", "defaultHeight": "200px" },
+        { "tag": "iobroker-webui-svg-image", "defaultWidth": "300px", "defaultHeight": "200px" },
         { "tag": "button", "defaultWidth": "100px", "defaultHeight": "30px", "defaultContent": "Button" },
         { "tag": "div", "defaultContent": "Default Text 1" },
         { "tag": "div", "name": "div with text", "defaultContent": "Default Text 2", "ghostElement": "<div style='background: red; width:40px; height:40px'></div>" },

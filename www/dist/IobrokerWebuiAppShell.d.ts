@@ -4,6 +4,7 @@ import { BaseCustomWebComponentConstructorAppend } from '@node-projects/base-cus
 import "./widgets/IobrokerWebuiSolutionExplorer.js";
 import "./runtime/ScreenViewer.js";
 import "./widgets/IobrokerWebuiStyleEditor.js";
+import "./controls/SvgImage.js";
 import { IobrokerWebuiSolutionExplorer } from './widgets/IobrokerWebuiSolutionExplorer.js';
 export declare class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
     activeElement: HTMLElement;
