@@ -9,8 +9,11 @@ webui for ioBroker
 If you want to help the development, sponsor this project at https://github.com/sponsors/jogibear9988
 
 ## Developing
+  * Install Repository as Adapter in IOBroker
+  * Download the Repository to an extra "dev" directory, do not develop inside the ioBroker Node_modules directory.
+  * Do the following steps inside of the "dev" dirctory.
 
-  * Install dependencies
+  * Install dependencies 
 ```
   $ npm install
 ```
