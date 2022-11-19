@@ -6,7 +6,7 @@ export class IobrokerWebuiBindableObjectDragDropService {
     rectMap = new Map();
     rect;
     dragEnter(designerCanvas, event) {
-        const element = event.composedPath()[0];
+        const element = designerCanvas.getElementAtPoint({ x: event.x, y: event.y });
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {
             let itemRect = designerCanvas.getNormalizedElementCoordinates(element);
@@ -17,7 +17,7 @@ export class IobrokerWebuiBindableObjectDragDropService {
         }
     }
     dragLeave(designerCanvas, event) {
-        const element = event.composedPath()[0];
+        const element = designerCanvas.getElementAtPoint({ x: event.x, y: event.y });
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {
             const rect = this.rectMap.get(element);
@@ -33,7 +33,7 @@ export class IobrokerWebuiBindableObjectDragDropService {
             designerCanvas.overlayLayer.removeOverlay(r);
         }
         this.rectMap.clear();
-        const element = event.composedPath()[0];
+        const element = designerCanvas.getElementAtPoint({ x: event.x, y: event.y });
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {
             // Add binding to drop target...

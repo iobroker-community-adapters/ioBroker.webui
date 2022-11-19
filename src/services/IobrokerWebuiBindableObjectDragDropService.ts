@@ -9,7 +9,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
     rect: SVGRectElement;
 
     dragEnter(designerCanvas: IDesignerCanvas, event: DragEvent) {
-        const element = <Element>event.composedPath()[0];
+        const element = designerCanvas.getElementAtPoint({ x: event.x, y: event.y });
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {
             let itemRect = designerCanvas.getNormalizedElementCoordinates(element);
@@ -21,7 +21,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
     }
 
     dragLeave(designerCanvas: IDesignerCanvas, event: DragEvent) {
-        const element = <Element>event.composedPath()[0];
+        const element = designerCanvas.getElementAtPoint({ x: event.x, y: event.y });
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {
             const rect = this.rectMap.get(element);
@@ -40,7 +40,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
         }
         this.rectMap.clear();
 
-        const element = <Element>event.composedPath()[0];
+        const element = designerCanvas.getElementAtPoint({ x: event.x, y: event.y });
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {
             // Add binding to drop target...
@@ -59,7 +59,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
 
             let di: DesignItem;
             let grp: ChangeGroup;
-            let obj =  await iobrokerHandler.connection.getObject(bindableObject.fullName);
+            let obj = await iobrokerHandler.connection.getObject(bindableObject.fullName);
             if (obj?.common?.role === 'url' && typeof bindableObject?.originalObject?.val === 'string') {
                 if (bindableObject?.originalObject?.val.endsWith('jpg')) {
                     const img = document.createElement('img');
