@@ -262,7 +262,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             return true;
                         }
                         else if (data.node.data.type == 'echart') {
-                            const url = 'http://' + window.iobrokerHost + ':' + window.iobrokerPort + '/echarts/chart/index.html?preset=' + data.node.data.name;
+                            const url = 'http://' + window.iobrokerHost + ':' + window.iobrokerPort + '/echarts/index.html?preset=' + data.node.data.name;
                             const elementDef = { tag: "iframe", defaultAttributes: { 'src': url }, defaultStyles: { 'border': '1px solid black;' }, defaultWidth: '400px', defaultHeight: '300px' };
                             data.effectAllowed = "all";
                             data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
