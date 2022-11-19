@@ -140,7 +140,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/elements-webui.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
     serviceContainer.globalContext.onToolChanged.on((e) => {
-      let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue).map(([k]) => k)[0];
+      let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue.tool).map(([k]) => k)[0];
       if (e.newValue == null)
         name = "Pointer"
       const buttons = Array.from<HTMLButtonElement>(document.getElementById('tools').querySelectorAll('[data-command]'));

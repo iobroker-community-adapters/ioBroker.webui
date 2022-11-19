@@ -1,5 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
-import { dragDropFormatNameBindingObject, ContextMenuHelper, IBindableObject, IBindableObjectsService, IElementDefinition, ServiceContainer, dragDropFormatNameElementDefinition } from "@node-projects/web-component-designer";
+import { dragDropFormatNameBindingObject, IBindableObject, IBindableObjectsService, IElementDefinition, ServiceContainer, dragDropFormatNameElementDefinition, ContextMenu } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../IobrokerHandler.js";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
@@ -49,11 +49,11 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
 
     private async _createscreensNode() {
         let screenNodeCtxMenu = (event, packageName) => {
-            ContextMenuHelper.showContextMenu(null, event, null, [{
+            ContextMenu.show([{
                 title: 'Remove Screen', action: () => {
                     //todo
                 }
-            }]);
+            }], event);
         }
 
         let screensNode: Fancytree.NodeData = { title: 'Screens', folder: true }
@@ -70,7 +70,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
 
     private async _createNpmsNode() {
         let npmNodeCtxMenu = (event, packageName) => {
-            ContextMenuHelper.showContextMenu(null, event, null, [{
+            ContextMenu.show([{
                 title: 'Update Package', action: () => {
                     iobrokerHandler.sendCommand("updateNpm", packageName);
                 }
@@ -79,18 +79,18 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 title: 'Remove Package', action: () => {
                     iobrokerHandler.sendCommand("removeNpm", packageName);
                 }
-            }]);
+            }], event);
         }
 
         let npmsNode: Fancytree.NodeData & { contextMenu: (event) => void } = {
             title: 'Packages', folder: true, contextMenu: (event) => {
-                ContextMenuHelper.showContextMenu(null, event, null, [{
+                ContextMenu.show([{
                     title: 'Add Package', action: () => {
                         const packageName = prompt("NPM Package Name");
                         if (packageName)
                             iobrokerHandler.sendCommand("addNpm", packageName);
                     }
-                }]);
+                }], event);
             }
         }
         try {
@@ -328,6 +328,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 }
             });
 
+            //@ts-ignore
             this._tree = $.ui.fancytree.getTree(this._treeDiv);
         } else {
             this._tree.reload(this.createTreeNodes());
