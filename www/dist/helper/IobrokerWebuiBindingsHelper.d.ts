@@ -3,7 +3,7 @@ import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding";
 export declare const bindingPrefixProperty = "bind-prop:";
 export declare const bindingPrefixAttribute = "bind-attr:";
 export declare const bindingPrefixCss = "bind-css:";
-export declare type namedBinding = [name: string, binding: IIobrokerWebuiBinding];
+export type namedBinding = [name: string, binding: IIobrokerWebuiBinding];
 export declare class IobrokerWebuiBindingsHelper {
     static parseBinding(element: Element, name: string, value: string, bindingTarget: BindingTarget, prefix: string): namedBinding;
     static serializeBinding(element: Element, name: string, binding: IIobrokerWebuiBinding): [name: string, value: string];

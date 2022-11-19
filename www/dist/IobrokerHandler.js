@@ -45,5 +45,60 @@ class IobrokerHandler {
         await this.connection.setState(this.namespace + '.control.clientIds', { val: clientId });
         await this.connection.setState(this.namespace + '.control.command', { val: command });
     }
+    /*async readAllStyles() {
+        const styleNames = (await this.connection.readDir(this.adapterName, this.configPath + "styles")).map(x => x.file);
+        const stylePromises = styleNames.map(x => this.connection.readFile(this.adapterName, this.configPath + "styles/" + x))
+        const stylesLoaded = await Promise.all(stylePromises);
+        this._styles = {};
+        styleNames.forEach((x, i) => this._styles[x.toLocaleLowerCase()] = JSON.parse(stylesLoaded[i].file));
+        this.screensChanged.emit();
+    }
+
+    async saveStyle(name: string, style: IStyle) {
+        await this.connection.writeFile64(this.adapterName, this.configPath + "styles/" + name.toLocaleLowerCase(), btoa(JSON.stringify(style)));
+        this.readAllStyles();
+    }
+
+    getStyleNames() {
+        return Object.keys(this._styles);
+    }
+
+    getStyle(name: string): IStyle {
+        return this._styles[name.toLocaleLowerCase()];
+    }*/
+    //todod: remove when https://github.com/ioBroker/socket-client/pull/17 is merged
+    /**
+     * Query a predefined object view.
+     * @param design design - 'system' or other designs like `custom`.
+     * @param type The type of object.
+     * @param start The start ID.
+     * @param [end] The end ID.
+     */
+    getObjectViewCustom(design, type, start, end) {
+        //@ts-ignore
+        return this.connection.request({
+            // TODO: check if this should time out
+            commandTimeout: false,
+            executor: (resolve, reject) => {
+                start = start || "";
+                end = end || "\u9999";
+                //@ts-ignore
+                this.connection._socket.emit("getObjectView", design, type, { startkey: start, endkey: end }, (err, res) => {
+                    if (err)
+                        reject(err);
+                    const _res = {};
+                    //@ts-ignore
+                    if (res && res.rows) {
+                        //@ts-ignore
+                        for (let i = 0; i < res.rows.length; i++) {
+                            //@ts-ignore
+                            _res[res.rows[i].id] = res.rows[i].value;
+                        }
+                    }
+                    resolve(_res);
+                });
+            },
+        });
+    }
 }
 export const iobrokerHandler = IobrokerHandler.instance;

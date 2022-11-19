@@ -1,5 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
-import { dragDropFormatNameBindingObject, ContextMenuHelper, dragDropFormatNameElementDefinition } from '/webui/node_modules/@node-projects/web-component-designer/./dist/index.js';
+import { dragDropFormatNameBindingObject, dragDropFormatNameElementDefinition, ContextMenu } from '/webui/node_modules/@node-projects/web-component-designer/./dist/index.js';
 import { iobrokerHandler } from "../IobrokerHandler.js";
 //@ts-ignore
 import fancyTreeStyleSheet from '/webui/node_modules/jquery.fancytree/dist/skin-win8/ui.fancytree.css' assert { type: 'css' };
@@ -38,11 +38,11 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
     async _createscreensNode() {
         let screenNodeCtxMenu = (event, packageName) => {
-            ContextMenuHelper.showContextMenu(null, event, null, [{
+            ContextMenu.show([{
                     title: 'Remove Screen', action: () => {
                         //todo
                     }
-                }]);
+                }], event);
         };
         let screensNode = { title: 'Screens', folder: true };
         let screens = await iobrokerHandler.getScreenNames();
@@ -56,7 +56,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
     async _createNpmsNode() {
         let npmNodeCtxMenu = (event, packageName) => {
-            ContextMenuHelper.showContextMenu(null, event, null, [{
+            ContextMenu.show([{
                     title: 'Update Package', action: () => {
                         iobrokerHandler.sendCommand("updateNpm", packageName);
                     }
@@ -65,17 +65,17 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     title: 'Remove Package', action: () => {
                         iobrokerHandler.sendCommand("removeNpm", packageName);
                     }
-                }]);
+                }], event);
         };
         let npmsNode = {
             title: 'Packages', folder: true, contextMenu: (event) => {
-                ContextMenuHelper.showContextMenu(null, event, null, [{
+                ContextMenu.show([{
                         title: 'Add Package', action: () => {
                             const packageName = prompt("NPM Package Name");
                             if (packageName)
                                 iobrokerHandler.sendCommand("addNpm", packageName);
                         }
-                    }]);
+                    }], event);
             }
         };
         try {
@@ -121,7 +121,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             title: 'Charts', folder: true, children: []
         };
         try {
-            let objs = await iobrokerHandler.connection.getObjectView('flot.', 'flot.\u9999', 'chart');
+            let objs = await iobrokerHandler.getObjectViewCustom('chart', 'chart', 'flot.', 'flot.\u9999');
             if (Object.keys(objs).length > 0) {
                 let flotNode = {
                     title: 'Flot', folder: true
@@ -135,10 +135,10 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             }
         }
         catch (err) {
-            console.warn("error loading package.json, may not yet exist", err);
+            console.warn("error loading flot charts", err);
         }
         try {
-            let objs = await iobrokerHandler.connection.getObjectView('echarts.', 'echarts.\u9999', 'chart');
+            let objs = await iobrokerHandler.getObjectViewCustom('chart', 'chart', 'echarts.', 'echarts.\u9999');
             if (Object.keys(objs).length > 0) {
                 let flotNode = {
                     title: 'ECharts', folder: true
@@ -152,7 +152,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             }
         }
         catch (err) {
-            console.warn("error loading package.json, may not yet exist", err);
+            console.warn("error loading echarts charts", err);
         }
         return chartsNode;
     }
@@ -295,6 +295,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     }
                 }
             });
+            //@ts-ignore
             this._tree = $.ui.fancytree.getTree(this._treeDiv);
         }
         else {

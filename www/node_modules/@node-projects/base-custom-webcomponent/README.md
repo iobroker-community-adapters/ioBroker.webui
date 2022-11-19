@@ -27,7 +27,7 @@ At the moment the call refreshes all bindings, but this could (and should) be op
 ## Advanced Features
 
 All the features are not enabled by default for performance reasons but you can call these methods to enable them. 
-
+ - this._restoreCachedInititalValues(); ==> Needs to be called after super() of the constructor, to restore properties set, before element is upgraded. And also it needs to be called after the default values are set in constructor.
  - this._parseAttributesToProperties(); ==> parses all attributes to the defined properties
  - this._assignEvents(); ==> parses @event bindings to callbacks in class
  - this._bindingsParse(); ==> parses and enables bindings
@@ -105,6 +105,11 @@ export class TestElement extends BaseCustomWebComponentConstructorAppend {
     info = 'hallo';
     @property()
     bprp = false;
+
+    constructor() {
+        super();
+        this._restoreCachedInititalValues();
+    }
 
     async ready() {
         this._root = this._getDomElement<HTMLDivElement>('root');

@@ -26,6 +26,16 @@ declare class IobrokerHandler {
     getScreenNames(): string[];
     getScreen(name: string): IScreen;
     sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm', data: string, clientId?: string): Promise<void>;
+    /**
+     * Query a predefined object view.
+     * @param design design - 'system' or other designs like `custom`.
+     * @param type The type of object.
+     * @param start The start ID.
+     * @param [end] The end ID.
+     */
+    getObjectViewCustom<T extends ioBroker.ObjectType>(design: string, type: T, start: string, end?: string): Promise<Record<string, ioBroker.AnyObject & {
+        type: T;
+    }>>;
 }
 export declare const iobrokerHandler: IobrokerHandler;
 export {};
