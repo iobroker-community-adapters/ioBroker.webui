@@ -8,8 +8,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
     rectMap = new Map<Element, SVGRectElement>();
     rect: SVGRectElement;
 
-    dragEnter(designerCanvas: IDesignerCanvas, event: DragEvent) {
-        const element = designerCanvas.getElementAtPoint({ x: event.x, y: event.y });
+    dragEnter(designerCanvas: IDesignerCanvas, event: DragEvent, element: Element) {
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {
             let itemRect = designerCanvas.getNormalizedElementCoordinates(element);
@@ -20,8 +19,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
         }
     }
 
-    dragLeave(designerCanvas: IDesignerCanvas, event: DragEvent) {
-        const element = designerCanvas.getElementAtPoint({ x: event.x, y: event.y });
+    dragLeave(designerCanvas: IDesignerCanvas, event: DragEvent, element: Element) {
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {
             const rect = this.rectMap.get(element);
@@ -30,17 +28,16 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
         }
     }
 
-    dragOver(designerView: IDesignerCanvas, event: DragEvent): "none" | "copy" | "link" | "move" {
+    dragOver(designerView: IDesignerCanvas, event: DragEvent, element: Element): "none" | "copy" | "link" | "move" {
         return 'copy';
     }
 
-    async drop(designerCanvas: IDesignerCanvas, event: DragEvent, bindableObject: IBindableObject<ioBroker.State>) {
+    async drop(designerCanvas: IDesignerCanvas, event: DragEvent, bindableObject: IBindableObject<ioBroker.State>, element: Element) {
         for (let r of this.rectMap.values()) {
             designerCanvas.overlayLayer.removeOverlay(r);
         }
         this.rectMap.clear();
 
-        const element = designerCanvas.getElementAtPoint({ x: event.x, y: event.y });
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {
             // Add binding to drop target...
