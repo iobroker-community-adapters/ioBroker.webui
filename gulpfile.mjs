@@ -1,8 +1,9 @@
-const { src, dest, series } = require('gulp');
-const path = require('path');
-const fs = require('fs');
-const through2 = require('through2');
-const del = require('del');
+import gulp from 'gulp';
+const { src, dest, series } = gulp;
+import path from 'path';
+import fs from 'fs';
+import { deleteAsync } from 'del';
+import through2 from 'through2';
 
 const rootPath = '/webui';
 
@@ -17,6 +18,7 @@ function fixJsImports() {
                     var checkRelativeImportRegex = RegExp('(import|export)(\\s*\\{?\\*?[\\s\\w,$]*\\}?\\s*(as)?[\\s\\w{}]*from\\s*|[\\s]*)[\'"]([\\.\\/][\\w\\/\\-@.]*?)[\'"]', 'g');
                     var importFunction =  RegExp('([=]|[^\\w]|^)import\\s*\\([\'"]([\\w.\\-\\\\\/]*)[\'"]\\s*([\\),])', 'g');
     
+                    var m;
                     var pos = 0;
                     var res = '';
                     while ((m = checkImportRegex.exec(code)) !== null) {
@@ -180,7 +182,7 @@ function cleanupNodeModules() {
         "./www/**/*.map"
     ]
 
-    return del(notUsed);
+    return deleteAsync(notUsed);
 }
 
 function copyDist() {
@@ -212,4 +214,4 @@ function copyConfigJs() {
 /*function aaa() {
     return tjs.exec('./src/scripting/ScriptCommands.ts', '*', {ignoreErrors:true})
 }*/
-exports.default = series(copyNodeModules, copyNodeFiles, cleanupNodeModules, copyDist, copyAssets, copyHtml, copyManifest, copyConfigJs, fixJsImports);
+export default series(copyNodeModules, copyNodeFiles, cleanupNodeModules, copyDist, copyAssets, copyHtml, copyManifest, copyConfigJs, fixJsImports);
