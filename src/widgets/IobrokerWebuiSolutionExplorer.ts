@@ -147,7 +147,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         }
 
         try {
-            let objs = await iobrokerHandler.connection.getObjectView('flot.', 'flot.\u9999', 'chart');
+            let objs = await iobrokerHandler.getObjectViewCustom('chart', 'chart', 'flot.', 'flot.\u9999');
             if (Object.keys(objs).length > 0) {
                 let flotNode: Fancytree.NodeData = {
                     title: 'Flot', folder: true
@@ -161,11 +161,11 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             }
         }
         catch (err) {
-            console.warn("error loading package.json, may not yet exist", err);
+            console.warn("error loading flot charts", err);
         }
 
         try {
-            let objs = await iobrokerHandler.connection.getObjectView('echarts.', 'echarts.\u9999', 'chart');
+            let objs = await iobrokerHandler.getObjectViewCustom('chart', 'chart', 'echarts.', 'echarts.\u9999');
             if (Object.keys(objs).length > 0) {
                 let flotNode: Fancytree.NodeData = {
                     title: 'ECharts', folder: true
@@ -179,7 +179,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             }
         }
         catch (err) {
-            console.warn("error loading package.json, may not yet exist", err);
+            console.warn("error loading echarts charts", err);
         }
 
         return chartsNode;

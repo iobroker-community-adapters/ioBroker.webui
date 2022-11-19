@@ -1,6 +1,6 @@
 {
   "name": "iobroker.webui",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "ioBroker webui",
   "type": "module",
   "main": "main.js",

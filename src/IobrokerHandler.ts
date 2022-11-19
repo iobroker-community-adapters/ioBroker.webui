@@ -91,6 +91,56 @@ class IobrokerHandler {
     getStyle(name: string): IStyle {
         return this._styles[name.toLocaleLowerCase()];
     }*/
+
+
+    //todod: remove when https://github.com/ioBroker/socket-client/pull/17 is merged
+    /**
+	 * Query a predefined object view.
+   	 * @param design design - 'system' or other designs like `custom`.
+	 * @param type The type of object.
+	 * @param start The start ID.
+	 * @param [end] The end ID.
+	 */
+	getObjectViewCustom<T extends ioBroker.ObjectType>(
+		design: string,
+		type: T,
+		start: string,
+		end?: string
+	): Promise<Record<string, ioBroker.AnyObject & { type: T }>> {
+        //@ts-ignore
+		return this.connection.request({
+			// TODO: check if this should time out
+			commandTimeout: false,
+			executor: (resolve, reject) => {
+				start = start || "";
+				end = end || "\u9999";
+                //@ts-ignore
+				this.connection._socket.emit(
+					"getObjectView",
+					design,
+					type,
+					{ startkey: start, endkey: end },
+					(err, res) => {
+						if (err) reject(err);
+						const _res: Record<
+							string,
+							ioBroker.AnyObject & { type: T }
+						> = {};
+                         //@ts-ignore
+						if (res && res.rows) {
+                             //@ts-ignore
+							for (let i = 0; i < res.rows.length; i++) {
+                                 //@ts-ignore
+								_res[res.rows[i].id] = res.rows[i].value as any;
+							}
+						}
+						resolve(_res);
+					},
+				);
+			},
+		});
+	}
+
 }
 
 export const iobrokerHandler = IobrokerHandler.instance;
