@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "webui",
-        "version": "0.0.13",
+        "version": "0.0.14",
         "title": "webui",
         "titleLang": {
             "en": "webui",
