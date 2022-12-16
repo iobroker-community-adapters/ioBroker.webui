@@ -121,7 +121,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             title: 'Charts', folder: true, children: []
         };
         try {
-            let objs = await iobrokerHandler.getObjectViewCustom('chart', 'chart', 'flot.', 'flot.\u9999');
+            let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'flot.', 'flot.\u9999');
             if (Object.keys(objs).length > 0) {
                 let flotNode = {
                     title: 'Flot', folder: true
@@ -138,7 +138,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             console.warn("error loading flot charts", err);
         }
         try {
-            let objs = await iobrokerHandler.getObjectViewCustom('chart', 'chart', 'echarts.', 'echarts.\u9999');
+            let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'echarts.', 'echarts.\u9999');
             if (Object.keys(objs).length > 0) {
                 let flotNode = {
                     title: 'ECharts', folder: true

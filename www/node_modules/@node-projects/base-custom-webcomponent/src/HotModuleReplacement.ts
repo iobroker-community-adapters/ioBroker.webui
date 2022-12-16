@@ -1,4 +1,4 @@
-import { BaseCustomWebComponentNoAttachedTemplate } from "./BaseCustomWebComponent";
+import { BaseCustomWebComponentNoAttachedTemplate } from "./BaseCustomWebComponent.js";
 
 export function getFunctionType(x) {
     return typeof x === 'function'
