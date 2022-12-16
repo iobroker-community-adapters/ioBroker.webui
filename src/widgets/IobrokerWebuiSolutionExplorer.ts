@@ -147,7 +147,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         }
 
         try {
-            let objs = await iobrokerHandler.getObjectViewCustom('chart', 'chart', 'flot.', 'flot.\u9999');
+            let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'flot.', 'flot.\u9999');
             if (Object.keys(objs).length > 0) {
                 let flotNode: Fancytree.NodeData = {
                     title: 'Flot', folder: true
@@ -165,7 +165,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         }
 
         try {
-            let objs = await iobrokerHandler.getObjectViewCustom('chart', 'chart', 'echarts.', 'echarts.\u9999');
+            let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'echarts.', 'echarts.\u9999');
             if (Object.keys(objs).length > 0) {
                 let flotNode: Fancytree.NodeData = {
                     title: 'ECharts', folder: true
