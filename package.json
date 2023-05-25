@@ -51,7 +51,7 @@
     "esprima-next": "^5.8.4",
     "gulp": "^4.0.2",
     "jquery": "^3.6.2",
-    "jquery.fancytree": "^2.38.2",
+    "jquery.fancytree": "^2.38.3",
     "metro4-dist": "^4.5.0",
     "mobile-drag-drop": "^3.0.0-rc.0",
     "mocha": "^10.2.0",
