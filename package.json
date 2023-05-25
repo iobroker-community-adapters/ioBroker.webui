@@ -35,7 +35,7 @@
     "@iobroker/testing": "^4.1.0",
     "@node-projects/base-custom-webcomponent": "0.10.9",
     "@node-projects/lean-he-esm": "^3.3.0",
-    "@node-projects/node-html-parser-esm": "^2.5.1",
+    "@node-projects/node-html-parser-esm": "^6.1.5",
     "@node-projects/web-component-designer": "^0.0.165",
     "@types/iobroker": "^4.0.5",
     "@types/jquery": "^3.5.14",
