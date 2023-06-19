@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.webui#readme",
   "devDependencies": {
-    "@iobroker/socket-client": "^2.0.7",
+    "@iobroker/socket-client": "^2.1.0",
     "@iobroker/testing": "^4.1.0",
     "@node-projects/base-custom-webcomponent": "0.10.9",
     "@node-projects/lean-he-esm": "^3.3.0",
