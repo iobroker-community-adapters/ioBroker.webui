@@ -33,7 +33,7 @@
   "devDependencies": {
     "@iobroker/socket-client": "^2.2.0",
     "@iobroker/testing": "^4.1.0",
-    "@node-projects/base-custom-webcomponent": "0.12.1",
+    "@node-projects/base-custom-webcomponent": "0.13.0",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^2.5.1",
     "@node-projects/web-component-designer": "^0.0.165",
