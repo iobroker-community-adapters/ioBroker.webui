@@ -36,7 +36,7 @@
     "@node-projects/base-custom-webcomponent": "0.13.0",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^2.5.1",
-    "@node-projects/web-component-designer": "^0.0.165",
+    "@node-projects/web-component-designer": "^0.0.244",
     "@types/iobroker": "^4.0.5",
     "@types/jquery": "^3.5.14",
     "@types/jquery.fancytree": "^0.0.7",
