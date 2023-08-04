@@ -1,7 +1,7 @@
-import { iobrokerHandler } from "../IobrokerHandler";
-import { ScreenViewer } from "../runtime/ScreenViewer";
-import { ScriptCommands } from "./ScriptCommands";
-import { ScriptMultiplexValue } from "./ScriptValue";
+import { iobrokerHandler } from "../IobrokerHandler.js";
+import { ScreenViewer } from "../runtime/ScreenViewer.js";
+import { ScriptCommands } from "./ScriptCommands.js";
+import { ScriptMultiplexValue } from "./ScriptValue.js";
 
 export class ScriptSystem {
     async execute(scriptCommands: ScriptCommands[], context: any) {

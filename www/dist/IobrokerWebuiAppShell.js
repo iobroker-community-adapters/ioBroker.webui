@@ -1,6 +1,5 @@
 import '/webui/node_modules/@node-projects/web-component-designer/./dist/index.js';
-import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, DocumentContainer, NodeHtmlParserService, CodeViewMonaco, WebcomponentManifestParserService } from '/webui/node_modules/@node-projects/web-component-designer/./dist/index.js';
-import createDefaultServiceContainer from '/webui/node_modules/@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap.js';
+import { createDefaultServiceContainer, BaseCustomWebcomponentBindingsService, JsonFileElementsService, DocumentContainer, NodeHtmlParserService, CodeViewMonaco, WebcomponentManifestParserService } from '/webui/node_modules/@node-projects/web-component-designer/./dist/index.js';
 import { IobrokerWebuiBindableObjectsService } from './services/IobrokerWebuiBindableObjectsService.js';
 import { IobrokerWebuiBindableObjectDragDropService } from './services/IobrokerWebuiBindableObjectDragDropService.js';
 import { IobrokerWebuiBindingService } from './services/IobrokerWebuiBindingService.js';

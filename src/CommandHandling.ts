@@ -1,9 +1,8 @@
-import { DocumentContainer, ServiceContainer } from '@node-projects/web-component-designer';
-import { IUiCommandHandler } from '@node-projects/web-component-designer/dist/commandHandling/IUiCommandHandler';
-import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
-import { IScreen } from './interfaces/IScreen';
-import { iobrokerHandler } from './IobrokerHandler';
-import { IobrokerWebuiAppShell } from './IobrokerWebuiAppShell';
+import { DocumentContainer, IUiCommandHandler, ServiceContainer } from '@node-projects/web-component-designer';
+import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js'
+import { IScreen } from './interfaces/IScreen.js';
+import { iobrokerHandler } from './IobrokerHandler.js';
+import { IobrokerWebuiAppShell } from './IobrokerWebuiAppShell.js';
 
 export class CommandHandling {
   dockManager: DockManager;
@@ -81,7 +80,7 @@ export class CommandHandling {
     }, 100);
   }
 
-  handleCommand(buttons: HTMLButtonElement[], target: IUiCommandHandler) {
+  handleCommand(buttons: (HTMLElement & { disabled: boolean })[], target: IUiCommandHandler) {
     buttons.forEach(b => {
       let command = b.dataset['command'];
       let commandParameter = b.dataset['commandParameter'];

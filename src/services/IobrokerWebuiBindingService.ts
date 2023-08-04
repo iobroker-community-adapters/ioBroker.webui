@@ -1,8 +1,5 @@
-import { IBindingService, IDesignItem } from "@node-projects/web-component-designer";
-import { BindingMode } from "@node-projects/web-component-designer/dist/elements/item/BindingMode";
-import { BindingTarget } from "@node-projects/web-component-designer/dist/elements/item/BindingTarget";
-import { IBinding } from "@node-projects/web-component-designer/dist/elements/item/IBinding";
-import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper";
+import { BindingMode, BindingTarget, IBinding, IBindingService, IDesignItem } from "@node-projects/web-component-designer";
+import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 
 export class IobrokerWebuiBindingService implements IBindingService {
   getBindings(designItem: IDesignItem): IBinding[] {

@@ -1,7 +1,15 @@
+import { iobrokerHandler } from './IobrokerHandler.js';
+
+//Load URL from IOBroker
+const script = document.createElement("script");
+//@ts-ignore
+script.src = window.iobrokerSocketScriptUrl;
+script.onload = () => iobrokerHandler.init();
+document.head.appendChild(script);
+
 import '@node-projects/web-component-designer'
 
-import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, TreeViewExtended, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewMonaco, WebcomponentManifestParserService } from '@node-projects/web-component-designer';
-import createDefaultServiceContainer from '@node-projects/web-component-designer/dist/elements/services/DefaultServiceBootstrap';
+import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, TreeViewExtended, PropertyGrid, DocumentContainer, NodeHtmlParserService, CodeViewMonaco, WebcomponentManifestParserService, createDefaultServiceContainer } from '@node-projects/web-component-designer';
 import { IobrokerWebuiBindableObjectsService } from './services/IobrokerWebuiBindableObjectsService.js';
 import { IobrokerWebuiBindableObjectDragDropService } from './services/IobrokerWebuiBindableObjectDragDropService.js';
 import { IobrokerWebuiBindingService } from './services/IobrokerWebuiBindingService.js';
@@ -18,10 +26,10 @@ serviceContainer.register("bindingService", new IobrokerWebuiBindingService())
 serviceContainer.register("demoProviderService", new IobrokerWebuiDemoProviderService())
 serviceContainer.config.codeViewWidget = CodeViewMonaco;
 
-import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent';
-import { DockManager } from 'dock-spawn-ts/lib/js/DockManager';
+import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent.js';
+import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js';
 import { BaseCustomWebComponentConstructorAppend, css, html } from '@node-projects/base-custom-webcomponent';
-import { CommandHandling } from './CommandHandling'
+import { CommandHandling } from './CommandHandling.js'
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
@@ -29,7 +37,6 @@ import "./widgets/IobrokerWebuiSolutionExplorer.js";
 import "./runtime/ScreenViewer.js";
 import "./widgets/IobrokerWebuiStyleEditor.js";
 import "./controls/SvgImage.js"
-import { iobrokerHandler } from './IobrokerHandler.js';
 import { IobrokerWebuiSolutionExplorer } from './widgets/IobrokerWebuiSolutionExplorer.js';
 
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {

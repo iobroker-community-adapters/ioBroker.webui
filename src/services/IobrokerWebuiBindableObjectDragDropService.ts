@@ -1,7 +1,6 @@
-import { OverlayLayer, DesignItem, IBindableObject, IBindableObjectDragDropService, IDesignerCanvas, InsertAction, ChangeGroup } from "@node-projects/web-component-designer";
-import { BindingTarget } from "@node-projects/web-component-designer/dist/elements/item/BindingTarget";
-import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper";
-import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding";
+import { OverlayLayer, DesignItem, IBindableObject, IBindableObjectDragDropService, IDesignerCanvas, InsertAction, ChangeGroup, BindingTarget } from "@node-projects/web-component-designer";
+import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
+import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding.js";
 import { iobrokerHandler } from "../IobrokerHandler.js";
 
 export class IobrokerWebuiBindableObjectDragDropService implements IBindableObjectDragDropService {
@@ -12,7 +11,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {
             let itemRect = designerCanvas.getNormalizedElementCoordinates(element);
-            this.rect = designerCanvas.overlayLayer.drawRect(itemRect.x, itemRect.y, itemRect.width, itemRect.height, '', null, OverlayLayer.Background);
+            this.rect = designerCanvas.overlayLayer.drawRect('IobrokerWebuiBindableObjectDragDropService', itemRect.x, itemRect.y, itemRect.width, itemRect.height, '', null, OverlayLayer.Background);
             this.rect.style.fill = '#ff0000';
             this.rect.style.opacity = '0.3';
             this.rectMap.set(element, this.rect);

@@ -1,5 +1,5 @@
 import { IBindableObjectsService, IBindableObject, BindableObjectType } from "@node-projects/web-component-designer";
-import { iobrokerHandler } from "../IobrokerHandler";
+import { iobrokerHandler } from "../IobrokerHandler.js";
 
 export class IobrokerWebuiBindableObjectsService implements IBindableObjectsService {
 

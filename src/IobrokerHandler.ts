@@ -1,6 +1,6 @@
 import { Connection } from "@iobroker/socket-client";
 import { TypedEvent } from "@node-projects/base-custom-webcomponent";
-import { IScreen } from "./interfaces/IScreen";
+import { IScreen } from "./interfaces/IScreen.js";
 
 declare global {
     interface Window {

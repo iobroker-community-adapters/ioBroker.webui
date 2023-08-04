@@ -1,8 +1,7 @@
 import { TypedEvent } from "@node-projects/base-custom-webcomponent";
-import { PropertiesHelper } from "@node-projects/web-component-designer/dist/elements/services/propertiesService/services/PropertiesHelper";
-import { BindingTarget } from "@node-projects/web-component-designer/dist/elements/item/BindingTarget";
-import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding";
-import { iobrokerHandler } from "../IobrokerHandler";
+import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding.js";
+import { iobrokerHandler } from "../IobrokerHandler.js";
+import { BindingTarget, PropertiesHelper } from "@node-projects/web-component-designer";
 
 //;,[ are not allowed in bindings, so they could be used for a short form...
 

@@ -1,4 +1,3 @@
-import { BindingTarget } from "@node-projects/web-component-designer/dist/elements/item/BindingTarget";
 import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding";
 export declare const bindingPrefixProperty = "bind-prop:";
 export declare const bindingPrefixAttribute = "bind-attr:";

@@ -1,6 +1,6 @@
 import { BaseCustomWebComponentConstructorAppend, customElement, DomHelper, htmlFromString, property } from "@node-projects/base-custom-webcomponent";
-import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper";
-import { iobrokerHandler } from "../IobrokerHandler";
+import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
+import { iobrokerHandler } from "../IobrokerHandler.js";
 
 @customElement("iobroker-webui-screen-viewer")
 export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {

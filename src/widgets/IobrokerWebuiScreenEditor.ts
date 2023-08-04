@@ -1,6 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent"
-import { ICommandHandler } from "@node-projects/web-component-designer"
-import { CommandType } from "@node-projects/web-component-designer/dist/commandHandling/CommandType"
+import { CommandType, ICommandHandler } from "@node-projects/web-component-designer"
 
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend implements ICommandHandler  {
     

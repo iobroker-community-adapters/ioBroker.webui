@@ -1,4 +1,3 @@
-import { BindingTarget } from "@node-projects/web-component-designer/dist/elements/item/BindingTarget";
 export interface IIobrokerWebuiBinding {
     signal: string;
     inverted?: boolean;
