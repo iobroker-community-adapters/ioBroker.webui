@@ -1,8 +1,8 @@
 import { ScriptMultiplexValue } from "./ScriptValue";
 
 export declare type ScriptCommands = OpenScreen |
-    SetSignal | IncreaseSignal | DecreaseSignal |
-    SetBit | ClearBit | ToggleBit |
+    SetSignalValue | IncrementSignalValue | DecrementSignalValue |
+    SetBitInSignal | ClearBitInSignal | ToggleBitInSignal |
     Javascript;
 
 export class OpenScreen {
@@ -12,34 +12,34 @@ export class OpenScreen {
     openInDialog: boolean;
 }
 
-export class SetSignal {
-    type: 'setSignal' = 'setSignal';
+export class SetSignalValue {
+    type: 'setSignalValue' = 'setSignalValue';
     signal: string;
     value: string | number | boolean | ScriptMultiplexValue;
 }
-export class IncreaseSignal {
-    type: 'increaseSignal' = 'increaseSignal';
+export class IncrementSignalValue {
+    type: 'incrementSignalValue' = 'incrementSignalValue';
     signal: string;
     value: string | number | boolean | ScriptMultiplexValue;
 }
-export class DecreaseSignal {
-    type: 'decreaseSignal' = 'decreaseSignal';
+export class DecrementSignalValue {
+    type: 'decrementSignalValue' = 'decrementSignalValue';
     signal: string;
     value: string | number | boolean | ScriptMultiplexValue;
 }
 
-export class SetBit {
-    type: 'setBit' = 'setBit';
+export class SetBitInSignal {
+    type: 'setBitInSignal' = 'setBitInSignal';
     signal: string;
     bitNumber: number = 0;
 }
-export class ClearBit {
-    type: 'clearBit' = 'clearBit';
+export class ClearBitInSignal {
+    type: 'clearBitInSignal' = 'clearBitInSignal';
     signal: string;
     bitNumber: number = 0;
 }
-export class ToggleBit {
-    type: 'toggleBit' = 'toggleBit';
+export class ToggleBitInSignal {
+    type: 'toggleBitInSignal' = 'toggleBitInSignal';
     signal: string;
     bitNumber: number = 0;
 }

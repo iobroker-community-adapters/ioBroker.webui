@@ -206,6 +206,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     let sampleDocument = new DocumentContainer(serviceContainer);
     sampleDocument.setAttribute('dock-spawn-panel-type', 'document');
     sampleDocument.title = name;
+    //todo: why are this 2 styles needed? needs a fix in dock-spawn
+    sampleDocument.style.zIndex = '1';
+    sampleDocument.style.position = 'relative'
     this._dock.appendChild(sampleDocument);
     if (content) {
       sampleDocument.designerView.parseHTML(content);

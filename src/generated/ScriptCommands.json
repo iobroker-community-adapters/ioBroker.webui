@@ -4,16 +4,15 @@
         "ClearBit": {
             "properties": {
                 "bitNumber": {
+                    "default": 0,
                     "type": "number"
                 },
                 "signal": {
                     "type": "string"
                 },
                 "type": {
+                    "const": "clearBit",
                     "default": "clearBit",
-                    "enum": [
-                        "clearBit"
-                    ],
                     "type": "string"
                 }
             },
@@ -25,10 +24,8 @@
                     "type": "string"
                 },
                 "type": {
+                    "const": "decreaseSignal",
                     "default": "decreaseSignal",
-                    "enum": [
-                        "decreaseSignal"
-                    ],
                     "type": "string"
                 },
                 "value": {
@@ -54,10 +51,8 @@
                     "type": "string"
                 },
                 "type": {
+                    "const": "increaseSignal",
                     "default": "increaseSignal",
-                    "enum": [
-                        "increaseSignal"
-                    ],
                     "type": "string"
                 },
                 "value": {
@@ -83,10 +78,8 @@
                     "type": "string"
                 },
                 "type": {
+                    "const": "javascript",
                     "default": "javascript",
-                    "enum": [
-                        "javascript"
-                    ],
                     "type": "string"
                 }
             },
@@ -111,10 +104,8 @@
                     ]
                 },
                 "type": {
+                    "const": "openScreen",
                     "default": "openScreen",
-                    "enum": [
-                        "openScreen"
-                    ],
                     "type": "string"
                 }
             },
@@ -166,10 +157,8 @@
                     "type": "string"
                 },
                 "type": {
+                    "const": "setBit",
                     "default": "setBit",
-                    "enum": [
-                        "setBit"
-                    ],
                     "type": "string"
                 }
             },
@@ -181,10 +170,8 @@
                     "type": "string"
                 },
                 "type": {
+                    "const": "setSignal",
                     "default": "setSignal",
-                    "enum": [
-                        "setSignal"
-                    ],
                     "type": "string"
                 },
                 "value": {
@@ -207,16 +194,15 @@
         "ToggleBit": {
             "properties": {
                 "bitNumber": {
+                    "default": 0,
                     "type": "number"
                 },
                 "signal": {
                     "type": "string"
                 },
                 "type": {
+                    "const": "toggleBit",
                     "default": "toggleBit",
-                    "enum": [
-                        "toggleBit"
-                    ],
                     "type": "string"
                 }
             },
