@@ -1,7 +1,9 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
+import { IUiCommand, IUiCommandHandler } from "@node-projects/web-component-designer";
 import type * as monaco from 'monaco-editor';
+import { iobrokerHandler } from "../IobrokerHandler.js";
 
-export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorAppend {
+export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
 
     static readonly style = css`
         :host {
@@ -121,6 +123,19 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
 
     delete() {
         this._editor.trigger('', 'editor.action.clipboardDeleteAction', null)
+    }
+
+    async executeCommand(command: Omit<IUiCommand, 'type'> & { type: string }) {
+        if (command.type == 'save') {
+            iobrokerHandler.config.globalStyle = this.model.getValue();
+            await iobrokerHandler.saveConfig();
+        }
+    }
+
+    canExecuteCommand(command: Omit<IUiCommand, 'type'> & { type: string }): boolean {
+        if (command.type == 'save')
+            return true;
+        return false;
     }
 }
 

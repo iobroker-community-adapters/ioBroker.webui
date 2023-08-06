@@ -54,10 +54,15 @@ export class CommandHandling {
     }
     else if (commandName === 'save') {
       let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
-      let html = (<DocumentContainer>target).designerView.getHTML();
-      let style = (<DocumentContainer>target).additionalData.model.getValue();
-      let screen: IScreen = { html, style, settings: {} };
-      await iobrokerHandler.saveScreen(target.title, screen);
+      //Todo: wrap screen in a screen editor wich handles save etc...
+      if (target instanceof DocumentContainer) {
+        let html = (<DocumentContainer>target).designerView.getHTML();
+        let style = (<DocumentContainer>target).additionalData.model.getValue();
+        let screen: IScreen = { html, style, settings: {} };
+        await iobrokerHandler.saveScreen(target.title, screen);
+      } else {
+        target.executeCommand({ type: <any>commandName, parameter: commandParameter })
+      }
     }
     else if (this.dockManager.activeDocument) {
       let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];

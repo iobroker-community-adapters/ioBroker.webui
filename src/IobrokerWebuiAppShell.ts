@@ -248,6 +248,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         model.applyEdits([{ range: model.getFullModelRange(), text: document.additionalStylesheets[0].content, forceMoveMarkers: true }]);
       disableTextChangedEvent = false;
     });
+    document.additionalStyleString = iobrokerHandler.config?.globalStyle ?? '';
 
 
 
@@ -258,6 +259,19 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     if (content) {
       document.designerView.parseHTML(content);
     }
+  }
+
+  public async globalStyleEditor(style: string) {
+    let styleEditor = new IobrokerWebuiStyleEditor();
+    styleEditor.setAttribute('dock-spawn-panel-type', 'document');
+    styleEditor.title = 'global style';
+    const model = await styleEditor.createModel(style);
+    styleEditor.model = model;
+    
+    //todo: why are this 2 styles needed? needs a fix in dock-spawn
+    styleEditor.style.zIndex = '1';
+    styleEditor.style.position = 'relative'
+    this._dock.appendChild(styleEditor);
   }
 }
 

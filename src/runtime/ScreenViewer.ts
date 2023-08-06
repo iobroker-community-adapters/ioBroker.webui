@@ -1,9 +1,15 @@
-import { BaseCustomWebComponentConstructorAppend, cssFromString, customElement, DomHelper, htmlFromString, property } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, DomHelper, htmlFromString, property } from "@node-projects/base-custom-webcomponent";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../IobrokerHandler.js";
 
 @customElement("iobroker-webui-screen-viewer")
 export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
+
+    static style = css`
+    :host {
+        height: 100%;
+    }
+    `
 
     private _iobBindings: (() => void)[];
     private _loading: boolean;
@@ -70,17 +76,22 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             DomHelper.removeAllChildnodes(this.shadowRoot);
             const screen = await iobrokerHandler.getScreen(this.screenName)
             if (screen) {
-
                 this.loadScreenData(screen.html, screen.style);
             }
         }
     }
 
     public loadScreenData(html, style) {
-        if (style)
-            this.shadowRoot.adoptedStyleSheets = [cssFromString(style)];
+        let globalStyle = iobrokerHandler.config?.globalStyle ?? '';
+
+        if (globalStyle && style)
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, cssFromString(globalStyle), cssFromString(style)];
+        else if (globalStyle)
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style,cssFromString(globalStyle)];
+        else if (style)
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style,cssFromString(style)];
         else
-            this.shadowRoot.adoptedStyleSheets = [];
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style];
 
         const template = htmlFromString(html);
         const documentFragment = template.content.cloneNode(true);

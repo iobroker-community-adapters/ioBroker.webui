@@ -1,10 +1,16 @@
-import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from "@node-projects/base-custom-webcomponent";
 import { dragDropFormatNameBindingObject, IBindableObject, IBindableObjectsService, IElementDefinition, ServiceContainer, dragDropFormatNameElementDefinition, ContextMenu, sleep } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../IobrokerHandler.js";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
 
-type TreeNodeData = Fancytree.NodeData & { lazyload?: (event: any, data: any) => void, children?: TreeNodeData[] | undefined; autoExpand?: boolean }
+type TreeNodeData = Fancytree.NodeData & {
+    lazyload?: (event: any, data: any) => void,
+    children?: TreeNodeData[] | undefined;
+    autoExpand?: boolean,
+    dblclick?: (event: any, data: any) => void,
+    contextMenu?: (event: any, data: any) => void
+}
 export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
 
     public static override template = html`
@@ -65,7 +71,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
 
     private _lazyLoadScreensNodes(event: any, data: any) {
-        data.result = new Promise(async resolve => {
+        data.result = new Promise<TreeNodeData[]>(async resolve => {
             let screenNodeCtxMenu = (event, screen) => {
                 ContextMenu.show([{
                     title: 'Remove Screen', action: () => {
@@ -78,6 +84,11 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 title: x,
                 folder: false,
                 contextMenu: (event => screenNodeCtxMenu(event, x)),
+                dblclick: (e, d) => {
+                    iobrokerHandler.getScreen(d.node.data.name).then(s => {
+                        window.appShell.newDocument(d.node.data.name, s.html, s.style);
+                    });
+                },
                 data: { type: 'screen', name: x }
             })));
         });
@@ -92,17 +103,27 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         }
     }
 
-    private async _createGlobalStyleNode() {
-        let screenNodeCtxMenu = (event) => {
+    private async _createGlobalStyleNode(): Promise<TreeNodeData> {
+        let ctxMenu = (event) => {
             ContextMenu.show([{
-                title: 'Add HabPanel Style', action: () => {
-
+                title: 'Add HabPanel Style', action: async () => {
+                    let text = await LazyLoader.LoadText('./assets/styleTemplates/HabPanelStyle.css');
+                    if (!iobrokerHandler.config.globalStyle)
+                        iobrokerHandler.config.globalStyle = '';
+                    iobrokerHandler.config.globalStyle += '\n\n' + text;
+                    iobrokerHandler.saveConfig();
                 }
             }], event);
         }
-        return { title: 'Global Style', folder: false, contextMenu: (event => screenNodeCtxMenu(event)), }
+        return {
+            title: 'Global Style',
+            folder: false,
+            contextMenu: (e, data) => ctxMenu(e),
+            dblclick: (e, data) => {
+                window.appShell.globalStyleEditor(iobrokerHandler.config.globalStyle ?? '');
+            }
+        }
     }
-
 
     private async _createNpmsNode() {
         let npmNodeCtxMenu = (event, packageName) => {
@@ -310,12 +331,9 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 lazyLoad: (event, n) => n.node.data.lazyload(event, n),
                 copyFunctionsToData: true,
                 extensions: ['dnd5'],
-                dblclick: (e, d) => {
-                    if (d.node.data && d.node.data.type == 'screen') {
-                        iobrokerHandler.getScreen(d.node.data.name).then(s => {
-                            window.appShell.newDocument(d.node.data.name, s.html, s.style);
-                        });
-                    }
+                dblclick: (e, data) => {
+                    if (data.node.data.dblclick)
+                        data.node.data.dblclick(e, data);
                     return true;
                 },
                 createNode: (event, data) => {
