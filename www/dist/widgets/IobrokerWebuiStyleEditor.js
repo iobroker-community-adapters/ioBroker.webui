@@ -1,4 +1,4 @@
-import { BaseCustomWebComponentConstructorAppend, css, html } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
+import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
 export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorAppend {
     static style = css `
         :host {
@@ -14,17 +14,18 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
     static template = html `
         <div id="container" style="width: 100%; height: 100%; position: absolute;"></div>
     `;
-    _text;
-    _model;
-    get text() {
-        if (this._editor)
-            return this._editor.getValue();
-        return this._text;
+    createModel(text) {
+        //@ts-ignore
+        return monaco.editor.createModel(text, 'css');
     }
-    set text(value) {
+    _model;
+    get model() {
+        return this._model;
+    }
+    set model(value) {
+        this._model = value;
         if (this._editor)
-            this._editor.setValue(value == null ? '' : value);
-        this._text = value;
+            this._editor.setModel(value);
     }
     _errorLine;
     get errorLine() {
@@ -39,12 +40,6 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
         }
         this._errorLine = value;
     }
-    readOnly;
-    onTextChanged;
-    static properties = {
-        text: String,
-        readOnly: Boolean
-    };
     _container;
     _editor;
     static _initalized;
@@ -70,7 +65,7 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
     }
     async ready() {
         //@ts-ignore
-        const style = await import('/webui/node_modules/monaco-editor/min/vs/editor/editor.main.css', { assert: { type: 'css' } });
+        const style = await import("monaco-editor/min/vs/editor/editor.main.css", { assert: { type: 'css' } });
         //@ts-ignore
         this.shadowRoot.adoptedStyleSheets = [style.default, this.constructor.style];
         this._container = this._getDomElement('container');
@@ -79,21 +74,14 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
             //@ts-ignore
             this._editor = monaco.editor.create(this._container, {
                 automaticLayout: true,
-                value: this.text,
                 language: 'css',
                 minimap: {
                     size: 'fill'
                 },
-                readOnly: this.readOnly,
                 fixedOverflowWidgets: true
             });
-            if (this._text)
-                this._editor.setValue(this._text);
-            this._model = this._editor.getModel();
-            this._model.onDidChangeContent((e) => {
-                if (this.onTextChanged)
-                    this.onTextChanged(e);
-            });
+            if (this._model)
+                this._editor.setModel(this._model);
         }, 1000);
     }
     undo() {

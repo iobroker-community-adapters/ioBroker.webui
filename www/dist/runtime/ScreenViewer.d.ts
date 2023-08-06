@@ -11,5 +11,5 @@ export declare class ScreenViewer extends BaseCustomWebComponentConstructorAppen
     constructor();
     ready(): void;
     private _loadScreen;
-    loadScreenData(html: any): void;
+    loadScreenData(html: any, style: any): void;
 }

@@ -1,6 +1,6 @@
-import { BaseCustomWebComponentConstructorAppend, css, html, TypedEvent } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
+import { BaseCustomWebComponentConstructorAppend, css, html, TypedEvent } from "@node-projects/base-custom-webcomponent";
 //@ts-ignore
-import fancyTreeStyleSheet from '/webui/node_modules/jquery.fancytree/dist/skin-win8/ui.fancytree.css' assert { type: 'css' };
+import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert { type: 'css' };
 export function getDeepValue(obj, path) {
     const parts = path.split('.');
     let val = obj;

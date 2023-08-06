@@ -1,5 +1,5 @@
-import { iobrokerHandler } from '../IobrokerHandler.js';
-import { ScreenViewer } from '../runtime/ScreenViewer.js';
+import { iobrokerHandler } from "../IobrokerHandler.js";
+import { ScreenViewer } from "../runtime/ScreenViewer.js";
 export class ScriptSystem {
     async execute(scriptCommands, context) {
         for (let c of scriptCommands) {
@@ -16,29 +16,32 @@ export class ScriptSystem {
                     }
                     break;
                 }
-                case 'setSignal': {
+                case 'setSignalValue': {
                     await iobrokerHandler.connection.setState(c.signal, this.getValue(c.value, context));
                     break;
                 }
-                case 'increaseSignal': {
+                case 'incrementSignalValue': {
                     let state = await iobrokerHandler.connection.getState(c.signal);
                     await iobrokerHandler.connection.setState(c.signal, state.val + this.getValue(c.value, context));
                     break;
                 }
-                case 'decreaseSignal': {
+                case 'decrementSignalValue': {
                     let state = await iobrokerHandler.connection.getState(c.signal);
                     await iobrokerHandler.connection.setState(c.signal, state.val - this.getValue(c.value, context));
                     break;
                 }
-                case 'setBit': {
+                case 'setBitInSignal': {
+                    //todo: bit
                     await iobrokerHandler.connection.setState(c.signal, true);
                     break;
                 }
-                case 'clearBit': {
+                case 'clearBitInSignal': {
+                    //todo: bit
                     await iobrokerHandler.connection.setState(c.signal, false);
                     break;
                 }
-                case 'toggleBit': {
+                case 'toggleBitInSignal': {
+                    //todo: bit
                     let state = await iobrokerHandler.connection.getState(c.signal);
                     await iobrokerHandler.connection.setState(c.signal, !state.val);
                     break;

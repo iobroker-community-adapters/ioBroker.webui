@@ -8,5 +8,7 @@ export declare class CommandHandling {
     handleCommandButtonClick(e: any): Promise<void>;
     handleInputValueChanged(e: any): void;
     init(serviceContainer: ServiceContainer): void;
-    handleCommand(buttons: HTMLButtonElement[], target: IUiCommandHandler): void;
+    canExecuteCommand(buttons: (HTMLElement & {
+        disabled: boolean;
+    })[], target: IUiCommandHandler): void;
 }

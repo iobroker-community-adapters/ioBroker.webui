@@ -1,17 +1,17 @@
-import { BaseCustomWebComponentConstructorAppend, css, html } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
-import { dragDropFormatNameBindingObject, dragDropFormatNameElementDefinition, ContextMenu } from '/webui/node_modules/@node-projects/web-component-designer/./dist/index.js';
+import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
+import { dragDropFormatNameBindingObject, dragDropFormatNameElementDefinition, ContextMenu, sleep } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../IobrokerHandler.js";
 //@ts-ignore
-import fancyTreeStyleSheet from '/webui/node_modules/jquery.fancytree/dist/skin-win8/ui.fancytree.css' assert { type: 'css' };
+import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert { type: 'css' };
 export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
     static template = html `
         <div id="treeDiv" class="" style="overflow: auto; width:100%; height: 100%;">
         </div>`;
     static style = css ``;
-    _treeDiv;
-    //@ts-ignore
-    _tree;
     serviceContainer;
+    _treeDiv;
+    _tree;
+    _screensNode;
     constructor() {
         super();
         this._treeDiv = this._getDomElement('treeDiv');
@@ -20,39 +20,53 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
     async ready() {
     }
-    initialize(serviceContainer) {
+    async initialize(serviceContainer) {
         this.serviceContainer = serviceContainer;
+        iobrokerHandler.screensChanged.on(() => this._refreshScreensNode());
+        await sleep(100);
         this._loadTree();
-        iobrokerHandler.screensChanged.on(() => this._loadTree());
     }
     async createTreeNodes() {
         const result = await Promise.allSettled([
-            this._createscreensNode(),
+            this._createScreensNode(),
+            this._createGlobalStyleNode(),
             this._createNpmsNode(),
             this._createControlsNode(),
             this._createChartsNode(),
-            this._createIconsNode(),
+            this._createIconsFolderNode(),
             this._createObjectsNode()
         ]);
         return result.map(x => x.status == 'fulfilled' ? x.value : null);
     }
-    async _createscreensNode() {
-        let screenNodeCtxMenu = (event, packageName) => {
+    async _createScreensNode() {
+        this._screensNode = { title: 'Screens', folder: true };
+        this._refreshScreensNode();
+        return this._screensNode;
+    }
+    async _refreshScreensNode() {
+        let screenNodeCtxMenu = (event, screen) => {
             ContextMenu.show([{
                     title: 'Remove Screen', action: () => {
-                        //todo
+                        iobrokerHandler.removeScreen(screen);
                     }
                 }], event);
         };
-        let screensNode = { title: 'Screens', folder: true };
         let screens = await iobrokerHandler.getScreenNames();
-        screensNode.children = screens.map(x => ({
+        this._screensNode.children = screens.map(x => ({
             title: x,
             folder: false,
             contextMenu: (event => screenNodeCtxMenu(event, x)),
             data: { type: 'screen', name: x }
         }));
-        return screensNode;
+    }
+    async _createGlobalStyleNode() {
+        let screenNodeCtxMenu = (event) => {
+            ContextMenu.show([{
+                    title: 'Add HabPanel Style', action: () => {
+                    }
+                }], event);
+        };
+        return { title: 'Global Style', folder: false, contextMenu: (event => screenNodeCtxMenu(event)), };
     }
     async _createNpmsNode() {
         let npmNodeCtxMenu = (event, packageName) => {
@@ -95,26 +109,42 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         }
         return npmsNode;
     }
-    async _createIconsNode() {
+    async _createIconsFolderNode() {
         let iconsNode = {
-            title: 'Icons', folder: true, children: []
+            title: 'Icons',
+            folder: true,
+            lazy: true,
+            lazyload: (e, data) => {
+                data.result = new Promise(async (resolve) => {
+                    const iconDirs = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons");
+                    const iconDirNodes = [];
+                    for (let d of iconDirs) {
+                        if (d.isDir)
+                            iconDirNodes.push({
+                                title: d.file,
+                                folder: true,
+                                lazy: true,
+                                lazyload: (e, data) => {
+                                    this._createIconsNodes(d.file, data);
+                                }
+                            });
+                    }
+                    resolve(iconDirNodes);
+                });
+            }
         };
-        const iconDirs = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons");
-        let results = await Promise.allSettled(iconDirs.filter(x => x.isDir).map(x => this._readIconsDir(x.file)));
-        for (let r of results) {
-            if (r.status == 'fulfilled')
-                iconsNode.children.push(r.value);
-        }
         return iconsNode;
     }
-    async _readIconsDir(dirName) {
-        let icons = { title: dirName, children: [] };
-        const dirList = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons/" + dirName);
-        for (let d of dirList) {
-            if (d.file.endsWith('.svg'))
-                icons.children.push({ title: d.file.substring(0, d.file.length - 4), icon: './assets/icons/' + dirName + '/' + d.file, data: { type: 'icon', file: './assets/icons/' + dirName + '/' + d.file } });
-        }
-        return icons;
+    async _createIconsNodes(dirName, data) {
+        data.result = new Promise(async (resolve) => {
+            let icons = [];
+            const dirList = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons/" + dirName);
+            for (let d of dirList) {
+                if (d.file.endsWith('.svg'))
+                    icons.push({ title: d.file.substring(0, d.file.length - 4), icon: './assets/icons/' + dirName + '/' + d.file, data: { type: 'icon', file: './assets/icons/' + dirName + '/' + d.file } });
+            }
+            resolve(icons);
+        });
     }
     async _createChartsNode() {
         let chartsNode = {
@@ -189,20 +219,24 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     async _createObjectsNode() {
         const s = this.serviceContainer.bindableObjectsServices[0];
         const objectsNode = {
-            title: 'Objects', folder: true, lazy: true, data: { service: s }
+            title: 'Objects',
+            data: { service: s },
+            folder: true,
+            lazy: true,
+            lazyload: (event, node) => this._lazyLoadObjectNodes(event, node)
         };
         return objectsNode;
     }
-    lazyLoad(event, data) {
+    _lazyLoadObjectNodes(event, data) {
         data.result = new Promise(async (resolve) => {
             const service = data.node.data.service;
             const bindable = data.node.data.bindable;
-            let children;
+            let objs;
             if (bindable?.children)
-                children = bindable.children;
+                objs = bindable.children;
             else
-                children = await service.getBindableObjects(bindable);
-            resolve(children.map(x => ({
+                objs = await service.getBindableObjects(bindable);
+            resolve(objs.map(x => ({
                 service,
                 title: x.name,
                 data: {
@@ -210,7 +244,8 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     bindable: x
                 },
                 folder: x.children !== false,
-                lazy: x.children !== false
+                lazy: x.children !== false,
+                lazyload: (event, node) => this._lazyLoadObjectNodes(event, node)
             })));
         });
     }
@@ -219,12 +254,14 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             $(this._treeDiv).fancytree({
                 icon: false,
                 source: this.createTreeNodes(),
-                lazyLoad: this.lazyLoad,
+                lazyLoad: (event, n) => n.node.data.lazyload(event, n),
                 copyFunctionsToData: true,
                 extensions: ['dnd5'],
                 dblclick: (e, d) => {
                     if (d.node.data && d.node.data.type == 'screen') {
-                        window.appShell.newDocument(d.node.data.name, iobrokerHandler.getScreen(d.node.data.name).html);
+                        iobrokerHandler.getScreen(d.node.data.name).then(s => {
+                            window.appShell.newDocument(d.node.data.name, s.html, s.style);
+                        });
                     }
                     return true;
                 },

@@ -14,13 +14,15 @@ export declare class IobrokerWebuiAppShell extends BaseCustomWebComponentConstru
     _solutionExplorer: IobrokerWebuiSolutionExplorer;
     _propertyGrid: PropertyGrid;
     _treeViewExtended: TreeViewExtended;
+    private _styleChangedCb;
+    private _styleEditor;
     static readonly style: CSSStyleSheet;
     static readonly template: HTMLTemplateElement;
     ready(): Promise<void>;
     private _setupServiceContainer;
     loadNpmPackages(): Promise<void>;
     private loadNpmPackage;
-    newDocument(name: string, content: string): void;
+    newDocument(name: string, content: string, style: string): void;
 }
 declare global {
     interface Window {

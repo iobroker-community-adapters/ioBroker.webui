@@ -1,5 +1,6 @@
-import { Connection } from '/webui/node_modules/@iobroker/socket-client/dist/esm/index.js';
-import { TypedEvent } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
+import { Connection } from "@iobroker/socket-client";
+import { TypedEvent } from "@node-projects/base-custom-webcomponent";
+const screenFileExtension = ".screen";
 class IobrokerHandler {
     static instance = new IobrokerHandler();
     host;
@@ -7,10 +8,6 @@ class IobrokerHandler {
     adapterName = "webui";
     configPath = "config/";
     namespace = "webui.0";
-    _screens = {};
-    //private _styles: Record<string, IStyle> = {};
-    //private _screenTemplateMap = new WeakMap<IScreen, HTMLTemplateElement>();
-    //private _styleSheetMap = new WeakMap<IStyle, CSSStyleSheet>();
     screensChanged = new TypedEvent();
     stylesChanged = new TypedEvent();
     constructor() {
@@ -19,26 +16,58 @@ class IobrokerHandler {
         this.connection = new Connection({ protocol: 'ws', host: window.iobrokerHost, port: window.iobrokerPort, admin5only: false, autoSubscribes: [] });
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
-        await this.readAllScreens();
         console.log("ioBroker handler ready.");
     }
-    async readAllScreens() {
-        const screenNames = (await this.connection.readDir(this.adapterName, this.configPath + "screens")).map(x => x.file);
-        const screenPromises = screenNames.map(x => this.connection.readFile(this.adapterName, this.configPath + "screens/" + x, false));
-        const screensLoaded = await Promise.all(screenPromises);
-        this._screens = {};
-        screenNames.forEach((x, i) => this._screens[x.toLocaleLowerCase()] = JSON.parse(atob(screensLoaded[i].file)));
-        this.screensChanged.emit();
+    _screenNames;
+    _screens = {};
+    async getScreenNames() {
+        if (this._screenNames)
+            return this._screenNames;
+        const screenNames = (await this.connection.readDir(this.adapterName, this.configPath + "screens"))
+            .filter(x => x.file.endsWith(screenFileExtension))
+            .map(x => x.file.substring(0, x.file.length - screenFileExtension.length));
+        this._screenNames = screenNames;
+        return screenNames;
+    }
+    async getScreen(name) {
+        let screen = this._screens[name.toLocaleLowerCase()];
+        if (!screen) {
+            try {
+                screen = await this._getObjectFromFile(this.configPath + "screens/" + name + screenFileExtension);
+            }
+            catch (err) {
+                console.error("Error reading Screen", screen, err);
+            }
+            this._screens[name.toLocaleLowerCase()] = screen;
+        }
+        return screen;
     }
     async saveScreen(name, screen) {
-        await this.connection.writeFile64(this.adapterName, this.configPath + "screens/" + name.toLocaleLowerCase(), btoa(JSON.stringify(screen)));
-        this.readAllScreens();
+        this._saveObjectToFile(screen, "/" + this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
+        this._screens[name.toLocaleLowerCase()] = screen;
+        this.screensChanged.emit();
     }
-    getScreenNames() {
-        return Object.keys(this._screens);
+    async removeScreen(name) {
+        await this.connection.deleteFile(this.adapterName, "/" + this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
+        delete this._screens.delete[name.toLocaleLowerCase()];
+        this.screensChanged.emit();
     }
-    getScreen(name) {
-        return this._screens[name.toLocaleLowerCase()];
+    async getConfig() {
+        return await this._getObjectFromFile(this.configPath + "config.json");
+    }
+    async saveConfig(config) {
+        this._saveObjectToFile(config, this.configPath + "config.json");
+    }
+    async _getObjectFromFile(name) {
+        const file = await this.connection.readFile(this.adapterName, name, false);
+        const dec = new TextDecoder();
+        //@ts-ignore
+        return JSON.parse(dec.decode(Uint8Array.from(file.file.data)));
+    }
+    async _saveObjectToFile(obj, name) {
+        const enc = new TextEncoder();
+        //@ts-ignore
+        await this.connection.writeFile64(this.adapterName, name, enc.encode(JSON.stringify(obj)));
     }
     async sendCommand(command, data, clientId = '') {
         await this.connection.setState(this.namespace + '.control.data', { val: data });

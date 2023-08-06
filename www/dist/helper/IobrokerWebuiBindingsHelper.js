@@ -1,7 +1,7 @@
-import { TypedEvent } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
-import { PropertiesHelper } from '/webui/node_modules/@node-projects/web-component-designer/dist/elements/services/propertiesService/services/PropertiesHelper.js';
-import { BindingTarget } from '/webui/node_modules/@node-projects/web-component-designer/dist/elements/item/BindingTarget.js';
-import { iobrokerHandler } from '../IobrokerHandler.js';
+import { TypedEvent } from "@node-projects/base-custom-webcomponent";
+import { iobrokerHandler } from "../IobrokerHandler.js";
+import { PropertiesHelper } from "@node-projects/web-component-designer/dist/elements/services/propertiesService/services/PropertiesHelper.js";
+import { BindingTarget } from "@node-projects/web-component-designer/dist/elements/item/BindingTarget.js";
 //;,[ are not allowed in bindings, so they could be used for a short form...
 export const bindingPrefixProperty = 'bind-prop:';
 export const bindingPrefixAttribute = 'bind-attr:';

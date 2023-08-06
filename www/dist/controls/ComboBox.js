@@ -1,5 +1,5 @@
-import { __decorate } from '/webui/node_modules/tslib/tslib.es6.js';
-import { BaseCustomWebComponentConstructorAppend, css, html, property } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
+import { __decorate } from "tslib";
+import { BaseCustomWebComponentConstructorAppend, css, html, property } from "@node-projects/base-custom-webcomponent";
 export class ComboBox extends BaseCustomWebComponentConstructorAppend {
     static style = css `
         :host {

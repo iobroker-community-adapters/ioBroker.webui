@@ -11,15 +11,41 @@ export class CommandHandling {
         let button = e.currentTarget;
         let commandName = button.dataset['command'];
         let commandParameter = button.dataset['commandParameter'];
-        if (commandName === 'new') {
+        if (commandName === 'runtime') {
+            let target = this.dockManager?.activeDocument?.elementContent?.assignedElements()[0];
+            if (target?.title) {
+                window.open("runtime.html?screenName=" + target.title);
+            }
+            else {
+                window.open("runtime.html");
+            }
+        }
+        else if (commandName === 'new') {
             let screen = prompt("New Screen Name:");
-            if (screen)
-                this.iobrokerWebuiAppShell.newDocument(screen, null);
+            let style = `* {
+    box-sizing: border-box;
+}`;
+            if (screen) {
+                if (commandParameter == 'grid') {
+                    let columns = parseInt(prompt("No Columns:", "12"));
+                    let rows = parseInt(prompt("No Rows:", "8"));
+                    style += `\n\n:host {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: ${'1fr '.repeat(columns).trim()};
+    grid-template-rows: ${'1fr '.repeat(rows).trim()};
+    gap: 10px;
+    padding: 10px;
+}`;
+                }
+                this.iobrokerWebuiAppShell.newDocument(screen, null, style);
+            }
         }
         else if (commandName === 'save') {
             let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
             let html = target.designerView.getHTML();
-            let screen = { html, style: null, settings: {} };
+            let style = target.additionalData.model.getValue();
+            let screen = { html, style, settings: {} };
             await iobrokerHandler.saveScreen(target.title, screen);
         }
         else if (this.dockManager.activeDocument) {
@@ -59,22 +85,24 @@ export class CommandHandling {
             if (this.dockManager.activeDocument) {
                 let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
                 if (target.canExecuteCommand) {
-                    this.handleCommand(buttons, target);
+                    this.canExecuteCommand(buttons, target);
                 }
                 else {
-                    this.handleCommand(buttons, null);
+                    this.canExecuteCommand(buttons, null);
                 }
             }
             else {
-                this.handleCommand(buttons, null);
+                this.canExecuteCommand(buttons, null);
             }
         }, 100);
     }
-    handleCommand(buttons, target) {
+    canExecuteCommand(buttons, target) {
         buttons.forEach(b => {
             let command = b.dataset['command'];
             let commandParameter = b.dataset['commandParameter'];
             if (command === 'new')
+                b.disabled = false;
+            else if (command === 'runtime')
                 b.disabled = false;
             else
                 b.disabled = !target ? true : !target.canExecuteCommand({ type: command, parameter: commandParameter });

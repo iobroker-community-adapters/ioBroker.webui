@@ -1,5 +1,5 @@
-import { BindingMode } from '/webui/node_modules/@node-projects/web-component-designer/dist/elements/item/BindingMode.js';
-import { IobrokerWebuiBindingsHelper } from '../helper/IobrokerWebuiBindingsHelper.js';
+import { BindingMode } from "@node-projects/web-component-designer";
+import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 export class IobrokerWebuiBindingService {
     getBindings(designItem) {
         const iobBindings = Array.from(IobrokerWebuiBindingsHelper.getBindings(designItem.element));

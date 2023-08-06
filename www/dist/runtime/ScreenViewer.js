@@ -1,8 +1,8 @@
-import { __decorate } from '/webui/node_modules/tslib/tslib.es6.js';
-import { BaseCustomWebComponentConstructorAppend, customElement, DomHelper, htmlFromString, property } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
-import { IobrokerWebuiBindingsHelper } from '../helper/IobrokerWebuiBindingsHelper.js';
-import { iobrokerHandler } from '../IobrokerHandler.js';
-let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
+import { __decorate } from "tslib";
+import { BaseCustomWebComponentConstructorAppend, cssFromString, customElement, DomHelper, htmlFromString, property } from "@node-projects/base-custom-webcomponent";
+import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
+import { iobrokerHandler } from "../IobrokerHandler.js";
+export let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     _iobBindings;
     _screenName;
     get screenName() {
@@ -26,6 +26,7 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
     objects;
     constructor() {
         super();
+        this._restoreCachedInititalValues();
     }
     ready() {
         this._parseAttributesToProperties();
@@ -53,12 +54,16 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
             this._iobBindings.forEach(x => x());
         this._iobBindings = null;
         DomHelper.removeAllChildnodes(this.shadowRoot);
-        const screen = iobrokerHandler.getScreen(this.screenName);
+        const screen = await iobrokerHandler.getScreen(this.screenName);
         if (screen) {
-            this.loadScreenData(screen.html);
+            this.loadScreenData(screen.html, screen.style);
         }
     }
-    loadScreenData(html) {
+    loadScreenData(html, style) {
+        if (style)
+            this.shadowRoot.adoptedStyleSheets = [cssFromString(style)];
+        else
+            this.shadowRoot.adoptedStyleSheets = [];
         const template = htmlFromString(html);
         const documentFragment = template.content.cloneNode(true);
         //this._bindingsParse(documentFragment, true);
@@ -75,4 +80,3 @@ __decorate([
 ScreenViewer = __decorate([
     customElement("iobroker-webui-screen-viewer")
 ], ScreenViewer);
-export { ScreenViewer };

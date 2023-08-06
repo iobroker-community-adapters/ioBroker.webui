@@ -1,6 +1,6 @@
 {
 	"name": "@node-projects/node-html-parser-esm",
-	"version": "2.5.1",
+	"version": "6.1.5",
 	"description": "A very fast HTML parser, generating a simplified DOM, with basic element query support.",
 	"main": "dist/index.js",
 	"module": "dist/index.js",
@@ -28,12 +28,12 @@
 	],
 	"author": "Xiaoyi Shi <ashi009@gmail.com>",
 	"contributors": [
+		"jochen.kuehner<jochen.kuehner@gmx.de>",
 		"taoqf<tao_qiufeng@126.com>"
 	],
 	"license": "MIT",
 	"devDependencies": {
 		"@types/entities": "latest",
-		"@types/he": "latest",
 		"@types/node": "latest",
 		"@typescript-eslint/eslint-plugin": "latest",
 		"@typescript-eslint/eslint-plugin-tslint": "latest",

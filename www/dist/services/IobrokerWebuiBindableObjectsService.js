@@ -1,5 +1,5 @@
-import { BindableObjectType } from '/webui/node_modules/@node-projects/web-component-designer/./dist/index.js';
-import { iobrokerHandler } from '../IobrokerHandler.js';
+import { BindableObjectType } from "@node-projects/web-component-designer";
+import { iobrokerHandler } from "../IobrokerHandler.js";
 export class IobrokerWebuiBindableObjectsService {
     name = 'iobroker';
     _states;

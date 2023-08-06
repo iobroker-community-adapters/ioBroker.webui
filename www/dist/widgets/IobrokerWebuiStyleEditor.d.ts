@@ -1,20 +1,15 @@
 import { BaseCustomWebComponentConstructorAppend } from "@node-projects/base-custom-webcomponent";
+import type * as monaco from 'monaco-editor';
 export declare class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorAppend {
     static readonly style: CSSStyleSheet;
     static readonly template: HTMLTemplateElement;
-    private _text;
+    createModel(text: string): monaco.editor.ITextModel;
     private _model;
-    get text(): string;
-    set text(value: string);
+    get model(): monaco.editor.ITextModel;
+    set model(value: monaco.editor.ITextModel);
     private _errorLine;
     get errorLine(): number;
     set errorLine(value: number);
-    readOnly: boolean;
-    onTextChanged: (e: any) => void;
-    static readonly properties: {
-        text: StringConstructor;
-        readOnly: BooleanConstructor;
-    };
     private _container;
     private _editor;
     private static _initalized;

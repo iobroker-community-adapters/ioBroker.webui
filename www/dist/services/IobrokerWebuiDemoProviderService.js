@@ -1,5 +1,5 @@
-import { DomHelper } from '/webui/node_modules/@node-projects/base-custom-webcomponent/./dist/index.js';
-import { ScreenViewer } from '../runtime/ScreenViewer.js';
+import { DomHelper } from "@node-projects/base-custom-webcomponent";
+import { ScreenViewer } from "../runtime/ScreenViewer.js";
 export class IobrokerWebuiDemoProviderService {
     provideDemo(container, serviceContainer, instanceServiceContainer, code) {
         return new Promise(resolve => {
@@ -10,10 +10,12 @@ export class IobrokerWebuiDemoProviderService {
             screenViewer.style.display = 'none';
             screenViewer.style.overflow = 'auto';
             screenViewer.style.position = 'absolute';
+            container.style.position = 'relative';
             DomHelper.removeAllChildnodes(container);
             container.appendChild(screenViewer);
-            screenViewer.loadScreenData(code);
-            screenViewer.style.display = 'block';
+            let documnet = instanceServiceContainer.designer;
+            screenViewer.loadScreenData(code, documnet.additionalData.model.getValue());
+            screenViewer.style.display = '';
             resolve();
         });
     }

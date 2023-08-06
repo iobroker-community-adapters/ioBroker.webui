@@ -1,6 +1,5 @@
-import { OverlayLayer, DesignItem, InsertAction } from '/webui/node_modules/@node-projects/web-component-designer/./dist/index.js';
-import { BindingTarget } from '/webui/node_modules/@node-projects/web-component-designer/dist/elements/item/BindingTarget.js';
-import { IobrokerWebuiBindingsHelper } from '../helper/IobrokerWebuiBindingsHelper.js';
+import { OverlayLayer, DesignItem, InsertAction, BindingTarget } from "@node-projects/web-component-designer";
+import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../IobrokerHandler.js";
 export class IobrokerWebuiBindableObjectDragDropService {
     rectMap = new Map();
@@ -9,7 +8,7 @@ export class IobrokerWebuiBindableObjectDragDropService {
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {
             let itemRect = designerCanvas.getNormalizedElementCoordinates(element);
-            this.rect = designerCanvas.overlayLayer.drawRect(itemRect.x, itemRect.y, itemRect.width, itemRect.height, '', null, OverlayLayer.Background);
+            this.rect = designerCanvas.overlayLayer.drawRect('IobrokerWebuiBindableObjectDragDropService', itemRect.x, itemRect.y, itemRect.width, itemRect.height, '', null, OverlayLayer.Background);
             this.rect.style.fill = '#ff0000';
             this.rect.style.opacity = '0.3';
             this.rectMap.set(element, this.rect);

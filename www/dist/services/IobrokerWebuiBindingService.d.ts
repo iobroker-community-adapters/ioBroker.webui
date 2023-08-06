@@ -1,6 +1,4 @@
-import { IBindingService, IDesignItem } from "@node-projects/web-component-designer";
-import { BindingTarget } from "@node-projects/web-component-designer/dist/elements/item/BindingTarget";
-import { IBinding } from "@node-projects/web-component-designer/dist/elements/item/IBinding";
+import { BindingTarget, IBinding, IBindingService, IDesignItem } from "@node-projects/web-component-designer";
 export declare class IobrokerWebuiBindingService implements IBindingService {
     getBindings(designItem: IDesignItem): IBinding[];
     setBinding(designItem: IDesignItem, binding: IBinding): boolean;

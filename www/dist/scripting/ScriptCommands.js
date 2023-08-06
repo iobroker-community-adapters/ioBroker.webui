@@ -4,33 +4,33 @@ export class OpenScreen {
     relativeSignalsPath;
     openInDialog;
 }
-export class SetSignal {
-    type = 'setSignal';
+export class SetSignalValue {
+    type = 'setSignalValue';
     signal;
     value;
 }
-export class IncreaseSignal {
-    type = 'increaseSignal';
+export class IncrementSignalValue {
+    type = 'incrementSignalValue';
     signal;
     value;
 }
-export class DecreaseSignal {
-    type = 'decreaseSignal';
+export class DecrementSignalValue {
+    type = 'decrementSignalValue';
     signal;
     value;
 }
-export class SetBit {
-    type = 'setBit';
+export class SetBitInSignal {
+    type = 'setBitInSignal';
     signal;
     bitNumber = 0;
 }
-export class ClearBit {
-    type = 'clearBit';
+export class ClearBitInSignal {
+    type = 'clearBitInSignal';
     signal;
     bitNumber = 0;
 }
-export class ToggleBit {
-    type = 'toggleBit';
+export class ToggleBitInSignal {
+    type = 'toggleBitInSignal';
     signal;
     bitNumber = 0;
 }

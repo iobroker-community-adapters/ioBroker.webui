@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
   <link rel="manifest" href="/manifest.json">
 
   <link rel="stylesheet" href="./node_modules/metro4-dist/css/metro-all.min.css">
@@ -14,17 +15,34 @@
 
   <title>iobroker-webui designer</title>
 
-  <script src="./node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js"></script>
+  <script type="esms-options">
+    {
+      "shimMode": true
+    }
+  </script>
+  <script src="./node_modules/es-module-shims/dist/es-module-shims.js"></script>
+  <script>
+    const importMap = {
+      imports: {
+        "jquery.fancytree/": "./node_modules/jquery.fancytree/",
+        "monaco-editor/": "./node_modules/monaco-editor/",
+        "@node-projects/web-component-designer": "./node_modules/@node-projects/web-component-designer/dist/index.js",
+        "@node-projects/web-component-designer/": "./node_modules/@node-projects/web-component-designer/",
+        "@adobe/css-tools": "./node_modules/@adobe/css-tools/dist/index.mjs",
+        "dock-spawn-ts/": "./node_modules/dock-spawn-ts/",
+        "@node-projects/base-custom-webcomponent/": "./node_modules/@node-projects/base-custom-webcomponent/",
+        "@node-projects/base-custom-webcomponent": "./node_modules/@node-projects/base-custom-webcomponent/dist/index.js",
+        "@node-projects/lean-he-esm/": "./node_modules/@node-projects/lean-he-esm/",
+        "@iobroker/socket-client/": "./node_modules/@iobroker/socket-client/",
+        "@iobroker/socket-client": "./node_modules/@iobroker/socket-client/dist/esm/index.js",
+        "tslib": "./node_modules/tslib/tslib.es6.mjs",
+      }
+    };
+    //@ts-ignore
+    importShim.addImportMap(importMap);
+  </script>
 
   <script src="config.js"></script>
-  <script type="module">
-    import { iobrokerHandler } from './dist/IobrokerHandler.js';
-
-    const script = document.createElement("script");
-    script.src = window.iobrokerSocketScriptUrl;
-    script.onload = () => iobrokerHandler.init();
-    document.head.appendChild(script);
-  </script>
 
   <script src="./node_modules/jquery/dist/jquery.min.js"></script>
   <script src="./node_modules/jquery.fancytree/dist/jquery.fancytree-all-deps.min.js"></script>
@@ -42,7 +60,7 @@
 
 
   <script type="module">
-    import './dist/IobrokerWebuiAppShell.js';
+    importShim('./dist/IobrokerWebuiAppShell.js');
   </script>
 
   <style>
@@ -115,7 +133,13 @@
             <span class="icon">
               <span class="mif-file-empty fg-cyan"></span>
             </span>
-            <span class="caption">new</span>
+            <span class="caption">new screen</span>
+          </button>
+          <button class="ribbon-button" data-command="new" data-command-parameter="grid" disabled>
+            <span class="icon">
+              <span class="mif-file-empty fg-cyan"></span>
+            </span>
+            <span class="caption">new screen<br>(grid)</span>
           </button>
           <button class="ribbon-button" data-command="save" disabled>
             <span class="icon">
@@ -248,14 +272,12 @@
         </div>
         <div style="position: absolute; right: 0;">
           <div class="group" style="height: 111px; border-left: 1px solid #dadbdc; inline-size: fit-content;">
-            <a href="runtime.html">
-              <button class="ribbon-button">
-                <span class="icon">
-                  <span class="mif-github fg-cyan"></span>
-                </span>
-                <span>runtime</span>
-              </button>
-            </a>
+            <button class="ribbon-button" data-command="runtime">
+              <span class="icon">
+                <span class="mif-play fg-cyan"></span>
+              </span>
+              <span class="caption">runtime</span>
+            </button>
             <span class="title">runtime</span>
           </div>
         </div>
