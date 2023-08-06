@@ -49,7 +49,6 @@ class WebUi extends utils.Adapter {
     }
 
     async refreshWWW() {
-        await fixJsImports(__dirname + '/www/widgets', '/webui/widgets');
         await this.runUpload();
         this.setState('webui.0.control.command', { val: 'uiReloadPackages', ack: true });
     }
@@ -208,6 +207,9 @@ class WebUi extends utils.Adapter {
         this.log.info(`dirName: ` + __dirname);
         if (!fs.existsSync(__dirname + '/www/widgets/package.json')) {
             this.log.info(`No package.json for widgets found, look if one was uploaded.`);
+
+            // Disable NPM Upload atm, need to look how we would do this....
+            /*
             if (await this.fileExistsAsync(adapterName, 'widgets/package.json')) {
                 this.log.info(`adapter was updated, restore packages.json`);
                 if (!fs.existsSync(__dirname + '/www/widgets'))
@@ -217,6 +219,7 @@ class WebUi extends utils.Adapter {
                 this.log.info(`run NPM install`);
                 await this.installNpm('');
             }
+            */
         }
         this.log.info(`create adapter objects`);
         await this.createObjects();
