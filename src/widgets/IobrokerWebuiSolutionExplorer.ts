@@ -258,7 +258,8 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 extensions: ['dnd5'],
                 dblclick: (e, d) => {
                     if (d.node.data && d.node.data.type == 'screen') {
-                        window.appShell.newDocument(d.node.data.name, iobrokerHandler.getScreen(d.node.data.name).html);
+                        let s = iobrokerHandler.getScreen(d.node.data.name)
+                        window.appShell.newDocument(d.node.data.name, s.html, s.style);
                     }
                     return true;
                 },

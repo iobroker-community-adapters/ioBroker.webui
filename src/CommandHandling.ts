@@ -22,12 +22,13 @@ export class CommandHandling {
     if (commandName === 'new') {
       let screen = prompt("New Screen Name:");
       if (screen)
-        this.iobrokerWebuiAppShell.newDocument(screen, null);
+        this.iobrokerWebuiAppShell.newDocument(screen, null, '');
     }
     else if (commandName === 'save') {
       let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
       let html = (<DocumentContainer>target).designerView.getHTML();
-      let screen: IScreen = { html, style: null, settings: {} };
+      let style = (<DocumentContainer>target).additionalData.model.getValue();
+      let screen: IScreen = { html, style, settings: {} };
       await iobrokerHandler.saveScreen(target.title, screen);
     }
     else if (this.dockManager.activeDocument) {
