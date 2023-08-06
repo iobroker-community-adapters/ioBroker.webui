@@ -2,7 +2,7 @@
 //binding:display="{'signal':'aa',..."
 //binding:value="aa" -> simplified form when only binding a direct property
 
-import { BindingTarget } from "@node-projects/web-component-designer";
+import type { BindingTarget } from "@node-projects/web-component-designer";
 
 export interface IIobrokerWebuiBinding {
     signal: string;
