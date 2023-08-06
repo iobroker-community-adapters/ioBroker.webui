@@ -3,7 +3,7 @@ import type * as monaco from 'monaco-editor';
 export declare class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorAppend {
     static readonly style: CSSStyleSheet;
     static readonly template: HTMLTemplateElement;
-    createModel(text: string): monaco.editor.ITextModel;
+    createModel(text: string): Promise<monaco.editor.ITextModel>;
     private _model;
     get model(): monaco.editor.ITextModel;
     set model(value: monaco.editor.ITextModel);

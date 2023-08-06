@@ -186,7 +186,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             console.warn("error loading " + name + "/package.json, may not yet exist", err);
         }
     }
-    newDocument(name, content, style) {
+    async newDocument(name, content, style) {
         let document = new DocumentContainer(serviceContainer);
         document.setAttribute('dock-spawn-panel-type', 'document');
         document.title = name;
@@ -197,7 +197,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             }
         ];
         document.instanceServiceContainer.designer = document;
-        const model = this._styleEditor.createModel(document.additionalStylesheets[0].content);
+        const model = await this._styleEditor.createModel(document.additionalStylesheets[0].content);
         document.additionalData = { model: model };
         let timer;
         let disableTextChangedEvent = false;

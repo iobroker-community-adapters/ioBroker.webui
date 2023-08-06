@@ -14,7 +14,8 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
     static template = html `
         <div id="container" style="width: 100%; height: 100%; position: absolute;"></div>
     `;
-    createModel(text) {
+    async createModel(text) {
+        await IobrokerWebuiStyleEditor.initMonacoEditor();
         //@ts-ignore
         return monaco.editor.createModel(text, 'css');
     }
@@ -50,12 +51,12 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
     static initMonacoEditor() {
         return new Promise(async (resolve) => {
             if (!IobrokerWebuiStyleEditor._initalized) {
-                IobrokerWebuiStyleEditor._initalized = true;
                 //@ts-ignore
                 require.config({ paths: { 'vs': 'node_modules/monaco-editor/min/vs', 'vs/css': { disabled: true } } });
                 //@ts-ignore
                 require(['vs/editor/editor.main'], () => {
                     resolve(undefined);
+                    IobrokerWebuiStyleEditor._initalized = true;
                 });
             }
             else {
