@@ -18,7 +18,7 @@ export class IobrokerWebuiDemoProviderService implements IDemoProviderService {
 
       let documnet: DocumentContainer = instanceServiceContainer.designer;
       screenViewer.loadScreenData(code, documnet.additionalData.model.getValue());
-      screenViewer.style.display = 'block';
+      screenViewer.style.display = '';
 
       resolve();
     });
