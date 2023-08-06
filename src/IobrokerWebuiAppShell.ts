@@ -221,6 +221,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         content: style ?? ''
       }
     ];
+    document.instanceServiceContainer.designer = document;
 
     const model = this._styleEditor.createModel(document.additionalStylesheets[0].content);
     document.additionalData = { model: model };

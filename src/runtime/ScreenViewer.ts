@@ -66,15 +66,17 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         DomHelper.removeAllChildnodes(this.shadowRoot);
         const screen = iobrokerHandler.getScreen(this.screenName)
         if (screen) {
-            if (screen.style)
-                this.shadowRoot.adoptedStyleSheets = [cssFromString(screen.style)];
-            else
-                this.shadowRoot.adoptedStyleSheets = [];
-            this.loadScreenData(screen.html);
+
+            this.loadScreenData(screen.html, screen.style);
         }
     }
 
-    public loadScreenData(html) {
+    public loadScreenData(html, style) {
+        if (style)
+            this.shadowRoot.adoptedStyleSheets = [cssFromString(style)];
+        else
+            this.shadowRoot.adoptedStyleSheets = [];
+
         const template = htmlFromString(html);
         const documentFragment = template.content.cloneNode(true);
         //this._bindingsParse(documentFragment, true);

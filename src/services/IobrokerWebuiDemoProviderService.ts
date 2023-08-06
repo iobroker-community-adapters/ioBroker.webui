@@ -1,5 +1,5 @@
 import { DomHelper } from "@node-projects/base-custom-webcomponent";
-import { IDemoProviderService, InstanceServiceContainer, ServiceContainer } from "@node-projects/web-component-designer";
+import { DocumentContainer, IDemoProviderService, InstanceServiceContainer, ServiceContainer } from "@node-projects/web-component-designer";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
 
 export class IobrokerWebuiDemoProviderService implements IDemoProviderService {
@@ -16,9 +16,10 @@ export class IobrokerWebuiDemoProviderService implements IDemoProviderService {
       DomHelper.removeAllChildnodes(container);
       container.appendChild(screenViewer);
 
-      screenViewer.loadScreenData(code);
+      let documnet: DocumentContainer = instanceServiceContainer.designer;
+      screenViewer.loadScreenData(code, documnet.additionalData.model.getValue());
       screenViewer.style.display = 'block';
-      
+
       resolve();
     });
   }
