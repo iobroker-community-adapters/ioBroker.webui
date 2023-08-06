@@ -13,6 +13,8 @@ export class IobrokerWebuiDemoProviderService implements IDemoProviderService {
       screenViewer.style.overflow = 'auto';
       screenViewer.style.position = 'absolute';
 
+      container.style.position = 'relative';
+      
       DomHelper.removeAllChildnodes(container);
       container.appendChild(screenViewer);
 

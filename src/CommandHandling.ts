@@ -21,12 +21,15 @@ export class CommandHandling {
 
     if (commandName === 'new') {
       let screen = prompt("New Screen Name:");
-      let style = '';
+      let style = `* {
+    box-sizing: border-box;
+}`;
       if (screen) {
         if (commandParameter == 'grid') {
           let columns = parseInt(prompt("No Columns:", "12"));
           let rows = parseInt(prompt("No Rows:", "8"));
-          style = `:host {
+          style += `\n\n:host {
+    box-sizing: border-box;
     display: grid;
     grid-template-columns: ${'1fr '.repeat(columns).trim()};
     grid-template-rows: ${'1fr '.repeat(rows).trim()};
