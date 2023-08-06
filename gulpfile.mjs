@@ -9,19 +9,21 @@ const rootPath = '/webui';
 
 function copyNodeModules() {
     let runtimeModules = [
+        "@adobe/css-tools",
         "@iobroker/socket-client",
         "@node-projects/base-custom-webcomponent",
         "@node-projects/lean-he-esm",
         "@node-projects/node-html-parser-esm",
         "@node-projects/web-component-designer",
-        "construct-style-sheets-polyfill",
+        "es-module-shims",
         "dock-spawn-ts",
+        "esprima-next",
         //"jquery",
         //"jquery.fancytree",
         //"metro4-dist",
-        //"tslib"
         "mobile-drag-drop",
         "monaco-editor",
+        //"tslib"
 
         "jquery.fancytree/dist/skin-win8",
     ]
@@ -40,7 +42,7 @@ function copyNodeFiles() {
         "jquery/dist/jquery.min.js",
         "jquery.fancytree/dist/jquery.fancytree-all-deps.min.js",
         "jquery.fancytree/dist/modules/jquery.fancytree.table.js",
-        "tslib/tslib.es6.js",
+        "tslib/tslib.es6.mjs",
     ]
 
     runtimeModules = runtimeModules.map(x => './node_modules/' + x)
