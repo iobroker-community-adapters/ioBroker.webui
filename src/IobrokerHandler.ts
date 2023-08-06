@@ -10,6 +10,8 @@ declare global {
     }
 }
 
+const screenFileExtension = ".screen";
+
 class IobrokerHandler {
 
     static instance = new IobrokerHandler();
@@ -42,16 +44,42 @@ class IobrokerHandler {
     }
 
     async readAllScreens() {
-        const screenNames = (await this.connection.readDir(this.adapterName, this.configPath + "screens")).map(x => x.file);
-        const screenPromises = screenNames.map(x => this.connection.readFile(this.adapterName, this.configPath + "screens/" + x, false))
-        const screensLoaded = await Promise.all(screenPromises);
-        this._screens = {};
-        screenNames.forEach((x, i) => this._screens[x.toLocaleLowerCase()] = JSON.parse(atob(screensLoaded[i].file)));
-        this.screensChanged.emit();
+        try {
+            const screenNames = (await this.connection.readDir(this.adapterName, this.configPath + "screens"))
+                .filter(x => x.file.endsWith(screenFileExtension))
+                .map(x => x.file.substring(0, x.file.length - screenFileExtension.length));
+            const screenPromises = screenNames.map(x => {
+                try {
+                    return this.connection.readFile(this.adapterName, this.configPath + "screens/" + x + screenFileExtension, false);
+                }
+                catch (err) {
+                    console.error("Error reading Screen", x, err);
+                    return null;
+                }
+            })
+            const screensLoaded = await Promise.all(screenPromises);
+            this._screens = {};
+            screenNames.forEach((x, i) => {
+                try {
+                    const dec = new TextDecoder();
+                    //@ts-ignore
+                    this._screens[x.toLocaleLowerCase()] = JSON.parse(dec.decode(Uint8Array.from(screensLoaded[i].file.data)));
+                }
+                catch (err) {
+                    console.error("Error parsing Screen", x, err);
+                }
+            });
+            this.screensChanged.emit();
+        }
+        catch (err) {
+            console.error("Error reading Screens", err)
+        }
     }
 
     async saveScreen(name: string, screen: IScreen) {
-        await this.connection.writeFile64(this.adapterName, this.configPath + "screens/" + name.toLocaleLowerCase(), btoa(JSON.stringify(screen)));
+        const enc = new TextEncoder();
+        //@ts-ignore
+        await this.connection.writeFile64(this.adapterName, "/" + this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension, enc.encode(JSON.stringify(screen)));
         this.readAllScreens();
     }
 
