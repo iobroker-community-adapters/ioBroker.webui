@@ -1,4 +1,4 @@
-import { BaseCustomWebComponentConstructorAppend, customElement, DomHelper, htmlFromString, property } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, cssFromString, customElement, DomHelper, htmlFromString, property } from "@node-projects/base-custom-webcomponent";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../IobrokerHandler.js";
 
@@ -66,6 +66,10 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         DomHelper.removeAllChildnodes(this.shadowRoot);
         const screen = iobrokerHandler.getScreen(this.screenName)
         if (screen) {
+            if (screen.style)
+                this.shadowRoot.adoptedStyleSheets = [cssFromString(screen.style)];
+            else
+                this.shadowRoot.adoptedStyleSheets = [];
             this.loadScreenData(screen.html);
         }
     }
