@@ -11,7 +11,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     serviceContainer;
     _treeDiv;
     _tree;
-    _screensNode;
+    _screensNodeData;
     constructor() {
         super();
         this._treeDiv = this._getDomElement('treeDiv');
@@ -39,25 +39,41 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         return result.map(x => x.status == 'fulfilled' ? x.value : null);
     }
     async _createScreensNode() {
-        this._screensNode = { title: 'Screens', folder: true };
-        this._refreshScreensNode();
-        return this._screensNode;
+        this._screensNodeData = {
+            title: 'Screens',
+            folder: true,
+            autoExpand: true,
+            key: 'screens',
+            lazy: true,
+            lazyload: (event, node) => this._lazyLoadScreensNodes(event, node)
+        };
+        return this._screensNodeData;
+    }
+    _lazyLoadScreensNodes(event, data) {
+        data.result = new Promise(async (resolve) => {
+            let screenNodeCtxMenu = (event, screen) => {
+                ContextMenu.show([{
+                        title: 'Remove Screen', action: () => {
+                            iobrokerHandler.removeScreen(screen);
+                        }
+                    }], event);
+            };
+            let screens = await iobrokerHandler.getScreenNames();
+            resolve(screens.map(x => ({
+                title: x,
+                folder: false,
+                contextMenu: (event => screenNodeCtxMenu(event, x)),
+                data: { type: 'screen', name: x }
+            })));
+        });
     }
     async _refreshScreensNode() {
-        let screenNodeCtxMenu = (event, screen) => {
-            ContextMenu.show([{
-                    title: 'Remove Screen', action: () => {
-                        iobrokerHandler.removeScreen(screen);
-                    }
-                }], event);
-        };
-        let screens = await iobrokerHandler.getScreenNames();
-        this._screensNode.children = screens.map(x => ({
-            title: x,
-            folder: false,
-            contextMenu: (event => screenNodeCtxMenu(event, x)),
-            data: { type: 'screen', name: x }
-        }));
+        const screensNode = this._tree.getNodeByKey('screens');
+        if (screensNode) {
+            screensNode.resetLazy();
+            await sleep(50);
+            screensNode.setExpanded(true);
+        }
     }
     async _createGlobalStyleNode() {
         let screenNodeCtxMenu = (event) => {
@@ -274,6 +290,21 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         e.preventDefault();
                         return false;
                     };
+                },
+                init: function (event, data) {
+                    let expandChildren = (node) => {
+                        if (node.data.autoExpand && !node.isExpanded()) {
+                            node.setExpanded(true);
+                        }
+                        if (node.children && node.children.length > 0) {
+                            try {
+                                node.children.forEach(expandChildren);
+                            }
+                            catch (error) {
+                            }
+                        }
+                    };
+                    expandChildren(data.tree.rootNode);
                 },
                 dnd5: {
                     dropMarkerParent: this.shadowRoot,

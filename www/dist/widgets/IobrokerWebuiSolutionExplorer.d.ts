@@ -6,12 +6,13 @@ export declare class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponen
     serviceContainer: ServiceContainer;
     private _treeDiv;
     private _tree;
-    private _screensNode;
+    private _screensNodeData;
     constructor();
     ready(): Promise<void>;
     initialize(serviceContainer: ServiceContainer): Promise<void>;
     private createTreeNodes;
     private _createScreensNode;
+    private _lazyLoadScreensNodes;
     private _refreshScreensNode;
     private _createGlobalStyleNode;
     private _createNpmsNode;
