@@ -34,6 +34,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
     constructor() {
         super();
+        this._restoreCachedInititalValues();
     }
 
     ready() {

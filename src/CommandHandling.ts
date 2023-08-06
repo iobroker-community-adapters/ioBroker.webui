@@ -19,7 +19,16 @@ export class CommandHandling {
     let commandName = button.dataset['command'];
     let commandParameter = button.dataset['commandParameter'];
 
-    if (commandName === 'new') {
+    if (commandName === 'runtime') {
+      let target: any = (<HTMLSlotElement><any>this.dockManager?.activeDocument?.elementContent).assignedElements()[0];
+      if (target?.title) {
+        window.open("runtime.html?screenName=" + target.title);
+      }
+      else{
+        window.open("runtime.html");
+      }
+      
+    } else if (commandName === 'new') {
       let screen = prompt("New Screen Name:");
       let style = `* {
     box-sizing: border-box;
@@ -87,21 +96,23 @@ export class CommandHandling {
       if (this.dockManager.activeDocument) {
         let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
         if (target.canExecuteCommand) {
-          this.handleCommand(buttons, target);
+          this.canExecuteCommand(buttons, target);
         } else {
-          this.handleCommand(buttons, null);
+          this.canExecuteCommand(buttons, null);
         }
       } else {
-        this.handleCommand(buttons, null);
+        this.canExecuteCommand(buttons, null);
       }
     }, 100);
   }
 
-  handleCommand(buttons: (HTMLElement & { disabled: boolean })[], target: IUiCommandHandler) {
+  canExecuteCommand(buttons: (HTMLElement & { disabled: boolean })[], target: IUiCommandHandler) {
     buttons.forEach(b => {
       let command = b.dataset['command'];
       let commandParameter = b.dataset['commandParameter'];
       if (command === 'new')
+        b.disabled = false;
+      else if (command === 'runtime')
         b.disabled = false;
       else
         b.disabled = !target ? true : !target.canExecuteCommand({ type: <any>command, parameter: commandParameter });
