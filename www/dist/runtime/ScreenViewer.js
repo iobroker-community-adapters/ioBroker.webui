@@ -4,6 +4,7 @@ import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelp
 import { iobrokerHandler } from "../IobrokerHandler.js";
 export let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     _iobBindings;
+    _loading;
     _screenName;
     get screenName() {
         return this._screenName;
@@ -49,14 +50,18 @@ export let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConst
         */
     }
     async _loadScreen() {
-        await iobrokerHandler.connection.waitForFirstConnection();
-        if (this._iobBindings)
-            this._iobBindings.forEach(x => x());
-        this._iobBindings = null;
-        DomHelper.removeAllChildnodes(this.shadowRoot);
-        const screen = await iobrokerHandler.getScreen(this.screenName);
-        if (screen) {
-            this.loadScreenData(screen.html, screen.style);
+        if (!this._loading) {
+            this._loading = true;
+            await iobrokerHandler.waitForReady();
+            this._loading = false;
+            if (this._iobBindings)
+                this._iobBindings.forEach(x => x());
+            this._iobBindings = null;
+            DomHelper.removeAllChildnodes(this.shadowRoot);
+            const screen = await iobrokerHandler.getScreen(this.screenName);
+            if (screen) {
+                this.loadScreenData(screen.html, screen.style);
+            }
         }
     }
     loadScreenData(html, style) {

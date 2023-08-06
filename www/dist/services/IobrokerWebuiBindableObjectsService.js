@@ -16,7 +16,7 @@ export class IobrokerWebuiBindableObjectsService {
     async getBindableObjects(parent) {
         if (!this._states) {
             await iobrokerHandler.connection.waitForFirstConnection();
-            this._states = await iobrokerHandler.connection.getStates();
+            this._states = await iobrokerHandler.connection.getObjects(true);
         }
         let start = "";
         if (parent)
@@ -34,7 +34,7 @@ export class IobrokerWebuiBindableObjectsService {
                     folder = { name: fldName, fullName: parent ? parent.fullName + '.' + fldName : fldName, type: BindableObjectType.folder };
                     retVal.push(folder);
                 }
-                if (splits.length === 1) {
+                if (splits.length === 1 && splits[0]) {
                     const signal = { name: splits[0], fullName: k, type: BindableObjectType.undefined, originalObject: this._states[k], children: false };
                     retVal.push(signal);
                 }

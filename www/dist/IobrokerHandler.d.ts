@@ -19,7 +19,9 @@ declare class IobrokerHandler {
     namespace: string;
     screensChanged: TypedEvent<void>;
     stylesChanged: TypedEvent<void>;
+    _readyPromises: (() => void)[];
     constructor();
+    waitForReady(): Promise<void>;
     init(): Promise<void>;
     private _screenNames;
     private _screens;
