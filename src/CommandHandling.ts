@@ -21,8 +21,21 @@ export class CommandHandling {
 
     if (commandName === 'new') {
       let screen = prompt("New Screen Name:");
-      if (screen)
-        this.iobrokerWebuiAppShell.newDocument(screen, null, '');
+      let style = '';
+      if (screen) {
+        if (commandParameter == 'grid') {
+          let columns = parseInt(prompt("No Columns:", "12"));
+          let rows = parseInt(prompt("No Rows:", "8"));
+          style = `:host {
+    display: grid;
+    grid-template-columns: ${'1fr '.repeat(columns).trim()};
+    grid-template-rows: ${'1fr '.repeat(rows).trim()};
+    gap: 10px;
+    padding: 10px;
+}`
+        }
+        this.iobrokerWebuiAppShell.newDocument(screen, null, style);
+      }
     }
     else if (commandName === 'save') {
       let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];

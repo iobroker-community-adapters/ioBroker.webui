@@ -37,7 +37,7 @@
     "@node-projects/base-custom-webcomponent": "0.13.0",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^6.1.5",
-    "@node-projects/web-component-designer": "^0.0.248",
+    "@node-projects/web-component-designer": "^0.0.249",
     "@types/iobroker": "^4.0.5",
     "@types/jquery": "^3.5.16",
     "@types/jquery.fancytree": "^0.0.7",
@@ -65,6 +65,6 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.0.3",
-    "@types/node": "^20.4.7"
+    "@types/node": "^20.4.8"
   }
 }
