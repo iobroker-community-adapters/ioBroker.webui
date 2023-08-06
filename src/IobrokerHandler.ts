@@ -23,7 +23,7 @@ class IobrokerHandler {
 
     namespace = "webui.0";
 
-    private _screens: Record<string, IScreen> = {};
+
     //private _styles: Record<string, IStyle> = {};
     //private _screenTemplateMap = new WeakMap<IScreen, HTMLTemplateElement>();
     //private _styleSheetMap = new WeakMap<IStyle, CSSStyleSheet>();
@@ -38,63 +38,54 @@ class IobrokerHandler {
         this.connection = new Connection({ protocol: 'ws', host: window.iobrokerHost, port: window.iobrokerPort, admin5only: false, autoSubscribes: [] });
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
-        await this.readAllScreens();
 
         console.log("ioBroker handler ready.")
     }
 
-    async readAllScreens() {
-        try {
-            const screenNames = (await this.connection.readDir(this.adapterName, this.configPath + "screens"))
-                .filter(x => x.file.endsWith(screenFileExtension))
-                .map(x => x.file.substring(0, x.file.length - screenFileExtension.length));
-            const screenPromises = screenNames.map(x => {
-                try {
-                    return this.connection.readFile(this.adapterName, this.configPath + "screens/" + x + screenFileExtension, false);
-                }
-                catch (err) {
-                    console.error("Error reading Screen", x, err);
-                    return null;
-                }
-            })
-            const screensLoaded = await Promise.all(screenPromises);
-            this._screens = {};
-            screenNames.forEach((x, i) => {
-                try {
-                    const dec = new TextDecoder();
-                    //@ts-ignore
-                    this._screens[x.toLocaleLowerCase()] = JSON.parse(dec.decode(Uint8Array.from(screensLoaded[i].file.data)));
-                }
-                catch (err) {
-                    console.error("Error parsing Screen", x, err);
-                }
-            });
-            this.screensChanged.emit();
+    private _screenNames: string[];
+    private _screens: Record<string, IScreen> = {};
+
+    async getScreenNames() {
+        if (this._screenNames) return this._screenNames;
+        const screenNames = (await this.connection.readDir(this.adapterName, this.configPath + "screens"))
+            .filter(x => x.file.endsWith(screenFileExtension))
+            .map(x => x.file.substring(0, x.file.length - screenFileExtension.length));
+        this._screenNames = screenNames;
+        return screenNames;
+    }
+
+    async getScreen(name: string): Promise<IScreen> {
+        let screen = this._screens[name.toLocaleLowerCase()];
+        if (!screen) {
+            try {
+                let screenFile = await this.connection.readFile(this.adapterName, this.configPath + "screens/" + name + screenFileExtension, false);
+                const dec = new TextDecoder();
+                //@ts-ignore
+                screen = JSON.parse(dec.decode(Uint8Array.from(screenFile.file.data)));
+            }
+            catch (err) {
+                console.error("Error reading Screen", screen, err);
+            }
+            this._screens[name.toLocaleLowerCase()] = screen;
         }
-        catch (err) {
-            console.error("Error reading Screens", err)
-        }
+        return screen;
     }
 
     async saveScreen(name: string, screen: IScreen) {
         const enc = new TextEncoder();
         //@ts-ignore
         await this.connection.writeFile64(this.adapterName, "/" + this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension, enc.encode(JSON.stringify(screen)));
-        this.readAllScreens();
+        this._screens[name.toLocaleLowerCase()] = screen;
+        this.screensChanged.emit();
     }
 
     async removeScreen(name: string) {
         await this.connection.deleteFile(this.adapterName, "/" + this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
-        this.readAllScreens();
+        delete this._screens.delete[name.toLocaleLowerCase()];
+        this.screensChanged.emit();
     }
 
-    getScreenNames() {
-        return Object.keys(this._screens);
-    }
 
-    getScreen(name: string): IScreen {
-        return this._screens[name.toLocaleLowerCase()];
-    }
 
     async sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm', data: string, clientId: string = ''): Promise<void> {
         await this.connection.setState(this.namespace + '.control.data', { val: data });
