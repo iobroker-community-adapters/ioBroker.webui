@@ -5,7 +5,7 @@ export class IobrokerWebuiBindableObjectsService implements IBindableObjectsServ
 
   name: string = 'iobroker';
 
-  _states: Record<string, ioBroker.State>;
+  _states: Record<string, ioBroker.Object>;
 
   async getBindableObject(fullName: string): Promise<IBindableObject<ioBroker.State>> {
     let objs = await this.getBindableObjects();
@@ -21,7 +21,7 @@ export class IobrokerWebuiBindableObjectsService implements IBindableObjectsServ
   async getBindableObjects(parent?: IBindableObject<ioBroker.State>): Promise<IBindableObject<ioBroker.State>[]> {
     if (!this._states) {
       await iobrokerHandler.connection.waitForFirstConnection();
-      this._states = await iobrokerHandler.connection.getStates();
+      this._states =  await iobrokerHandler.connection.getObjects(true);
     }
 
     let start = "";
@@ -42,8 +42,8 @@ export class IobrokerWebuiBindableObjectsService implements IBindableObjectsServ
           retVal.push(folder);
         }
 
-        if (splits.length === 1) {
-          const signal: IBindableObject<ioBroker.State> = { name: splits[0], fullName: k, type: BindableObjectType.undefined, originalObject: this._states[k], children: false };
+        if (splits.length === 1 && splits[0]) {
+          const signal: IBindableObject<ioBroker.Object> = { name: splits[0], fullName: k, type: BindableObjectType.undefined, originalObject: this._states[k], children: false };
           retVal.push(signal);
         }
       }

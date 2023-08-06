@@ -24,12 +24,15 @@ export class CommandHandling {
       if (target?.title) {
         window.open("runtime.html?screenName=" + target.title);
       }
-      else{
+      else {
         window.open("runtime.html");
       }
-      
+
     } else if (commandName === 'new') {
-      let screen = prompt("New Screen Name:");
+      let defaultName = '';
+      if (!(await iobrokerHandler.getScreenNames()).includes('start'))
+        defaultName = 'start';
+      let screen = prompt("New Screen Name:", defaultName);
       let style = `* {
     box-sizing: border-box;
 }`;

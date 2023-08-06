@@ -31,7 +31,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
         return 'copy';
     }
 
-    async drop(designerCanvas: IDesignerCanvas, event: DragEvent, bindableObject: IBindableObject<ioBroker.State>, element: Element) {
+    async drop(designerCanvas: IDesignerCanvas, event: DragEvent, bindableObject: IBindableObject<ioBroker.Object>, element: Element) {
         for (let r of this.rectMap.values()) {
             designerCanvas.overlayLayer.removeOverlay(r);
         }
@@ -56,8 +56,9 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
             let di: DesignItem;
             let grp: ChangeGroup;
             let obj = await iobrokerHandler.connection.getObject(bindableObject.fullName);
-            if (obj?.common?.role === 'url' && typeof bindableObject?.originalObject?.val === 'string') {
-                if (bindableObject?.originalObject?.val.endsWith('jpg')) {
+            let state = await iobrokerHandler.connection.getState(bindableObject.fullName);
+            if (obj?.common?.role === 'url' && typeof state.val === 'string') {
+                if (state.val.endsWith('jpg')) {
                     const img = document.createElement('img');
                     di = DesignItem.createDesignItemFromInstance(img, designerCanvas.serviceContainer, designerCanvas.instanceServiceContainer);
                     grp = di.openGroup("Insert");
@@ -66,7 +67,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
                     di.setAttribute(serializedBinding[0], serializedBinding[1]);
                     di.setStyle('width', '640px');
                     di.setStyle('height', '480px');
-                } else if (bindableObject?.originalObject?.val.endsWith('mp4')) {
+                } else if (state.val.endsWith('mp4')) {
                     const video = document.createElement('video');
                     di = DesignItem.createDesignItemFromInstance(video, designerCanvas.serviceContainer, designerCanvas.instanceServiceContainer);
                     grp = di.openGroup("Insert");
@@ -84,7 +85,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
                 grp = di.openGroup("Insert");
                 const binding: IIobrokerWebuiBinding = { signal: bindableObject.fullName, target: BindingTarget.property };
                 let serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value', binding);
-                if (bindableObject.originalObject.val === true || bindableObject.originalObject.val === false) {
+                if (bindableObject.originalObject.common.type === 'boolean') {
                     serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'checked', binding);
                     di.setAttribute("type", "checkbox");
                 }
