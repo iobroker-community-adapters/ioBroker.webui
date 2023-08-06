@@ -20,7 +20,7 @@ export class CommandHandling {
     let commandParameter = button.dataset['commandParameter'];
 
     if (commandName === 'runtime') {
-      let target: any = (<HTMLSlotElement><any>this.dockManager?.activeDocument?.elementContent).assignedElements()[0];
+      let target: any = (<HTMLSlotElement><any>this.dockManager?.activeDocument?.elementContent)?.assignedElements()[0];
       if (target?.title) {
         window.open("runtime.html?screenName=" + target.title);
       }
