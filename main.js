@@ -1,6 +1,5 @@
 import utils from '@iobroker/adapter-core';
 import { spawn } from 'child_process';
-import fixJsImports from './lib/fixEs6Imports.js';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
