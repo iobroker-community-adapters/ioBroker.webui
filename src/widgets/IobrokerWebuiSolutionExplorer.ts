@@ -4,7 +4,7 @@ import { iobrokerHandler } from "../IobrokerHandler.js";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
 
-type TreeNode = Fancytree.NodeData & { lazyload?: (event: any, data: any) => void, children?: TreeNode[] | undefined; }
+type TreeNodeData = Fancytree.NodeData & { lazyload?: (event: any, data: any) => void, children?: TreeNodeData[] | undefined; autoExpand?: boolean }
 export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
 
     public static override template = html`
@@ -17,7 +17,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
 
     private _treeDiv: HTMLDivElement;
     private _tree: Fancytree.Fancytree;
-    private _screensNode: TreeNode;
+    private _screensNodeData: TreeNodeData;
 
     constructor() {
         super();
@@ -53,26 +53,43 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
 
 
     private async _createScreensNode() {
-        this._screensNode = { title: 'Screens', folder: true }
-        this._refreshScreensNode();
-        return this._screensNode;
+        this._screensNodeData = {
+            title: 'Screens',
+            folder: true,
+            autoExpand: true,
+            key: 'screens',
+            lazy: true,
+            lazyload: (event, node) => this._lazyLoadScreensNodes(event, node)
+        }
+        return this._screensNodeData;
+    }
+
+    private _lazyLoadScreensNodes(event: any, data: any) {
+        data.result = new Promise(async resolve => {
+            let screenNodeCtxMenu = (event, screen) => {
+                ContextMenu.show([{
+                    title: 'Remove Screen', action: () => {
+                        iobrokerHandler.removeScreen(screen);
+                    }
+                }], event);
+            }
+            let screens = await iobrokerHandler.getScreenNames();
+            resolve(screens.map(x => ({
+                title: x,
+                folder: false,
+                contextMenu: (event => screenNodeCtxMenu(event, x)),
+                data: { type: 'screen', name: x }
+            })));
+        });
     }
 
     private async _refreshScreensNode() {
-        let screenNodeCtxMenu = (event, screen) => {
-            ContextMenu.show([{
-                title: 'Remove Screen', action: () => {
-                    iobrokerHandler.removeScreen(screen);
-                }
-            }], event);
+        const screensNode = this._tree.getNodeByKey('screens');
+        if (screensNode) {
+            screensNode.resetLazy();
+            await sleep(50);
+            screensNode.setExpanded(true);
         }
-        let screens = await iobrokerHandler.getScreenNames();
-        this._screensNode.children = screens.map(x => ({
-            title: x,
-            folder: false,
-            contextMenu: (event => screenNodeCtxMenu(event, x)),
-            data: { type: 'screen', name: x }
-        }));
     }
 
     private async _createGlobalStyleNode() {
@@ -101,7 +118,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             }], event);
         }
 
-        let npmsNode: TreeNode & { contextMenu: (event) => void } = {
+        let npmsNode: TreeNodeData & { contextMenu: (event) => void } = {
             title: 'Packages', folder: true, contextMenu: (event) => {
                 ContextMenu.show([{
                     title: 'Add Package', action: () => {
@@ -133,14 +150,14 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
 
     private async _createIconsFolderNode() {
-        let iconsNode: TreeNode = {
+        let iconsNode: TreeNodeData = {
             title: 'Icons',
             folder: true,
             lazy: true,
             lazyload: (e, data) => {
                 data.result = new Promise(async resolve => {
                     const iconDirs = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons");
-                    const iconDirNodes: TreeNode[] = [];
+                    const iconDirNodes: TreeNodeData[] = [];
                     for (let d of iconDirs) {
                         if (d.isDir)
                             iconDirNodes.push({
@@ -162,7 +179,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
 
     private async _createIconsNodes(dirName: string, data) {
         data.result = new Promise(async resolve => {
-            let icons: TreeNode[] = [];
+            let icons: TreeNodeData[] = [];
             const dirList = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons/" + dirName);
 
             for (let d of dirList) {
@@ -174,14 +191,14 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
 
     private async _createChartsNode() {
-        let chartsNode: TreeNode = {
+        let chartsNode: TreeNodeData = {
             title: 'Charts', folder: true, children: []
         }
 
         try {
             let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'flot.', 'flot.\u9999');
             if (Object.keys(objs).length > 0) {
-                let flotNode: TreeNode = {
+                let flotNode: TreeNodeData = {
                     title: 'Flot', folder: true
                 }
                 chartsNode.children.push(flotNode);
@@ -199,7 +216,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         try {
             let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'echarts.', 'echarts.\u9999');
             if (Object.keys(objs).length > 0) {
-                let flotNode: TreeNode = {
+                let flotNode: TreeNodeData = {
                     title: 'ECharts', folder: true
                 }
                 chartsNode.children.push(flotNode);
@@ -218,12 +235,12 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
 
     private async _createControlsNode() {
-        let controlsNode: TreeNode = {
+        let controlsNode: TreeNodeData = {
             title: 'Controls', folder: true, children: []
         }
 
         for (const s of this.serviceContainer.elementsServices) {
-            const newNode: TreeNode = {
+            const newNode: TreeNodeData = {
                 title: s.name,
                 folder: true,
                 children: []
@@ -252,7 +269,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
 
     private async _createObjectsNode() {
         const s = this.serviceContainer.bindableObjectsServices[0];
-        const objectsNode: TreeNode = {
+        const objectsNode: TreeNodeData = {
             title: 'Objects',
             data: { service: s },
             folder: true,
@@ -310,6 +327,21 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         e.preventDefault();
                         return false;
                     }
+                },
+                init: function (event, data) {
+                    let expandChildren = (node) => {
+                        if (node.data.autoExpand && !node.isExpanded()) {
+                            node.setExpanded(true);
+                        }
+                        if (node.children && node.children.length > 0) {
+                            try {
+                                node.children.forEach(expandChildren);
+                            } catch (error) {
+                            }
+                        }
+                    };
+                    expandChildren(data.tree.rootNode);
+
                 },
 
                 dnd5: {

@@ -39,7 +39,7 @@ class IobrokerHandler {
             this._readyPromises.push(res);
         });
     }
-    
+
     async init() {
         this.connection = new Connection({ protocol: 'ws', host: window.iobrokerHost, port: window.iobrokerPort, admin5only: false, autoSubscribes: [] });
         await this.connection.startSocket();
@@ -52,19 +52,26 @@ class IobrokerHandler {
     }
 
     private _screenNames: string[];
-    private _screens: Record<string, IScreen> = {};
+    private _screens: Map<string, IScreen> = new Map();
 
     async getScreenNames() {
         if (this._screenNames) return this._screenNames;
-        const screenNames = (await this.connection.readDir(this.adapterName, this.configPath + "screens"))
-            .filter(x => x.file.endsWith(screenFileExtension))
-            .map(x => x.file.substring(0, x.file.length - screenFileExtension.length));
-        this._screenNames = screenNames;
-        return screenNames;
+        try {
+            const dirs = await this.connection.readDir(this.adapterName, this.configPath + "screens")
+            const screenNames = dirs
+                .filter(x => x.file.endsWith(screenFileExtension))
+                .map(x => x.file.substring(0, x.file.length - screenFileExtension.length));
+            this._screenNames = screenNames;
+            return screenNames;
+        }
+        catch (err) {
+            console.warn('no screens loaded', err);
+        }
+        return []
     }
 
     async getScreen(name: string): Promise<IScreen> {
-        let screen = this._screens[name.toLocaleLowerCase()];
+        let screen = this._screens.get(name.toLocaleLowerCase());
         if (!screen) {
             try {
                 screen = await this._getObjectFromFile<IScreen>(this.configPath + "screens/" + name + screenFileExtension);
@@ -72,20 +79,22 @@ class IobrokerHandler {
             catch (err) {
                 console.error("Error reading Screen", screen, err);
             }
-            this._screens[name.toLocaleLowerCase()] = screen;
+            this._screens.set(name.toLocaleLowerCase(), screen);
         }
         return screen;
     }
 
     async saveScreen(name: string, screen: IScreen) {
         this._saveObjectToFile(screen, "/" + this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
-        this._screens[name.toLocaleLowerCase()] = screen;
+        this._screens.set(name.toLocaleLowerCase(), screen);
+        this._screenNames = null;
         this.screensChanged.emit();
     }
 
     async removeScreen(name: string) {
         await this.connection.deleteFile(this.adapterName, "/" + this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
-        delete this._screens.delete[name.toLocaleLowerCase()];
+        this._screens.delete(name.toLocaleLowerCase());
+        this._screenNames = null;
         this.screensChanged.emit();
     }
 
