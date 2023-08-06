@@ -27,14 +27,27 @@ class IobrokerHandler {
     screensChanged = new TypedEvent<void>();
     stylesChanged = new TypedEvent<void>();
 
+    _readyPromises: (() => void)[] = [];
+
     constructor() {
     }
 
+    waitForReady(): Promise<void> {
+        if (!this._readyPromises)
+            return Promise.resolve();
+        return new Promise(res => {
+            this._readyPromises.push(res);
+        });
+    }
+    
     async init() {
         this.connection = new Connection({ protocol: 'ws', host: window.iobrokerHost, port: window.iobrokerPort, admin5only: false, autoSubscribes: [] });
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
 
+        for (let p of this._readyPromises)
+            p();
+        this._readyPromises = null;
         console.log("ioBroker handler ready.")
     }
 
