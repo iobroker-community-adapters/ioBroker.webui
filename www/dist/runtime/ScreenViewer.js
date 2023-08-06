@@ -1,8 +1,15 @@
+var ScreenViewer_1;
 import { __decorate } from "tslib";
-import { BaseCustomWebComponentConstructorAppend, cssFromString, customElement, DomHelper, htmlFromString, property } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, DomHelper, htmlFromString, property } from "@node-projects/base-custom-webcomponent";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../IobrokerHandler.js";
 export let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
+    static { ScreenViewer_1 = this; }
+    static style = css `
+    :host {
+        height: 100%;
+    }
+    `;
     _iobBindings;
     _loading;
     _screenName;
@@ -65,10 +72,15 @@ export let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConst
         }
     }
     loadScreenData(html, style) {
-        if (style)
-            this.shadowRoot.adoptedStyleSheets = [cssFromString(style)];
+        let globalStyle = iobrokerHandler.config?.globalStyle ?? '';
+        if (globalStyle && style)
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer_1.style, cssFromString(globalStyle), cssFromString(style)];
+        else if (globalStyle)
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer_1.style, cssFromString(globalStyle)];
+        else if (style)
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer_1.style, cssFromString(style)];
         else
-            this.shadowRoot.adoptedStyleSheets = [];
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer_1.style];
         const template = htmlFromString(html);
         const documentFragment = template.content.cloneNode(true);
         //this._bindingsParse(documentFragment, true);
@@ -82,6 +94,6 @@ __decorate([
 __decorate([
     property()
 ], ScreenViewer.prototype, "relativeSignalsPath", null);
-ScreenViewer = __decorate([
+ScreenViewer = ScreenViewer_1 = __decorate([
     customElement("iobroker-webui-screen-viewer")
 ], ScreenViewer);

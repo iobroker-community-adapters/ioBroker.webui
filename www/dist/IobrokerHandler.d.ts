@@ -17,6 +17,7 @@ declare class IobrokerHandler {
     adapterName: string;
     configPath: string;
     namespace: string;
+    config: IWebUiConfig;
     screensChanged: TypedEvent<void>;
     stylesChanged: TypedEvent<void>;
     _readyPromises: (() => void)[];
@@ -29,8 +30,8 @@ declare class IobrokerHandler {
     getScreen(name: string): Promise<IScreen>;
     saveScreen(name: string, screen: IScreen): Promise<void>;
     removeScreen(name: string): Promise<void>;
-    getConfig(): Promise<IWebUiConfig>;
-    saveConfig(config: IWebUiConfig): Promise<void>;
+    private _getConfig;
+    saveConfig(): Promise<void>;
     private _getObjectFromFile;
     private _saveObjectToFile;
     sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm', data: string, clientId?: string): Promise<void>;

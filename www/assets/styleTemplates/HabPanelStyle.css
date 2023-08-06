@@ -1,0 +1,9 @@
+:host {
+    background-color: black;
+}
+
+button {
+    background: rgb(34, 51, 68);
+    border: none;
+    color: white;
+}

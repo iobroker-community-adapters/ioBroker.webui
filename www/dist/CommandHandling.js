@@ -1,3 +1,4 @@
+import { DocumentContainer } from '@node-projects/web-component-designer';
 import { iobrokerHandler } from './IobrokerHandler.js';
 export class CommandHandling {
     dockManager;
@@ -46,10 +47,16 @@ export class CommandHandling {
         }
         else if (commandName === 'save') {
             let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
-            let html = target.designerView.getHTML();
-            let style = target.additionalData.model.getValue();
-            let screen = { html, style, settings: {} };
-            await iobrokerHandler.saveScreen(target.title, screen);
+            //Todo: wrap screen in a screen editor wich handles save etc...
+            if (target instanceof DocumentContainer) {
+                let html = target.designerView.getHTML();
+                let style = target.additionalData.model.getValue();
+                let screen = { html, style, settings: {} };
+                await iobrokerHandler.saveScreen(target.title, screen);
+            }
+            else {
+                target.executeCommand({ type: commandName, parameter: commandParameter });
+            }
         }
         else if (this.dockManager.activeDocument) {
             let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];

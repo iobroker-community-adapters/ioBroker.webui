@@ -1,6 +1,7 @@
 import { BaseCustomWebComponentConstructorAppend } from "@node-projects/base-custom-webcomponent";
+import { IUiCommand, IUiCommandHandler } from "@node-projects/web-component-designer";
 import type * as monaco from 'monaco-editor';
-export declare class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorAppend {
+export declare class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
     static readonly style: CSSStyleSheet;
     static readonly template: HTMLTemplateElement;
     createModel(text: string): Promise<monaco.editor.ITextModel>;
@@ -22,4 +23,10 @@ export declare class IobrokerWebuiStyleEditor extends BaseCustomWebComponentCons
     paste(): void;
     cut(): void;
     delete(): void;
+    executeCommand(command: Omit<IUiCommand, 'type'> & {
+        type: string;
+    }): Promise<void>;
+    canExecuteCommand(command: Omit<IUiCommand, 'type'> & {
+        type: string;
+    }): boolean;
 }

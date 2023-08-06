@@ -8,6 +8,7 @@ class IobrokerHandler {
     adapterName = "webui";
     configPath = "config/";
     namespace = "webui.0";
+    config;
     screensChanged = new TypedEvent();
     stylesChanged = new TypedEvent();
     _readyPromises = [];
@@ -24,6 +25,8 @@ class IobrokerHandler {
         this.connection = new Connection({ protocol: 'ws', host: window.iobrokerHost, port: window.iobrokerPort, admin5only: false, autoSubscribes: [] });
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
+        let cfg = await this._getConfig();
+        this.config = cfg ?? { globalStyle: null };
         for (let p of this._readyPromises)
             p();
         this._readyPromises = null;
@@ -72,14 +75,22 @@ class IobrokerHandler {
         this._screenNames = null;
         this.screensChanged.emit();
     }
-    async getConfig() {
-        return await this._getObjectFromFile(this.configPath + "config.json");
+    async _getConfig() {
+        try {
+            return await this._getObjectFromFile(this.configPath + "config.json");
+        }
+        catch (err) {
+            return null;
+        }
     }
-    async saveConfig(config) {
-        this._saveObjectToFile(config, this.configPath + "config.json");
+    async saveConfig() {
+        this._saveObjectToFile(this.config, this.configPath + "config.json");
     }
     async _getObjectFromFile(name) {
         const file = await this.connection.readFile(this.adapterName, name, false);
+        if (file.mimeType == 'application/json') {
+            return JSON.parse(file.file);
+        }
         const dec = new TextDecoder();
         //@ts-ignore
         return JSON.parse(dec.decode(Uint8Array.from(file.file.data)));

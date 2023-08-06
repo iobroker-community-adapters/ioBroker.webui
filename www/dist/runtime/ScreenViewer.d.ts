@@ -1,5 +1,6 @@
 import { BaseCustomWebComponentConstructorAppend } from "@node-projects/base-custom-webcomponent";
 export declare class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
+    static style: CSSStyleSheet;
     private _iobBindings;
     private _loading;
     _screenName: string;

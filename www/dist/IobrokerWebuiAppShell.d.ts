@@ -23,6 +23,7 @@ export declare class IobrokerWebuiAppShell extends BaseCustomWebComponentConstru
     loadNpmPackages(): Promise<void>;
     private loadNpmPackage;
     newDocument(name: string, content: string, style: string): Promise<void>;
+    globalStyleEditor(style: string): Promise<void>;
 }
 declare global {
     interface Window {

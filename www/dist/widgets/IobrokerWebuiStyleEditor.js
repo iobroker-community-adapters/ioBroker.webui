@@ -1,4 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
+import { iobrokerHandler } from "../IobrokerHandler.js";
 export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorAppend {
     static style = css `
         :host {
@@ -102,6 +103,17 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
     }
     delete() {
         this._editor.trigger('', 'editor.action.clipboardDeleteAction', null);
+    }
+    async executeCommand(command) {
+        if (command.type == 'save') {
+            iobrokerHandler.config.globalStyle = this.model.getValue();
+            await iobrokerHandler.saveConfig();
+        }
+    }
+    canExecuteCommand(command) {
+        if (command.type == 'save')
+            return true;
+        return false;
     }
 }
 customElements.define('iobroker-webui-style-editor', IobrokerWebuiStyleEditor);
