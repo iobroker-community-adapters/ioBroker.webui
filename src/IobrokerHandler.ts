@@ -83,6 +83,11 @@ class IobrokerHandler {
         this.readAllScreens();
     }
 
+    async removeScreen(name: string) {
+        await this.connection.deleteFile(this.adapterName, "/" + this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
+        this.readAllScreens();
+    }
+
     getScreenNames() {
         return Object.keys(this._screens);
     }
