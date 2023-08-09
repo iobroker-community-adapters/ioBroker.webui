@@ -47,11 +47,21 @@
   </script>
   
   <script type="module">
-    importShim('./dist/runtime/ScreenViewer.js');
+    importShim('./dist/runtime/controls.js');
   </script>
 </head>
 
-<body style="height: 100%; margin: 0;">
+<style>
+   body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Roboto', 'Noto', sans-serif;
+      line-height: 1.5;
+      background-color: white;
+      -webkit-font-smoothing: antialiased;
+    }
+</style>
+<body>
   <iobroker-webui-screen-viewer id="viewer"></iobroker-webui-screen-viewer>
   <script type="module">
     const screen = (new URLSearchParams(location.search)).get('screenName');
