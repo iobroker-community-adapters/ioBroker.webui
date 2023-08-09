@@ -6,10 +6,11 @@ import { IScreen } from "../interfaces/IScreen.js";
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
 
     private _name: string;
+    public get name() { return this._name; }
     private _configChangedListener: Disposable;
-    
+
     public documentContainer: DocumentContainer;
-    
+
     public static override template = html``
 
     public static override style = css``

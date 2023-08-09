@@ -2,6 +2,7 @@ import { IUiCommandHandler, ServiceContainer } from '@node-projects/web-componen
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js'
 import { iobrokerHandler } from './IobrokerHandler.js';
 import { IobrokerWebuiAppShell } from './IobrokerWebuiAppShell.js';
+import { IobrokerWebuiScreenEditor } from './widgets/IobrokerWebuiScreenEditor.js';
 
 export class CommandHandling {
   dockManager: DockManager;
@@ -20,8 +21,8 @@ export class CommandHandling {
 
     if (commandName === 'runtime') {
       let target: any = (<HTMLSlotElement><any>this.dockManager?.activeDocument?.elementContent)?.assignedElements()[0];
-      if (target?.title) {
-        window.open("runtime.html?screenName=" + target.title);
+      if (target instanceof IobrokerWebuiScreenEditor) {
+        window.open("runtime.html?screenName=" + target.name);
       }
       else {
         window.open("runtime.html");
