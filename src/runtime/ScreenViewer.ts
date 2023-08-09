@@ -48,7 +48,10 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     ready() {
         this._parseAttributesToProperties();
         //Todo: unsubscribe from this event (or it causes memory leaks)
-        iobrokerHandler.screensChanged.on(() => this._loadScreen());
+        iobrokerHandler.screensChanged.on(() => {
+            if (this._screenName)
+                this._loadScreen();
+        });
         if (this._screenName)
             this._loadScreen();
         /*
@@ -89,9 +92,9 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         if (globalStyle && style)
             this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, cssFromString(globalStyle), cssFromString(style)];
         else if (globalStyle)
-            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style,cssFromString(globalStyle)];
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, cssFromString(globalStyle)];
         else if (style)
-            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style,cssFromString(style)];
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, cssFromString(style)];
         else
             this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style];
 
