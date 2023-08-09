@@ -1,8 +1,8 @@
 import { BaseCustomWebComponentConstructorAppend } from "@node-projects/base-custom-webcomponent";
-import { CommandType, ICommandHandler } from "@node-projects/web-component-designer";
-export declare class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend implements ICommandHandler {
+import { IUiCommand, IUiCommandHandler } from "@node-projects/web-component-designer";
+export declare class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
     static template: HTMLTemplateElement;
     static style: CSSStyleSheet;
-    executeCommand(type: CommandType, parameter: any): Promise<void>;
-    canExecuteCommand(type: CommandType, parameter: any): boolean;
+    executeCommand: (command: IUiCommand) => void;
+    canExecuteCommand: (command: IUiCommand) => boolean;
 }

@@ -1,6 +1,7 @@
 import { OverlayLayer, DesignItem, InsertAction, BindingTarget } from "@node-projects/web-component-designer";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../IobrokerHandler.js";
+import { SvgImage } from "../controls/SvgImage.js";
 export class IobrokerWebuiBindableObjectDragDropService {
     rectMap = new Map();
     rect;
@@ -37,6 +38,15 @@ export class IobrokerWebuiBindableObjectDragDropService {
                 const binding = { signal: bindableObject.fullName, target: BindingTarget.property };
                 const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(element, element.type == 'checkbox' ? 'checked' : 'value', binding);
                 designItem.setAttribute(serializedBinding[0], serializedBinding[1]);
+            }
+            else if (element instanceof SvgImage) {
+                const binding = { signal: bindableObject.fullName, target: BindingTarget.property };
+                const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(element, 'value', binding);
+                designItem.setAttribute(serializedBinding[0], serializedBinding[1]);
+                if (!designItem.element.name) {
+                    designItem.element.name = bindableObject.name;
+                    designItem.setAttribute('name', bindableObject.name);
+                }
             }
             else {
                 const binding = { signal: bindableObject.fullName, target: BindingTarget.content };
