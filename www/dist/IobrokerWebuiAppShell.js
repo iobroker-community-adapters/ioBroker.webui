@@ -6,7 +6,7 @@ script.src = window.iobrokerSocketScriptUrl;
 script.onload = () => iobrokerHandler.init();
 document.head.appendChild(script);
 import '@node-projects/web-component-designer';
-import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, DocumentContainer, NodeHtmlParserService, CodeViewMonaco, WebcomponentManifestParserService, createDefaultServiceContainer, CssToolsStylesheetService } from '@node-projects/web-component-designer';
+import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, NodeHtmlParserService, CodeViewMonaco, WebcomponentManifestParserService, createDefaultServiceContainer, CssToolsStylesheetService } from '@node-projects/web-component-designer';
 import { IobrokerWebuiBindableObjectsService } from './services/IobrokerWebuiBindableObjectsService.js';
 import { IobrokerWebuiBindableObjectDragDropService } from './services/IobrokerWebuiBindableObjectDragDropService.js';
 import { IobrokerWebuiBindingService } from './services/IobrokerWebuiBindingService.js';
@@ -30,16 +30,16 @@ import "./runtime/ScreenViewer.js";
 import "./widgets/IobrokerWebuiStyleEditor.js";
 import "./controls/SvgImage.js";
 import { IobrokerWebuiStyleEditor } from './widgets/IobrokerWebuiStyleEditor.js';
+import { IobrokerWebuiScreenEditor } from './widgets/IobrokerWebuiScreenEditor.js';
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
     activeElement;
     mainPage = 'designer';
     _dock;
     _dockManager;
     _solutionExplorer;
-    _propertyGrid;
-    _treeViewExtended;
-    _styleChangedCb;
-    _styleEditor;
+    styleEditor;
+    propertyGrid;
+    treeViewExtended;
     static style = css `
     :host {
       display: block;
@@ -96,9 +96,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     async ready() {
         this._dock = this._getDomElement('dock');
         this._solutionExplorer = this._getDomElement('solutionExplorer');
-        this._treeViewExtended = this._getDomElement('treeViewExtended');
-        this._propertyGrid = this._getDomElement('propertyGrid');
-        this._styleEditor = this._getDomElement('styleEditor');
+        this.treeViewExtended = this._getDomElement('treeViewExtended');
+        this.propertyGrid = this._getDomElement('propertyGrid');
+        this.styleEditor = this._getDomElement('styleEditor');
         const linkElement = document.createElement("link");
         linkElement.rel = "stylesheet";
         linkElement.href = "./assets/dockspawn.css";
@@ -109,24 +109,15 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             onActiveDocumentChange: (manager, panel) => {
                 if (panel) {
                     let element = this._dock.getElementInSlot(panel.elementContent);
-                    if (element && element instanceof DocumentContainer) {
-                        const document = element;
-                        this._styleEditor.model = document.additionalData.model;
-                        this._propertyGrid.instanceServiceContainer = document.instanceServiceContainer;
-                        this._treeViewExtended.instanceServiceContainer = document.instanceServiceContainer;
-                    }
+                    if (element?.activated)
+                        element?.activated();
                 }
             },
             onClosePanel: (manager, panel) => {
                 if (panel) {
                     let element = this._dock.getElementInSlot(panel.elementContent);
-                    if (element && element instanceof DocumentContainer) {
-                        const document = element;
-                        document.dispose();
-                        if (this._styleChangedCb)
-                            this._styleChangedCb.dispose();
-                        this._styleChangedCb = null;
-                    }
+                    if (element?.dispose)
+                        element?.dispose();
                 }
             }
         });
@@ -149,7 +140,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         });
         await this.loadNpmPackages();
         this._solutionExplorer.initialize(serviceContainer);
-        this._propertyGrid.serviceContainer = serviceContainer;
+        this.propertyGrid.serviceContainer = serviceContainer;
     }
     async loadNpmPackages() {
         let promises = [];
@@ -187,61 +178,25 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             console.warn("error loading " + name + "/package.json, may not yet exist", err);
         }
     }
-    async newDocument(name, content, style) {
-        let document = new DocumentContainer(serviceContainer);
-        document.setAttribute('dock-spawn-panel-type', 'document');
-        document.title = name;
-        document.additionalStylesheets = [
-            {
-                name: "stylesheet.css",
-                content: style ?? ''
-            }
-        ];
-        document.instanceServiceContainer.designer = document;
-        const model = await this._styleEditor.createModel(document.additionalStylesheets[0].content);
-        document.additionalData = { model: model };
-        let timer;
-        let disableTextChangedEvent = false;
-        model.onDidChangeContent((e) => {
-            if (!disableTextChangedEvent) {
-                if (timer)
-                    clearTimeout(timer);
-                timer = setTimeout(() => {
-                    document.additionalStylesheets = [
-                        {
-                            name: "stylesheet.css",
-                            content: model.getValue()
-                        }
-                    ];
-                    timer = null;
-                }, 250);
-            }
-        });
-        document.additionalStylesheetChanged.on(() => {
-            disableTextChangedEvent = true;
-            if (model.getValue() !== document.additionalStylesheets[0].content)
-                model.applyEdits([{ range: model.getFullModelRange(), text: document.additionalStylesheets[0].content, forceMoveMarkers: true }]);
-            disableTextChangedEvent = false;
-        });
-        document.additionalStyleString = iobrokerHandler.config?.globalStyle ?? '';
+    openDock(element) {
+        element.setAttribute('dock-spawn-panel-type', 'document');
         //todo: why are this 2 styles needed? needs a fix in dock-spawn
-        document.style.zIndex = '1';
-        document.style.position = 'relative';
-        this._dock.appendChild(document);
-        if (content) {
-            document.designerView.parseHTML(content);
-        }
+        element.style.zIndex = '1';
+        element.style.position = 'relative';
+        this._dock.appendChild(element);
     }
-    async globalStyleEditor(style) {
+    async openScreenEditor(name, html, style) {
+        let screenEditor = new IobrokerWebuiScreenEditor();
+        screenEditor.initialize(name, html, style, serviceContainer);
+        screenEditor.title = name;
+        this.openDock(screenEditor);
+    }
+    async openGlobalStyleEditor(style) {
         let styleEditor = new IobrokerWebuiStyleEditor();
-        styleEditor.setAttribute('dock-spawn-panel-type', 'document');
         styleEditor.title = 'global style';
         const model = await styleEditor.createModel(style);
         styleEditor.model = model;
-        //todo: why are this 2 styles needed? needs a fix in dock-spawn
-        styleEditor.style.zIndex = '1';
-        styleEditor.style.position = 'relative';
-        this._dock.appendChild(styleEditor);
+        this.openDock(styleEditor);
     }
 }
 window.customElements.define('iobroker-webui-app-shell', IobrokerWebuiAppShell);

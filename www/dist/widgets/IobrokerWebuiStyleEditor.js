@@ -1,4 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
+import { sleep } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../IobrokerHandler.js";
 export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorAppend {
     static style = css `
@@ -52,6 +53,7 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
     static initMonacoEditor() {
         return new Promise(async (resolve) => {
             if (!IobrokerWebuiStyleEditor._initalized) {
+                await sleep(500);
                 //@ts-ignore
                 require.config({ paths: { 'vs': 'node_modules/monaco-editor/min/vs', 'vs/css': { disabled: true } } });
                 //@ts-ignore
@@ -71,20 +73,18 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
         //@ts-ignore
         this.shadowRoot.adoptedStyleSheets = [style.default, this.constructor.style];
         this._container = this._getDomElement('container');
-        setTimeout(async () => {
-            await IobrokerWebuiStyleEditor.initMonacoEditor();
-            //@ts-ignore
-            this._editor = monaco.editor.create(this._container, {
-                automaticLayout: true,
-                language: 'css',
-                minimap: {
-                    size: 'fill'
-                },
-                fixedOverflowWidgets: true
-            });
-            if (this._model)
-                this._editor.setModel(this._model);
-        }, 1000);
+        await IobrokerWebuiStyleEditor.initMonacoEditor();
+        //@ts-ignore
+        this._editor = monaco.editor.create(this._container, {
+            automaticLayout: true,
+            language: 'css',
+            minimap: {
+                size: 'fill'
+            },
+            fixedOverflowWidgets: true
+        });
+        if (this._model)
+            this._editor.setModel(this._model);
     }
     undo() {
         this._editor.trigger('', 'undo', null);

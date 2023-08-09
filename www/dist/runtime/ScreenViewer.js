@@ -8,6 +8,7 @@ export let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConst
     static style = css `
     :host {
         height: 100%;
+        position: relative;
     }
     `;
     _iobBindings;
@@ -38,7 +39,11 @@ export let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConst
     }
     ready() {
         this._parseAttributesToProperties();
-        iobrokerHandler.screensChanged.on(() => this._loadScreen());
+        //Todo: unsubscribe from this event (or it causes memory leaks)
+        iobrokerHandler.screensChanged.on(() => {
+            if (this._screenName)
+                this._loadScreen();
+        });
         if (this._screenName)
             this._loadScreen();
         /*

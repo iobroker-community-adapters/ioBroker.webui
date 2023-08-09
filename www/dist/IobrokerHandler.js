@@ -10,7 +10,7 @@ class IobrokerHandler {
     namespace = "webui.0";
     config;
     screensChanged = new TypedEvent();
-    stylesChanged = new TypedEvent();
+    configChanged = new TypedEvent();
     _readyPromises = [];
     constructor() {
     }
@@ -85,6 +85,7 @@ class IobrokerHandler {
     }
     async saveConfig() {
         this._saveObjectToFile(this.config, this.configPath + "config.json");
+        this.configChanged.emit();
     }
     async _getObjectFromFile(name) {
         const file = await this.connection.readFile(this.adapterName, name, false);

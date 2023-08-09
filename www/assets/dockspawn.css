@@ -5,8 +5,3 @@
 .dockspan-tab-handle-text {
   margin-top: 0;
 }
-
-/* dock-container dock-container-fill document-manager splitter-container-vertical */
-.dock-container {
-  z-index: 1;
-}

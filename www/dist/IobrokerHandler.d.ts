@@ -19,7 +19,7 @@ declare class IobrokerHandler {
     namespace: string;
     config: IWebUiConfig;
     screensChanged: TypedEvent<void>;
-    stylesChanged: TypedEvent<void>;
+    configChanged: TypedEvent<void>;
     _readyPromises: (() => void)[];
     constructor();
     waitForReady(): Promise<void>;

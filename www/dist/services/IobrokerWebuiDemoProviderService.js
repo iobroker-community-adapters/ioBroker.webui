@@ -13,8 +13,8 @@ export class IobrokerWebuiDemoProviderService {
             container.style.position = 'relative';
             DomHelper.removeAllChildnodes(container);
             container.appendChild(screenViewer);
-            let documnet = instanceServiceContainer.designer;
-            screenViewer.loadScreenData(code, documnet.additionalData.model.getValue());
+            let designer = instanceServiceContainer.designer;
+            screenViewer.loadScreenData(code, designer.documentContainer.additionalData.model.getValue());
             screenViewer.style.display = '';
             resolve();
         });

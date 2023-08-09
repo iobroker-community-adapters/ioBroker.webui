@@ -65,7 +65,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 contextMenu: (event => screenNodeCtxMenu(event, x)),
                 dblclick: (e, d) => {
                     iobrokerHandler.getScreen(d.node.data.name).then(s => {
-                        window.appShell.newDocument(d.node.data.name, s.html, s.style);
+                        window.appShell.openScreenEditor(d.node.data.name, s.html, s.style);
                     });
                 },
                 data: { type: 'screen', name: x }
@@ -88,6 +88,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         if (!iobrokerHandler.config.globalStyle)
                             iobrokerHandler.config.globalStyle = '';
                         iobrokerHandler.config.globalStyle += '\n\n' + text;
+                        iobrokerHandler.config.globalStyle = iobrokerHandler.config.globalStyle.trim();
                         iobrokerHandler.saveConfig();
                     }
                 }], event);
@@ -97,7 +98,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             folder: false,
             contextMenu: (e, data) => ctxMenu(e),
             dblclick: (e, data) => {
-                window.appShell.globalStyleEditor(iobrokerHandler.config.globalStyle ?? '');
+                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.globalStyle ?? '');
             }
         };
     }
