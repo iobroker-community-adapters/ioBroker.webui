@@ -1,16 +1,13 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent"
-import { CommandType, ICommandHandler } from "@node-projects/web-component-designer"
+import { IUiCommand, IUiCommandHandler,  } from "@node-projects/web-component-designer"
 
-export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend implements ICommandHandler  {
+export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler  {
     
     public static override template = html``
-
+    
     public static override style = css``
-
-    executeCommand(type: CommandType, parameter: any): Promise<void> {
-        throw new Error("Method not implemented.")
-    }
-    canExecuteCommand(type: CommandType, parameter: any): boolean {
-        throw new Error("Method not implemented.")
-    }
+    
+    executeCommand: (command: IUiCommand) => void
+    canExecuteCommand: (command: IUiCommand) => boolean
+    
 }
