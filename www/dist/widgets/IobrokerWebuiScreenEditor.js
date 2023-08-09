@@ -3,6 +3,7 @@ import { DocumentContainer, } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../IobrokerHandler.js";
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend {
     _name;
+    get name() { return this._name; }
     _configChangedListener;
     documentContainer;
     static template = html ``;

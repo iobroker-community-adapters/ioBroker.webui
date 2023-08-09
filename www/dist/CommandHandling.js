@@ -1,4 +1,5 @@
 import { iobrokerHandler } from './IobrokerHandler.js';
+import { IobrokerWebuiScreenEditor } from './widgets/IobrokerWebuiScreenEditor.js';
 export class CommandHandling {
     dockManager;
     iobrokerWebuiAppShell;
@@ -13,8 +14,8 @@ export class CommandHandling {
         let commandParameter = button.dataset['commandParameter'];
         if (commandName === 'runtime') {
             let target = this.dockManager?.activeDocument?.elementContent?.assignedElements()[0];
-            if (target?.title) {
-                window.open("runtime.html?screenName=" + target.title);
+            if (target instanceof IobrokerWebuiScreenEditor) {
+                window.open("runtime.html?screenName=" + target.name);
             }
             else {
                 window.open("runtime.html");

@@ -187,8 +187,8 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     }
     async openScreenEditor(name, html, style) {
         let screenEditor = new IobrokerWebuiScreenEditor();
-        screenEditor.initialize(name, html, style, serviceContainer);
-        screenEditor.title = name;
+        await screenEditor.initialize(name, html, style, serviceContainer);
+        screenEditor.title = 'screen - ' + name;
         this.openDock(screenEditor);
     }
     async openGlobalStyleEditor(style) {

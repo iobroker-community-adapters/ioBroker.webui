@@ -2,6 +2,7 @@ import { BaseCustomWebComponentConstructorAppend } from "@node-projects/base-cus
 import { DocumentContainer, IUiCommand, IUiCommandHandler, ServiceContainer } from "@node-projects/web-component-designer";
 export declare class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
     private _name;
+    get name(): string;
     private _configChangedListener;
     documentContainer: DocumentContainer;
     static template: HTMLTemplateElement;
