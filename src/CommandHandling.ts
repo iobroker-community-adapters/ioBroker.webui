@@ -1,6 +1,5 @@
-import { DocumentContainer, IUiCommandHandler, ServiceContainer } from '@node-projects/web-component-designer';
+import { IUiCommandHandler, ServiceContainer } from '@node-projects/web-component-designer';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js'
-import { IScreen } from './interfaces/IScreen.js';
 import { iobrokerHandler } from './IobrokerHandler.js';
 import { IobrokerWebuiAppShell } from './IobrokerWebuiAppShell.js';
 
@@ -49,20 +48,12 @@ export class CommandHandling {
     padding: 10px;
 }`
         }
-        this.iobrokerWebuiAppShell.newDocument(screen, null, style);
+        this.iobrokerWebuiAppShell.openScreenEditor(screen, null, style);
       }
     }
     else if (commandName === 'save') {
       let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
-      //Todo: wrap screen in a screen editor wich handles save etc...
-      if (target instanceof DocumentContainer) {
-        let html = (<DocumentContainer>target).designerView.getHTML();
-        let style = (<DocumentContainer>target).additionalData.model.getValue();
-        let screen: IScreen = { html, style, settings: {} };
-        await iobrokerHandler.saveScreen(target.title, screen);
-      } else {
-        target.executeCommand({ type: <any>commandName, parameter: commandParameter })
-      }
+      target.executeCommand({ type: <any>commandName, parameter: commandParameter })
     }
     else if (this.dockManager.activeDocument) {
       let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];

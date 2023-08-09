@@ -27,7 +27,7 @@ class IobrokerHandler {
     config: IWebUiConfig;
 
     screensChanged = new TypedEvent<void>();
-    stylesChanged = new TypedEvent<void>();
+    configChanged = new TypedEvent<void>();
 
     _readyPromises: (() => void)[] = [];
 
@@ -113,6 +113,7 @@ class IobrokerHandler {
 
     public async saveConfig() {
         this._saveObjectToFile(this.config, this.configPath + "config.json");
+        this.configChanged.emit();
     }
 
     private async _getObjectFromFile<T>(name: string): Promise<T> {

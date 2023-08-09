@@ -8,6 +8,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     static style = css`
     :host {
         height: 100%;
+        position: relative;
     }
     `
 
@@ -46,6 +47,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
     ready() {
         this._parseAttributesToProperties();
+        //Todo: unsubscribe from this event (or it causes memory leaks)
         iobrokerHandler.screensChanged.on(() => this._loadScreen());
         if (this._screenName)
             this._loadScreen();

@@ -1,6 +1,7 @@
 import { DomHelper } from "@node-projects/base-custom-webcomponent";
-import { DocumentContainer, IDemoProviderService, InstanceServiceContainer, ServiceContainer } from "@node-projects/web-component-designer";
+import { IDemoProviderService, InstanceServiceContainer, ServiceContainer } from "@node-projects/web-component-designer";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
+import { IobrokerWebuiScreenEditor } from "../widgets/IobrokerWebuiScreenEditor.js";
 
 export class IobrokerWebuiDemoProviderService implements IDemoProviderService {
   provideDemo(container: HTMLElement, serviceContainer: ServiceContainer, instanceServiceContainer: InstanceServiceContainer, code: string) {
@@ -18,8 +19,8 @@ export class IobrokerWebuiDemoProviderService implements IDemoProviderService {
       DomHelper.removeAllChildnodes(container);
       container.appendChild(screenViewer);
 
-      let documnet: DocumentContainer = instanceServiceContainer.designer;
-      screenViewer.loadScreenData(code, documnet.additionalData.model.getValue());
+      let designer: IobrokerWebuiScreenEditor = instanceServiceContainer.designer;
+      screenViewer.loadScreenData(code, designer.documentContainer.additionalData.model.getValue());
       screenViewer.style.display = '';
 
       resolve();

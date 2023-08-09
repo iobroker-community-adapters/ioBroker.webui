@@ -84,21 +84,19 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
 
         this._container = this._getDomElement<HTMLDivElement>('container')
 
-        setTimeout(async () => {
-            await IobrokerWebuiStyleEditor.initMonacoEditor();
+        await IobrokerWebuiStyleEditor.initMonacoEditor();
 
-            //@ts-ignore
-            this._editor = monaco.editor.create(this._container, {
-                automaticLayout: true,
-                language: 'css',
-                minimap: {
-                    size: 'fill'
-                },
-                fixedOverflowWidgets: true
-            });
-            if (this._model)
-                this._editor.setModel(this._model);
-        }, 1000);
+        //@ts-ignore
+        this._editor = monaco.editor.create(this._container, {
+            automaticLayout: true,
+            language: 'css',
+            minimap: {
+                size: 'fill'
+            },
+            fixedOverflowWidgets: true
+        });
+        if (this._model)
+            this._editor.setModel(this._model);
     }
 
     undo() {
