@@ -111,6 +111,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     if (!iobrokerHandler.config.globalStyle)
                         iobrokerHandler.config.globalStyle = '';
                     iobrokerHandler.config.globalStyle += '\n\n' + text;
+                    iobrokerHandler.config.globalStyle = iobrokerHandler.config.globalStyle.trim();
                     iobrokerHandler.saveConfig();
                 }
             }], event);
