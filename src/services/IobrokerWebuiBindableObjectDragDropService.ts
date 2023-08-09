@@ -2,6 +2,7 @@ import { OverlayLayer, DesignItem, IBindableObject, IBindableObjectDragDropServi
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding.js";
 import { iobrokerHandler } from "../IobrokerHandler.js";
+import { SvgImage } from "../controls/SvgImage.js";
 
 export class IobrokerWebuiBindableObjectDragDropService implements IBindableObjectDragDropService {
     rectMap = new Map<Element, SVGRectElement>();
@@ -44,6 +45,14 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
                 const binding: IIobrokerWebuiBinding = { signal: bindableObject.fullName, target: BindingTarget.property };
                 const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(element, element.type == 'checkbox' ? 'checked' : 'value', binding);
                 designItem.setAttribute(serializedBinding[0], serializedBinding[1]);
+            } else if (element instanceof SvgImage) {
+                const binding: IIobrokerWebuiBinding = { signal: bindableObject.fullName, target: BindingTarget.property };
+                const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(element, 'value', binding);
+                designItem.setAttribute(serializedBinding[0], serializedBinding[1]);
+                if (!(<SvgImage>designItem.element).name) {
+                    (<SvgImage>designItem.element).name = bindableObject.name;
+                    designItem.setAttribute('name', bindableObject.name);
+                }
             }
             else {
                 const binding = { signal: bindableObject.fullName, target: BindingTarget.content };
