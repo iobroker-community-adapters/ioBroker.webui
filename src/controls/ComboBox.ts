@@ -17,7 +17,7 @@ export class ComboBox extends BaseCustomWebComponentConstructorAppend {
         <select id="select"></select>
     `;
 
-    public static readonly is = 'iobroker-webui-svg-image';
+    public static readonly is = 'iobroker-webui-combo-box';
     
     //@ts-ignore
     private _select: HTMLSelectElement;
