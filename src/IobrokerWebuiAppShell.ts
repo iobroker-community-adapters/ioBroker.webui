@@ -29,7 +29,7 @@ serviceContainer.config.codeViewWidget = CodeViewMonaco;
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent.js';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js';
-import { BaseCustomWebComponentConstructorAppend, Disposable, css, html } from '@node-projects/base-custom-webcomponent';
+import { BaseCustomWebComponentConstructorAppend, css, html } from '@node-projects/base-custom-webcomponent';
 import { CommandHandling } from './CommandHandling.js'
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
