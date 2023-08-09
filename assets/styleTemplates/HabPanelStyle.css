@@ -1,8 +1,12 @@
+* {
+    --primary-color: #0db9f0;
+}
+
 :host {
     background-color: black;
 }
 
-button {
+button, iobroker-webui-svg-image {
     background: rgb(34, 51, 68);
     border: none;
     color: white;
