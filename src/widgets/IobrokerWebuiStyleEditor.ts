@@ -1,5 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
-import { IUiCommand, IUiCommandHandler } from "@node-projects/web-component-designer";
+import { IUiCommand, IUiCommandHandler, sleep } from "@node-projects/web-component-designer";
 import type * as monaco from 'monaco-editor';
 import { iobrokerHandler } from "../IobrokerHandler.js";
 
@@ -62,6 +62,7 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
     static initMonacoEditor() {
         return new Promise(async resolve => {
             if (!IobrokerWebuiStyleEditor._initalized) {
+                await sleep(500);
                 //@ts-ignore
                 require.config({ paths: { 'vs': 'node_modules/monaco-editor/min/vs', 'vs/css': { disabled: true } } });
 
