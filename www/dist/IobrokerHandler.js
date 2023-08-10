@@ -1,5 +1,6 @@
 import { Connection } from "@iobroker/socket-client";
 import { TypedEvent } from "@node-projects/base-custom-webcomponent";
+import { sleep } from "@node-projects/web-component-designer/dist/elements/helper/Helper.js";
 const screenFileExtension = ".screen";
 class IobrokerHandler {
     static instance = new IobrokerHandler();
@@ -22,9 +23,13 @@ class IobrokerHandler {
         });
     }
     async init() {
+        //@ts-ignore
+        while (!window.io)
+            await sleep(5);
         this.connection = new Connection({ protocol: 'ws', host: window.iobrokerHost, port: window.iobrokerPort, admin5only: false, autoSubscribes: [] });
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
+        //await this.loadAllScreens();
         let cfg = await this._getConfig();
         this.config = cfg ?? { globalStyle: null };
         for (let p of this._readyPromises)
@@ -34,9 +39,19 @@ class IobrokerHandler {
     }
     _screenNames;
     _screens = new Map();
+    async loadAllScreens() {
+        let names = await this.getScreenNames();
+        let p = [];
+        for (let n of names) {
+            p.push(this.getScreen(n));
+        }
+        await Promise.all(p);
+    }
     async getScreenNames() {
         if (this._screenNames)
             return this._screenNames;
+        if (this._readyPromises)
+            this.waitForReady();
         try {
             const dirs = await this.connection.readDir(this.adapterName, this.configPath + "screens");
             const screenNames = dirs
@@ -53,6 +68,8 @@ class IobrokerHandler {
     async getScreen(name) {
         let screen = this._screens.get(name.toLocaleLowerCase());
         if (!screen) {
+            if (this._readyPromises)
+                this.waitForReady();
             try {
                 screen = await this._getObjectFromFile(this.configPath + "screens/" + name + screenFileExtension);
             }
@@ -77,6 +94,8 @@ class IobrokerHandler {
     }
     async _getConfig() {
         try {
+            if (this._readyPromises)
+                this.waitForReady();
             return await this._getObjectFromFile(this.configPath + "config.json");
         }
         catch (err) {
@@ -91,6 +110,11 @@ class IobrokerHandler {
         const file = await this.connection.readFile(this.adapterName, name, false);
         if (file.mimeType == 'application/json') {
             return JSON.parse(file.file);
+        }
+        if (file.mimeType == "application/octet-stream") {
+            const dec = new TextDecoder();
+            //@ts-ignore
+            return JSON.parse(dec.decode(file.file));
         }
         const dec = new TextDecoder();
         //@ts-ignore

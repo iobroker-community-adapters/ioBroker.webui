@@ -127,6 +127,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             }
         };
         try {
+            await iobrokerHandler.waitForReady();
             let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/package.json", false)).file);
             npmsNode.children = Object.keys(packageJson.dependencies).map(x => ({
                 title: x + ' (' + packageJson.dependencies[x] + ')',
@@ -150,6 +151,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             lazy: true,
             lazyload: (e, data) => {
                 data.result = new Promise(async (resolve) => {
+                    await iobrokerHandler.waitForReady();
                     const iconDirs = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons");
                     const iconDirNodes = [];
                     for (let d of iconDirs) {
@@ -172,6 +174,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     async _createIconsNodes(dirName, data) {
         data.result = new Promise(async (resolve) => {
             let icons = [];
+            await iobrokerHandler.waitForReady();
             const dirList = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons/" + dirName);
             for (let d of dirList) {
                 if (d.file.endsWith('.svg'))
@@ -185,6 +188,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             title: 'Charts', folder: true, children: []
         };
         try {
+            await iobrokerHandler.waitForReady();
             let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'flot.', 'flot.\u9999');
             if (Object.keys(objs).length > 0) {
                 let flotNode = {
@@ -202,6 +206,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             console.warn("error loading flot charts", err);
         }
         try {
+            await iobrokerHandler.waitForReady();
             let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'echarts.', 'echarts.\u9999');
             if (Object.keys(objs).length > 0) {
                 let flotNode = {

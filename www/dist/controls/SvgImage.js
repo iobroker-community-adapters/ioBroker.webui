@@ -66,6 +66,16 @@ export class SvgImage extends BaseCustomWebComponentConstructorAppend {
             this._main.innerHTML = await x.text();
         });
     }
+    _bgImageSrc;
+    get bgImageSrc() {
+        return this._bgImageSrc;
+    }
+    set bgImageSrc(value) {
+        this._bgImageSrc = value;
+        fetch(value).then(async (x) => {
+            //this._main.innerHTML = await x.text();
+        });
+    }
     _value;
     get value() {
         return this._value;
@@ -86,6 +96,9 @@ export class SvgImage extends BaseCustomWebComponentConstructorAppend {
 __decorate([
     property(String)
 ], SvgImage.prototype, "src", null);
+__decorate([
+    property(String)
+], SvgImage.prototype, "bgImageSrc", null);
 __decorate([
     property(String)
 ], SvgImage.prototype, "value", null);

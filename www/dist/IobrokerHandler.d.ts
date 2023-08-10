@@ -26,6 +26,7 @@ declare class IobrokerHandler {
     init(): Promise<void>;
     private _screenNames;
     private _screens;
+    loadAllScreens(): Promise<void>;
     getScreenNames(): Promise<string[]>;
     getScreen(name: string): Promise<IScreen>;
     saveScreen(name: string, screen: IScreen): Promise<void>;

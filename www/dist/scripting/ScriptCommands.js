@@ -4,6 +4,12 @@ export class OpenScreen {
     relativeSignalsPath;
     openInDialog;
 }
+export class OpenUrl {
+    type = 'openUrl';
+    url;
+    target;
+    openInDialog;
+}
 export class SetSignalValue {
     type = 'setSignalValue';
     signal;

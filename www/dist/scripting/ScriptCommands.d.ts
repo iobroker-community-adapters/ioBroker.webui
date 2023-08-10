@@ -6,6 +6,12 @@ export declare class OpenScreen {
     relativeSignalsPath: string;
     openInDialog: boolean;
 }
+export declare class OpenUrl {
+    type: 'openUrl';
+    url: string | ScriptMultiplexValue;
+    target: string;
+    openInDialog: boolean;
+}
 export declare class SetSignalValue {
     type: 'setSignalValue';
     signal: string;

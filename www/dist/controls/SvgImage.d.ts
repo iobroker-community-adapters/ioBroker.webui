@@ -11,6 +11,9 @@ export declare class SvgImage extends BaseCustomWebComponentConstructorAppend {
     private _src;
     get src(): string;
     set src(value: string);
+    private _bgImageSrc;
+    get bgImageSrc(): string;
+    set bgImageSrc(value: string);
     private _value;
     get value(): string;
     set value(value: string);
