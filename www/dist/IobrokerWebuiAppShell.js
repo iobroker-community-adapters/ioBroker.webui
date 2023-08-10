@@ -1,10 +1,8 @@
 import { iobrokerHandler } from './IobrokerHandler.js';
-//Load URL from IOBroker
-const script = document.createElement("script");
 //@ts-ignore
-script.src = window.iobrokerSocketScriptUrl;
-script.onload = () => iobrokerHandler.init();
-document.head.appendChild(script);
+await LazyLoader.LoadJavascript(window.iobrokerSocketScriptUrl);
+iobrokerHandler.init();
+await LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
 import '@node-projects/web-component-designer';
 import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, NodeHtmlParserService, CodeViewMonaco, createDefaultServiceContainer, CssToolsStylesheetService } from '@node-projects/web-component-designer';
 import { IobrokerWebuiBindableObjectsService } from './services/IobrokerWebuiBindableObjectsService.js';
@@ -22,7 +20,7 @@ serviceContainer.register("demoProviderService", new IobrokerWebuiDemoProviderSe
 serviceContainer.register("stylesheetService", designerCanvas => new CssToolsStylesheetService(designerCanvas));
 serviceContainer.config.codeViewWidget = CodeViewMonaco;
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent.js';
-import { BaseCustomWebComponentConstructorAppend, css, html } from '@node-projects/base-custom-webcomponent';
+import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from '@node-projects/base-custom-webcomponent';
 import { CommandHandling } from './CommandHandling.js';
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 import "./widgets/IobrokerWebuiSolutionExplorer.js";
