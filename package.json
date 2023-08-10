@@ -1,6 +1,6 @@
 {
   "name": "iobroker.webui",
-  "version": "0.0.20",
+  "version": "0.0.30",
   "description": "ioBroker webui",
   "type": "module",
   "main": "main.js",
@@ -32,7 +32,7 @@
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.webui#readme",
   "devDependencies": {
     "@adobe/css-tools": "4.3.0",
-    "@iobroker/socket-client": "^2.3.3",
+    "@iobroker/socket-client": "^2.3.4",
     "@iobroker/testing": "^4.1.0",
     "@node-projects/base-custom-webcomponent": "0.13.0",
     "@node-projects/lean-he-esm": "^3.3.0",
