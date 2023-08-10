@@ -1,8 +1,11 @@
+var SvgImage_1;
 import { __decorate } from "tslib";
-import { BaseCustomWebComponentConstructorAppend, css, html, property } from "@node-projects/base-custom-webcomponent";
-export class SvgImage extends BaseCustomWebComponentConstructorAppend {
+import { BaseCustomWebComponentConstructorAppend, css, customElement, html, property } from "@node-projects/base-custom-webcomponent";
+export let SvgImage = class SvgImage extends BaseCustomWebComponentConstructorAppend {
+    static { SvgImage_1 = this; }
     static style = css `
         :host {
+            display: block;
             height: 100%;
             width: 100%;
             fill: var(--primary-color, white);
@@ -92,7 +95,7 @@ export class SvgImage extends BaseCustomWebComponentConstructorAppend {
         this._name = value;
         this._head.innerText = value ?? '';
     }
-}
+};
 __decorate([
     property(String)
 ], SvgImage.prototype, "src", null);
@@ -105,4 +108,6 @@ __decorate([
 __decorate([
     property(String)
 ], SvgImage.prototype, "name", null);
-customElements.define(SvgImage.is, SvgImage);
+SvgImage = SvgImage_1 = __decorate([
+    customElement(SvgImage_1.is)
+], SvgImage);

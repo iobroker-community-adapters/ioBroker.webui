@@ -30,7 +30,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         const result = await Promise.allSettled([
             this._createScreensNode(),
             this._createGlobalStyleNode(),
-            this._createNpmsNode(),
+            //this._createNpmsNode(),
             this._createControlsNode(),
             this._createChartsNode(),
             this._createIconsFolderNode(),
@@ -102,6 +102,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             }
         };
     }
+    //@ts-ignore
     async _createNpmsNode() {
         let npmNodeCtxMenu = (event, packageName) => {
             ContextMenu.show([{
@@ -185,44 +186,50 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
     async _createChartsNode() {
         let chartsNode = {
-            title: 'Charts', folder: true, children: []
+            title: 'Charts', folder: true, lazy: true,
+            lazyload: (e, data) => {
+                data.result = new Promise(async (resolve) => {
+                    let chartNodes = [];
+                    try {
+                        await iobrokerHandler.waitForReady();
+                        let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'flot.', 'flot.\u9999');
+                        if (Object.keys(objs).length > 0) {
+                            let flotNode = {
+                                title: 'Flot', folder: true
+                            };
+                            chartNodes.push(flotNode);
+                            flotNode.children = Object.keys(objs).map(x => ({
+                                title: x.split('.').pop(),
+                                folder: false,
+                                data: { type: 'flot', name: objs[x].native.url }
+                            }));
+                        }
+                    }
+                    catch (err) {
+                        console.warn("error loading flot charts", err);
+                    }
+                    try {
+                        await iobrokerHandler.waitForReady();
+                        let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'echarts.', 'echarts.\u9999');
+                        if (Object.keys(objs).length > 0) {
+                            let flotNode = {
+                                title: 'ECharts', folder: true
+                            };
+                            chartNodes.push(flotNode);
+                            flotNode.children = Object.keys(objs).map(x => ({
+                                title: x.split('.').pop(),
+                                folder: false,
+                                data: { type: 'echart', name: x }
+                            }));
+                        }
+                    }
+                    catch (err) {
+                        console.warn("error loading echarts charts", err);
+                    }
+                    resolve(chartNodes);
+                });
+            }
         };
-        try {
-            await iobrokerHandler.waitForReady();
-            let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'flot.', 'flot.\u9999');
-            if (Object.keys(objs).length > 0) {
-                let flotNode = {
-                    title: 'Flot', folder: true
-                };
-                chartsNode.children.push(flotNode);
-                flotNode.children = Object.keys(objs).map(x => ({
-                    title: x.split('.').pop(),
-                    folder: false,
-                    data: { type: 'flot', name: objs[x].native.url }
-                }));
-            }
-        }
-        catch (err) {
-            console.warn("error loading flot charts", err);
-        }
-        try {
-            await iobrokerHandler.waitForReady();
-            let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'echarts.', 'echarts.\u9999');
-            if (Object.keys(objs).length > 0) {
-                let flotNode = {
-                    title: 'ECharts', folder: true
-                };
-                chartsNode.children.push(flotNode);
-                flotNode.children = Object.keys(objs).map(x => ({
-                    title: x.split('.').pop(),
-                    folder: false,
-                    data: { type: 'echart', name: x }
-                }));
-            }
-        }
-        catch (err) {
-            console.warn("error loading echarts charts", err);
-        }
         return chartsNode;
     }
     async _createControlsNode() {

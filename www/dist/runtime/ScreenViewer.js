@@ -9,6 +9,7 @@ export let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConst
     :host {
         height: 100%;
         position: relative;
+        display: block;
     }
     `;
     _iobBindings;
