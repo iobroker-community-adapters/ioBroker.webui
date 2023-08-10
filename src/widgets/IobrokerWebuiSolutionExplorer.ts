@@ -48,7 +48,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             [
                 this._createScreensNode(),
                 this._createGlobalStyleNode(),
-                this._createNpmsNode(),
+                //this._createNpmsNode(),
                 this._createControlsNode(),
                 this._createChartsNode(),
                 this._createIconsFolderNode(),
@@ -126,6 +126,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         }
     }
 
+    //@ts-ignore
     private async _createNpmsNode() {
         let npmNodeCtxMenu = (event, packageName) => {
             ContextMenu.show([{
@@ -217,46 +218,53 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
 
     private async _createChartsNode() {
         let chartsNode: TreeNodeData = {
-            title: 'Charts', folder: true, children: []
-        }
+            title: 'Charts', folder: true, lazy: true,
+            lazyload: (e, data) => {
+                data.result = new Promise(async resolve => {
+                    let chartNodes = [];
+                    try {
+                        await iobrokerHandler.waitForReady();
+                        let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'flot.', 'flot.\u9999');
+                        if (Object.keys(objs).length > 0) {
+                            let flotNode: TreeNodeData = {
+                                title: 'Flot', folder: true
+                            }
+                            chartNodes.push(flotNode);
+                            flotNode.children = Object.keys(objs).map(x => ({
+                                title: x.split('.').pop(),
+                                folder: false,
+                                data: { type: 'flot', name: objs[x].native.url }
+                            }));
+                        }
+                    }
+                    catch (err) {
+                        console.warn("error loading flot charts", err);
+                    }
+                    try {
+                        await iobrokerHandler.waitForReady();
+                        let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'echarts.', 'echarts.\u9999');
+                        if (Object.keys(objs).length > 0) {
+                            let flotNode: TreeNodeData = {
+                                title: 'ECharts', folder: true
+                            }
+                            chartNodes.push(flotNode);
+                            flotNode.children = Object.keys(objs).map(x => ({
+                                title: x.split('.').pop(),
+                                folder: false,
+                                data: { type: 'echart', name: x }
+                            }));
+                        }
+                    }
+                    catch (err) {
+                        console.warn("error loading echarts charts", err);
+                    }
 
-        try {
-            await iobrokerHandler.waitForReady();
-            let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'flot.', 'flot.\u9999');
-            if (Object.keys(objs).length > 0) {
-                let flotNode: TreeNodeData = {
-                    title: 'Flot', folder: true
-                }
-                chartsNode.children.push(flotNode);
-                flotNode.children = Object.keys(objs).map(x => ({
-                    title: x.split('.').pop(),
-                    folder: false,
-                    data: { type: 'flot', name: objs[x].native.url }
-                }));
+                    resolve(chartNodes);
+                });
             }
         }
-        catch (err) {
-            console.warn("error loading flot charts", err);
-        }
 
-        try {
-            await iobrokerHandler.waitForReady();
-            let objs = await iobrokerHandler.connection.getObjectViewCustom('chart', 'chart', 'echarts.', 'echarts.\u9999');
-            if (Object.keys(objs).length > 0) {
-                let flotNode: TreeNodeData = {
-                    title: 'ECharts', folder: true
-                }
-                chartsNode.children.push(flotNode);
-                flotNode.children = Object.keys(objs).map(x => ({
-                    title: x.split('.').pop(),
-                    folder: false,
-                    data: { type: 'echart', name: x }
-                }));
-            }
-        }
-        catch (err) {
-            console.warn("error loading echarts charts", err);
-        }
+
 
         return chartsNode;
     }
