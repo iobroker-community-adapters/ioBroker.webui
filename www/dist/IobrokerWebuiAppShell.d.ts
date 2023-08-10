@@ -20,8 +20,6 @@ export declare class IobrokerWebuiAppShell extends BaseCustomWebComponentConstru
     static readonly template: HTMLTemplateElement;
     ready(): Promise<void>;
     private _setupServiceContainer;
-    loadNpmPackages(): Promise<void>;
-    private loadNpmPackage;
     openDock(element: HTMLElement): void;
     openScreenEditor(name: string, html: string, style: string): Promise<void>;
     openGlobalStyleEditor(style: string): Promise<void>;

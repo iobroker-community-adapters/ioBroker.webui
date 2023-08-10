@@ -111,7 +111,8 @@ class IobrokerHandler {
         if (file.mimeType == 'application/json') {
             return JSON.parse(file.file);
         }
-        if (file.mimeType == "application/octet-stream") {
+        //@ts-ignore
+        if (file.mimeType == "application/octet-stream" && file.file instanceof ArrayBuffer) {
             const dec = new TextDecoder();
             //@ts-ignore
             return JSON.parse(dec.decode(file.file));

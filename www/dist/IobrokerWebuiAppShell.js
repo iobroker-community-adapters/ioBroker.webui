@@ -6,7 +6,7 @@ script.src = window.iobrokerSocketScriptUrl;
 script.onload = () => iobrokerHandler.init();
 document.head.appendChild(script);
 import '@node-projects/web-component-designer';
-import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, NodeHtmlParserService, CodeViewMonaco, WebcomponentManifestParserService, createDefaultServiceContainer, CssToolsStylesheetService } from '@node-projects/web-component-designer';
+import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, NodeHtmlParserService, CodeViewMonaco, createDefaultServiceContainer, CssToolsStylesheetService } from '@node-projects/web-component-designer';
 import { IobrokerWebuiBindableObjectsService } from './services/IobrokerWebuiBindableObjectsService.js';
 import { IobrokerWebuiBindableObjectDragDropService } from './services/IobrokerWebuiBindableObjectDragDropService.js';
 import { IobrokerWebuiBindingService } from './services/IobrokerWebuiBindingService.js';
@@ -138,46 +138,47 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
                     b.style.backgroundColor = "";
             }
         });
-        await this.loadNpmPackages();
+        //await this.loadNpmPackages();
         this._solutionExplorer.initialize(serviceContainer);
         this.propertyGrid.serviceContainer = serviceContainer;
     }
-    async loadNpmPackages() {
-        let promises = [];
+    /*async loadNpmPackages() {
+      let promises: Promise<void>[] = [];
+      try {
+        //todo: do not access connection from here
+        let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/package.json", false)).file);
+        for (let name of Object.keys(packageJson.dependencies)) {
+          promises.push(this.loadNpmPackage(name))
+        }
+        await Promise.allSettled(promises);
+      }
+      catch (err) {
+        console.warn("error loading package.json, may not yet exist", err);
+      }
+    }*/
+    /*private async loadNpmPackage(name: string) {
+      try {
+        let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/node_modules/" + name + "/package.json", false)).file);
+        let customElementsJsonName = "custom-elements.json";
+        if (packageJson["customElements"])
+          customElementsJsonName = packageJson["customElements"];
         try {
-            let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/package.json", false)).file);
-            for (let name of Object.keys(packageJson.dependencies)) {
-                promises.push(this.loadNpmPackage(name));
-            }
-            await Promise.allSettled(promises);
+          let manifest = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/node_modules/" + name + "/" + customElementsJsonName, false)).file);
+          try {
+            serviceContainer.registerMultiple(['elementsService', 'propertyService'], new WebcomponentManifestParserService(name, manifest, "/webui/widgets/node_modules/" + name + ""));
+          }
+          catch (err) {
+            console.warn("error parsing manifest: " + name + "/" + customElementsJsonName, err);
+          }
         }
         catch (err) {
-            console.warn("error loading package.json, may not yet exist", err);
+          console.warn("error loading " + name + "/" + customElementsJsonName + ", may not yet exist", err);
         }
-    }
-    async loadNpmPackage(name) {
-        try {
-            let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/node_modules/" + name + "/package.json", false)).file);
-            let customElementsJsonName = "custom-elements.json";
-            if (packageJson["customElements"])
-                customElementsJsonName = packageJson["customElements"];
-            try {
-                let manifest = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/node_modules/" + name + "/" + customElementsJsonName, false)).file);
-                try {
-                    serviceContainer.registerMultiple(['elementsService', 'propertyService'], new WebcomponentManifestParserService(name, manifest, "/webui/widgets/node_modules/" + name + ""));
-                }
-                catch (err) {
-                    console.warn("error parsing manifest: " + name + "/" + customElementsJsonName, err);
-                }
-            }
-            catch (err) {
-                console.warn("error loading " + name + "/" + customElementsJsonName + ", may not yet exist", err);
-            }
-        }
-        catch (err) {
-            console.warn("error loading " + name + "/package.json, may not yet exist", err);
-        }
-    }
+      }
+      catch (err) {
+        console.warn("error loading " + name + "/package.json, may not yet exist", err);
+      }
+    }*/
     openDock(element) {
         element.setAttribute('dock-spawn-panel-type', 'document');
         //todo: why are this 2 styles needed? needs a fix in dock-spawn
