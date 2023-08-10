@@ -75,6 +75,18 @@ export class SvgImage extends BaseCustomWebComponentConstructorAppend {
         })
     }
 
+    private _bgImageSrc: string;
+    @property(String)
+    public get bgImageSrc() {
+        return this._bgImageSrc;
+    }
+    public set bgImageSrc(value: string) {
+        this._bgImageSrc = value;
+        fetch(value).then(async x => {
+            //this._main.innerHTML = await x.text();
+        });
+    }
+
     private _value: string;
     @property(String)
     public get value() {

@@ -12,6 +12,13 @@ export class OpenScreen {
     openInDialog: boolean;
 }
 
+export class OpenUrl {
+    type: 'openUrl' = 'openUrl';
+    url: string | ScriptMultiplexValue;
+    target: string;
+    openInDialog: boolean;
+}
+
 export class SetSignalValue {
     type: 'setSignalValue' = 'setSignalValue';
     signal: string;
