@@ -1,8 +1,10 @@
-import { BaseCustomWebComponentConstructorAppend, css, html, property } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, css, customElement, html, property } from "@node-projects/base-custom-webcomponent";
 
+@customElement(SvgImage.is)
 export class SvgImage extends BaseCustomWebComponentConstructorAppend {
     public static readonly style = css`
         :host {
+            display: block;
             height: 100%;
             width: 100%;
             fill: var(--primary-color, white);
@@ -107,5 +109,3 @@ export class SvgImage extends BaseCustomWebComponentConstructorAppend {
         this._head.innerText = value ?? '';
     }
 }
-
-customElements.define(SvgImage.is, SvgImage);

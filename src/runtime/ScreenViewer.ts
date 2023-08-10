@@ -9,6 +9,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     :host {
         height: 100%;
         position: relative;
+        display: block;
     }
     `
 
