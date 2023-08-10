@@ -49,19 +49,11 @@
   <script src="./node_modules/jquery.fancytree/dist/modules/jquery.fancytree.table.js"></script>
 
   <script src="./node_modules/mobile-drag-drop/index.js"></script>
-
+ 
   <script type="module">
     importShim('./dist/IobrokerWebuiAppShell.js');
   </script>
-
-  <script type="module"> //monaco has an require wich destorys loading of some modules, fix this with a monaco esm version
-    setTimeout(() => {
-      const script = document.createElement("script");
-      script.src = './node_modules/monaco-editor/min/vs/loader.js';
-      document.head.appendChild(script);
-    }, 1000);
-  </script>
-
+  
   <style>
     body {
       margin: 0;
@@ -239,27 +231,25 @@
             <!-- Is the Rectangle Selector necssary, when the Pointer tool does the same thing? -->
             <!-- <button class="tool-button" data-command="setTool" data-command-parameter="RectangleSelector" title="Rectangle Selector"><i class="far fa-object-group"></i></button> -->
             <button class="tool-button" data-command="setTool" data-command-parameter="Pointer" title="Pointer tool"
-              style="background: green; background-image: url('./assets/images/layout/PointerTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
-            <button class="tool-button" data-command="setTool" data-command-parameter="MagicWandSelector"
-              title="Magic Wand Selector"
-              style="background-image: url('./assets/images/layout/MagicWandTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background: green; background-image: url('./assets/images/layout/PointerTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="MagicWandSelector" title="Magic Wand Selector"
+            style="background-image: url('./assets/images/layout/MagicWandTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="DrawLine" title="Draw Line"
-              style="background-image: url('./assets/images/layout/DrawLineTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background-image: url('./assets/images/layout/DrawLineTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="DrawPath" title="Draw Path"
-              style="background-image: url('./assets/images/layout/DrawPathTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background-image: url('./assets/images/layout/DrawPathTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="DrawRect" title="Draw Rectangle"
-              style="background-image: url('./assets/images/layout/DrawRectTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
-            <button class="tool-button" data-command="setTool" data-command-parameter="DrawEllipsis"
-              title="Draw Ellipsis"
-              style="background-image: url('./assets/images/layout/DrawEllipTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background-image: url('./assets/images/layout/DrawRectTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            <button class="tool-button" data-command="setTool" data-command-parameter="DrawEllipsis" title="Draw Ellipsis"
+            style="background-image: url('./assets/images/layout/DrawEllipTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="PickColor" title="Color picker"
-              style="background-image: url('./assets/images/layout/ColorPickerTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background-image: url('./assets/images/layout/ColorPickerTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="Zoom" title="Zoom tool"
-              style="background-image: url('./assets/images/layout/ZoomTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background-image: url('./assets/images/layout/ZoomTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="Text" title="Text tool"
-              style="background-image: url('./assets/images/layout/TextTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background-image: url('./assets/images/layout/TextTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
             <button class="tool-button" data-command="setTool" data-command-parameter="TextBoc" title="Textbox Tool"
-              style="background-image: url('./assets/images/layout/TextBoxTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
+            style="background-image: url('./assets/images/layout/TextBoxTool.svg'); background-size: 60%;background-repeat: no-repeat;background-position: center;"></button>
           </div>
           <div class="toolbar" id="color">
             <input type="color" title="stroke color" data-command="setStrokeColor" value="#000000"
