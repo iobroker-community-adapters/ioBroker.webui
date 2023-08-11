@@ -5,53 +5,53 @@ export declare type ScriptCommands = OpenScreen |
     SetBitInSignal | ClearBitInSignal | ToggleBitInSignal |
     Javascript;
 
-export class OpenScreen {
-    type: 'openScreen' = 'openScreen';
+export interface OpenScreen {
+    type: 'OpenScreen';
     screen: string | ScriptMultiplexValue;
     relativeSignalsPath: string;
     openInDialog: boolean;
 }
 
-export class OpenUrl {
-    type: 'openUrl' = 'openUrl';
+export interface OpenUrl {
+    type: 'OpenUrl';
     url: string | ScriptMultiplexValue;
     target: string;
     openInDialog: boolean;
 }
 
-export class SetSignalValue {
-    type: 'setSignalValue' = 'setSignalValue';
+export interface SetSignalValue {
+    type: 'SetSignalValue';
     signal: string;
     value: string | number | boolean | ScriptMultiplexValue;
 }
-export class IncrementSignalValue {
-    type: 'incrementSignalValue' = 'incrementSignalValue';
+export interface IncrementSignalValue {
+    type: 'IncrementSignalValue';
     signal: string;
     value: string | number | boolean | ScriptMultiplexValue;
 }
-export class DecrementSignalValue {
-    type: 'decrementSignalValue' = 'decrementSignalValue';
+export interface DecrementSignalValue {
+    type: 'DecrementSignalValue';
     signal: string;
     value: string | number | boolean | ScriptMultiplexValue;
 }
 
-export class SetBitInSignal {
-    type: 'setBitInSignal' = 'setBitInSignal';
+export interface SetBitInSignal {
+    type: 'SetBitInSignal';
     signal: string;
-    bitNumber: number = 0;
+    bitNumber: number;
 }
-export class ClearBitInSignal {
-    type: 'clearBitInSignal' = 'clearBitInSignal';
+export interface ClearBitInSignal {
+    type: 'ClearBitInSignal';
     signal: string;
-    bitNumber: number = 0;
+    bitNumber: number;
 }
-export class ToggleBitInSignal {
-    type: 'toggleBitInSignal' = 'toggleBitInSignal';
+export interface ToggleBitInSignal {
+    type: 'ToggleBitInSignal';
     signal: string;
-    bitNumber: number = 0;
+    bitNumber: number;
 }
 
-export class Javascript {
-    type: 'javascript' = 'javascript';
+export interface Javascript {
+    type: 'Javascript';
     script: string;
 }

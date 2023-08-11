@@ -7,7 +7,7 @@ export class ScriptSystem {
     async execute(scriptCommands: ScriptCommands[], context: any) {
         for (let c of scriptCommands) {
             switch (c.type) {
-                case 'openScreen': {
+                case 'OpenScreen': {
                     if (!c.openInDialog) {
                         (<ScreenViewer>document.getElementById('viewer')).relativeSignalsPath = c.relativeSignalsPath;
                         (<ScreenViewer>document.getElementById('viewer')).screenName = this.getValue(c.screen, context);
@@ -19,39 +19,39 @@ export class ScriptSystem {
                     break;
                 }
 
-                case 'setSignalValue': {
+                case 'SetSignalValue': {
                     await iobrokerHandler.connection.setState(c.signal, this.getValue(c.value, context));
                     break;
                 }
-                case 'incrementSignalValue': {
+                case 'IncrementSignalValue': {
                     let state = await iobrokerHandler.connection.getState(c.signal);
                     await iobrokerHandler.connection.setState(c.signal, state.val + this.getValue(c.value, context));
                     break;
                 }
-                case 'decrementSignalValue': {
+                case 'DecrementSignalValue': {
                     let state = await iobrokerHandler.connection.getState(c.signal);
                     await iobrokerHandler.connection.setState(c.signal, <any>state.val - this.getValue(c.value, context));
                     break;
                 }
 
-                case 'setBitInSignal': {
+                case 'SetBitInSignal': {
                     //todo: bit
                     await iobrokerHandler.connection.setState(c.signal, true);
                     break;
                 }
-                case 'clearBitInSignal': {
+                case 'ClearBitInSignal': {
                     //todo: bit
                     await iobrokerHandler.connection.setState(c.signal, false);
                     break;
                 }
-                case 'toggleBitInSignal': {
+                case 'ToggleBitInSignal': {
                     //todo: bit
                     let state = await iobrokerHandler.connection.getState(c.signal);
                     await iobrokerHandler.connection.setState(c.signal, !state.val);
                     break;
                 }
 
-                case 'javascript': {
+                case 'Javascript': {
                     var context = context; // make context accessible from script
                     eval(c.script);
                     break;

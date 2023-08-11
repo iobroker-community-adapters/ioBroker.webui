@@ -1,31 +1,28 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
-        "ClearBit": {
+        "ClearBitInSignal": {
             "properties": {
                 "bitNumber": {
-                    "default": 0,
                     "type": "number"
                 },
                 "signal": {
                     "type": "string"
                 },
                 "type": {
-                    "const": "clearBit",
-                    "default": "clearBit",
+                    "const": "clearBitInSignal",
                     "type": "string"
                 }
             },
             "type": "object"
         },
-        "DecreaseSignal": {
+        "DecrementSignalValue": {
             "properties": {
                 "signal": {
                     "type": "string"
                 },
                 "type": {
-                    "const": "decreaseSignal",
-                    "default": "decreaseSignal",
+                    "const": "decrementSignalValue",
                     "type": "string"
                 },
                 "value": {
@@ -45,14 +42,13 @@
             },
             "type": "object"
         },
-        "IncreaseSignal": {
+        "IncrementSignalValue": {
             "properties": {
                 "signal": {
                     "type": "string"
                 },
                 "type": {
-                    "const": "increaseSignal",
-                    "default": "increaseSignal",
+                    "const": "incrementSignalValue",
                     "type": "string"
                 },
                 "value": {
@@ -79,7 +75,6 @@
                 },
                 "type": {
                     "const": "javascript",
-                    "default": "javascript",
                     "type": "string"
                 }
             },
@@ -105,8 +100,32 @@
                 },
                 "type": {
                     "const": "openScreen",
-                    "default": "openScreen",
                     "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "OpenUrl": {
+            "properties": {
+                "openInDialog": {
+                    "type": "boolean"
+                },
+                "target": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "openUrl",
+                    "type": "string"
+                },
+                "url": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/ScriptMultiplexValue"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "type": "object"
@@ -117,22 +136,22 @@
                     "$ref": "#/definitions/OpenScreen"
                 },
                 {
-                    "$ref": "#/definitions/SetSignal"
+                    "$ref": "#/definitions/SetSignalValue"
                 },
                 {
-                    "$ref": "#/definitions/IncreaseSignal"
+                    "$ref": "#/definitions/IncrementSignalValue"
                 },
                 {
-                    "$ref": "#/definitions/DecreaseSignal"
+                    "$ref": "#/definitions/DecrementSignalValue"
                 },
                 {
-                    "$ref": "#/definitions/SetBit"
+                    "$ref": "#/definitions/SetBitInSignal"
                 },
                 {
-                    "$ref": "#/definitions/ClearBit"
+                    "$ref": "#/definitions/ClearBitInSignal"
                 },
                 {
-                    "$ref": "#/definitions/ToggleBit"
+                    "$ref": "#/definitions/ToggleBitInSignal"
                 },
                 {
                     "$ref": "#/definitions/Javascript"
@@ -147,31 +166,28 @@
             },
             "type": "object"
         },
-        "SetBit": {
+        "SetBitInSignal": {
             "properties": {
                 "bitNumber": {
-                    "default": 0,
                     "type": "number"
                 },
                 "signal": {
                     "type": "string"
                 },
                 "type": {
-                    "const": "setBit",
-                    "default": "setBit",
+                    "const": "setBitInSignal",
                     "type": "string"
                 }
             },
             "type": "object"
         },
-        "SetSignal": {
+        "SetSignalValue": {
             "properties": {
                 "signal": {
                     "type": "string"
                 },
                 "type": {
-                    "const": "setSignal",
-                    "default": "setSignal",
+                    "const": "setSignalValue",
                     "type": "string"
                 },
                 "value": {
@@ -191,18 +207,16 @@
             },
             "type": "object"
         },
-        "ToggleBit": {
+        "ToggleBitInSignal": {
             "properties": {
                 "bitNumber": {
-                    "default": 0,
                     "type": "number"
                 },
                 "signal": {
                     "type": "string"
                 },
                 "type": {
-                    "const": "toggleBit",
-                    "default": "toggleBit",
+                    "const": "toggleBitInSignal",
                     "type": "string"
                 }
             },
