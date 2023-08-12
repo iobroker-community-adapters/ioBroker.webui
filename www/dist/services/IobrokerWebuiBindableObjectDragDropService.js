@@ -1,7 +1,7 @@
 import { OverlayLayer, DesignItem, InsertAction, BindingTarget } from "@node-projects/web-component-designer";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../IobrokerHandler.js";
-import { SvgImage } from "../controls/SvgImage.js";
+import { SvgImage } from "../runtime/SvgImage.js";
 export class IobrokerWebuiBindableObjectDragDropService {
     rectMap = new Map();
     rect;

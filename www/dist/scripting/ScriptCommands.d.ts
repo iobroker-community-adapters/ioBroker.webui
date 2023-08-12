@@ -1,48 +1,51 @@
-import { ScriptMultiplexValue } from "./ScriptValue";
-export declare type ScriptCommands = OpenScreen | SetSignalValue | IncrementSignalValue | DecrementSignalValue | SetBitInSignal | ClearBitInSignal | ToggleBitInSignal | Javascript;
-export declare class OpenScreen {
-    type: 'openScreen';
-    screen: string | ScriptMultiplexValue;
+export declare type ScriptCommands = OpenScreen | ToggleSignalValue | SetSignalValue | IncrementSignalValue | DecrementSignalValue | SetBitInSignal | ClearBitInSignal | ToggleBitInSignal | Javascript;
+export interface OpenScreen {
+    type: 'OpenScreen';
+    screen: string;
     relativeSignalsPath: string;
     openInDialog: boolean;
 }
-export declare class OpenUrl {
-    type: 'openUrl';
-    url: string | ScriptMultiplexValue;
+export interface OpenUrl {
+    type: 'OpenUrl';
+    url: string;
     target: string;
     openInDialog: boolean;
 }
-export declare class SetSignalValue {
-    type: 'setSignalValue';
+export interface SetSignalValue {
+    type: 'SetSignalValue';
     signal: string;
-    value: string | number | boolean | ScriptMultiplexValue;
+    value: string;
 }
-export declare class IncrementSignalValue {
-    type: 'incrementSignalValue';
+export interface ToggleSignalValue {
+    type: 'ToggleSignalValue';
     signal: string;
-    value: string | number | boolean | ScriptMultiplexValue;
 }
-export declare class DecrementSignalValue {
-    type: 'decrementSignalValue';
+export interface IncrementSignalValue {
+    type: 'IncrementSignalValue';
     signal: string;
-    value: string | number | boolean | ScriptMultiplexValue;
+    value: number;
 }
-export declare class SetBitInSignal {
-    type: 'setBitInSignal';
+export interface DecrementSignalValue {
+    type: 'DecrementSignalValue';
     signal: string;
-    bitNumber: number;
+    value: number;
 }
-export declare class ClearBitInSignal {
-    type: 'clearBitInSignal';
-    signal: string;
-    bitNumber: number;
-}
-export declare class ToggleBitInSignal {
-    type: 'toggleBitInSignal';
+export interface SetBitInSignal {
+    type: 'SetBitInSignal';
     signal: string;
     bitNumber: number;
 }
-export declare class Javascript {
-    type: 'javascript';
+export interface ClearBitInSignal {
+    type: 'ClearBitInSignal';
+    signal: string;
+    bitNumber: number;
+}
+export interface ToggleBitInSignal {
+    type: 'ToggleBitInSignal';
+    signal: string;
+    bitNumber: number;
+}
+export interface Javascript {
+    type: 'Javascript';
     script: string;
 }

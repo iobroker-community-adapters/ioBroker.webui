@@ -10,7 +10,7 @@ import { IobrokerWebuiBindableObjectDragDropService } from './services/IobrokerW
 import { IobrokerWebuiBindingService } from './services/IobrokerWebuiBindingService.js';
 import { IobrokerWebuiDemoProviderService } from './services/IobrokerWebuiDemoProviderService.js';
 const rootPath = new URL(import.meta.url).pathname.split('/').slice(0, -2).join('/'); // -2 remove file & dist
-let serviceContainer = createDefaultServiceContainer();
+const serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
 serviceContainer.register("htmlParserService", new NodeHtmlParserService(rootPath + '/node_modules/@node-projects/node-html-parser-esm/dist/index.js'));
 serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableObjectsService());
@@ -26,9 +26,14 @@ DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css
 import "./widgets/IobrokerWebuiSolutionExplorer.js";
 import "./runtime/ScreenViewer.js";
 import "./widgets/IobrokerWebuiStyleEditor.js";
-import "./controls/SvgImage.js";
+import "./runtime/SvgImage.js";
+import "./widgets/IobrokerWebuiEventAssignment.js";
+import "./widgets/IobrokerWebuiSplitView.js";
+import "./widgets/IobrokerWebuiPropertyGrid.js";
 import { IobrokerWebuiStyleEditor } from './widgets/IobrokerWebuiStyleEditor.js';
 import { IobrokerWebuiScreenEditor } from './widgets/IobrokerWebuiScreenEditor.js';
+import { PanelContainer } from 'dock-spawn-ts/lib/js/PanelContainer.js';
+import { PanelType } from 'dock-spawn-ts/lib/js/enums/PanelType.js';
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
     activeElement;
     mainPage = 'designer';
@@ -38,6 +43,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     styleEditor;
     propertyGrid;
     treeViewExtended;
+    eventsAssignment;
     static style = css `
     :host {
       display: block;
@@ -61,7 +67,6 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       display: flex;
       flex-direction: row;
       height: 100%;
-      overflow: hidden;
     }
 
     dock-spawn-ts > div {
@@ -84,6 +89,10 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
           <div id="attributeDock" title="Properties" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.2">
             <node-projects-property-grid-with-header id="propertyGrid"></node-projects-property-grid-with-header>
           </div>
+          
+          <div id="eventsDock" title="Events" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.4" dock-spawn-dock-to="attributeDock">
+            <iobroker-webui-event-assignment id="eventsList"></iobroker-webui-event-assignment>
+          </div>
 
           <div id="lower" title="style" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.25" style="overflow: hidden; width: 100%;">
             <iobroker-webui-style-editor id="styleEditor"></iobroker-webui-style-editor>
@@ -97,6 +106,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         this.treeViewExtended = this._getDomElement('treeViewExtended');
         this.propertyGrid = this._getDomElement('propertyGrid');
         this.styleEditor = this._getDomElement('styleEditor');
+        this.eventsAssignment = this._getDomElement('eventsList');
         const linkElement = document.createElement("link");
         linkElement.rel = "stylesheet";
         linkElement.href = "./assets/dockspawn.css";
@@ -183,6 +193,17 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         element.style.zIndex = '1';
         element.style.position = 'relative';
         this._dock.appendChild(element);
+    }
+    openDialog(element, x, y, width, height) {
+        element.setAttribute('dock-spawn-panel-type', 'document');
+        //todo: why are this 2 styles needed? needs a fix in dock-spawn
+        element.style.zIndex = '1';
+        element.style.position = 'relative';
+        let container = new PanelContainer(element, this._dock.dockManager, element.title, PanelType.panel);
+        let d = this._dock.dockManager.floatDialog(container, x, y, null, false);
+        d.resize(width, height);
+        d.noDocking = true;
+        return { close: () => container.close() };
     }
     async openScreenEditor(name, html, style) {
         let screenEditor = new IobrokerWebuiScreenEditor();

@@ -71,6 +71,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         window.appShell.styleEditor.model = this.documentContainer.additionalData.model;
         window.appShell.propertyGrid.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
         window.appShell.treeViewExtended.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
+        window.appShell.eventsAssignment.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
     }
     dispose() {
         this.documentContainer.dispose();

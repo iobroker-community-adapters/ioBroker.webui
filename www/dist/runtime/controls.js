@@ -4,4 +4,4 @@ import { LazyLoader } from '@node-projects/base-custom-webcomponent';
 await LazyLoader.LoadJavascript(window.iobrokerSocketScriptUrl);
 iobrokerHandler.init();
 import './ScreenViewer.js';
-import '../controls/SvgImage.js';
+import './SvgImage.js';

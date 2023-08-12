@@ -1,5 +1,5 @@
 import { ScriptCommands } from "./ScriptCommands";
 export declare class Script {
-    name: string;
+    name?: string;
     commands: ScriptCommands[];
 }

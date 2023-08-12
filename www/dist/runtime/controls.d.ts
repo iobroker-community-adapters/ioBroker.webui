@@ -1,2 +1,2 @@
 import './ScreenViewer.js';
-import '../controls/SvgImage.js';
+import './SvgImage.js';
