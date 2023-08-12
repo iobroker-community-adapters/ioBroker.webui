@@ -38,6 +38,7 @@ import "./widgets/IobrokerWebuiStyleEditor.js";
 import "./runtime/SvgImage.js";
 import "./widgets/IobrokerWebuiEventAssignment.js";
 import "./widgets/IobrokerWebuiSplitView.js";
+import "./widgets/IobrokerWebuiPropertyGrid.js";
 
 import { IobrokerWebuiSolutionExplorer } from './widgets/IobrokerWebuiSolutionExplorer.js';
 import { IobrokerWebuiStyleEditor } from './widgets/IobrokerWebuiStyleEditor.js';

@@ -3,8 +3,9 @@ import scriptCommandsTypeInfo from "../generated/ScriptCommands.json" assert {ty
 import { Script } from "../scripting/Script.js";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
-import { ScriptCommands } from "../scripting/ScriptCommands";
+import { ScriptCommands } from "../scripting/ScriptCommands.js";
 import { ContextMenu, IUiCommand, IUiCommandHandler } from "@node-projects/web-component-designer";
+import { IProperty, ITypeInfo, IobrokerWebuiPropertyGrid } from "./IobrokerWebuiPropertyGrid.js";
 
 export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
     static readonly style = css`
@@ -31,6 +32,10 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         span.fancytree-expander {
             display: none;
         }
+        iobroker-webui-property-grid {
+            width: 100%;
+            height: 100%;
+        }
     `;
 
     static readonly template = html`
@@ -45,7 +50,8 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
                         </div>
                     </div> 
                 </div>
-                <div style="width: 60%; position: relative;"> 
+                <div style="width: 60%; position: relative;">
+                    <iobroker-webui-property-grid id="propertygrid"></iobroker-webui-property-grid>
                 </div>
             </iobroker-webui-split-view>
         </div>
@@ -59,6 +65,7 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
     private _commandListFancyTree: Fancytree.FancytreeNode;
 
     private _possibleCommands: HTMLSelectElement;
+    private _propertygrid: IobrokerWebuiPropertyGrid;
 
     constructor() {
         super();
@@ -66,6 +73,9 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
 
         this._commandListDiv = this._getDomElement<HTMLDivElement>('commandList');
         this._possibleCommands = this._getDomElement<HTMLSelectElement>('possibleCommands');
+        this._propertygrid = this._getDomElement<IobrokerWebuiPropertyGrid>('propertygrid');
+        this._propertygrid.getTypeInfo = this._getTypeInfo;
+
         this.addPossibleCommands();
         this.shadowRoot.adoptedStyleSheets = [fancyTreeStyleSheet, IobrokerWebuiScriptEditor.style];
     }
@@ -76,10 +86,31 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         this._assignEvents();
     }
 
+    private _getTypeInfo(obj: any, type: string): ITypeInfo {
+        if (!type && obj.type) {
+            const def = scriptCommandsTypeInfo.definitions[obj.type];
+            let tInfo: ITypeInfo = {};
+            tInfo.name = obj.type;
+            tInfo.properties = [];
+            for (let prp in def.properties) {
+                if (prp != 'type') {
+                    let p: IProperty = {};
+                    p.name = prp;
+                    p.type = def.properties[prp].type;
+                    tInfo.properties.push(p);
+                }
+            }
+            return tInfo;
+        }
+        return null;
+    }
+
     private async addPossibleCommands() {
         let commands = Object.keys(scriptCommandsTypeInfo.definitions);
 
         for (let c of commands) {
+            if (c == 'ScriptCommands')
+                continue;
             let option = document.createElement('option');
             option.innerText = c;
             this._possibleCommands.add(option);
@@ -103,8 +134,8 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
             nodata: false,
 
             activate: (event, data) => {
-                //let node = data.node;
-                //this._propertygrid.selectedObject = node.data.dto;
+                let node = data.node;
+                this._propertygrid.selectedObject = node.data.item;
             },
 
             createNode: (event, data) => {
@@ -185,7 +216,7 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
     private createTreeItem(currentItem: ScriptCommands) {
         let cti = {
             title: currentItem.type,
-            data: { dto: currentItem },
+            data: { item: currentItem },
             contextMenu: (e, data) => {
                 ContextMenu.show([{ title: 'Remove Item', action: (e) => this.removeItem(data) }], e);
             }
@@ -204,19 +235,10 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         data.node.remove();
     }
 
-
-    sortListBeforeSave() {
+    getScriptCommands() {
         let children = this._commandListFancyTree.children;
-        let sortedList = [];
-        children.forEach(c => {
-            let temp = this._script.commands.find(i => c.data.dto == i);
-            sortedList.push(temp);
-        })
-        this._script.commands = sortedList;
+        return children.map(x => x.data.item);
     }
-
-
-
 
     async executeCommand(command: IUiCommand | { type: string }) {
         if (command.type === 'save') {

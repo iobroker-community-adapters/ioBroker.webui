@@ -1,6 +1,8 @@
 import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, DomHelper, htmlFromString, property } from "@node-projects/base-custom-webcomponent";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../IobrokerHandler.js";
+import { ScriptSystem } from "../scripting/ScriptSystem.js";
+import { Script } from "../scripting/Script.js";
 
 @customElement("iobroker-webui-screen-viewer")
 export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
@@ -104,6 +106,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         //this._bindingsParse(documentFragment, true);
         this.shadowRoot.appendChild(documentFragment);
         this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot);
+        this.assignAllScripts();
     }
 
     /*
@@ -126,4 +129,22 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         iobrokerHandler.connection.setState(name, value);
     }
     */
+
+    assignAllScripts() {
+        const allElements = this.shadowRoot.querySelectorAll('*');
+        for (let e of allElements) {
+            for (let a of e.attributes) {
+                if (a.name[0] == '@') {
+                    try {
+                        let evtName = a.name.substring(1);
+                        let script: Script = JSON.parse(a.value);
+                        e.addEventListener(evtName, () => ScriptSystem.execute(script.commands, null));
+                    }
+                    catch (err) {
+                        console.warn('error assigning script', e, a);
+                    }
+                }
+            }
+        }
+    }
 }

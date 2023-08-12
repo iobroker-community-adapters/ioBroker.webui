@@ -10,7 +10,7 @@
                     "type": "string"
                 },
                 "type": {
-                    "const": "clearBitInSignal",
+                    "const": "ClearBitInSignal",
                     "type": "string"
                 }
             },
@@ -22,22 +22,11 @@
                     "type": "string"
                 },
                 "type": {
-                    "const": "decrementSignalValue",
+                    "const": "DecrementSignalValue",
                     "type": "string"
                 },
                 "value": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/definitions/ScriptMultiplexValue"
-                        },
-                        {
-                            "type": [
-                                "string",
-                                "number",
-                                "boolean"
-                            ]
-                        }
-                    ]
+                    "type": "number"
                 }
             },
             "type": "object"
@@ -48,22 +37,11 @@
                     "type": "string"
                 },
                 "type": {
-                    "const": "incrementSignalValue",
+                    "const": "IncrementSignalValue",
                     "type": "string"
                 },
                 "value": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/definitions/ScriptMultiplexValue"
-                        },
-                        {
-                            "type": [
-                                "string",
-                                "number",
-                                "boolean"
-                            ]
-                        }
-                    ]
+                    "type": "number"
                 }
             },
             "type": "object"
@@ -74,7 +52,7 @@
                     "type": "string"
                 },
                 "type": {
-                    "const": "javascript",
+                    "const": "Javascript",
                     "type": "string"
                 }
             },
@@ -89,17 +67,10 @@
                     "type": "string"
                 },
                 "screen": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/definitions/ScriptMultiplexValue"
-                        },
-                        {
-                            "type": "string"
-                        }
-                    ]
+                    "type": "string"
                 },
                 "type": {
-                    "const": "openScreen",
+                    "const": "OpenScreen",
                     "type": "string"
                 }
             },
@@ -114,18 +85,11 @@
                     "type": "string"
                 },
                 "type": {
-                    "const": "openUrl",
+                    "const": "OpenUrl",
                     "type": "string"
                 },
                 "url": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/definitions/ScriptMultiplexValue"
-                        },
-                        {
-                            "type": "string"
-                        }
-                    ]
+                    "type": "string"
                 }
             },
             "type": "object"
@@ -158,14 +122,6 @@
                 }
             ]
         },
-        "ScriptMultiplexValue": {
-            "properties": {
-                "name": {
-                    "type": "string"
-                }
-            },
-            "type": "object"
-        },
         "SetBitInSignal": {
             "properties": {
                 "bitNumber": {
@@ -175,7 +131,7 @@
                     "type": "string"
                 },
                 "type": {
-                    "const": "setBitInSignal",
+                    "const": "SetBitInSignal",
                     "type": "string"
                 }
             },
@@ -187,22 +143,11 @@
                     "type": "string"
                 },
                 "type": {
-                    "const": "setSignalValue",
+                    "const": "SetSignalValue",
                     "type": "string"
                 },
                 "value": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/definitions/ScriptMultiplexValue"
-                        },
-                        {
-                            "type": [
-                                "string",
-                                "number",
-                                "boolean"
-                            ]
-                        }
-                    ]
+                    "type": "string"
                 }
             },
             "type": "object"
@@ -216,7 +161,19 @@
                     "type": "string"
                 },
                 "type": {
-                    "const": "toggleBitInSignal",
+                    "const": "ToggleBitInSignal",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "ToggleSignalValue": {
+            "properties": {
+                "signal": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "ToggleSignalValue",
                     "type": "string"
                 }
             },

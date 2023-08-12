@@ -1,20 +1,20 @@
-import { ScriptMultiplexValue } from "./ScriptValue";
+//import { ScriptMultiplexValue } from "./ScriptValue";
 
 export declare type ScriptCommands = OpenScreen |
-    SetSignalValue | IncrementSignalValue | DecrementSignalValue |
+    ToggleSignalValue | SetSignalValue | IncrementSignalValue | DecrementSignalValue |
     SetBitInSignal | ClearBitInSignal | ToggleBitInSignal |
     Javascript;
 
 export interface OpenScreen {
     type: 'OpenScreen';
-    screen: string | ScriptMultiplexValue;
+    screen: string //| ScriptMultiplexValue;
     relativeSignalsPath: string;
     openInDialog: boolean;
 }
 
 export interface OpenUrl {
     type: 'OpenUrl';
-    url: string | ScriptMultiplexValue;
+    url: string //| ScriptMultiplexValue;
     target: string;
     openInDialog: boolean;
 }
@@ -22,17 +22,24 @@ export interface OpenUrl {
 export interface SetSignalValue {
     type: 'SetSignalValue';
     signal: string;
-    value: string | number | boolean | ScriptMultiplexValue;
+    value: string //| number | boolean | ScriptMultiplexValue;
 }
+
+export interface ToggleSignalValue {
+    type: 'ToggleSignalValue';
+    signal: string;
+}
+
 export interface IncrementSignalValue {
     type: 'IncrementSignalValue';
     signal: string;
-    value: string | number | boolean | ScriptMultiplexValue;
+    value: number //| ScriptMultiplexValue;
 }
+
 export interface DecrementSignalValue {
     type: 'DecrementSignalValue';
     signal: string;
-    value: string | number | boolean | ScriptMultiplexValue;
+    value: number //| ScriptMultiplexValue;
 }
 
 export interface SetBitInSignal {

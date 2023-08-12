@@ -84,6 +84,12 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
 
             let dlg = window.appShell.openDialog(cw, 100, 100, 500, 300);
             cw.okClicked.on(() => {
+                let scriptCommands = sc.getScriptCommands();
+                if (scriptCommands && scriptCommands.length) {
+                    let json = JSON.stringify({commands: scriptCommands});
+                    this.selectedItems[0].setAttribute('@' + eventItem.name, json);
+                    this._bindingsRefresh();
+                }
                 dlg.close();
             });
             cw.cancelClicked.on(() => dlg.close());
