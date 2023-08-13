@@ -111,7 +111,7 @@ export async function registerDesignerAddons(serviceContainer) {
             for (let m of manifest.modules) {
                 for (let e of m.exports) {
                     if (e.kind == 'custom-element-definition') {
-                        this.importFiles.push('./' + elementsRootPathWeb + removeLeading(e.declaration.module, '/'));
+                        this.importFiles.push('../' + elementsRootPathWeb + removeLeading(e.declaration.module, '/'));
                     }
                 }
             }
