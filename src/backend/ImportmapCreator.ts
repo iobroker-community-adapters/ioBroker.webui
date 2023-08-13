@@ -165,9 +165,9 @@ export class ImportmapCreator {
         }
         if (reportState)
             reportState(dependency + ": loading dependency: " + dependency);
-        const basePath = this._packageBaseDirectory + dependency + '/';
+        const basePath = path.join(this._packageBaseDirectory, dependency);
 
-        const packageJsonPath = basePath + 'package.json';
+        const packageJsonPath = path.join(basePath, 'package.json');
         const packageJson = await fs.readFile(packageJsonPath, 'utf-8');
         const packageJsonObj = await JSON.parse(packageJson);
 
