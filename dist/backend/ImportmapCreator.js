@@ -12,11 +12,12 @@ function removeLeading(text, char) {
 }
 export class ImportmapCreator {
     _packageBaseDirectory;
+    _importmapBaseDirectory;
     _nodeModulesBaseDirectory;
     _dependecies = new Map();
     _adapter;
     importMap = { imports: {}, scopes: {} };
-    constructor(adapter, packageBaseDirectory) {
+    constructor(adapter, packageBaseDirectory, importmapBaseDirectory) {
         this._adapter = adapter;
         this._packageBaseDirectory = packageBaseDirectory;
         this._nodeModulesBaseDirectory = path.join(packageBaseDirectory, 'node_modules');
@@ -165,6 +166,7 @@ export class ImportmapCreator {
         if (reportState)
             reportState(dependency + ": loading dependency: " + dependency);
         const basePath = path.join(this._nodeModulesBaseDirectory, dependency);
+        const importMapBasePath = path.join(this._importmapBaseDirectory, dependency);
         const packageJsonPath = path.join(basePath, 'package.json');
         const packageJson = await fs.readFile(packageJsonPath, 'utf-8');
         const packageJsonObj = await JSON.parse(packageJson);
@@ -175,7 +177,7 @@ export class ImportmapCreator {
             }
         }
         await Promise.all(depPromises);
-        this.addToImportmap(basePath, packageJsonObj);
+        this.addToImportmap(importMapBasePath, packageJsonObj);
     }
     async addToImportmap(basePath, packageJsonObj) {
         const map = this.importMap.imports;
@@ -184,7 +186,7 @@ export class ImportmapCreator {
             if (packageJsonObj.module)
                 mainImport = packageJsonObj.module;
             if (mainImport) {
-                this.importMap.imports[packageJsonObj.name] = basePath + removeTrailing(mainImport, '/');
+                this.importMap.imports[packageJsonObj.name] = path.join(basePath, removeTrailing(mainImport, '/'));
             }
             else {
                 this._adapter.log.warn('main is undefined for "' + packageJsonObj.name + '"');

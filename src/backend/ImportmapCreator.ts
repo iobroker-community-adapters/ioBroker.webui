@@ -17,13 +17,14 @@ function removeLeading(text: string, char: string) {
 export class ImportmapCreator {
 
     private _packageBaseDirectory: string;
+    private _importmapBaseDirectory: string;
     private _nodeModulesBaseDirectory: string;
     private _dependecies = new Map<string, boolean>();
     private _adapter: AdapterInstance
 
     public importMap = { imports: {}, scopes: {} }
 
-    constructor(adapter: AdapterInstance, packageBaseDirectory: string) {
+    constructor(adapter: AdapterInstance, packageBaseDirectory: string, importmapBaseDirectory: string) {
         this._adapter = adapter;
         this._packageBaseDirectory = packageBaseDirectory;
         this._nodeModulesBaseDirectory = path.join(packageBaseDirectory, 'node_modules');
@@ -184,6 +185,7 @@ export class ImportmapCreator {
         if (reportState)
             reportState(dependency + ": loading dependency: " + dependency);
         const basePath = path.join(this._nodeModulesBaseDirectory, dependency);
+        const importMapBasePath = path.join(this._importmapBaseDirectory, dependency);
 
         const packageJsonPath = path.join(basePath, 'package.json');
         const packageJson = await fs.readFile(packageJsonPath, 'utf-8');
@@ -197,7 +199,7 @@ export class ImportmapCreator {
         }
         await Promise.all(depPromises)
 
-        this.addToImportmap(basePath, packageJsonObj);
+        this.addToImportmap(importMapBasePath, packageJsonObj);
     }
 
     async addToImportmap(basePath: string, packageJsonObj: { name?: string, module?: string, main?: string, exports?: Record<string, string> }) {
@@ -208,7 +210,7 @@ export class ImportmapCreator {
             if (packageJsonObj.module)
                 mainImport = packageJsonObj.module;
             if (mainImport) {
-                this.importMap.imports[packageJsonObj.name] = basePath + removeTrailing(mainImport, '/');
+                this.importMap.imports[packageJsonObj.name] = path.join(basePath, removeTrailing(mainImport, '/'));
             } else {
                 this._adapter.log.warn('main is undefined for "' + packageJsonObj.name + '"');
             }
