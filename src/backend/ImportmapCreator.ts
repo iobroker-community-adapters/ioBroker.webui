@@ -1,6 +1,7 @@
 import path from 'path';
 import fs from 'fs/promises';
 import type { AdapterInstance } from '@iobroker/adapter-core';
+import { WebcomponentManifestElementsService } from '@node-projects/web-component-designer/dist/elements/services/elementsService/WebcomponentManifestElementsService.js';
 
 function removeTrailing(text: string, char: string) {
     if (text.endsWith('/'))
@@ -25,6 +26,7 @@ export class ImportmapCreator {
     public importMap = { imports: {}, scopes: {} }
     public designerServicesCode = '';
     public designerAddonsCode = '';
+    public importFiles: string[] = [];
 
     constructor(adapter: AdapterInstance, packageBaseDirectory: string, importmapBaseDirectory: string) {
         this._adapter = adapter;
@@ -65,6 +67,8 @@ export async function registerDesignerAddons(serviceContainer) {
         fileDesignerAddons += this.designerAddonsCode;
         fileDesignerAddons += '\n}';
         await fs.writeFile(path.join(this._packageBaseDirectory, 'designerAddons.js'), fileDesignerAddons);
+
+        await fs.writeFile(path.join(this._packageBaseDirectory, 'importWidgetFiles.js'), this.importFiles.map(x => "import '" + x + "';").join('\n'));
     }
 
     private async parseNpmPackageInternal(pkg: string, reportState?: (state: string) => void) {
@@ -115,9 +119,9 @@ export async function registerDesignerAddons(serviceContainer) {
                     for (let s of webComponentDesignerJson.services[o]) {
                         if (s.startsWith('./'))
                             s = s.substring(2);
-                            this.designerAddonsCode += `    classDefinition = (await importShim('./${path.join(importMapBasePath, s)}')).default;
+                        this.designerAddonsCode += `    classDefinition = (await importShim('./${path.join(importMapBasePath, s)}')).default;
     serviceContainer.register('${o}', new classDefinition());
-`   
+`
                     }
                 }
             }
@@ -129,14 +133,11 @@ export async function registerDesignerAddons(serviceContainer) {
             this.designerServicesCode += `let ${nm} = ${customElementsJson};
     serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', './${elementsRootPathWeb}', ${nm}));
     serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm}));`
-            /*;
-            if (loadAllImports) {
-                for (let e of await elements.getElements()) {
-                    //@ts-ignore
-                    importShim(e.import);
-                }
+
+            let elements = new WebcomponentManifestElementsService(packageJsonObj.name, elementsRootPathWeb, packageJsonObj);
+            for (let e of await elements.getElements()) {
+                this.importFiles.push(e.import)
             }
-            */
         }
         else {
             /*console.warn('npm package: ' + pkg + ' - no custom-elements.json found, only loading javascript module');

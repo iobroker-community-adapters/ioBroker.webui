@@ -39,8 +39,7 @@ export class SvgImage extends BaseCustomWebComponentConstructorAppend {
             color: var(--primary-color, white);
             overflow: hidden;
             text-align: center;
-        }
-    `;
+        }`;
 
     public static readonly template = html`
     <div id="container">

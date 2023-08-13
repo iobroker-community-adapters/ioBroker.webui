@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs/promises';
+import { WebcomponentManifestElementsService } from '@node-projects/web-component-designer/dist/elements/services/elementsService/WebcomponentManifestElementsService.js';
 function removeTrailing(text, char) {
     if (text.endsWith('/'))
         return text.substring(0, text.length - 1);
@@ -16,6 +17,7 @@ export class ImportmapCreator {
         this.importMap = { imports: {}, scopes: {} };
         this.designerServicesCode = '';
         this.designerAddonsCode = '';
+        this.importFiles = [];
         this._adapter = adapter;
         this._packageBaseDirectory = packageBaseDirectory;
         this._importmapBaseDirectory = importmapBaseDirectory;
@@ -48,6 +50,7 @@ export async function registerDesignerAddons(serviceContainer) {
         fileDesignerAddons += this.designerAddonsCode;
         fileDesignerAddons += '\n}';
         await fs.writeFile(path.join(this._packageBaseDirectory, 'designerAddons.js'), fileDesignerAddons);
+        await fs.writeFile(path.join(this._packageBaseDirectory, 'importWidgetFiles.js'), this.importFiles.map(x => "import '" + x + "';").join('\n'));
     }
     async parseNpmPackageInternal(pkg, reportState) {
         const basePath = path.join(this._nodeModulesBaseDirectory, pkg);
@@ -105,14 +108,10 @@ export async function registerDesignerAddons(serviceContainer) {
             this.designerServicesCode += `let ${nm} = ${customElementsJson};
     serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', './${elementsRootPathWeb}', ${nm}));
     serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm}));`;
-            /*;
-            if (loadAllImports) {
-                for (let e of await elements.getElements()) {
-                    //@ts-ignore
-                    importShim(e.import);
-                }
+            let elements = new WebcomponentManifestElementsService(packageJsonObj.name, elementsRootPathWeb, packageJsonObj);
+            for (let e of await elements.getElements()) {
+                this.importFiles.push(e.import);
             }
-            */
         }
         else {
             /*console.warn('npm package: ' + pkg + ' - no custom-elements.json found, only loading javascript module');

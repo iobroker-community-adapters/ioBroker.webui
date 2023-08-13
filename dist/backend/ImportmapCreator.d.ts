@@ -11,6 +11,7 @@ export declare class ImportmapCreator {
     };
     designerServicesCode: string;
     designerAddonsCode: string;
+    importFiles: string[];
     constructor(adapter: AdapterInstance, packageBaseDirectory: string, importmapBaseDirectory: string);
     parsePackages(reportState?: (state: string) => void): Promise<void>;
     private parseNpmPackageInternal;
