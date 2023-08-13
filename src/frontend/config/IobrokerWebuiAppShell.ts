@@ -16,7 +16,7 @@ import { IDisposable } from 'monaco-editor';
 import { PanelContainer } from 'dock-spawn-ts/lib/js/PanelContainer.js';
 import { PanelType } from 'dock-spawn-ts/lib/js/enums/PanelType.js';
 
-const rootPath = new URL(import.meta.url).pathname.split('/').slice(0, -2).join('/'); // -2 remove file & dist
+const rootPath = new URL(import.meta.url).pathname.split('/').slice(0, -4).join('/'); // -2 remove file & dist
 
 const serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
