@@ -44,6 +44,7 @@
     "@web/dev-server": "^0.3.0",
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
+    "construct-style-sheets-polyfill": "^3.1.0",
     "del": "^7.0.0",
     "dock-spawn-ts": "^2.518.0",
     "es-module-shims": "^1.8.0",
@@ -52,6 +53,7 @@
     "gulp": "^4.0.2",
     "jquery": "^3.7.0",
     "jquery.fancytree": "^2.38.3",
+    "long": "^5.2.3",
     "metro4-dist": "^4.5.0",
     "mobile-drag-drop": "^3.0.0-rc.0",
     "mocha": "^10.2.0",
@@ -65,7 +67,6 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.0.3",
-    "@types/node": "^20.4.10",
-    "construct-style-sheets-polyfill": "^3.1.0"
+    "@types/node": "^20.4.10"
   }
 }

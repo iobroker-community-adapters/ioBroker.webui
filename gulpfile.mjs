@@ -21,6 +21,7 @@ function copyNodeModules() {
         "esprima-next",
         //"jquery",
         //"jquery.fancytree",
+        "long",
         //"metro4-dist",
         "mobile-drag-drop",
         "monaco-editor",

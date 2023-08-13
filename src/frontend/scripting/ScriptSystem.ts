@@ -2,6 +2,7 @@ import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
 import { ScriptCommands } from "./ScriptCommands.js";
 import { ScriptMultiplexValue } from "./ScriptValue.js";
+import Long from 'long'
 
 export class ScriptSystem {
     static async execute(scriptCommands: ScriptCommands[], context: any) {
@@ -41,22 +42,23 @@ export class ScriptSystem {
 
                 case 'SetBitInSignal': {
                     let state = await iobrokerHandler.connection.getState(c.signal);
-                    let mask = 1 << c.bitNumber;
-                    const newVal = <number>state.val | mask;
+                    let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
+                    const newVal= Long.fromNumber(<number>state.val).or(mask).toNumber();
                     await iobrokerHandler.connection.setState(c.signal, newVal);
                     break;
                 }
                 case 'ClearBitInSignal': {
                     let state = await iobrokerHandler.connection.getState(c.signal);
-                    let mask = 1 << c.bitNumber;
-                    const newVal = <number>state.val & ~mask;
+                    let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
+                    mask.negate();
+                    const newVal= Long.fromNumber(<number>state.val).and(mask).toNumber();
                     await iobrokerHandler.connection.setState(c.signal, newVal);
                     break;
                 }
                 case 'ToggleBitInSignal': {
                     let state = await iobrokerHandler.connection.getState(c.signal);
-                    let mask = 1 << c.bitNumber;
-                    const newVal = <number>state.val ^ mask;
+                    let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
+                    const newVal= Long.fromNumber(<number>state.val).xor(mask).toNumber();
                     await iobrokerHandler.connection.setState(c.signal, newVal);
                     break;
                 }
