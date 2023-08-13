@@ -31,6 +31,7 @@
     "alwaysStrict": true,                  /* Parse in strict mode and emit "use strict" for each source file. */
     "resolveJsonModule": true,
     "importHelpers": true,
+    "skipLibCheck": true,
 
     /* Additional Checks */
     "noUnusedLocals": true,                /* Report errors on unused locals. */
