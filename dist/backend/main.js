@@ -3,7 +3,7 @@ import { spawn } from 'child_process';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import { Uploadheler } from './UploadHelper.js';
+import { Uploadhelper } from './UploadHelper.js';
 const __dirname = path.normalize(path.join(path.dirname(fileURLToPath(import.meta.url)), "../.."));
 const pkg = JSON.parse(fs.readFileSync(new URL('../../package.json', import.meta.url)).toString());
 const adapterName = pkg.name.split('.').pop();
@@ -24,7 +24,7 @@ class WebUi extends utils.Adapter {
         this.on('unload', this.onUnload.bind(this));
     }
     async runUpload() {
-        await Uploadheler.upload(this, utils.getAbsoluteInstanceDataDir(this) + '/www/widgets');
+        await Uploadhelper.upload(this, utils.getAbsoluteInstanceDataDir(this) + '/www/widgets');
         /*return new Promise(resolve => {
             this.log.info(`Upload ${this.name}, changes detected...`);
             const file = utils.controllerDir + '/iobroker.js';
@@ -63,7 +63,7 @@ class WebUi extends utils.Adapter {
             if (!fs.existsSync(__dirname + '/www/widgets/package.json'))
                 await fs.promises.writeFile(__dirname + '/www/widgets/package.json', '{}');
             this.log.info(`Install NPM package (${name})...`);
-            const child = spawn('npm', ['install', '--only=prod', '--omit=dev', name], { cwd: __dirname + '/www/widgets' });
+            const child = spawn('npm', ['install', '--omit=dev', name], { cwd: __dirname + '/www/widgets' });
             child.stdout.on('data', data => {
                 this.log.debug(data.toString().replace('\n', ''));
             });

@@ -1,5 +1,5 @@
 import fs from 'fs';
-export class Uploadheler {
+export class Uploadhelper {
     _adapter;
     _adapterName;
     _stoppingPromise = false;
@@ -16,7 +16,9 @@ export class Uploadheler {
         this._adapterName = this._adapter.name;
         this._uploadStateObjectName = `system.adapter.${this._adapterName}.upload`;
     }
-    static upload(adapter, dir) {
+    static async upload(adapter, dir) {
+        const hlp = new Uploadhelper(adapter);
+        await hlp.upload(dir);
     }
     async upload(dir) {
         if (!fs.existsSync(dir)) {

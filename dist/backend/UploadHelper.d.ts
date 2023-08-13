@@ -1,5 +1,5 @@
 import { AdapterInstance } from '@iobroker/adapter-core';
-export declare class Uploadheler {
+export declare class Uploadhelper {
     private _adapter;
     private _adapterName;
     private _stoppingPromise;
@@ -7,7 +7,7 @@ export declare class Uploadheler {
     private _ignoredFileExtensions;
     private _uploadStateObjectName;
     constructor(adapter: AdapterInstance);
-    static upload(adapter: AdapterInstance, dir: string): void;
+    static upload(adapter: AdapterInstance, dir: string): Promise<void>;
     upload(dir: string): Promise<void>;
     collectExistingFilesToDelete(path: any): Promise<{
         filesToDelete: any[];

@@ -1,7 +1,7 @@
 import { AdapterInstance } from '@iobroker/adapter-core';
 import fs from 'fs';
 
-export class Uploadheler {
+export class Uploadhelper {
 
     private _adapter: AdapterInstance;
     private _adapterName: string;
@@ -23,7 +23,9 @@ export class Uploadheler {
         this._uploadStateObjectName = `system.adapter.${this._adapterName}.upload`;
     }
 
-    public static upload(adapter: AdapterInstance, dir: string) {
+    public static async upload(adapter: AdapterInstance, dir: string) {
+        const hlp = new Uploadhelper(adapter);
+        await hlp.upload(dir)
     }
 
     async upload(dir: string) {
