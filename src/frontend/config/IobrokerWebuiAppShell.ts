@@ -28,7 +28,12 @@ serviceContainer.register("demoProviderService", new IobrokerWebuiDemoProviderSe
 serviceContainer.register("stylesheetService", designerCanvas => new CssToolsStylesheetService(designerCanvas));
 serviceContainer.config.codeViewWidget = CodeViewMonaco;
 
-registerNpmWidgets(serviceContainer);
+import(window.iobrokerWebuiRootUrl + 'widgets/configWidgets.js').then(x => {
+  x.registerNpmWidgets(serviceContainer);
+  //paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);
+}).catch(err => {
+  console.error('error loading widgets designer generated code', err);
+});
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent.js';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js';
@@ -49,7 +54,6 @@ import { IobrokerWebuiSolutionExplorer } from './IobrokerWebuiSolutionExplorer.j
 import { IobrokerWebuiStyleEditor } from './IobrokerWebuiStyleEditor.js';
 import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
 import { IobrokerWebuiEventAssignment } from './IobrokerWebuiEventAssignment.js';
-import { registerNpmWidgets } from '../widgets/configWidgets.js';
 
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
   activeElement: HTMLElement;

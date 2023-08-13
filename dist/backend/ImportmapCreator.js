@@ -37,7 +37,8 @@ export class ImportmapCreator {
         await fs.writeFile(path.join(this._packageBaseDirectory, 'importmap.js'), importMapScript);
         let file = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
 
-        export function registerNpmWidgets(serviceContainer: ServiceContainer) {`;
+        export function registerNpmWidgets(serviceContainer: ServiceContainer) {
+`;
         file += this.designerServicesCode;
         file += '\n}';
         await fs.writeFile(path.join(this._packageBaseDirectory, 'configWidgets.js'), file);

@@ -48,7 +48,8 @@ export class ImportmapCreator {
 
         let file = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
 
-        export function registerNpmWidgets(serviceContainer: ServiceContainer) {`
+        export function registerNpmWidgets(serviceContainer: ServiceContainer) {
+`
         file += this.designerServicesCode;
         file += '\n}';
 
