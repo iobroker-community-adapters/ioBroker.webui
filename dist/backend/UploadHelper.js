@@ -16,17 +16,15 @@ export class Uploadhelper {
         this._adapterName = this._adapter.name;
         this._uploadStateObjectName = `system.adapter.${this._adapterName}.upload`;
     }
-    static async upload(adapter, dir) {
-        adapter.log.debug(`bbbb`);
+    static async upload(adapter, sourceDirectory, targetDirectory) {
         const hlp = new Uploadhelper(adapter);
-        await hlp.upload(dir);
+        await hlp.upload(sourceDirectory, targetDirectory);
     }
-    async upload(dir) {
-        this._adapter.log.debug(`ccccc` + dir);
-        if (!fs.existsSync(dir)) {
+    async upload(sourceDirectory, targetDirectory) {
+        if (!fs.existsSync(sourceDirectory)) {
+            this._adapter.log.warn(`source directory does not exist: ${sourceDirectory}`);
             return;
         }
-        this._adapter.log.debug(`dddd`);
         await this._adapter.setForeignStateAsync(`system.adapter.${this._adapterName}.upload`, 0, true);
         let result;
         try {
@@ -36,8 +34,8 @@ export class Uploadhelper {
             // ignore
         }
         // Read all names with subtrees from the local directory
-        const files = this.walk(dir);
-        const { filesToDelete } = await this.collectExistingFilesToDelete(dir);
+        const files = this.walk(sourceDirectory);
+        const { filesToDelete } = await this.collectExistingFilesToDelete(targetDirectory);
         this._adapter.log.debug(`Erasing files: ${filesToDelete.length}`);
         if (this._stoppingPromise) {
             return;
@@ -110,26 +108,26 @@ export class Uploadhelper {
             }
         }
     }
-    async uploadInternal(files) {
+    async uploadInternal(files, sourceDirectory, targetDirectory) {
         await this._adapter.setForeignStateAsync(this._uploadStateObjectName, { val: 0, ack: true });
-        const wwwLen = (`${__dirname}/www/`).length;
+        const dirLen = sourceDirectory.length;
         for (let f = 0; f < files.length; f++) {
             const file = files[f];
             if (this._stoppingPromise) {
                 return;
             }
-            let attName = file.substring(wwwLen).replace(/\\/g, '/');
+            let attName = targetDirectory + file.substring(dirLen).replace(/\\/g, '/');
             // write upload status into log
             if (files.length - f > 100) {
                 (!f || !((files.length - f - 1) % 50)) &&
-                    this._adapter.log.debug(`upload [${files.length - f - 1}] ${file.substring(wwwLen)} ${attName}`);
+                    this._adapter.log.debug(`upload [${files.length - f - 1}] ${file.substring(dirLen)} ${attName}`);
             }
             else if (files.length - f - 1 > 20) {
                 (!f || !((files.length - f - 1) % 10)) &&
-                    this._adapter.log.debug(`upload [${files.length - f - 1}] ${file.substring(wwwLen)} ${attName}`);
+                    this._adapter.log.debug(`upload [${files.length - f - 1}] ${file.substring(dirLen)} ${attName}`);
             }
             else {
-                this._adapter.log.debug(`upload [${files.length - f - 1}] ${file.substring(wwwLen)} ${attName}`);
+                this._adapter.log.debug(`upload [${files.length - f - 1}] ${file.substring(dirLen)} ${attName}`);
             }
             // Update upload indicator
             const now = Date.now();
@@ -141,8 +139,10 @@ export class Uploadhelper {
                 });
             }
             try {
-                const data = fs.readFileSync(file);
-                await this._adapter.writeFileAsync(this._adapterName, attName, data);
+                this._adapter.log.debug(`ReadFile ${file}`);
+                this._adapter.log.debug(`WriteFile ${attName}`);
+                //const data = fs.readFileSync(file);
+                //await this._adapter.writeFileAsync(this._adapterName, attName, data);
             }
             catch (e) {
                 this._adapter.log.error(`Error: Cannot upload ${file}: ${e.message}`);
