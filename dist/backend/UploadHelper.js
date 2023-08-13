@@ -17,13 +17,16 @@ export class Uploadhelper {
         this._uploadStateObjectName = `system.adapter.${this._adapterName}.upload`;
     }
     static async upload(adapter, dir) {
+        adapter.log.debug(`bbbb`);
         const hlp = new Uploadhelper(adapter);
         await hlp.upload(dir);
     }
     async upload(dir) {
+        this._adapter.log.debug(`ccccc` + dir);
         if (!fs.existsSync(dir)) {
             return;
         }
+        this._adapter.log.debug(`dddd`);
         await this._adapter.setForeignStateAsync(`system.adapter.${this._adapterName}.upload`, 0, true);
         let result;
         try {

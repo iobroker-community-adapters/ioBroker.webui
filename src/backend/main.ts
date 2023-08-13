@@ -29,6 +29,7 @@ class WebUi extends utils.Adapter {
     }
 
     async runUpload() {
+        this.log.debug(`aaaaaa`);
         await Uploadhelper.upload(this, utils.getAbsoluteInstanceDataDir(this) + '/www/widgets')
         /*return new Promise(resolve => {
             this.log.info(`Upload ${this.name}, changes detected...`);
