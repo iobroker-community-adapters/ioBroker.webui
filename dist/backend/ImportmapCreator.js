@@ -12,26 +12,38 @@ function removeLeading(text, char) {
 }
 export class ImportmapCreator {
     _packageBaseDirectory;
+    _nodeModulesBaseDirectory;
     _dependecies = new Map();
     importMap = { imports: {}, scopes: {} };
     constructor(packageBaseDirectory) {
         this._packageBaseDirectory = packageBaseDirectory;
+        this._nodeModulesBaseDirectory = path.join(packageBaseDirectory, 'node_modules');
     }
-    async parseNpmPackage(pkg, /*loadAllImports: boolean,*/ reportState) {
-        const basePath = path.join(this._packageBaseDirectory, pkg);
+    async parsePackages(reportState) {
+        const packageJsonPath = path.join(this._packageBaseDirectory, 'package.json');
+        const packageJson = await fs.readFile(packageJsonPath, 'utf-8');
+        const packageJsonObj = await JSON.parse(packageJson);
+        const depPromises = [];
+        if (packageJsonObj.dependencies) {
+            for (let d in packageJsonObj.dependencies) {
+                await this.parseNpmPackageInternal(d, reportState);
+            }
+        }
+        await Promise.all(depPromises);
+    }
+    async parseNpmPackageInternal(pkg, reportState) {
+        const basePath = path.join(this._nodeModulesBaseDirectory, pkg);
         const packageJsonPath = path.join(basePath, 'package.json');
         if (reportState)
             reportState(pkg + ": loading package.json");
         const packageJson = await fs.readFile(packageJsonPath, 'utf-8');
         const packageJsonObj = await JSON.parse(packageJson);
         this.addToImportmap(basePath, packageJsonObj);
-        const depPromises = [];
         if (packageJsonObj.dependencies) {
             for (let d in packageJsonObj.dependencies) {
-                depPromises.push(this.loadDependency(d, packageJsonObj.dependencies[d]));
+                await this.loadDependency(d, packageJsonObj.dependencies[d]);
             }
         }
-        await Promise.all(depPromises);
         let customElementsPath = basePath + 'custom-elements.json';
         //let elementsRootPath = basePath;
         if (packageJsonObj.customElements) {
@@ -150,7 +162,7 @@ export class ImportmapCreator {
         }
         if (reportState)
             reportState(dependency + ": loading dependency: " + dependency);
-        const basePath = path.join(this._packageBaseDirectory, dependency);
+        const basePath = path.join(this._nodeModulesBaseDirectory, dependency);
         const packageJsonPath = path.join(basePath, 'package.json');
         const packageJson = await fs.readFile(packageJsonPath, 'utf-8');
         const packageJsonObj = await JSON.parse(packageJson);

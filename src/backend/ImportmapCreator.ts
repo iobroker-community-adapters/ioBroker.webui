@@ -16,16 +16,32 @@ function removeLeading(text: string, char: string) {
 export class ImportmapCreator {
 
     private _packageBaseDirectory: string;
+    private _nodeModulesBaseDirectory: string;
     private _dependecies = new Map<string, boolean>();
 
     public importMap = { imports: {}, scopes: {} }
 
     constructor(packageBaseDirectory: string) {
         this._packageBaseDirectory = packageBaseDirectory;
+        this._nodeModulesBaseDirectory = path.join(packageBaseDirectory, 'node_modules');
     }
 
-    async parseNpmPackage(pkg: string, /*loadAllImports: boolean,*/ reportState?: (state: string) => void) {
-        const basePath = path.join(this._packageBaseDirectory, pkg);
+    public async parsePackages(reportState?: (state: string) => void) {
+        const packageJsonPath = path.join(this._packageBaseDirectory, 'package.json');
+        const packageJson = await fs.readFile(packageJsonPath, 'utf-8');
+        const packageJsonObj = await JSON.parse(packageJson);
+
+        const depPromises: Promise<void>[] = [];
+        if (packageJsonObj.dependencies) {
+            for (let d in packageJsonObj.dependencies) {
+                await this.parseNpmPackageInternal(d, reportState);
+            }
+        }
+        await Promise.all(depPromises);
+    }
+
+    private async parseNpmPackageInternal(pkg: string, reportState?: (state: string) => void) {
+        const basePath = path.join(this._nodeModulesBaseDirectory, pkg);
 
         const packageJsonPath = path.join(basePath, 'package.json');
         if (reportState)
@@ -35,13 +51,11 @@ export class ImportmapCreator {
 
         this.addToImportmap(basePath, packageJsonObj);
 
-        const depPromises: Promise<void>[] = []
         if (packageJsonObj.dependencies) {
             for (let d in packageJsonObj.dependencies) {
-                depPromises.push(this.loadDependency(d, packageJsonObj.dependencies[d]));
+                await this.loadDependency(d, packageJsonObj.dependencies[d]);
             }
         }
-        await Promise.all(depPromises)
         let customElementsPath = basePath + 'custom-elements.json';
         //let elementsRootPath = basePath;
         if (packageJsonObj.customElements) {
@@ -166,7 +180,7 @@ export class ImportmapCreator {
         }
         if (reportState)
             reportState(dependency + ": loading dependency: " + dependency);
-        const basePath = path.join(this._packageBaseDirectory, dependency);
+        const basePath = path.join(this._nodeModulesBaseDirectory, dependency);
 
         const packageJsonPath = path.join(basePath, 'package.json');
         const packageJson = await fs.readFile(packageJsonPath, 'utf-8');
