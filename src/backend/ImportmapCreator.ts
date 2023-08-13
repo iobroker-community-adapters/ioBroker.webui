@@ -116,7 +116,7 @@ export async function registerDesignerAddons(serviceContainer) {
                         if (s.startsWith('./'))
                             s = s.substring(2);
                             this.designerAddonsCode += `    classDefinition = (await importShim('./${path.join(importMapBasePath, s)}')).default;
-    serviceContainer.register(${o}, new classDefinition());
+    serviceContainer.register('${o}', new classDefinition());
 `   
                     }
                 }

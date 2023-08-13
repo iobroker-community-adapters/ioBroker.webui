@@ -15,6 +15,7 @@ function copyNodeModules() {
         "@node-projects/lean-he-esm",
         "@node-projects/node-html-parser-esm",
         "@node-projects/web-component-designer",
+        "construct-style-sheets-polyfill",
         "es-module-shims",
         "dock-spawn-ts",
         "esprima-next",
