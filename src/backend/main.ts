@@ -262,6 +262,8 @@ class WebUi extends utils.Adapter {
                 await this.installNpm('');
             }
         }
+        await this.createImportMapAndLoaderFiles();
+        
         this.log.info(`create adapter objects`);
         await this.createObjects();
         this.log.info(`subscribe adapter states`);
