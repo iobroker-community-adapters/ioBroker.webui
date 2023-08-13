@@ -48,7 +48,7 @@ export class ImportmapCreator {
 
         let file = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
 
-        export function registerNpmWidgets(serviceContainer: ServiceContainer) {
+        export function registerNpmWidgets(serviceContainer) {
 `
         file += this.designerServicesCode;
         file += '\n}';
@@ -112,8 +112,8 @@ export class ImportmapCreator {
         if (customElementsJson) {
             let nm = (<string>packageJsonObj.name).replaceAll(' ', '_').replaceAll('@', '_').replaceAll('-', '_').replaceAll('/', '_').replaceAll('.', '_');
             this.designerServicesCode += `let ${nm} = ${customElementsJson};
-    serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPath}', ${nm});
-    serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm});`
+    serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPath}', ${nm}));
+    serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm}));`
             /*;
             let elements = new WebcomponentManifestElementsService(packageJsonObj.name, elementsRootPath, customElementsJsonObj);
             serviceContainer.register('elementsService', elements);
