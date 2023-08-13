@@ -4,6 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { Uploadhelper } from './UploadHelper.js';
+import { ImportmapCreator } from './ImportmapCreator.js';
 const __dirname = path.normalize(path.join(path.dirname(fileURLToPath(import.meta.url)), "../.."));
 const pkg = JSON.parse(fs.readFileSync(new URL('../../package.json', import.meta.url)).toString());
 const adapterName = pkg.name.split('.').pop();
@@ -108,19 +109,28 @@ class WebUi extends utils.Adapter {
             await this.runCommand(this.states["webui.0.control.command"], this.states["webui.0.control.data"]);
         await this.setStateAsync(id, state, true);
     }
+    async createImportMapAndLoaderFiles() {
+        this.log.info(`create importMap...`);
+        const imc = new ImportmapCreator(__dirname + '/www/widgets');
+        imc.parseNpmPackage('');
+        this.log.info(`importMap: ` + JSON.stringify(imc.importMap));
+    }
     async runCommand(command, parameter) {
         this.log.info(`runCommand: ${command}, parameter: ${parameter}`);
         switch (command) {
             case 'addNpm':
                 await this.installNpm(parameter);
+                await this.createImportMapAndLoaderFiles();
                 await this.refreshWWW();
                 break;
             case 'updateNpm':
                 await this.installNpm(parameter);
+                await this.createImportMapAndLoaderFiles();
                 await this.refreshWWW();
                 break;
             case 'removeNpm':
                 await this.removeNpm(parameter);
+                await this.createImportMapAndLoaderFiles();
                 await this.refreshWWW();
                 break;
             case 'refreshWww':
