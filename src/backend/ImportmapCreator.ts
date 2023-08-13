@@ -85,12 +85,17 @@ export async function registerDesignerAddons(serviceContainer) {
             }
         }
         let customElementsPath = basePath + 'custom-elements.json';
-        let elementsRootPath = basePath;
+        let customElementsPathWeb = importMapBasePath + 'custom-elements.json';
+        //let elementsRootPath = basePath;
+        let elementsRootPathWeb = importMapBasePath;
         if (packageJsonObj.customElements) {
             customElementsPath = path.join(basePath, removeTrailing(packageJsonObj.customElements, '/'));
+            customElementsPathWeb = path.join(importMapBasePath, removeTrailing(packageJsonObj.customElements, '/'));
             if (customElementsPath.includes('/')) {
-                let idx = customElementsPath.lastIndexOf('/');
-                elementsRootPath = customElementsPath.substring(0, idx + 1);
+                //let idx = customElementsPath.lastIndexOf('/');
+                //elementsRootPath = customElementsPath.substring(0, idx + 1);
+                let idx2 = customElementsPathWeb.lastIndexOf('/');
+                elementsRootPathWeb = customElementsPathWeb.substring(0, idx2 + 1);
             }
         }
         let webComponentDesignerPath = path.join(basePath, 'web-component-designer.json');
@@ -110,7 +115,7 @@ export async function registerDesignerAddons(serviceContainer) {
                     for (let s of webComponentDesignerJson.services[o]) {
                         if (s.startsWith('./'))
                             s = s.substring(2);
-                            this.designerAddonsCode += `    classDefinition = (await importShim('${importMapBasePath + s}')).default;
+                            this.designerAddonsCode += `    classDefinition = (await importShim('./${importMapBasePath + s}')).default;
     serviceContainer.register(${o}, new classDefinition());
 `   
                     }
@@ -122,7 +127,7 @@ export async function registerDesignerAddons(serviceContainer) {
         if (customElementsJson) {
             let nm = (<string>packageJsonObj.name).replaceAll(' ', '_').replaceAll('@', '_').replaceAll('-', '_').replaceAll('/', '_').replaceAll('.', '_');
             this.designerServicesCode += `let ${nm} = ${customElementsJson};
-    serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPath}', ${nm}));
+    serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPathWeb}', ${nm}));
     serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm}));`
             /*;
             if (loadAllImports) {
