@@ -110,7 +110,7 @@ export class ImportmapCreator {
         });*/
 
         if (customElementsJson) {
-            let nm = (<string>packageJsonObj.name).replaceAll(' ', '_');
+            let nm = (<string>packageJsonObj.name).replaceAll(' ', '_').replaceAll('@', '_').replaceAll('-', '_').replaceAll('/', '_').replaceAll('.', '_');
             this.designerServicesCode += `let ${nm} = ${customElementsJson};
     serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPath}', ${nm});
     serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm});`
