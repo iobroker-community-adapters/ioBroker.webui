@@ -97,7 +97,7 @@ export async function registerDesignerAddons(serviceContainer) {
                     for (let s of webComponentDesignerJson.services[o]) {
                         if (s.startsWith('./'))
                             s = s.substring(2);
-                        this.designerAddonsCode += `    classDefinition = (await importShim('./${importMapBasePath + s}')).default;
+                        this.designerAddonsCode += `    classDefinition = (await importShim('./${path.join(importMapBasePath, s)}')).default;
     serviceContainer.register(${o}, new classDefinition());
 `;
                     }
