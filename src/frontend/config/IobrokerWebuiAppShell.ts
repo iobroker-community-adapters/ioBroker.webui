@@ -35,6 +35,11 @@ import(window.iobrokerWebuiRootUrl + 'widgets/configWidgets.js').then(x => {
 }).catch(err => {
   console.error('error loading widgets designer generated code', err);
 });
+import(window.iobrokerWebuiRootUrl + 'widgets/designerAddons.js').then(x => {
+  x.registerDesignerAddons(serviceContainer);
+}).catch(err => {
+  console.error('error loading widgets designer addons', err);
+});
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent.js';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js';

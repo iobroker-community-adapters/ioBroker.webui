@@ -10,6 +10,7 @@ export declare class ImportmapCreator {
         scopes: {};
     };
     designerServicesCode: string;
+    designerAddonsCode: string;
     constructor(adapter: AdapterInstance, packageBaseDirectory: string, importmapBaseDirectory: string);
     parsePackages(reportState?: (state: string) => void): Promise<void>;
     private parseNpmPackageInternal;

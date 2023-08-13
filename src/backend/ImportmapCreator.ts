@@ -8,11 +8,11 @@ function removeTrailing(text: string, char: string) {
     return text;
 }
 
-/*function removeLeading(text: string, char: string) {
+function removeLeading(text: string, char: string) {
     if (text.startsWith('/'))
         return text.substring(1);
     return text;
-}*/
+}
 
 export class ImportmapCreator {
 
@@ -24,6 +24,7 @@ export class ImportmapCreator {
 
     public importMap = { imports: {}, scopes: {} }
     public designerServicesCode = '';
+    public designerAddonsCode = '';
 
     constructor(adapter: AdapterInstance, packageBaseDirectory: string, importmapBaseDirectory: string) {
         this._adapter = adapter;
@@ -46,14 +47,24 @@ export class ImportmapCreator {
         let importMapScript = `const importMapWidgets = ` + JSON.stringify(this.importMap, null, 4) + ';\nimportShim.addImportMap(importMapWidgets);'
         await fs.writeFile(path.join(this._packageBaseDirectory, 'importmap.js'), importMapScript);
 
-        let file = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
+        /* Imports Code for Designer ... */
 
-        export function registerNpmWidgets(serviceContainer) {
+        let fileConfigWidgets = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
+
+    export function registerNpmWidgets(serviceContainer) {
 `
-        file += this.designerServicesCode;
-        file += '\n}';
+        fileConfigWidgets += this.designerServicesCode;
+        fileConfigWidgets += '\n}';
+        await fs.writeFile(path.join(this._packageBaseDirectory, 'configWidgets.js'), fileConfigWidgets);
 
-        await fs.writeFile(path.join(this._packageBaseDirectory, 'configWidgets.js'), file);
+        let fileDesignerAddons = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
+
+    export async function registerDesignerAddons(serviceContainer) {
+        let classDefinition;
+`
+        fileDesignerAddons += this.designerAddonsCode;
+        fileDesignerAddons += '\n}';
+        await fs.writeFile(path.join(this._packageBaseDirectory, 'designerAddons.js'), fileDesignerAddons);
     }
 
     private async parseNpmPackageInternal(pkg: string, reportState?: (state: string) => void) {
@@ -82,9 +93,9 @@ export class ImportmapCreator {
                 elementsRootPath = customElementsPath.substring(0, idx + 1);
             }
         }
-        //let webComponentDesignerPath = path.join(basePath, 'web-component-designer.json');
+        let webComponentDesignerPath = path.join(basePath, 'web-component-designer.json');
         if (packageJsonObj.webComponentDesigner) {
-            //webComponentDesignerPath = path.join(basePath, removeLeading(packageJsonObj.webComponentDesigner, '/'));
+            webComponentDesignerPath = path.join(basePath, removeLeading(packageJsonObj.webComponentDesigner, '/'));
         }
         if (reportState)
             reportState(pkg + ": loading custom-elements.json");
@@ -92,22 +103,21 @@ export class ImportmapCreator {
         //if (await fs.access(customElementsPath,fs.constants.R_OK ))
         let customElementsJson = await fs.readFile(customElementsPath, 'utf-8');
 
-        /*fs.readFile(webComponentDesignerPath, 'utf-8').then(async x => {
-                const webComponentDesignerJson = await JSON.parse(x);
-                if (webComponentDesignerJson.services) {
-                    for (let o in webComponentDesignerJson.services) {
-                        for (let s of webComponentDesignerJson.services[o]) {
-                            if (s.startsWith('./'))
-                                s = s.substring(2);
-                            //@ts-ignore
-                            const classDefinition = (await importShim(basePath + s)).default;
-                            //@ts-ignore
-                            serviceContainer.register(o, new classDefinition());
-                        }
+        fs.readFile(webComponentDesignerPath, 'utf-8').then(async x => {
+            const webComponentDesignerJson = await JSON.parse(x);
+            if (webComponentDesignerJson.services) {
+                for (let o in webComponentDesignerJson.services) {
+                    for (let s of webComponentDesignerJson.services[o]) {
+                        if (s.startsWith('./'))
+                            s = s.substring(2);
+                            this.designerAddonsCode += `    classDefinition = (await importShim(${basePath + s})).default;
+                            serviceContainer.register(${o}, new classDefinition());
+`   
                     }
                 }
-            
-        });*/
+            }
+
+        }).catch(_ => { });
 
         if (customElementsJson) {
             let nm = (<string>packageJsonObj.name).replaceAll(' ', '_').replaceAll('@', '_').replaceAll('-', '_').replaceAll('/', '_').replaceAll('.', '_');
