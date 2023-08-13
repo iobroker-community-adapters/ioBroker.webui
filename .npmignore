@@ -4,7 +4,7 @@
 /.github
 /.vs
 /assets
-/dist
+/dist/frontend
 /node_modules
 /src
 .gitignore
