@@ -40,19 +40,24 @@ export class ScriptSystem {
                 }
 
                 case 'SetBitInSignal': {
-                    //todo: bit
-                    await iobrokerHandler.connection.setState(c.signal, true);
+                    let state = await iobrokerHandler.connection.getState(c.signal);
+                    let mask = 1 << c.bitNumber;
+                    const newVal = <number>state.val | mask;
+                    await iobrokerHandler.connection.setState(c.signal, newVal);
                     break;
                 }
                 case 'ClearBitInSignal': {
-                    //todo: bit
-                    await iobrokerHandler.connection.setState(c.signal, false);
+                    let state = await iobrokerHandler.connection.getState(c.signal);
+                    let mask = 1 << c.bitNumber;
+                    const newVal = <number>state.val & ~mask;
+                    await iobrokerHandler.connection.setState(c.signal, newVal);
                     break;
                 }
                 case 'ToggleBitInSignal': {
-                    //todo: bit
                     let state = await iobrokerHandler.connection.getState(c.signal);
-                    await iobrokerHandler.connection.setState(c.signal, !state.val);
+                    let mask = 1 << c.bitNumber;
+                    const newVal = <number>state.val ^ mask;
+                    await iobrokerHandler.connection.setState(c.signal, newVal);
                     break;
                 }
 
