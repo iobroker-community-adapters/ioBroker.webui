@@ -13,7 +13,8 @@ export class Uploadhelper {
         '.npmignore',
         '.gitignore',
         '.DS_Store',
-        '_socket/info.js'
+        '_socket/info.js',
+        'LICENSE'
     ]
 
     private _uploadStateObjectName

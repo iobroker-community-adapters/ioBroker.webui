@@ -51,7 +51,7 @@ export class ImportmapCreator {
 
         let fileConfigWidgets = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
 
-    export function registerNpmWidgets(serviceContainer) {
+export function registerNpmWidgets(serviceContainer) {
 `
         fileConfigWidgets += this.designerServicesCode;
         fileConfigWidgets += '\n}';
@@ -59,8 +59,8 @@ export class ImportmapCreator {
 
         let fileDesignerAddons = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
 
-    export async function registerDesignerAddons(serviceContainer) {
-        let classDefinition;
+export async function registerDesignerAddons(serviceContainer) {
+    let classDefinition;
 `
         fileDesignerAddons += this.designerAddonsCode;
         fileDesignerAddons += '\n}';
@@ -110,8 +110,8 @@ export class ImportmapCreator {
                     for (let s of webComponentDesignerJson.services[o]) {
                         if (s.startsWith('./'))
                             s = s.substring(2);
-                            this.designerAddonsCode += `    classDefinition = (await importShim(${basePath + s})).default;
-                            serviceContainer.register(${o}, new classDefinition());
+                            this.designerAddonsCode += `    classDefinition = (await importShim('${importMapBasePath + s}')).default;
+    serviceContainer.register(${o}, new classDefinition());
 `   
                     }
                 }
@@ -125,20 +125,13 @@ export class ImportmapCreator {
     serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPath}', ${nm}));
     serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm}));`
             /*;
-            let elements = new WebcomponentManifestElementsService(packageJsonObj.name, elementsRootPath, customElementsJsonObj);
-            serviceContainer.register('elementsService', elements);
-            let properties = new WebcomponentManifestPropertiesService(packageJsonObj.name, customElementsJsonObj);
-            serviceContainer.register('propertyService', properties);
-
             if (loadAllImports) {
                 for (let e of await elements.getElements()) {
                     //@ts-ignore
                     importShim(e.import);
                 }
             }
-
-            //todo: should be retriggered by service container, or changeing list in container
-            paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);*/
+            */
         }
         else {
             /*console.warn('npm package: ' + pkg + ' - no custom-elements.json found, only loading javascript module');
