@@ -124,7 +124,7 @@ class WebUi extends utils.Adapter {
     async createImportMapAndLoaderFiles() {
         try {
             this.log.info(`create importMap...`);
-            const imc = new ImportmapCreator(__dirname + '/www/widgets');
+            const imc = new ImportmapCreator(__dirname + '/www/widgets/node_modules');
             imc.parseNpmPackage('');
             this.log.info(`importMap: ` + JSON.stringify(imc.importMap));
         }

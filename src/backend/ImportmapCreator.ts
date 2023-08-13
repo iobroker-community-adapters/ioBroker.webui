@@ -45,23 +45,24 @@ export class ImportmapCreator {
         let customElementsPath = basePath + 'custom-elements.json';
         //let elementsRootPath = basePath;
         if (packageJsonObj.customElements) {
-            customElementsPath = basePath + removeTrailing(packageJsonObj.customElements, '/');
+            customElementsPath = path.join(basePath, removeTrailing(packageJsonObj.customElements, '/'));
             if (customElementsPath.includes('/')) {
                 //let idx = customElementsPath.lastIndexOf('/');
                 //elementsRootPath = customElementsPath.substring(0, idx + 1);
             }
         }
-        let webComponentDesignerPath = basePath + 'web-component-designer.json';
+        let webComponentDesignerPath = path.join(basePath, 'web-component-designer.json');
         if (packageJsonObj.webComponentDesigner) {
-            webComponentDesignerPath = basePath + removeLeading(packageJsonObj.webComponentDesigner, '/');
+            webComponentDesignerPath = path.join(basePath, removeLeading(packageJsonObj.webComponentDesigner, '/'));
         }
         if (reportState)
             reportState(pkg + ": loading custom-elements.json");
+        //let customElementsJson;
+        //if (await fs.access(customElementsPath,fs.constants.R_OK ))
         let customElementsJson = await fs.readFile(customElementsPath, 'utf-8');
 
-        fetch(webComponentDesignerPath).then(async x => {
-            if (x.ok) {
-                const webComponentDesignerJson = await x.json();
+        /*fs.readFile(webComponentDesignerPath, 'utf-8').then(async x => {
+                const webComponentDesignerJson = await JSON.parse(x);
                 if (webComponentDesignerJson.services) {
                     for (let o in webComponentDesignerJson.services) {
                         for (let s of webComponentDesignerJson.services[o]) {
@@ -74,8 +75,8 @@ export class ImportmapCreator {
                         }
                     }
                 }
-            }
-        });
+            
+        });*/
 
         if (customElementsJson) {
             /*const customElementsJsonObj = await customElementsJson.json();
