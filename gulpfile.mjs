@@ -69,6 +69,14 @@ function copyDist() {
         .pipe(dest('./www/dist'));
 }
 
+function cleanupDist() {
+    let notUsed = [
+        "./www/dist/backend"
+    ]
+
+    return deleteAsync(notUsed);
+}
+
 function copyAssets() {
     return src('./assets/**/*.*')
         .pipe(dest('./www/assets'));
@@ -89,4 +97,4 @@ function copyConfigJs() {
         .pipe(dest('./www'));
 }
 
-export default series(copyNodeModules, copyNodeFiles, cleanupNodeModules, copyDist, copyAssets, copyHtml, copyManifest, copyConfigJs);
+export default series(copyNodeModules, copyNodeFiles, cleanupNodeModules, copyDist, cleanupDist, copyAssets, copyHtml, copyManifest, copyConfigJs);
