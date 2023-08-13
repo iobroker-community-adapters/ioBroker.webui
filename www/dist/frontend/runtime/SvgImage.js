@@ -66,6 +66,9 @@ SvgImage.style = css `
             width: 100%;
             overflow: hidden;
         }
+        #head {
+            text-align: center;
+        }
         #main {
             display: flex;
             justify-content: center;
@@ -78,6 +81,7 @@ SvgImage.style = css `
         #foot {
             color: var(--primary-color, white);
             overflow: hidden;
+            text-align: center;
         }
     `;
 SvgImage.template = html `
@@ -85,8 +89,7 @@ SvgImage.template = html `
         <div id="head"></div>
         <div id="main"></div>
         <div id="foot"></div>
-        </div>
-    `;
+    </div>`;
 SvgImage.is = 'iobroker-webui-svg-image';
 __decorate([
     property(String)
