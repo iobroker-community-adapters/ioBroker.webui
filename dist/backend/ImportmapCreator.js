@@ -21,7 +21,6 @@ export class ImportmapCreator {
         this._adapter = adapter;
         this._packageBaseDirectory = packageBaseDirectory;
         this._importmapBaseDirectory = importmapBaseDirectory;
-        PageTransitionEvent;
         this._nodeModulesBaseDirectory = path.join(packageBaseDirectory, 'node_modules');
     }
     async parsePackages(reportState) {

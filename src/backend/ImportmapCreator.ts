@@ -27,7 +27,7 @@ export class ImportmapCreator {
     constructor(adapter: AdapterInstance, packageBaseDirectory: string, importmapBaseDirectory: string) {
         this._adapter = adapter;
         this._packageBaseDirectory = packageBaseDirectory;
-        this._importmapBaseDirectory=importmapBaseDirectory;PageTransitionEvent
+        this._importmapBaseDirectory = importmapBaseDirectory;
         this._nodeModulesBaseDirectory = path.join(packageBaseDirectory, 'node_modules');
     }
 
@@ -197,7 +197,7 @@ export class ImportmapCreator {
                 await this.loadDependency(d, packageJsonObj.dependencies[d]);
             }
         }
-       
+
         this.addToImportmap(importMapBasePath, packageJsonObj);
     }
 
