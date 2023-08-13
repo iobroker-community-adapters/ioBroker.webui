@@ -5,11 +5,11 @@ function removeTrailing(text, char) {
         return text.substring(0, text.length - 1);
     return text;
 }
-function removeLeading(text, char) {
+/*function removeLeading(text: string, char: string) {
     if (text.startsWith('/'))
         return text.substring(1);
     return text;
-}
+}*/
 export class ImportmapCreator {
     _packageBaseDirectory;
     _importmapBaseDirectory;
@@ -32,7 +32,8 @@ export class ImportmapCreator {
                 await this.parseNpmPackageInternal(d, reportState);
             }
         }
-        await fs.writeFile(path.join(this._packageBaseDirectory, 'importmap.json'), JSON.stringify(this.importMap, null, 2));
+        let importMapScript = `const importMapConfig = ` + JSON.stringify(this.importMap, null, 4) + ';\nimportShim.addImportMap(importMapConfig);';
+        await fs.writeFile(path.join(this._packageBaseDirectory, 'importmap.js'), importMapScript);
     }
     async parseNpmPackageInternal(pkg, reportState) {
         const basePath = path.join(this._nodeModulesBaseDirectory, pkg);
@@ -57,9 +58,9 @@ export class ImportmapCreator {
                 //elementsRootPath = customElementsPath.substring(0, idx + 1);
             }
         }
-        let webComponentDesignerPath = path.join(basePath, 'web-component-designer.json');
+        //let webComponentDesignerPath = path.join(basePath, 'web-component-designer.json');
         if (packageJsonObj.webComponentDesigner) {
-            webComponentDesignerPath = path.join(basePath, removeLeading(packageJsonObj.webComponentDesigner, '/'));
+            //webComponentDesignerPath = path.join(basePath, removeLeading(packageJsonObj.webComponentDesigner, '/'));
         }
         if (reportState)
             reportState(pkg + ": loading custom-elements.json");
@@ -190,7 +191,7 @@ export class ImportmapCreator {
             else {
                 this._adapter.log.warn('main is undefined for "' + packageJsonObj.name + '"');
             }
-            this.importMap.imports[packageJsonObj.name + '/'] = basePath + '/';
+            this.importMap.imports[packageJsonObj.name + '/'] = './' + basePath + '/';
         }
     }
 }

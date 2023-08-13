@@ -8,11 +8,11 @@ function removeTrailing(text: string, char: string) {
     return text;
 }
 
-function removeLeading(text: string, char: string) {
+/*function removeLeading(text: string, char: string) {
     if (text.startsWith('/'))
         return text.substring(1);
     return text;
-}
+}*/
 
 export class ImportmapCreator {
 
@@ -42,7 +42,8 @@ export class ImportmapCreator {
             }
         }
 
-        await fs.writeFile(path.join(this._packageBaseDirectory, 'importmap.json'), JSON.stringify(this.importMap, null, 2));
+        let importMapScript = `const importMapConfig = ` + JSON.stringify(this.importMap, null, 4) + ';\nimportShim.addImportMap(importMapConfig);'
+        await fs.writeFile(path.join(this._packageBaseDirectory, 'importmap.js'), importMapScript);
     }
 
     private async parseNpmPackageInternal(pkg: string, reportState?: (state: string) => void) {
@@ -71,9 +72,9 @@ export class ImportmapCreator {
                 //elementsRootPath = customElementsPath.substring(0, idx + 1);
             }
         }
-        let webComponentDesignerPath = path.join(basePath, 'web-component-designer.json');
+        //let webComponentDesignerPath = path.join(basePath, 'web-component-designer.json');
         if (packageJsonObj.webComponentDesigner) {
-            webComponentDesignerPath = path.join(basePath, removeLeading(packageJsonObj.webComponentDesigner, '/'));
+            //webComponentDesignerPath = path.join(basePath, removeLeading(packageJsonObj.webComponentDesigner, '/'));
         }
         if (reportState)
             reportState(pkg + ": loading custom-elements.json");
@@ -214,7 +215,7 @@ export class ImportmapCreator {
             } else {
                 this._adapter.log.warn('main is undefined for "' + packageJsonObj.name + '"');
             }
-            this.importMap.imports[packageJsonObj.name + '/'] = basePath + '/';
+            this.importMap.imports[packageJsonObj.name + '/'] = './' + basePath + '/';
         }
     }
 }
