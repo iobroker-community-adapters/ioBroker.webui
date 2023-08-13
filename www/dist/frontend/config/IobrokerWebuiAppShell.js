@@ -21,6 +21,13 @@ serviceContainer.register("bindingService", new IobrokerWebuiBindingService());
 serviceContainer.register("demoProviderService", new IobrokerWebuiDemoProviderService());
 serviceContainer.register("stylesheetService", designerCanvas => new CssToolsStylesheetService(designerCanvas));
 serviceContainer.config.codeViewWidget = CodeViewMonaco;
+LazyLoader.LoadJavascript(window.iobrokerWebuiRootUrl + 'widgets/importmap.js');
+import(window.iobrokerWebuiRootUrl + 'widgets/configWidgets.js').then(x => {
+    x.registerNpmWidgets(serviceContainer);
+    //paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);
+}).catch(err => {
+    console.error('error loading widgets designer generated code', err);
+});
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent.js';
 import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from '@node-projects/base-custom-webcomponent';
 import { CommandHandling } from './CommandHandling.js';
