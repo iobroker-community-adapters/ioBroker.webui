@@ -36,17 +36,18 @@ export class ImportmapCreator {
         const packageJson = await fs.readFile(packageJsonPath, 'utf-8');
         const packageJsonObj = await JSON.parse(packageJson);
 
-        const depPromises: Promise<void>[] = [];
         if (packageJsonObj.dependencies) {
             for (let d in packageJsonObj.dependencies) {
                 await this.parseNpmPackageInternal(d, reportState);
             }
         }
-        await Promise.all(depPromises);
+
+        await fs.writeFile(path.join(this._packageBaseDirectory, 'importmap.json'), JSON.stringify(this.importMap, null, 2));
     }
 
     private async parseNpmPackageInternal(pkg: string, reportState?: (state: string) => void) {
         const basePath = path.join(this._nodeModulesBaseDirectory, pkg);
+        const importMapBasePath = path.join(this._importmapBaseDirectory, pkg);
 
         const packageJsonPath = path.join(basePath, 'package.json');
         if (reportState)
@@ -54,7 +55,7 @@ export class ImportmapCreator {
         const packageJson = await fs.readFile(packageJsonPath, 'utf-8');
         const packageJsonObj = await JSON.parse(packageJson);
 
-        this.addToImportmap(basePath, packageJsonObj);
+        this.addToImportmap(importMapBasePath, packageJsonObj);
 
         if (packageJsonObj.dependencies) {
             for (let d in packageJsonObj.dependencies) {
@@ -209,11 +210,11 @@ export class ImportmapCreator {
             if (packageJsonObj.module)
                 mainImport = packageJsonObj.module;
             if (mainImport) {
-                this.importMap.imports[packageJsonObj.name] = path.join(basePath, removeTrailing(mainImport, '/'));
+                this.importMap.imports[packageJsonObj.name] = './' + path.join(basePath, removeTrailing(mainImport, '/'));
             } else {
                 this._adapter.log.warn('main is undefined for "' + packageJsonObj.name + '"');
             }
-            this.importMap.imports[packageJsonObj.name + '/'] = basePath;
+            this.importMap.imports[packageJsonObj.name + '/'] = basePath + '/';
         }
     }
 }
