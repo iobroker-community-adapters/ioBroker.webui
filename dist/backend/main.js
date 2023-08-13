@@ -191,11 +191,13 @@ class WebUi extends utils.Adapter {
             native: {}
         });
         await this.setForeignObjectAsync(`system.adapter.${adapterName}.upload`, {
+            //@ts-ignore
             type: 'state',
             common: {
                 name: `${adapterName}.upload`,
                 type: 'number',
                 role: 'indicator.state',
+                //@ts-ignore
                 unit: '%',
                 min: 0,
                 max: 100,

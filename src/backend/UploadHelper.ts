@@ -36,9 +36,8 @@ export class Uploadhelper {
         }
         await this._adapter.setForeignStateAsync(`system.adapter.${this._adapterName}.upload`, 0, true);
 
-        let result;
         try {
-            result = await this._adapter.getForeignObjectAsync(this._adapterName);
+            await this._adapter.getForeignObjectAsync(this._adapterName);
         } catch {
             // ignore
         }
@@ -126,7 +125,7 @@ export class Uploadhelper {
         }
     }
 
-    async uploadInternal(files, sourceDirectory: string, targetDirectory: string) {
+    async uploadInternal(files, sourceDirectory: string, targetDirectory: string): Promise<void> {
         await this._adapter.setForeignStateAsync(this._uploadStateObjectName, { val: 0, ack: true });
 
         const dirLen = sourceDirectory.length;
@@ -174,7 +173,7 @@ export class Uploadhelper {
             await this._adapter.setForeignStateAsync(this._uploadStateObjectName, { val: 0, ack: true });
         }
 
-        return this._adapter;
+        return;
     }
 
     // Read synchronous all files recursively from local directory
