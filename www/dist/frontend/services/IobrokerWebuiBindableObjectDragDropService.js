@@ -3,8 +3,9 @@ import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelp
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { SvgImage } from "../runtime/SvgImage.js";
 export class IobrokerWebuiBindableObjectDragDropService {
-    rectMap = new Map();
-    rect;
+    constructor() {
+        this.rectMap = new Map();
+    }
     dragEnter(designerCanvas, event, element) {
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {

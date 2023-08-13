@@ -4,18 +4,7 @@ import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElem
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
-export let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
-    static { ScreenViewer_1 = this; }
-    static style = css `
-    :host {
-        height: 100%;
-        position: relative;
-        display: block;
-    }
-    `;
-    _iobBindings;
-    _loading;
-    _screenName;
+export let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     get screenName() {
         return this._screenName;
     }
@@ -25,7 +14,6 @@ export let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConst
             this._loadScreen();
         }
     }
-    _relativeSignalsPath;
     get relativeSignalsPath() {
         return this._relativeSignalsPath;
     }
@@ -34,7 +22,6 @@ export let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConst
             this._relativeSignalsPath = value;
         }
     }
-    objects;
     constructor() {
         super();
         this._restoreCachedInititalValues();
@@ -119,6 +106,13 @@ export let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConst
         }
     }
 };
+ScreenViewer.style = css `
+    :host {
+        height: 100%;
+        position: relative;
+        display: block;
+    }
+    `;
 __decorate([
     property()
 ], ScreenViewer.prototype, "screenName", null);

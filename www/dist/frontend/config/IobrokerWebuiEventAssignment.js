@@ -3,30 +3,6 @@ import { ContextMenu } from "@node-projects/web-component-designer";
 import { IobrokerWebuiScriptEditor } from "./IobrokerWebuiScriptEditor.js";
 import { IobrokerWebuiConfirmationWrapper } from "./IobrokerWebuiConfirmationWrapper.js";
 export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstructorAppend {
-    static style = css `
-    :host {
-        display: grid;
-        grid-template-columns: 20px 1fr 30px;
-        overflow-y: auto;
-        align-content: start;
-        height: 100%;
-    }
-    .rect {
-        width: 7px;
-        height: 7px;
-        border: 1px solid black;
-        justify-self: center;
-    }
-    div {
-        width: 40px;
-        align-self: center;
-    }`;
-    static template = html `
-        <template repeat:item="[[this.events]]">
-            <div @contextmenu="[[this._ctxMenu(event, item)]]" class="rect" css:background-color="[[this._isEventSet(item)]]"></div>
-            <div title="[[item.name]]">[[item.name]]</div>
-            <button @click="[[this._editEvent(event, item)]]">...</button>
-        </template>`;
     constructor() {
         super();
         this._restoreCachedInititalValues();
@@ -34,10 +10,6 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
     ready() {
         this._bindingsParse();
     }
-    _instanceServiceContainer;
-    _selectionChangedHandler;
-    _selectedItems;
-    events;
     set instanceServiceContainer(value) {
         this._instanceServiceContainer = value;
         this._selectionChangedHandler?.dispose();
@@ -98,4 +70,28 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
         }
     }
 }
+IobrokerWebuiEventAssignment.style = css `
+    :host {
+        display: grid;
+        grid-template-columns: 20px 1fr 30px;
+        overflow-y: auto;
+        align-content: start;
+        height: 100%;
+    }
+    .rect {
+        width: 7px;
+        height: 7px;
+        border: 1px solid black;
+        justify-self: center;
+    }
+    div {
+        width: 40px;
+        align-self: center;
+    }`;
+IobrokerWebuiEventAssignment.template = html `
+        <template repeat:item="[[this.events]]">
+            <div @contextmenu="[[this._ctxMenu(event, item)]]" class="rect" css:background-color="[[this._isEventSet(item)]]"></div>
+            <div title="[[item.name]]">[[item.name]]</div>
+            <button @click="[[this._editEvent(event, item)]]">...</button>
+        </template>`;
 customElements.define("iobroker-webui-event-assignment", IobrokerWebuiEventAssignment);

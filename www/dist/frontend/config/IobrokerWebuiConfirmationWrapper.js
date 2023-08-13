@@ -1,6 +1,22 @@
 import { BaseCustomWebComponentConstructorAppend, TypedEvent, css, html } from "@node-projects/base-custom-webcomponent";
 export class IobrokerWebuiConfirmationWrapper extends BaseCustomWebComponentConstructorAppend {
-    static style = css `
+    constructor() {
+        super();
+        this.okClicked = new TypedEvent;
+        this.cancelClicked = new TypedEvent;
+        this._restoreCachedInititalValues();
+    }
+    ready() {
+        this._assignEvents();
+    }
+    _ok() {
+        this.okClicked?.emit();
+    }
+    _cancel() {
+        this.cancelClicked?.emit();
+    }
+}
+IobrokerWebuiConfirmationWrapper.style = css `
         #upper {
             height: calc(100% - 35px);
 
@@ -14,26 +30,10 @@ export class IobrokerWebuiConfirmationWrapper extends BaseCustomWebComponentCons
             padding: 5px;
             box-sizing: border-box;
         }`;
-    static template = html `
+IobrokerWebuiConfirmationWrapper.template = html `
         <div id="upper"><slot></slot></div>
         <div id="lower">
             <button @click="_ok">Ok</button>
             <button @click="_cancel">Cancel</button>
         </div>`;
-    constructor() {
-        super();
-        this._restoreCachedInititalValues();
-    }
-    ready() {
-        this._assignEvents();
-    }
-    _ok() {
-        this.okClicked?.emit();
-    }
-    _cancel() {
-        this.cancelClicked?.emit();
-    }
-    okClicked = new TypedEvent;
-    cancelClicked = new TypedEvent;
-}
 customElements.define("iobroker-webui-confirmation-wrapper", IobrokerWebuiConfirmationWrapper);

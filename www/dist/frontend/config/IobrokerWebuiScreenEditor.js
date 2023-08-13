@@ -2,12 +2,7 @@ import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projec
 import { DocumentContainer, } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend {
-    _name;
     get name() { return this._name; }
-    _configChangedListener;
-    documentContainer;
-    static template = html ``;
-    static style = css ``;
     async initialize(name, html, style, serviceContainer) {
         this._name = name;
         this.documentContainer = new DocumentContainer(serviceContainer);
@@ -78,4 +73,6 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         this._configChangedListener?.dispose();
     }
 }
+IobrokerWebuiScreenEditor.template = html ``;
+IobrokerWebuiScreenEditor.style = css ``;
 customElements.define("iobroker-webui-screen-editor", IobrokerWebuiScreenEditor);

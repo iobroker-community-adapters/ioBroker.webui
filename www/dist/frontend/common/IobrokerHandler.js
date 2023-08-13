@@ -3,17 +3,14 @@ import { TypedEvent } from "@node-projects/base-custom-webcomponent";
 import { sleep } from "@node-projects/web-component-designer/dist/elements/helper/Helper.js";
 const screenFileExtension = ".screen";
 class IobrokerHandler {
-    static instance = new IobrokerHandler();
-    host;
-    connection;
-    adapterName = "webui";
-    configPath = "config/";
-    namespace = "webui.0";
-    config;
-    screensChanged = new TypedEvent();
-    configChanged = new TypedEvent();
-    _readyPromises = [];
     constructor() {
+        this.adapterName = "webui";
+        this.configPath = "config/";
+        this.namespace = "webui.0";
+        this.screensChanged = new TypedEvent();
+        this.configChanged = new TypedEvent();
+        this._readyPromises = [];
+        this._screens = new Map();
     }
     waitForReady() {
         if (!this._readyPromises)
@@ -37,8 +34,6 @@ class IobrokerHandler {
         this._readyPromises = null;
         console.log("ioBroker handler ready.");
     }
-    _screenNames;
-    _screens = new Map();
     async loadAllScreens() {
         let names = await this.getScreenNames();
         let p = [];
@@ -132,4 +127,5 @@ class IobrokerHandler {
         await this.connection.setState(this.namespace + '.control.command', { val: command });
     }
 }
+IobrokerHandler.instance = new IobrokerHandler();
 export const iobrokerHandler = IobrokerHandler.instance;

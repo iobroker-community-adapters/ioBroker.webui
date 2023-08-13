@@ -5,20 +5,17 @@ function removeTrailing(text, char) {
         return text.substring(0, text.length - 1);
     return text;
 }
-/*function removeLeading(text: string, char: string) {
+function removeLeading(text, char) {
     if (text.startsWith('/'))
         return text.substring(1);
     return text;
-}*/
+}
 export class ImportmapCreator {
-    _packageBaseDirectory;
-    _importmapBaseDirectory;
-    _nodeModulesBaseDirectory;
-    _dependecies = new Map();
-    _adapter;
-    importMap = { imports: {}, scopes: {} };
-    designerServicesCode = '';
     constructor(adapter, packageBaseDirectory, importmapBaseDirectory) {
+        this._dependecies = new Map();
+        this.importMap = { imports: {}, scopes: {} };
+        this.designerServicesCode = '';
+        this.designerAddonsCode = '';
         this._adapter = adapter;
         this._packageBaseDirectory = packageBaseDirectory;
         this._importmapBaseDirectory = importmapBaseDirectory;
@@ -35,13 +32,22 @@ export class ImportmapCreator {
         }
         let importMapScript = `const importMapWidgets = ` + JSON.stringify(this.importMap, null, 4) + ';\nimportShim.addImportMap(importMapWidgets);';
         await fs.writeFile(path.join(this._packageBaseDirectory, 'importmap.js'), importMapScript);
-        let file = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
+        /* Imports Code for Designer ... */
+        let fileConfigWidgets = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
 
-        export function registerNpmWidgets(serviceContainer) {
+export function registerNpmWidgets(serviceContainer) {
 `;
-        file += this.designerServicesCode;
-        file += '\n}';
-        await fs.writeFile(path.join(this._packageBaseDirectory, 'configWidgets.js'), file);
+        fileConfigWidgets += this.designerServicesCode;
+        fileConfigWidgets += '\n}';
+        await fs.writeFile(path.join(this._packageBaseDirectory, 'configWidgets.js'), fileConfigWidgets);
+        let fileDesignerAddons = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
+
+export async function registerDesignerAddons(serviceContainer) {
+    let classDefinition;
+`;
+        fileDesignerAddons += this.designerAddonsCode;
+        fileDesignerAddons += '\n}';
+        await fs.writeFile(path.join(this._packageBaseDirectory, 'designerAddons.js'), fileDesignerAddons);
     }
     async parseNpmPackageInternal(pkg, reportState) {
         const basePath = path.join(this._nodeModulesBaseDirectory, pkg);
@@ -58,59 +64,55 @@ export class ImportmapCreator {
             }
         }
         let customElementsPath = basePath + 'custom-elements.json';
-        let elementsRootPath = basePath;
+        let customElementsPathWeb = importMapBasePath + 'custom-elements.json';
+        //let elementsRootPath = basePath;
+        let elementsRootPathWeb = importMapBasePath;
         if (packageJsonObj.customElements) {
             customElementsPath = path.join(basePath, removeTrailing(packageJsonObj.customElements, '/'));
+            customElementsPathWeb = path.join(importMapBasePath, removeTrailing(packageJsonObj.customElements, '/'));
             if (customElementsPath.includes('/')) {
-                let idx = customElementsPath.lastIndexOf('/');
-                elementsRootPath = customElementsPath.substring(0, idx + 1);
+                //let idx = customElementsPath.lastIndexOf('/');
+                //elementsRootPath = customElementsPath.substring(0, idx + 1);
+                let idx2 = customElementsPathWeb.lastIndexOf('/');
+                elementsRootPathWeb = customElementsPathWeb.substring(0, idx2 + 1);
             }
         }
-        //let webComponentDesignerPath = path.join(basePath, 'web-component-designer.json');
+        let webComponentDesignerPath = path.join(basePath, 'web-component-designer.json');
         if (packageJsonObj.webComponentDesigner) {
-            //webComponentDesignerPath = path.join(basePath, removeLeading(packageJsonObj.webComponentDesigner, '/'));
+            webComponentDesignerPath = path.join(basePath, removeLeading(packageJsonObj.webComponentDesigner, '/'));
         }
         if (reportState)
             reportState(pkg + ": loading custom-elements.json");
         //let customElementsJson;
         //if (await fs.access(customElementsPath,fs.constants.R_OK ))
         let customElementsJson = await fs.readFile(customElementsPath, 'utf-8');
-        /*fs.readFile(webComponentDesignerPath, 'utf-8').then(async x => {
-                const webComponentDesignerJson = await JSON.parse(x);
-                if (webComponentDesignerJson.services) {
-                    for (let o in webComponentDesignerJson.services) {
-                        for (let s of webComponentDesignerJson.services[o]) {
-                            if (s.startsWith('./'))
-                                s = s.substring(2);
-                            //@ts-ignore
-                            const classDefinition = (await importShim(basePath + s)).default;
-                            //@ts-ignore
-                            serviceContainer.register(o, new classDefinition());
-                        }
+        fs.readFile(webComponentDesignerPath, 'utf-8').then(async (x) => {
+            const webComponentDesignerJson = await JSON.parse(x);
+            if (webComponentDesignerJson.services) {
+                for (let o in webComponentDesignerJson.services) {
+                    for (let s of webComponentDesignerJson.services[o]) {
+                        if (s.startsWith('./'))
+                            s = s.substring(2);
+                        this.designerAddonsCode += `    classDefinition = (await importShim('./${path.join(importMapBasePath, s)}')).default;
+    serviceContainer.register(${o}, new classDefinition());
+`;
                     }
                 }
-            
-        });*/
+            }
+        }).catch(_ => { });
         if (customElementsJson) {
             let nm = packageJsonObj.name.replaceAll(' ', '_').replaceAll('@', '_').replaceAll('-', '_').replaceAll('/', '_').replaceAll('.', '_');
             this.designerServicesCode += `let ${nm} = ${customElementsJson};
-    serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPath}', ${nm}));
+    serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPathWeb}', ${nm}));
     serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm}));`;
             /*;
-            let elements = new WebcomponentManifestElementsService(packageJsonObj.name, elementsRootPath, customElementsJsonObj);
-            serviceContainer.register('elementsService', elements);
-            let properties = new WebcomponentManifestPropertiesService(packageJsonObj.name, customElementsJsonObj);
-            serviceContainer.register('propertyService', properties);
-
             if (loadAllImports) {
                 for (let e of await elements.getElements()) {
                     //@ts-ignore
                     importShim(e.import);
                 }
             }
-
-            //todo: should be retriggered by service container, or changeing list in container
-            paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);*/
+            */
         }
         else {
             /*console.warn('npm package: ' + pkg + ' - no custom-elements.json found, only loading javascript module');

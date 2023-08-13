@@ -4,59 +4,6 @@ import scriptCommandsTypeInfo from "../generated/ScriptCommands.json" assert { t
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert { type: 'css' };
 import { ContextMenu } from "@node-projects/web-component-designer";
 export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructorAppend {
-    static style = css `
-        :host {
-            background: white;
-        }
-        .list{
-            display: grid;
-            grid-template-columns: 1fr 40px;
-            width: 100%;
-            box-sizing: border-box;
-            margin: 3px;
-        }
-
-        .list button{
-            padding: 5px 10px;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-            margin-right: 5px;
-            margin-left: 5px;
-        }
-
-        span.fancytree-expander {
-            display: none;
-        }
-        iobroker-webui-property-grid {
-            width: 100%;
-            height: 100%;
-        }
-    `;
-    static template = html `
-        <div style="width:100%; height:100%; overflow: hidden;">
-            <iobroker-webui-split-view style="height: 100%; width: 100%; position: relative;" orientation="horizontal">
-                <div style="width: 40%;  position: relative;">
-                    <div style="width:100%; height:100%">
-                        <div id="commandList" style="overflow-x: hidden; overflow-y: auto; width:100%; height: calc(100% - 34px);"></div>
-                        <div class="list">
-                            <select id="possibleCommands" style="width: 100%"></select>  
-                            <button @click="[[this.addItem()]]">Add</button>
-                        </div>
-                    </div> 
-                </div>
-                <div style="width: 60%; position: relative;">
-                    <iobroker-webui-property-grid id="propertygrid"></iobroker-webui-property-grid>
-                </div>
-            </iobroker-webui-split-view>
-        </div>
-    `;
-    static is = 'vscript-editor';
-    _script;
-    _commandListDiv;
-    _commandListFancyTree;
-    _possibleCommands;
-    _propertygrid;
     constructor() {
         super();
         this._restoreCachedInititalValues();
@@ -222,4 +169,52 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         return false;
     }
 }
+IobrokerWebuiScriptEditor.style = css `
+        :host {
+            background: white;
+        }
+        .list{
+            display: grid;
+            grid-template-columns: 1fr 40px;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 3px;
+        }
+
+        .list button{
+            padding: 5px 10px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            margin-right: 5px;
+            margin-left: 5px;
+        }
+
+        span.fancytree-expander {
+            display: none;
+        }
+        iobroker-webui-property-grid {
+            width: 100%;
+            height: 100%;
+        }
+    `;
+IobrokerWebuiScriptEditor.template = html `
+        <div style="width:100%; height:100%; overflow: hidden;">
+            <iobroker-webui-split-view style="height: 100%; width: 100%; position: relative;" orientation="horizontal">
+                <div style="width: 40%;  position: relative;">
+                    <div style="width:100%; height:100%">
+                        <div id="commandList" style="overflow-x: hidden; overflow-y: auto; width:100%; height: calc(100% - 34px);"></div>
+                        <div class="list">
+                            <select id="possibleCommands" style="width: 100%"></select>  
+                            <button @click="[[this.addItem()]]">Add</button>
+                        </div>
+                    </div> 
+                </div>
+                <div style="width: 60%; position: relative;">
+                    <iobroker-webui-property-grid id="propertygrid"></iobroker-webui-property-grid>
+                </div>
+            </iobroker-webui-split-view>
+        </div>
+    `;
+IobrokerWebuiScriptEditor.is = 'vscript-editor';
 customElements.define("iobroker-webui-script-editor", IobrokerWebuiScriptEditor);

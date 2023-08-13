@@ -2,26 +2,11 @@ import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projec
 import { sleep } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorAppend {
-    static style = css `
-        :host {
-            display: block;
-            height: 100%;
-            width: 100%;
-        }
-
-        .errorDecoration {
-            background-color: red !important;
-        }
-    `;
-    static template = html `
-        <div id="container" style="width: 100%; height: 100%; position: absolute;"></div>
-    `;
     async createModel(text) {
         await IobrokerWebuiStyleEditor.initMonacoEditor();
         //@ts-ignore
         return monaco.editor.createModel(text, 'css');
     }
-    _model;
     get model() {
         return this._model;
     }
@@ -30,7 +15,6 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
         if (this._editor)
             this._editor.setModel(value);
     }
-    _errorLine;
     get errorLine() {
         return this._errorLine;
     }
@@ -43,9 +27,6 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
         }
         this._errorLine = value;
     }
-    _container;
-    _editor;
-    static _initalized;
     constructor() {
         super();
         this._parseAttributesToProperties();
@@ -116,4 +97,18 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
         return false;
     }
 }
+IobrokerWebuiStyleEditor.style = css `
+        :host {
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+
+        .errorDecoration {
+            background-color: red !important;
+        }
+    `;
+IobrokerWebuiStyleEditor.template = html `
+        <div id="container" style="width: 100%; height: 100%; position: absolute;"></div>
+    `;
 customElements.define('iobroker-webui-style-editor', IobrokerWebuiStyleEditor);

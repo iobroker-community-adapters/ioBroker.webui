@@ -28,6 +28,11 @@ import(window.iobrokerWebuiRootUrl + 'widgets/configWidgets.js').then(x => {
 }).catch(err => {
     console.error('error loading widgets designer generated code', err);
 });
+import(window.iobrokerWebuiRootUrl + 'widgets/designerAddons.js').then(x => {
+    x.registerDesignerAddons(serviceContainer);
+}).catch(err => {
+    console.error('error loading widgets designer addons', err);
+});
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent.js';
 import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from '@node-projects/base-custom-webcomponent';
 import { CommandHandling } from './CommandHandling.js';
@@ -42,71 +47,10 @@ import "./IobrokerWebuiPropertyGrid.js";
 import { IobrokerWebuiStyleEditor } from './IobrokerWebuiStyleEditor.js';
 import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
-    activeElement;
-    mainPage = 'designer';
-    _dock;
-    _dockManager;
-    _solutionExplorer;
-    styleEditor;
-    propertyGrid;
-    treeViewExtended;
-    eventsAssignment;
-    static style = css `
-    :host {
-      display: block;
-      box-sizing: border-box;
-      position: relative;
-
-      /* Default colour scheme */
-      --canvas-background: white;
-      --almost-black: #141720;
-      --dark-grey: #232733;
-      --medium-grey: #2f3545;
-      --light-grey: #383f52;
-      --highlight-pink: #e91e63;
-      --highlight-blue: #2196f3;
-      --highlight-green: #99ff33;
-      --input-border-color: #596c7a;
+    constructor() {
+        super(...arguments);
+        this.mainPage = 'designer';
     }
-
-    .app-body {
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: row;
-      height: 100%;
-    }
-
-    dock-spawn-ts > div {
-      height: 100%;
-    }
-    `;
-    static template = html `
-      <div class="app-body">
-        <dock-spawn-ts id="dock" style="width: 100%; height: 100%; position: relative;">
-          <div id="treeUpper" title="project" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2"
-            style="overflow: hidden; width: 100%;">
-            <iobroker-webui-solution-explorer id="solutionExplorer"></iobroker-solution-explorer>
-          </div>
-
-          <div title="outline" dock-spawn-dock-type="down" dock-spawn-dock-to="treeUpper" dock-spawn-dock-ratio="0.33"
-            style="overflow: hidden; width: 100%;">
-            <node-projects-tree-view-extended name="tree" id="treeViewExtended"></node-projects-tree-view-extended>
-          </div>
-      
-          <div id="attributeDock" title="Properties" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.2">
-            <node-projects-property-grid-with-header id="propertyGrid"></node-projects-property-grid-with-header>
-          </div>
-          
-          <div id="eventsDock" title="Events" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.4" dock-spawn-dock-to="attributeDock">
-            <iobroker-webui-event-assignment id="eventsList"></iobroker-webui-event-assignment>
-          </div>
-
-          <div id="lower" title="style" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.25" style="overflow: hidden; width: 100%;">
-            <iobroker-webui-style-editor id="styleEditor"></iobroker-webui-style-editor>
-          </div>
-        </dock-spawn-ts>
-      </div>
-    `;
     async ready() {
         this._dock = this._getDomElement('dock');
         this._solutionExplorer = this._getDomElement('solutionExplorer');
@@ -226,4 +170,60 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         this.openDock(styleEditor);
     }
 }
+IobrokerWebuiAppShell.style = css `
+    :host {
+      display: block;
+      box-sizing: border-box;
+      position: relative;
+
+      /* Default colour scheme */
+      --canvas-background: white;
+      --almost-black: #141720;
+      --dark-grey: #232733;
+      --medium-grey: #2f3545;
+      --light-grey: #383f52;
+      --highlight-pink: #e91e63;
+      --highlight-blue: #2196f3;
+      --highlight-green: #99ff33;
+      --input-border-color: #596c7a;
+    }
+
+    .app-body {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      height: 100%;
+    }
+
+    dock-spawn-ts > div {
+      height: 100%;
+    }
+    `;
+IobrokerWebuiAppShell.template = html `
+      <div class="app-body">
+        <dock-spawn-ts id="dock" style="width: 100%; height: 100%; position: relative;">
+          <div id="treeUpper" title="project" dock-spawn-dock-type="left" dock-spawn-dock-ratio="0.2"
+            style="overflow: hidden; width: 100%;">
+            <iobroker-webui-solution-explorer id="solutionExplorer"></iobroker-solution-explorer>
+          </div>
+
+          <div title="outline" dock-spawn-dock-type="down" dock-spawn-dock-to="treeUpper" dock-spawn-dock-ratio="0.33"
+            style="overflow: hidden; width: 100%;">
+            <node-projects-tree-view-extended name="tree" id="treeViewExtended"></node-projects-tree-view-extended>
+          </div>
+      
+          <div id="attributeDock" title="Properties" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.2">
+            <node-projects-property-grid-with-header id="propertyGrid"></node-projects-property-grid-with-header>
+          </div>
+          
+          <div id="eventsDock" title="Events" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.4" dock-spawn-dock-to="attributeDock">
+            <iobroker-webui-event-assignment id="eventsList"></iobroker-webui-event-assignment>
+          </div>
+
+          <div id="lower" title="style" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.25" style="overflow: hidden; width: 100%;">
+            <iobroker-webui-style-editor id="styleEditor"></iobroker-webui-style-editor>
+          </div>
+        </dock-spawn-ts>
+      </div>
+    `;
 window.customElements.define('iobroker-webui-app-shell', IobrokerWebuiAppShell);
