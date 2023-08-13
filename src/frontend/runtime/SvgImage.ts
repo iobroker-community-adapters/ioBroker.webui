@@ -23,6 +23,9 @@ export class SvgImage extends BaseCustomWebComponentConstructorAppend {
             width: 100%;
             overflow: hidden;
         }
+        #head {
+            text-align: center;
+        }
         #main {
             display: flex;
             justify-content: center;
@@ -35,6 +38,7 @@ export class SvgImage extends BaseCustomWebComponentConstructorAppend {
         #foot {
             color: var(--primary-color, white);
             overflow: hidden;
+            text-align: center;
         }
     `;
 
@@ -43,8 +47,7 @@ export class SvgImage extends BaseCustomWebComponentConstructorAppend {
         <div id="head"></div>
         <div id="main"></div>
         <div id="foot"></div>
-        </div>
-    `
+    </div>`
 
     public static readonly is = 'iobroker-webui-svg-image';
 
