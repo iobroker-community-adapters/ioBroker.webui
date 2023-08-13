@@ -51,6 +51,8 @@ export class ImportmapCreator {
         export function registerNpmWidgets(serviceContainer: ServiceContainer) {`
         file += this.designerServicesCode;
         file += '\n}';
+
+        await fs.writeFile(path.join(this._packageBaseDirectory, 'configWidgets.js'), file);
     }
 
     private async parseNpmPackageInternal(pkg: string, reportState?: (state: string) => void) {
