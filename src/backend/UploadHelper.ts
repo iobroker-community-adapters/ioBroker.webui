@@ -1,5 +1,6 @@
 import { AdapterInstance } from '@iobroker/adapter-core';
 import fs from 'fs';
+import path from 'path';
 
 export class Uploadhelper {
 
@@ -64,7 +65,7 @@ export class Uploadhelper {
     }
 
 
-    async collectExistingFilesToDelete(path) {
+    async collectExistingFilesToDelete(dir) {
         let _files = [];
         let _dirs = [];
         let files;
@@ -74,8 +75,8 @@ export class Uploadhelper {
         }
 
         try {
-            this._adapter.log.debug(`Scanning ${path}`);
-            files = await this._adapter.readDirAsync(this._adapterName, path);
+            this._adapter.log.debug(`Scanning ${dir}`);
+            files = await this._adapter.readDirAsync(this._adapterName, dir);
         } catch {
             // ignore err
             files = [];
@@ -86,7 +87,7 @@ export class Uploadhelper {
                 if (file.file === '.' || file.file === '..') {
                     continue;
                 }
-                const newPath = path + file.file;
+                const newPath = path.join(dir, file.file);
                 if (file.isDir) {
                     if (!_dirs.find(e => e.path === newPath)) {
                         _dirs.push({ adapter: this._adapter, path: newPath });
@@ -161,8 +162,6 @@ export class Uploadhelper {
             }
 
             try {
-                //this._adapter.log.debug(`ReadFile ${file}`);
-                //this._adapter.log.debug(`WriteFile ${attName}`);
                 const data = fs.readFileSync(file);
                 await this._adapter.writeFileAsync(this._adapterName, attName, data);
             } catch (e) {

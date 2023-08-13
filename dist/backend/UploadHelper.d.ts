@@ -9,7 +9,7 @@ export declare class Uploadhelper {
     constructor(adapter: AdapterInstance);
     static upload(adapter: AdapterInstance, sourceDirectory: string, targetDirectory: string): Promise<void>;
     upload(sourceDirectory: string, targetDirectory: string): Promise<void>;
-    collectExistingFilesToDelete(path: any): Promise<{
+    collectExistingFilesToDelete(dir: any): Promise<{
         filesToDelete: any[];
         dirs: any[];
     }>;
