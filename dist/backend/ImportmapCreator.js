@@ -185,11 +185,11 @@ export class ImportmapCreator {
                 mainImport = packageJsonObj.module;
             if (mainImport) {
                 this.importMap.imports[packageJsonObj.name] = basePath + removeTrailing(mainImport, '/');
-                this.importMap.imports[packageJsonObj.name + '/'] = basePath;
             }
             else {
-                this._adapter.log.error('mainImport is undefined for "' + packageJsonObj.name + '"');
+                this._adapter.log.warn('main is undefined for "' + packageJsonObj.name + '"');
             }
+            this.importMap.imports[packageJsonObj.name + '/'] = basePath;
         }
     }
 }
