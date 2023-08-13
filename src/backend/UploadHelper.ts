@@ -161,10 +161,10 @@ export class Uploadhelper {
             }
 
             try {
-                this._adapter.log.debug(`ReadFile ${file}`);
-                this._adapter.log.debug(`WriteFile ${attName}`);
-                //const data = fs.readFileSync(file);
-                //await this._adapter.writeFileAsync(this._adapterName, attName, data);
+                //this._adapter.log.debug(`ReadFile ${file}`);
+                //this._adapter.log.debug(`WriteFile ${attName}`);
+                const data = fs.readFileSync(file);
+                await this._adapter.writeFileAsync(this._adapterName, attName, data);
             } catch (e) {
                 this._adapter.log.error(`Error: Cannot upload ${file}: ${e.message}`);
             }
