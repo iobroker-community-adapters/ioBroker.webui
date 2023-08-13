@@ -12,7 +12,7 @@ import { IobrokerWebuiBindableObjectsService } from '../services/IobrokerWebuiBi
 import { IobrokerWebuiBindableObjectDragDropService } from '../services/IobrokerWebuiBindableObjectDragDropService.js';
 import { IobrokerWebuiBindingService } from '../services/IobrokerWebuiBindingService.js';
 import { IobrokerWebuiDemoProviderService } from '../services/IobrokerWebuiDemoProviderService.js';
-import { IDisposable } from 'monaco-editor';
+import type { IDisposable } from 'monaco-editor';
 import { PanelContainer } from 'dock-spawn-ts/lib/js/PanelContainer.js';
 import { PanelType } from 'dock-spawn-ts/lib/js/enums/PanelType.js';
 

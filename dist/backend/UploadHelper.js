@@ -1,19 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 export class Uploadhelper {
-    _adapter;
-    _adapterName;
-    _stoppingPromise = false;
-    _lastProgressUpdate;
-    _ignoredFileExtensions = [
-        '.npmignore',
-        '.gitignore',
-        '.DS_Store',
-        '_socket/info.js',
-        'LICENSE'
-    ];
-    _uploadStateObjectName;
     constructor(adapter) {
+        this._stoppingPromise = false;
+        this._ignoredFileExtensions = [
+            '.npmignore',
+            '.gitignore',
+            '.DS_Store',
+            '_socket/info.js',
+            'LICENSE'
+        ];
         this._adapter = adapter;
         this._adapterName = this._adapter.name;
         this._uploadStateObjectName = `system.adapter.${this._adapterName}.upload`;

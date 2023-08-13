@@ -9,7 +9,6 @@ const __dirname = path.normalize(path.join(path.dirname(fileURLToPath(import.met
 const pkg = JSON.parse(fs.readFileSync(new URL('../../package.json', import.meta.url)).toString());
 const adapterName = pkg.name.split('.').pop();
 class WebUi extends utils.Adapter {
-    _unloaded;
     /**
      * @param {Partial<utils.AdapterOptions>} [options={}]
      */
@@ -18,6 +17,8 @@ class WebUi extends utils.Adapter {
             ...options,
             name: adapterName,
         });
+        this.npmRunning = false;
+        this.states = {};
         this.on('ready', this.main.bind(this));
         this.on('stateChange', this.stateChange.bind(this));
         // this.on('objectChange', this.onObjectChange.bind(this));
@@ -50,7 +51,6 @@ class WebUi extends utils.Adapter {
         await this.runUpload();
         this.setState('webui.0.control.command', { val: 'uiReloadPackages', ack: true });
     }
-    npmRunning = false;
     installNpm(name) {
         return new Promise(async (resolve) => {
             if (this.npmRunning) {
@@ -96,7 +96,6 @@ class WebUi extends utils.Adapter {
             });
         });
     }
-    states = {};
     async stateChange(id, state) {
         this.log.info(`stateChange: ${id}, value: ${state.val}, ack: ${state.ack}`);
         if (!id || !state)
