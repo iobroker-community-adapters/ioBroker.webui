@@ -20,6 +20,8 @@ export class ImportmapCreator {
     constructor(adapter, packageBaseDirectory, importmapBaseDirectory) {
         this._adapter = adapter;
         this._packageBaseDirectory = packageBaseDirectory;
+        this._importmapBaseDirectory = importmapBaseDirectory;
+        PageTransitionEvent;
         this._nodeModulesBaseDirectory = path.join(packageBaseDirectory, 'node_modules');
     }
     async parsePackages(reportState) {
@@ -170,13 +172,11 @@ export class ImportmapCreator {
         const packageJsonPath = path.join(basePath, 'package.json');
         const packageJson = await fs.readFile(packageJsonPath, 'utf-8');
         const packageJsonObj = await JSON.parse(packageJson);
-        const depPromises = [];
         if (packageJsonObj.dependencies) {
             for (let d in packageJsonObj.dependencies) {
-                depPromises.push(this.loadDependency(d, packageJsonObj.dependencies[d]));
+                await this.loadDependency(d, packageJsonObj.dependencies[d]);
             }
         }
-        await Promise.all(depPromises);
         this.addToImportmap(importMapBasePath, packageJsonObj);
     }
     async addToImportmap(basePath, packageJsonObj) {
