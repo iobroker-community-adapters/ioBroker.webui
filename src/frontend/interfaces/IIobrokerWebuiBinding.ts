@@ -11,6 +11,7 @@ export interface IIobrokerWebuiBinding {
     events?: string[];
     target: BindingTarget;
     converter?: IBindingConverter;
+    formula?: string;
 }
 
 export interface IBindingConverter {

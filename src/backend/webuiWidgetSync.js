@@ -58,13 +58,10 @@ function deleteFolderRecursive(path) {
 }
 
 function syncWidgetSets() {
-
     let pack = null;
     let changed = false;
     let found;
     let name;
-
-
 
     let oldConfig = null;
     if (fs.existsSync(__dirname + '/../www/webui-widgets/config.json')) {

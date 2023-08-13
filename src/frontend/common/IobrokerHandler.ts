@@ -1,7 +1,7 @@
 import { Connection } from "@iobroker/socket-client";
 import { TypedEvent } from "@node-projects/base-custom-webcomponent";
-import { IScreen } from "./interfaces/IScreen.js";
-import { IWebUiConfig } from "./interfaces/IWebUiConfig.js";
+import { IScreen } from "../interfaces/IScreen.js";
+import { IWebUiConfig } from "../interfaces/IWebUiConfig.js";
 import { sleep } from "@node-projects/web-component-designer/dist/elements/helper/Helper.js";
 
 declare global {

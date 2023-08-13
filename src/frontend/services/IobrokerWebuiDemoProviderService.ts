@@ -1,7 +1,7 @@
 import { DomHelper } from "@node-projects/base-custom-webcomponent";
 import { IDemoProviderService, InstanceServiceContainer, ServiceContainer } from "@node-projects/web-component-designer";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
-import { IobrokerWebuiScreenEditor } from "../widgets/IobrokerWebuiScreenEditor.js";
+import { IobrokerWebuiScreenEditor } from "../config/IobrokerWebuiScreenEditor.js";
 
 export class IobrokerWebuiDemoProviderService implements IDemoProviderService {
   provideDemo(container: HTMLElement, serviceContainer: ServiceContainer, instanceServiceContainer: InstanceServiceContainer, code: string) {

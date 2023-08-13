@@ -1,7 +1,7 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
 import { IUiCommand, IUiCommandHandler, sleep } from "@node-projects/web-component-designer";
 import type * as monaco from 'monaco-editor';
-import { iobrokerHandler } from "../IobrokerHandler.js";
+import { iobrokerHandler } from "../common/IobrokerHandler.js";
 
 export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
 

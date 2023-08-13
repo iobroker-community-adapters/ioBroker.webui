@@ -1,4 +1,4 @@
-import { iobrokerHandler } from './IobrokerHandler.js';
+import { iobrokerHandler } from '../common/IobrokerHandler.js';
 
 //@ts-ignore
 await LazyLoader.LoadJavascript(window.iobrokerSocketScriptUrl);
@@ -8,10 +8,13 @@ await LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js')
 import '@node-projects/web-component-designer'
 
 import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, TreeViewExtended, PropertyGrid, NodeHtmlParserService, CodeViewMonaco, createDefaultServiceContainer, CssToolsStylesheetService } from '@node-projects/web-component-designer';
-import { IobrokerWebuiBindableObjectsService } from './services/IobrokerWebuiBindableObjectsService.js';
-import { IobrokerWebuiBindableObjectDragDropService } from './services/IobrokerWebuiBindableObjectDragDropService.js';
-import { IobrokerWebuiBindingService } from './services/IobrokerWebuiBindingService.js';
-import { IobrokerWebuiDemoProviderService } from './services/IobrokerWebuiDemoProviderService.js';
+import { IobrokerWebuiBindableObjectsService } from '../services/IobrokerWebuiBindableObjectsService.js';
+import { IobrokerWebuiBindableObjectDragDropService } from '../services/IobrokerWebuiBindableObjectDragDropService.js';
+import { IobrokerWebuiBindingService } from '../services/IobrokerWebuiBindingService.js';
+import { IobrokerWebuiDemoProviderService } from '../services/IobrokerWebuiDemoProviderService.js';
+import { IDisposable } from 'monaco-editor';
+import { PanelContainer } from 'dock-spawn-ts/lib/js/PanelContainer.js';
+import { PanelType } from 'dock-spawn-ts/lib/js/enums/PanelType.js';
 
 const rootPath = new URL(import.meta.url).pathname.split('/').slice(0, -2).join('/'); // -2 remove file & dist
 
@@ -32,21 +35,18 @@ import { CommandHandling } from './CommandHandling.js'
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
-import "./widgets/IobrokerWebuiSolutionExplorer.js";
-import "./runtime/ScreenViewer.js";
-import "./widgets/IobrokerWebuiStyleEditor.js";
-import "./runtime/SvgImage.js";
-import "./widgets/IobrokerWebuiEventAssignment.js";
-import "./widgets/IobrokerWebuiSplitView.js";
-import "./widgets/IobrokerWebuiPropertyGrid.js";
+import "../runtime/ScreenViewer.js";
+import "../runtime/SvgImage.js";
+import "./IobrokerWebuiSolutionExplorer.js";
+import "./IobrokerWebuiStyleEditor.js";
+import "./IobrokerWebuiEventAssignment.js";
+import "./IobrokerWebuiSplitView.js";
+import "./IobrokerWebuiPropertyGrid.js";
 
-import { IobrokerWebuiSolutionExplorer } from './widgets/IobrokerWebuiSolutionExplorer.js';
-import { IobrokerWebuiStyleEditor } from './widgets/IobrokerWebuiStyleEditor.js';
-import { IDisposable } from 'monaco-editor';
-import { IobrokerWebuiScreenEditor } from './widgets/IobrokerWebuiScreenEditor.js';
-import { IobrokerWebuiEventAssignment } from './widgets/IobrokerWebuiEventAssignment.js';
-import { PanelContainer } from 'dock-spawn-ts/lib/js/PanelContainer.js';
-import { PanelType } from 'dock-spawn-ts/lib/js/enums/PanelType.js';
+import { IobrokerWebuiSolutionExplorer } from './IobrokerWebuiSolutionExplorer.js';
+import { IobrokerWebuiStyleEditor } from './IobrokerWebuiStyleEditor.js';
+import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
+import { IobrokerWebuiEventAssignment } from './IobrokerWebuiEventAssignment.js';
 
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
   activeElement: HTMLElement;
@@ -158,7 +158,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   }
 
   private async _setupServiceContainer() {
-    serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/elements-webui.json'));
+    serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/frontend/elements-webui.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
     serviceContainer.globalContext.onToolChanged.on((e) => {
       let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue.tool).map(([k]) => k)[0];

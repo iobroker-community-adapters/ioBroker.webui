@@ -1,4 +1,4 @@
-import { iobrokerHandler } from "../IobrokerHandler.js";
+import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
 import { ScriptCommands } from "./ScriptCommands.js";
 import { ScriptMultiplexValue } from "./ScriptValue.js";

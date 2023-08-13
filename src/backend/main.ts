@@ -3,6 +3,7 @@ import { spawn } from 'child_process';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import { Uploadheler } from './UploadHelper';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url)).toString());
@@ -10,10 +11,12 @@ const adapterName = pkg.name.split('.').pop();
 
 class WebUi extends utils.Adapter {
 
+    _unloaded: boolean;
+
     /**
      * @param {Partial<utils.AdapterOptions>} [options={}]
      */
-    constructor(options) {
+    constructor(options?) {
         super({
             ...options,
             name: adapterName,
@@ -25,8 +28,9 @@ class WebUi extends utils.Adapter {
         this.on('unload', this.onUnload.bind(this));
     }
 
-    runUpload() {
-        return new Promise(resolve => {
+    async runUpload() {
+        await Uploadheler.upload(this, utils.getAbsoluteInstanceDataDir(this) + '/www/widgets')
+        /*return new Promise(resolve => {
             this.log.info(`Upload ${this.name}, changes detected...`);
             const file = utils.controllerDir + '/iobroker.js';
             const child = spawn('node', [file, 'upload', this.name, 'widgets']);
@@ -44,7 +48,7 @@ class WebUi extends utils.Adapter {
                 this.log.info(`Uploaded. ${exitCode ? 'Exit - ' + exitCode : 0}`);
                 resolve(exitCode);
             });
-        });
+        });*/
     }
 
     async refreshWWW() {
@@ -65,8 +69,8 @@ class WebUi extends utils.Adapter {
                 await fs.promises.mkdir(__dirname + '/www/widgets')
             if (!fs.existsSync(__dirname + '/www/widgets/package.json'))
                 await fs.promises.writeFile(__dirname + '/www/widgets/package.json', '{}');
-                this.log.info(`Install NPM package (${name})...`);
-            const child = spawn('npm', ['install', '--only=prod', name], { cwd: __dirname + '/www/widgets' });
+            this.log.info(`Install NPM package (${name})...`);
+            const child = spawn('npm', ['install', '--only=prod', '--omit=dev', name], { cwd: __dirname + '/www/widgets' });
             child.stdout.on('data', data => {
                 this.log.debug(data.toString().replace('\n', ''));
             });
@@ -103,7 +107,7 @@ class WebUi extends utils.Adapter {
     states = {}
 
     async stateChange(id, state) {
-
+        this.log.info(`stateChange: ${id}, value: ${state.val}, ack: ${state.ack}`);
         if (!id || !state) return;
 
         if (state.ack) {
@@ -140,12 +144,19 @@ class WebUi extends utils.Adapter {
 
     async createObjects() {
 
-        const obj = await this.getObjectAsync('control.command');
-        if (!obj) {
+        let obj = await this.getObjectAsync('control.data');
+        if (obj)
             await this.delObjectAsync('control.data');
+        obj = await this.getObjectAsync('control.clientId');
+        if (obj)
             await this.delObjectAsync('control.clientId');
+        obj = await this.getObjectAsync('control.command');
+        if (obj)
             await this.delObjectAsync('control.command');
-        }
+
+        obj = await this.getForeignObjectAsync(`system.adapter.${adapterName}.upload`);
+        if (obj)
+            await this.delObjectAsync(`system.adapter.${adapterName}.upload`);
 
         await this.setObjectAsync('control.data',
             {
@@ -200,15 +211,29 @@ class WebUi extends utils.Adapter {
                 },
                 native: {}
             });
+
+        await this.setForeignObjectAsync(`system.adapter.${adapterName}.upload`, {
+            type: 'state',
+            common: {
+                name: `${adapterName}.upload`,
+                type: 'number',
+                role: 'indicator.state',
+                unit: '%',
+                min: 0,
+                max: 100,
+                def: 0,
+                desc: 'Upload process indicator',
+                read: true,
+                write: false,
+            },
+            native: {},
+        });
     }
 
     async main() {
         this.log.info(`dirName: ` + __dirname);
         if (!fs.existsSync(__dirname + '/www/widgets/package.json')) {
             this.log.info(`No package.json for widgets found, look if one was uploaded.`);
-
-            // Disable NPM Upload atm, need to look how we would do this....
-            /*
             if (await this.fileExistsAsync(adapterName, 'widgets/package.json')) {
                 this.log.info(`adapter was updated, restore packages.json`);
                 if (!fs.existsSync(__dirname + '/www/widgets'))
@@ -218,7 +243,6 @@ class WebUi extends utils.Adapter {
                 this.log.info(`run NPM install`);
                 await this.installNpm('');
             }
-            */
         }
         this.log.info(`create adapter objects`);
         await this.createObjects();
@@ -228,6 +252,7 @@ class WebUi extends utils.Adapter {
     }
 
     onUnload() {
+        this._unloaded = true;
     }
 }
 

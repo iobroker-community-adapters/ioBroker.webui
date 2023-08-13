@@ -1,6 +1,6 @@
 import { TypedEvent } from "@node-projects/base-custom-webcomponent";
 import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding.js";
-import { iobrokerHandler } from "../IobrokerHandler.js";
+import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { PropertiesHelper } from "@node-projects/web-component-designer/dist/elements/services/propertiesService/services/PropertiesHelper.js";
 import { BindingTarget } from "@node-projects/web-component-designer/dist/elements/item/BindingTarget.js";
 

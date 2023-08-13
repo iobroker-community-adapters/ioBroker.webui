@@ -1,7 +1,7 @@
 import { OverlayLayer, DesignItem, IBindableObject, IBindableObjectDragDropService, IDesignerCanvas, InsertAction, ChangeGroup, BindingTarget } from "@node-projects/web-component-designer";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding.js";
-import { iobrokerHandler } from "../IobrokerHandler.js";
+import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { SvgImage } from "../runtime/SvgImage.js";
 
 export class IobrokerWebuiBindableObjectDragDropService implements IBindableObjectDragDropService {

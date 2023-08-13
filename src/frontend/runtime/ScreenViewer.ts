@@ -1,6 +1,6 @@
 import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, DomHelper, htmlFromString, property } from "@node-projects/base-custom-webcomponent";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
-import { iobrokerHandler } from "../IobrokerHandler.js";
+import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
 import { Script } from "../scripting/Script.js";
 
@@ -57,20 +57,6 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         });
         if (this._screenName)
             this._loadScreen();
-        /*
-        const target = {};
-        const proxyHandler = {
-            get: (target, prop, receiver) => {
-                return this.state(prop);
-            },
-            set: (obj, prop, value) => {
-                this.set(prop, value);
-                return true;
-            }
-        };
-
-        this.objects = new Proxy(target, proxyHandler);
-        */
     }
 
     private async _loadScreen() {

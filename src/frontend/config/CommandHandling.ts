@@ -1,8 +1,8 @@
 import { IUiCommandHandler, ServiceContainer } from '@node-projects/web-component-designer';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js'
-import { iobrokerHandler } from './IobrokerHandler.js';
+import { iobrokerHandler } from '../common/IobrokerHandler.js';
 import { IobrokerWebuiAppShell } from './IobrokerWebuiAppShell.js';
-import { IobrokerWebuiScreenEditor } from './widgets/IobrokerWebuiScreenEditor.js';
+import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
 
 export class CommandHandling {
   dockManager: DockManager;

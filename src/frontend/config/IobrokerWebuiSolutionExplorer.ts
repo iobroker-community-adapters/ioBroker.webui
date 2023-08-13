@@ -1,6 +1,6 @@
 import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from "@node-projects/base-custom-webcomponent";
 import { dragDropFormatNameBindingObject, IBindableObject, IBindableObjectsService, IElementDefinition, ServiceContainer, dragDropFormatNameElementDefinition, ContextMenu, sleep } from "@node-projects/web-component-designer";
-import { iobrokerHandler } from "../IobrokerHandler.js";
+import { iobrokerHandler } from "../common/IobrokerHandler.js";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
 
@@ -9,7 +9,7 @@ type TreeNodeData = Fancytree.NodeData & {
     children?: TreeNodeData[] | undefined;
     autoExpand?: boolean,
     dblclick?: (event: any, data: any) => void,
-    contextMenu?: (event: any, data: any) => void
+    contextMenu?: (event: any, data: any) => void,
 }
 export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
 
@@ -48,15 +48,14 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             [
                 this._createScreensNode(),
                 this._createGlobalStyleNode(),
-                //this._createNpmsNode(),
                 this._createControlsNode(),
+                this._createNpmsNode(),
                 this._createChartsNode(),
                 this._createIconsFolderNode(),
                 this._createObjectsNode()
             ]);
         return result.map(x => x.status == 'fulfilled' ? x.value : null);
     }
-
 
     private async _createScreensNode() {
         this._screensNodeData = {
@@ -128,6 +127,22 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
 
     //@ts-ignore
     private async _createNpmsNode() {
+
+        let npmsNode: TreeNodeData = {
+            title: 'Packages',
+            folder: true,
+            contextMenu: (event) => {
+                ContextMenu.show([{
+                    title: 'Add Package', action: () => {
+                        const packageName = prompt("NPM Package Name");
+                        if (packageName)
+                            iobrokerHandler.sendCommand("addNpm", packageName);
+                    }
+                }], event);
+            },
+            children: []
+        }
+
         let npmNodeCtxMenu = (event, packageName) => {
             ContextMenu.show([{
                 title: 'Update Package', action: () => {
@@ -141,8 +156,10 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             }], event);
         }
 
-        let npmsNode: TreeNodeData & { contextMenu: (event) => void } = {
-            title: 'Packages', folder: true, contextMenu: (event) => {
+        let npmInstalled: TreeNodeData = {
+            title: 'Installed',
+            folder: true,
+            contextMenu: (event) => {
                 ContextMenu.show([{
                     title: 'Add Package', action: () => {
                         const packageName = prompt("NPM Package Name");
@@ -150,25 +167,50 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             iobrokerHandler.sendCommand("addNpm", packageName);
                     }
                 }], event);
+            },
+            lazy: true,
+            lazyload: (e, data) => {
+                data.result = new Promise(async resolve => {
+                    try {
+                        await iobrokerHandler.waitForReady();
+                        let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/package.json", false)).file);
+                        let children = Object.keys(packageJson.dependencies).map(x => ({
+                            title: x + ' (' + packageJson.dependencies[x] + ')',
+                            folder: false,
+                            contextMenu: (event => npmNodeCtxMenu(event, x)),
+                            data: { type: 'npm', name: x }
+                        }));
+
+                        //todo
+                        //search every package for a package JsonFileElementsService, and look if it contains a customElements definition
+                        //if so, load the file, if not, try load "custom-elements.json"
+                        resolve(children);
+                    }
+                    catch (err) {
+                        console.warn("error loading package.json, may not yet exist", err);
+                    }
+                    resolve([]);
+                });
             }
         }
-        try {
-            await iobrokerHandler.waitForReady();
-            let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/package.json", false)).file);
-            npmsNode.children = Object.keys(packageJson.dependencies).map(x => ({
-                title: x + ' (' + packageJson.dependencies[x] + ')',
-                folder: false,
-                contextMenu: (event => npmNodeCtxMenu(event, x)),
-                data: { type: 'npm', name: x }
-            }));
 
-            //todo
-            //search every package for a package JsonFileElementsService, and look if it contains a customElements definition
-            //if so, load the file, if not, try load "custom-elements.json"
+        let npmSuggestion: TreeNodeData = {
+            title: 'Suggestions',
+            folder: true,
+            tooltip: 'doublecklick to install',
+            children: [
+                { title: "@node-projects/gauge.webcomponent" },
+                { title: "@node-projects/tab.webcomponent" },
+            ]
         }
-        catch (err) {
-            console.warn("error loading package.json, may not yet exist", err);
+
+        for (let c of npmSuggestion.children) {
+            c.dblclick = (e, data) => {
+                iobrokerHandler.sendCommand("addNpm", c.title);
+            }
         }
+        npmsNode.children.push(npmInstalled);
+        npmsNode.children.push(npmSuggestion);
 
         return npmsNode;
     }
@@ -373,7 +415,6 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         }
                     };
                     expandChildren(data.tree.rootNode);
-
                 },
 
                 dnd5: {

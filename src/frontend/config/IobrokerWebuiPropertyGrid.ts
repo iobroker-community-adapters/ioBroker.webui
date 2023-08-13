@@ -1,52 +1,78 @@
-import { BaseCustomWebComponentConstructorAppend, css, html, TypedEvent } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, TypedEvent, css, html } from "@node-projects/base-custom-webcomponent";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
 
-export function getDeepValue(obj: any, path: string): any {
-    const parts = path.split('.');
-    let val = obj;
-    for (let i = 0; i < parts.length; i++) {
-        val = val[parts[i]]
-    }
-    return val;
-}
+export interface ITypeInfo {
+    properties?: IProperty[];
+    name?: string;
 
-export function setDeepValue(obj: any, path: string, value: any) {
-    const parts = path.split('.');
-    let val = obj;
-    let i;
-    for (i = 0; i < parts.length - 1; i++) {
-        val = val[parts[i]]
-    }
-    val[parts[i]] = value;
 }
-
-export interface IPropertyInfo {
-    name: string;
-    type: string;
-    nullable: boolean;
+export interface IProperty {
     category?: string;
-    description?: string
+    name?: string;
+    type?: 'object' | 'string' | 'number' | 'boolean' | 'color' | 'enum';
+    description?: string;
+    defaultValue?: string;
+    nullable?: boolean;
 }
 
-export interface IPropertyProvider {
-    getProperties(typeName: string, instance: any): Record<string, IPropertyInfo>;
-}
-
-interface IPropertyGridFancyTreeItem {
+export interface IFancyTreeItem {
     title?: string;
     icon?: string;
     folder?: boolean;
+
     expanded?: boolean;
-    children?: IPropertyGridFancyTreeItem[];
+    children?: IFancyTreeItem[];
+
     nodeType?: string;
     data?: any;
-    propertyInfo?: IPropertyInfo,
-    propertyPath?: string,
-    tooltip?: string
 }
 
-export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
+interface IPropertyGridFancyTreeItem extends IFancyTreeItem {
+    property?: IProperty;
+    propertyPath?: string;
+    tooltip?: string;
+}
+
+let nullObject: {};
+export function deepValue(obj, path: string, returnNullObject = false) {
+    if (path === undefined || path === null) {
+        return obj;
+    }
+
+    const pathParts = path.split('.');
+    for (let i = 0; i < pathParts.length; i++) {
+        if (obj != null) {
+            obj = obj[pathParts[i]];
+        } else {
+            return returnNullObject ? nullObject : null;
+        }
+    }
+    return obj;
+}
+
+export function setDeepValue(obj, path: string, value) {
+    if (path === undefined || path === null) {
+        return;
+    }
+
+    const pathParts = path.split('.');
+    for (let i = 0; i < pathParts.length - 1; i++) {
+        if (obj != null) {
+            let newObj = obj[pathParts[i]];
+            if (newObj == null) {
+                newObj = {};
+                obj[pathParts[i]] = newObj;
+            }
+            obj = newObj;
+        }
+    }
+
+    if (obj != null)
+        obj[pathParts[pathParts.length - 1]] = value;
+}
+
+export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructorAppend {
     public static readonly style = css`
         :host {
             display: block;
@@ -58,13 +84,12 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
             height: 100%;
             display: grid;
             overflow: auto;
-            grid-template-rows: auto auto 1fr auto;
+            grid-template-rows: auto 1fr auto auto;
             grid-template-areas:
                 'head'
                 'properties'
                 '.'
                 'description';
-
         }
 
         .input-group {
@@ -90,7 +115,8 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
             overflow: hidden;
         }
 
-        thead th, #head {
+        thead th,
+        #head {
             position: sticky;
             top: 0;
             left: 1px;
@@ -114,6 +140,10 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
 
         table td {
             overflow: hidden;
+        }
+
+        table td:nth-child(2) {
+            overflow: visible;
         }
 
         table th {
@@ -143,9 +173,12 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
         #descText {
             white-space: break-spaces;
         }
-    `;
 
-    public static readonly template = html`
+        span.fancytree-node {
+            white-space: nowrap;
+        }`;
+
+    public static readonly template = html` 
         <div id="tableDiv">
             <div id="head"></div>
             <div id="tableDiv">
@@ -163,7 +196,7 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
                     <tbody id="tbody"></tbody>
                 </table>
             </div>
-        
+
             <div id="description">
                 <h4 id="descTitel"></h4>
                 <p id="descText"></p>
@@ -174,28 +207,15 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
         noCategory: Boolean,
         hideProperties: String,
         expanded: Boolean,
+        selectedObject: Object,
+        getTypeInfo: Function
     };
-
-    public static readonly is = 'property-grid';
-
-    public propertyProvider: IPropertyProvider;
-    public typeName: string;
 
     public noCategory: boolean;
     public hideProperties: string;
     public expanded: boolean;
 
-    public getSpecialPropertyEditor: (property: IPropertyInfo, currentValue, propertyPath: string, valueChangedCallback: (newValue) => void) => HTMLElement;
-
-    private _selectedObject: any;
-    public get selectedObject(): any {
-        return this._selectedObject;
-    }
-    public set selectedObject(value: any) {
-        this._selectedObject = value;
-        this.updateTree();
-    }
-    public propertyChanged = new TypedEvent<{ property: string, newValue: any }>();
+    public getTypeInfo: (obj: any, type: string) => ITypeInfo;
 
     private _table: HTMLTableElement;
     private _tree: Fancytree.Fancytree;
@@ -203,14 +223,15 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
 
     public constructor() {
         super();
+        this._restoreCachedInititalValues();
 
-        this._parseAttributesToProperties();
         this._table = this._getDomElement<HTMLTableElement>('table');
         this._head = this._getDomElement<HTMLDivElement>('head');
-        //new TableColumnResize(this._table);
     }
 
     public ready(): void {
+        this._parseAttributesToProperties();
+
         $(this._table).fancytree(<Fancytree.FancytreeOptions>{
             icon: false,
             extensions: ['table', 'gridnav'],
@@ -220,13 +241,16 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
             renderColumns: (_event, data) => {
                 const row = data.node.tr;
                 const cell = <HTMLTableCellElement>row.children[1];
-                //removeAllChildnodes(cell);
+                cell.innerHTML = "";
                 if (!data.node.folder) {
                     const pPath = <string>data.node.data.propertyPath;
-                    const currentValue = getDeepValue(this._selectedObject, pPath);
-                    const pInfo = <IPropertyInfo>data.node.data.propertyInfo;
-                    const ctl = this._internalGetEditorForType(pInfo, currentValue, pPath);
+                    const currentValue = deepValue(this._selectedObject, pPath);
+                    const pInfo = <IProperty>data.node.data.property;
+                    const ctl = this._getEditorForType(pInfo, currentValue, pPath);
                     if (ctl) {
+                        if (pInfo.defaultValue && (ctl as HTMLInputElement).value == '' && !pInfo.nullable) {
+                            (ctl as HTMLInputElement).placeholder = pInfo.defaultValue;
+                        }
                         cell.appendChild(ctl);
                     }
                 }
@@ -247,16 +271,19 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
                 this.updateDescription(data);
                 return true;
             },
+            init: (_event, data) => {
+                if (this.expanded)
+                    data.tree.expandAll(true);
+            }
         });
 
         this._tree = $.ui.fancytree.getTree(this._table);
-        //resizableTable(this._table);
 
         if (this.selectedObject) {
             this.updateTree();
         }
-        //@ts-ignore
-        this.shadowRoot.adoptedStyleSheets = [fancyTreeStyleSheet, this.constructor.style];
+
+        this.shadowRoot.adoptedStyleSheets = [fancyTreeStyleSheet, IobrokerWebuiPropertyGrid.style];
     }
 
     private updateDescription(data: Fancytree.EventData) {
@@ -264,19 +291,36 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
             return;
         }
         this._getDomElement<HTMLElement>('descTitel').innerText = data.node.title;
-        if (data.node.tooltip) {
+        if (data.node.tooltip && data.node.data.property.defaultValue) {
+            this._getDomElement<HTMLElement>('descText').innerHTML = data.node.tooltip + '<br />Default Value: ' + data.node.data.property.defaultValue;
+        } else if (data.node.tooltip) {
             this._getDomElement<HTMLElement>('descText').innerText = data.node.tooltip;
+        } else if (data.node.data.property.defaultValue) {
+            this._getDomElement<HTMLElement>('descText').innerText = 'Default Value: ' + data.node.data.property.defaultValue;
         } else {
             this._getDomElement<HTMLElement>('descText').innerText = '';
         }
     }
 
-    private createPropertyNodes(baseNode: IPropertyGridFancyTreeItem[], properties: { [index: string]: IPropertyInfo }, prefix = '') {
-        if (!this.noCategory) {
-            const groups: Map<string, { [index: string]: IPropertyInfo }> = new Map();
+    private _selectedObject: any;
 
-            for (const name in properties) {
-                const p = properties[name];
+    public get selectedObject(): any {
+        return this._selectedObject;
+    }
+    public set selectedObject(value: any) {
+        this._selectedObject = value;
+        this.updateTree();
+    }
+
+    public propertyChanged = new TypedEvent<{ property: string; newValue: any }>();
+
+    public typeName: string;
+
+    private createPropertyNodes(baseNode: IPropertyGridFancyTreeItem[], properties: IProperty[], prefix = '') {
+        if (!this.noCategory) {
+            const groups: Map<string, { [index: string]: IProperty }> = new Map();
+
+            for (const p of properties) {
                 let nm = '';
                 if (p.category) {
                     nm = p.category;
@@ -284,7 +328,7 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
                 if (!groups.has(nm)) {
                     groups.set(nm, {});
                 }
-                groups.get(nm)[name] = p;
+                groups.get(nm)[p.name] = p;
             }
 
             for (const g of groups) {
@@ -301,29 +345,30 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
                 }
             }
         } else {
-            this.createPropertyNodesInternal(baseNode, properties, prefix);
+            //@ts-ignore
+            this.createPropertyNodesInternal(baseNode, properties.reduce((obj, cur) => ({ ...obj, [cur.name]: cur }), {}), prefix);
         }
     }
 
-    private createPropertyNodesInternal(baseNode: IPropertyGridFancyTreeItem[], properties: Record<string, IPropertyInfo>, prefix = '') {
+    private createPropertyNodesInternal(baseNode: IPropertyGridFancyTreeItem[], properties: { [index: string]: IProperty }, prefix = '') {
         for (const name in properties) {
-            if (!this.hideProperties || (';' + this.hideProperties + ';').indexOf(';' + name + ';') < 0) {
+            if ((!this.hideProperties || (';' + this.hideProperties + ';').indexOf(';' + name + ';') < 0)) {
                 const p = properties[name];
-                /*if (p.BaseType === 'Class' && p.Type !== 'System.Object' && !p.IsIEnumerableT && !p?.PropertyDetails?.PropertyEditorType) {
+                if (p.type === 'object') {
                     const children = [];
                     baseNode.push({
                         title: name,
                         folder: true,
                         children: children,
-                        propertyInfo: p,
+                        property: p,
                         expanded: this.expanded,
                     });
-                    this.createPropertyNodes(children, mccReflection.getClassProperties(p.Type), prefix + name + '.');
-                } else*/ {
+                    this.createPropertyNodes(children, this.getTypeInfo(null, p.type).properties, prefix + name + '.');
+                } else {
                     baseNode.push({
                         title: name,
                         folder: false,
-                        propertyInfo: p,
+                        property: p,
                         propertyPath: prefix + name,
                         tooltip: p.description,
                     });
@@ -332,106 +377,71 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
         }
     }
 
-    public wrapEditorWithNullable(inner: HTMLElement, currentValue: any, propertyPath: string): HTMLElement {
-        const div = document.createElement('div');
-        div.style.display = 'flex';
-        const editor = document.createElement('input');
-        editor.type = 'checkbox';
-        if (currentValue) {
-            editor.checked = true;
-            //inner.
-        }
+    private _getEditorForType(property: IProperty, currentValue, propertyPath: string): HTMLElement {
+        let setValue = (value) => {
+            setDeepValue(this._selectedObject, propertyPath, value);
+            this.propertyChanged.emit({ property: propertyPath, newValue: value });
+        };
 
-        editor.onchange = () => {
-            if (editor.checked)
-                setDeepValue(this._selectedObject, propertyPath, editor.checked);
-            else
-                setDeepValue(this._selectedObject, propertyPath, null);
-        }
-
-        div.appendChild(editor);
-        div.appendChild(inner);
-        return div;
-    }
-
-    private _internalGetEditorForType(property: IPropertyInfo, currentValue: any, propertyPath: string): HTMLElement {
-        if (this.getSpecialPropertyEditor) {
-            const editor = this.getSpecialPropertyEditor(property, currentValue, propertyPath, (value) => {
-                //setDeepValue(this._selectedObject, propertyPath, value);
-                this.propertyChanged.emit({ property: propertyPath, newValue: value });
-            });
-            if (editor) {
+        switch (property.type) {
+            case 'string': {
+                let editor = document.createElement('input');
+                editor.style.boxSizing = 'border-box';
+                editor.style.width = '100%';
+                editor.value = currentValue ?? '';
+                editor.onblur = e => { setValue(editor.value); }
                 return editor;
             }
-        }
-        let editor = this.getEditorForType(property.type, currentValue, propertyPath);
-        if (property.nullable) {
-            editor = this.wrapEditorWithNullable(editor, currentValue, propertyPath);
-        }
-        return editor;
-    }
-
-    private getEditorForType(type: string, currentValue: any, propertyPath: string): HTMLElement {
-        let editor;
-        switch (type) {
-            case 'boolean': {
-                editor = document.createElement('input');
-                editor.type = 'checkbox';
-                editor.onchange = () => {
-                    setDeepValue(this._selectedObject, propertyPath, editor.checked);
-                };
-                break;
-            }
-            case 'string': {
-                editor = document.createElement('input');
-                editor.type = 'text';
-                editor.onchange = () => {
-                    setDeepValue(this._selectedObject, propertyPath, editor.value);
-                };
-                break;
-            }
             case 'number': {
-                editor = document.createElement('input');
-                editor.type = 'number';
-                editor.onchange = () => {
-                    setDeepValue(this._selectedObject, propertyPath, editor.value);
-                };
-                break;
+                let editor = document.createElement('input');
+                editor.type = 'number'
+                editor.style.boxSizing = 'border-box';
+                editor.style.width = '100%';
+                editor.value = currentValue ?? '';
+                editor.onblur = e => { setValue(editor.value); }
+                return editor;
+            }
+            case 'boolean': {
+                let editor = document.createElement('input');
+                editor.type = 'checkbox'
+                editor.checked = currentValue ?? false;
+                editor.onblur = e => { setValue(editor.value); }
+                return editor;
             }
             case 'color': {
-                editor = document.createElement('input');
+                let editor = document.createElement('input');
                 editor.type = 'color';
                 editor.onchange = () => {
                     setDeepValue(this._selectedObject, propertyPath, editor.value);
                 };
-                break;
+                return editor;
             }
             case 'enum': {
-                editor = document.createElement('select');
+                let editor = document.createElement('select');
                 editor.onchange = () => {
                     setDeepValue(this._selectedObject, propertyPath, editor.value);
                 };
-                break;
+                return editor;
             }
         }
-
-        return editor;
+        return null;
     }
 
     private updateTree() {
-        if (this._tree != null && this._selectedObject != null) {
-            if (this._selectedObject.$type) {
-                this.typeName = this._selectedObject.$type;
+        if (this._head) {
+            if (this._selectedObject != null) {
+                if (this._selectedObject.$type) {
+                    this.typeName = this._selectedObject.$type;
+                }
             }
+            if (this.selectedObject) {
+                let tInfo = this.getTypeInfo(this.selectedObject, this.typeName);
+                this._head.innerText = tInfo.name;
+            } else {
+                this._head.innerText = '';
+            }
+            this._renderTree();
         }
-
-        if (this.selectedObject) {
-            this._head.innerText = "testtext";
-        }
-        else {
-            this._head.innerText = '';
-        }
-        this._renderTree();
     }
 
     private _renderTree() {
@@ -440,11 +450,8 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
 
             const rootObject: IPropertyGridFancyTreeItem[] = [];
 
-            if (this.typeName) {
-                this.createPropertyNodes(rootObject, this.propertyProvider.getProperties(this.typeName, this.selectedObject));
-                this._tree.reload(rootObject);
-            }
-            //resizableTable(this._table);
+            this.createPropertyNodes(rootObject, this.getTypeInfo(this.selectedObject, this.typeName).properties);
+            this._tree.reload(rootObject);
         }
     }
 
@@ -452,5 +459,4 @@ export class PropertyGrid extends BaseCustomWebComponentConstructorAppend {
         this._tree.getRootNode().removeChildren();
     }
 }
-
-window.customElements.define(PropertyGrid.is, PropertyGrid);
+customElements.define("iobroker-webui-property-grid", IobrokerWebuiPropertyGrid);
