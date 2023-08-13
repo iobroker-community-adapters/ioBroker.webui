@@ -1,5 +1,5 @@
 import path from 'path';
-//import fs from 'fs/promises';
+import fs from 'fs/promises';
 
 function removeTrailing(text: string, char: string) {
     if (text.endsWith('/'))
@@ -30,8 +30,8 @@ export class ImportmapCreator {
         const packageJsonPath = path.join(basePath, 'package.json');
         if (reportState)
             reportState(pkg + ": loading package.json");
-        const packageJson = await fetch(packageJsonPath);
-        const packageJsonObj = await packageJson.json();
+        const packageJson = await fs.readFile(packageJsonPath, 'utf-8');
+        const packageJsonObj = await JSON.parse(packageJson);
 
         this.addToImportmap(basePath, packageJsonObj);
 
@@ -57,7 +57,7 @@ export class ImportmapCreator {
         }
         if (reportState)
             reportState(pkg + ": loading custom-elements.json");
-        let customElementsJson = await fetch(customElementsPath);
+        let customElementsJson = await fs.readFile(customElementsPath, 'utf-8');
 
         fetch(webComponentDesignerPath).then(async x => {
             if (x.ok) {
@@ -77,7 +77,7 @@ export class ImportmapCreator {
             }
         });
 
-        if (customElementsJson.ok) {
+        if (customElementsJson) {
             /*const customElementsJsonObj = await customElementsJson.json();
             let elements = new WebcomponentManifestElementsService(packageJsonObj.name, elementsRootPath, customElementsJsonObj);
             serviceContainer.register('elementsService', elements);
@@ -168,8 +168,8 @@ export class ImportmapCreator {
         const basePath = this._packageBaseDirectory + dependency + '/';
 
         const packageJsonPath = basePath + 'package.json';
-        const packageJson = await fetch(packageJsonPath);
-        const packageJsonObj = await packageJson.json();
+        const packageJson = await fs.readFile(packageJsonPath, 'utf-8');
+        const packageJsonObj = await JSON.parse(packageJson);
 
         const depPromises: Promise<void>[] = []
         if (packageJsonObj.dependencies) {
