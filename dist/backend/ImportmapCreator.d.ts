@@ -9,6 +9,7 @@ export declare class ImportmapCreator {
         imports: {};
         scopes: {};
     };
+    designerServicesCode: string;
     constructor(adapter: AdapterInstance, packageBaseDirectory: string, importmapBaseDirectory: string);
     parsePackages(reportState?: (state: string) => void): Promise<void>;
     private parseNpmPackageInternal;

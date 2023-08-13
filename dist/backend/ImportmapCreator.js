@@ -17,6 +17,7 @@ export class ImportmapCreator {
     _dependecies = new Map();
     _adapter;
     importMap = { imports: {}, scopes: {} };
+    designerServicesCode = '';
     constructor(adapter, packageBaseDirectory, importmapBaseDirectory) {
         this._adapter = adapter;
         this._packageBaseDirectory = packageBaseDirectory;
@@ -32,8 +33,13 @@ export class ImportmapCreator {
                 await this.parseNpmPackageInternal(d, reportState);
             }
         }
-        let importMapScript = `const importMapConfig = ` + JSON.stringify(this.importMap, null, 4) + ';\nimportShim.addImportMap(importMapConfig);';
+        let importMapScript = `const importMapWidgets = ` + JSON.stringify(this.importMap, null, 4) + ';\nimportShim.addImportMap(importMapWidgets);';
         await fs.writeFile(path.join(this._packageBaseDirectory, 'importmap.js'), importMapScript);
+        let file = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
+
+        export function registerNpmWidgets(serviceContainer: ServiceContainer) {`;
+        file += this.designerServicesCode;
+        file += '\n}';
     }
     async parseNpmPackageInternal(pkg, reportState) {
         const basePath = path.join(this._nodeModulesBaseDirectory, pkg);
@@ -50,12 +56,12 @@ export class ImportmapCreator {
             }
         }
         let customElementsPath = basePath + 'custom-elements.json';
-        //let elementsRootPath = basePath;
+        let elementsRootPath = basePath;
         if (packageJsonObj.customElements) {
             customElementsPath = path.join(basePath, removeTrailing(packageJsonObj.customElements, '/'));
             if (customElementsPath.includes('/')) {
-                //let idx = customElementsPath.lastIndexOf('/');
-                //elementsRootPath = customElementsPath.substring(0, idx + 1);
+                let idx = customElementsPath.lastIndexOf('/');
+                elementsRootPath = customElementsPath.substring(0, idx + 1);
             }
         }
         //let webComponentDesignerPath = path.join(basePath, 'web-component-designer.json');
@@ -84,7 +90,11 @@ export class ImportmapCreator {
             
         });*/
         if (customElementsJson) {
-            /*const customElementsJsonObj = await customElementsJson.json();
+            let nm = packageJsonObj.name.replaceAll(' ', '_');
+            this.designerServicesCode += `let ${nm} = ${customElementsJson};
+    serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPath}', ${nm});
+    serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm});`;
+            /*;
             let elements = new WebcomponentManifestElementsService(packageJsonObj.name, elementsRootPath, customElementsJsonObj);
             serviceContainer.register('elementsService', elements);
             let properties = new WebcomponentManifestPropertiesService(packageJsonObj.name, customElementsJsonObj);

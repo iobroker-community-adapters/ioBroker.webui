@@ -23,6 +23,7 @@ export class ImportmapCreator {
     private _adapter: AdapterInstance
 
     public importMap = { imports: {}, scopes: {} }
+    public designerServicesCode = '';
 
     constructor(adapter: AdapterInstance, packageBaseDirectory: string, importmapBaseDirectory: string) {
         this._adapter = adapter;
@@ -42,8 +43,14 @@ export class ImportmapCreator {
             }
         }
 
-        let importMapScript = `const importMapConfig = ` + JSON.stringify(this.importMap, null, 4) + ';\nimportShim.addImportMap(importMapConfig);'
+        let importMapScript = `const importMapWidgets = ` + JSON.stringify(this.importMap, null, 4) + ';\nimportShim.addImportMap(importMapWidgets);'
         await fs.writeFile(path.join(this._packageBaseDirectory, 'importmap.js'), importMapScript);
+
+        let file = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
+
+        export function registerNpmWidgets(serviceContainer: ServiceContainer) {`
+        file += this.designerServicesCode;
+        file += '\n}';
     }
 
     private async parseNpmPackageInternal(pkg: string, reportState?: (state: string) => void) {
@@ -64,12 +71,12 @@ export class ImportmapCreator {
             }
         }
         let customElementsPath = basePath + 'custom-elements.json';
-        //let elementsRootPath = basePath;
+        let elementsRootPath = basePath;
         if (packageJsonObj.customElements) {
             customElementsPath = path.join(basePath, removeTrailing(packageJsonObj.customElements, '/'));
             if (customElementsPath.includes('/')) {
-                //let idx = customElementsPath.lastIndexOf('/');
-                //elementsRootPath = customElementsPath.substring(0, idx + 1);
+                let idx = customElementsPath.lastIndexOf('/');
+                elementsRootPath = customElementsPath.substring(0, idx + 1);
             }
         }
         //let webComponentDesignerPath = path.join(basePath, 'web-component-designer.json');
@@ -100,7 +107,11 @@ export class ImportmapCreator {
         });*/
 
         if (customElementsJson) {
-            /*const customElementsJsonObj = await customElementsJson.json();
+            let nm = (<string>packageJsonObj.name).replaceAll(' ', '_');
+            this.designerServicesCode += `let ${nm} = ${customElementsJson};
+    serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPath}', ${nm});
+    serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm});`
+            /*;
             let elements = new WebcomponentManifestElementsService(packageJsonObj.name, elementsRootPath, customElementsJsonObj);
             serviceContainer.register('elementsService', elements);
             let properties = new WebcomponentManifestPropertiesService(packageJsonObj.name, customElementsJsonObj);
