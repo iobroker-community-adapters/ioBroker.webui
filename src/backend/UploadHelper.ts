@@ -56,7 +56,7 @@ export class Uploadhelper {
             this._adapter.log.debug(`Erasing file: ${f}`);
         }
         // delete old files, before upload of new
-        //await this.eraseFiles(filesToDelete);
+        await this.eraseFiles(filesToDelete);
         await this.uploadInternal(files, sourceDirectory, targetDirectory);
 
         if (this._stoppingPromise) {
