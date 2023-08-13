@@ -3,7 +3,7 @@ import { spawn } from 'child_process';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import { Uploadheler } from './UploadHelper';
+import { Uploadheler } from './UploadHelper.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url)).toString());
 const adapterName = pkg.name.split('.').pop();
