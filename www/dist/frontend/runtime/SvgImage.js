@@ -82,8 +82,7 @@ SvgImage.style = css `
             color: var(--primary-color, white);
             overflow: hidden;
             text-align: center;
-        }
-    `;
+        }`;
 SvgImage.template = html `
     <div id="container">
         <div id="head"></div>
