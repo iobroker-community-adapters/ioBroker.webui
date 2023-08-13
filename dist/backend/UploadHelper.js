@@ -45,7 +45,7 @@ export class Uploadhelper {
         }
         // delete old files, before upload of new
         //await this.eraseFiles(filesToDelete);
-        //await this.uploadInternal(files);
+        await this.uploadInternal(files, sourceDirectory, targetDirectory);
         if (this._stoppingPromise) {
             return;
         }

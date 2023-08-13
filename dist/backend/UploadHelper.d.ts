@@ -14,6 +14,6 @@ export declare class Uploadhelper {
         dirs: any[];
     }>;
     eraseFiles(files: any): Promise<void>;
-    uploadInternal(files: any, sourceDirectory: any, targetDirectory: any): Promise<AdapterInstance<undefined, undefined>>;
+    uploadInternal(files: any, sourceDirectory: string, targetDirectory: string): Promise<AdapterInstance<undefined, undefined>>;
     walk(dir: any, _results?: any): any;
 }

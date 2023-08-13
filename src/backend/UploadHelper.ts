@@ -56,7 +56,7 @@ export class Uploadhelper {
         }
         // delete old files, before upload of new
         //await this.eraseFiles(filesToDelete);
-        //await this.uploadInternal(files);
+        await this.uploadInternal(files, sourceDirectory, targetDirectory);
 
         if (this._stoppingPromise) {
             return;
@@ -125,7 +125,7 @@ export class Uploadhelper {
         }
     }
 
-    async uploadInternal(files, sourceDirectory, targetDirectory) {
+    async uploadInternal(files, sourceDirectory: string, targetDirectory: string) {
         await this._adapter.setForeignStateAsync(this._uploadStateObjectName, { val: 0, ack: true });
 
         const dirLen = sourceDirectory.length;
