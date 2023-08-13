@@ -235,9 +235,10 @@ class WebUi extends utils.Adapter {
                 await fs.promises.writeFile(__dirname + '/www/widgets/package.json', data.file);
                 this.log.info(`run NPM install`);
                 await this.installNpm('');
+                await this.createImportMapAndLoaderFiles();
+                await this.refreshWWW();
             }
         }
-        await this.createImportMapAndLoaderFiles();
         this.log.info(`create adapter objects`);
         await this.createObjects();
         this.log.info(`subscribe adapter states`);

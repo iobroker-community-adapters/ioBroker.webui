@@ -103,7 +103,7 @@ export async function registerDesignerAddons(serviceContainer) {
         if (customElementsJson) {
             let nm = packageJsonObj.name.replaceAll(' ', '_').replaceAll('@', '_').replaceAll('-', '_').replaceAll('/', '_').replaceAll('.', '_');
             this.designerServicesCode += `let ${nm} = ${customElementsJson};
-    serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPathWeb}', ${nm}));
+    serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', './${elementsRootPathWeb}', ${nm}));
     serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm}));`;
             /*;
             if (loadAllImports) {
