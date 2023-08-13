@@ -133,7 +133,7 @@ export async function registerDesignerAddons(serviceContainer) {
     serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', './${elementsRootPathWeb}', ${nm}));
     serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm}));`
 
-            let manifest = packageJsonObj;
+            let manifest = JSON.parse(customElementsJson);
             for (let m of manifest.modules) {
                 for (let e of m.exports) {
                     if (e.kind == 'custom-element-definition') {
