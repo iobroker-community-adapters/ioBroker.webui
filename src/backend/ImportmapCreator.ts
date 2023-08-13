@@ -1,7 +1,6 @@
 import path from 'path';
 import fs from 'fs/promises';
 import type { AdapterInstance } from '@iobroker/adapter-core';
-import { WebcomponentManifestElementsService } from '@node-projects/web-component-designer/dist/elements/services/elementsService/WebcomponentManifestElementsService.js';
 
 function removeTrailing(text: string, char: string) {
     if (text.endsWith('/'))
@@ -134,9 +133,13 @@ export async function registerDesignerAddons(serviceContainer) {
     serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', './${elementsRootPathWeb}', ${nm}));
     serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm}));`
 
-            let elements = new WebcomponentManifestElementsService(packageJsonObj.name, elementsRootPathWeb, packageJsonObj);
-            for (let e of await elements.getElements()) {
-                this.importFiles.push(e.import)
+            let manifest = packageJsonObj;
+            for (let m of manifest.modules) {
+                for (let e of m.exports) {
+                    if (e.kind == 'custom-element-definition') {
+                        this.importFiles.push('./' + elementsRootPathWeb + '/' + removeLeading(e.declaration.module, '/'));
+                    }
+                }
             }
         }
         else {
