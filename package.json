@@ -65,6 +65,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.0.3",
-    "@types/node": "^20.4.10"
+    "@types/node": "^20.4.10",
+    "construct-style-sheets-polyfill": "^3.1.0"
   }
 }
