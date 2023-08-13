@@ -12,5 +12,6 @@ declare const importMapConfig: {
         "@iobroker/socket-client/": string;
         "@iobroker/socket-client": string;
         tslib: string;
+        long: string;
     };
 };

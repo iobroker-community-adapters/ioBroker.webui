@@ -1,5 +1,6 @@
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
+import Long from 'long';
 export class ScriptSystem {
     static async execute(scriptCommands, context) {
         for (let c of scriptCommands) {
@@ -36,19 +37,25 @@ export class ScriptSystem {
                     break;
                 }
                 case 'SetBitInSignal': {
-                    //todo: bit
-                    await iobrokerHandler.connection.setState(c.signal, true);
+                    let state = await iobrokerHandler.connection.getState(c.signal);
+                    let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
+                    const newVal = Long.fromNumber(state.val).or(mask).toNumber();
+                    await iobrokerHandler.connection.setState(c.signal, newVal);
                     break;
                 }
                 case 'ClearBitInSignal': {
-                    //todo: bit
-                    await iobrokerHandler.connection.setState(c.signal, false);
+                    let state = await iobrokerHandler.connection.getState(c.signal);
+                    let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
+                    mask.negate();
+                    const newVal = Long.fromNumber(state.val).and(mask).toNumber();
+                    await iobrokerHandler.connection.setState(c.signal, newVal);
                     break;
                 }
                 case 'ToggleBitInSignal': {
-                    //todo: bit
                     let state = await iobrokerHandler.connection.getState(c.signal);
-                    await iobrokerHandler.connection.setState(c.signal, !state.val);
+                    let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
+                    const newVal = Long.fromNumber(state.val).xor(mask).toNumber();
+                    await iobrokerHandler.connection.setState(c.signal, newVal);
                     break;
                 }
                 case 'Javascript': {
