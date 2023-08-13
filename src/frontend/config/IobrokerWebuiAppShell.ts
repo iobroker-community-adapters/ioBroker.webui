@@ -49,7 +49,7 @@ import { IobrokerWebuiSolutionExplorer } from './IobrokerWebuiSolutionExplorer.j
 import { IobrokerWebuiStyleEditor } from './IobrokerWebuiStyleEditor.js';
 import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
 import { IobrokerWebuiEventAssignment } from './IobrokerWebuiEventAssignment.js';
-import { registerNpmWidgets } from '../configWidgets.js';
+import { registerNpmWidgets } from '../widgets/configWidgets.js';
 
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
   activeElement: HTMLElement;
