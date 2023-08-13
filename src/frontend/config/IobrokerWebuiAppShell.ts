@@ -28,6 +28,7 @@ serviceContainer.register("demoProviderService", new IobrokerWebuiDemoProviderSe
 serviceContainer.register("stylesheetService", designerCanvas => new CssToolsStylesheetService(designerCanvas));
 serviceContainer.config.codeViewWidget = CodeViewMonaco;
 
+LazyLoader.LoadJavascript(window.iobrokerWebuiRootUrl + 'widgets/importmap.js');
 import(window.iobrokerWebuiRootUrl + 'widgets/configWidgets.js').then(x => {
   x.registerNpmWidgets(serviceContainer);
   //paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);
