@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs/promises';
+import type { AdapterInstance } from '@iobroker/adapter-core';
 
 function removeTrailing(text: string, char: string) {
     if (text.endsWith('/'))
@@ -18,10 +19,12 @@ export class ImportmapCreator {
     private _packageBaseDirectory: string;
     private _nodeModulesBaseDirectory: string;
     private _dependecies = new Map<string, boolean>();
+    private _adapter: AdapterInstance
 
     public importMap = { imports: {}, scopes: {} }
 
-    constructor(packageBaseDirectory: string) {
+    constructor(adapter: AdapterInstance, packageBaseDirectory: string) {
+        this._adapter = adapter;
         this._packageBaseDirectory = packageBaseDirectory;
         this._nodeModulesBaseDirectory = path.join(packageBaseDirectory, 'node_modules');
     }
@@ -204,8 +207,12 @@ export class ImportmapCreator {
             let mainImport = packageJsonObj.main;
             if (packageJsonObj.module)
                 mainImport = packageJsonObj.module;
-            this.importMap.imports[packageJsonObj.name] = basePath + removeTrailing(mainImport, '/');
-            this.importMap.imports[packageJsonObj.name + '/'] = basePath;
+            if (mainImport) {
+                this.importMap.imports[packageJsonObj.name] = basePath + removeTrailing(mainImport, '/');
+                this.importMap.imports[packageJsonObj.name + '/'] = basePath;
+            } else {
+                this._adapter.log.error('mainImport is undefined for "' + packageJsonObj.name + '"');
+            }
         }
     }
 }

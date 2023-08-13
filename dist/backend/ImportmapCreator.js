@@ -14,8 +14,10 @@ export class ImportmapCreator {
     _packageBaseDirectory;
     _nodeModulesBaseDirectory;
     _dependecies = new Map();
+    _adapter;
     importMap = { imports: {}, scopes: {} };
-    constructor(packageBaseDirectory) {
+    constructor(adapter, packageBaseDirectory) {
+        this._adapter = adapter;
         this._packageBaseDirectory = packageBaseDirectory;
         this._nodeModulesBaseDirectory = path.join(packageBaseDirectory, 'node_modules');
     }
@@ -181,8 +183,13 @@ export class ImportmapCreator {
             let mainImport = packageJsonObj.main;
             if (packageJsonObj.module)
                 mainImport = packageJsonObj.module;
-            this.importMap.imports[packageJsonObj.name] = basePath + removeTrailing(mainImport, '/');
-            this.importMap.imports[packageJsonObj.name + '/'] = basePath;
+            if (mainImport) {
+                this.importMap.imports[packageJsonObj.name] = basePath + removeTrailing(mainImport, '/');
+                this.importMap.imports[packageJsonObj.name + '/'] = basePath;
+            }
+            else {
+                this._adapter.log.error('mainImport is undefined for "' + packageJsonObj.name + '"');
+            }
         }
     }
 }

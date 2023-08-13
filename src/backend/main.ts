@@ -124,7 +124,7 @@ class WebUi extends utils.Adapter {
     async createImportMapAndLoaderFiles() {
         try {
             this.log.info(`create importMap...`);
-            const imc = new ImportmapCreator(__dirname + '/www/widgets');
+            const imc = new ImportmapCreator(this, __dirname + '/www/widgets');
             imc.parsePackages();
             this.log.info(`importMap: ` + JSON.stringify(imc.importMap));
         }
@@ -143,9 +143,9 @@ class WebUi extends utils.Adapter {
                 await this.refreshWWW();
                 break;
             case 'updateNpm':
-                await this.installNpm(parameter);
+                //await this.installNpm(parameter);
                 await this.createImportMapAndLoaderFiles();
-                await this.refreshWWW();
+                //await this.refreshWWW();
                 break;
             case 'removeNpm':
                 await this.removeNpm(parameter);
