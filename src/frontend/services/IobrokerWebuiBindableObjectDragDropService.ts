@@ -1,4 +1,4 @@
-import { OverlayLayer, DesignItem, IBindableObject, IBindableObjectDragDropService, IDesignerCanvas, InsertAction, ChangeGroup, BindingTarget } from "@node-projects/web-component-designer";
+import { OverlayLayer, DesignItem, IBindableObject, IBindableObjectDragDropService, IDesignerCanvas, InsertAction, ChangeGroup, BindingTarget, IProperty, IDesignItem, PropertyType } from "@node-projects/web-component-designer";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
@@ -17,6 +17,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
             this.rect.style.opacity = '0.3';
             this.rectMap.set(element, this.rect);
         }
+        console.log(element);
     }
 
     dragLeave(designerCanvas: IDesignerCanvas, event: DragEvent, element: Element) {
@@ -65,7 +66,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
 
             let di: DesignItem;
             let grp: ChangeGroup;
-           
+
             let state = await iobrokerHandler.connection.getState(bindableObject.fullName);
             if (obj?.common?.role === 'url' && typeof state.val === 'string') {
                 if (state.val.endsWith('jpg')) {
@@ -108,5 +109,26 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
             grp.commit();
             requestAnimationFrame(() => designerCanvas.instanceServiceContainer.selectionService.setSelectedElements([di]));
         }
+    }
+
+    dragOverOnProperty?(event: DragEvent, property: IProperty, designItems: IDesignItem[]): 'none' | 'copy' | 'link' | 'move' {
+        return 'copy';
+    }
+
+    dropOnProperty?(event: DragEvent, property: IProperty, bindableObject: IBindableObject<any>, designItems: IDesignItem[]) {
+        const binding: IIobrokerWebuiBinding = { signal: bindableObject.fullName, target: BindingTarget.property };
+        if (property.propertyType == PropertyType.attribute)
+            binding.target = BindingTarget.attribute;
+        if (property.propertyType == PropertyType.cssValue)
+            binding.target = BindingTarget.css;
+        binding.signal = bindableObject.fullName;
+        binding.twoWay = property.propertyType == PropertyType.property || property.propertyType == PropertyType.propertyAndAttribute;
+
+        const group = designItems[0].openGroup('drop binding')
+        for (let d of designItems) {
+            const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(d.element, property.name, binding);
+            d.setAttribute(serializedBinding[0], serializedBinding[1]);
+        }
+        group.commit();
     }
 }
