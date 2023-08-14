@@ -27,8 +27,8 @@ serviceContainer.register('elementsService', new JsonFileElementsService('native
 
 serviceContainer.config.openBindingsEditor = async (property, designItems, binding, target) => {
     let dynEdt = new IobrokerWebuiDynamicsEditor(property, binding, target);
-    dynEdt.title = "Edit Binding of '" + property.name + "' - " + property.propertyType;
     let cw = new IobrokerWebuiConfirmationWrapper();
+    cw.title = "Edit Binding of '" + property.name + "' - " + property.propertyType;
     cw.appendChild(dynEdt);
     let dlg = window.appShell.openDialog(cw, 200, 200, 700, 460);
     cw.cancelClicked.on((e) => {
