@@ -6,40 +6,11 @@ iobrokerHandler.init();
 await LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
 
 import '@node-projects/web-component-designer'
-
-import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, TreeViewExtended, PropertyGrid, NodeHtmlParserService, CodeViewMonaco, createDefaultServiceContainer, CssToolsStylesheetService } from '@node-projects/web-component-designer';
-import { IobrokerWebuiBindableObjectsService } from '../services/IobrokerWebuiBindableObjectsService.js';
-import { IobrokerWebuiBindableObjectDragDropService } from '../services/IobrokerWebuiBindableObjectDragDropService.js';
-import { IobrokerWebuiBindingService } from '../services/IobrokerWebuiBindingService.js';
-import { IobrokerWebuiDemoProviderService } from '../services/IobrokerWebuiDemoProviderService.js';
+import { TreeViewExtended, PropertyGrid } from '@node-projects/web-component-designer';
 import type { IDisposable } from 'monaco-editor';
 import { PanelContainer } from 'dock-spawn-ts/lib/js/PanelContainer.js';
 import { PanelType } from 'dock-spawn-ts/lib/js/enums/PanelType.js';
-
-const rootPath = new URL(import.meta.url).pathname.split('/').slice(0, -4).join('/'); // -2 remove file & dist
-
-const serviceContainer = createDefaultServiceContainer();
-serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
-serviceContainer.register("htmlParserService", new NodeHtmlParserService(rootPath + '/node_modules/@node-projects/node-html-parser-esm/dist/index.js'));
-serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableObjectsService());
-serviceContainer.register("bindableObjectDragDropService", new IobrokerWebuiBindableObjectDragDropService());
-serviceContainer.register("bindingService", new IobrokerWebuiBindingService());
-serviceContainer.register("demoProviderService", new IobrokerWebuiDemoProviderService());
-serviceContainer.register("stylesheetService", designerCanvas => new CssToolsStylesheetService(designerCanvas));
-serviceContainer.config.codeViewWidget = CodeViewMonaco;
-
-LazyLoader.LoadJavascript(window.iobrokerWebuiRootUrl + 'widgets/importmap.js');
-import(window.iobrokerWebuiRootUrl + 'widgets/configWidgets.js').then(x => {
-  x.registerNpmWidgets(serviceContainer);
-  //paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);
-}).catch(err => {
-  console.error('error loading widgets designer generated code', err);
-});
-import(window.iobrokerWebuiRootUrl + 'widgets/designerAddons.js').then(x => {
-  x.registerDesignerAddons(serviceContainer);
-}).catch(err => {
-  console.error('error loading widgets designer addons', err);
-});
+import serviceContainer from './ConfigureWebcomponentDesigner.js';
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent.js';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js';
@@ -171,8 +142,6 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   }
 
   private async _setupServiceContainer() {
-    serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/frontend/elements-webui.json'));
-    serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
     serviceContainer.globalContext.onToolChanged.on((e) => {
       let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue.tool).map(([k]) => k)[0];
       if (e.newValue == null)

@@ -9,6 +9,7 @@ import { BindingTarget } from "@node-projects/web-component-designer/dist/elemen
 export const bindingPrefixProperty = 'bind-prop:';
 export const bindingPrefixAttribute = 'bind-attr:';
 export const bindingPrefixCss = 'bind-css:';
+export const bindingPrefixContent = 'bind-content:';
 
 export type namedBinding = [name: string, binding: IIobrokerWebuiBinding];
 
@@ -43,12 +44,17 @@ export class IobrokerWebuiBindingsHelper {
 
     }
 
-    static serializeBinding(element: Element, name: string, binding: IIobrokerWebuiBinding): [name: string, value: string] {
+    static serializeBinding(element: Element, targetName: string, binding: IIobrokerWebuiBinding): [name: string, value: string] {
         if (binding.target == BindingTarget.property &&
             binding.converter == null &&
             (binding.events == null || binding.events.length == 0) &&
-            !binding.twoWay)
-            return [bindingPrefixProperty + name, (binding.inverted ? '!' : '') + binding.signal];
+            !binding.twoWay) {
+            if (targetName == 'textContent')
+                return [bindingPrefixContent + 'text', (binding.inverted ? '!' : '') + binding.signal];
+            if (targetName == 'innerHTML')
+                return [bindingPrefixContent + 'html', (binding.inverted ? '!' : '') + binding.signal];
+            return [bindingPrefixProperty + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal];
+        }
 
         let bindingCopy = { ...binding }; //can be removed with custom serialization
         //todo custom serialization
@@ -59,18 +65,22 @@ export class IobrokerWebuiBindingsHelper {
                 delete bindingCopy.events;
             else if (element instanceof HTMLInputElement && binding.events[0] == "change")
                 delete bindingCopy.events;
-            else if (element instanceof HTMLInputElement && binding.events[0] == name + '-changed')
+            else if (element instanceof HTMLInputElement && binding.events[0] == targetName + '-changed')
                 delete bindingCopy.events;
         }
         delete bindingCopy.target;
 
         if (binding.target == BindingTarget.content)
-            return [bindingPrefixProperty + PropertiesHelper.camelToDashCase('innerHTML'), JSON.stringify(bindingCopy)];
+            return [bindingPrefixContent + 'html', JSON.stringify(bindingCopy)];
         if (binding.target == BindingTarget.attribute)
-            return [bindingPrefixAttribute + PropertiesHelper.camelToDashCase(name), JSON.stringify(bindingCopy)];
+            return [bindingPrefixAttribute + PropertiesHelper.camelToDashCase(targetName), JSON.stringify(bindingCopy)];
         if (binding.target == BindingTarget.css)
-            return [bindingPrefixCss + PropertiesHelper.camelToDashCase(name), JSON.stringify(bindingCopy)];
-        return [bindingPrefixProperty + PropertiesHelper.camelToDashCase(name), JSON.stringify(bindingCopy)];
+            return [bindingPrefixCss + PropertiesHelper.camelToDashCase(targetName), JSON.stringify(bindingCopy)];
+        if (binding.target == BindingTarget.property && targetName == 'innerHTML')
+            return [bindingPrefixContent + 'html', JSON.stringify(bindingCopy)];
+        if (binding.target == BindingTarget.property && targetName == 'textContent')
+            return [bindingPrefixContent + 'text', JSON.stringify(bindingCopy)];
+        return [bindingPrefixProperty + PropertiesHelper.camelToDashCase(targetName), JSON.stringify(bindingCopy)];
     }
 
     static getBindingAttributeName(element: Element, propertyName: string, propertyTarget: BindingTarget) {
@@ -80,6 +90,12 @@ export class IobrokerWebuiBindingsHelper {
         if (propertyTarget == BindingTarget.css) {
             return bindingPrefixCss + PropertiesHelper.camelToDashCase(propertyName);
         }
+        if (propertyTarget == BindingTarget.property && propertyName == 'innerHTML') {
+            return bindingPrefixContent + 'html';
+        }
+        if (propertyTarget == BindingTarget.property && propertyName == 'textContent') {
+            return bindingPrefixContent + 'text';
+        }
         return bindingPrefixProperty + PropertiesHelper.camelToDashCase(propertyName);
     }
 
@@ -87,6 +103,9 @@ export class IobrokerWebuiBindingsHelper {
         for (let a of element.attributes) {
             if (a.name.startsWith(bindingPrefixProperty)) {
                 yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.property, bindingPrefixProperty);
+            }
+            else if (a.name.startsWith(bindingPrefixContent)) {
+                yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name == 'bind-content:html' ? 'bind-prop:inner-h-t-m-l' : 'bind-prop:text-content', a.value, BindingTarget.property, bindingPrefixProperty);
             }
             else if (a.name.startsWith(bindingPrefixAttribute)) {
                 yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.attribute, bindingPrefixAttribute);
