@@ -18,6 +18,12 @@ export class IobrokerWebuiBindingsHelper {
                 value = value.substring(1);
                 binding.signal = value;
                 binding.twoWay = true;
+                if (element instanceof HTMLInputElement)
+                    binding.events = ['change'];
+                else if (element instanceof HTMLInputElement)
+                    binding.events = ['change'];
+                else
+                    binding.events = [name + '-changed'];
             }
             if (value.startsWith('!')) {
                 binding.signal = value.substring(1);
