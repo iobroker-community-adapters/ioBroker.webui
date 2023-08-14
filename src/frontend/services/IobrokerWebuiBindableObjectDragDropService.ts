@@ -39,6 +39,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
         this.rectMap.clear();
 
         const designItem = DesignItem.GetDesignItem(element);
+        let obj = await iobrokerHandler.connection.getObject(bindableObject.fullName);
         if (designItem && !designItem.isRootItem) {
             // Add binding to drop target...
             if (element instanceof HTMLInputElement) {
@@ -64,7 +65,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
 
             let di: DesignItem;
             let grp: ChangeGroup;
-            let obj = await iobrokerHandler.connection.getObject(bindableObject.fullName);
+           
             let state = await iobrokerHandler.connection.getState(bindableObject.fullName);
             if (obj?.common?.role === 'url' && typeof state.val === 'string') {
                 if (state.val.endsWith('jpg')) {
@@ -92,7 +93,7 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
                 const input = document.createElement('input');
                 di = DesignItem.createDesignItemFromInstance(input, designerCanvas.serviceContainer, designerCanvas.instanceServiceContainer);
                 grp = di.openGroup("Insert");
-                const binding: IIobrokerWebuiBinding = { signal: bindableObject.fullName, target: BindingTarget.property };
+                const binding: IIobrokerWebuiBinding = { signal: bindableObject.fullName, target: BindingTarget.property, twoWay: obj?.common?.write !== false };
                 let serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value', binding);
                 if (bindableObject.originalObject.common.type === 'boolean') {
                     serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'checked', binding);
