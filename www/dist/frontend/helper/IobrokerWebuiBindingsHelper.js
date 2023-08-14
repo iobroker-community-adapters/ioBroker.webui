@@ -14,6 +14,11 @@ export class IobrokerWebuiBindingsHelper {
                 signal: value,
                 target: bindingTarget
             };
+            if (value.startsWith('=')) {
+                value = value.substring(1);
+                binding.signal = value;
+                binding.twoWay = true;
+            }
             if (value.startsWith('!')) {
                 binding.signal = value.substring(1);
                 binding.inverted = true;
@@ -35,13 +40,12 @@ export class IobrokerWebuiBindingsHelper {
     static serializeBinding(element, targetName, binding) {
         if (binding.target == BindingTarget.property &&
             binding.converter == null &&
-            (binding.events == null || binding.events.length == 0) &&
-            !binding.twoWay) {
+            (binding.events == null || binding.events.length == 0)) {
             if (targetName == 'textContent')
-                return [bindingPrefixContent + 'text', (binding.inverted ? '!' : '') + binding.signal];
+                return [bindingPrefixContent + 'text', (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
             if (targetName == 'innerHTML')
-                return [bindingPrefixContent + 'html', (binding.inverted ? '!' : '') + binding.signal];
-            return [bindingPrefixProperty + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal];
+                return [bindingPrefixContent + 'html', (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
+            return [bindingPrefixProperty + PropertiesHelper.camelToDashCase(targetName), (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
         }
         let bindingCopy = { ...binding }; //can be removed with custom serialization
         //todo custom serialization
