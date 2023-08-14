@@ -25,6 +25,12 @@ export class IobrokerWebuiBindingsHelper {
                 value = value.substring(1);
                 binding.signal = value;
                 binding.twoWay = true;
+                if (element instanceof HTMLInputElement)
+                    binding.events = ['change'];
+                else if (element instanceof HTMLInputElement)
+                    binding.events = ['change'];
+                else
+                    binding.events = [name + '-changed'];
             }
 
             if (value.startsWith('!')) {
@@ -58,8 +64,8 @@ export class IobrokerWebuiBindingsHelper {
             if (targetName == 'textContent')
                 return [bindingPrefixContent + 'text', (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
             if (targetName == 'innerHTML')
-                return [bindingPrefixContent + 'html', (binding.twoWay ? '=' : '') +(binding.inverted ? '!' : '') + binding.signal];
-            return [bindingPrefixProperty + PropertiesHelper.camelToDashCase(targetName), (binding.twoWay ? '=' : '') +(binding.inverted ? '!' : '') + binding.signal];
+                return [bindingPrefixContent + 'html', (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
+            return [bindingPrefixProperty + PropertiesHelper.camelToDashCase(targetName), (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
         }
 
         let bindingCopy = { ...binding }; //can be removed with custom serialization
