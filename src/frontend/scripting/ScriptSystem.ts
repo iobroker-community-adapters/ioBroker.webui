@@ -19,6 +19,10 @@ export class ScriptSystem {
                     }
                     break;
                 }
+                case 'OpenUrl': {
+                    window.open(c.url, c.target);
+                    break;
+                }
 
                 case 'ToggleSignalValue': {
                     let state = await iobrokerHandler.connection.getState(c.signal);
@@ -43,7 +47,7 @@ export class ScriptSystem {
                 case 'SetBitInSignal': {
                     let state = await iobrokerHandler.connection.getState(c.signal);
                     let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
-                    const newVal= Long.fromNumber(<number>state.val).or(mask).toNumber();
+                    const newVal = Long.fromNumber(<number>state.val).or(mask).toNumber();
                     await iobrokerHandler.connection.setState(c.signal, newVal);
                     break;
                 }
@@ -51,14 +55,14 @@ export class ScriptSystem {
                     let state = await iobrokerHandler.connection.getState(c.signal);
                     let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
                     mask.negate();
-                    const newVal= Long.fromNumber(<number>state.val).and(mask).toNumber();
+                    const newVal = Long.fromNumber(<number>state.val).and(mask).toNumber();
                     await iobrokerHandler.connection.setState(c.signal, newVal);
                     break;
                 }
                 case 'ToggleBitInSignal': {
                     let state = await iobrokerHandler.connection.getState(c.signal);
                     let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
-                    const newVal= Long.fromNumber(<number>state.val).xor(mask).toNumber();
+                    const newVal = Long.fromNumber(<number>state.val).xor(mask).toNumber();
                     await iobrokerHandler.connection.setState(c.signal, newVal);
                     break;
                 }

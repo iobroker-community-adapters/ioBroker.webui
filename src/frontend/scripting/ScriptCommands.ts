@@ -1,6 +1,6 @@
 //import { ScriptMultiplexValue } from "./ScriptValue";
 
-export declare type ScriptCommands = OpenScreen |
+export declare type ScriptCommands = OpenScreen | OpenUrl |
     ToggleSignalValue | SetSignalValue | IncrementSignalValue | DecrementSignalValue |
     SetBitInSignal | ClearBitInSignal | ToggleBitInSignal |
     Javascript;
