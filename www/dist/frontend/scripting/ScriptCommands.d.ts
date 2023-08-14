@@ -1,4 +1,4 @@
-export declare type ScriptCommands = OpenScreen | ToggleSignalValue | SetSignalValue | IncrementSignalValue | DecrementSignalValue | SetBitInSignal | ClearBitInSignal | ToggleBitInSignal | Javascript;
+export declare type ScriptCommands = OpenScreen | OpenUrl | ToggleSignalValue | SetSignalValue | IncrementSignalValue | DecrementSignalValue | SetBitInSignal | ClearBitInSignal | ToggleBitInSignal | Javascript;
 export interface OpenScreen {
     type: 'OpenScreen';
     screen: string;

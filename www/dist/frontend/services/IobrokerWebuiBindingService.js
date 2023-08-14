@@ -7,7 +7,9 @@ export class IobrokerWebuiBindingService {
             targetName: x[0],
             target: x[1].target,
             mode: x[1].twoWay ? BindingMode.twoWay : BindingMode.oneWay,
-            invert: x[1].inverted
+            invert: x[1].inverted,
+            bindableObjectNames: x[1].signal.split(';'),
+            expression: x[1].formula
         }));
     }
     setBinding(designItem, binding) {

@@ -17,6 +17,10 @@ export class ScriptSystem {
                     }
                     break;
                 }
+                case 'OpenUrl': {
+                    window.open(c.url, c.target);
+                    break;
+                }
                 case 'ToggleSignalValue': {
                     let state = await iobrokerHandler.connection.getState(c.signal);
                     await iobrokerHandler.connection.setState(c.signal, !state.val);
