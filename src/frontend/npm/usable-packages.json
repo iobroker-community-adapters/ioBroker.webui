@@ -1,6 +1,7 @@
 [
     "@node-projects/tab.webcomponent",
     "@node-projects/gauge.webcomponent",
+    "@node-projects/input-knob",
     "@christianliebel/paint",
     "@node-projects/wired-elements"
 ]
