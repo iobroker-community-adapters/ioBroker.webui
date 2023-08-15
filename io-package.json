@@ -34,7 +34,9 @@
         "authors": [
             "jogibear9988 <jochen.kuehner@gmx.de>"
         ],
-        "localLink": "%web_protocol%://%ip%:%web_port%/webui/",
+        "localLinks": {
+            "_default" : "%web_protocol%://%ip%:%web_port%/webui/"
+        },
         "license": "MIT",
         "dependencies": [
             {
@@ -49,6 +51,9 @@
         "type": "visualization",
         "highlight": true,
         "noConfig": true,
+        "adminUI" : {
+            "config": "none"
+        },
         "materialize": true,
         "onlyWWW": false,
         "nogit": false,
