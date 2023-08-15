@@ -162,16 +162,50 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             title: 'Suggestions',
             folder: true,
             tooltip: 'doublecklick to install',
-            children: [
-                { title: "@node-projects/gauge.webcomponent" },
-                { title: "@node-projects/tab.webcomponent" },
-            ]
+            lazy: true,
+            lazyload: (e, data) => {
+                data.result = new Promise(async (resolve) => {
+                    try {
+                        let packages = (await import('../npm/usable-packages.json', { assert: { type: 'json' } })).default;
+                        let groups = [...new Set(packages.map(x => x.split('/')[0]))];
+                        let children = [];
+                        for (let g of groups) {
+                            let elements = packages.filter(x => x.startsWith(g));
+                            if (elements.length == 1) {
+                                children.push({
+                                    title: elements[0],
+                                    folder: false,
+                                    tooltip: elements[0],
+                                    dblclick: (e, data) => {
+                                        iobrokerHandler.sendCommand("addNpm", elements[0]);
+                                    }
+                                });
+                            }
+                            else {
+                                children.push({
+                                    title: g,
+                                    folder: true,
+                                    tooltip: g,
+                                    children: elements.map(x => ({
+                                        title: x.split('/')[1],
+                                        folder: false,
+                                        tooltip: x.split('/')[1],
+                                        dblclick: (e, data) => {
+                                            iobrokerHandler.sendCommand("addNpm", x);
+                                        }
+                                    }))
+                                });
+                            }
+                        }
+                        resolve(children);
+                    }
+                    catch (err) {
+                        console.warn("error loading usable-packages.json, may not yet exist", err);
+                    }
+                    resolve([]);
+                });
+            }
         };
-        for (let c of npmSuggestion.children) {
-            c.dblclick = (e, data) => {
-                iobrokerHandler.sendCommand("addNpm", c.title);
-            };
-        }
         npmsNode.children.push(npmInstalled);
         npmsNode.children.push(npmSuggestion);
         return npmsNode;

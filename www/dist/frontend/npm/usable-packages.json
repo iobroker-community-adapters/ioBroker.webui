@@ -1,4 +1,6 @@
 [
     "@node-projects/tab.webcomponent",
-    "@node-projects/gauge.webcomponent"
+    "@node-projects/gauge.webcomponent",
+    "@christianliebel/paint",
+    "@node-projects/wired-elements"
 ]

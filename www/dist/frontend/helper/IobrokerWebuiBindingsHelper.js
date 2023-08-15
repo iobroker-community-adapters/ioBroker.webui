@@ -53,6 +53,16 @@ export class IobrokerWebuiBindingsHelper {
                 return [bindingPrefixContent + 'html', (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
             return [bindingPrefixProperty + PropertiesHelper.camelToDashCase(targetName), (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
         }
+        if (binding.target == BindingTarget.attribute &&
+            binding.converter == null &&
+            (binding.events == null || binding.events.length == 0)) {
+            return [bindingPrefixAttribute + PropertiesHelper.camelToDashCase(targetName), (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
+        }
+        if (binding.target == BindingTarget.css &&
+            binding.converter == null &&
+            (binding.events == null || binding.events.length == 0)) {
+            return [bindingPrefixCss + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal];
+        }
         let bindingCopy = { ...binding }; //can be removed with custom serialization
         //todo custom serialization
         //let str='{"signal":"'+binding.signal+'",'+binding.
