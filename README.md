@@ -53,9 +53,7 @@ If you want to help the development, sponsor this project at https://github.com/
 
   - Run 
 ```
-  $ npm run release major 
-  or
-  $ npm run release minor 
+  $ npm run release
 ``` 
    to create correct release infos for iobroker
 
