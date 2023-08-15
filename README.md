@@ -55,7 +55,7 @@ If you want to help the development, sponsor this project at https://github.com/
 ```
   $ npm run release
 ``` 
-   to create correct release infos for iobroker
+   to create correct release commit for iobroker, Be carefull this also pushes to git repo
 
 ## Info about the Adapter.
 

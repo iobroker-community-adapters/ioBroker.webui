@@ -5,7 +5,16 @@
         "title": "webui",
         "titleLang": {
             "en": "webui",
-            "de": "webui"
+            "de": "webui",
+            "ru": "webui",
+            "pt": "webui",
+            "nl": "webui",
+            "fr": "webui",
+            "it": "webui",
+            "es": "webui",
+            "pl": "webui",
+            "uk": "webui",
+            "zh-cn": "webui"
         },
         "desc": {
             "en": "Graphical user interface for iobroker using Webcomponents"
@@ -35,7 +44,7 @@
             "jogibear9988 <jochen.kuehner@gmx.de>"
         ],
         "localLinks": {
-            "_default" : "%web_protocol%://%ip%:%web_port%/webui/"
+            "_default": "%web_protocol%://%ip%:%web_port%/webui/"
         },
         "license": "MIT",
         "dependencies": [
@@ -51,7 +60,7 @@
         "type": "visualization",
         "highlight": true,
         "noConfig": true,
-        "adminUI" : {
+        "adminUI": {
             "config": "none"
         },
         "materialize": true,
