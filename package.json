@@ -34,6 +34,8 @@
   "devDependencies": {
     "@adobe/css-tools": "4.3.0",
     "@alcalzone/release-script": "^3.6.0",
+    "@alcalzone/release-script-plugin-iobroker": "^3.6.0",
+    "@alcalzone/release-script-plugin-license": "^3.5.9",
     "@iobroker/socket-client": "^2.3.4",
     "@iobroker/testing": "^4.1.0",
     "@node-projects/base-custom-webcomponent": "0.13.0",

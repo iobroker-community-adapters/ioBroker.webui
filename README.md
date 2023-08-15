@@ -37,6 +37,28 @@ If you want to help the development, sponsor this project at https://github.com/
 
   * Navigate Chrome to [localhost:8000]() to see the app.
 
+### More about Development
+
+  - Run 
+```
+  $ npm run reflection
+``` 
+   to recreate reflection files for Scripting wich are  used for the property grid
+
+  - Run 
+```
+  $ npm run build
+``` 
+   to copy compiled files and node_modules to www folder so adapter is installable via github
+
+  - Run 
+```
+  $ npm run release major 
+  or
+  $ npm run release minor 
+``` 
+   to create correct release infos for iobroker
+
 ## Info about the Adapter.
 
 The Adapter is based on the following Designer component:
@@ -45,14 +67,6 @@ https://github.com/node-projects/web-component-designer
 You need to create a screen "start", this is the first one called when you open runtime.html, 
 but you can change this via query parameter:
 runtime.html?screenName=screen2
-
-## Changelog
-<!--
-	Placeholder for the next version (at the beginning of the line):
-	### __WORK IN PROGRESS__
--->
-### 0.0.30 (2023-08-210)
-* initial version
 
 ## License
 The MIT License (MIT)
