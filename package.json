@@ -18,7 +18,8 @@
     "check": "tsc --noEmit",
     "coverage": "nyc npm run test:ts",
     "lint": "eslint --ext .ts src/",
-    "reflection": "typescript-json-schema './src/scripting/ScriptCommands.ts' '*' --ignoreErrors --strictNullChecks > ./src/generated/ScriptCommands.json"
+    "reflection": "typescript-json-schema './src/scripting/ScriptCommands.ts' '*' --ignoreErrors --strictNullChecks > ./src/generated/ScriptCommands.json",
+    "release": "release-script"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.webui#readme",
   "devDependencies": {
     "@adobe/css-tools": "4.3.0",
+    "@alcalzone/release-script": "^3.6.0",
     "@iobroker/socket-client": "^2.3.4",
     "@iobroker/testing": "^4.1.0",
     "@node-projects/base-custom-webcomponent": "0.13.0",
