@@ -20,9 +20,6 @@
             "en": "Graphical user interface for iobroker using Webcomponents"
         },
         "news": {
-            "0.0.30": {
-                "en": "initial version"
-            }
         },
         "icon": "logo.png",
         "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.webui/master/admin/logo.png",

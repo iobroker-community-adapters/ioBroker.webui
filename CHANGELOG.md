@@ -6,8 +6,5 @@
 
 ## **WORK IN PROGRESS**
 
--   Did some changes
--   Did some more changes
+-   initial public release
 
-### 0.0.30 (2023-08-21)
-* initial version
