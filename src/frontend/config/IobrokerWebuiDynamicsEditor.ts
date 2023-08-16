@@ -43,14 +43,6 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
                     <div class="input-headline">
                         <span>converter</span>:
                     </div>
-                    <div>
-                        <selecttype="" id="select_converter"></select>
-                    </div>
-                </div>
-                <div class="padding_top controlbox">
-                    <button disabled type="button"  value="add">
-                        <span>add</span>
-                    </button>
                 </div>
             </div>
             <div class="vertical-grid">
@@ -61,7 +53,7 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
                 </div>
                 <div class="controlbox" id="grid-controls">
                     <button disabled type="button" id="add-row-button" value="add">
-                        <span>Add</span>
+                        <span>add</span>
                     </button>
                     <button disabled id="remove-row-button" value="remove" style="margin-top: 6px;">
                         <span>remove</span>
