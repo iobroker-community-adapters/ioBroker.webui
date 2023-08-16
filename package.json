@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.webui#readme",
   "devDependencies": {
-    "@adobe/css-tools": "4.3.0",
+    "@adobe/css-tools": "4.3.1",
     "@alcalzone/release-script": "^3.6.0",
     "@alcalzone/release-script-plugin-iobroker": "^3.6.0",
     "@alcalzone/release-script-plugin-license": "^3.5.9",
@@ -41,7 +41,7 @@
     "@node-projects/base-custom-webcomponent": "0.13.0",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^6.1.5",
-    "@node-projects/web-component-designer": "^0.0.267",
+    "@node-projects/web-component-designer": "^0.0.268",
     "@types/jquery": "^3.5.16",
     "@types/jquery.fancytree": "^0.0.7",
     "@types/json-schema": "^7.0.12",
