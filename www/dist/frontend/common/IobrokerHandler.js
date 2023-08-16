@@ -103,7 +103,7 @@ class IobrokerHandler {
     }
     async _getObjectFromFile(name) {
         const file = await this.connection.readFile(this.adapterName, name, false);
-        if (file.mimeType == 'application/json') {
+        if (file.mimeType == 'application/json' || file.mimeType == 'text/javascript') {
             return JSON.parse(file.file);
         }
         //@ts-ignore
