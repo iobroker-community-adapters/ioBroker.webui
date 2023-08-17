@@ -112,7 +112,7 @@ export class Uploadhelper {
     async uploadInternal(files, sourceDirectory, targetDirectory) {
         await this._adapter.setForeignStateAsync(this._uploadStateObjectName, { val: 0, ack: true });
         const dirLen = sourceDirectory.length;
-        let filePromises = [];
+        let filePromises = new Set;
         let maxParallelUpload = 20;
         for (let f = 0; f < files.length; f++) {
             const file = files[f];
@@ -142,9 +142,11 @@ export class Uploadhelper {
                 });
             }
             try {
-                while (filePromises.length > maxParallelUpload)
+                while (filePromises.size > maxParallelUpload)
                     sleep(10);
-                filePromises.push(this._uploadFile(file, attName));
+                let uploadPromise = this._uploadFile(file, attName);
+                filePromises.add(uploadPromise);
+                uploadPromise.then(x => filePromises.delete(uploadPromise));
             }
             catch (e) {
                 this._adapter.log.error(`Error: Cannot upload ${file}: ${e.message}`);
