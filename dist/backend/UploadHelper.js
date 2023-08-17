@@ -1,5 +1,8 @@
 import fs from 'fs';
 import path from 'path';
+export function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 export class Uploadhelper {
     constructor(adapter) {
         this._stoppingPromise = false;
@@ -56,7 +59,7 @@ export class Uploadhelper {
             return { filesToDelete: _files, dirs: _dirs };
         }
         try {
-            this._adapter.log.debug(`Scanning ${dir}`);
+            //this._adapter.log.debug(`Scanning ${dir}`);
             files = await this._adapter.readDirAsync(this._adapterName, dir);
         }
         catch {
@@ -109,6 +112,8 @@ export class Uploadhelper {
     async uploadInternal(files, sourceDirectory, targetDirectory) {
         await this._adapter.setForeignStateAsync(this._uploadStateObjectName, { val: 0, ack: true });
         const dirLen = sourceDirectory.length;
+        let filePromises = [];
+        let maxParallelUpload = 20;
         for (let f = 0; f < files.length; f++) {
             const file = files[f];
             if (this._stoppingPromise) {
@@ -137,18 +142,26 @@ export class Uploadhelper {
                 });
             }
             try {
-                const data = fs.readFileSync(file);
-                await this._adapter.writeFileAsync(this._adapterName, attName, data);
+                while (filePromises.length > maxParallelUpload)
+                    sleep(10);
+                filePromises.push(this._uploadFile(file, attName));
             }
             catch (e) {
                 this._adapter.log.error(`Error: Cannot upload ${file}: ${e.message}`);
             }
         }
+        this._adapter.log.error(`Wait for last upload Promises to fullfill`);
+        Promise.all(filePromises);
+        this._adapter.log.error(`upload done`);
         // Set upload progress to 0;
         if (files.length) {
             await this._adapter.setForeignStateAsync(this._uploadStateObjectName, { val: 0, ack: true });
         }
         return;
+    }
+    async _uploadFile(sourceFile, destinationFile) {
+        const data = fs.readFileSync(sourceFile);
+        await this._adapter.writeFileAsync(this._adapterName, destinationFile, data);
     }
     // Read synchronous all files recursively from local directory
     walk(dir, _results) {
