@@ -161,9 +161,9 @@ export async function registerDesignerAddons(serviceContainer) {
 
 
             if (packageJsonObj.module) {
-                this.importUndefinedElementFiles.push([packageJsonObj.name, packageJsonObj.module]);
+                this.importUndefinedElementFiles.push([packageJsonObj.name, '../' + elementsRootPathWeb + removeLeading(packageJsonObj.module, '/')]);
             } else if (packageJsonObj.main) {
-                this.importUndefinedElementFiles.push([packageJsonObj.name, packageJsonObj.main]);
+                this.importUndefinedElementFiles.push([packageJsonObj.name, '../' + elementsRootPathWeb + removeLeading(packageJsonObj.main, '/')]);
             } else {
                 console.warn('npm package: ' + pkg + ' - no entry point in package found.');
             }
