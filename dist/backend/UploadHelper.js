@@ -1,4 +1,5 @@
 import fs from 'fs';
+import fsAsync from 'fs/promises';
 import path from 'path';
 export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -142,11 +143,15 @@ export class Uploadhelper {
                 });
             }
             try {
+                this._adapter.log.info(`... start ${file} ...`);
                 while (filePromises.size > maxParallelUpload)
                     sleep(10);
+                this._adapter.log.info(`... after sleep ${file} ...`);
                 let uploadPromise = this._uploadFile(file, attName);
+                this._adapter.log.info(`... after upload ${file} ...`);
                 filePromises.add(uploadPromise);
                 uploadPromise.then(x => filePromises.delete(uploadPromise));
+                this._adapter.log.info(`... after upload an fullfillchek ${file} ...`);
             }
             catch (e) {
                 this._adapter.log.error(`Error: Cannot upload ${file}: ${e.message}`);
@@ -162,7 +167,7 @@ export class Uploadhelper {
         return;
     }
     async _uploadFile(sourceFile, destinationFile) {
-        const data = fs.readFileSync(sourceFile);
+        const data = await fsAsync.readFile(sourceFile);
         await this._adapter.writeFileAsync(this._adapterName, destinationFile, data);
     }
     // Read synchronous all files recursively from local directory
