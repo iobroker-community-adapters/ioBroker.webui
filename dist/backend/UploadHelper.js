@@ -114,7 +114,7 @@ export class Uploadhelper {
         await this._adapter.setForeignStateAsync(this._uploadStateObjectName, { val: 0, ack: true });
         const dirLen = sourceDirectory.length;
         let filePromises = new Set;
-        let maxParallelUpload = 20;
+        let maxParallelUpload = 50;
         for (let f = 0; f < files.length; f++) {
             const file = files[f];
             if (this._stoppingPromise) {

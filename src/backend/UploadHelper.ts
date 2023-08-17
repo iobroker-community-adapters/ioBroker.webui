@@ -138,7 +138,7 @@ export class Uploadhelper {
         const dirLen = sourceDirectory.length;
 
         let filePromises = new Set<Promise<any>>;
-        let maxParallelUpload = 20;
+        let maxParallelUpload = 50;
 
         for (let f = 0; f < files.length; f++) {
             const file = files[f];
