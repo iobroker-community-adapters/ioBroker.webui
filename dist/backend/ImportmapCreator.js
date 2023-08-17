@@ -30,7 +30,12 @@ export class ImportmapCreator {
         const packageJsonObj = await JSON.parse(packageJson);
         if (packageJsonObj.dependencies) {
             for (let d in packageJsonObj.dependencies) {
-                await this.parseNpmPackageInternal(d, reportState);
+                try {
+                    await this.parseNpmPackageInternal(d, reportState);
+                }
+                catch (err) {
+                    this._adapter.log.warn("Error Parsing Package: " + d + " - error: " + err);
+                }
             }
         }
         let importMapScript = `const importMapWidgets = ` + JSON.stringify(this.importMap, null, 4) + ';\nimportShim.addImportMap(importMapWidgets);';
@@ -54,6 +59,7 @@ export async function registerDesignerAddons(serviceContainer) {
         let importWidgetFiles = `import observer from "./customElementsObserver";
 `;
         importWidgetFiles += this.importFiles.map(x => "import '" + x + "';").join('\n');
+        importWidgetFiles += '\n\n';
         importWidgetFiles += this.importUndefinedElementFiles.map(x => "observer.setCurrentLib('" + x[0] + "');\nimport '" + x[1] + "';").join('\n');
         await fs.writeFile(path.join(this._packageBaseDirectory, 'importWidgetFiles.js'), importWidgetFiles);
     }
@@ -124,10 +130,10 @@ export async function registerDesignerAddons(serviceContainer) {
         else {
             this._adapter.log.warn('npm package: ' + pkg + ' - no custom-elements.json found, only loading javascript module');
             if (packageJsonObj.module) {
-                this.importUndefinedElementFiles.push(packageJsonObj.name, packageJsonObj.module);
+                this.importUndefinedElementFiles.push([packageJsonObj.name, packageJsonObj.module]);
             }
             else if (packageJsonObj.main) {
-                this.importUndefinedElementFiles.push(packageJsonObj.name, packageJsonObj.main);
+                this.importUndefinedElementFiles.push([packageJsonObj.name, packageJsonObj.main]);
             }
             else {
                 console.warn('npm package: ' + pkg + ' - no entry point in package found.');

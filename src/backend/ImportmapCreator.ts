@@ -43,7 +43,12 @@ export class ImportmapCreator {
 
         if (packageJsonObj.dependencies) {
             for (let d in packageJsonObj.dependencies) {
-                await this.parseNpmPackageInternal(d, reportState);
+                try {
+                    await this.parseNpmPackageInternal(d, reportState);
+                }
+                catch (err) {
+                    this._adapter.log.warn("Error Parsing Package: " + d + " - error: " + err)
+                }
             }
         }
 
@@ -73,6 +78,7 @@ export async function registerDesignerAddons(serviceContainer) {
 `;
 
         importWidgetFiles += this.importFiles.map(x => "import '" + x + "';").join('\n');
+        importWidgetFiles += '\n\n';
         importWidgetFiles += this.importUndefinedElementFiles.map(x => "observer.setCurrentLib('" + x[0] + "');\nimport '" + x[1] + "';").join('\n');
         await fs.writeFile(path.join(this._packageBaseDirectory, 'importWidgetFiles.js'), importWidgetFiles);
     }
@@ -155,9 +161,9 @@ export async function registerDesignerAddons(serviceContainer) {
 
 
             if (packageJsonObj.module) {
-                this.importUndefinedElementFiles.push(packageJsonObj.name, packageJsonObj.module);
+                this.importUndefinedElementFiles.push([packageJsonObj.name, packageJsonObj.module]);
             } else if (packageJsonObj.main) {
-                this.importUndefinedElementFiles.push(packageJsonObj.name, packageJsonObj.main);
+                this.importUndefinedElementFiles.push([packageJsonObj.name, packageJsonObj.main]);
             } else {
                 console.warn('npm package: ' + pkg + ' - no entry point in package found.');
             }
