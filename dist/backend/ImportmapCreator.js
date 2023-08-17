@@ -56,7 +56,7 @@ export async function registerDesignerAddons(serviceContainer) {
         fileDesignerAddons += this.designerAddonsCode;
         fileDesignerAddons += '\n}';
         await fs.writeFile(path.join(this._packageBaseDirectory, 'designerAddons.js'), fileDesignerAddons);
-        let importWidgetFiles = `import observer from "./customElementsObserver.js";
+        let importWidgetFiles = `import observer from "../dist/frontend/widgets/customElementsObserver.js";
 `;
         importWidgetFiles += this.importFiles.map(x => "import '" + x + "';").join('\n');
         importWidgetFiles += '\n\n';
