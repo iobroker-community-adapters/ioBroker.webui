@@ -143,24 +143,20 @@ export class Uploadhelper {
                 });
             }
             try {
-                this._adapter.log.info(`... start ${file} ${filePromises.size} ${maxParallelUpload} ${filePromises.size > maxParallelUpload} ...`);
                 while (filePromises.size > maxParallelUpload) {
                     await sleep(10);
                 }
-                this._adapter.log.info(`... after sleep ${file} ...`);
                 let uploadPromise = this._uploadFile(file, attName);
-                this._adapter.log.info(`... after upload ${file} ...`);
                 filePromises.add(uploadPromise);
                 uploadPromise.then(x => filePromises.delete(uploadPromise));
-                this._adapter.log.info(`... after upload an fullfillchek ${file} ...`);
             }
             catch (e) {
                 this._adapter.log.error(`Error: Cannot upload ${file}: ${e.message}`);
             }
         }
-        this._adapter.log.error(`Wait for last upload Promises to fullfill`);
+        this._adapter.log.info(`Wait for last upload Promises to fullfill`);
         Promise.all(filePromises);
-        this._adapter.log.error(`upload done`);
+        this._adapter.log.info(`upload done`);
         // Set upload progress to 0;
         if (files.length) {
             await this._adapter.setForeignStateAsync(this._uploadStateObjectName, { val: 0, ack: true });
