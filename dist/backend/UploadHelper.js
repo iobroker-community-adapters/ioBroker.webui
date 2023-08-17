@@ -143,9 +143,10 @@ export class Uploadhelper {
                 });
             }
             try {
-                this._adapter.log.info(`... start ${file} ...`);
-                while (filePromises.size > maxParallelUpload)
-                    sleep(10);
+                this._adapter.log.info(`... start ${file} ${filePromises.size} ${maxParallelUpload} ${filePromises.size > maxParallelUpload} ...`);
+                while (filePromises.size > maxParallelUpload) {
+                    await sleep(10);
+                }
                 this._adapter.log.info(`... after sleep ${file} ...`);
                 let uploadPromise = this._uploadFile(file, attName);
                 this._adapter.log.info(`... after upload ${file} ...`);
