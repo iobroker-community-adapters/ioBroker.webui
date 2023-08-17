@@ -17,6 +17,7 @@ export class ImportmapCreator {
         this.designerServicesCode = '';
         this.designerAddonsCode = '';
         this.importFiles = [];
+        this.importUndefinedElementFiles = [];
         this._adapter = adapter;
         this._packageBaseDirectory = packageBaseDirectory;
         this._importmapBaseDirectory = importmapBaseDirectory;
@@ -49,7 +50,11 @@ export async function registerDesignerAddons(serviceContainer) {
         fileDesignerAddons += this.designerAddonsCode;
         fileDesignerAddons += '\n}';
         await fs.writeFile(path.join(this._packageBaseDirectory, 'designerAddons.js'), fileDesignerAddons);
-        await fs.writeFile(path.join(this._packageBaseDirectory, 'importWidgetFiles.js'), this.importFiles.map(x => "import '" + x + "';").join('\n'));
+        let importWidgetFiles = `import observer from "./customElementsObserver";
+`;
+        importWidgetFiles += this.importFiles.map(x => "import '" + x + "';").join('\n');
+        importWidgetFiles += this.importUndefinedElementFiles.map(x => "observer.setCurrentLib('" + x[0] + "');\nimport '" + x[1] + "';").join('\n');
+        await fs.writeFile(path.join(this._packageBaseDirectory, 'importWidgetFiles.js'), importWidgetFiles);
     }
     async parseNpmPackageInternal(pkg, reportState) {
         const basePath = path.join(this._nodeModulesBaseDirectory, pkg);
@@ -117,58 +122,24 @@ export async function registerDesignerAddons(serviceContainer) {
             }
         }
         else {
-            /*console.warn('npm package: ' + pkg + ' - no custom-elements.json found, only loading javascript module');
-
-            let customElementsRegistry = window.customElements;
-            const registry: any = {};
-            const newElements: string[] = [];
-            registry.define = function (name, constructor, options) {
-                newElements.push(name);
-                customElementsRegistry.define(name, constructor, options);
-            }
-            registry.get = function (name) {
-                return customElementsRegistry.get(name);
-            }
-            registry.upgrade = function (node) {
-                return customElementsRegistry.upgrade(node);
-            }
-            registry.whenDefined = function (name) {
-                return customElementsRegistry.whenDefined(name);
-            }
-
-            Object.defineProperty(window, "customElements", {
-                get() {
-                    return registry
-                }
-            });
-
+            this._adapter.log.warn('npm package: ' + pkg + ' - no custom-elements.json found, only loading javascript module');
             if (packageJsonObj.module) {
-                //@ts-ignore
-                await importShim(basePath + removeLeading(packageJsonObj.module, '/'))
-            } else if (packageJsonObj.main) {
-                //@ts-ignore
-                await importShim(basePath + removeLeading(packageJsonObj.main, '/'))
-            } else if (packageJsonObj.unpkg) {
-                //@ts-ignore
-                await importShim(basePath + removeLeading(packageJsonObj.unpkg, '/'))
-            } else {
+                this.importUndefinedElementFiles.push(packageJsonObj.name, packageJsonObj.module);
+            }
+            else if (packageJsonObj.main) {
+                this.importUndefinedElementFiles.push(packageJsonObj.name, packageJsonObj.main);
+            }
+            else {
                 console.warn('npm package: ' + pkg + ' - no entry point in package found.');
             }
-
-            if (newElements.length > 0) {
+            /*if (newElements.length > 0) {
                 const elementsCfg: IElementsJson = {
                     elements: newElements
                 }
                 let elService = new PreDefinedElementsService(pkg, elementsCfg)
                 serviceContainer.register('elementsService', elService);
                 paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);
-            }
-
-            Object.defineProperty(window, "customElements", {
-                get() {
-                    return customElementsRegistry
-                }
-            }); */
+            }*/
         }
         if (reportState)
             reportState(pkg + ": done");

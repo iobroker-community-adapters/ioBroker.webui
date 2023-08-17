@@ -1,5 +1,5 @@
 import { LazyLoader } from "@node-projects/base-custom-webcomponent";
-import { BaseCustomWebcomponentBindingsService, CodeViewMonaco, CssToolsStylesheetService, JsonFileElementsService, NodeHtmlParserService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
+import { BaseCustomWebcomponentBindingsService, CodeViewMonaco, CssToolsStylesheetService, IElementsJson, JsonFileElementsService, NodeHtmlParserService, PreDefinedElementsService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
 import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
 import { IobrokerWebuiBindableObjectDragDropService } from "../services/IobrokerWebuiBindableObjectDragDropService.js";
 import { IobrokerWebuiBindingService } from "../services/IobrokerWebuiBindingService.js";
@@ -8,6 +8,7 @@ import { IobrokerWebuiDynamicsEditor } from "./IobrokerWebuiDynamicsEditor.js";
 import { IobrokerWebuiConfirmationWrapper } from "./IobrokerWebuiConfirmationWrapper.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding.js";
+import customElementsObserver from "../widgets/customElementsObserver.js";
 
 const rootPath = new URL(import.meta.url).pathname.split('/').slice(0, -4).join('/'); // -2 remove file & dist
 
@@ -24,6 +25,15 @@ serviceContainer.config.codeViewWidget = CodeViewMonaco;
 serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/frontend/elements-webui.json'));
 serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
 
+for (let l of customElementsObserver.getElements()) {
+    if (l[1].length > 0) {
+        const elementsCfg: IElementsJson = {
+            elements: l[1]
+        }
+        let elService = new PreDefinedElementsService(l[0], elementsCfg)
+        serviceContainer.register('elementsService', elService);
+    }
+}
 
 serviceContainer.config.openBindingsEditor = async (property, designItems, binding, target) => {
     let dynEdt = new IobrokerWebuiDynamicsEditor(property, binding, target);
