@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs/promises';
+import fsSync from 'fs';
 import type { AdapterInstance } from '@iobroker/adapter-core';
 
 function removeTrailing(text: string, char: string) {
@@ -93,16 +94,13 @@ export async function registerDesignerAddons(serviceContainer) {
                 await this.loadDependency(d, packageJsonObj.dependencies[d]);
             }
         }
-        let customElementsPath = basePath + 'custom-elements.json';
-        let customElementsPathWeb = importMapBasePath + 'custom-elements.json';
-        //let elementsRootPath = basePath;
+        let customElementsPath = basePath + '/custom-elements.json';
+        let customElementsPathWeb = importMapBasePath + '/custom-elements.json';
         let elementsRootPathWeb = importMapBasePath;
         if (packageJsonObj.customElements) {
             customElementsPath = path.join(basePath, removeTrailing(packageJsonObj.customElements, '/'));
             customElementsPathWeb = path.join(importMapBasePath, removeTrailing(packageJsonObj.customElements, '/'));
             if (customElementsPath.includes('/')) {
-                //let idx = customElementsPath.lastIndexOf('/');
-                //elementsRootPath = customElementsPath.substring(0, idx + 1);
                 let idx2 = customElementsPathWeb.lastIndexOf('/');
                 elementsRootPathWeb = customElementsPathWeb.substring(0, idx2 + 1);
             }
@@ -115,7 +113,10 @@ export async function registerDesignerAddons(serviceContainer) {
             reportState(pkg + ": loading custom-elements.json");
         //let customElementsJson;
         //if (await fs.access(customElementsPath,fs.constants.R_OK ))
-        let customElementsJson = await fs.readFile(customElementsPath, 'utf-8');
+
+        let customElementsJson = null;
+        if (fsSync.existsSync(customElementsPath))
+            customElementsJson = await fs.readFile(customElementsPath, 'utf-8');
 
         fs.readFile(webComponentDesignerPath, 'utf-8').then(async x => {
             const webComponentDesignerJson = await JSON.parse(x);
