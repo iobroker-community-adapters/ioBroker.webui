@@ -3,6 +3,7 @@ declare class CustomElementsObserver {
     private currentLib;
     constructor();
     setCurrentLib(name: string): void;
+    finishedCurrentLib(): void;
     getElements(): Map<string, string[]>;
 }
 declare var customElementsObserver: CustomElementsObserver;

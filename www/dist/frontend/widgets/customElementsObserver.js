@@ -29,6 +29,9 @@ class CustomElementsObserver {
         this.currentLib = name;
         this._newElements.set(name, []);
     }
+    finishedCurrentLib() {
+        this.currentLib = null;
+    }
     getElements() {
         return this._newElements;
     }
