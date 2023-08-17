@@ -36,6 +36,10 @@ class CustomElementsObserver {
         this._newElements.set(name, []);
     }
 
+    finishedCurrentLib() {
+        this.currentLib = null;
+    }
+
     getElements() {
         return this._newElements;
     }
