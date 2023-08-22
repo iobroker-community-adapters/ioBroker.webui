@@ -10,6 +10,7 @@ export interface OpenScreen {
     screen: string //| ScriptMultiplexValue;
     relativeSignalsPath: string;
     openInDialog: boolean;
+    noHistory: boolean;
 }
 
 export interface OpenUrl {

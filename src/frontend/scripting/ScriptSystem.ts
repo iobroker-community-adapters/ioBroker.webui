@@ -10,8 +10,13 @@ export class ScriptSystem {
             switch (c.type) {
                 case 'OpenScreen': {
                     if (!c.openInDialog) {
-                        (<ScreenViewer>document.getElementById('viewer')).relativeSignalsPath = c.relativeSignalsPath;
-                        (<ScreenViewer>document.getElementById('viewer')).screenName = ScriptSystem.getValue(c.screen, context);
+                        if (c.noHistory) {
+                            (<ScreenViewer>document.getElementById('viewer')).relativeSignalsPath = c.relativeSignalsPath;
+                            (<ScreenViewer>document.getElementById('viewer')).screenName = ScriptSystem.getValue(c.screen, context);
+                        } else {
+                            let hash = 'screenName=' + ScriptSystem.getValue(c.screen, context);
+                            window.location.hash = hash;
+                        }
                     } else {
                         let sv = new ScreenViewer();
                         sv.relativeSignalsPath = c.relativeSignalsPath;

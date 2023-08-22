@@ -4,13 +4,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <link rel="manifest" href="./manifest.json">
 
   <title>runtime</title>
 
   <script src="./node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js"></script>
-  
+
   <script type="esms-options">
     {
       "shimMode": true,
@@ -22,7 +23,7 @@
   <script src="./dist/importmaps/importmap-runtime.js"></script>
 
   <script src="config.js"></script>
-  
+
   <script type="module">
     importShim('./dist/frontend/runtime/controls.js');
     importShim('./widgets/importWidgetFilesRuntime.js');
@@ -30,26 +31,31 @@
 </head>
 
 <style>
-   body {
-      height: 100%;
-      margin: 0;
-      font-family: 'Roboto', 'Noto', sans-serif;
-      line-height: 1.5;
-      background-color: white;
-      -webkit-font-smoothing: antialiased;
-    }
+  body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', 'Noto', sans-serif;
+    line-height: 1.5;
+    background-color: white;
+    -webkit-font-smoothing: antialiased;
+  }
 </style>
+
 <body>
   <iobroker-webui-screen-viewer id="viewer"></iobroker-webui-screen-viewer>
   <script type="module">
-    const screen = (new URLSearchParams(location.search)).get('screenName');
-    if (screen) {
-      const viewer = document.getElementById('viewer');
-      await customElements.whenDefined(viewer.localName);
-      viewer.screenName = screen;
-    } else {
-      viewer.screenName = 'start';
+    async function checkHash() {
+      const screen = (new URLSearchParams(location.hash.substring(1))).get('screenName');
+      if (screen) {
+        const viewer = document.getElementById('viewer');
+        await customElements.whenDefined(viewer.localName);
+        viewer.screenName = screen;
+      } else {
+        viewer.screenName = 'start';
+      }
     }
+    checkHash();
+    window.onhashchange = checkHash;
   </script>
 </body>
 
