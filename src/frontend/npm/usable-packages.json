@@ -3,5 +3,8 @@
     "@node-projects/gauge.webcomponent",
     "@node-projects/input-knob",
     "@christianliebel/paint",
-    "@node-projects/wired-elements"
+    "vanilla-colorful",
+    "@node-projects/hsluv-webcomponent",
+    "@node-projects/wired-elements",
+    "@shoelace-style/shoelace"
 ]
