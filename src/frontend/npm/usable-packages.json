@@ -6,5 +6,9 @@
     "vanilla-colorful",
     "@node-projects/hsluv-webcomponent",
     "@node-projects/wired-elements",
-    "@shoelace-style/shoelace"
+    "@shoelace-style/shoelace",
+    "@microsoft/fast-components",
+    "emoji-picker-element",
+
+    "@fluentui/web-components"
 ]
