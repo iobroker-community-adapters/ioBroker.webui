@@ -4,6 +4,7 @@ export interface OpenScreen {
     screen: string;
     relativeSignalsPath: string;
     openInDialog: boolean;
+    noHistory: boolean;
 }
 export interface OpenUrl {
     type: 'OpenUrl';
