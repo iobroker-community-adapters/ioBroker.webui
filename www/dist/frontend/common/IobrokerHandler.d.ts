@@ -16,6 +16,7 @@ declare class IobrokerHandler {
     adapterName: string;
     configPath: string;
     namespace: string;
+    namespaceFiles: string;
     config: IWebUiConfig;
     screensChanged: TypedEvent<void>;
     configChanged: TypedEvent<void>;
@@ -30,6 +31,9 @@ declare class IobrokerHandler {
     getScreen(name: string): Promise<IScreen>;
     saveScreen(name: string, screen: IScreen): Promise<void>;
     removeScreen(name: string): Promise<void>;
+    getImageNames(): Promise<string[]>;
+    saveImage(name: string, imageData: string): Promise<void>;
+    removeImage(name: string): Promise<void>;
     private _getConfig;
     saveConfig(): Promise<void>;
     private _getObjectFromFile;

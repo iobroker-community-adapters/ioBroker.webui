@@ -13,7 +13,7 @@ export class CommandHandling {
         if (commandName === 'runtime') {
             let target = this.dockManager?.activeDocument?.elementContent?.assignedElements()[0];
             if (target instanceof IobrokerWebuiScreenEditor) {
-                window.open("runtime.html?screenName=" + target.name);
+                window.open("runtime.html#screenName=" + target.name);
             }
             else {
                 window.open("runtime.html");

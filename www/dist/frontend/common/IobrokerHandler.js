@@ -7,6 +7,7 @@ class IobrokerHandler {
         this.adapterName = "webui";
         this.configPath = "config/";
         this.namespace = "webui.0";
+        this.namespaceFiles = this.namespace + '.data';
         this.screensChanged = new TypedEvent();
         this.configChanged = new TypedEvent();
         this._readyPromises = [];
@@ -48,8 +49,8 @@ class IobrokerHandler {
         if (this._readyPromises)
             this.waitForReady();
         try {
-            const dirs = await this.connection.readDir(this.adapterName, this.configPath + "screens");
-            const screenNames = dirs
+            const files = await this.connection.readDir(this.namespaceFiles, this.configPath + "screens");
+            const screenNames = files
                 .filter(x => x.file.endsWith(screenFileExtension))
                 .map(x => x.file.substring(0, x.file.length - screenFileExtension.length));
             this._screenNames = screenNames;
@@ -82,10 +83,27 @@ class IobrokerHandler {
         this.screensChanged.emit();
     }
     async removeScreen(name) {
-        await this.connection.deleteFile(this.adapterName, "/" + this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
+        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
         this._screens.delete(name.toLocaleLowerCase());
         this._screenNames = null;
         this.screensChanged.emit();
+    }
+    async getImageNames() {
+        if (this._readyPromises)
+            this.waitForReady();
+        try {
+            const files = await this.connection.readDir(this.namespaceFiles, this.configPath + "images");
+            const imageNames = files.map(x => x.file);
+            return imageNames;
+        }
+        catch (err) { }
+        return [];
+    }
+    async saveImage(name, imageData) {
+        this._saveObjectToFile(screen, "/" + this.configPath + "images/" + name.toLocaleLowerCase());
+    }
+    async removeImage(name) {
+        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "images/" + name.toLocaleLowerCase() + screenFileExtension);
     }
     async _getConfig() {
         try {
@@ -102,24 +120,20 @@ class IobrokerHandler {
         this.configChanged.emit();
     }
     async _getObjectFromFile(name) {
-        const file = await this.connection.readFile(this.adapterName, name, false);
+        const file = await this.connection.readFile(this.namespaceFiles, name, false);
         if (file.mimeType == 'application/json' || file.mimeType == 'text/javascript') {
             return JSON.parse(file.file);
         }
-        //@ts-ignore
         if (file.mimeType == "application/octet-stream" && file.file instanceof ArrayBuffer) {
             const dec = new TextDecoder();
-            //@ts-ignore
             return JSON.parse(dec.decode(file.file));
         }
         const dec = new TextDecoder();
-        //@ts-ignore
         return JSON.parse(dec.decode(Uint8Array.from(file.file.data)));
     }
     async _saveObjectToFile(obj, name) {
         const enc = new TextEncoder();
-        //@ts-ignore
-        await this.connection.writeFile64(this.adapterName, name, enc.encode(JSON.stringify(obj)));
+        await this.connection.writeFile64(this.namespaceFiles, name, enc.encode(JSON.stringify(obj)));
     }
     async sendCommand(command, data, clientId = '') {
         await this.connection.setState(this.namespace + '.control.data', { val: data });
