@@ -31,6 +31,13 @@
     "url": "https://github.com/iobroker-community-adapters/ioBroker.webui/issues"
   },
   "homepage": "https://github.com/iobroker-community-adapters/ioBroker.webui#readme",
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {
+    "@iobroker/adapter-core": "^3.0.3",
+    "@types/node": "^20.5.1"
+  },
   "devDependencies": {
     "@adobe/css-tools": "4.3.1",
     "@alcalzone/release-script": "^3.6.0",
@@ -65,12 +72,8 @@
     "nyc": "^15.1.0",
     "sinon-chai": "^3.7.0",
     "ts-node": "^10.9.1",
-    "tslib": "^2.6.1",
+    "tslib": "^2.6.2",
     "typescript": "^5.1.6",
     "typescript-json-schema": "^0.59.0"
-  },
-  "dependencies": {
-    "@iobroker/adapter-core": "^3.0.3",
-    "@types/node": "^20.5.0"
   }
 }
