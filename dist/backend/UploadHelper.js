@@ -5,6 +5,7 @@ export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 export class Uploadhelper {
+    //private _uploadStateObjectName
     constructor(adapter) {
         this._stoppingPromise = false;
         this._ignoredFileExtensions = [
@@ -16,7 +17,7 @@ export class Uploadhelper {
         ];
         this._adapter = adapter;
         this._adapterName = this._adapter.name;
-        this._uploadStateObjectName = `system.adapter.${this._adapterName}.upload`;
+        //this._uploadStateObjectName = `system.adapter.${this._adapterName}.upload`;
     }
     static async upload(adapter, sourceDirectory, targetDirectory) {
         const hlp = new Uploadhelper(adapter);
@@ -27,7 +28,7 @@ export class Uploadhelper {
             this._adapter.log.warn(`source directory does not exist: ${sourceDirectory}`);
             return;
         }
-        await this._adapter.setForeignStateAsync(`system.adapter.${this._adapterName}.upload`, 0, true);
+        //await this._adapter.setForeignStateAsync(`system.adapter.${this._adapterName}.upload`, 0, true);
         try {
             await this._adapter.getForeignObjectAsync(this._adapterName);
         }
@@ -111,7 +112,7 @@ export class Uploadhelper {
         }
     }
     async uploadInternal(files, sourceDirectory, targetDirectory) {
-        await this._adapter.setForeignStateAsync(this._uploadStateObjectName, { val: 0, ack: true });
+        //await this._adapter.setForeignStateAsync(this._uploadStateObjectName, { val: 0, ack: true });
         const dirLen = sourceDirectory.length;
         //let filePromises = new Set<Promise<any>>;
         //let maxParallelUpload = 50;
@@ -137,10 +138,10 @@ export class Uploadhelper {
             const now = Date.now();
             if (!this._lastProgressUpdate || now - this._lastProgressUpdate > 1000) {
                 this._lastProgressUpdate = now;
-                await this._adapter.setForeignStateAsync(this._uploadStateObjectName, {
+                /*await this._adapter.setForeignStateAsync(this._uploadStateObjectName, {
                     val: Math.round((1000 * (files.length - f)) / files.length) / 10,
                     ack: true,
-                });
+                });*/
             }
             try {
                 await this._uploadFile(file, attName);
@@ -159,9 +160,9 @@ export class Uploadhelper {
         //Promise.all(filePromises);
         //this._adapter.log.info(`upload done`);
         // Set upload progress to 0;
-        if (files.length) {
+        /*if (files.length) {
             await this._adapter.setForeignStateAsync(this._uploadStateObjectName, { val: 0, ack: true });
-        }
+        }*/
         return;
     }
     async _uploadFile(sourceFile, destinationFile) {

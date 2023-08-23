@@ -158,96 +158,6 @@ class WebUi extends utils.Adapter {
         }
     }
 
-    async createObjects() {
-
-        let obj = await this.getObjectAsync('control.data');
-        if (obj)
-            await this.delObjectAsync('control.data');
-        obj = await this.getObjectAsync('control.clientId');
-        if (obj)
-            await this.delObjectAsync('control.clientId');
-        obj = await this.getObjectAsync('control.command');
-        if (obj)
-            await this.delObjectAsync('control.command');
-
-        obj = await this.getForeignObjectAsync(`system.adapter.${adapterName}.upload`);
-        if (obj)
-            await this.delObjectAsync(`system.adapter.${adapterName}.upload`);
-
-        await this.setObjectAsync('control.data',
-            {
-                type: 'state',
-                common: {
-                    name: 'data for command for webui',
-                    type: 'string',
-                    desc: 'additional data when running the command, needs to be set before setting the command.',
-                    read: true,
-                    write: true,
-                    role: 'text'
-                },
-                native: {}
-            });
-        await this.setObjectAsync('control.clientIds',
-            {
-                type: 'state',
-                common: {
-                    name: 'clientIds for command for webui',
-                    type: 'string',
-                    desc: 'clientIds when running the command, needs to be set before setting the command. splitted by ;',
-                    read: true,
-                    write: true,
-                    role: 'text'
-                },
-                native: {}
-            });
-        await this.setObjectAsync('control.command',
-            {
-                type: 'state',
-                common: {
-                    name: 'command for webui',
-                    type: 'string',
-                    desc: 'Writing this variable akt as the trigger. Instance and data must be preset before \'command\' will be written.',
-                    states: {
-                        addNpm: 'addNpm',
-                        removeNpm: 'removeNpm',
-                        updateNpm: 'updateNpm',
-                        refreshWww: 'refreshWww',
-                        uiReloadPackages: 'uiReloadPackages',
-
-                        uiReload: 'uiReload',
-                        uiChangeView: 'uiChangeView',
-                        uiChangedView: 'uiChangedView',
-                        uiOpenDialog: 'uiOpenDialog',
-                        uiOpenedDialog: 'uiOpenedDialog',
-                        uiPlaySound: 'uiPlaySound',
-                    },
-                    read: true,
-                    write: true,
-                    role: 'text'
-                },
-                native: {}
-            });
-
-        await this.setForeignObjectAsync(`system.adapter.${adapterName}.upload`, {
-            //@ts-ignore
-            type: 'state',
-            common: {
-                name: `${adapterName}.upload`,
-                type: 'number',
-                role: 'indicator.state',
-                //@ts-ignore
-                unit: '%',
-                min: 0,
-                max: 100,
-                def: 0,
-                desc: 'Upload process indicator',
-                read: true,
-                write: false,
-            },
-            native: {},
-        });
-    }
-
     async main() {
         this.log.info(`dirName: ` + __dirname);
         if (!fs.existsSync(__dirname + '/www/widgets/package.json')) {
@@ -265,9 +175,6 @@ class WebUi extends utils.Adapter {
             }
         }
 
-        this.log.info(`create adapter objects`);
-        await this.createObjects();
-        this.log.info(`subscribe adapter states`);
         await this.subscribeStatesAsync('*', {});
         this.log.info(`adapter ready`);
     }

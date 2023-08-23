@@ -6,7 +6,6 @@ export declare class Uploadhelper {
     private _stoppingPromise;
     private _lastProgressUpdate;
     private _ignoredFileExtensions;
-    private _uploadStateObjectName;
     constructor(adapter: AdapterInstance);
     static upload(adapter: AdapterInstance, sourceDirectory: string, targetDirectory: string): Promise<void>;
     upload(sourceDirectory: string, targetDirectory: string): Promise<void>;

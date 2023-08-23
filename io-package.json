@@ -19,8 +19,7 @@
         "desc": {
             "en": "Graphical user interface for iobroker using Webcomponents"
         },
-        "news": {
-        },
+        "news": {},
         "icon": "logo.png",
         "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.webui/master/admin/logo.png",
         "connectionType": "local",
@@ -72,5 +71,84 @@
             "order": 1
         }
     },
-    "native": {}
+    "native": {},
+    "instanceObjects": [
+        {
+            "_id": "control",
+            "type": "folder",
+            "common": {
+                "name": "control"
+            },
+            "native": {}
+        },
+        {
+            "_id": "control.data",
+            "type": "state",
+            "common": {
+                "name": "data for command for webui",
+                "type": "string",
+                "desc": "additional data when running the command, needs to be set before setting the command.",
+                "read": true,
+                "write": true,
+                "role": "text"
+            },
+            "native": {}
+        },
+        {
+            "_id": "control.clientIds",
+            "type": "state",
+            "common": {
+                "name": "clientIds for command for webui",
+                "type": "string",
+                "desc": "clientIds when running the command, needs to be set before setting the command. splitted by ;",
+                "read": true,
+                "write": true,
+                "role": "text"
+            },
+            "native": {}
+        },
+        {
+            "_id": "control.command",
+            "type": "state",
+            "common": {
+                "name": "command for webui",
+                "type": "string",
+                "desc": "Writing this variable akt as the trigger. Instance and data must be preset before 'command' will be written.",
+                "states": {
+                    "addNpm": "addNpm",
+                    "removeNpm": "removeNpm",
+                    "updateNpm": "updateNpm",
+                    "refreshWww": "refreshWww",
+                    "uiReloadPackages": "uiReloadPackages",
+                    "uiReload": "uiReload",
+                    "uiChangeView": "uiChangeView",
+                    "uiChangedView": "uiChangedView",
+                    "uiOpenDialog": "uiOpenDialog",
+                    "uiOpenedDialog": "uiOpenedDialog",
+                    "uiPlaySound": "uiPlaySound"
+                },
+                "read": true,
+                "write": true,
+                "role": "text"
+            },
+            "native": {}
+        },
+        {
+            "_id": "state",
+            "type": "folder",
+            "common": {
+                "name": "state"
+            },
+            "native": {}
+        },
+        {
+            "_id": "data",
+            "type": "meta",
+            "common": {
+                "name": "Files for webui",
+                "role": "meta.user"
+            },
+            "native": {}
+        }
+    ]
 }
