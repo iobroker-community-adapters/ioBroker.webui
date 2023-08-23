@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.0.3",
-    "@types/node": "^20.5.1"
+    "@types/node": "^20.5.4"
   },
   "devDependencies": {
     "@adobe/css-tools": "4.3.1",
@@ -48,8 +48,8 @@
     "@node-projects/base-custom-webcomponent": "0.13.0",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^6.1.5",
-    "@node-projects/web-component-designer": "^0.0.268",
-    "@types/jquery": "^3.5.16",
+    "@node-projects/web-component-designer": "^0.0.271",
+    "@types/jquery": "^3.5.17",
     "@types/jquery.fancytree": "^0.0.7",
     "@types/json-schema": "^7.0.12",
     "@web/dev-server": "^0.3.0",
