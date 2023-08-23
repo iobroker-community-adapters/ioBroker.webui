@@ -50,6 +50,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 this._createGlobalStyleNode(),
                 this._createControlsNode(),
                 this._createNpmsNode(),
+                this._createImagesNode(),
                 this._createChartsNode(),
                 this._createIconsFolderNode(),
                 this._createObjectsNode()
@@ -289,6 +290,28 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             }
             resolve(icons);
         });
+    }
+
+    private async _createImagesNode() {
+        let imagesNode: TreeNodeData = {
+            title: 'Images', folder: true, lazy: true,
+            lazyload: (e, data) => {
+                data.result = new Promise(async resolve => {
+                    try {
+                        await iobrokerHandler.waitForReady();
+                        let images = await iobrokerHandler.getImageNames();
+                        images.map(x => ({
+                            title: x
+                        }));
+                        resolve(images);
+                    }
+                    catch (err) {
+                        console.warn("error loading flot charts", err);
+                    }
+                });
+            }
+        }
+        return imagesNode;
     }
 
     private async _createChartsNode() {
