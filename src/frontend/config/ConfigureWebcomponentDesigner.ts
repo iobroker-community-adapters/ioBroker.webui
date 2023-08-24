@@ -34,7 +34,7 @@ for (let l of customElementsObserver.getElements()) {
         const elementsCfg: IElementsJson = {
             elements: l[1]
         }
-        let elService = new PreDefinedElementsService(l[0], elementsCfg)
+        let elService = new PreDefinedElementsService(l[0], elementsCfg);
         serviceContainer.register('elementsService', elService);
     }
 }

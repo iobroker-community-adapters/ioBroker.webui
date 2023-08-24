@@ -119,6 +119,7 @@
                     "removeNpm": "removeNpm",
                     "updateNpm": "updateNpm",
                     "refreshWww": "refreshWww",
+                    "createImportmap": "createImportmap",
                     "uiReloadPackages": "uiReloadPackages",
                     "uiReload": "uiReload",
                     "uiChangeView": "uiChangeView",

@@ -58,7 +58,7 @@ export async function registerDesignerAddons(serviceContainer) {
         await fs.writeFile(path.join(this._packageBaseDirectory, 'designerAddons.js'), fileDesignerAddons);
         let importWidgetFiles = `import observer from "../dist/frontend/widgets/customElementsObserver.js";
 `;
-        importWidgetFiles += this.importFiles.map(x => "import '" + x + "';").join('\n');
+        importWidgetFiles += this.importFiles.map(x => "try {\nawait import('" + x + "');\n}catch (err) { console.error('error during import of ' + x, err); }\n").join('\n');
         importWidgetFiles += '\n\n';
         importWidgetFiles += this.importUndefinedElementFiles.map(x => "observer.setCurrentLib('" + x[0] + "');\nawait import('" + x[1] + "');\nobserver.finishedCurrentLib();").join('\n');
         await fs.writeFile(path.join(this._packageBaseDirectory, 'importWidgetFiles.js'), importWidgetFiles);
