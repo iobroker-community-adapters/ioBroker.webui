@@ -9,6 +9,7 @@ export const bindingPrefixCss = 'bind-css:';
 export const bindingPrefixContent = 'bind-content:';
 export class IobrokerWebuiBindingsHelper {
     static parseBinding(element, name, value, bindingTarget, prefix) {
+        const propname = name.substring(prefix.length);
         if (!value.startsWith('{')) {
             let binding = {
                 signal: value,
@@ -23,13 +24,13 @@ export class IobrokerWebuiBindingsHelper {
                 else if (element instanceof HTMLInputElement)
                     binding.events = ['change'];
                 else
-                    binding.events = [name + '-changed'];
+                    binding.events = [propname + '-changed'];
             }
             if (value.startsWith('!')) {
                 binding.signal = value.substring(1);
                 binding.inverted = true;
             }
-            return [PropertiesHelper.dashToCamelCase(name.substring(prefix.length)), binding];
+            return [PropertiesHelper.dashToCamelCase(propname), binding];
         }
         let binding = JSON.parse(value);
         binding.target = bindingTarget;
@@ -39,9 +40,9 @@ export class IobrokerWebuiBindingsHelper {
             else if (element instanceof HTMLInputElement)
                 binding.events = ['change'];
             else
-                binding.events = [name + '-changed'];
+                binding.events = [propname + '-changed'];
         }
-        return [PropertiesHelper.dashToCamelCase(name.substring(prefix.length)), binding];
+        return [PropertiesHelper.dashToCamelCase(propname), binding];
     }
     static serializeBinding(element, targetName, binding) {
         if (binding.target == BindingTarget.property &&
