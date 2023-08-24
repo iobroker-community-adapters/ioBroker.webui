@@ -1,0 +1,9 @@
+sort elemnts list,
+sort npm packges list
+importer änderungen vom designe rübernehmen
+try catch für jeden import so das ein kaputter nicht alles zerstört
+
+hsluv package geht nicht, aber dadurch auch wired kaputt...
+
+status des uploads von npm....
+delete files only before upload not all before

@@ -87,7 +87,7 @@ class WebUi extends utils.Adapter {
             this.log.info(`Install NPM package (${name}), check dirs...`);
             await this.creatWidgetsDirAndRestorePackageJsonIfneeded();
             this.log.info(`Install NPM package (${name})...`);
-            const child = spawn('npm', ['install', '--omit=dev', name], { cwd: __dirname + this.widgetsDir });
+            const child = spawn('npm', ['install', '--omit=dev', name], { cwd: this.widgetsDir });
             child.stdout.on('data', data => {
                 this.log.debug(data.toString().replace('\n', ''));
             });
@@ -204,7 +204,7 @@ class WebUi extends utils.Adapter {
                 await this.refreshWWW();
             }
         }*/
-
+        await this.setState(this._stateNpm, { val: 'idle', ack: true });
         await this.subscribeStatesAsync('*', {});
         this.log.info(`adapter ready`);
     }
