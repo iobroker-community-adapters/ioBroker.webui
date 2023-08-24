@@ -142,6 +142,34 @@
             "native": {}
         },
         {
+            "_id": "state.npm",
+            "type": "state",
+            "common": {
+                "name": "state of packge installation",
+                "type": "string",
+                "states": {
+                    "idle": "idle",
+                    "installingPackage": "installingPackage",
+                    "removeingPackage": "removeingPackage",
+                    "createImportmap": "createImportmap",
+                    "uploading": "uploading"
+                },
+                "read": true,
+                "write": true,
+                "role": "text"
+            },
+            "native": {}
+        },
+        {
+            "_id": "widgets",
+            "type": "meta",
+            "common": {
+                "name": "Npm Packages for webui",
+                "role": "meta"
+            },
+            "native": {}
+        },
+        {
             "_id": "data",
             "type": "meta",
             "common": {
