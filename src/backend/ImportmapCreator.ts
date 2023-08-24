@@ -244,9 +244,9 @@ export async function registerDesignerAddons(serviceContainer) {
                 }
                 let imp = getImportFlat(packageJsonObj.exports);
                 if (imp) {
-                    this.importMap.imports[packageJsonObj.name] = basePath + removeTrailing(imp, '/');
+                    this.importMap.imports[packageJsonObj.name] = basePath + removeLeading(removeTrailing(imp, '/'), '.');
                 } else if (imp = getImportFlat(packageJsonObj.exports?.['.'])) {
-                    this.importMap.imports[packageJsonObj.name] = basePath + removeTrailing(imp, '/');
+                    this.importMap.imports[packageJsonObj.name] = basePath + removeLeading(removeTrailing(imp, '/'), '.');
                 }
             }
 

@@ -1,5 +1,4 @@
-importer änderungen vom designer übernehmen
-try catch für jeden import so das ein kaputter nicht alles zerstört
+check for import state when npm install/update/remove
 
 hsluv package geht nicht, aber dadurch auch wired kaputt...
 
