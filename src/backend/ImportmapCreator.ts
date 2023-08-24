@@ -4,13 +4,13 @@ import fsSync from 'fs';
 import type { AdapterInstance } from '@iobroker/adapter-core';
 
 function removeTrailing(text: string, char: string) {
-    if (text.endsWith('/'))
+    if (text.endsWith(char ?? '/'))
         return text.substring(0, text.length - 1);
     return text;
 }
 
 function removeLeading(text: string, char: string) {
-    if (text.startsWith('/'))
+    if (text.startsWith(char ?? '/'))
         return text.substring(1);
     return text;
 }
