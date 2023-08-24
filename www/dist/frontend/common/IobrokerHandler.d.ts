@@ -6,6 +6,7 @@ declare global {
     interface Window {
         iobrokerHost: string;
         iobrokerPort: number;
+        iobrokerWebRootUrl: string;
         iobrokerWebuiRootUrl: string;
     }
 }

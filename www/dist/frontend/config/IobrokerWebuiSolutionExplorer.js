@@ -140,7 +140,9 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     try {
                         await iobrokerHandler.waitForReady();
                         let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/package.json", false)).file);
-                        let children = Object.keys(packageJson.dependencies).map(x => ({
+                        let packages = Object.keys(packageJson.dependencies);
+                        packages.sort();
+                        let children = packages.map(x => ({
                             title: x + ' (' + packageJson.dependencies[x] + ')',
                             folder: false,
                             contextMenu: (event => npmNodeCtxMenu(event, x)),
@@ -167,6 +169,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 data.result = new Promise(async (resolve) => {
                     try {
                         let packages = (await import('../npm/usable-packages.json', { assert: { type: 'json' } })).default;
+                        packages.sort();
                         let groups = [...new Set(packages.map(x => x.split('/')[0]))];
                         let children = [];
                         for (let g of groups) {
@@ -257,6 +260,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     try {
                         await iobrokerHandler.waitForReady();
                         let images = await iobrokerHandler.getImageNames();
+                        images.sort();
                         resolve(images.map(x => ({
                             title: x,
                             icon: iobrokerHandler.imagePrefix + x,
