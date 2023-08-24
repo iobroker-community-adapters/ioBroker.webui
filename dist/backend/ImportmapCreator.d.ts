@@ -21,6 +21,7 @@ export declare class ImportmapCreator {
         name?: string;
         module?: string;
         main?: string;
+        unpkg?: string;
         exports?: Record<string, string>;
     }): Promise<void>;
 }

@@ -13,6 +13,9 @@
   <!-- Drag/Drop support on touch devices -->
   <link rel="stylesheet" href="./node_modules/mobile-drag-drop/default.css">
 
+  <link rel="stylesheet" href="./node_modules/dock-spawn-ts/lib/css/dock-manager.css">
+
+
   <title>iobroker-webui designer</title>
 
   <script src="./node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js"></script>
@@ -252,6 +255,12 @@
               style="padding: 0; width:80px; height:20px; margin-right: 5px;">
           </div>
           <span class="title">Tools</span>
+        </div>
+        <div class="group flex-column">
+          <div class="toolbar" id="tools">
+            <input id="npmState" type="text" readonly>
+          </div>
+          <span class="title">State</span>
         </div>
         <div style="position: absolute; right: 0;">
           <div class="group" style="height: 111px; border-left: 1px solid #dadbdc; inline-size: fit-content;">

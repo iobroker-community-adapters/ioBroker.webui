@@ -2,7 +2,7 @@
     "name": "iobrober-webui",
     "short_name": "webui",
     "description": "",
-    "start_url": "/",
+    "start_url": "/webui/runtime.html",
     "display": "standalone"
   }
   

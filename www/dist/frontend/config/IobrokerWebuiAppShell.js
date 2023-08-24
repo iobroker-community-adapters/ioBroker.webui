@@ -55,6 +55,10 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             }
         });
         await this._setupServiceContainer();
+        let stateElement = document.getElementById('npmState');
+        iobrokerHandler.waitForReady().then(x => {
+            iobrokerHandler.connection.subscribeState('webui.0.state.npm', (id, value) => stateElement.value = value.val);
+        });
     }
     async _setupServiceContainer() {
         serviceContainer.globalContext.onToolChanged.on((e) => {

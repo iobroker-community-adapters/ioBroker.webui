@@ -17,6 +17,10 @@ class WebUi extends utils.Adapter {
             ...options,
             name: adapterName,
         });
+        this._instanceName = 'webui.0';
+        this._npmNamespace = this._instanceName + '.widgets';
+        this._stateNpm = 'state.npm';
+        this.widgetsDir = __dirname + '/widgets';
         this.npmRunning = false;
         this.states = {};
         this.on('ready', this.main.bind(this));
@@ -26,7 +30,7 @@ class WebUi extends utils.Adapter {
         this.on('unload', this.onUnload.bind(this));
     }
     async runUpload() {
-        await Uploadhelper.upload(this, __dirname + '/www/widgets', 'widgets');
+        await Uploadhelper.upload(this, this._npmNamespace, this.widgetsDir, '');
         /*return new Promise(resolve => {
             this.log.info(`Upload ${this.name}, changes detected...`);
             const file = utils.controllerDir + '/iobroker.js';
@@ -51,6 +55,20 @@ class WebUi extends utils.Adapter {
         await this.runUpload();
         this.setState('webui.0.control.command', { val: 'uiReloadPackages', ack: true });
     }
+    async creatWidgetsDirAndRestorePackageJsonIfneeded() {
+        if (!fs.existsSync(this.widgetsDir))
+            await fs.promises.mkdir(this.widgetsDir);
+        if (!fs.existsSync(this.widgetsDir + '/package.json')) {
+            if (await this.fileExistsAsync(this._npmNamespace, 'package.json')) {
+                this.log.info(`adapter was updated, restore packages.json`);
+                let data = await this.readFileAsync(this._npmNamespace, 'package.json');
+                await fs.promises.writeFile(this.widgetsDir, data.file);
+            }
+            else {
+                await fs.promises.writeFile(this.widgetsDir + '/package.json', '{}');
+            }
+        }
+    }
     installNpm(name) {
         return new Promise(async (resolve) => {
             if (this.npmRunning) {
@@ -59,12 +77,9 @@ class WebUi extends utils.Adapter {
             }
             this.npmRunning = true;
             this.log.info(`Install NPM package (${name}), check dirs...`);
-            if (!fs.existsSync(__dirname + '/www/widgets'))
-                await fs.promises.mkdir(__dirname + '/www/widgets');
-            if (!fs.existsSync(__dirname + '/www/widgets/package.json'))
-                await fs.promises.writeFile(__dirname + '/www/widgets/package.json', '{}');
+            await this.creatWidgetsDirAndRestorePackageJsonIfneeded();
             this.log.info(`Install NPM package (${name})...`);
-            const child = spawn('npm', ['install', '--omit=dev', name], { cwd: __dirname + '/www/widgets' });
+            const child = spawn('npm', ['install', '--omit=dev', name], { cwd: __dirname + this.widgetsDir });
             child.stdout.on('data', data => {
                 this.log.debug(data.toString().replace('\n', ''));
             });
@@ -77,20 +92,22 @@ class WebUi extends utils.Adapter {
         });
     }
     removeNpm(name) {
-        return new Promise(resolve => {
+        return new Promise(async (resolve) => {
             if (this.npmRunning) {
                 this.log.info(`NPM already running`);
                 resolve(null);
             }
             this.npmRunning = true;
-            this.log.info(`Install NPM package (${name})...`);
-            const child = spawn('npm', ['remove', name], { cwd: __dirname + '/www/widgets' });
+            this.log.info(`Remove NPM package (${name}), check dirs...`);
+            await this.creatWidgetsDirAndRestorePackageJsonIfneeded();
+            this.log.info(`Remove NPM package (${name})...`);
+            const child = spawn('npm', ['remove', name], { cwd: this.widgetsDir });
             child.stdout.on('data', data => {
                 this.log.debug(data.toString().replace('\n', ''));
             });
             child.stderr.on('data', data => this.log.error(data.toString().replace('\n', '')));
             child.on('exit', exitCode => {
-                this.log.info(`Installed NPM packge (${name}). ${exitCode ? 'Exit - ' + exitCode : 0}`);
+                this.log.info(`Remove NPM packge (${name}). ${exitCode ? 'Exit - ' + exitCode : 0}`);
                 this.npmRunning = false;
                 resolve(exitCode);
             });
@@ -111,7 +128,7 @@ class WebUi extends utils.Adapter {
     async createImportMapAndLoaderFiles() {
         try {
             this.log.info(`create importMap...`);
-            const imc = new ImportmapCreator(this, __dirname + '/www/widgets', './widgets/node_modules/');
+            const imc = new ImportmapCreator(this, this.widgetsDir, '/' + this._npmNamespace);
             await imc.parsePackages();
             this.log.info(`importMap: ` + JSON.stringify(imc.importMap));
         }
@@ -123,41 +140,53 @@ class WebUi extends utils.Adapter {
         this.log.info(`runCommand: ${command}, parameter: ${parameter}`);
         switch (command) {
             case 'addNpm':
+                await this.setState(this._stateNpm, { val: 'installingPackage', ack: true });
                 await this.installNpm(parameter);
+                await this.setState(this._stateNpm, { val: 'createImportmap', ack: true });
                 await this.createImportMapAndLoaderFiles();
+                await this.setState(this._stateNpm, { val: 'uploading', ack: true });
                 await this.refreshWWW();
+                await this.setState(this._stateNpm, { val: 'idle', ack: true });
                 break;
             case 'updateNpm':
                 await this.installNpm(parameter);
                 await this.createImportMapAndLoaderFiles();
+                await this.setState(this._stateNpm, { val: 'uploading', ack: true });
                 await this.refreshWWW();
+                await this.setState(this._stateNpm, { val: 'idle', ack: true });
                 break;
             case 'removeNpm':
+                await this.setState(this._stateNpm, { val: 'removeingPackage', ack: true });
                 await this.removeNpm(parameter);
+                await this.setState(this._stateNpm, { val: 'createImportmap', ack: true });
                 await this.createImportMapAndLoaderFiles();
+                await this.setState(this._stateNpm, { val: 'uploading', ack: true });
                 await this.refreshWWW();
+                await this.setState(this._stateNpm, { val: 'idle', ack: true });
                 break;
             case 'refreshWww':
+                await this.setState(this._stateNpm, { val: 'uploading', ack: true });
                 await this.refreshWWW();
+                await this.setState(this._stateNpm, { val: 'idle', ack: true });
                 break;
         }
     }
     async main() {
         this.log.info(`dirName: ` + __dirname);
-        if (!fs.existsSync(__dirname + '/www/widgets/package.json')) {
+        /*if (!fs.existsSync(__dirname + '/www/widgets/package.json')) {
             this.log.info(`No package.json for widgets found, look if one was uploaded.`);
             if (await this.fileExistsAsync(adapterName, 'widgets/package.json')) {
                 this.log.info(`adapter was updated, restore packages.json`);
                 if (!fs.existsSync(__dirname + '/www/widgets'))
-                    await fs.promises.mkdir(__dirname + '/www/widgets');
-                let data = await this.readFileAsync(adapterName, 'widgets/package.json');
+                    await fs.promises.mkdir(__dirname + '/www/widgets')
+                let data = await this.readFileAsync(adapterName, 'widgets/package.json')
                 await fs.promises.writeFile(__dirname + '/www/widgets/package.json', data.file);
                 this.log.info(`run NPM install`);
                 await this.installNpm('');
                 await this.createImportMapAndLoaderFiles();
                 await this.refreshWWW();
             }
-        }
+        }*/
         await this.subscribeStatesAsync('*', {});
         this.log.info(`adapter ready`);
     }

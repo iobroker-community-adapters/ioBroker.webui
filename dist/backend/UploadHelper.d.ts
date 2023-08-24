@@ -2,12 +2,12 @@ import { AdapterInstance } from '@iobroker/adapter-core';
 export declare function sleep(ms: any): Promise<unknown>;
 export declare class Uploadhelper {
     private _adapter;
-    private _adapterName;
     private _stoppingPromise;
     private _lastProgressUpdate;
+    private _namespace;
     private _ignoredFileExtensions;
-    constructor(adapter: AdapterInstance);
-    static upload(adapter: AdapterInstance, sourceDirectory: string, targetDirectory: string): Promise<void>;
+    constructor(adapter: AdapterInstance, namespace: string);
+    static upload(adapter: AdapterInstance, namespace: string, sourceDirectory: string, targetDirectory: string): Promise<void>;
     upload(sourceDirectory: string, targetDirectory: string): Promise<void>;
     collectExistingFilesToDelete(dir: any): Promise<{
         filesToDelete: any[];

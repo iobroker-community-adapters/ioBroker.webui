@@ -6,21 +6,22 @@ export function sleep(ms) {
 }
 export class Uploadhelper {
     //private _uploadStateObjectName
-    constructor(adapter) {
+    constructor(adapter, namespace) {
         this._stoppingPromise = false;
         this._ignoredFileExtensions = [
             '.npmignore',
             '.gitignore',
             '.DS_Store',
             '_socket/info.js',
-            'LICENSE'
+            'LICENSE',
+            '.ts',
         ];
         this._adapter = adapter;
-        this._adapterName = this._adapter.name;
+        this._namespace = namespace;
         //this._uploadStateObjectName = `system.adapter.${this._adapterName}.upload`;
     }
-    static async upload(adapter, sourceDirectory, targetDirectory) {
-        const hlp = new Uploadhelper(adapter);
+    static async upload(adapter, namespace, sourceDirectory, targetDirectory) {
+        const hlp = new Uploadhelper(adapter, namespace);
         await hlp.upload(sourceDirectory, targetDirectory);
     }
     async upload(sourceDirectory, targetDirectory) {
@@ -29,12 +30,6 @@ export class Uploadhelper {
             return;
         }
         //await this._adapter.setForeignStateAsync(`system.adapter.${this._adapterName}.upload`, 0, true);
-        try {
-            await this._adapter.getForeignObjectAsync(this._adapterName);
-        }
-        catch {
-            // ignore
-        }
         // Read all names with subtrees from the local directory
         const files = this.walk(sourceDirectory);
         const { filesToDelete } = await this.collectExistingFilesToDelete(targetDirectory);
@@ -62,7 +57,7 @@ export class Uploadhelper {
         }
         try {
             //this._adapter.log.debug(`Scanning ${dir}`);
-            files = await this._adapter.readDirAsync(this._adapterName, dir);
+            files = await this._adapter.readDirAsync(this._namespace, dir);
         }
         catch {
             // ignore err
@@ -103,7 +98,7 @@ export class Uploadhelper {
                     return;
                 }
                 try {
-                    await this._adapter.unlinkAsync(this._adapterName, file);
+                    await this._adapter.unlinkAsync(this._namespace, file);
                 }
                 catch (err) {
                     this._adapter.log.error(`Cannot delete file "${file}": ${err}`);
@@ -167,7 +162,7 @@ export class Uploadhelper {
     }
     async _uploadFile(sourceFile, destinationFile) {
         const data = await fsAsync.readFile(sourceFile);
-        await this._adapter.writeFileAsync(this._adapterName, destinationFile, data);
+        await this._adapter.writeFileAsync(this._namespace, destinationFile, data);
     }
     // Read synchronous all files recursively from local directory
     walk(dir, _results) {

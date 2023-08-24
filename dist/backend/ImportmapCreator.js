@@ -180,16 +180,49 @@ export async function registerDesignerAddons(serviceContainer) {
     async addToImportmap(basePath, packageJsonObj) {
         const map = this.importMap.imports;
         if (!map.hasOwnProperty(packageJsonObj.name)) {
+            if (packageJsonObj.exports) {
+                let getImport = (obj) => {
+                    if (obj?.browser)
+                        return obj.browser;
+                    if (obj?.import)
+                        return obj.import;
+                    if (obj?.module)
+                        return obj.module;
+                    if (obj?.default)
+                        return obj.default;
+                    return obj?.node;
+                };
+                let getImportFlat = (obj) => {
+                    let i = getImport(obj);
+                    if (!(typeof i == 'string'))
+                        i = getImport(i);
+                    if (!(typeof i == 'string'))
+                        i = getImport(i);
+                    if (!(typeof i == 'string'))
+                        i = null;
+                    return i;
+                };
+                let imp = getImportFlat(packageJsonObj.exports);
+                if (imp) {
+                    this.importMap.imports[packageJsonObj.name] = basePath + removeTrailing(imp, '/');
+                }
+                else if (imp = getImportFlat(packageJsonObj.exports?.['.'])) {
+                    this.importMap.imports[packageJsonObj.name] = basePath + removeTrailing(imp, '/');
+                }
+            }
             let mainImport = packageJsonObj.main;
             if (packageJsonObj.module)
                 mainImport = packageJsonObj.module;
+            if (packageJsonObj.unpkg && !mainImport)
+                mainImport = packageJsonObj.unpkg;
             if (mainImport) {
-                this.importMap.imports[packageJsonObj.name] = './' + path.join(basePath, removeTrailing(mainImport, '/'));
+                if (!this.importMap.imports[packageJsonObj.name])
+                    this.importMap.imports[packageJsonObj.name] = path.join(basePath, removeTrailing(mainImport, '/'));
             }
             else {
                 this._adapter.log.warn('main is undefined for "' + packageJsonObj.name + '"');
             }
-            this.importMap.imports[packageJsonObj.name + '/'] = './' + basePath + '/';
+            this.importMap.imports[packageJsonObj.name + '/'] = basePath + '/';
         }
     }
 }
