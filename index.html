@@ -27,7 +27,7 @@
     }
   </script>
   <script src="./node_modules/es-module-shims/dist/es-module-shims.js"></script>
-  <script src="./widgets/importmap.js"></script>
+  <script src="/webui.0.widgets/importmap.js"></script>
   <script src="./dist/importmaps/importmap-config.js"></script>
 
   <script src="config.js"></script>
@@ -40,7 +40,11 @@
 
   <script type="module">
     try {
-      await importShim('./widgets/importWidgetFiles.js');
+      const scp = document.createElement('script');
+      scp.src = iobrokerWebRootUrl + "webui.0.widgets/importmap.js";
+      document.head.appendChild(scp);
+
+      await importShim(iobrokerWebRootUrl + 'webui.0.widgets/importWidgetFiles.js');
     } catch (err) {
       console.warn(err);
     }

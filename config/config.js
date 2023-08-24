@@ -1,6 +1,7 @@
 window.iobrokerHost = window.location.hostname;
 window.iobrokerPort = window.location.port;
-window.iobrokerWebuiRootUrl = window.location.protocol + '//' + window.iobrokerHost + ':' + window.iobrokerPort + '/webui/';
+window.iobrokerWebRootUrl = window.location.protocol + '//' + window.iobrokerHost + ':' + window.iobrokerPort + '/';
+window.iobrokerWebuiRootUrl = window.iobrokerWebRootUrl + 'webui/';
 window.iobrokerSocketScriptUrl = '../lib/js/socket.io.js';
 //hack, webui socket does not work atm...
 //window.iobrokerPort = 8081;

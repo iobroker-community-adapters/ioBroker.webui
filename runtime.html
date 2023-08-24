@@ -19,14 +19,18 @@
     }
   </script>
   <script src="./node_modules/es-module-shims/dist/es-module-shims.js"></script>
-  <script src="./widgets/importmap.js"></script>
+  <script src="/webui.0.widgets/importmap.js"></script>
   <script src="./dist/importmaps/importmap-runtime.js"></script>
 
   <script src="config.js"></script>
 
   <script type="module">
+    const scp = document.createElement('script');
+    scp.src = iobrokerWebRootUrl + "webui.0.widgets/importmap.js";
+    document.head.appendChild(scp);
+
     importShim('./dist/frontend/runtime/controls.js');
-    importShim('./widgets/importWidgetFilesRuntime.js');
+    importShim(iobrokerWebRootUrl + 'webui.0.widgets/importWidgetFilesRuntime.js');
   </script>
 </head>
 

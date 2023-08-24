@@ -1,4 +1,3 @@
-import { LazyLoader } from "@node-projects/base-custom-webcomponent";
 import { BaseCustomWebcomponentBindingsService, CodeViewMonaco, CssToolsStylesheetService, IElementsJson, JsonFileElementsService, NodeHtmlParserService, PreDefinedElementsService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
 import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
 import { IobrokerWebuiBindableObjectDragDropService } from "../services/IobrokerWebuiBindableObjectDragDropService.js";
@@ -61,14 +60,14 @@ serviceContainer.config.openBindingsEditor = async (property, designItems, bindi
     });
 }
 
-LazyLoader.LoadJavascript(window.iobrokerWebuiRootUrl + 'widgets/importmap.js');
-import(window.iobrokerWebuiRootUrl + 'widgets/configWidgets.js').then(x => {
+//LazyLoader.LoadJavascript(window.iobrokerWebRootUrl + 'webui.0.widgets/importmap.js');
+import(window.iobrokerWebRootUrl + 'webui.0.widgets/configWidgets.js').then(x => {
     x.registerNpmWidgets(serviceContainer);
     //paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);
 }).catch(err => {
     console.error('error loading widgets designer generated code', err);
 });
-import(window.iobrokerWebuiRootUrl + 'widgets/designerAddons.js').then(x => {
+import(window.iobrokerWebRootUrl + 'webui.0.widgets/designerAddons.js').then(x => {
     x.registerDesignerAddons(serviceContainer);
 }).catch(err => {
     console.error('error loading widgets designer addons', err);
