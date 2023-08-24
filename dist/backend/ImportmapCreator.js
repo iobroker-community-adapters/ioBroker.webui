@@ -1,6 +1,7 @@
 import path from 'path';
 import fs from 'fs/promises';
 import fsSync from 'fs';
+let skipPackages = ['@node-projects/base-custom-webcomponent', 'tslib', 'long'];
 function removeTrailing(text, char) {
     if (text.endsWith(char ?? '/'))
         return text.substring(0, text.length - 1);
@@ -31,7 +32,9 @@ export class ImportmapCreator {
         if (packageJsonObj.dependencies) {
             for (let d in packageJsonObj.dependencies) {
                 try {
-                    await this.parseNpmPackageInternal(d, reportState);
+                    if (!skipPackages.includes(d)) {
+                        await this.parseNpmPackageInternal(d, reportState);
+                    }
                 }
                 catch (err) {
                     this._adapter.log.warn("Error Parsing Package: " + d + " - error: " + err);
@@ -79,7 +82,9 @@ export async function registerDesignerAddons(serviceContainer) {
         this.addToImportmap(importMapBasePath, packageJsonObj);
         if (packageJsonObj.dependencies) {
             for (let d in packageJsonObj.dependencies) {
-                await this.loadDependency(d, packageJsonObj.dependencies[d]);
+                if (!skipPackages.includes(d)) {
+                    await this.loadDependency(d, packageJsonObj.dependencies[d]);
+                }
             }
         }
         let customElementsPath = basePath + '/custom-elements.json';
