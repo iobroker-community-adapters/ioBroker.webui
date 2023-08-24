@@ -15,6 +15,7 @@ export type namedBinding = [name: string, binding: IIobrokerWebuiBinding];
 
 export class IobrokerWebuiBindingsHelper {
     static parseBinding(element: Element, name: string, value: string, bindingTarget: BindingTarget, prefix: string): namedBinding {
+        const propname = name.substring(prefix.length);
         if (!value.startsWith('{')) {
             let binding: IIobrokerWebuiBinding = {
                 signal: value,
@@ -30,7 +31,7 @@ export class IobrokerWebuiBindingsHelper {
                 else if (element instanceof HTMLInputElement)
                     binding.events = ['change'];
                 else
-                    binding.events = [name + '-changed'];
+                    binding.events = [propname + '-changed'];
             }
 
             if (value.startsWith('!')) {
@@ -38,7 +39,7 @@ export class IobrokerWebuiBindingsHelper {
                 binding.inverted = true;
             }
 
-            return [PropertiesHelper.dashToCamelCase(name.substring(prefix.length)), binding];
+            return [PropertiesHelper.dashToCamelCase(propname), binding];
         }
 
         let binding: IIobrokerWebuiBinding = JSON.parse(value);
@@ -50,9 +51,9 @@ export class IobrokerWebuiBindingsHelper {
             else if (element instanceof HTMLInputElement)
                 binding.events = ['change'];
             else
-                binding.events = [name + '-changed'];
+                binding.events = [propname + '-changed'];
         }
-        return [PropertiesHelper.dashToCamelCase(name.substring(prefix.length)), binding];
+        return [PropertiesHelper.dashToCamelCase(propname), binding];
 
 
     }
