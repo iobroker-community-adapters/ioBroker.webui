@@ -121,13 +121,13 @@ export async function registerDesignerAddons(serviceContainer) {
         if (customElementsJson) {
             let nm = packageJsonObj.name.replaceAll(' ', '_').replaceAll('@', '_').replaceAll('-', '_').replaceAll('/', '_').replaceAll('.', '_');
             this.designerServicesCode += `let ${nm} = ${customElementsJson};
-    serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', './${elementsRootPathWeb}', ${nm}));
+    serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPathWeb}', ${nm}));
     serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm}));`;
             let manifest = JSON.parse(customElementsJson);
             for (let m of manifest.modules) {
                 for (let e of m.exports) {
                     if (e.kind == 'custom-element-definition') {
-                        this.importFiles.push('../' + elementsRootPathWeb + removeLeading(e.declaration.module, '/'));
+                        this.importFiles.push(elementsRootPathWeb + removeLeading(e.declaration.module, '/'));
                     }
                 }
             }
@@ -135,10 +135,13 @@ export async function registerDesignerAddons(serviceContainer) {
         else {
             this._adapter.log.warn('npm package: ' + pkg + ' - no custom-elements.json found, only loading javascript module');
             if (packageJsonObj.module) {
-                this.importUndefinedElementFiles.push([packageJsonObj.name, '../' + elementsRootPathWeb + "/" + removeLeading(packageJsonObj.module, '/')]);
+                this.importUndefinedElementFiles.push([packageJsonObj.name, elementsRootPathWeb + "/" + removeLeading(packageJsonObj.module, '/')]);
             }
             else if (packageJsonObj.main) {
-                this.importUndefinedElementFiles.push([packageJsonObj.name, '../' + elementsRootPathWeb + "/" + removeLeading(packageJsonObj.main, '/')]);
+                this.importUndefinedElementFiles.push([packageJsonObj.name, elementsRootPathWeb + "/" + removeLeading(packageJsonObj.main, '/')]);
+            }
+            else if (packageJsonObj.unpkg) {
+                this.importUndefinedElementFiles.push([packageJsonObj.name, elementsRootPathWeb + "/" + removeLeading(packageJsonObj.unpkg, '/')]);
             }
             else {
                 console.warn('npm package: ' + pkg + ' - no entry point in package found.');
