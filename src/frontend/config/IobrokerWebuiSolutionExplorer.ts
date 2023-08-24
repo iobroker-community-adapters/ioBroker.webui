@@ -134,8 +134,12 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 ContextMenu.show([{
                     title: 'Add Package', action: () => {
                         const packageName = prompt("NPM Package Name");
-                        if (packageName)
-                            iobrokerHandler.sendCommand("addNpm", packageName);
+                        if (packageName) {
+                            if (window.appShell.npmState != 'idle') {
+                                alert("webui is already handling a npm request");
+                            } else
+                                iobrokerHandler.sendCommand("addNpm", packageName);
+                        }
                     }
                 }], event);
             },
@@ -145,12 +149,18 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         let npmNodeCtxMenu = (event, packageName) => {
             ContextMenu.show([{
                 title: 'Update Package', action: () => {
-                    iobrokerHandler.sendCommand("updateNpm", packageName);
+                    if (window.appShell.npmState != 'idle') {
+                        alert("webui is already handling a npm request");
+                    } else
+                        iobrokerHandler.sendCommand("updateNpm", packageName);
                 }
             },
             {
                 title: 'Remove Package', action: () => {
-                    iobrokerHandler.sendCommand("removeNpm", packageName);
+                    if (window.appShell.npmState != 'idle') {
+                        alert("webui is already handling a npm request");
+                    } else
+                        iobrokerHandler.sendCommand("removeNpm", packageName);
                 }
             }], event);
         }
@@ -162,8 +172,12 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 ContextMenu.show([{
                     title: 'Add Package', action: () => {
                         const packageName = prompt("NPM Package Name");
-                        if (packageName)
-                            iobrokerHandler.sendCommand("addNpm", packageName);
+                        if (packageName) {
+                            if (window.appShell.npmState != 'idle') {
+                                alert("webui is already handling a npm request");
+                            } else
+                                iobrokerHandler.sendCommand("addNpm", packageName);
+                        }
                     }
                 }], event);
             },
@@ -215,7 +229,10 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                                     folder: false,
                                     tooltip: elements[0],
                                     dblclick: (e, data) => {
-                                        iobrokerHandler.sendCommand("addNpm", elements[0]);
+                                        if (window.appShell.npmState != 'idle') {
+                                            alert("webui is already handling a npm request");
+                                        } else
+                                            iobrokerHandler.sendCommand("addNpm", elements[0]);
                                     }
                                 });
                             } else {
@@ -228,7 +245,10 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                                         folder: false,
                                         tooltip: x.split('/')[1],
                                         dblclick: (e, data) => {
-                                            iobrokerHandler.sendCommand("addNpm", x);
+                                            if (window.appShell.npmState != 'idle') {
+                                                alert("webui is already handling a npm request");
+                                            } else
+                                                iobrokerHandler.sendCommand("addNpm", x);
                                         }
                                     }))
                                 });

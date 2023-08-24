@@ -156,9 +156,9 @@ class WebUi extends utils.Adapter {
 
         switch (command) {
             case 'addNpm':
-                await this.setState(this._stateNpm, { val: 'installing Package', ack: true });
+                await this.setState(this._stateNpm, { val: 'installing npm package "' + parameter + '"', ack: true });
                 await this.installNpm(parameter);
-                await this.setState(this._stateNpm, { val: 'create Importmap', ack: true });
+                await this.setState(this._stateNpm, { val: 'create importmap', ack: true });
                 await this.createImportMapAndLoaderFiles();
                 await this.setState(this._stateNpm, { val: 'uploading', ack: true });
                 await this.refreshWWW();
@@ -172,16 +172,16 @@ class WebUi extends utils.Adapter {
                 await this.setState(this._stateNpm, { val: 'idle', ack: true });
                 break;
             case 'removeNpm':
-                await this.setState(this._stateNpm, { val: 'removeing Package', ack: true });
+                await this.setState(this._stateNpm, { val: 'removeing npm package "' + parameter + '"', ack: true });
                 await this.removeNpm(parameter);
-                await this.setState(this._stateNpm, { val: 'create Importmap', ack: true });
+                await this.setState(this._stateNpm, { val: 'create importmap', ack: true });
                 await this.createImportMapAndLoaderFiles();
                 await this.setState(this._stateNpm, { val: 'uploading', ack: true });
                 await this.refreshWWW();
                 await this.setState(this._stateNpm, { val: 'idle', ack: true });
                 break;
             case 'createImportmap':
-                await this.setState(this._stateNpm, { val: 'create Importmap', ack: true });
+                await this.setState(this._stateNpm, { val: 'create importmap', ack: true });
                 await this.createImportMapAndLoaderFiles();
                 await this.setState(this._stateNpm, { val: 'uploading', ack: true });
                 await this.refreshWWW();

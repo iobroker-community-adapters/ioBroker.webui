@@ -50,7 +50,7 @@ export class Uploadhelper {
         this._adapter.setState(this._stateNpm, { val: `collect files to delete`, ack: true });
         const { filesToDelete } = await this.collectExistingFilesToDelete(targetDirectory);
 
-        this._adapter.setState(this._stateNpm, { val: `delete ${filesToDelete.length}`, ack: true });
+        this._adapter.setState(this._stateNpm, { val: `delete ${filesToDelete.length} files`, ack: true });
         this._adapter.log.debug(`Erasing files: ${filesToDelete.length}`);
 
         if (this._stoppingPromise) {

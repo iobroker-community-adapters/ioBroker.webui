@@ -45,6 +45,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   public propertyGrid: PropertyGrid;
   public treeViewExtended: TreeViewExtended;
   public eventsAssignment: IobrokerWebuiEventAssignment;
+  public npmState: string;
 
   static readonly style = css`
     :host {
@@ -140,9 +141,12 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
 
     await this._setupServiceContainer();
 
-    let stateElement = <HTMLInputElement>document.getElementById('npmState');
+    let stateElement = <HTMLDivElement>document.getElementById('npmState');
     iobrokerHandler.waitForReady().then(x => {
-      iobrokerHandler.connection.subscribeState('webui.0.state.npm', (id, value) => stateElement.value = <any>value.val);
+      iobrokerHandler.connection.subscribeState('webui.0.state.npm', (id, value) => {
+        this.npmState = <any>value.val;
+        stateElement.innerText = <any>value.val;
+      });
     });
   }
 
