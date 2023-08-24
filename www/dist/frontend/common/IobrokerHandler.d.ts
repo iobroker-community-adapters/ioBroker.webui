@@ -17,6 +17,7 @@ declare class IobrokerHandler {
     configPath: string;
     namespace: string;
     namespaceFiles: string;
+    imagePrefix: string;
     config: IWebUiConfig;
     screensChanged: TypedEvent<void>;
     configChanged: TypedEvent<void>;
@@ -32,12 +33,13 @@ declare class IobrokerHandler {
     saveScreen(name: string, screen: IScreen): Promise<void>;
     removeScreen(name: string): Promise<void>;
     getImageNames(): Promise<string[]>;
-    saveImage(name: string, imageData: string): Promise<void>;
+    saveImage(name: string, imageData: Blob): Promise<void>;
     removeImage(name: string): Promise<void>;
     private _getConfig;
     saveConfig(): Promise<void>;
     private _getObjectFromFile;
     private _saveObjectToFile;
+    private _saveBinaryToFile;
     sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm', data: string, clientId?: string): Promise<void>;
 }
 export declare const iobrokerHandler: IobrokerHandler;

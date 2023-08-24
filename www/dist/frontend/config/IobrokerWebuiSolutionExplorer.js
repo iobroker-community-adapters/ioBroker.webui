@@ -95,7 +95,6 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             }
         };
     }
-    //@ts-ignore
     async _createNpmsNode() {
         let npmsNode = {
             title: 'Packages',
@@ -258,10 +257,10 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     try {
                         await iobrokerHandler.waitForReady();
                         let images = await iobrokerHandler.getImageNames();
-                        images.map(x => ({
-                            title: x
-                        }));
-                        resolve(images);
+                        resolve(images.map(x => ({
+                            title: x,
+                            data: { type: 'image', name: x }
+                        })));
                     }
                     catch (err) {
                         console.warn("error loading flot charts", err);
@@ -430,6 +429,14 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         if (data.node.data.type == 'screen') {
                             const screen = data.node.data.name;
                             const elementDef = { tag: "iobroker-webui-screen-viewer", defaultAttributes: { 'screen-name': screen }, defaultWidth: '300px', defaultHeight: '200px' };
+                            data.effectAllowed = "all";
+                            data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
+                            data.dropEffect = "copy";
+                            return true;
+                        }
+                        else if (data.node.data.type == 'image') {
+                            const image = data.node.data.name;
+                            const elementDef = { tag: "img", defaultAttributes: { 'src': iobrokerHandler.imagePrefix + image } };
                             data.effectAllowed = "all";
                             data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
                             data.dropEffect = "copy";

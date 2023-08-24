@@ -8,6 +8,8 @@ import { IobrokerWebuiDynamicsEditor } from "./IobrokerWebuiDynamicsEditor.js";
 import { IobrokerWebuiConfirmationWrapper } from "./IobrokerWebuiConfirmationWrapper.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import customElementsObserver from "../widgets/customElementsObserver.js";
+import { IobrokerWebuiExternalDragDropService } from "../services/IobrokerWebuiExternalDragDropService.js";
+import { IobrokerWebuiCopyPasteService } from "../services/IobrokerWebuiCopyPasteService.js";
 const rootPath = new URL(import.meta.url).pathname.split('/').slice(0, -4).join('/'); // -2 remove file & dist
 const serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
@@ -16,6 +18,8 @@ serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableObj
 serviceContainer.register("bindableObjectDragDropService", new IobrokerWebuiBindableObjectDragDropService());
 serviceContainer.register("bindingService", new IobrokerWebuiBindingService());
 serviceContainer.register("demoProviderService", new IobrokerWebuiDemoProviderService());
+serviceContainer.register("externalDragDropService", new IobrokerWebuiExternalDragDropService());
+serviceContainer.register("copyPasteService", new IobrokerWebuiCopyPasteService());
 serviceContainer.register("stylesheetService", designerCanvas => new CssToolsStylesheetService(designerCanvas));
 serviceContainer.config.codeViewWidget = CodeViewMonaco;
 serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/frontend/elements-webui.json'));

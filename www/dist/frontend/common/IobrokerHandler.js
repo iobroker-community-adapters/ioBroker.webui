@@ -8,6 +8,7 @@ class IobrokerHandler {
         this.configPath = "config/";
         this.namespace = "webui.0";
         this.namespaceFiles = this.namespace + '.data';
+        this.imagePrefix = '/' + this.namespaceFiles + '/config/images/';
         this.screensChanged = new TypedEvent();
         this.configChanged = new TypedEvent();
         this._readyPromises = [];
@@ -100,7 +101,7 @@ class IobrokerHandler {
         return [];
     }
     async saveImage(name, imageData) {
-        this._saveObjectToFile(screen, "/" + this.configPath + "images/" + name.toLocaleLowerCase());
+        this._saveBinaryToFile(imageData, "/" + this.configPath + "images/" + name);
     }
     async removeImage(name) {
         await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "images/" + name.toLocaleLowerCase() + screenFileExtension);
@@ -134,6 +135,9 @@ class IobrokerHandler {
     async _saveObjectToFile(obj, name) {
         const enc = new TextEncoder();
         await this.connection.writeFile64(this.namespaceFiles, name, enc.encode(JSON.stringify(obj)));
+    }
+    async _saveBinaryToFile(binary, name) {
+        await this.connection.writeFile64(this.namespaceFiles, name, await binary.arrayBuffer());
     }
     async sendCommand(command, data, clientId = '') {
         await this.connection.setState(this.namespace + '.control.data', { val: data });
