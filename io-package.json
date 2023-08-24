@@ -145,7 +145,7 @@
             "_id": "state.npm",
             "type": "state",
             "common": {
-                "name": "state of packge installation",
+                "name": "state of package installation",
                 "type": "string",
                 "states": {
                     "idle": "idle",
