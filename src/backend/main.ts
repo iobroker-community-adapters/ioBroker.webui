@@ -183,6 +183,8 @@ class WebUi extends utils.Adapter {
             case 'createImportmap':
                 await this.setState(this._stateNpm, { val: 'createImportmap', ack: true });
                 await this.createImportMapAndLoaderFiles();
+                await this.setState(this._stateNpm, { val: 'uploading', ack: true });
+                await this.refreshWWW();
                 await this.setState(this._stateNpm, { val: 'idle', ack: true });
                 break;
             case 'refreshWww':
