@@ -148,13 +148,6 @@
             "common": {
                 "name": "state of package installation",
                 "type": "string",
-                "states": {
-                    "idle": "idle",
-                    "installingPackage": "installingPackage",
-                    "removeingPackage": "removeingPackage",
-                    "createImportmap": "createImportmap",
-                    "uploading": "uploading"
-                },
                 "read": true,
                 "write": true,
                 "role": "text"

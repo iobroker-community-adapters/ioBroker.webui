@@ -14,6 +14,8 @@ export class Uploadhelper {
     private _lastProgressUpdate: number;
     private _namespace: string;
 
+    _stateNpm = 'state.npm';
+
     private _ignoredFileExtensions = [
         '.npmignore',
         '.gitignore',
@@ -41,21 +43,20 @@ export class Uploadhelper {
             this._adapter.log.warn(`source directory does not exist: ${sourceDirectory}`);
             return;
         }
-        //await this._adapter.setForeignStateAsync(`system.adapter.${this._adapterName}.upload`, 0, true);
 
         // Read all names with subtrees from the local directory
         const files = this.walk(sourceDirectory);
+        
+        this._adapter.setState(this._stateNpm, { val: `collect files to delete`, ack: true });
         const { filesToDelete } = await this.collectExistingFilesToDelete(targetDirectory);
 
+        this._adapter.setState(this._stateNpm, { val: `delete ${filesToDelete.length}`, ack: true });
         this._adapter.log.debug(`Erasing files: ${filesToDelete.length}`);
 
         if (this._stoppingPromise) {
             return;
         }
 
-        /*for (let f of filesToDelete) {
-            this._adapter.log.debug(`Erasing file: ${f}`);
-        }*/
         // delete old files, before upload of new
         await this.eraseFiles(filesToDelete);
         this._adapter.log.debug(`Erasing done, start upload...`);
@@ -77,7 +78,6 @@ export class Uploadhelper {
         }
 
         try {
-            //this._adapter.log.debug(`Scanning ${dir}`);
             files = await this._adapter.readDirAsync(this._namespace, dir);
         } catch {
             // ignore err
@@ -129,12 +129,7 @@ export class Uploadhelper {
     }
 
     async uploadInternal(files, sourceDirectory: string, targetDirectory: string): Promise<void> {
-        //await this._adapter.setForeignStateAsync(this._uploadStateObjectName, { val: 0, ack: true });
-
         const dirLen = sourceDirectory.length;
-
-        //let filePromises = new Set<Promise<any>>;
-        //let maxParallelUpload = 50;
 
         for (let f = 0; f < files.length; f++) {
             const file = files[f];
@@ -148,46 +143,26 @@ export class Uploadhelper {
             // write upload status into log
             if (files.length - f > 100) {
                 (!f || !((files.length - f - 1) % 50)) &&
-                    this._adapter.log.debug(`upload [${files.length - f - 1}] ${file.substring(dirLen)} ${attName}`);
+                    this._adapter.setState(this._stateNpm, { val: `upload [${files.length - f - 1}/${files.length}]`, ack: true });
             } else if (files.length - f - 1 > 20) {
                 (!f || !((files.length - f - 1) % 10)) &&
-                    this._adapter.log.debug(`upload [${files.length - f - 1}] ${file.substring(dirLen)} ${attName}`);
+                    this._adapter.setState(this._stateNpm, { val: `upload [${files.length - f - 1}/${files.length}]`, ack: true });
             } else {
-                this._adapter.log.debug(`upload [${files.length - f - 1}] ${file.substring(dirLen)} ${attName}`);
+                this._adapter.setState(this._stateNpm, { val: `upload [${files.length - f - 1}/${files.length}]`, ack: true });
             }
 
             // Update upload indicator
             const now = Date.now();
             if (!this._lastProgressUpdate || now - this._lastProgressUpdate > 1000) {
                 this._lastProgressUpdate = now;
-                /*await this._adapter.setForeignStateAsync(this._uploadStateObjectName, {
-                    val: Math.round((1000 * (files.length - f)) / files.length) / 10,
-                    ack: true,
-                });*/
             }
 
             try {
                 await this._uploadFile(file, attName);
-                //while (filePromises.size > maxParallelUpload) {
-                //    await sleep(10);
-                //}
-                //let uploadPromise = this._uploadFile(file, attName);
-                //filePromises.add(uploadPromise);
-                //uploadPromise.then(x => filePromises.delete(uploadPromise));
             } catch (e) {
                 this._adapter.log.error(`Error: Cannot upload ${file}: ${e.message}`);
             }
         }
-
-        //this._adapter.log.info(`Wait for last upload Promises to fullfill`);
-        //Promise.all(filePromises);
-        //this._adapter.log.info(`upload done`);
-
-        // Set upload progress to 0;
-        /*if (files.length) {
-            await this._adapter.setForeignStateAsync(this._uploadStateObjectName, { val: 0, ack: true });
-        }*/
-
         return;
     }
 
