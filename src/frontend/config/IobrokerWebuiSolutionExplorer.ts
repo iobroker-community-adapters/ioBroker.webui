@@ -39,6 +39,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     async initialize(serviceContainer: ServiceContainer) {
         this.serviceContainer = serviceContainer;
         iobrokerHandler.screensChanged.on(() => this._refreshScreensNode());
+        iobrokerHandler.imagesChanged.on(() => this._refreshImagesNode());
         await sleep(100);
         this._loadTree();
     }
@@ -100,6 +101,13 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             screensNode.resetLazy();
             await sleep(50);
             screensNode.setExpanded(true);
+        }
+    }
+
+    private async _refreshImagesNode() {
+        const imagesNode = this._tree.getNodeByKey('images');
+        if (imagesNode) {
+            imagesNode.resetLazy();
         }
     }
 
@@ -314,8 +322,19 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
 
     private async _createImagesNode() {
+        let screenNodeCtxMenu = (event, image) => {
+            ContextMenu.show([{
+                title: 'Remove Image', action: () => {
+                    iobrokerHandler.removeImage(image);
+                }
+            }], event);
+        }
+
         let imagesNode: TreeNodeData = {
-            title: 'Images', folder: true, lazy: true,
+            title: 'Images', 
+            folder: true, 
+            lazy: true,
+            key: 'images',
             lazyload: (e, data) => {
                 data.result = new Promise(async resolve => {
                     try {
@@ -324,6 +343,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         images.sort();
                         resolve(images.map(x => ({
                             title: x,
+                            contextMenu: (event => screenNodeCtxMenu(event, x)),
                             icon: iobrokerHandler.imagePrefix + x,
                             data: { type: 'image', name: x }
                         })));

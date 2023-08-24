@@ -32,6 +32,7 @@ class IobrokerHandler {
     config: IWebUiConfig;
 
     screensChanged = new TypedEvent<void>();
+    imagesChanged = new TypedEvent<void>();
     configChanged = new TypedEvent<void>();
 
     _readyPromises: (() => void)[] = [];
@@ -136,10 +137,12 @@ class IobrokerHandler {
 
     async saveImage(name: string, imageData: Blob) {
         await this._saveBinaryToFile(imageData, "/" + this.configPath + "images/" + name);
+        this.imagesChanged.emit();
     }
 
     async removeImage(name: string) {
-        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "images/" + name.toLocaleLowerCase() + screenFileExtension);
+        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "images/" + name);
+        this.imagesChanged.emit();
     }
 
 
