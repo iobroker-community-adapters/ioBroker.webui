@@ -172,7 +172,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 data.result = new Promise(async resolve => {
                     try {
                         await iobrokerHandler.waitForReady();
-                        let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/package.json", false)).file);
+                        let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.namespaceWidgets, "package.json", false)).file);
                         let packages = Object.keys(packageJson.dependencies);
                         packages.sort();
                         let children = packages.map(x => ({

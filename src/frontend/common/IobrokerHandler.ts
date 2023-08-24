@@ -26,6 +26,7 @@ class IobrokerHandler {
 
     namespace = "webui.0";
     namespaceFiles = this.namespace + '.data';
+    namespaceWidgets = this.namespace + '.widgets';
     imagePrefix = '/' + this.namespaceFiles + '/config/images/';
 
     config: IWebUiConfig;
