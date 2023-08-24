@@ -15,6 +15,7 @@ class WebUi extends utils.Adapter {
     _unloaded: boolean;
     _instanceName = 'webui.0'
     _npmNamespace = this._instanceName + '.widgets'
+    _stateNpm = 'state.npm';
 
     /**
      * @param {Partial<utils.AdapterOptions>} [options={}]
@@ -155,22 +156,34 @@ class WebUi extends utils.Adapter {
 
         switch (command) {
             case 'addNpm':
+                await this.setState(this._stateNpm, { val: 'installingPackage', ack: true });
                 await this.installNpm(parameter);
+                await this.setState(this._stateNpm, { val: 'createImportmap', ack: true });
                 await this.createImportMapAndLoaderFiles();
+                await this.setState(this._stateNpm, { val: 'uploading', ack: true });
                 await this.refreshWWW();
+                await this.setState(this._stateNpm, { val: 'idle', ack: true });
                 break;
             case 'updateNpm':
                 await this.installNpm(parameter);
                 await this.createImportMapAndLoaderFiles();
+                await this.setState(this._stateNpm, { val: 'uploading', ack: true });
                 await this.refreshWWW();
+                await this.setState(this._stateNpm, { val: 'idle', ack: true });
                 break;
             case 'removeNpm':
+                await this.setState(this._stateNpm, { val: 'removeingPackage', ack: true });
                 await this.removeNpm(parameter);
+                await this.setState(this._stateNpm, { val: 'createImportmap', ack: true });
                 await this.createImportMapAndLoaderFiles();
+                await this.setState(this._stateNpm, { val: 'uploading', ack: true });
                 await this.refreshWWW();
+                await this.setState(this._stateNpm, { val: 'idle', ack: true });
                 break;
             case 'refreshWww':
+                await this.setState(this._stateNpm, { val: 'uploading', ack: true });
                 await this.refreshWWW();
+                await this.setState(this._stateNpm, { val: 'idle', ack: true });
                 break;
         }
     }
