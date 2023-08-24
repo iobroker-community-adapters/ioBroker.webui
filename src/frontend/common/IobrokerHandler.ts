@@ -25,6 +25,7 @@ class IobrokerHandler {
 
     namespace = "webui.0";
     namespaceFiles = this.namespace + '.data';
+    imagePrefix = '/' + this.namespaceFiles + '/config/images/';
 
     config: IWebUiConfig;
 
@@ -131,8 +132,8 @@ class IobrokerHandler {
         return []
     }
 
-    async saveImage(name: string, imageData: string) {
-        this._saveObjectToFile(screen, "/" + this.configPath + "images/" + name.toLocaleLowerCase());
+    async saveImage(name: string, imageData: Blob) {
+        this._saveBinaryToFile(imageData, "/" + this.configPath + "images/" + name);
     }
 
     async removeImage(name: string) {
@@ -172,6 +173,10 @@ class IobrokerHandler {
     private async _saveObjectToFile<T>(obj: T, name: string) {
         const enc = new TextEncoder();
         await this.connection.writeFile64(this.namespaceFiles, name, <any>enc.encode(JSON.stringify(obj)));
+    }
+
+    private async _saveBinaryToFile(binary: Blob, name: string) {
+        await this.connection.writeFile64(this.namespaceFiles, name, await <any>binary.arrayBuffer());
     }
 
     async sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm', data: string, clientId: string = ''): Promise<void> {
