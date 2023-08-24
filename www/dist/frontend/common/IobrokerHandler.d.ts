@@ -18,6 +18,7 @@ declare class IobrokerHandler {
     configPath: string;
     namespace: string;
     namespaceFiles: string;
+    namespaceWidgets: string;
     imagePrefix: string;
     config: IWebUiConfig;
     screensChanged: TypedEvent<void>;

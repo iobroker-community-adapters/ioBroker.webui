@@ -8,6 +8,7 @@ class IobrokerHandler {
         this.configPath = "config/";
         this.namespace = "webui.0";
         this.namespaceFiles = this.namespace + '.data';
+        this.namespaceWidgets = this.namespace + '.widgets';
         this.imagePrefix = '/' + this.namespaceFiles + '/config/images/';
         this.screensChanged = new TypedEvent();
         this.configChanged = new TypedEvent();
