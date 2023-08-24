@@ -108,6 +108,33 @@
         height: 32px;
       }
     }
+
+    html {
+      --heightTop: 121px;
+      --heightStatus: 20px;
+    }
+
+    #shell {
+      height: calc(100% - var(--heightTop) - var(--heightStatus));
+      width: 100%;
+      position: absolute;
+    }
+
+    #statusbar {
+      display: flex;
+      height: var(--heightStatus);
+      background: lightgray;
+      border-top: 1px solid gray;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+    }
+
+    #npmState {
+      margin-left: 10px;
+      font-size: 14px;
+      font-family: sans-serif;
+    }
   </style>
 </head>
 
@@ -260,12 +287,6 @@
           </div>
           <span class="title">Tools</span>
         </div>
-        <div class="group flex-column">
-          <div class="toolbar" id="tools">
-            <input id="npmState" type="text" readonly>
-          </div>
-          <span class="title">State</span>
-        </div>
         <div style="position: absolute; right: 0;">
           <div class="group" style="height: 111px; border-left: 1px solid #dadbdc; inline-size: fit-content;">
             <button class="ribbon-button" data-command="runtime">
@@ -280,8 +301,11 @@
       </div>
     </div>
   </nav>
-  <iobroker-webui-app-shell id="shell" style="height: calc(100% - 121px); width: 100%; position: absolute;">
+  <iobroker-webui-app-shell id="shell">
   </iobroker-webui-app-shell>
+  <div id="statusbar">
+    <div id="npmState"></div>
+  </div>
   <div id="load"
     style="position: absolute; width: 100%; height: 100%; z-index: 9999999999; top: 0; left: 0; background: white;">
     <div class="lds-facebook">

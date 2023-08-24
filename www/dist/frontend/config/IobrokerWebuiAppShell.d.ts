@@ -21,6 +21,7 @@ export declare class IobrokerWebuiAppShell extends BaseCustomWebComponentConstru
     propertyGrid: PropertyGrid;
     treeViewExtended: TreeViewExtended;
     eventsAssignment: IobrokerWebuiEventAssignment;
+    npmState: string;
     static readonly style: CSSStyleSheet;
     static readonly template: HTMLTemplateElement;
     ready(): Promise<void>;
