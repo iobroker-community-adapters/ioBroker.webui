@@ -259,6 +259,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         let images = await iobrokerHandler.getImageNames();
                         resolve(images.map(x => ({
                             title: x,
+                            icon: iobrokerHandler.imagePrefix + x,
                             data: { type: 'image', name: x }
                         })));
                     }

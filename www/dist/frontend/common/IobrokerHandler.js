@@ -101,7 +101,7 @@ class IobrokerHandler {
         return [];
     }
     async saveImage(name, imageData) {
-        this._saveBinaryToFile(imageData, "/" + this.configPath + "images/" + name);
+        await this._saveBinaryToFile(imageData, "/" + this.configPath + "images/" + name);
     }
     async removeImage(name) {
         await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "images/" + name.toLocaleLowerCase() + screenFileExtension);
