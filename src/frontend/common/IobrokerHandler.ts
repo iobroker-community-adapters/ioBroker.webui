@@ -133,7 +133,7 @@ class IobrokerHandler {
     }
 
     async saveImage(name: string, imageData: Blob) {
-        this._saveBinaryToFile(imageData, "/" + this.configPath + "images/" + name);
+        await this._saveBinaryToFile(imageData, "/" + this.configPath + "images/" + name);
     }
 
     async removeImage(name: string) {
