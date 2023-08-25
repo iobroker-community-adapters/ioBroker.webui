@@ -130,8 +130,14 @@
       bottom: 0;
     }
 
-    #npmState {
-      margin-left: 10px;
+    #statusbar {
+      padding-left: 10px;
+      font-size: 14px;
+      font-family: sans-serif;
+    }
+
+
+    #statusbar > div {
       font-size: 14px;
       font-family: sans-serif;
     }
@@ -304,7 +310,7 @@
   <iobroker-webui-app-shell id="shell">
   </iobroker-webui-app-shell>
   <div id="statusbar">
-    <div id="npmState"></div>
+    <div>npm status:&nbsp;&nbsp;</div><div id="npmState"></div>
   </div>
   <div id="load"
     style="position: absolute; width: 100%; height: 100%; z-index: 9999999999; top: 0; left: 0; background: white;">
