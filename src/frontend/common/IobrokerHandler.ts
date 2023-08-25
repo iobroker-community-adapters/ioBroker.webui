@@ -185,8 +185,11 @@ class IobrokerHandler {
     }
 
     async sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm', data: string, clientId: string = ''): Promise<void> {
-        await this.connection.setState(this.namespace + '.control.data', { val: data });
-        await this.connection.setState(this.namespace + '.control.clientIds', { val: clientId });
+        let p = [
+            this.connection.setState(this.namespace + '.control.data', { val: data }),
+            this.connection.setState(this.namespace + '.control.clientIds', { val: clientId })
+        ];
+        await Promise.all(p);
         await this.connection.setState(this.namespace + '.control.command', { val: command });
     }
 }
