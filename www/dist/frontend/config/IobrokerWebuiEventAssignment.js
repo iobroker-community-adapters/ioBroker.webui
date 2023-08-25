@@ -1,7 +1,6 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
-import { ContextMenu } from "@node-projects/web-component-designer";
+import { ContextMenu, PropertiesHelper } from "@node-projects/web-component-designer";
 import { IobrokerWebuiScriptEditor } from "./IobrokerWebuiScriptEditor.js";
-import { IobrokerWebuiConfirmationWrapper } from "./IobrokerWebuiConfirmationWrapper.js";
 export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super();
@@ -29,7 +28,16 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
         e.preventDefault();
         ContextMenu.show([{ title: 'remove', action: () => { this.selectedItems[0].removeAttribute('@' + eventItem.name); this._bindingsRefresh(); } }], e);
     }
-    _editEvent(e, eventItem) {
+    async _addEvent(e) {
+        if (e.key == 'Enter') {
+            let ip = this._getDomElement('addEventInput');
+            this._selectedItems[0].setAttribute('@' + PropertiesHelper.camelToDashCase(ip.value.replaceAll(' ', '-')), '');
+            ip.value = '';
+            this.scrollTop = 0;
+            this.refresh();
+        }
+    }
+    async _editEvent(e, eventItem) {
         let scriptString = this.selectedItems[0].getAttribute('@' + eventItem.name);
         if (!scriptString || scriptString.startsWith('{')) {
             let script = { commands: [] };
@@ -38,21 +46,25 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
             let sc = new IobrokerWebuiScriptEditor();
             sc.loadScript(script);
             sc.title = "Script '" + eventItem.name + "' on " + this.selectedItems[0].name;
-            let cw = new IobrokerWebuiConfirmationWrapper();
-            cw.title = sc.title;
-            cw.appendChild(sc);
-            let dlg = window.appShell.openDialog(cw, 100, 100, 500, 300);
-            cw.okClicked.on(() => {
+            let res = await window.appShell.openConfirmation(sc, 100, 100, 500, 300);
+            if (res) {
                 let scriptCommands = sc.getScriptCommands();
                 if (scriptCommands && scriptCommands.length) {
                     let json = JSON.stringify({ commands: scriptCommands });
                     this.selectedItems[0].setAttribute('@' + eventItem.name, json);
                     this._bindingsRefresh();
                 }
-                dlg.close();
-            });
-            cw.cancelClicked.on(() => dlg.close());
+            }
         }
+    }
+    refresh() {
+        if (this._selectedItems != null && this._selectedItems.length) {
+            this.events = this._selectedItems[0].serviceContainer.getLastServiceWhere('eventsService', x => x.isHandledElement(this._selectedItems[0])).getPossibleEvents(this._selectedItems[0]);
+        }
+        else {
+            this.events = [];
+        }
+        this._bindingsRefresh();
     }
     get selectedItems() {
         return this._selectedItems;
@@ -60,13 +72,7 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
     set selectedItems(items) {
         if (this._selectedItems != items) {
             this._selectedItems = items;
-            if (items != null && items.length) {
-                this.events = items[0].serviceContainer.getLastServiceWhere('eventsService', x => x.isHandledElement(items[0])).getPossibleEvents(items[0]);
-            }
-            else {
-                this.events = [];
-            }
-            this._bindingsRefresh();
+            this.refresh();
         }
     }
 }
@@ -87,11 +93,14 @@ IobrokerWebuiEventAssignment.style = css `
     div {
         width: 40px;
         align-self: center;
+        white-space: nowrap;
     }`;
 IobrokerWebuiEventAssignment.template = html `
         <template repeat:item="[[this.events]]">
             <div @contextmenu="[[this._ctxMenu(event, item)]]" class="rect" css:background-color="[[this._isEventSet(item)]]"></div>
             <div title="[[item.name]]">[[item.name]]</div>
             <button @click="[[this._editEvent(event, item)]]">...</button>
-        </template>`;
+        </template>
+        <span style="grid-column: 1 / span 3; margin-top: 8px; margin-left: 3px;">add event:</span>
+        <input id="addEventInput" style="grid-column: 1 / span 3; margin: 5px;" @keypress=[[this._addEvent(event)]] type="text">`;
 customElements.define("iobroker-webui-event-assignment", IobrokerWebuiEventAssignment);

@@ -10,6 +10,7 @@ export interface IProperty {
     description?: string;
     defaultValue?: string;
     nullable?: boolean;
+    format?: string;
 }
 export interface IFancyTreeItem {
     title?: string;

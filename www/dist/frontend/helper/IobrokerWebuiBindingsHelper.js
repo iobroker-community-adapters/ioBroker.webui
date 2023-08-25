@@ -120,38 +120,42 @@ export class IobrokerWebuiBindingsHelper {
             }
         }
     }
-    static applyAllBindings(rootElement) {
+    static applyAllBindings(rootElement, relativeSignalPath) {
         let retVal = [];
         let allElements = rootElement.querySelectorAll('*');
         for (let e of allElements) {
             const bindings = this.getBindings(e);
             for (let b of bindings) {
-                retVal.push(this.applyBinding(e, b));
+                retVal.push(this.applyBinding(e, b, relativeSignalPath));
             }
         }
         return retVal;
     }
-    static applyBinding(element, binding) {
+    static applyBinding(element, binding, relativeSignalPath) {
+        let signal = binding[1].signal;
+        if (signal[0] === '.') {
+            signal = relativeSignalPath + signal;
+        }
         let cb = (id, value) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value);
-        iobrokerHandler.connection.subscribeState(binding[1].signal, cb);
+        iobrokerHandler.connection.subscribeState(signal, cb);
         if (binding[1].twoWay) {
             for (let e of binding[1].events) {
                 const evt = element[e];
                 if (evt instanceof TypedEvent) {
                     evt.on(() => {
                         if (binding[1].target == BindingTarget.property)
-                            iobrokerHandler.connection.setState(binding[1].signal, element[binding[0]]);
+                            iobrokerHandler.connection.setState(signal, element[binding[0]]);
                     });
                 }
                 else {
                     element.addEventListener(e, () => {
                         if (binding[1].target == BindingTarget.property)
-                            iobrokerHandler.connection.setState(binding[1].signal, element[binding[0]]);
+                            iobrokerHandler.connection.setState(signal, element[binding[0]]);
                     });
                 }
             }
         }
-        return () => iobrokerHandler.connection.unsubscribeState(binding[1].signal, cb);
+        return () => iobrokerHandler.connection.unsubscribeState(signal, cb);
     }
     static handleValueChanged(element, binding, value) {
         let v = value.val;

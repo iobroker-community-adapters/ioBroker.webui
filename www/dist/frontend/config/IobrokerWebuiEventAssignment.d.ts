@@ -12,7 +12,9 @@ export declare class IobrokerWebuiEventAssignment extends BaseCustomWebComponent
     set instanceServiceContainer(value: InstanceServiceContainer);
     _isEventSet(eventItem: IEvent): "lightgreen" | "white";
     _ctxMenu(e: MouseEvent, eventItem: IEvent): void;
-    _editEvent(e: MouseEvent, eventItem: IEvent): void;
+    _addEvent(e: KeyboardEvent): Promise<void>;
+    _editEvent(e: MouseEvent, eventItem: IEvent): Promise<void>;
+    refresh(): void;
     get selectedItems(): IDesignItem[];
     set selectedItems(items: IDesignItem[]);
 }

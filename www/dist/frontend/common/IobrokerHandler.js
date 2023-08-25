@@ -11,6 +11,7 @@ class IobrokerHandler {
         this.namespaceWidgets = this.namespace + '.widgets';
         this.imagePrefix = '/' + this.namespaceFiles + '/config/images/';
         this.screensChanged = new TypedEvent();
+        this.imagesChanged = new TypedEvent();
         this.configChanged = new TypedEvent();
         this._readyPromises = [];
         this._screens = new Map();
@@ -103,9 +104,11 @@ class IobrokerHandler {
     }
     async saveImage(name, imageData) {
         await this._saveBinaryToFile(imageData, "/" + this.configPath + "images/" + name);
+        this.imagesChanged.emit();
     }
     async removeImage(name) {
-        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "images/" + name.toLocaleLowerCase() + screenFileExtension);
+        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "images/" + name);
+        this.imagesChanged.emit();
     }
     async _getConfig() {
         try {

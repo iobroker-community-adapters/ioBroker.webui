@@ -14,6 +14,7 @@ export declare class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponen
     private _createScreensNode;
     private _lazyLoadScreensNodes;
     private _refreshScreensNode;
+    private _refreshImagesNode;
     private _createGlobalStyleNode;
     private _createNpmsNode;
     private _createIconsFolderNode;

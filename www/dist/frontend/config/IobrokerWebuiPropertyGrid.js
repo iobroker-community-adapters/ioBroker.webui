@@ -1,4 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, TypedEvent, css, html } from "@node-projects/base-custom-webcomponent";
+import { CodeViewMonaco } from "@node-projects/web-component-designer";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert { type: 'css' };
 let nullObject;
@@ -174,7 +175,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                         folder: false,
                         property: p,
                         propertyPath: prefix + name,
-                        tooltip: p.description,
+                        tooltip: p.description
                     });
                 }
             }
@@ -185,6 +186,43 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             setDeepValue(this._selectedObject, propertyPath, value);
             this.propertyChanged.emit({ property: propertyPath, newValue: value });
         };
+        switch (property.format) {
+            case 'script': {
+                let editor = document.createElement('div');
+                editor.style.boxSizing = 'border-box';
+                editor.style.width = '100%';
+                editor.style.display = 'flex';
+                let inp = document.createElement('textarea');
+                inp.style.boxSizing = 'border-box';
+                inp.value = currentValue ?? '';
+                inp.style.width = '100%';
+                inp.onblur = e => { setValue(inp.value); };
+                editor.appendChild(inp);
+                let btn = document.createElement('button');
+                btn.innerHTML = '...';
+                btn.style.boxSizing = 'border-box';
+                btn.onclick = async () => {
+                    let monacoInfo = {
+                        content: `declare global {
+                            var context: { event: Event, element: Element };
+                        }`, filePath: 'global.d.ts'
+                    };
+                    //@ts-ignore
+                    monaco.languages.typescript.typescriptDefaults.setExtraLibs([monacoInfo]);
+                    let cvm = new CodeViewMonaco();
+                    cvm.language = 'javascript';
+                    cvm.code = inp.value;
+                    cvm.style.position = 'relative';
+                    let res = await window.appShell.openConfirmation(cvm, 200, 200, 600, 400, this);
+                    if (res) {
+                        inp.value = cvm.getText();
+                        setValue(inp.value);
+                    }
+                };
+                editor.appendChild(btn);
+                return editor;
+            }
+        }
         switch (property.type) {
             case 'string': {
                 let editor = document.createElement('input');

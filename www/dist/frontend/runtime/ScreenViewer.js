@@ -4,7 +4,7 @@ import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElem
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
-export let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
+let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     get screenName() {
         return this._screenName;
     }
@@ -65,7 +65,7 @@ export let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustom
         const documentFragment = template.content.cloneNode(true);
         //this._bindingsParse(documentFragment, true);
         this.shadowRoot.appendChild(documentFragment);
-        this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot);
+        this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath);
         this.assignAllScripts();
     }
     /*
@@ -96,7 +96,7 @@ export let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustom
                     try {
                         let evtName = a.name.substring(1);
                         let script = JSON.parse(a.value);
-                        e.addEventListener(evtName, () => ScriptSystem.execute(script.commands, null));
+                        e.addEventListener(evtName, (evt) => ScriptSystem.execute(script.commands, { event: evt, element: e }));
                     }
                     catch (err) {
                         console.warn('error assigning script', e, a);
@@ -122,3 +122,4 @@ __decorate([
 ScreenViewer = ScreenViewer_1 = __decorate([
     customElement("iobroker-webui-screen-viewer")
 ], ScreenViewer);
+export { ScreenViewer };

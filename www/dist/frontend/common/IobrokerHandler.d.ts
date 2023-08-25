@@ -22,6 +22,7 @@ declare class IobrokerHandler {
     imagePrefix: string;
     config: IWebUiConfig;
     screensChanged: TypedEvent<void>;
+    imagesChanged: TypedEvent<void>;
     configChanged: TypedEvent<void>;
     _readyPromises: (() => void)[];
     constructor();

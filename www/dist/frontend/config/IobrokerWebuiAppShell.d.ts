@@ -27,9 +27,10 @@ export declare class IobrokerWebuiAppShell extends BaseCustomWebComponentConstru
     ready(): Promise<void>;
     private _setupServiceContainer;
     openDock(element: HTMLElement): void;
-    openDialog(element: HTMLElement, x: number, y: number, width: number, height: number): {
+    openDialog(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement): {
         close: () => void;
     };
+    openConfirmation(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement): Promise<boolean>;
     openScreenEditor(name: string, html: string, style: string): Promise<void>;
     openGlobalStyleEditor(style: string): Promise<void>;
 }

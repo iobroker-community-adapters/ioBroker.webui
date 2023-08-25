@@ -1,6 +1,6 @@
 import { __decorate } from "tslib";
 import { BaseCustomWebComponentConstructorAppend, css, customElement, property } from "@node-projects/base-custom-webcomponent";
-export let HabPanelLikeMenu = class HabPanelLikeMenu extends BaseCustomWebComponentConstructorAppend {
+let HabPanelLikeMenu = class HabPanelLikeMenu extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super();
         this._restoreCachedInititalValues();
@@ -22,3 +22,4 @@ __decorate([
 HabPanelLikeMenu = __decorate([
     customElement("iobroker-webui-hab-panel-likemenu")
 ], HabPanelLikeMenu);
+export { HabPanelLikeMenu };

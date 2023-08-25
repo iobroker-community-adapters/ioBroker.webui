@@ -2,7 +2,7 @@
 //Apache License: https://www.apache.org/licenses/LICENSE-2.0.html
 import { __decorate } from "tslib";
 import { BaseCustomWebComponentConstructorAppend, css, customElement, html, property } from "@node-projects/base-custom-webcomponent";
-export let IobrokerWebuiSplitView = class IobrokerWebuiSplitView extends BaseCustomWebComponentConstructorAppend {
+let IobrokerWebuiSplitView = class IobrokerWebuiSplitView extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super();
         this.orientation = 'horizontal';
@@ -195,3 +195,4 @@ __decorate([
 IobrokerWebuiSplitView = __decorate([
     customElement('iobroker-webui-split-view')
 ], IobrokerWebuiSplitView);
+export { IobrokerWebuiSplitView };

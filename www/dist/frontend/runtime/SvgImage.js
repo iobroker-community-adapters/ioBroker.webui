@@ -1,7 +1,6 @@
-var SvgImage_1;
 import { __decorate } from "tslib";
 import { BaseCustomWebComponentConstructorAppend, css, customElement, html, property } from "@node-projects/base-custom-webcomponent";
-export let SvgImage = SvgImage_1 = class SvgImage extends BaseCustomWebComponentConstructorAppend {
+let SvgImage = class SvgImage extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super();
         this._restoreCachedInititalValues();
@@ -102,6 +101,7 @@ __decorate([
 __decorate([
     property(String)
 ], SvgImage.prototype, "name", null);
-SvgImage = SvgImage_1 = __decorate([
-    customElement(SvgImage_1.is)
+SvgImage = __decorate([
+    customElement(SvgImage.is)
 ], SvgImage);
+export { SvgImage };
