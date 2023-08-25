@@ -3,5 +3,6 @@ export declare class IobrokerWebuiBindableObjectsService implements IBindableObj
     name: string;
     _states: Record<string, ioBroker.Object>;
     getBindableObject(fullName: string): Promise<IBindableObject<ioBroker.State>>;
+    clearCache(): void;
     getBindableObjects(parent?: IBindableObject<ioBroker.State>): Promise<IBindableObject<ioBroker.State>[]>;
 }

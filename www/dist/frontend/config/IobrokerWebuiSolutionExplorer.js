@@ -404,7 +404,21 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             data: { service: s },
             folder: true,
             lazy: true,
-            lazyload: (event, node) => this._lazyLoadObjectNodes(event, node)
+            key: 'objects',
+            lazyload: (event, node) => this._lazyLoadObjectNodes(event, node),
+            contextMenu: (event) => {
+                ContextMenu.show([{
+                        title: 'Refresh', action: async () => {
+                            s.clearCache();
+                            const objectsNode = this._tree.getNodeByKey('objects');
+                            if (objectsNode) {
+                                objectsNode.resetLazy();
+                                await sleep(50);
+                                objectsNode.setExpanded(true);
+                            }
+                        }
+                    }], event);
+            },
         };
         return objectsNode;
     }

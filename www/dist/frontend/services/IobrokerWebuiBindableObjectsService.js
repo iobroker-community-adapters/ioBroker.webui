@@ -14,6 +14,9 @@ export class IobrokerWebuiBindableObjectsService {
         }
         return result;
     }
+    clearCache() {
+        this._states = null;
+    }
     async getBindableObjects(parent) {
         if (!this._states) {
             await iobrokerHandler.connection.waitForFirstConnection();
