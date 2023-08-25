@@ -144,11 +144,14 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     await this._setupServiceContainer();
 
     let stateElement = <HTMLDivElement>document.getElementById('npmState');
-    iobrokerHandler.waitForReady().then(x => {
+    iobrokerHandler.waitForReady().then(async x => {
       iobrokerHandler.connection.subscribeState('webui.0.state.npm', (id, value) => {
         this.npmState = <any>value.val;
         stateElement.innerText = <any>value.val;
       });
+      let state = await iobrokerHandler.connection.getState('webui.0.state.npm');
+      this.npmState = <any>state.val;
+      stateElement.innerText = <any>state.val;
     });
   }
 
