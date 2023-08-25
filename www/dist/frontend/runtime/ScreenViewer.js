@@ -112,6 +112,10 @@ ScreenViewer.style = css `
         position: relative;
         display: block;
     }
+
+    *[node-projects-hide-at-run-time] {
+        display: none !important;
+    }
     `;
 __decorate([
     property()
