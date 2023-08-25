@@ -18,10 +18,6 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
                             <option>string</string>
                         </select>
                         <div class="row">
-                            <input type="checkbox" checked="{{this.complex::change}}">
-                            <span>complex</span>
-                        </div>
-                        <div class="row">
                             <input type="checkbox" disabled="[[!this.twoWayPossible]]" checked="{{this.twoWay::change}}">
                             <span>two way binding</span>
                         </div>
@@ -30,10 +26,10 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
                             <span>invert logic</span>
                         </div>
                         <div class="row">
-                            <span style="cursor: pointer;" title="access multiple objects with @0, @1, ...">formula</span>
+                            <span style="cursor: pointer;" title="access objects with __0, __1, ...">formula</span>
                         </div>
                         <div class="row">
-                            <input type="text" disabled="[[!this.complex]]" value="{{?this.expression}}" style="width: 100%">
+                            <input type="text" value="{{?this.expression}}" style="width: 100%">
                         </div>
                     </div>
                 </div>
@@ -125,20 +121,17 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
     static readonly properties = {
         twoWayPossible: Boolean,
         twoWay: Boolean,
-        complex: Boolean,
-        formula: String,
+        expression: String,
         objectNames: String,
-        invert: Boolean,
-        expression: String
+        invert: Boolean
     }
 
     public twoWayPossible: boolean = false;
     public twoWay: boolean = false;
-    public complex: boolean = false;
-    public formula: string = '';
+    //public complex: boolean = false;
+    public expression: string = '';
     public objectNames: string = '';
     public invert: boolean = false;
-    public expression: string = ''
 
     //private _property: IProperty;
     private _binding: IBinding;
@@ -163,7 +156,7 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
 
         if (this._binding) {
             this.twoWay = this._binding.mode == BindingMode.twoWay;
-            this.formula = this._binding.expression;
+            this.expression = this._binding.expression;
             this.invert = this._binding.invert;
             if (this._binding.bindableObjectNames)
                 this.objectNames = this._binding.bindableObjectNames.join(';');

@@ -63,14 +63,18 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             this._loadScreen();
     }
 
+    removeBindings() {
+        if (this._iobBindings)
+            this._iobBindings.forEach(x => x());
+        this._iobBindings = null;
+    }
+
     private async _loadScreen() {
         if (!this._loading) {
             this._loading = true;
             await iobrokerHandler.waitForReady();
             this._loading = false;
-            if (this._iobBindings)
-                this._iobBindings.forEach(x => x());
-            this._iobBindings = null;
+            this.removeBindings();
             DomHelper.removeAllChildnodes(this.shadowRoot);
             const screen = await iobrokerHandler.getScreen(this.screenName)
             if (screen) {
@@ -128,7 +132,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
                     try {
                         let evtName = a.name.substring(1);
                         let script: Script = JSON.parse(a.value);
-                        e.addEventListener(evtName, (evt) => ScriptSystem.execute(script.commands, { event: evt, element: e}));
+                        e.addEventListener(evtName, (evt) => ScriptSystem.execute(script.commands, { event: evt, element: e }));
                     }
                     catch (err) {
                         console.warn('error assigning script', e, a);

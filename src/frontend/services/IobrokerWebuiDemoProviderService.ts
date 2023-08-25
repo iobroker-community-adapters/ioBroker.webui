@@ -15,7 +15,10 @@ export class IobrokerWebuiDemoProviderService implements IDemoProviderService {
       screenViewer.style.position = 'absolute';
 
       container.style.position = 'relative';
-      
+
+      let existingSV = <ScreenViewer> container.querySelector(screenViewer.localName); 
+      existingSV?.removeBindings();
+
       DomHelper.removeAllChildnodes(container);
       container.appendChild(screenViewer);
 

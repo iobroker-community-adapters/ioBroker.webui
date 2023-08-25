@@ -10,7 +10,7 @@ export class IobrokerWebuiBindingService implements IBindingService {
       mode: x[1].twoWay ? BindingMode.twoWay : BindingMode.oneWay,
       invert: x[1].inverted,
       bindableObjectNames: x[1].signal.split(';'),
-      expression: x[1].formula
+      expression: x[1].expression
     }))
   }
 

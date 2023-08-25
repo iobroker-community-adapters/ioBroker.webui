@@ -54,12 +54,11 @@ export class IobrokerWebuiBindingsHelper {
                 binding.events = [propname + '-changed'];
         }
         return [PropertiesHelper.dashToCamelCase(propname), binding];
-
-
     }
 
     static serializeBinding(element: Element, targetName: string, binding: IIobrokerWebuiBinding): [name: string, value: string] {
         if (binding.target == BindingTarget.property &&
+            !binding.expression &&
             binding.converter == null &&
             (binding.events == null || binding.events.length == 0)) {
             if (targetName == 'textContent')
@@ -70,12 +69,14 @@ export class IobrokerWebuiBindingsHelper {
         }
 
         if (binding.target == BindingTarget.attribute &&
+            !binding.expression &&
             binding.converter == null &&
             (binding.events == null || binding.events.length == 0)) {
             return [bindingPrefixAttribute + PropertiesHelper.camelToDashCase(targetName), (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
         }
 
         if (binding.target == BindingTarget.css &&
+            !binding.expression &&
             binding.converter == null &&
             (binding.events == null || binding.events.length == 0)) {
             return [bindingPrefixCss + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal];
@@ -92,6 +93,9 @@ export class IobrokerWebuiBindingsHelper {
                 delete bindingCopy.events;
             else if (element instanceof HTMLInputElement && binding.events[0] == targetName + '-changed')
                 delete bindingCopy.events;
+        }
+        if (binding.expression === null || binding.expression === '') {
+            delete bindingCopy.expression;
         }
         delete bindingCopy.target;
 
@@ -154,33 +158,69 @@ export class IobrokerWebuiBindingsHelper {
     }
 
     static applyBinding(element: Element, binding: namedBinding, relativeSignalPath: string): () => void {
-        let signal = binding[1].signal;
-        if (signal[0] === '.') {
-            signal = relativeSignalPath + signal;
+        const signals = binding[1].signal.split(';');
+        for (let i = 0; i < signals.length; i++) {
+            if (signals[i][0] === '.') {
+                signals[i] = relativeSignalPath + signals[i];
+            }
         }
-        let cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value);
-        iobrokerHandler.connection.subscribeState(signal, cb);
-        if (binding[1].twoWay) {
-            for (let e of binding[1].events) {
-                const evt = element[e];
-                if (evt instanceof TypedEvent) {
-                    evt.on(() => {
-                        if (binding[1].target == BindingTarget.property)
-                            iobrokerHandler.connection.setState(signal, element[binding[0]]);
-                    })
-                } else {
-                    element.addEventListener(e, () => {
-                        if (binding[1].target == BindingTarget.property)
-                            iobrokerHandler.connection.setState(signal, element[binding[0]]);
-                    });
+        let unsubscribeList: ((id: string, value: any) => void)[] = [];
+        let valuesObject = new Array(signals.length);
+        for (let i = 0; i < signals.length; i++) {
+            const s = signals[i];
+            let cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value, valuesObject, i);
+            unsubscribeList.push(cb);
+            iobrokerHandler.connection.subscribeState(s, cb);
+            if (binding[1].twoWay) {
+                for (let e of binding[1].events) {
+                    const evt = element[e];
+                    if (evt instanceof TypedEvent) {
+                        evt.on(() => {
+                            if (binding[1].target == BindingTarget.property)
+                                iobrokerHandler.connection.setState(s, element[binding[0]]);
+                        })
+                    } else {
+                        element.addEventListener(e, () => {
+                            if (binding[1].target == BindingTarget.property)
+                                iobrokerHandler.connection.setState(s, element[binding[0]]);
+                        });
+                    }
                 }
             }
         }
-        return () => iobrokerHandler.connection.unsubscribeState(signal, cb);
+
+        return () => {
+            for (let i = 0; i < signals.length; i++) {
+                iobrokerHandler.connection.unsubscribeState(signals[i], unsubscribeList[i]);
+            }
+        }
     }
 
-    static handleValueChanged(element: Element, binding: namedBinding, value: any) {
+    static handleValueChanged(element: Element, binding: namedBinding, value: any, valuesObject: any[], index: number) {
         let v = value.val;
+
+        /*
+        for (let i = 0; i < values.length; i++) {
+            const objectString = values[i];
+            if (typeof values[i] === 'string') {
+                evalstring += 'let  __' + i + " = '" + objectString + "';";
+            } else {
+                evalstring += 'let  __' + i + ' = ' + objectString + ';';
+            }
+        }
+        evalstring += ' ' + expression + ';';
+        const value = eval(evalstring);
+        */
+        if (binding[1].expression) {
+            valuesObject[index] = value;
+            let evalstring = ''
+            for (let i = 0; i < valuesObject.length; i++) {
+                evalstring += 'let  __' + i + ' = valuesObject[' + i + '].val;\n';
+            }
+            evalstring += binding[1].expression;
+            var valuesObject = valuesObject;
+            v = eval(evalstring);
+        }
         if (binding[1].converter) {
 
         }
