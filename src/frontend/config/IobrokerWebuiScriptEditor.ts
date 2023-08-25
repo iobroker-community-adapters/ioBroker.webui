@@ -97,6 +97,8 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
                     let p: IProperty = {};
                     p.name = prp;
                     p.type = def.properties[prp].type;
+                    p.description= def.properties[prp].description;
+                    p.format = def.properties[prp].format;
                     tInfo.properties.push(p);
                 }
             }

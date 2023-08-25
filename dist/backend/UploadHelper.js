@@ -5,7 +5,6 @@ export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 export class Uploadhelper {
-    //private _uploadStateObjectName
     constructor(adapter, namespace) {
         this._stoppingPromise = false;
         this._stateNpm = 'state.npm';

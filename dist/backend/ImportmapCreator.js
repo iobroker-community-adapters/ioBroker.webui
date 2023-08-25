@@ -104,8 +104,6 @@ export async function registerDesignerAddons(serviceContainer) {
         }
         if (reportState)
             reportState(pkg + ": loading custom-elements.json");
-        //let customElementsJson;
-        //if (await fs.access(customElementsPath,fs.constants.R_OK ))
         let customElementsJson = null;
         if (fsSync.existsSync(customElementsPath))
             customElementsJson = await fs.readFile(customElementsPath, 'utf-8');
@@ -151,14 +149,6 @@ export async function registerDesignerAddons(serviceContainer) {
             else {
                 console.warn('npm package: ' + pkg + ' - no entry point in package found.');
             }
-            /*if (newElements.length > 0) {
-                const elementsCfg: IElementsJson = {
-                    elements: newElements
-                }
-                let elService = new PreDefinedElementsService(pkg, elementsCfg)
-                serviceContainer.register('elementsService', elService);
-                paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);
-            }*/
         }
         if (reportState)
             reportState(pkg + ": done");

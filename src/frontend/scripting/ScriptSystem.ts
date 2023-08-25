@@ -5,7 +5,7 @@ import { ScriptMultiplexValue } from "./ScriptValue.js";
 import Long from 'long'
 
 export class ScriptSystem {
-    static async execute(scriptCommands: ScriptCommands[], context: any) {
+    static async execute(scriptCommands: ScriptCommands[], context: { event: Event, element: Element}) {
         for (let c of scriptCommands) {
             switch (c.type) {
                 case 'OpenScreen': {

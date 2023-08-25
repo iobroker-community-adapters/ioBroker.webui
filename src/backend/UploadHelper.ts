@@ -25,8 +25,6 @@ export class Uploadhelper {
         '.ts',
     ]
 
-    //private _uploadStateObjectName
-
     constructor(adapter: AdapterInstance, namespace: string) {
         this._adapter = adapter;
         this._namespace = namespace;
@@ -66,7 +64,6 @@ export class Uploadhelper {
             return;
         }
     }
-
 
     async collectExistingFilesToDelete(dir) {
         let _files = [];

@@ -7,6 +7,7 @@
                     "type": "number"
                 },
                 "signal": {
+                    "description": "Name of the ioBroker object",
                     "type": "string"
                 },
                 "type": {
@@ -19,6 +20,7 @@
         "DecrementSignalValue": {
             "properties": {
                 "signal": {
+                    "description": "Name of the ioBroker object",
                     "type": "string"
                 },
                 "type": {
@@ -34,6 +36,7 @@
         "IncrementSignalValue": {
             "properties": {
                 "signal": {
+                    "description": "Name of the ioBroker object",
                     "type": "string"
                 },
                 "type": {
@@ -49,6 +52,8 @@
         "Javascript": {
             "properties": {
                 "script": {
+                    "description": "Usable objects in Script: \ncontext : {event : Event, element: Element }",
+                    "format": "script",
                     "type": "string"
                 },
                 "type": {
@@ -60,10 +65,14 @@
         },
         "OpenScreen": {
             "properties": {
+                "noHistory": {
+                    "type": "boolean"
+                },
                 "openInDialog": {
                     "type": "boolean"
                 },
                 "relativeSignalsPath": {
+                    "description": "If signals in screen are defined relative (starting with a '.'), this will be prepended",
                     "type": "string"
                 },
                 "screen": {
@@ -82,6 +91,7 @@
                     "type": "boolean"
                 },
                 "target": {
+                    "description": "defaults to '_blank'",
                     "type": "string"
                 },
                 "type": {
@@ -98,6 +108,12 @@
             "anyOf": [
                 {
                     "$ref": "#/definitions/OpenScreen"
+                },
+                {
+                    "$ref": "#/definitions/OpenUrl"
+                },
+                {
+                    "$ref": "#/definitions/ToggleSignalValue"
                 },
                 {
                     "$ref": "#/definitions/SetSignalValue"
@@ -128,6 +144,7 @@
                     "type": "number"
                 },
                 "signal": {
+                    "description": "Name of the ioBroker object",
                     "type": "string"
                 },
                 "type": {
@@ -140,6 +157,7 @@
         "SetSignalValue": {
             "properties": {
                 "signal": {
+                    "description": "Name of the ioBroker object",
                     "type": "string"
                 },
                 "type": {
@@ -158,6 +176,7 @@
                     "type": "number"
                 },
                 "signal": {
+                    "description": "Name of the ioBroker object",
                     "type": "string"
                 },
                 "type": {
@@ -170,6 +189,7 @@
         "ToggleSignalValue": {
             "properties": {
                 "signal": {
+                    "description": "Name of the ioBroker object",
                     "type": "string"
                 },
                 "type": {

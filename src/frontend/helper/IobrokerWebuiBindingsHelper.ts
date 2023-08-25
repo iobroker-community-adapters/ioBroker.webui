@@ -154,25 +154,29 @@ export class IobrokerWebuiBindingsHelper {
     }
 
     static applyBinding(element: Element, binding: namedBinding, relativeSignalPath: string): () => void {
+        let signal = binding[1].signal;
+        if (signal[0] === '.') {
+            signal = relativeSignalPath + signal;
+        }
         let cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value);
-        iobrokerHandler.connection.subscribeState((relativeSignalPath ?? '') + binding[1].signal, cb);
+        iobrokerHandler.connection.subscribeState(signal, cb);
         if (binding[1].twoWay) {
             for (let e of binding[1].events) {
                 const evt = element[e];
                 if (evt instanceof TypedEvent) {
                     evt.on(() => {
                         if (binding[1].target == BindingTarget.property)
-                            iobrokerHandler.connection.setState((relativeSignalPath ?? '') + binding[1].signal, element[binding[0]]);
+                            iobrokerHandler.connection.setState(signal, element[binding[0]]);
                     })
                 } else {
                     element.addEventListener(e, () => {
                         if (binding[1].target == BindingTarget.property)
-                            iobrokerHandler.connection.setState((relativeSignalPath ?? '') + binding[1].signal, element[binding[0]]);
+                            iobrokerHandler.connection.setState(signal, element[binding[0]]);
                     });
                 }
             }
         }
-        return () => iobrokerHandler.connection.unsubscribeState((relativeSignalPath ?? '') + binding[1].signal, cb);
+        return () => iobrokerHandler.connection.unsubscribeState(signal, cb);
     }
 
     static handleValueChanged(element: Element, binding: namedBinding, value: any) {

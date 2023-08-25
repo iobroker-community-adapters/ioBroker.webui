@@ -1,7 +1,6 @@
 import { BaseCustomWebComponentConstructorAppend, Disposable, css, html } from "@node-projects/base-custom-webcomponent"
-import { ContextMenu, IDesignItem, IEvent, InstanceServiceContainer } from "@node-projects/web-component-designer";
+import { ContextMenu, IDesignItem, IEvent, InstanceServiceContainer, PropertiesHelper } from "@node-projects/web-component-designer";
 import { IobrokerWebuiScriptEditor } from "./IobrokerWebuiScriptEditor.js";
-import { IobrokerWebuiConfirmationWrapper } from "./IobrokerWebuiConfirmationWrapper.js";
 
 export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstructorAppend {
 
@@ -22,6 +21,7 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
     div {
         width: 40px;
         align-self: center;
+        white-space: nowrap;
     }`
 
     static override template = html`
@@ -29,7 +29,9 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
             <div @contextmenu="[[this._ctxMenu(event, item)]]" class="rect" css:background-color="[[this._isEventSet(item)]]"></div>
             <div title="[[item.name]]">[[item.name]]</div>
             <button @click="[[this._editEvent(event, item)]]">...</button>
-        </template>`;
+        </template>
+        <span style="grid-column: 1 / span 3; margin-top: 8px; margin-left: 3px;">add event:</span>
+        <input id="addEventInput" style="grid-column: 1 / span 3; margin: 5px;" @keypress=[[this._addEvent(event)]] type="text">`;
 
     constructor() {
         super();
@@ -67,8 +69,16 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
         e.preventDefault();
         ContextMenu.show([{ title: 'remove', action: () => { this.selectedItems[0].removeAttribute('@' + eventItem.name); this._bindingsRefresh(); } }], e)
     }
-
-    public _editEvent(e: MouseEvent, eventItem: IEvent) {
+    public async _addEvent(e: KeyboardEvent) {
+        if (e.key == 'Enter') {
+            let ip = this._getDomElement<HTMLInputElement>('addEventInput');
+            this._selectedItems[0].setAttribute('@' + PropertiesHelper.camelToDashCase(ip.value.replaceAll(' ', '-')), '');
+            ip.value = '';
+            this.scrollTop = 0;
+            this.refresh();
+        }
+    }
+    public async _editEvent(e: MouseEvent, eventItem: IEvent) {
         let scriptString = <string>this.selectedItems[0].getAttribute('@' + eventItem.name);
         if (!scriptString || scriptString.startsWith('{')) {
             let script = { commands: [] };
@@ -78,22 +88,25 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
             sc.loadScript(script);
             sc.title = "Script '" + eventItem.name + "' on " + this.selectedItems[0].name;
 
-            let cw = new IobrokerWebuiConfirmationWrapper();
-            cw.title = sc.title;
-            cw.appendChild(sc);
-
-            let dlg = window.appShell.openDialog(cw, 100, 100, 500, 300);
-            cw.okClicked.on(() => {
+            let res = await window.appShell.openConfirmation(sc, 100, 100, 500, 300);
+            if (res) {
                 let scriptCommands = sc.getScriptCommands();
                 if (scriptCommands && scriptCommands.length) {
-                    let json = JSON.stringify({commands: scriptCommands});
+                    let json = JSON.stringify({ commands: scriptCommands });
                     this.selectedItems[0].setAttribute('@' + eventItem.name, json);
                     this._bindingsRefresh();
                 }
-                dlg.close();
-            });
-            cw.cancelClicked.on(() => dlg.close());
+            }
         }
+    }
+
+    public refresh() {
+        if (this._selectedItems != null && this._selectedItems.length) {
+            this.events = this._selectedItems[0].serviceContainer.getLastServiceWhere('eventsService', x => x.isHandledElement(this._selectedItems[0])).getPossibleEvents(this._selectedItems[0]);
+        } else {
+            this.events = [];
+        }
+        this._bindingsRefresh();
     }
 
     get selectedItems() {
@@ -102,12 +115,7 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
     set selectedItems(items: IDesignItem[]) {
         if (this._selectedItems != items) {
             this._selectedItems = items;
-            if (items != null && items.length) {
-                this.events = items[0].serviceContainer.getLastServiceWhere('eventsService', x => x.isHandledElement(items[0])).getPossibleEvents(items[0]);
-            } else {
-                this.events = [];
-            }
-            this._bindingsRefresh();
+            this.refresh();
         }
     }
 }

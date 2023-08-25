@@ -31,6 +31,8 @@ import { IobrokerWebuiSolutionExplorer } from './IobrokerWebuiSolutionExplorer.j
 import { IobrokerWebuiStyleEditor } from './IobrokerWebuiStyleEditor.js';
 import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
 import { IobrokerWebuiEventAssignment } from './IobrokerWebuiEventAssignment.js';
+import { IobrokerWebuiConfirmationWrapper } from './IobrokerWebuiConfirmationWrapper.js';
+import { getPanelContainerForElement } from './DockHelper.js';
 
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
   activeElement: HTMLElement;
@@ -216,16 +218,34 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     this._dock.appendChild(element);
   }
 
-  openDialog(element: HTMLElement, x: number, y: number, width: number, height: number): { close: () => void } {
+  openDialog(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement): { close: () => void } {
     element.setAttribute('dock-spawn-panel-type', 'document');
     //todo: why are this 2 styles needed? needs a fix in dock-spawn
     element.style.zIndex = '1';
     element.style.position = 'relative';
     let container = new PanelContainer(element as HTMLElement, this._dock.dockManager, element.title, PanelType.panel);
-    let d = this._dock.dockManager.floatDialog(container, x, y, null, false);
+    let d = this._dock.dockManager.floatDialog(container, x, y, getPanelContainerForElement(parent), false);
     d.resize(width, height);
     d.noDocking = true;
     return { close: () => container.close() };
+  }
+
+  openConfirmation(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      let cw = new IobrokerWebuiConfirmationWrapper();
+      cw.title = element.title;
+      cw.appendChild(element);
+
+      let dlg = window.appShell.openDialog(cw, x, y, width, height, parent);
+      cw.okClicked.on(() => {
+        dlg.close();
+        resolve(true);
+      });
+      cw.cancelClicked.on(() => {
+        dlg.close();
+        resolve(false);
+      });
+    });
   }
 
   public async openScreenEditor(name: string, html: string, style: string) {
@@ -251,3 +271,4 @@ declare global {
     appShell: IobrokerWebuiAppShell;
   }
 }
+

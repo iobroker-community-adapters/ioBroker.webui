@@ -2,16 +2,21 @@ import { EventsService, IDesignItem, IEvent } from "@node-projects/web-component
 
 export class IobrokerWebuiEventsService extends EventsService {
     override getPossibleEvents(designItem: IDesignItem): IEvent[] {
-
         let events = super.getPossibleEvents(designItem);
         let setEvents: IEvent[] = [];
-        for  (let a of designItem.attributes()) {
-setEvents.push({name:a[0],propertyName:a[0]});
+        for (let a of designItem.attributes()) {
+            if (a[0][0] == '@') {
+                const evtName = a[0].substring(1);
+                let idx = events.findIndex(x => x.name == evtName);
+                if (idx >= 0) {
+                    const e = events[idx];
+                    events.splice(idx, 1);
+                    setEvents.push(e);
+                }
+                else
+                    setEvents.push({ name: evtName });
+            }
         }
-
-        //Todo: create corret events list for all std. elements
-        let lst = [...this._mouseEvents, ...this._allElements, ...this._focusableEvents];
-        let events: IEvent[] = lst.map(x => ({ name: x, propertyName: 'on' + x }));
-        return events;
+        return [...setEvents, ...events];
     }
 }
