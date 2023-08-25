@@ -24,6 +24,7 @@ If you want to help the development, sponsor this project at https://github.com/
 ```
 
   * Adjust 'config.js' to match you ip-adress and port for your iobroker
+   (The config.js in the repository root will be replaced with the one in '/config' when running 'npm build')
 ```
     window.iobrokerHost = '192.168.1.2';
     window.iobrokerPort = '8082';
@@ -43,7 +44,7 @@ If you want to help the development, sponsor this project at https://github.com/
 ```
   $ npm run reflection
 ``` 
-   to recreate reflection files for Scripting wich are  used for the property grid
+   to recreate reflection files for Scripting wich are used for the property grid
 
   - Run 
 ```
@@ -56,7 +57,7 @@ If you want to help the development, sponsor this project at https://github.com/
   $ npm run release
 ``` 
    to create correct release commit for iobroker, Be carefull this also pushes to git repo.
-   Be sure to edit "CHANGELOG.md" before, tex in "## **WORK IN PROGRESS**" will be used for version info
+   Be sure to edit "CHANGELOG.md" before, the text in "## **WORK IN PROGRESS**" in README.Md will be used for version info
 
 ## Info about the Adapter.
 
