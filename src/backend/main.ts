@@ -60,7 +60,7 @@ class WebUi extends utils.Adapter {
     }
 
     async backupPackageJson() {
-        if (!fs.existsSync(this.widgetsDir + '/package.json')) {
+        if (fs.existsSync(this.widgetsDir + '/package.json')) {
             if (await this.fileExistsAsync(this._dataNamespace, 'package.json')) {
                 await this.delFileAsync(this._dataNamespace, 'package.json');
             }
@@ -85,7 +85,7 @@ class WebUi extends utils.Adapter {
             });
             child.stderr.on('data', data => this.log.error(data.toString().replace('\n', '')));
             child.on('exit', async exitCode => {
-                this.log.info(`Installed NPM packge (${name}). ${exitCode ? 'Exit - ' + exitCode : 0}`);
+                this.log.info(`Installed NPM packge (${name}). ${exitCode ? 'Exit - ' + exitCode : ''}`);
                 this.npmRunning = false;
                 await this.backupPackageJson();
                 resolve(exitCode);
@@ -109,7 +109,7 @@ class WebUi extends utils.Adapter {
             });
             child.stderr.on('data', data => this.log.error(data.toString().replace('\n', '')));
             child.on('exit', async exitCode => {
-                this.log.info(`Remove NPM packge (${name}). ${exitCode ? 'Exit - ' + exitCode : 0}`);
+                this.log.info(`Remove NPM packge (${name}). ${exitCode ? 'Exit - ' + exitCode : ''}`);
                 this.npmRunning = false;
                 await this.backupPackageJson();
                 resolve(exitCode);
