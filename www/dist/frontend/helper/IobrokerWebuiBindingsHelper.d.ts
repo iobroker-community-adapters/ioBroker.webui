@@ -12,5 +12,5 @@ export declare class IobrokerWebuiBindingsHelper {
     static getBindings(element: Element): Generator<namedBinding, void, unknown>;
     static applyAllBindings(rootElement: ParentNode, relativeSignalPath: string): (() => void)[];
     static applyBinding(element: Element, binding: namedBinding, relativeSignalPath: string): () => void;
-    static handleValueChanged(element: Element, binding: namedBinding, value: any): void;
+    static handleValueChanged(element: Element, binding: namedBinding, value: any, valuesObject: any[], index: number): void;
 }

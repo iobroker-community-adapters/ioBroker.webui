@@ -36,14 +36,17 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
         if (this._screenName)
             this._loadScreen();
     }
+    removeBindings() {
+        if (this._iobBindings)
+            this._iobBindings.forEach(x => x());
+        this._iobBindings = null;
+    }
     async _loadScreen() {
         if (!this._loading) {
             this._loading = true;
             await iobrokerHandler.waitForReady();
             this._loading = false;
-            if (this._iobBindings)
-                this._iobBindings.forEach(x => x());
-            this._iobBindings = null;
+            this.removeBindings();
             DomHelper.removeAllChildnodes(this.shadowRoot);
             const screen = await iobrokerHandler.getScreen(this.screenName);
             if (screen) {

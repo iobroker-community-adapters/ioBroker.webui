@@ -7,19 +7,15 @@ export declare class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentC
     static readonly properties: {
         twoWayPossible: BooleanConstructor;
         twoWay: BooleanConstructor;
-        complex: BooleanConstructor;
-        formula: StringConstructor;
+        expression: StringConstructor;
         objectNames: StringConstructor;
         invert: BooleanConstructor;
-        expression: StringConstructor;
     };
     twoWayPossible: boolean;
     twoWay: boolean;
-    complex: boolean;
-    formula: string;
+    expression: string;
     objectNames: string;
     invert: boolean;
-    expression: string;
     private _binding;
     private _bindingTarget;
     constructor(property: IProperty, binding: IBinding, bindingTarget: BindingTarget);

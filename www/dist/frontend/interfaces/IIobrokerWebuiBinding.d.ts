@@ -6,7 +6,7 @@ export interface IIobrokerWebuiBinding {
     events?: string[];
     target: BindingTarget;
     converter?: IBindingConverter;
-    formula?: string;
+    expression?: string;
 }
 export interface IBindingConverter {
     [condition: string]: any;

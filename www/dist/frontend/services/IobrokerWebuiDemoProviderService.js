@@ -11,6 +11,8 @@ export class IobrokerWebuiDemoProviderService {
             screenViewer.style.overflow = 'auto';
             screenViewer.style.position = 'absolute';
             container.style.position = 'relative';
+            let existingSV = container.querySelector(screenViewer.localName);
+            existingSV?.removeBindings();
             DomHelper.removeAllChildnodes(container);
             container.appendChild(screenViewer);
             let designer = instanceServiceContainer.designer;

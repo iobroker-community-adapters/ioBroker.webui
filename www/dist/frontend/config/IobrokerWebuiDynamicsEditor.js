@@ -5,11 +5,10 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
         super();
         this.twoWayPossible = false;
         this.twoWay = false;
-        this.complex = false;
-        this.formula = '';
+        //public complex: boolean = false;
+        this.expression = '';
         this.objectNames = '';
         this.invert = false;
-        this.expression = '';
         super._restoreCachedInititalValues();
         //this._property = property;
         this._binding = binding;
@@ -23,7 +22,7 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
             this.twoWayPossible = true;
         if (this._binding) {
             this.twoWay = this._binding.mode == BindingMode.twoWay;
-            this.formula = this._binding.expression;
+            this.expression = this._binding.expression;
             this.invert = this._binding.invert;
             if (this._binding.bindableObjectNames)
                 this.objectNames = this._binding.bindableObjectNames.join(';');
@@ -46,10 +45,6 @@ IobrokerWebuiDynamicsEditor.template = html `
                             <option>string</string>
                         </select>
                         <div class="row">
-                            <input type="checkbox" checked="{{this.complex::change}}">
-                            <span>complex</span>
-                        </div>
-                        <div class="row">
                             <input type="checkbox" disabled="[[!this.twoWayPossible]]" checked="{{this.twoWay::change}}">
                             <span>two way binding</span>
                         </div>
@@ -58,10 +53,10 @@ IobrokerWebuiDynamicsEditor.template = html `
                             <span>invert logic</span>
                         </div>
                         <div class="row">
-                            <span style="cursor: pointer;" title="access multiple objects with @0, @1, ...">formula</span>
+                            <span style="cursor: pointer;" title="access objects with __0, __1, ...">formula</span>
                         </div>
                         <div class="row">
-                            <input type="text" disabled="[[!this.complex]]" value="{{?this.expression}}" style="width: 100%">
+                            <input type="text" value="{{?this.expression}}" style="width: 100%">
                         </div>
                     </div>
                 </div>
@@ -150,10 +145,8 @@ IobrokerWebuiDynamicsEditor.is = 'iobroker-webui-dynamics-editor';
 IobrokerWebuiDynamicsEditor.properties = {
     twoWayPossible: Boolean,
     twoWay: Boolean,
-    complex: Boolean,
-    formula: String,
+    expression: String,
     objectNames: String,
-    invert: Boolean,
-    expression: String
+    invert: Boolean
 };
 customElements.define(IobrokerWebuiDynamicsEditor.is, IobrokerWebuiDynamicsEditor);
