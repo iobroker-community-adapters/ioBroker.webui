@@ -1,4 +1,4 @@
-import { DomHelper, cssFromString } from "@node-projects/base-custom-webcomponent";
+import { DomHelper } from "@node-projects/base-custom-webcomponent";
 import { IDemoProviderService, InstanceServiceContainer, ServiceContainer } from "@node-projects/web-component-designer";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
 import { IobrokerWebuiScreenEditor } from "../config/IobrokerWebuiScreenEditor.js";

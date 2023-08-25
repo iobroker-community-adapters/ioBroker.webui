@@ -18,6 +18,7 @@ export class IobrokerWebuiDemoProviderService {
             let designer = instanceServiceContainer.designer;
             screenViewer.loadScreenData(code, designer.documentContainer.additionalData.model.getValue());
             screenViewer.style.display = '';
+            screenViewer.shadowRoot.querySelectorAll('a').forEach(x => x.onclick = () => false); // disable links in preview view...
             resolve();
         });
     }
