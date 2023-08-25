@@ -1,4 +1,4 @@
-import { DomHelper } from "@node-projects/base-custom-webcomponent";
+import { DomHelper, cssFromString } from "@node-projects/base-custom-webcomponent";
 import { IDemoProviderService, InstanceServiceContainer, ServiceContainer } from "@node-projects/web-component-designer";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
 import { IobrokerWebuiScreenEditor } from "../config/IobrokerWebuiScreenEditor.js";
@@ -16,7 +16,7 @@ export class IobrokerWebuiDemoProviderService implements IDemoProviderService {
 
       container.style.position = 'relative';
 
-      let existingSV = <ScreenViewer> container.querySelector(screenViewer.localName); 
+      let existingSV = <ScreenViewer>container.querySelector(screenViewer.localName);
       existingSV?.removeBindings();
 
       DomHelper.removeAllChildnodes(container);
@@ -25,7 +25,7 @@ export class IobrokerWebuiDemoProviderService implements IDemoProviderService {
       let designer: IobrokerWebuiScreenEditor = instanceServiceContainer.designer;
       screenViewer.loadScreenData(code, designer.documentContainer.additionalData.model.getValue());
       screenViewer.style.display = '';
-
+      screenViewer.shadowRoot.querySelectorAll('a').forEach(x => x.onclick = () => false); // disable links in preview view...
       resolve();
     });
   }
