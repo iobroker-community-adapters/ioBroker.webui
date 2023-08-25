@@ -13,6 +13,10 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         position: relative;
         display: block;
     }
+
+    *[node-projects-hide-at-run-time] {
+        display: none !important;
+    }
     `
 
     private _iobBindings: (() => void)[];
