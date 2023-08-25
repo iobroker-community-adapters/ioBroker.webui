@@ -91,7 +91,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         const documentFragment = template.content.cloneNode(true);
         //this._bindingsParse(documentFragment, true);
         this.shadowRoot.appendChild(documentFragment);
-        this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot);
+        this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath);
         this.assignAllScripts();
     }
 
@@ -124,7 +124,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
                     try {
                         let evtName = a.name.substring(1);
                         let script: Script = JSON.parse(a.value);
-                        e.addEventListener(evtName, () => ScriptSystem.execute(script.commands, null));
+                        e.addEventListener(evtName, (evt) => ScriptSystem.execute(script.commands, { event: evt, element: e}));
                     }
                     catch (err) {
                         console.warn('error assigning script', e, a);
