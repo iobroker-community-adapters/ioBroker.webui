@@ -18,10 +18,14 @@ export class IobrokerWebuiBindableObjectsService implements IBindableObjectsServ
     return result;
   }
 
+  clearCache() {
+    this._states = null;
+  }
+
   async getBindableObjects(parent?: IBindableObject<ioBroker.State>): Promise<IBindableObject<ioBroker.State>[]> {
     if (!this._states) {
       await iobrokerHandler.connection.waitForFirstConnection();
-      this._states =  await iobrokerHandler.connection.getObjects(true);
+      this._states = await iobrokerHandler.connection.getObjects(true);
     }
 
     let start = "";

@@ -3,6 +3,7 @@ import { dragDropFormatNameBindingObject, IBindableObject, IBindableObjectsServi
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
+import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
 
 type TreeNodeData = Fancytree.NodeData & {
     lazyload?: (event: any, data: any) => void,
@@ -331,8 +332,8 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         }
 
         let imagesNode: TreeNodeData = {
-            title: 'Images', 
-            folder: true, 
+            title: 'Images',
+            folder: true,
             lazy: true,
             key: 'images',
             lazyload: (e, data) => {
@@ -450,7 +451,21 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             data: { service: s },
             folder: true,
             lazy: true,
-            lazyload: (event, node) => this._lazyLoadObjectNodes(event, node)
+            key: 'objects',
+            lazyload: (event, node) => this._lazyLoadObjectNodes(event, node),
+            contextMenu: (event) => {
+                ContextMenu.show([{
+                    title: 'Refresh', action: async () => {
+                        (<IobrokerWebuiBindableObjectsService>s).clearCache();
+                        const objectsNode = this._tree.getNodeByKey('objects');
+                        if (objectsNode) {
+                            objectsNode.resetLazy();
+                            await sleep(50);
+                            objectsNode.setExpanded(true);
+                        }
+                    }
+                }], event);
+            },
         }
         return objectsNode;
     }
