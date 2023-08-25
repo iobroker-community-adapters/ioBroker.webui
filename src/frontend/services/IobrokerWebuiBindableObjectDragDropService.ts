@@ -68,8 +68,8 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
             let grp: ChangeGroup;
 
             let state = await iobrokerHandler.connection.getState(bindableObject.fullName);
-            if (obj?.common?.role === 'url' && typeof state.val === 'string') {
-                if (state.val.endsWith('jpg')) {
+            if ((obj?.common?.role === 'url' || obj?.common?.role === 'text.url') && typeof state.val === 'string') {
+                if (state.val.endsWith('jpg') || state.val.endsWith('jpeg') || state.val.endsWith('png') || state.val.endsWith('gif') || state.val.endsWith('svg')) {
                     const img = document.createElement('img');
                     di = DesignItem.createDesignItemFromInstance(img, designerCanvas.serviceContainer, designerCanvas.instanceServiceContainer);
                     grp = di.openGroup("Insert");
@@ -80,6 +80,15 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
                     di.setStyle('height', '480px');
                 } else if (state.val.endsWith('mp4')) {
                     const video = document.createElement('video');
+                    di = DesignItem.createDesignItemFromInstance(video, designerCanvas.serviceContainer, designerCanvas.instanceServiceContainer);
+                    grp = di.openGroup("Insert");
+                    const binding: IIobrokerWebuiBinding = { signal: bindableObject.fullName, target: BindingTarget.property };
+                    let serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(video, 'src', binding);
+                    di.setAttribute(serializedBinding[0], serializedBinding[1]);
+                    di.setStyle('width', '640px');
+                    di.setStyle('height', '480px');
+                } else {
+                    const video = document.createElement('iframe');
                     di = DesignItem.createDesignItemFromInstance(video, designerCanvas.serviceContainer, designerCanvas.instanceServiceContainer);
                     grp = di.openGroup("Insert");
                     const binding: IIobrokerWebuiBinding = { signal: bindableObject.fullName, target: BindingTarget.property };
