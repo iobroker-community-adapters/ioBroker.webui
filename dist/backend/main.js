@@ -141,7 +141,9 @@ class WebUi extends utils.Adapter {
                 await this.setState(this._stateNpm, { val: 'idle', ack: true });
                 break;
             case 'updateNpm':
+                await this.setState(this._stateNpm, { val: 'updateing npm package "' + parameter + '"', ack: true });
                 await this.installNpm(parameter + '@latest');
+                await this.setState(this._stateNpm, { val: 'create importmap', ack: true });
                 await this.createImportMapAndLoaderFiles();
                 await this.setState(this._stateNpm, { val: 'uploading', ack: true });
                 await this.refreshWWW();
