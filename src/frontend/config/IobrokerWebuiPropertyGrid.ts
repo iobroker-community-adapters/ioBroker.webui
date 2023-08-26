@@ -188,7 +188,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             <div id="tableDiv">
                 <table id="table">
                     <colgroup>
-                        <col style="width: 35%;" />
+                        <col style="width: 70%;" />
                         <col id="lastCol" />
                     </colgroup>
                     <thead>
