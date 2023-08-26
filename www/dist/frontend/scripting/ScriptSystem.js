@@ -2,24 +2,24 @@ import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
 import Long from 'long';
 export class ScriptSystem {
-    static async execute(scriptCommands, context) {
+    static async execute(scriptCommands, outerContext) {
         for (let c of scriptCommands) {
             switch (c.type) {
                 case 'OpenScreen': {
                     if (!c.openInDialog) {
                         if (c.noHistory) {
                             document.getElementById('viewer').relativeSignalsPath = c.relativeSignalsPath;
-                            document.getElementById('viewer').screenName = ScriptSystem.getValue(c.screen, context);
+                            document.getElementById('viewer').screenName = ScriptSystem.getValue(c.screen, outerContext);
                         }
                         else {
-                            let hash = 'screenName=' + ScriptSystem.getValue(c.screen, context);
+                            let hash = 'screenName=' + ScriptSystem.getValue(c.screen, outerContext);
                             window.location.hash = hash;
                         }
                     }
                     else {
                         let sv = new ScreenViewer();
                         sv.relativeSignalsPath = c.relativeSignalsPath;
-                        sv.screenName = ScriptSystem.getValue(c.screen, context);
+                        sv.screenName = ScriptSystem.getValue(c.screen, outerContext);
                     }
                     break;
                 }
@@ -33,17 +33,17 @@ export class ScriptSystem {
                     break;
                 }
                 case 'SetSignalValue': {
-                    await iobrokerHandler.connection.setState(c.signal, ScriptSystem.getValue(c.value, context));
+                    await iobrokerHandler.connection.setState(c.signal, ScriptSystem.getValue(c.value, outerContext));
                     break;
                 }
                 case 'IncrementSignalValue': {
                     let state = await iobrokerHandler.connection.getState(c.signal);
-                    await iobrokerHandler.connection.setState(c.signal, state.val + ScriptSystem.getValue(c.value, context));
+                    await iobrokerHandler.connection.setState(c.signal, state.val + ScriptSystem.getValue(c.value, outerContext));
                     break;
                 }
                 case 'DecrementSignalValue': {
                     let state = await iobrokerHandler.connection.getState(c.signal);
-                    await iobrokerHandler.connection.setState(c.signal, state.val - ScriptSystem.getValue(c.value, context));
+                    await iobrokerHandler.connection.setState(c.signal, state.val - ScriptSystem.getValue(c.value, outerContext));
                     break;
                 }
                 case 'SetBitInSignal': {
@@ -69,17 +69,17 @@ export class ScriptSystem {
                     break;
                 }
                 case 'Javascript': {
-                    var context = context; // make context accessible from script
+                    var context = outerContext; // make context accessible from script
                     context.shadowRoot = context.element.getRootNode();
                     eval(c.script);
                     break;
                 }
                 case 'SetElementProperty': {
-                    let host = context.element.getRootNode().host;
+                    let host = outerContext.element.getRootNode().host;
                     if (c.targetSelectorTarget == 'currentElement')
-                        host = context.element;
+                        host = outerContext.element;
                     else if (c.targetSelectorTarget == 'parentElement')
-                        host = context.element.parentElement;
+                        host = outerContext.element.parentElement;
                     else if (c.targetSelectorTarget == 'parentScreen')
                         host = host.getRootNode().host;
                     let elements = [host];
@@ -100,7 +100,7 @@ export class ScriptSystem {
             }
         }
     }
-    static getValue(value, context) {
+    static getValue(value, outerContext) {
         return value;
     }
 }
