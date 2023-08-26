@@ -73,7 +73,8 @@ export class ScriptSystem {
                 }
 
                 case 'Javascript': {
-                    var context = context; // make context accessible from script
+                    var context: { event: Event, element: Element } = context; // make context accessible from script
+                    (<any>context).shadowRoot = (<ShadowRoot>context.element.getRootNode());
                     eval(c.script);
                     break;
                 }
