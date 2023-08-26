@@ -9,7 +9,7 @@ export class HabPanelLikeMenu extends BaseCustomWebComponentConstructorAppend {
         position: relative;
         display: block;
         overflow: hidden;
-        //--menu-offset: 0;
+        --menu-offset: 0;
     }
 
     #outer {
@@ -21,7 +21,8 @@ export class HabPanelLikeMenu extends BaseCustomWebComponentConstructorAppend {
         background: blue;
         position: absolute;
         height: 100%;
-        width: 200px;
+        width: var(--menu-offset);
+        transition: width 500ms;
     }
     
     #main {
@@ -32,6 +33,7 @@ export class HabPanelLikeMenu extends BaseCustomWebComponentConstructorAppend {
         flex-direction: column;
         height: 100%;
         width: 100%;
+        transition: left 500ms;
     }
     
     #head {
@@ -53,7 +55,9 @@ export class HabPanelLikeMenu extends BaseCustomWebComponentConstructorAppend {
 
     static template = html`
     <div id="outer"> 
-        <div id="menu">aa</div>
+        <div id="menu">
+            <part name="menu"></part>
+        </div>
         <div id="main">
             <div id="head">
             <svg @click="switchMenu" style="width: 20px; margin: 10px;" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -62,22 +66,21 @@ export class HabPanelLikeMenu extends BaseCustomWebComponentConstructorAppend {
                 </g>
             </svg>
            </div>
-            <div id="content">cc</div>
+            <div id="content">
+                <part></part>
+            </div>
         </div>
     </div>`
 
     @property(Array)
     screens: string[]
 
+    @property(Array)
+    expanded: boolean = false;
+
     constructor() {
         super();
         this._restoreCachedInititalValues();
-        CSS.registerProperty({
-            name: '--menu-offset',
-            syntax: '<length>',
-            inherits: true,
-            initialValue: '0'
-          });
     }
 
     ready() {
@@ -86,9 +89,14 @@ export class HabPanelLikeMenu extends BaseCustomWebComponentConstructorAppend {
     }
 
     switchMenu() {
-        this.animate([
+        this.expanded = !this.expanded;
+        if (this.expanded)
+            this.style.setProperty('--menu-offset', '200px');
+        else
+            this.style.setProperty('--menu-offset', '0');
+        /*this.animate([
             { offset: 0, '--menu-offset': '0' },
             { offset: 1, '--menu-offset': '200px' },
-          ], { duration: 300, iterations: 1 });
+          ], { duration: 300, iterations: 1 });*/
     }
 }

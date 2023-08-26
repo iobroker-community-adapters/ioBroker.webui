@@ -135,6 +135,9 @@
                 },
                 {
                     "$ref": "#/definitions/Javascript"
+                },
+                {
+                    "$ref": "#/definitions/SetElementProperty"
                 }
             ]
         },
@@ -149,6 +152,44 @@
                 },
                 "type": {
                     "const": "SetBitInSignal",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "SetElementProperty": {
+            "properties": {
+                "name": {
+                    "description": "name of property/attribute or css value you want to set",
+                    "type": "string"
+                },
+                "target": {
+                    "description": "what of the elements do you want to set",
+                    "enum": [
+                        "attribute",
+                        "css",
+                        "property"
+                    ],
+                    "type": "string"
+                },
+                "targetSelector": {
+                    "description": "css selector to find elements, if empty the targetSelectorTarget is used",
+                    "type": "string"
+                },
+                "targetSelectorTarget": {
+                    "description": "where to search for the elements",
+                    "enum": [
+                        "currentScreen",
+                        "parentScreen"
+                    ],
+                    "type": "string"
+                },
+                "type": {
+                    "const": "SetElementProperty",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "value you want to set",
                     "type": "string"
                 }
             },

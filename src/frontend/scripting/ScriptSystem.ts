@@ -5,7 +5,7 @@ import { ScriptMultiplexValue } from "./ScriptValue.js";
 import Long from 'long'
 
 export class ScriptSystem {
-    static async execute(scriptCommands: ScriptCommands[], context: { event: Event, element: Element}) {
+    static async execute(scriptCommands: ScriptCommands[], context: { event: Event, element: Element }) {
         for (let c of scriptCommands) {
             switch (c.type) {
                 case 'OpenScreen': {
@@ -76,6 +76,24 @@ export class ScriptSystem {
                     var context = context; // make context accessible from script
                     eval(c.script);
                     break;
+                }
+
+                case 'SetElementProperty': {
+                    let host = (<ShadowRoot>context.element.getRootNode()).host;
+                    if (c.targetSelectorTarget == 'parentScreen')
+                        host = (<ShadowRoot>host.getRootNode()).host;
+                    let elements: Iterable<Element> = [host];
+                    if (c.targetSelector)
+                        elements = host.shadowRoot.querySelectorAll(c.targetSelector);
+                    for (let e of elements) {
+                        if (c.target == 'attribute') {
+                            e.setAttribute(c.name, c.value);
+                        } else if (c.target == 'property') {
+                            e[c.name] = c.value;
+                        } else if (c.target == 'css') {
+                            (<HTMLElement>e).style[c.name] = c.value;
+                        }
+                    }
                 }
             }
         }

@@ -86,6 +86,7 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         this._assignEvents();
     }
 
+    //Converter from TypscriptJsonSchema to our Property list...
     private _getTypeInfo(obj: any, type: string): ITypeInfo {
         if (!type && obj.type) {
             const def = scriptCommandsTypeInfo.definitions[obj.type];
@@ -97,7 +98,11 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
                     let p: IProperty = {};
                     p.name = prp;
                     p.type = def.properties[prp].type;
-                    p.description= def.properties[prp].description;
+                    if (def.properties[prp].enum) {
+                        p.type = 'enum';
+                        p.values = [...def.properties[prp].enum];
+                    }
+                    p.description = def.properties[prp].description;
                     p.format = def.properties[prp].format;
                     tInfo.properties.push(p);
                 }

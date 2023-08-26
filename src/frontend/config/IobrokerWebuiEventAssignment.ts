@@ -88,7 +88,7 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
             sc.loadScript(script);
             sc.title = "Script '" + eventItem.name + "' on " + this.selectedItems[0].name;
 
-            let res = await window.appShell.openConfirmation(sc, 100, 100, 500, 300);
+            let res = await window.appShell.openConfirmation(sc, 100, 100, 600, 500);
             if (res) {
                 let scriptCommands = sc.getScriptCommands();
                 if (scriptCommands && scriptCommands.length) {

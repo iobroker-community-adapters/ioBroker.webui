@@ -12,6 +12,7 @@ export interface IProperty {
     category?: string;
     name?: string;
     type?: 'object' | 'string' | 'number' | 'boolean' | 'color' | 'enum';
+    values?: string[]; //on a enum type
     description?: string;
     defaultValue?: string;
     nullable?: boolean;
@@ -461,9 +462,16 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             }
             case 'enum': {
                 let editor = document.createElement('select');
+                for (let v of property.values) {
+                    const op = document.createElement('option');
+                    op.value = v;
+                    op.innerText = v;
+                    editor.appendChild(op);
+                }
                 editor.onchange = () => {
                     setDeepValue(this._selectedObject, propertyPath, editor.value);
                 };
+                editor.value = currentValue ?? property.values[0];
                 return editor;
             }
         }
