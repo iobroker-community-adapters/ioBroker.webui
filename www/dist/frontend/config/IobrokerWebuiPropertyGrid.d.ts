@@ -7,6 +7,7 @@ export interface IProperty {
     category?: string;
     name?: string;
     type?: 'object' | 'string' | 'number' | 'boolean' | 'color' | 'enum';
+    values?: string[];
     description?: string;
     defaultValue?: string;
     nullable?: boolean;

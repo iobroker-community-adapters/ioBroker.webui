@@ -1,4 +1,4 @@
-export declare type ScriptCommands = OpenScreen | OpenUrl | ToggleSignalValue | SetSignalValue | IncrementSignalValue | DecrementSignalValue | SetBitInSignal | ClearBitInSignal | ToggleBitInSignal | Javascript;
+export declare type ScriptCommands = OpenScreen | OpenUrl | ToggleSignalValue | SetSignalValue | IncrementSignalValue | DecrementSignalValue | SetBitInSignal | ClearBitInSignal | ToggleBitInSignal | Javascript | SetElementProperty;
 export interface OpenScreen {
     type: 'OpenScreen';
     screen: string;
@@ -81,4 +81,27 @@ export interface Javascript {
      * @TJS-format script
      */
     script: string;
+}
+export interface SetElementProperty {
+    type: 'SetElementProperty';
+    /**
+     * what of the elements do you want to set
+     */
+    target: 'property' | 'attribute' | 'css';
+    /**
+     * where to search for the elements
+     */
+    targetSelectorTarget: 'currentScreen' | 'parentScreen';
+    /**
+     * css selector to find elements, if empty the targetSelectorTarget is used
+     */
+    targetSelector: string;
+    /**
+     * name of property/attribute or css value you want to set
+     */
+    name: string;
+    /**
+     * value you want to set
+     */
+    value: string;
 }

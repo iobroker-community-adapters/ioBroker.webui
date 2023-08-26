@@ -1,8 +1,7 @@
 import '@node-projects/web-component-designer';
 import { TreeViewExtended, PropertyGrid } from '@node-projects/web-component-designer';
 import { BaseCustomWebComponentConstructorAppend } from '@node-projects/base-custom-webcomponent';
-import "../runtime/ScreenViewer.js";
-import "../runtime/SvgImage.js";
+import "../runtime/controls.js";
 import "./IobrokerWebuiSolutionExplorer.js";
 import "./IobrokerWebuiStyleEditor.js";
 import "./IobrokerWebuiEventAssignment.js";

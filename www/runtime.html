@@ -29,7 +29,6 @@
     scp.src = iobrokerWebRootUrl + "webui.0.widgets/importmap.js";
     document.head.appendChild(scp);
 
-    importShim('./dist/frontend/runtime/init.js');
     importShim('./dist/frontend/runtime/controls.js');
     importShim(iobrokerWebRootUrl + 'webui.0.widgets/importWidgetFilesRuntime.js');
   </script>

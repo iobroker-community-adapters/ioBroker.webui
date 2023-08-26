@@ -2,7 +2,7 @@ import { iobrokerHandler } from '../common/IobrokerHandler.js';
 //@ts-ignore
 await LazyLoader.LoadJavascript(window.iobrokerSocketScriptUrl);
 iobrokerHandler.init();
-await LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
+LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
 import '@node-projects/web-component-designer';
 import { PanelContainer } from 'dock-spawn-ts/lib/js/PanelContainer.js';
 import { PanelType } from 'dock-spawn-ts/lib/js/enums/PanelType.js';
@@ -11,8 +11,7 @@ import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockS
 import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from '@node-projects/base-custom-webcomponent';
 import { CommandHandling } from './CommandHandling.js';
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
-import "../runtime/ScreenViewer.js";
-import "../runtime/SvgImage.js";
+import "../runtime/controls.js";
 import "./IobrokerWebuiSolutionExplorer.js";
 import "./IobrokerWebuiStyleEditor.js";
 import "./IobrokerWebuiEventAssignment.js";

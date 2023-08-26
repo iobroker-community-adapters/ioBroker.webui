@@ -73,6 +73,25 @@ export class ScriptSystem {
                     eval(c.script);
                     break;
                 }
+                case 'SetElementProperty': {
+                    let host = context.element.getRootNode().host;
+                    if (c.targetSelectorTarget == 'parentScreen')
+                        host = host.getRootNode().host;
+                    let elements = [host];
+                    if (c.targetSelector)
+                        elements = host.shadowRoot.querySelectorAll(c.targetSelector);
+                    for (let e of elements) {
+                        if (c.target == 'attribute') {
+                            e.setAttribute(c.name, c.value);
+                        }
+                        else if (c.target == 'property') {
+                            e[c.name] = c.value;
+                        }
+                        else if (c.target == 'css') {
+                            e.style[c.name] = c.value;
+                        }
+                    }
+                }
             }
         }
     }
