@@ -49,8 +49,8 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         const result = await Promise.allSettled(
             [
                 this._createScreensNode(),
-                this._createGlobalStyleNode(),
                 this._createControlsNode(),
+                this._createGlobalNode(),
                 this._createNpmsNode(),
                 this._createImagesNode(),
                 this._createChartsNode(),
@@ -112,7 +112,28 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         }
     }
 
-    private async _createGlobalStyleNode(): Promise<TreeNodeData> {
+
+    private _createGlobalNode(): TreeNodeData {
+        return {
+            title: 'Global',
+            folder: true,
+            children: [
+                this._createGlobalSettingsNode(),
+                this._createGlobalStyleNode(),
+                this._createGlobalScriptsNode(),
+                this._createGlobalJavascriptsNode()
+            ]
+        }
+    }
+
+    private _createGlobalSettingsNode(): TreeNodeData {
+        return {
+            title: 'Settings',
+            folder: false
+        }
+    }
+
+    private _createGlobalStyleNode(): TreeNodeData {
         let ctxMenu = (event) => {
             ContextMenu.show([{
                 title: 'Add HabPanel Style', action: async () => {
@@ -126,12 +147,26 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             }], event);
         }
         return {
-            title: 'Global Style',
+            title: 'Style',
             folder: false,
             contextMenu: (e, data) => ctxMenu(e),
             dblclick: (e, data) => {
                 window.appShell.openGlobalStyleEditor(iobrokerHandler.config.globalStyle ?? '');
             }
+        }
+    }
+
+    private _createGlobalScriptsNode(): TreeNodeData {
+        return {
+            title: 'Scripts',
+            folder: false,
+        }
+    }
+
+    private _createGlobalJavascriptsNode(): TreeNodeData {
+        return {
+            title: 'Javascripts',
+            folder: false,
         }
     }
 

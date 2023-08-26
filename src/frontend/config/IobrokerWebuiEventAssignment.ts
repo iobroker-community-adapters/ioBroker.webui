@@ -1,5 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, Disposable, css, html } from "@node-projects/base-custom-webcomponent"
-import { ContextMenu, IDesignItem, IEvent, InstanceServiceContainer, PropertiesHelper } from "@node-projects/web-component-designer";
+import { CodeViewMonaco, ContextMenu, DesignItem, IDesignItem, IEvent, InstanceServiceContainer, PropertiesHelper } from "@node-projects/web-component-designer";
 import { IobrokerWebuiScriptEditor } from "./IobrokerWebuiScriptEditor.js";
 
 export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstructorAppend {
@@ -7,7 +7,7 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
     static override style = css`
     :host {
         display: grid;
-        grid-template-columns: 20px 1fr 30px;
+        grid-template-columns: 20px 1fr auto 30px;
         overflow-y: auto;
         align-content: start;
         height: 100%;
@@ -18,6 +18,10 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
         border: 1px solid black;
         justify-self: center;
     }
+    input.mth {
+        width: 100%;
+        box-sizing: border-box;
+    }
     div {
         width: 40px;
         align-self: center;
@@ -26,9 +30,10 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
 
     static override template = html`
         <template repeat:item="[[this.events]]">
-            <div @contextmenu="[[this._ctxMenu(event, item)]]" class="rect" css:background-color="[[this._isEventSet(item)]]"></div>
-            <div title="[[item.name]]">[[item.name]]</div>
-            <button @click="[[this._editEvent(event, item)]]">...</button>
+            <div @contextmenu="[[this._ctxMenu(event, item)]]" class="rect" css:background-color="[[this._getEventColor(item)]]"></div>
+            <div css:grid-column-end="[[this._getEventType(item) == 'js' ? 'span 1' : 'span 2']]" title="[[item.name]]">[[item.name]]</div>
+            <input @input="[[this._inputMthName(event, item)]]" class="mth" value="[[this._getEventMethodname(item)]]" css:display="[[this._getEventType(item) == 'js' ? 'block' : 'none']]" type="text">
+            <button @contextmenu="[[this._contextMenuAddEvent(event, item)]]" @click="[[this._editEvent(event, item)]]">...</button>
         </template>
         <span style="grid-column: 1 / span 3; margin-top: 8px; margin-left: 3px;">add event:</span>
         <input id="addEventInput" style="grid-column: 1 / span 3; margin: 5px;" @keypress=[[this._addEvent(event)]] type="text">`;
@@ -57,18 +62,42 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
         this.selectedItems = this._instanceServiceContainer.selectionService.selectedElements;
     }
 
-    public _isEventSet(eventItem: IEvent) {
-        if (this.selectedItems && this.selectedItems.length) {
-            if (this.selectedItems[0].hasAttribute('@' + eventItem.name))
+    public _getEventColor(eventItem: IEvent) {
+        switch (this._getEventType(eventItem)) {
+            case 'js':
+                return 'purple';
+            case 'script':
                 return 'lightgreen';
         }
         return 'white';
+    }
+
+    public _getEventType(eventItem: IEvent): 'js' | 'script' | 'none' {
+        if (this.selectedItems && this.selectedItems.length) {
+            if (this.selectedItems[0].hasAttribute('@' + eventItem.name)) {
+                if (this.selectedItems[0].getAttribute('@' + eventItem.name).startsWith('{'))
+                    return 'script';
+                else
+                    return 'js';
+            }
+        }
+        return 'none';
+    }
+
+    public _getEventMethodname(eventItem: IEvent): string {
+        return this.selectedItems[0].getAttribute('@' + eventItem.name);
+    }
+
+    public _inputMthName(event: InputEvent, eventItem: IEvent) {
+        let el = event.target as HTMLInputElement
+        this.selectedItems[0].setAttribute('@' + eventItem.name, el.value);
     }
 
     public _ctxMenu(e: MouseEvent, eventItem: IEvent) {
         e.preventDefault();
         ContextMenu.show([{ title: 'remove', action: () => { this.selectedItems[0].removeAttribute('@' + eventItem.name); this._bindingsRefresh(); } }], e)
     }
+
     public async _addEvent(e: KeyboardEvent) {
         if (e.key == 'Enter') {
             let ip = this._getDomElement<HTMLInputElement>('addEventInput');
@@ -78,23 +107,65 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
             this.refresh();
         }
     }
-    public async _editEvent(e: MouseEvent, eventItem: IEvent) {
-        let scriptString = <string>this.selectedItems[0].getAttribute('@' + eventItem.name);
-        if (!scriptString || scriptString.startsWith('{')) {
-            let script = { commands: [] };
-            if (scriptString)
-                script = JSON.parse(scriptString);
-            let sc = new IobrokerWebuiScriptEditor();
-            sc.loadScript(script);
-            sc.title = "Script '" + eventItem.name + "' on " + this.selectedItems[0].name;
 
-            let res = await window.appShell.openConfirmation(sc, 100, 100, 600, 500);
+    public async _contextMenuAddEvent(event, eventItem: IEvent) {
+        ContextMenu.show([{
+            title: 'Add JS Handler',
+            action: () => {
+                let nm = prompt('name of function ?');
+                if (nm) {
+                    this._selectedItems[0].setAttribute('@' + eventItem.name, nm);
+                    this.refresh();
+                    this._editEvent(null, eventItem);
+                }
+            }
+        }], event);
+    }
+
+    public async _editEvent(e: MouseEvent, eventItem: IEvent) {
+        if (this._getEventType(eventItem) == 'js') {
+            let scriptTag = <HTMLScriptElement>this.selectedItems[0].instanceServiceContainer.designerCanvas.shadowRoot.querySelector('script[type=module]');
+            if (!scriptTag) {
+                let jsName = this.selectedItems[0].getAttribute('@' + eventItem.name);
+                let templateScript = `
+export function ${jsName}(event, element, shadowRoot) {
+
+}
+`;
+                scriptTag = document.createElement('script');
+                scriptTag.setAttribute('type', 'module');
+                scriptTag.textContent = templateScript;
+                let di = DesignItem.createDesignItemFromInstance(scriptTag, this.selectedItems[0].serviceContainer, this.selectedItems[0].instanceServiceContainer);
+                di.instanceServiceContainer.designerCanvas.rootDesignItem.insertChild(di, 0);
+            }
+            let scriptDesignItem = DesignItem.GetDesignItem(scriptTag);
+
+            let cvm = new CodeViewMonaco();
+            cvm.language = 'javascript';
+            cvm.code = scriptDesignItem.content;
+            cvm.style.position = 'relative';
+            let res = await window.appShell.openConfirmation(cvm, 200, 200, 600, 400, this);
             if (res) {
-                let scriptCommands = sc.getScriptCommands();
-                if (scriptCommands && scriptCommands.length) {
-                    let json = JSON.stringify({ commands: scriptCommands });
-                    this.selectedItems[0].setAttribute('@' + eventItem.name, json);
-                    this._bindingsRefresh();
+                scriptDesignItem.content = cvm.getText();
+            }
+        } else {
+            let scriptString = <string>this.selectedItems[0].getAttribute('@' + eventItem.name);
+            if (!scriptString || scriptString.startsWith('{')) {
+                let script = { commands: [] };
+                if (scriptString)
+                    script = JSON.parse(scriptString);
+                let sc = new IobrokerWebuiScriptEditor();
+                sc.loadScript(script);
+                sc.title = "Script '" + eventItem.name + "' on " + this.selectedItems[0].name;
+
+                let res = await window.appShell.openConfirmation(sc, 100, 100, 600, 500);
+                if (res) {
+                    let scriptCommands = sc.getScriptCommands();
+                    if (scriptCommands && scriptCommands.length) {
+                        let json = JSON.stringify({ commands: scriptCommands });
+                        this.selectedItems[0].setAttribute('@' + eventItem.name, json);
+                        this._bindingsRefresh();
+                    }
                 }
             }
         }
