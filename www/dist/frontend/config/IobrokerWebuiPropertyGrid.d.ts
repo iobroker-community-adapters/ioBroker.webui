@@ -6,7 +6,7 @@ export interface ITypeInfo {
 export interface IProperty {
     category?: string;
     name?: string;
-    type?: 'object' | 'string' | 'number' | 'boolean' | 'color' | 'enum';
+    type?: 'object' | 'string' | 'number' | 'boolean' | 'color' | 'enum' | 'any';
     values?: string[];
     description?: string;
     defaultValue?: string;

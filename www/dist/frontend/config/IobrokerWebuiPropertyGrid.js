@@ -224,6 +224,73 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             }
         }
         switch (property.type) {
+            case 'any': {
+                let editor = document.createElement('div');
+                editor.style.display = 'flex';
+                let sel = document.createElement('select');
+                const op0 = document.createElement('option');
+                op0.value = 'null';
+                op0.textContent = 'null';
+                sel.appendChild(op0);
+                const op1 = document.createElement('option');
+                op1.value = 'string';
+                op1.textContent = 'string';
+                sel.appendChild(op1);
+                const op2 = document.createElement('option');
+                op2.value = 'number';
+                op2.textContent = 'number';
+                sel.appendChild(op2);
+                const op3 = document.createElement('option');
+                op3.value = 'boolean';
+                op3.textContent = 'boolean';
+                sel.appendChild(op3);
+                editor.appendChild(sel);
+                let stringEditor = document.createElement('input');
+                stringEditor.style.display = 'none';
+                stringEditor.style.boxSizing = 'border-box';
+                stringEditor.style.width = '100%';
+                stringEditor.value = currentValue ?? '';
+                stringEditor.onblur = e => { setValue(stringEditor.value); };
+                editor.appendChild(stringEditor);
+                let boolEditor = document.createElement('input');
+                boolEditor.style.display = 'none';
+                boolEditor.type = 'checkbox';
+                boolEditor.checked = currentValue ?? false;
+                boolEditor.onblur = e => { setValue(boolEditor.checked); };
+                editor.appendChild(boolEditor);
+                let numberEditor = document.createElement('input');
+                numberEditor.style.display = 'none';
+                numberEditor.type = 'number';
+                numberEditor.style.boxSizing = 'border-box';
+                numberEditor.style.width = '100%';
+                numberEditor.value = currentValue ?? '';
+                numberEditor.onblur = e => { setValue(numberEditor.valueAsNumber); };
+                editor.appendChild(numberEditor);
+                let showEdt = () => {
+                    stringEditor.style.display = 'none';
+                    boolEditor.style.display = 'none';
+                    numberEditor.style.display = 'none';
+                    if (sel.value == 'string')
+                        stringEditor.style.display = 'block';
+                    else if (sel.value == 'boolean')
+                        boolEditor.style.display = 'block';
+                    else if (sel.value == 'number')
+                        numberEditor.style.display = 'block';
+                };
+                sel.onchange = () => {
+                    if (sel.value == 'null')
+                        setValue(null);
+                    showEdt();
+                };
+                if (typeof currentValue === 'string')
+                    sel.value = 'string';
+                else if (typeof currentValue === 'boolean')
+                    sel.value = 'boolean';
+                else if (typeof currentValue === 'number')
+                    sel.value = 'number';
+                showEdt();
+                return editor;
+            }
             case 'string': {
                 let editor = document.createElement('input');
                 editor.style.boxSizing = 'border-box';
@@ -238,7 +305,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 editor.style.boxSizing = 'border-box';
                 editor.style.width = '100%';
                 editor.value = currentValue ?? '';
-                editor.onblur = e => { setValue(editor.value); };
+                editor.onblur = e => { setValue(editor.valueAsNumber); };
                 return editor;
             }
             case 'boolean': {

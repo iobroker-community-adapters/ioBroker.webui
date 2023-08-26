@@ -52,7 +52,7 @@
         "Javascript": {
             "properties": {
                 "script": {
-                    "description": "Usable objects in Script: \ncontext : {event : Event, element: Element }",
+                    "description": "Usable objects in Script: \ncontext : {event : Event, element: Element, shadowRoot: ShadowRoot }",
                     "format": "script",
                     "type": "string"
                 },
@@ -179,7 +179,9 @@
                 "targetSelectorTarget": {
                     "description": "where to search for the elements",
                     "enum": [
+                        "currentElement",
                         "currentScreen",
+                        "parentElement",
                         "parentScreen"
                     ],
                     "type": "string"
@@ -189,8 +191,7 @@
                     "type": "string"
                 },
                 "value": {
-                    "description": "value you want to set",
-                    "type": "string"
+                    "description": "value you want to set"
                 }
             },
             "type": "object"

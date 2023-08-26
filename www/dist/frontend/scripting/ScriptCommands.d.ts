@@ -91,7 +91,7 @@ export interface SetElementProperty {
     /**
      * where to search for the elements
      */
-    targetSelectorTarget: 'currentScreen' | 'parentScreen';
+    targetSelectorTarget: 'currentScreen' | 'parentScreen' | 'currentElement' | 'parentElement';
     /**
      * css selector to find elements, if empty the targetSelectorTarget is used
      */
@@ -103,5 +103,5 @@ export interface SetElementProperty {
     /**
      * value you want to set
      */
-    value: string;
+    value: any;
 }
