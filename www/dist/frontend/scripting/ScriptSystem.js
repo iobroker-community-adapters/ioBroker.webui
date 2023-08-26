@@ -70,6 +70,7 @@ export class ScriptSystem {
                 }
                 case 'Javascript': {
                     var context = context; // make context accessible from script
+                    context.shadowRoot = context.element.getRootNode();
                     eval(c.script);
                     break;
                 }

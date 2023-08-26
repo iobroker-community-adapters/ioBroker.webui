@@ -77,7 +77,7 @@ export interface Javascript {
     type: 'Javascript';
     /**
      * Usable objects in Script:
-     * context : {event : Event, element: Element }
+     * context : {event : Event, element: Element, shadowRoot: ShadowRoot }
      * @TJS-format script
      */
     script: string;
