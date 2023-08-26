@@ -3,6 +3,7 @@
     [
       { "tag" : "iobroker-webui-screen-viewer", "defaultWidth": "300px", "defaultHeight": "200px" },
       { "tag" : "iobroker-webui-svg-image", "defaultWidth": "300px", "defaultHeight": "200px" },
+      { "tag" : "iobroker-webui-hab-panel-like-menu", "defaultWidth": "300px", "defaultHeight": "200px" },
       { "name": "text", "tag" : "span", "defaultContent": "hello world" },
       { "name": "text input", "tag" : "input", "defaultWidth": "140px", "defaultAttributes": { "type": "text" } },
       { "name": "number", "tag" : "input", "defaultWidth": "140px", "defaultAttributes": { "type": "number" } },
