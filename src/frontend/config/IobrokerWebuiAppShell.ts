@@ -3,7 +3,7 @@ import { iobrokerHandler } from '../common/IobrokerHandler.js';
 //@ts-ignore
 await LazyLoader.LoadJavascript(window.iobrokerSocketScriptUrl);
 iobrokerHandler.init();
-await LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
+LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
 
 import '@node-projects/web-component-designer'
 import { TreeViewExtended, PropertyGrid } from '@node-projects/web-component-designer';
@@ -19,8 +19,7 @@ import { CommandHandling } from './CommandHandling.js'
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
-import "../runtime/ScreenViewer.js";
-import "../runtime/SvgImage.js";
+import "../runtime/controls.js";
 import "./IobrokerWebuiSolutionExplorer.js";
 import "./IobrokerWebuiStyleEditor.js";
 import "./IobrokerWebuiEventAssignment.js";
