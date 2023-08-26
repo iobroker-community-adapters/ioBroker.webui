@@ -81,7 +81,11 @@ export class ScriptSystem {
 
                 case 'SetElementProperty': {
                     let host = (<ShadowRoot>context.element.getRootNode()).host;
-                    if (c.targetSelectorTarget == 'parentScreen')
+                    if (c.targetSelectorTarget == 'currentElement')
+                        host = context.element;
+                    else if (c.targetSelectorTarget == 'parentElement')
+                        host = context.element.parentElement;
+                    else if (c.targetSelectorTarget == 'parentScreen')
                         host = (<ShadowRoot>host.getRootNode()).host;
                     let elements: Iterable<Element> = [host];
                     if (c.targetSelector)

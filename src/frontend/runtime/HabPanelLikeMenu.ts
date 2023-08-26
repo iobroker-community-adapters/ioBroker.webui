@@ -18,17 +18,19 @@ export class HabPanelLikeMenu extends BaseCustomWebComponentConstructorAppend {
     }
 
     #menu {
-        background: blue;
         position: absolute;
         height: 100%;
         width: var(--menu-offset);
         transition: width 500ms;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        overflow: hidden;
     }
     
     #main {
         position: absolute;
         left: var(--menu-offset);
-        background: yellow;
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -49,14 +51,13 @@ export class HabPanelLikeMenu extends BaseCustomWebComponentConstructorAppend {
     }
 
     #content {
-        background: green;
         height: 100%;
     }`
 
     static template = html`
     <div id="outer"> 
         <div id="menu">
-            <part name="menu"></part>
+            <slot name="menu"></part>
         </div>
         <div id="main">
             <div id="head">
@@ -65,9 +66,10 @@ export class HabPanelLikeMenu extends BaseCustomWebComponentConstructorAppend {
                     <path d="M230,904 L214,904 C212.896,904 212,904.896 212,906 C212,907.104 212.896,908 214,908 L230,908 C231.104,908 232,907.104 232,906 C232,904.896 231.104,904 230,904 L230,904 Z M230,896 L214,896 C212.896,896 212,896.896 212,898 C212,899.104 212.896,900 214,900 L230,900 C231.104,900 232,899.104 232,898 C232,896.896 231.104,896 230,896 L230,896 Z M214,892 L230,892 C231.104,892 232,891.104 232,890 C232,888.896 231.104,888 230,888 L214,888 C212.896,888 212,888.896 212,890 C212,891.104 212.896,892 214,892 L214,892 Z"></path>
                 </g>
             </svg>
+            <slot name="head"></part>
            </div>
             <div id="content">
-                <part></part>
+                <slot></slot>
             </div>
         </div>
     </div>`
@@ -75,8 +77,18 @@ export class HabPanelLikeMenu extends BaseCustomWebComponentConstructorAppend {
     @property(Array)
     screens: string[]
 
-    @property(Array)
-    expanded: boolean = false;
+    _expanded: boolean = false;
+    @property(Boolean)
+    get expanded() {
+        return this._expanded;
+    }
+    set expanded(value: boolean) {
+        this._expanded = value;
+        if (this._expanded)
+            this.style.setProperty('--menu-offset', '200px');
+        else
+            this.style.setProperty('--menu-offset', '0');
+    }
 
     constructor() {
         super();
@@ -90,13 +102,5 @@ export class HabPanelLikeMenu extends BaseCustomWebComponentConstructorAppend {
 
     switchMenu() {
         this.expanded = !this.expanded;
-        if (this.expanded)
-            this.style.setProperty('--menu-offset', '200px');
-        else
-            this.style.setProperty('--menu-offset', '0');
-        /*this.animate([
-            { offset: 0, '--menu-offset': '0' },
-            { offset: 1, '--menu-offset': '200px' },
-          ], { duration: 300, iterations: 1 });*/
     }
 }

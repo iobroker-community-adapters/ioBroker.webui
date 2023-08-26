@@ -97,7 +97,7 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
                 if (prp != 'type') {
                     let p: IProperty = {};
                     p.name = prp;
-                    p.type = def.properties[prp].type;
+                    p.type = def.properties[prp].type ?? 'any'; 
                     if (def.properties[prp].enum) {
                         p.type = 'enum';
                         p.values = [...def.properties[prp].enum];

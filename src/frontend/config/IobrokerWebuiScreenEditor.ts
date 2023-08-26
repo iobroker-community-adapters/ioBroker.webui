@@ -11,9 +11,9 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
 
     public documentContainer: DocumentContainer;
 
-    public static override template = html``
+    public static override template = html``;
 
-    public static override style = css``
+    public static override style = css``;
 
     public async initialize(name: string, html: string, style: string, serviceContainer: ServiceContainer) {
         this._name = name;
