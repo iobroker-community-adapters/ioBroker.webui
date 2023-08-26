@@ -22,8 +22,8 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     async createTreeNodes() {
         const result = await Promise.allSettled([
             this._createScreensNode(),
-            this._createGlobalStyleNode(),
             this._createControlsNode(),
+            this._createGlobalNode(),
             this._createNpmsNode(),
             this._createImagesNode(),
             this._createChartsNode(),
@@ -80,7 +80,25 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             imagesNode.resetLazy();
         }
     }
-    async _createGlobalStyleNode() {
+    _createGlobalNode() {
+        return {
+            title: 'Global',
+            folder: true,
+            children: [
+                this._createGlobalSettingsNode(),
+                this._createGlobalStyleNode(),
+                this._createGlobalScriptsNode(),
+                this._createGlobalJavascriptsNode()
+            ]
+        };
+    }
+    _createGlobalSettingsNode() {
+        return {
+            title: 'Settings',
+            folder: false
+        };
+    }
+    _createGlobalStyleNode() {
         let ctxMenu = (event) => {
             ContextMenu.show([{
                     title: 'Add HabPanel Style', action: async () => {
@@ -94,12 +112,24 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 }], event);
         };
         return {
-            title: 'Global Style',
+            title: 'Style',
             folder: false,
             contextMenu: (e, data) => ctxMenu(e),
             dblclick: (e, data) => {
                 window.appShell.openGlobalStyleEditor(iobrokerHandler.config.globalStyle ?? '');
             }
+        };
+    }
+    _createGlobalScriptsNode() {
+        return {
+            title: 'Scripts',
+            folder: false,
+        };
+    }
+    _createGlobalJavascriptsNode() {
+        return {
+            title: 'Javascripts',
+            folder: false,
         };
     }
     async _createNpmsNode() {

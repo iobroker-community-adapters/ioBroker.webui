@@ -91,15 +91,38 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
         iobrokerHandler.connection.setState(name, value);
     }
     */
-    assignAllScripts() {
+    async assignAllScripts() {
         const allElements = this.shadowRoot.querySelectorAll('*');
+        const scriptTag = this.shadowRoot.querySelector('script[type=module]');
+        let jsObject = null;
+        if (scriptTag) {
+            try {
+                const scriptUrl = URL.createObjectURL(new Blob([scriptTag.textContent], { type: 'application/javascript' }));
+                //@ts-ignore
+                jsObject = await importShim(scriptUrl);
+            }
+            catch (err) {
+                console.warn('error parsing javascript', err);
+            }
+        }
         for (let e of allElements) {
             for (let a of e.attributes) {
                 if (a.name[0] == '@') {
                     try {
                         let evtName = a.name.substring(1);
-                        let script = JSON.parse(a.value);
-                        e.addEventListener(evtName, (evt) => ScriptSystem.execute(script.commands, { event: evt, element: e }));
+                        let script = a.value.trim();
+                        if (script[0] == '{') {
+                            let scriptObj = JSON.parse(script);
+                            e.addEventListener(evtName, (evt) => ScriptSystem.execute(scriptObj.commands, { event: evt, element: e }));
+                        }
+                        else {
+                            e.addEventListener(evtName, (evt) => {
+                                if (!jsObject[script])
+                                    console.warn('javascritp function named: ' + script + ' not found, maybe missing a "export" ?');
+                                else
+                                    jsObject[script](evt, e, this.shadowRoot);
+                            });
+                        }
                     }
                     catch (err) {
                         console.warn('error assigning script', e, a);
