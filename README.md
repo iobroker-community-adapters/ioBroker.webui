@@ -72,6 +72,7 @@ If you want to help the development, sponsor this project at https://github.com/
   - Run 
 ```
   $ npm run release
+  $ npm publish
 ``` 
    to create correct release commit for iobroker, Be carefull this also pushes to git repo.
    Be sure to edit "CHANGELOG.md" before, the text in "## **WORK IN PROGRESS**" in README.Md will be used for version info
