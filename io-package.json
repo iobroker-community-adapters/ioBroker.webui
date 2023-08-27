@@ -1,176 +1,190 @@
 {
-    "common": {
-        "name": "webui",
-        "version": "0.0.30",
-        "title": "webui",
-        "titleLang": {
-            "en": "webui",
-            "de": "webui",
-            "ru": "webui",
-            "pt": "webui",
-            "nl": "webui",
-            "fr": "webui",
-            "it": "webui",
-            "es": "webui",
-            "pl": "webui",
-            "uk": "webui",
-            "zh-cn": "webui"
-        },
-        "desc": {
-            "en": "Graphical user interface for iobroker using Webcomponents"
-        },
-        "news": {},
-        "icon": "logo.png",
-        "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.webui/master/admin/logo.png",
-        "connectionType": "local",
-        "dataSource": "push",
-        "platform": "Javascript/Node.js",
-        "loglevel": "info",
-        "enabled": true,
-        "compact": true,
-        "keywords": [
-            "GUI",
-            "graphical",
-            "scada",
-            "webcompoents",
-            "HTML"
-        ],
-        "readme": "",
-        "authors": [
-            "jogibear9988 <jochen.kuehner@gmx.de>"
-        ],
-        "localLinks": {
-            "_default": "%web_protocol%://%ip%:%web_port%/webui/"
-        },
-        "license": "MIT",
-        "dependencies": [
-            {
-                "web": ">=3.4.16"
-            }
-        ],
-        "restartAdapters": [
-            "webui"
-        ],
-        "serviceStates": false,
-        "singleton": true,
-        "type": "visualization",
-        "highlight": true,
-        "noConfig": true,
-        "adminUI": {
-            "config": "none"
-        },
-        "materialize": true,
-        "onlyWWW": false,
-        "nogit": false,
-        "mode": "daemon",
-        "welcomeScreen": {
-            "link": "webui/index.html",
-            "name": "webui editor",
-            "img": "admin/logo.png",
-            "color": "#c8ffe1",
-            "order": 1
-        }
+  "common": {
+    "name": "webui",
+    "version": "0.1.0",
+    "title": "webui",
+    "titleLang": {
+      "en": "webui",
+      "de": "webui",
+      "ru": "webui",
+      "pt": "webui",
+      "nl": "webui",
+      "fr": "webui",
+      "it": "webui",
+      "es": "webui",
+      "pl": "webui",
+      "uk": "webui",
+      "zh-cn": "webui"
     },
-    "native": {},
-    "instanceObjects": [
-        {
-            "_id": "control",
-            "type": "folder",
-            "common": {
-                "name": "control"
-            },
-            "native": {}
+    "desc": {
+      "en": "Graphical user interface for iobroker using Webcomponents"
+    },
+    "news": {
+      "0.1.0": {
+        "en": "initial public release",
+        "de": "erste öffentliche veröffentlichung",
+        "ru": "начальный публичный релиз",
+        "pt": "lançamento público inicial",
+        "nl": "eerste openbare vrijlating",
+        "fr": "initial public release",
+        "it": "primo rilascio pubblico",
+        "es": "liberación pública inicial",
+        "pl": "wstępne wydanie",
+        "uk": "початковий публічний реліз",
+        "zh-cn": "最初的公共释放"
+      }
+    },
+    "icon": "logo.png",
+    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.webui/master/admin/logo.png",
+    "connectionType": "local",
+    "dataSource": "push",
+    "platform": "Javascript/Node.js",
+    "loglevel": "info",
+    "enabled": true,
+    "compact": true,
+    "keywords": [
+      "GUI",
+      "graphical",
+      "scada",
+      "webcompoents",
+      "HTML"
+    ],
+    "readme": "",
+    "authors": [
+      "jogibear9988 <jochen.kuehner@gmx.de>"
+    ],
+    "localLinks": {
+      "_default": "%web_protocol%://%ip%:%web_port%/webui/"
+    },
+    "license": "MIT",
+    "dependencies": [
+      {
+        "web": ">=3.4.16"
+      }
+    ],
+    "restartAdapters": [
+      "webui"
+    ],
+    "serviceStates": false,
+    "singleton": true,
+    "type": "visualization",
+    "highlight": true,
+    "noConfig": true,
+    "adminUI": {
+      "config": "none"
+    },
+    "materialize": true,
+    "onlyWWW": false,
+    "nogit": false,
+    "mode": "daemon",
+    "welcomeScreen": {
+      "link": "webui/index.html",
+      "name": "webui editor",
+      "img": "admin/logo.png",
+      "color": "#c8ffe1",
+      "order": 1
+    }
+  },
+  "native": {},
+  "instanceObjects": [
+    {
+      "_id": "control",
+      "type": "folder",
+      "common": {
+        "name": "control"
+      },
+      "native": {}
+    },
+    {
+      "_id": "control.data",
+      "type": "state",
+      "common": {
+        "name": "data for command for webui",
+        "type": "string",
+        "desc": "additional data when running the command, needs to be set before setting the command.",
+        "read": true,
+        "write": true,
+        "role": "text"
+      },
+      "native": {}
+    },
+    {
+      "_id": "control.clientIds",
+      "type": "state",
+      "common": {
+        "name": "clientIds for command for webui",
+        "type": "string",
+        "desc": "clientIds when running the command, needs to be set before setting the command. splitted by ;",
+        "read": true,
+        "write": true,
+        "role": "text"
+      },
+      "native": {}
+    },
+    {
+      "_id": "control.command",
+      "type": "state",
+      "common": {
+        "name": "command for webui",
+        "type": "string",
+        "desc": "Writing this variable akt as the trigger. Instance and data must be preset before 'command' will be written.",
+        "states": {
+          "addNpm": "addNpm",
+          "removeNpm": "removeNpm",
+          "updateNpm": "updateNpm",
+          "refreshWww": "refreshWww",
+          "createImportmap": "createImportmap",
+          "uiReloadPackages": "uiReloadPackages",
+          "uiReload": "uiReload",
+          "uiChangeView": "uiChangeView",
+          "uiChangedView": "uiChangedView",
+          "uiOpenDialog": "uiOpenDialog",
+          "uiOpenedDialog": "uiOpenedDialog",
+          "uiPlaySound": "uiPlaySound"
         },
-        {
-            "_id": "control.data",
-            "type": "state",
-            "common": {
-                "name": "data for command for webui",
-                "type": "string",
-                "desc": "additional data when running the command, needs to be set before setting the command.",
-                "read": true,
-                "write": true,
-                "role": "text"
-            },
-            "native": {}
-        },
-        {
-            "_id": "control.clientIds",
-            "type": "state",
-            "common": {
-                "name": "clientIds for command for webui",
-                "type": "string",
-                "desc": "clientIds when running the command, needs to be set before setting the command. splitted by ;",
-                "read": true,
-                "write": true,
-                "role": "text"
-            },
-            "native": {}
-        },
-        {
-            "_id": "control.command",
-            "type": "state",
-            "common": {
-                "name": "command for webui",
-                "type": "string",
-                "desc": "Writing this variable akt as the trigger. Instance and data must be preset before 'command' will be written.",
-                "states": {
-                    "addNpm": "addNpm",
-                    "removeNpm": "removeNpm",
-                    "updateNpm": "updateNpm",
-                    "refreshWww": "refreshWww",
-                    "createImportmap": "createImportmap",
-                    "uiReloadPackages": "uiReloadPackages",
-                    "uiReload": "uiReload",
-                    "uiChangeView": "uiChangeView",
-                    "uiChangedView": "uiChangedView",
-                    "uiOpenDialog": "uiOpenDialog",
-                    "uiOpenedDialog": "uiOpenedDialog",
-                    "uiPlaySound": "uiPlaySound"
-                },
-                "read": true,
-                "write": true,
-                "role": "text"
-            },
-            "native": {}
-        },
-        {
-            "_id": "state",
-            "type": "folder",
-            "common": {
-                "name": "state"
-            },
-            "native": {}
-        },
-        {
-            "_id": "state.npm",
-            "type": "state",
-            "common": {
-                "name": "state of package installation",
-                "type": "string",
-                "read": true,
-                "write": true,
-                "role": "text"
-            },
-            "native": {}
-        },
-        {
-            "_id": "widgets",
-            "type": "meta",
-            "common": {
-                "name": "Npm Packages for webui",
-                "role": "meta"
-            },
-            "native": {}
-        },
-        {
-            "_id": "data",
-            "type": "meta",
-            "common": {
-                "name": "Files for webui",
-                "role": "meta.user"
-            },
-            "native": {}
-        }
-    ]
+        "read": true,
+        "write": true,
+        "role": "text"
+      },
+      "native": {}
+    },
+    {
+      "_id": "state",
+      "type": "folder",
+      "common": {
+        "name": "state"
+      },
+      "native": {}
+    },
+    {
+      "_id": "state.npm",
+      "type": "state",
+      "common": {
+        "name": "state of package installation",
+        "type": "string",
+        "read": true,
+        "write": true,
+        "role": "text"
+      },
+      "native": {}
+    },
+    {
+      "_id": "widgets",
+      "type": "meta",
+      "common": {
+        "name": "Npm Packages for webui",
+        "role": "meta"
+      },
+      "native": {}
+    },
+    {
+      "_id": "data",
+      "type": "meta",
+      "common": {
+        "name": "Files for webui",
+        "role": "meta.user"
+      },
+      "native": {}
+    }
+  ]
 }
