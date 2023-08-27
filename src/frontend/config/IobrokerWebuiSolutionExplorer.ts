@@ -542,7 +542,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 ContextMenu.show([{
                     title: 'Export Control', action: async () => {
                         let data = await iobrokerHandler.getCustomControl(control);
-                        await exportData(JSON.stringify(data), data + '.control')
+                        await exportData(JSON.stringify(data), control + '.control')
                     }
                 }, {
                     title: 'Remove Control', action: () => {
@@ -561,7 +561,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         window.appShell.openScreenEditor(d.node.data.name, 'control', s.html, s.style, s.properties);
                     });
                 },
-                data: { type: 'control', name: x }
+                data: { type: 'customcontrol', name: x }
             })));
         });
     }
@@ -701,7 +701,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
                             data.dropEffect = "copy";
                             return true;
-                        } else if (data.node.data.type == 'control') {
+                        } else if (data.node.data.type == 'customcontrol') {
                             const control = data.node.data.name;
                             let nm = PropertiesHelper.camelToDashCase(control);
                             if (nm[0] !== '-')
