@@ -6,7 +6,7 @@ webui for ioBroker
 
 ## Description
 
-This is a complete visualization sytsem for ioBroker.
+This is a complete visualization system for ioBroker.
 
 It includes features like:
 
