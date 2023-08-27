@@ -1,9 +1,12 @@
 import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from "@node-projects/base-custom-webcomponent";
-import { dragDropFormatNameBindingObject, IBindableObject, IBindableObjectsService, IElementDefinition, ServiceContainer, dragDropFormatNameElementDefinition, ContextMenu, sleep } from "@node-projects/web-component-designer";
+import { dragDropFormatNameBindingObject, IBindableObject, IBindableObjectsService, IElementDefinition, ServiceContainer, dragDropFormatNameElementDefinition, ContextMenu, sleep, dragDropFormatNamePropertyGrid, PropertiesHelper } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
 import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
+import { exportData, openFileDialog } from "../helper/Helper.js";
+import { IScreen } from "../interfaces/IScreen.js";
+import { IControl } from "../interfaces/IControl.js";
 
 type TreeNodeData = Fancytree.NodeData & {
     lazyload?: (event: any, data: any) => void,
@@ -34,12 +37,12 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
 
     async ready() {
-
     }
 
     async initialize(serviceContainer: ServiceContainer) {
         this.serviceContainer = serviceContainer;
         iobrokerHandler.screensChanged.on(() => this._refreshScreensNode());
+        iobrokerHandler.controlsChanged.on(() => this._refreshControlsNode());
         iobrokerHandler.imagesChanged.on(() => this._refreshImagesNode());
         await sleep(100);
         this._loadTree();
@@ -61,7 +64,23 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
 
     private async _createScreensNode() {
+        let screenNodeCtxMenu = (event) => {
+            ContextMenu.show([{
+                title: 'Import Screen', action: async () => {
+                    let files = await openFileDialog('.screen', true, 'text');
+                    for (let f of files) {
+                        let screen: IScreen = JSON.parse(<string>f.data);
+                        let nm = f.name;
+                        if (nm.endsWith('.screen'))
+                            nm = nm.substring(0, nm.length - 7);
+                        await iobrokerHandler.saveScreen(nm, screen);
+                    }
+                }
+            }], event);
+        }
+
         this._screensNodeData = {
+            contextMenu: (event => screenNodeCtxMenu(event)),
             title: 'Screens',
             folder: true,
             autoExpand: true,
@@ -76,8 +95,14 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         data.result = new Promise<TreeNodeData[]>(async resolve => {
             let screenNodeCtxMenu = (event, screen) => {
                 ContextMenu.show([{
+                    title: 'Export Screen', action: async () => {
+                        let data = await iobrokerHandler.getScreen(screen);
+                        await exportData(JSON.stringify(data), screen + '.screen')
+                    }
+                }, {
                     title: 'Remove Screen', action: () => {
-                        iobrokerHandler.removeScreen(screen);
+                        if (confirm("are you sure?"))
+                            iobrokerHandler.removeScreen(screen);
                     }
                 }], event);
             }
@@ -88,7 +113,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 contextMenu: (event => screenNodeCtxMenu(event, x)),
                 dblclick: (e, d) => {
                     iobrokerHandler.getScreen(d.node.data.name).then(s => {
-                        window.appShell.openScreenEditor(d.node.data.name, s.html, s.style);
+                        window.appShell.openScreenEditor(d.node.data.name, 'screen', s.html, s.style, null);
                     });
                 },
                 data: { type: 'screen', name: x }
@@ -105,13 +130,21 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         }
     }
 
+    private async _refreshControlsNode() {
+        const controlsNode = this._tree.getNodeByKey('controls');
+        if (controlsNode) {
+            controlsNode.resetLazy();
+            await sleep(50);
+            controlsNode.setExpanded(true);
+        }
+    }
+
     private async _refreshImagesNode() {
         const imagesNode = this._tree.getNodeByKey('images');
         if (imagesNode) {
             imagesNode.resetLazy();
         }
     }
-
 
     private _createGlobalNode(): TreeNodeData {
         return {
@@ -181,8 +214,9 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         if (packageName) {
                             if (window.appShell.npmState != 'idle') {
                                 alert("webui is already handling a npm request");
-                            } else
+                            } else {
                                 iobrokerHandler.sendCommand("addNpm", packageName);
+                            }
                         }
                     }
                 }], event);
@@ -195,16 +229,19 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 title: 'Update Package', action: () => {
                     if (window.appShell.npmState != 'idle') {
                         alert("webui is already handling a npm request");
-                    } else
+                    } else {
                         iobrokerHandler.sendCommand("updateNpm", packageName);
+                    }
                 }
             },
             {
                 title: 'Remove Package', action: () => {
                     if (window.appShell.npmState != 'idle') {
                         alert("webui is already handling a npm request");
-                    } else
-                        iobrokerHandler.sendCommand("removeNpm", packageName);
+                    } else {
+                        if (confirm("are you sure?"))
+                            iobrokerHandler.sendCommand("removeNpm", packageName);
+                    }
                 }
             }], event);
         }
@@ -219,8 +256,9 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         if (packageName) {
                             if (window.appShell.npmState != 'idle') {
                                 alert("webui is already handling a npm request");
-                            } else
+                            } else {
                                 iobrokerHandler.sendCommand("addNpm", packageName);
+                            }
                         }
                     }
                 }], event);
@@ -239,13 +277,8 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             contextMenu: (event => npmNodeCtxMenu(event, x)),
                             data: { type: 'npm', name: x }
                         }));
-
-                        //todo
-                        //search every package for a package JsonFileElementsService, and look if it contains a customElements definition
-                        //if so, load the file, if not, try load "custom-elements.json"
                         resolve(children);
-                    }
-                    catch (err) {
+                    } catch (err) {
                         console.warn("error loading package.json, may not yet exist", err);
                     }
                     resolve([]);
@@ -275,8 +308,9 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                                     dblclick: (e, data) => {
                                         if (window.appShell.npmState != 'idle') {
                                             alert("webui is already handling a npm request");
-                                        } else
+                                        } else {
                                             iobrokerHandler.sendCommand("addNpm", elements[0]);
+                                        }
                                     }
                                 });
                             } else {
@@ -358,16 +392,35 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
 
     private async _createImagesNode() {
-        let screenNodeCtxMenu = (event, image) => {
+        let imagesNodeCtxMenu = (event) => {
             ContextMenu.show([{
+                title: 'Import Images', action: async () => {
+                    let files = await openFileDialog('.png,.gif,.jpg,.jpeg,,svg', true, 'file');
+                    for (let f of files) {
+                        let nm = f.name;
+                        await iobrokerHandler.saveImage(nm, <File>f.data);
+                    }
+                }
+            }], event);
+        }
+
+        let imageChildNodeCtxMenu = (event, image) => {
+            ContextMenu.show([{
+                title: 'Export Image', action: async () => {
+                    let data = await iobrokerHandler.getImage(image);
+                    await exportData(data.file, image, data.mimType)
+                }
+            }, {
                 title: 'Remove Image', action: () => {
-                    iobrokerHandler.removeImage(image);
+                    if (confirm("are you sure?"))
+                        iobrokerHandler.removeImage(image);
                 }
             }], event);
         }
 
         let imagesNode: TreeNodeData = {
             title: 'Images',
+            contextMenu: (event => imagesNodeCtxMenu(event)),
             folder: true,
             lazy: true,
             key: 'images',
@@ -379,7 +432,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         images.sort();
                         resolve(images.map(x => ({
                             title: x,
-                            contextMenu: (event => screenNodeCtxMenu(event, x)),
+                            contextMenu: (event => imageChildNodeCtxMenu(event, x)),
                             icon: iobrokerHandler.imagePrefix + x,
                             data: { type: 'image', name: x }
                         })));
@@ -441,14 +494,81 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             }
         }
 
-
-
         return chartsNode;
     }
 
     private async _createControlsNode() {
         let controlsNode: TreeNodeData = {
-            title: 'Controls', folder: true, children: []
+            title: 'Controls',
+            folder: true,
+            children: [
+                await this._createSelfDefinedControlsNode(),
+                await this._createWebcomponentsNode()
+            ]
+        }
+        return controlsNode;
+    }
+
+    private async _createSelfDefinedControlsNode() {
+        let controlsNodeCtxMenu = (event) => {
+            ContextMenu.show([{
+                title: 'Import Control', action: async () => {
+                    let files = await openFileDialog('.control', true, 'text');
+                    for (let f of files) {
+                        let control: IControl = JSON.parse(<string>f.data);
+                        let nm = f.name;
+                        if (nm.endsWith('.control'))
+                            nm = nm.substring(0, nm.length - 8);
+                        await iobrokerHandler.saveControl(nm, control);
+                    }
+                }
+            }], event);
+        }
+
+        let controlsNode: TreeNodeData = {
+            contextMenu: (event => controlsNodeCtxMenu(event)),
+            title: 'CustomControls',
+            folder: true,
+            key: 'controls',
+            lazy: true,
+            lazyload: (event, node) => this._lazyLoadControlsNodes(event, node)
+        }
+        return controlsNode;
+    }
+
+    private _lazyLoadControlsNodes(event: any, data: any) {
+        data.result = new Promise<TreeNodeData[]>(async resolve => {
+            let controlNodeCtxMenu = (event, control) => {
+                ContextMenu.show([{
+                    title: 'Export Control', action: async () => {
+                        let data = await iobrokerHandler.getControl(control);
+                        await exportData(JSON.stringify(data), data + '.control')
+                    }
+                }, {
+                    title: 'Remove Control', action: () => {
+                        if (confirm("are you sure?"))
+                            iobrokerHandler.removeControl(control);
+                    }
+                }], event);
+            }
+            let controls = await iobrokerHandler.getControlNames();
+            resolve(controls.map(x => ({
+                title: x,
+                folder: false,
+                contextMenu: (event => controlNodeCtxMenu(event, x)),
+                dblclick: (e, d) => {
+                    iobrokerHandler.getControl(d.node.data.name).then(s => {
+                        window.appShell.openScreenEditor(d.node.data.name, 'control', s.html, s.style, s.properties);
+                    });
+                },
+                data: { type: 'control', name: x }
+            })));
+        });
+    }
+
+    private async _createWebcomponentsNode() {
+        let controlsNode: TreeNodeData = {
+            title: 'Webcomponents', folder: true, children: []
         }
 
         for (const s of this.serviceContainer.elementsServices) {
@@ -581,11 +701,23 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
                             data.dropEffect = "copy";
                             return true;
+                        } else if (data.node.data.type == 'control') {
+                            const control = data.node.data.name;
+                            let nm = PropertiesHelper.camelToDashCase(control);
+                            if (nm[0] !== '-')
+                                nm = '-' + nm;
+                            let name = 'iobroker-webui-custom-control' + nm;
+                            const elementDef: IElementDefinition = { tag: name, defaultWidth: '300px', defaultHeight: '200px' }
+                            data.effectAllowed = "all";
+                            data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
+                            data.dropEffect = "copy";
+                            return true;
                         } else if (data.node.data.type == 'image') {
                             const image = data.node.data.name;
                             const elementDef: IElementDefinition = { tag: "img", defaultAttributes: { 'src': iobrokerHandler.imagePrefix + image } }
                             data.effectAllowed = "all";
                             data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
+                            data.dataTransfer.setData(dragDropFormatNamePropertyGrid, JSON.stringify({ 'type': 'image', 'text': iobrokerHandler.imagePrefix + image }));
                             data.dropEffect = "copy";
                             return true;
                         } else if (data.node.data.type == 'flot') {
@@ -616,6 +748,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             const elementDef: IElementDefinition = { tag: "iobroker-webui-svg-image", defaultAttributes: { 'src': data.node.data.file }, defaultWidth: '32px', defaultHeight: '32px' }
                             data.effectAllowed = "all";
                             data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
+                            data.dataTransfer.setData(dragDropFormatNamePropertyGrid, JSON.stringify({ 'type': 'icon', 'text': data.node.data.file }));
                             data.dropEffect = "copy";
                             return true;
                         }

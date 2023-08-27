@@ -37,6 +37,7 @@ export class CommandHandling {
     box-sizing: border-box;
 }`;
       if (screen) {
+        let screentype: 'screen' | 'control' = 'screen';
         if (commandParameter == 'grid') {
           let columns = parseInt(prompt("No Columns:", "12"));
           let rows = parseInt(prompt("No Rows:", "8"));
@@ -49,7 +50,9 @@ export class CommandHandling {
     padding: 10px;
 }`
         }
-        this.iobrokerWebuiAppShell.openScreenEditor(screen, null, style);
+        if (commandParameter == 'control')
+          screentype = 'control';
+        this.iobrokerWebuiAppShell.openScreenEditor(screen, screentype, null, style);
       }
     }
     else if (commandName === 'save') {

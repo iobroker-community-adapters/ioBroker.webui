@@ -2,11 +2,17 @@ import { BaseCustomWebComponentConstructorAppend, Disposable, css, html } from "
 import { DocumentContainer, IUiCommand, IUiCommandHandler, ServiceContainer, } from "@node-projects/web-component-designer"
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IScreen } from "../interfaces/IScreen.js";
+import { IControl } from "../interfaces/IControl.js";
 
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
 
     private _name: string;
     public get name() { return this._name; }
+
+    private _type: 'screen' | 'control';
+
+    private _properties: Record<string, string>;
+
     private _configChangedListener: Disposable;
 
     public documentContainer: DocumentContainer;
@@ -15,8 +21,14 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
 
     public static override style = css``;
 
-    public async initialize(name: string, html: string, style: string, serviceContainer: ServiceContainer) {
+    public async initialize(name: string, type: 'screen' | 'control', html: string, style: string, properties: Record<string, string>, serviceContainer: ServiceContainer) {
+        this.title = type + ' - ' + name;
+
         this._name = name;
+        this._type = type;
+        if (this._type == 'control') {
+            this._properties = properties ?? {};
+        }
 
         this.documentContainer = new DocumentContainer(serviceContainer);
         this.documentContainer.additionalStylesheets = [
@@ -69,8 +81,13 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         if ((<string>command.type) == 'save') {
             let html = this.documentContainer.designerView.getHTML();
             let style = this.documentContainer.additionalData.model.getValue();
-            let screen: IScreen = { html, style, settings: {} };
-            await iobrokerHandler.saveScreen(this._name, screen);
+            if (this._type == 'screen') {
+                let screen: IScreen = { html, style, settings: {} };
+                await iobrokerHandler.saveScreen(this._name, screen);
+            } else {
+                let control: IControl = { html, style, settings: {}, properties: this._properties };
+                await iobrokerHandler.saveControl(this._name, control);
+            }
         } else
             this.documentContainer.executeCommand(command);
     }
@@ -86,11 +103,13 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         window.appShell.propertyGrid.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
         window.appShell.treeViewExtended.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
         window.appShell.eventsAssignment.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
+        window.appShell.controlpropertiesEditor.setProperties(this._properties);
     }
 
     dispose() {
         this.documentContainer.dispose();
         this._configChangedListener?.dispose();
+        window.appShell.controlpropertiesEditor.setProperties(null);
     }
 }
 

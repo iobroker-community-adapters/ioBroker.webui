@@ -3,6 +3,8 @@ import { TypedEvent } from "@node-projects/base-custom-webcomponent";
 import { IScreen } from "../interfaces/IScreen.js";
 import { IWebUiConfig } from "../interfaces/IWebUiConfig.js";
 import { sleep } from "@node-projects/web-component-designer/dist/elements/helper/Helper.js";
+import { IControl } from "../interfaces/IControl.js";
+import { generateCustomControl } from "../runtime/CustomControls.js";
 
 declare global {
     interface Window {
@@ -14,6 +16,7 @@ declare global {
 }
 
 const screenFileExtension = ".screen";
+const controlFileExtension = ".control";
 
 class IobrokerHandler {
 
@@ -32,6 +35,7 @@ class IobrokerHandler {
     config: IWebUiConfig;
 
     screensChanged = new TypedEvent<void>();
+    controlsChanged = new TypedEvent<void>();
     imagesChanged = new TypedEvent<void>();
     configChanged = new TypedEvent<void>();
 
@@ -124,6 +128,67 @@ class IobrokerHandler {
         this.screensChanged.emit();
     }
 
+    private _controlNames: string[];
+    private _controls: Map<string, IControl> = new Map();
+
+    async loadAllControls() {
+        let names = await this.getControlNames();
+        let p: Promise<any>[] = [];
+        for (let n of names) {
+            p.push(this.getControl(n));
+        }
+        await Promise.all(p);
+    }
+
+    async getControlNames() {
+        if (this._controlNames) return this._controlNames;
+        if (this._readyPromises)
+            this.waitForReady();
+        try {
+            const files = await this.connection.readDir(this.namespaceFiles, this.configPath + "controls")
+            const controlNames = files
+                .filter(x => x.file.endsWith(controlFileExtension))
+                .map(x => x.file.substring(0, x.file.length - controlFileExtension.length));
+            this._controlNames = controlNames;
+            return controlNames;
+        } catch (err) {
+            console.warn('no controls loaded', err);
+        }
+        return []
+    }
+
+    async getControl(name: string): Promise<IControl> {
+        let control = this._controls.get(name.toLocaleLowerCase());
+        if (!control) {
+            if (this._readyPromises)
+                this.waitForReady();
+            try {
+                control = await this._getObjectFromFile<IControl>(this.configPath + "controls/" + name + controlFileExtension);
+            }
+            catch (err) {
+                console.error("Error reading Control", control, err);
+            }
+            this._controls.set(name.toLocaleLowerCase(), control);
+        }
+        generateCustomControl(name, control);
+        return control;
+    }
+
+    async saveControl(name: string, control: IControl) {
+        this._saveObjectToFile(control, "/" + this.configPath + "controls/" + name.toLocaleLowerCase() + controlFileExtension);
+        generateCustomControl(name, control);
+        this._controls.set(name.toLocaleLowerCase(), control);
+        this._controlNames = null;
+        this.controlsChanged.emit();
+    }
+
+    async removeControl(name: string) {
+        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "controls/" + name.toLocaleLowerCase() + controlFileExtension);
+        this._controls.delete(name.toLocaleLowerCase());
+        this._controlNames = null;
+        this.controlsChanged.emit();
+    }
+
     async getImageNames() {
         if (this._readyPromises)
             this.waitForReady();
@@ -138,6 +203,11 @@ class IobrokerHandler {
     async saveImage(name: string, imageData: Blob) {
         await this._saveBinaryToFile(imageData, "/" + this.configPath + "images/" + name);
         this.imagesChanged.emit();
+    }
+
+    async getImage(name: string) {
+        const file = await this.connection.readFile(this.namespaceFiles, "/" + this.configPath + "images/" + name, false);
+        return <{ mimType: string, file: ArrayBuffer }><any>file;
     }
 
     async removeImage(name: string) {

@@ -25,6 +25,7 @@ import "./IobrokerWebuiStyleEditor.js";
 import "./IobrokerWebuiEventAssignment.js";
 import "./IobrokerWebuiSplitView.js";
 import "./IobrokerWebuiPropertyGrid.js";
+import "./IobrokerWebuiControlPropertiesEditor.js";
 
 import { IobrokerWebuiSolutionExplorer } from './IobrokerWebuiSolutionExplorer.js';
 import { IobrokerWebuiStyleEditor } from './IobrokerWebuiStyleEditor.js';
@@ -32,6 +33,7 @@ import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
 import { IobrokerWebuiEventAssignment } from './IobrokerWebuiEventAssignment.js';
 import { IobrokerWebuiConfirmationWrapper } from './IobrokerWebuiConfirmationWrapper.js';
 import { getPanelContainerForElement } from './DockHelper.js';
+import { IobrokerWebuiControlPropertiesEditor } from './IobrokerWebuiControlPropertiesEditor.js';
 
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
   activeElement: HTMLElement;
@@ -43,6 +45,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
 
 
   public styleEditor: IobrokerWebuiStyleEditor;
+  public controlpropertiesEditor: IobrokerWebuiControlPropertiesEditor;
   public propertyGrid: PropertyGrid;
   public treeViewExtended: TreeViewExtended;
   public eventsAssignment: IobrokerWebuiEventAssignment;
@@ -102,6 +105,10 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
           <div id="lower" title="style" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.25" style="overflow: hidden; width: 100%;">
             <iobroker-webui-style-editor id="styleEditor"></iobroker-webui-style-editor>
           </div>
+
+          <div id="propertiesDock" title="control prop." style="overflow: hidden; width: 100%;" dock-spawn-dock-to="eventsDock">
+            <iobroker-webui-control-properties-editor id="propertiesEditor"></iobroker-webui-control-properties-editor>
+          </div>
         </dock-spawn-ts>
       </div>
     `;
@@ -113,6 +120,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     this.treeViewExtended = this._getDomElement<TreeViewExtended>('treeViewExtended');
     this.propertyGrid = this._getDomElement<PropertyGrid>('propertyGrid');
     this.styleEditor = this._getDomElement<IobrokerWebuiStyleEditor>('styleEditor');
+    this.controlpropertiesEditor = this._getDomElement<IobrokerWebuiControlPropertiesEditor>('propertiesEditor');
     this.eventsAssignment = this._getDomElement<IobrokerWebuiEventAssignment>('eventsList');
 
     const linkElement = document.createElement("link");
@@ -155,62 +163,11 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   }
 
   private async _setupServiceContainer() {
-    serviceContainer.globalContext.onToolChanged.on((e) => {
-      let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue.tool).map(([k]) => k)[0];
-      if (e.newValue == null)
-        name = "Pointer"
-      const buttons = Array.from<HTMLButtonElement>(document.getElementById('tools').querySelectorAll('[data-command]'));
-      for (const b of buttons) {
-        if (b.dataset.commandParameter == name)
-          b.style.backgroundColor = "green"
-        else
-          b.style.backgroundColor = ""
-      }
-    });
-
-    //await this.loadNpmPackages();
     this._solutionExplorer.initialize(serviceContainer);
     this.propertyGrid.serviceContainer = serviceContainer;
   }
 
-  /*async loadNpmPackages() {
-    let promises: Promise<void>[] = [];
-    try {
-      //todo: do not access connection from here
-      let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/package.json", false)).file);
-      for (let name of Object.keys(packageJson.dependencies)) {
-        promises.push(this.loadNpmPackage(name))
-      }
-      await Promise.allSettled(promises);
-    }
-    catch (err) {
-      console.warn("error loading package.json, may not yet exist", err);
-    }
-  }*/
 
-  /*private async loadNpmPackage(name: string) {
-    try {
-      let packageJson = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/node_modules/" + name + "/package.json", false)).file);
-      let customElementsJsonName = "custom-elements.json";
-      if (packageJson["customElements"])
-        customElementsJsonName = packageJson["customElements"];
-      try {
-        let manifest = JSON.parse(await (await iobrokerHandler.connection.readFile(iobrokerHandler.adapterName, "widgets/node_modules/" + name + "/" + customElementsJsonName, false)).file);
-        try {
-          serviceContainer.registerMultiple(['elementsService', 'propertyService'], new WebcomponentManifestParserService(name, manifest, "/webui/widgets/node_modules/" + name + ""));
-        }
-        catch (err) {
-          console.warn("error parsing manifest: " + name + "/" + customElementsJsonName, err);
-        }
-      }
-      catch (err) {
-        console.warn("error loading " + name + "/" + customElementsJsonName + ", may not yet exist", err);
-      }
-    }
-    catch (err) {
-      console.warn("error loading " + name + "/package.json, may not yet exist", err);
-    }
-  }*/
 
   openDock(element: HTMLElement) {
     element.setAttribute('dock-spawn-panel-type', 'document');
@@ -249,10 +206,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     });
   }
 
-  public async openScreenEditor(name: string, html: string, style: string) {
+  public async openScreenEditor(name: string, type: 'screen' | 'control', html: string, style: string, properties?: Record<string, string>) {
     let screenEditor = new IobrokerWebuiScreenEditor();
-    await screenEditor.initialize(name, html, style, serviceContainer);
-    screenEditor.title = 'screen - ' + name;
+    await screenEditor.initialize(name, type, html, style, properties, serviceContainer);
     this.openDock(screenEditor);
   }
 
