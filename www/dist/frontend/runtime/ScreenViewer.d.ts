@@ -15,5 +15,5 @@ export declare class ScreenViewer extends BaseCustomWebComponentConstructorAppen
     removeBindings(): void;
     private _loadScreen;
     loadScreenData(html: any, style: any): void;
-    assignAllScripts(): Promise<void>;
+    static assignAllScripts(shadowRoot: ShadowRoot, instance: HTMLElement): Promise<void>;
 }

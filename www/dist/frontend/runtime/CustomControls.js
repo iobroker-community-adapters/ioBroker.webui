@@ -1,5 +1,6 @@
 import { BaseCustomWebComponentLazyAppend, css, cssFromString } from "@node-projects/base-custom-webcomponent";
 import { PropertiesHelper } from "@node-projects/web-component-designer";
+import { ScreenViewer } from "./ScreenViewer.js";
 export class BaseCustomControl extends BaseCustomWebComponentLazyAppend {
     constructor() {
         super();
@@ -53,6 +54,8 @@ export function generateCustomControl(name, control) {
                     configurable: true,
                 });
             }
+            //@ts-ignore - todo: maybe do it in another way? _rootDocumentFragment is not accessible normaly?
+            ScreenViewer.assignAllScripts(instance._rootDocumentFragment, instance);
             return instance;
         };
         window['IobrokerWebuiCustomControl' + name]._template = template;

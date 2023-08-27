@@ -470,7 +470,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             let nm = f.name;
                             if (nm.endsWith('.control'))
                                 nm = nm.substring(0, nm.length - 8);
-                            await iobrokerHandler.saveControl(nm, control);
+                            await iobrokerHandler.saveCustomControl(nm, control);
                         }
                     }
                 }], event);
@@ -490,27 +490,27 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             let controlNodeCtxMenu = (event, control) => {
                 ContextMenu.show([{
                         title: 'Export Control', action: async () => {
-                            let data = await iobrokerHandler.getControl(control);
-                            await exportData(JSON.stringify(data), data + '.control');
+                            let data = await iobrokerHandler.getCustomControl(control);
+                            await exportData(JSON.stringify(data), control + '.control');
                         }
                     }, {
                         title: 'Remove Control', action: () => {
                             if (confirm("are you sure?"))
-                                iobrokerHandler.removeControl(control);
+                                iobrokerHandler.removeCustomControl(control);
                         }
                     }], event);
             };
-            let controls = await iobrokerHandler.getControlNames();
+            let controls = await iobrokerHandler.getCustomControlNames();
             resolve(controls.map(x => ({
                 title: x,
                 folder: false,
                 contextMenu: (event => controlNodeCtxMenu(event, x)),
                 dblclick: (e, d) => {
-                    iobrokerHandler.getControl(d.node.data.name).then(s => {
+                    iobrokerHandler.getCustomControl(d.node.data.name).then(s => {
                         window.appShell.openScreenEditor(d.node.data.name, 'control', s.html, s.style, s.properties);
                     });
                 },
-                data: { type: 'control', name: x }
+                data: { type: 'customcontrol', name: x }
             })));
         });
     }
@@ -644,7 +644,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             data.dropEffect = "copy";
                             return true;
                         }
-                        else if (data.node.data.type == 'control') {
+                        else if (data.node.data.type == 'customcontrol') {
                             const control = data.node.data.name;
                             let nm = PropertiesHelper.camelToDashCase(control);
                             if (nm[0] !== '-')

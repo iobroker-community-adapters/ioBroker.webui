@@ -62,7 +62,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
             }
             else {
                 let control = { html, style, settings: {}, properties: this._properties };
-                await iobrokerHandler.saveControl(this._name, control);
+                await iobrokerHandler.saveCustomControl(this._name, control);
             }
         }
         else

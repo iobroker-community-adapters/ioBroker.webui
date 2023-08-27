@@ -39,11 +39,11 @@ declare class IobrokerHandler {
     removeScreen(name: string): Promise<void>;
     private _controlNames;
     private _controls;
-    loadAllControls(): Promise<void>;
-    getControlNames(): Promise<string[]>;
-    getControl(name: string): Promise<IControl>;
-    saveControl(name: string, control: IControl): Promise<void>;
-    removeControl(name: string): Promise<void>;
+    loadAllCustomControls(): Promise<void>;
+    getCustomControlNames(): Promise<string[]>;
+    getCustomControl(name: string): Promise<IControl>;
+    saveCustomControl(name: string, control: IControl): Promise<void>;
+    removeCustomControl(name: string): Promise<void>;
     getImageNames(): Promise<string[]>;
     saveImage(name: string, imageData: Blob): Promise<void>;
     getImage(name: string): Promise<{

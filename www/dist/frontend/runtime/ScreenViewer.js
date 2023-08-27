@@ -69,7 +69,7 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
         //this._bindingsParse(documentFragment, true);
         this.shadowRoot.appendChild(documentFragment);
         this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath);
-        this.assignAllScripts();
+        ScreenViewer_1.assignAllScripts(this.shadowRoot, this);
     }
     /*
     _states: { [name: string]: any } = {};
@@ -91,15 +91,18 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
         iobrokerHandler.connection.setState(name, value);
     }
     */
-    async assignAllScripts() {
-        const allElements = this.shadowRoot.querySelectorAll('*');
-        const scriptTag = this.shadowRoot.querySelector('script[type=module]');
+    static async assignAllScripts(shadowRoot, instance) {
+        const allElements = shadowRoot.querySelectorAll('*');
+        const scriptTag = shadowRoot.querySelector('script[type=module]');
         let jsObject = null;
         if (scriptTag) {
             try {
                 const scriptUrl = URL.createObjectURL(new Blob([scriptTag.textContent], { type: 'application/javascript' }));
                 //@ts-ignore
                 jsObject = await importShim(scriptUrl);
+                if (jsObject.init) {
+                    jsObject.init(instance);
+                }
             }
             catch (err) {
                 console.warn('error parsing javascript', err);
@@ -120,7 +123,7 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
                                 if (!jsObject[script])
                                     console.warn('javascritp function named: ' + script + ' not found, maybe missing a "export" ?');
                                 else
-                                    jsObject[script](evt, e, this.shadowRoot);
+                                    jsObject[script](evt, e, shadowRoot);
                             });
                         }
                     }

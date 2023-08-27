@@ -95,15 +95,16 @@ class IobrokerHandler {
         this._screenNames = null;
         this.screensChanged.emit();
     }
-    async loadAllControls() {
-        let names = await this.getControlNames();
+    async loadAllCustomControls() {
+        await iobrokerHandler.waitForReady();
+        let names = await this.getCustomControlNames();
         let p = [];
         for (let n of names) {
-            p.push(this.getControl(n));
+            p.push(this.getCustomControl(n));
         }
         await Promise.all(p);
     }
-    async getControlNames() {
+    async getCustomControlNames() {
         if (this._controlNames)
             return this._controlNames;
         if (this._readyPromises)
@@ -121,7 +122,7 @@ class IobrokerHandler {
         }
         return [];
     }
-    async getControl(name) {
+    async getCustomControl(name) {
         let control = this._controls.get(name.toLocaleLowerCase());
         if (!control) {
             if (this._readyPromises)
@@ -137,14 +138,14 @@ class IobrokerHandler {
         generateCustomControl(name, control);
         return control;
     }
-    async saveControl(name, control) {
+    async saveCustomControl(name, control) {
         this._saveObjectToFile(control, "/" + this.configPath + "controls/" + name.toLocaleLowerCase() + controlFileExtension);
         generateCustomControl(name, control);
         this._controls.set(name.toLocaleLowerCase(), control);
         this._controlNames = null;
         this.controlsChanged.emit();
     }
-    async removeControl(name) {
+    async removeCustomControl(name) {
         await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "controls/" + name.toLocaleLowerCase() + controlFileExtension);
         this._controls.delete(name.toLocaleLowerCase());
         this._controlNames = null;
