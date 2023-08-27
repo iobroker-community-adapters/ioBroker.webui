@@ -4,6 +4,23 @@ webui for ioBroker
 
 ![image](https://user-images.githubusercontent.com/364896/147159584-e0e43d37-9e63-409d-867b-458c5dd8be4e.png)
 
+## Description
+
+This is a complete visualization sytsem for ioBroker.
+
+It includes features like:
+
+  - own simple scripting language
+  - binding to ioBroker objects including converters & javascript expressions
+  - drag drop of external images
+  - drag drop of ioBroker objects to automaticy create bindings
+  - relative signal paths to ioBroker objects
+  - split view edit of html code
+  - global styling support
+  - usage of npm packages containing webcomponents
+  - screens inside of screens
+  - icons from habpanel included
+
 ## Sponsoring
 
 If you want to help the development, sponsor this project at https://github.com/sponsors/jogibear9988
