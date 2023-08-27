@@ -3,8 +3,13 @@ import { DocumentContainer, } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend {
     get name() { return this._name; }
-    async initialize(name, html, style, serviceContainer) {
+    async initialize(name, type, html, style, properties, serviceContainer) {
+        this.title = type + ' - ' + name;
         this._name = name;
+        this._type = type;
+        if (this._type == 'control') {
+            this._properties = properties ?? {};
+        }
         this.documentContainer = new DocumentContainer(serviceContainer);
         this.documentContainer.additionalStylesheets = [
             {
@@ -51,8 +56,14 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         if (command.type == 'save') {
             let html = this.documentContainer.designerView.getHTML();
             let style = this.documentContainer.additionalData.model.getValue();
-            let screen = { html, style, settings: {} };
-            await iobrokerHandler.saveScreen(this._name, screen);
+            if (this._type == 'screen') {
+                let screen = { html, style, settings: {} };
+                await iobrokerHandler.saveScreen(this._name, screen);
+            }
+            else {
+                let control = { html, style, settings: {}, properties: this._properties };
+                await iobrokerHandler.saveControl(this._name, control);
+            }
         }
         else
             this.documentContainer.executeCommand(command);
@@ -67,10 +78,12 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         window.appShell.propertyGrid.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
         window.appShell.treeViewExtended.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
         window.appShell.eventsAssignment.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
+        window.appShell.controlpropertiesEditor.setProperties(this._properties);
     }
     dispose() {
         this.documentContainer.dispose();
         this._configChangedListener?.dispose();
+        window.appShell.controlpropertiesEditor.setProperties(null);
     }
 }
 IobrokerWebuiScreenEditor.template = html ``;

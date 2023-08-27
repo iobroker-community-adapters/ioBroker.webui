@@ -7,9 +7,11 @@ import "./IobrokerWebuiStyleEditor.js";
 import "./IobrokerWebuiEventAssignment.js";
 import "./IobrokerWebuiSplitView.js";
 import "./IobrokerWebuiPropertyGrid.js";
+import "./IobrokerWebuiControlPropertiesEditor.js";
 import { IobrokerWebuiSolutionExplorer } from './IobrokerWebuiSolutionExplorer.js';
 import { IobrokerWebuiStyleEditor } from './IobrokerWebuiStyleEditor.js';
 import { IobrokerWebuiEventAssignment } from './IobrokerWebuiEventAssignment.js';
+import { IobrokerWebuiControlPropertiesEditor } from './IobrokerWebuiControlPropertiesEditor.js';
 export declare class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
     activeElement: HTMLElement;
     mainPage: string;
@@ -17,6 +19,7 @@ export declare class IobrokerWebuiAppShell extends BaseCustomWebComponentConstru
     private _dockManager;
     _solutionExplorer: IobrokerWebuiSolutionExplorer;
     styleEditor: IobrokerWebuiStyleEditor;
+    controlpropertiesEditor: IobrokerWebuiControlPropertiesEditor;
     propertyGrid: PropertyGrid;
     treeViewExtended: TreeViewExtended;
     eventsAssignment: IobrokerWebuiEventAssignment;
@@ -30,7 +33,7 @@ export declare class IobrokerWebuiAppShell extends BaseCustomWebComponentConstru
         close: () => void;
     };
     openConfirmation(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement): Promise<boolean>;
-    openScreenEditor(name: string, html: string, style: string): Promise<void>;
+    openScreenEditor(name: string, type: 'screen' | 'control', html: string, style: string, properties?: Record<string, string>): Promise<void>;
     openGlobalStyleEditor(style: string): Promise<void>;
 }
 declare global {

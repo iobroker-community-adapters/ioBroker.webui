@@ -2,6 +2,7 @@ import { Connection } from "@iobroker/socket-client";
 import { TypedEvent } from "@node-projects/base-custom-webcomponent";
 import { IScreen } from "../interfaces/IScreen.js";
 import { IWebUiConfig } from "../interfaces/IWebUiConfig.js";
+import { IControl } from "../interfaces/IControl.js";
 declare global {
     interface Window {
         iobrokerHost: string;
@@ -22,6 +23,7 @@ declare class IobrokerHandler {
     imagePrefix: string;
     config: IWebUiConfig;
     screensChanged: TypedEvent<void>;
+    controlsChanged: TypedEvent<void>;
     imagesChanged: TypedEvent<void>;
     configChanged: TypedEvent<void>;
     _readyPromises: (() => void)[];
@@ -35,8 +37,19 @@ declare class IobrokerHandler {
     getScreen(name: string): Promise<IScreen>;
     saveScreen(name: string, screen: IScreen): Promise<void>;
     removeScreen(name: string): Promise<void>;
+    private _controlNames;
+    private _controls;
+    loadAllControls(): Promise<void>;
+    getControlNames(): Promise<string[]>;
+    getControl(name: string): Promise<IControl>;
+    saveControl(name: string, control: IControl): Promise<void>;
+    removeControl(name: string): Promise<void>;
     getImageNames(): Promise<string[]>;
     saveImage(name: string, imageData: Blob): Promise<void>;
+    getImage(name: string): Promise<{
+        mimType: string;
+        file: ArrayBuffer;
+    }>;
     removeImage(name: string): Promise<void>;
     private _getConfig;
     saveConfig(): Promise<void>;

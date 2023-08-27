@@ -10,6 +10,7 @@ import customElementsObserver from "../widgets/customElementsObserver.js";
 import { IobrokerWebuiExternalDragDropService } from "../services/IobrokerWebuiExternalDragDropService.js";
 import { IobrokerWebuiCopyPasteService } from "../services/IobrokerWebuiCopyPasteService.js";
 import { IobrokerWebuiEventsService } from "../services/IobrokerWebuiEventsService.js";
+import { IobrokerWebuiPropertyGridDragDropService } from "../services/IobrokerWebuiPropertyGridDragDropService.js";
 const rootPath = new URL(import.meta.url).pathname.split('/').slice(0, -4).join('/'); // -2 remove file & dist
 const serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
@@ -21,6 +22,7 @@ serviceContainer.register("demoProviderService", new IobrokerWebuiDemoProviderSe
 serviceContainer.register("externalDragDropService", new IobrokerWebuiExternalDragDropService());
 serviceContainer.register("copyPasteService", new IobrokerWebuiCopyPasteService());
 serviceContainer.register("eventsService", new IobrokerWebuiEventsService());
+serviceContainer.register("propertyGridDragDropService", new IobrokerWebuiPropertyGridDragDropService());
 serviceContainer.register("stylesheetService", designerCanvas => new CssToolsStylesheetService(designerCanvas));
 serviceContainer.config.codeViewWidget = CodeViewMonaco;
 serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/frontend/elements-webui.json'));
@@ -73,5 +75,17 @@ import(window.iobrokerWebRootUrl + 'webui.0.widgets/designerAddons.js').then(x =
     x.registerDesignerAddons(serviceContainer);
 }).catch(err => {
     console.error('error loading widgets designer addons', err);
+});
+serviceContainer.globalContext.onToolChanged.on((e) => {
+    let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue.tool).map(([k]) => k)[0];
+    if (e.newValue == null)
+        name = "Pointer";
+    const buttons = Array.from(document.getElementById('tools').querySelectorAll('[data-command]'));
+    for (const b of buttons) {
+        if (b.dataset.commandParameter == name)
+            b.style.backgroundColor = "green";
+        else
+            b.style.backgroundColor = "";
+    }
 });
 export default serviceContainer;
