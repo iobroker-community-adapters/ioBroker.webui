@@ -42,10 +42,25 @@ export function generateCustomControl(name: string, control: IControl) {
             this.constructor.template = window['IobrokerWebuiCustomControl' + name]._template;
             //@ts-ignore
             this.constructor.style = window['IobrokerWebuiCustomControl' + name]._style;
-             //@ts-ignore
+            //@ts-ignore
             this.constructor.properties = window['IobrokerWebuiCustomControl' + name]._properties;
             //@ts-ignore
             let instance = Reflect.construct(BaseCustomControl, [], window['IobrokerWebuiCustomControl' + name]);
+
+            for (let p in control.properties) {
+                Object.defineProperty(instance, p, {
+                    get() {
+                        return this['_' + p];
+                    },
+                    set(newValue) {
+                        this['_' + p] = newValue;
+                        this._bindingsRefresh(p);
+                    },
+                    enumerable: true,
+                    configurable: true,
+                });
+            }
+
             return instance;
         }
         window['IobrokerWebuiCustomControl' + name]._template = template;
