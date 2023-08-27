@@ -86,7 +86,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
                 await iobrokerHandler.saveScreen(this._name, screen);
             } else {
                 let control: IControl = { html, style, settings: {}, properties: this._properties };
-                await iobrokerHandler.saveControl(this._name, control);
+                await iobrokerHandler.saveCustomControl(this._name, control);
             }
         } else
             this.documentContainer.executeCommand(command);
