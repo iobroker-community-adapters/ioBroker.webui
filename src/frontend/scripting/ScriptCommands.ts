@@ -3,6 +3,17 @@ export declare type ScriptCommands = OpenScreen | OpenUrl |
     SetBitInSignal | ClearBitInSignal | ToggleBitInSignal |
     Javascript | SetElementProperty;
 
+
+    /* 
+    TODO:
+    Indirect Values in Scripts:
+    
+    Indirection Source:
+    Object Values,
+    Current Element Property
+     */
+
+
 export interface OpenScreen {
     type: 'OpenScreen';
     screen: string;
