@@ -5,9 +5,6 @@ export interface IIobrokerWebuiBinding {
     twoWay?: boolean;
     events?: string[];
     target: BindingTarget;
-    converter?: IBindingConverter;
+    converter?: Record<string, any>;
     expression?: string;
-}
-export interface IBindingConverter {
-    [condition: string]: any;
 }

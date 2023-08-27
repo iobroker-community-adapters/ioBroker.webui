@@ -41,7 +41,7 @@ for (let l of customElementsObserver.getElements()) {
 }
 
 serviceContainer.config.openBindingsEditor = async (property, designItems, binding, target) => {
-    let dynEdt = new IobrokerWebuiDynamicsEditor(property, binding, target);
+    let dynEdt = new IobrokerWebuiDynamicsEditor(property, <any>binding, target);
     let cw = new IobrokerWebuiConfirmationWrapper();
     cw.title = "Edit Binding of '" + property.name + "' - " + property.propertyType;
     cw.appendChild(dynEdt);

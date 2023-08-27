@@ -5,12 +5,13 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
         super();
         this.twoWayPossible = false;
         this.twoWay = false;
-        //public complex: boolean = false;
         this.expression = '';
         this.objectNames = '';
         this.invert = false;
+        this.converters = [];
+        this._activeRow = -1;
         super._restoreCachedInititalValues();
-        //this._property = property;
+        this._property = property;
         this._binding = binding;
         this._bindingTarget = bindingTarget;
     }
@@ -26,8 +27,35 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
             this.invert = this._binding.invert;
             if (this._binding.bindableObjectNames)
                 this.objectNames = this._binding.bindableObjectNames.join(';');
+            if (this._binding.converter) {
+                for (let c in this._binding.converter) {
+                    this.converters.push({ key: c, value: this._binding.converter[c] });
+                }
+            }
         }
         this._bindingsParse();
+    }
+    _focusRow(index) {
+        this._activeRow = index;
+        this._updatefocusedRow();
+    }
+    _updatefocusedRow() {
+        let g = this._getDomElement('converterGrid');
+        g.querySelectorAll('div').forEach(x => x.style.background = '');
+        if (this._activeRow >= 0)
+            g.children[this._activeRow + 1].style.background = 'gray';
+    }
+    addConverter() {
+        this.converters.push({ key: '', value: '' });
+        this._activeRow = this.converters.length - 1;
+        this._bindingsRefresh();
+        this._updatefocusedRow();
+    }
+    removeConverter() {
+        this.converters.splice(this._activeRow, 1);
+        this._activeRow = -1;
+        this._bindingsRefresh();
+        this._updatefocusedRow();
     }
 }
 IobrokerWebuiDynamicsEditor.template = html `
@@ -39,7 +67,7 @@ IobrokerWebuiDynamicsEditor.template = html `
                             <span style="cursor: pointer;" title="to use multiple objects, seprate them with semicolon (;)">objects</span>
                         </div>
                         <input class="row" value="{{?this.objectNames::change}}" style="flex-grow: 1;"></input>
-                        <select class="row" value="{{thi.objectValueType}}">
+                        <select class="row" value="{{this.objectValueType}}">
                             <option>number</option>
                             <option>boolean</option>
                             <option>string</string>
@@ -68,17 +96,26 @@ IobrokerWebuiDynamicsEditor.template = html `
                     </div>
                 </div>
             </div>
-            <div class="vertical-grid">
+            <div class="vertical-grid" style="border: solid 1px black; padding: 10px;">
                 <div class="bottomleft">
-                    <div style="height: 100%;">
-                        
+                    <div id="converterGrid" style="height: 100%;">
+                        <div style="width: 100%; height: 20px; display: flex;">
+                            <div style="width: 39%">condition</div>
+                            <div style="width: 59%">value</div>
+                        </div>
+                        <template repeat:item="[[this.converters]]">
+                            <div css:background-color="[[item.activeRow ? 'gray' : '']]" style="width: 100%; display: flex; height: 26px; justify-content: center; align-items: center;">
+                                <input type="text" value="{{item.key}}" @focus="[[this._focusRow(index)]]" style="width: 39%">
+                                <input type="[[this._property.type == 'color' ? 'color' : 'text']]" value="{{item.value}}" @focus="[[this._focusRow(index)]]" style="width: 59%">
+                            </div>
+                        </template>
                     </div>
                 </div>
                 <div class="controlbox" id="grid-controls">
-                    <button disabled type="button" id="add-row-button" value="add">
+                    <button type="button" id="add-row-button" value="add" @click="addConverter">
                         <span>add</span>
                     </button>
-                    <button disabled id="remove-row-button" value="remove" style="margin-top: 6px;">
+                    <button id="remove-row-button" value="remove" style="margin-top: 6px;" @click="removeConverter">
                         <span>remove</span>
                     </button>
                 </div>
@@ -89,6 +126,16 @@ IobrokerWebuiDynamicsEditor.style = css `
             box-sizing: border-box;
         }
         
+        #converterGrid {
+            display: flex;
+            gap: 2px;
+            flex-direction: column;
+        }
+        #converterGrid input {
+            height: 20px;
+            box-sizing: border-box;
+        }
+
         .padding_top {
             padding-top: 30px;
         }
@@ -147,6 +194,7 @@ IobrokerWebuiDynamicsEditor.properties = {
     twoWay: Boolean,
     expression: String,
     objectNames: String,
-    invert: Boolean
+    invert: Boolean,
+    converters: Array
 };
 customElements.define(IobrokerWebuiDynamicsEditor.is, IobrokerWebuiDynamicsEditor);

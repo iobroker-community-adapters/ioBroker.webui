@@ -10,14 +10,27 @@ export declare class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentC
         expression: StringConstructor;
         objectNames: StringConstructor;
         invert: BooleanConstructor;
+        converters: ArrayConstructor;
     };
     twoWayPossible: boolean;
     twoWay: boolean;
     expression: string;
     objectNames: string;
     invert: boolean;
+    converters: {
+        key: string;
+        value: any;
+    }[];
+    _property: IProperty;
     private _binding;
     private _bindingTarget;
-    constructor(property: IProperty, binding: IBinding, bindingTarget: BindingTarget);
+    private _activeRow;
+    constructor(property: IProperty, binding: IBinding & {
+        converter: Record<string, any>;
+    }, bindingTarget: BindingTarget);
     ready(): void;
+    _focusRow(index: number): void;
+    _updatefocusedRow(): void;
+    addConverter(): void;
+    removeConverter(): void;
 }

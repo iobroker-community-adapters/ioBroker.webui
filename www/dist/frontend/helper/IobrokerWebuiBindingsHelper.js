@@ -82,6 +82,9 @@ export class IobrokerWebuiBindingsHelper {
         if (binding.expression === null || binding.expression === '') {
             delete bindingCopy.expression;
         }
+        if (binding.twoWay === null || binding.twoWay === false) {
+            delete bindingCopy.twoWay;
+        }
         delete bindingCopy.target;
         if (binding.target == BindingTarget.content)
             return [bindingPrefixContent + 'html', JSON.stringify(bindingCopy)];
@@ -177,18 +180,6 @@ export class IobrokerWebuiBindingsHelper {
     }
     static handleValueChanged(element, binding, value, valuesObject, index) {
         let v = value.val;
-        /*
-        for (let i = 0; i < values.length; i++) {
-            const objectString = values[i];
-            if (typeof values[i] === 'string') {
-                evalstring += 'let  __' + i + " = '" + objectString + "';";
-            } else {
-                evalstring += 'let  __' + i + ' = ' + objectString + ';';
-            }
-        }
-        evalstring += ' ' + expression + ';';
-        const value = eval(evalstring);
-        */
         if (binding[1].expression) {
             valuesObject[index] = value;
             let evalstring = '';
@@ -200,6 +191,51 @@ export class IobrokerWebuiBindingsHelper {
             v = eval(evalstring);
         }
         if (binding[1].converter) {
+            const stringValue = v.toString();
+            if (stringValue in binding[1].converter) {
+                v = binding[1].converter[stringValue];
+            }
+            else {
+                for (let c in binding[1].converter) {
+                    if (c.length > 2 && c[0] === '>' && c[1] === '=') {
+                        const wr = c.substring(2);
+                        if (v >= wr) {
+                            v = binding[1].converter[c];
+                            break;
+                        }
+                    }
+                    else if (c.length > 2 && c[0] === '<' && c[1] === '=') {
+                        const wr = c.substring(2);
+                        if (v <= wr) {
+                            v = binding[1].converter[c];
+                            break;
+                        }
+                    }
+                    else if (c.length > 1 && c[0] === '>') {
+                        const wr = c.substring(1);
+                        if (v > wr) {
+                            v = binding[1].converter[c];
+                            break;
+                        }
+                    }
+                    else if (c.length > 1 && c[0] === '<') {
+                        const wr = c.substring(1);
+                        if (v < wr) {
+                            v = binding[1].converter[c];
+                            break;
+                        }
+                    }
+                    else {
+                        const sp = c.split('-');
+                        if (sp.length > 1) {
+                            if ((sp[0] === '' || v >= sp[0]) && (sp[1] === '' || sp[1] >= v)) {
+                                v = binding[1].converter[c];
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
         if (binding[1].inverted)
             v = !v;
