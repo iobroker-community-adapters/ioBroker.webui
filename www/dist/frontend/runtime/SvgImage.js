@@ -7,6 +7,10 @@ let SvgImage = class SvgImage extends BaseCustomWebComponentConstructorAppend {
         this._head = this._getDomElement('head');
         this._main = this._getDomElement('main');
         this._foot = this._getDomElement('foot');
+        this.src = this.src;
+        this.bgImageSrc = this.bgImageSrc;
+        this.name = this.name;
+        this.value = this.value;
     }
     ready() {
         this._parseAttributesToProperties();
@@ -16,13 +20,15 @@ let SvgImage = class SvgImage extends BaseCustomWebComponentConstructorAppend {
     }
     set src(value) {
         this._src = value;
-        if (value) {
-            fetch(value).then(async (x) => {
-                this._main.innerHTML = await x.text();
-            });
-        }
-        else {
-            this._main.innerHTML = '';
+        if (this._main) {
+            if (value) {
+                fetch(value).then(async (x) => {
+                    this._main.innerHTML = await x.text();
+                });
+            }
+            else {
+                this._main.innerHTML = '';
+            }
         }
     }
     get bgImageSrc() {
@@ -44,14 +50,16 @@ let SvgImage = class SvgImage extends BaseCustomWebComponentConstructorAppend {
     }
     set value(value) {
         this._value = value;
-        this._foot.innerText = value ?? '';
+        if (this._foot)
+            this._foot.innerText = value ?? '';
     }
     get name() {
         return this._name;
     }
     set name(value) {
         this._name = value;
-        this._head.innerText = value ?? '';
+        if (this._head)
+            this._head.innerText = value ?? '';
     }
 };
 SvgImage.style = css `
