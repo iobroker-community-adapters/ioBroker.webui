@@ -35,8 +35,8 @@ export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentProper
             } else if (type === 'boolean') {
                 let property: IProperty = { name: name, type: "boolean", service: this, propertyType: PropertyType.propertyAndAttribute };
                 properties.push(property);
-            } else if (type === 'enum') {
-                let property: IProperty = { name: name, type: "enum", enumValues: [], service: this, propertyType: PropertyType.propertyAndAttribute };
+            } else if (type.startsWith("[")) {
+                let property: IProperty = { name: name, type: "list", values: <string[]>JSON.parse(type), service: this, propertyType: PropertyType.propertyAndAttribute };
                 properties.push(property);
             } else {
                 let property: IProperty = { name: name, type: "string", service: this, propertyType: PropertyType.propertyAndAttribute };

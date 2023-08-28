@@ -5,7 +5,7 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
     static override style = css`
     :host {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 30px;
         overflow-y: auto;
         align-content: start;
         height: 100%;
@@ -21,15 +21,18 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
     static override template = html`
         <template repeat:item="[[this.properties]]">
             <input value="{{item.name}}" @input="[[this.changed()]]">
-            <select value="{{item.type}}" @change="[[this.changed()]]">
+            <select css:display="[[item.type == 'enum' ? 'none' : '']]" value="{{item.type}}" @change="[[this.changed()]]">
                 <option value="string">string</option>
                 <option value="boolean">boolean</option>
                 <option value="number">number</option>
                 <option value="color">color</option>
                 <option value="date">date</option>
             </select>
+            <input css:display="[[item.type == 'enum' ? '' : 'none']]" value="{{?item.values}}" @input="[[this.changed()]]">
+            <button @click="[[this.removeProp(index)]]">del</button>
         </template>
-        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 2;" @click="add">add...</button>`;
+        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 3;" @click="addProp">add...</button>
+        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 3;" @click="addEnumProp">add enum...</button>`;
 
     constructor() {
         super();
@@ -41,7 +44,7 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
         this._assignEvents();
     }
 
-    public properties: { name: string, type: string }[];
+    public properties: { name: string, type: string, values?: string }[];
     public propertiesObj: Record<string, string>
 
     public setProperties(properties: Record<string, string>) {
@@ -49,7 +52,10 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
         if (properties) {
             this.properties = [];
             for (let p in properties) {
-                this.properties.push({ name: p, type: properties[p] });
+                if (properties[p].startsWith("["))
+                    this.properties.push({ name: p, type: 'enum', values: properties[p] });
+                else
+                    this.properties.push({ name: p, type: properties[p] });
             }
         } else {
             this.properties = null;
@@ -61,8 +67,18 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
         this._bindingsRefresh();
     }
 
-    public add() {
+    public addProp() {
         this.properties.push({ name: '', type: 'string' });
+        this._bindingsRefresh();
+    }
+
+    public addEnumProp() {
+        this.properties.push({ name: '', type: 'enum', values: '["a", "b"]' });
+        this._bindingsRefresh();
+    }
+
+    public removeProp(index: number) {
+        this.properties.splice(index, 1);
         this._bindingsRefresh();
     }
 
@@ -74,7 +90,12 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
         }
         for (let p of this.properties) {
             if (p.name) {
-                this.propertiesObj[p.name] = p.type;
+                if (p.type != 'enum')
+                    this.propertiesObj[p.name] = p.type;
+                else {
+                    if (p.values)
+                        this.propertiesObj[p.name] = p.values;
+                }
             }
         }
     }

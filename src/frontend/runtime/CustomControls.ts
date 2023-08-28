@@ -48,6 +48,8 @@ export function generateCustomControl(name: string, control: IControl) {
             properties[p] = Number;
         else if (val == 'date')
             properties[p] = Date;
+        else if (val.startsWith("[")) // enum
+            properties[p] = String;
         else
             properties[p] = Object;
     }
