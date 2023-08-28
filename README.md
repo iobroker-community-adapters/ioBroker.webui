@@ -86,6 +86,21 @@ You need to create a screen "start", this is the first one called when you open 
 but you can change this via query parameter:
 runtime.html?screenName=screen2
 
+# Changelog
+<!--
+	Placeholder for next versions:
+	### __WORK IN PROGRESS__
+-->
+### __WORK IN PROGRESS__
+- Import/Export of Screens/Images/Controls
+- Define your own Controls directly in webui
+- Drag/Drop of Icons/Images to Properties
+- Drag/Drop of objects to Bindings-Editor Signalname
+- Basic functionality of CustomControls
+
+### 0.1.0 (2023-08-27)
+-   initial public release
+
 ## License
 The MIT License (MIT)
 
