@@ -163,8 +163,13 @@ export class IobrokerWebuiBindingsHelper {
     static applyBinding(element: Element, binding: namedBinding, relativeSignalPath: string, root: HTMLElement): () => void {
         const signals = binding[1].signal.split(';');
         for (let i = 0; i < signals.length; i++) {
-            if (signals[i][0] === '?') { //local property access on custom controls
-                signals[i] = root[signals[i].substring(1)];
+            if (signals[i][0] === '?') { //access object path in property in custom control, todo: bind direct to property value in local property
+                let s = signals[i].substring(1);
+                if (s[0] == '?') {
+                    signals[i] = s;
+                } else {
+                    signals[i] = root[s];
+                }
             }
             if (signals[i][0] === '.') {
                 signals[i] = relativeSignalPath + signals[i];
@@ -174,22 +179,27 @@ export class IobrokerWebuiBindingsHelper {
         let valuesObject = new Array(signals.length);
         for (let i = 0; i < signals.length; i++) {
             const s = signals[i];
-            let cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value, valuesObject, i);
-            unsubscribeList.push(cb);
-            iobrokerHandler.connection.subscribeState(s, cb);
-            if (binding[1].twoWay) {
-                for (let e of binding[1].events) {
-                    const evt = element[e];
-                    if (evt instanceof TypedEvent) {
-                        evt.on(() => {
-                            if (binding[1].target == BindingTarget.property)
-                                iobrokerHandler.connection.setState(s, element[binding[0]]);
-                        })
-                    } else {
-                        element.addEventListener(e, () => {
-                            if (binding[1].target == BindingTarget.property)
-                                iobrokerHandler.connection.setState(s, element[binding[0]]);
-                        });
+            if (s[0] == '?') {
+                //todo: binding value changed of prop
+                IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[s.substring(1)], valuesObject, i)
+            } else {
+                let cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value, valuesObject, i);
+                unsubscribeList.push(cb);
+                iobrokerHandler.connection.subscribeState(s, cb);
+                if (binding[1].twoWay) {
+                    for (let e of binding[1].events) {
+                        const evt = element[e];
+                        if (evt instanceof TypedEvent) {
+                            evt.on(() => {
+                                if (binding[1].target == BindingTarget.property)
+                                    iobrokerHandler.connection.setState(s, element[binding[0]]);
+                            })
+                        } else {
+                            element.addEventListener(e, () => {
+                                if (binding[1].target == BindingTarget.property)
+                                    iobrokerHandler.connection.setState(s, element[binding[0]]);
+                            });
+                        }
                     }
                 }
             }
