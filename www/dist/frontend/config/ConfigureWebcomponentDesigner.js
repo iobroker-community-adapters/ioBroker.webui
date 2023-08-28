@@ -11,6 +11,7 @@ import { IobrokerWebuiExternalDragDropService } from "../services/IobrokerWebuiE
 import { IobrokerWebuiCopyPasteService } from "../services/IobrokerWebuiCopyPasteService.js";
 import { IobrokerWebuiEventsService } from "../services/IobrokerWebuiEventsService.js";
 import { IobrokerWebuiPropertyGridDragDropService } from "../services/IobrokerWebuiPropertyGridDragDropService.js";
+import { IobrokerWebuiPropertiesService } from "../services/IobrokerWebuiPropertiesService.js";
 const rootPath = new URL(import.meta.url).pathname.split('/').slice(0, -4).join('/'); // -2 remove file & dist
 const serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
@@ -27,6 +28,7 @@ serviceContainer.register("stylesheetService", designerCanvas => new CssToolsSty
 serviceContainer.config.codeViewWidget = CodeViewMonaco;
 serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/frontend/elements-webui.json'));
 serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
+serviceContainer.register('propertyService', new IobrokerWebuiPropertiesService());
 for (let l of customElementsObserver.getElements()) {
     if (l[1].length > 0) {
         const elementsCfg = {

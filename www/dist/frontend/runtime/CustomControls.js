@@ -31,15 +31,24 @@ export function generateCustomControl(name, control) {
         const val = control.properties[p];
         if (val == 'string')
             properties[p] = String;
+        else if (val == 'color')
+            properties[p] = String;
         else if (val == 'boolean')
             properties[p] = Boolean;
         else if (val == 'number')
             properties[p] = Number;
+        else if (val == 'date')
+            properties[p] = Date;
+        else if (val.startsWith("[")) // enum
+            properties[p] = String;
+        else
+            properties[p] = Object;
     }
     if (window['IobrokerWebuiCustomControl' + name]) {
         window['IobrokerWebuiCustomControl' + name]._template = template;
         window['IobrokerWebuiCustomControl' + name]._style = style;
         window['IobrokerWebuiCustomControl' + name]._properties = properties;
+        window['IobrokerWebuiCustomControl' + name]._control = control;
     }
     else {
         window['IobrokerWebuiCustomControl' + name] = function () {
@@ -49,6 +58,8 @@ export function generateCustomControl(name, control) {
             this.constructor.style = window['IobrokerWebuiCustomControl' + name]._style;
             //@ts-ignore
             this.constructor.properties = window['IobrokerWebuiCustomControl' + name]._properties;
+            //@ts-ignore
+            this.constructor._control = window['IobrokerWebuiCustomControl' + name]._control;
             //@ts-ignore
             let instance = Reflect.construct(BaseCustomControl, [], window['IobrokerWebuiCustomControl' + name]);
             for (let p in control.properties) {
@@ -72,6 +83,7 @@ export function generateCustomControl(name, control) {
         window['IobrokerWebuiCustomControl' + name]._template = template;
         window['IobrokerWebuiCustomControl' + name]._style = style;
         window['IobrokerWebuiCustomControl' + name]._properties = properties;
+        window['IobrokerWebuiCustomControl' + name]._control = control;
         window['IobrokerWebuiCustomControl' + name].prototype = Object.create(BaseCustomControl.prototype);
         customElements.define('iobroker-webui-custom-control' + nm, window['IobrokerWebuiCustomControl' + name]);
     }
