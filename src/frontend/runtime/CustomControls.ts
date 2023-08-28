@@ -13,13 +13,13 @@ export class BaseCustomControl extends BaseCustomWebComponentLazyAppend {
 
     ready() {
         this._parseAttributesToProperties();
-        let root = this.shadowRoot.children.length>1?this.shadowRoot:this._rootDocumentFragment;
+        let root = this.shadowRoot.children.length > 0 ? this.shadowRoot : this._rootDocumentFragment;
         ScriptSystem.assignAllScripts(<any>root, this);
         this._bindingsParse(null, true);
     }
 
     connectedCallback() {
-        let root = this.shadowRoot.children.length>1?this.shadowRoot:this._rootDocumentFragment;
+        let root = this.shadowRoot.children.length > 0 ? this.shadowRoot : this._rootDocumentFragment;
         IobrokerWebuiBindingsHelper.applyAllBindings(<any>root, this._getRelativeSignalsPath(), this);
     }
 
