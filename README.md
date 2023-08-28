@@ -86,7 +86,7 @@ You need to create a screen "start", this is the first one called when you open 
 but you can change this via query parameter:
 runtime.html?screenName=screen2
 
-# Changelog
+## Changelog
 <!--
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
