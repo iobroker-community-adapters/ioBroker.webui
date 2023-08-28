@@ -74,9 +74,13 @@ export class SvgImage extends BaseCustomWebComponentConstructorAppend {
     }
     public set src(value: string) {
         this._src = value;
-        fetch(value).then(async x => {
-            this._main.innerHTML = await x.text();
-        })
+        if (value) {
+            fetch(value).then(async x => {
+                this._main.innerHTML = await x.text();
+            })
+        } else {
+            this._main.innerHTML = '';
+        }
     }
 
     private _bgImageSrc: string;
@@ -86,9 +90,13 @@ export class SvgImage extends BaseCustomWebComponentConstructorAppend {
     }
     public set bgImageSrc(value: string) {
         this._bgImageSrc = value;
-        fetch(value).then(async x => {
-            //this._main.innerHTML = await x.text();
-        });
+        if (value) {
+            fetch(value).then(async x => {
+                //this._main.innerHTML = await x.text();
+            })
+        } else {
+            //this._main.innerHTML = '';
+        }
     }
 
     private _value: string;
