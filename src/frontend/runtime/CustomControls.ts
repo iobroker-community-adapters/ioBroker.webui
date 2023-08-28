@@ -13,7 +13,9 @@ export class BaseCustomControl extends BaseCustomWebComponentLazyAppend {
 
     ready(){
         this._parseAttributesToProperties();
-        IobrokerWebuiBindingsHelper.applyAllBindings(this._rootDocumentFragment, '', this);
+        ScriptSystem.assignAllScripts(this.shadowRoot, this);
+        //todo: relative bindings
+        IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, '', this);
         this._bindingsParse(null, true);
     }
 }
@@ -67,8 +69,6 @@ export function generateCustomControl(name: string, control: IControl) {
                 });
             }
 
-            //@ts-ignore - todo: maybe do it in another way? _rootDocumentFragment is not accessible normaly?
-            ScriptSystem.assignAllScripts(instance._rootDocumentFragment, instance);
             return instance;
         }
         window['IobrokerWebuiCustomControl' + name]._template = template;
