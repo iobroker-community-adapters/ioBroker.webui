@@ -10,7 +10,7 @@ export declare class IobrokerWebuiBindingsHelper {
     static serializeBinding(element: Element, targetName: string, binding: IIobrokerWebuiBinding): [name: string, value: string];
     static getBindingAttributeName(element: Element, propertyName: string, propertyTarget: BindingTarget): string;
     static getBindings(element: Element): Generator<namedBinding, void, unknown>;
-    static applyAllBindings(rootElement: ParentNode, relativeSignalPath: string): (() => void)[];
-    static applyBinding(element: Element, binding: namedBinding, relativeSignalPath: string): () => void;
+    static applyAllBindings(rootElement: ParentNode, relativeSignalPath: string, root: HTMLElement): (() => void)[];
+    static applyBinding(element: Element, binding: namedBinding, relativeSignalPath: string, root: HTMLElement): () => void;
     static handleValueChanged(element: Element, binding: namedBinding, value: any, valuesObject: any[], index: number): void;
 }

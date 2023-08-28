@@ -1,10 +1,12 @@
 import { BaseCustomWebComponentLazyAppend, css, cssFromString } from "@node-projects/base-custom-webcomponent";
 import { PropertiesHelper } from "@node-projects/web-component-designer";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
+import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 export class BaseCustomControl extends BaseCustomWebComponentLazyAppend {
     constructor() {
         super();
         this._parseAttributesToProperties();
+        IobrokerWebuiBindingsHelper.applyAllBindings(this._rootDocumentFragment, '', this);
         this._bindingsParse(null, true);
     }
 }
