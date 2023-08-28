@@ -15,7 +15,6 @@ export class IobrokerWebuiBindableObjectDragDropService {
             this.rect.style.opacity = '0.3';
             this.rectMap.set(element, this.rect);
         }
-        console.log(element);
     }
     dragLeave(designerCanvas, event, element) {
         const designItem = DesignItem.GetDesignItem(element);

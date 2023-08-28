@@ -8,11 +8,13 @@ export class BaseCustomControl extends BaseCustomWebComponentLazyAppend {
     }
     ready() {
         this._parseAttributesToProperties();
-        ScriptSystem.assignAllScripts(this.shadowRoot, this);
+        let root = this.shadowRoot.children.length > 1 ? this.shadowRoot : this._rootDocumentFragment;
+        ScriptSystem.assignAllScripts(root, this);
         this._bindingsParse(null, true);
     }
     connectedCallback() {
-        IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
+        let root = this.shadowRoot.children.length > 1 ? this.shadowRoot : this._rootDocumentFragment;
+        IobrokerWebuiBindingsHelper.applyAllBindings(root, this._getRelativeSignalsPath(), this);
     }
     _getRelativeSignalsPath() {
         return this.getRootNode()?.host?._getRelativeSignalsPath?.() ?? '';
