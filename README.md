@@ -103,8 +103,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-
-### __WORK IN PROGRESS__
+### 0.2.2 (2023-08-28)
 - better support & fixes of custom elements
 - enum properties in custom controls
 - sample custom controls

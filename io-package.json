@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.2.2": {
+        "en": "better support & fixes of custom elements\nenum properties in custom controls\nsample custom controls",
+        "de": "bessere unterstützung und fixierung von benutzerdefinierten elementen\nenum eigenschaften in benutzerdefinierten steuerungen\nmuster benutzerdefinierte kontrollen",
+        "ru": "лучшая поддержка и исправления пользовательских элементов\nenum свойства в пользовательских контролях\nобразец пользовательские управления",
+        "pt": "melhor suporte e correções de elementos personalizados\npropriedades enum em controles personalizados\ncontroles personalizados da amostra",
+        "nl": "vertaling:\nin de gebruikelijke eigenschappen\nprofessionele controle",
+        "fr": "meilleur support & corrections des éléments personnalisés\npropriétés enum dans les contrôles personnalisés\ncommandes personnalisées",
+        "it": "migliore supporto & correzioni di elementi personalizzati\nproprietà enum nei controlli personalizzati\ncampione controlli personalizzati",
+        "es": "mejor soporte & soluciones de elementos personalizados\npropiedades enum en controles personalizados\nmuestra controles personalizados",
+        "pl": "lepsze wsparcie i naprawa elementów zwyczajowych\nwłaściwości enum\nkontrola próbkowa",
+        "uk": "краща підтримка і кріплення користувальницьких елементів\nоб'ємні властивості в користувацьких управліннях\nзразок користувацького контролю",
+        "zh-cn": "更好地支持和确定习俗要素\na. 习俗控制的扩展财产\n抽样管制"
+      },
       "0.2.1": {
         "en": "null ref fix in bindings",
         "de": "null ref fix in bindungen",
