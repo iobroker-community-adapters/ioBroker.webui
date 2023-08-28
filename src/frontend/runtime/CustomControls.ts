@@ -1,24 +1,22 @@
-import { BaseCustomWebComponentLazyAppend, css, cssFromString } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, css, cssFromString } from "@node-projects/base-custom-webcomponent";
 import { PropertiesHelper } from "@node-projects/web-component-designer";
 import { IControl } from "../interfaces/IControl.js";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 
-export class BaseCustomControl extends BaseCustomWebComponentLazyAppend {
+export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     static readonly style = css`:host { overflow: hidden }`;
 
-
-
-    ready() {
-        this._parseAttributesToProperties();
-        let root = this.shadowRoot.children.length > 0 ? this.shadowRoot : this._rootDocumentFragment;
-        ScriptSystem.assignAllScripts(<any>root, this);
+    constructor() {
+        super();
         this._bindingsParse(null, true);
     }
 
     connectedCallback() {
-        let root = this.shadowRoot.children.length > 0 ? this.shadowRoot : this._rootDocumentFragment;
-        IobrokerWebuiBindingsHelper.applyAllBindings(<any>root, this._getRelativeSignalsPath(), this);
+        this._parseAttributesToProperties();
+        this._bindingsRefresh();
+        ScriptSystem.assignAllScripts(this.shadowRoot, this);
+        IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
     }
 
     _getRelativeSignalsPath(): string {
