@@ -6,11 +6,11 @@
 /assets
 /dist/frontend
 /node_modules
-/src
+src/
 .gitignore
 .gulp.json
 /index.html
 /runtime.html
 /rollup*
 /tsconfig.json
-/test
+test/
