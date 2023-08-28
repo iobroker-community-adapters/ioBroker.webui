@@ -168,7 +168,7 @@ export class IobrokerWebuiBindingsHelper {
                 let cb = (id, value) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
                 unsubscribeList.push(cb);
                 iobrokerHandler.connection.subscribeState(s, cb);
-                iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x.val, valuesObject, i));
+                iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i));
                 if (binding[1].twoWay) {
                     for (let e of binding[1].events) {
                         const evt = element[e];
