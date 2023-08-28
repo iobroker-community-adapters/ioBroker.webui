@@ -91,8 +91,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-
-### __WORK IN PROGRESS__
+### 0.2.1 (2023-08-28)
 - null ref fix in bindings
 
 ### 0.2.0 (2023-08-28)

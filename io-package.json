@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.2.1": {
+        "en": "null ref fix in bindings",
+        "de": "null ref fix in bindungen",
+        "ru": "null реф исправить в связываниях",
+        "pt": "null ref fix em ligações",
+        "nl": "nul ref fix in binding",
+        "fr": "null ref fix in bindings",
+        "it": "null ref fix in binding",
+        "es": "null ref fijado en acoplamientos",
+        "pl": "ukończenie naprawy w wiązaniach",
+        "uk": "null реф виправити в зв'язках",
+        "zh-cn": "无约束力的驳斥"
+      },
       "0.2.0": {
         "en": "Import/Export of Screens/Images/Controls\nDefine your own Controls directly in webui\nDrag/Drop of Icons/Images to Properties\nDrag/Drop of objects to Bindings-Editor Signalname\nBasic functionality of CustomControls",
         "de": "Import/Export von Screens/Images/Controls\nDefinieren Sie Ihre eigenen Steuerungen direkt in webui\nDrag/Drop von Icons/Images zu Eigenschaften\nDrag/Drop von Objekten zu Bindings-Editor Signalname\nGrundlegende Funktionalität von CustomControls",
