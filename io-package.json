@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.2.3": {
+        "en": "rework how custom controls are initalized",
+        "de": "nacharbeiten, wie benutzerdefinierte bedienelemente initalisiert werden",
+        "ru": "переработайте, как пользовательские управления инитализованы",
+        "pt": "retrabalhe como os controles personalizados são initalizados",
+        "nl": "_",
+        "fr": "retravailler comment les contrôles personnalisés sont initalisés",
+        "it": "rielaborare i controlli personalizzati",
+        "es": "rework how custom controls are initalized",
+        "pl": "przepracowanie, w jaki sposób systemy są inicjalizowane",
+        "uk": "переробити, як користувацькі елементи керування",
+        "zh-cn": "b. 重新调整习俗控制的设想"
+      },
       "0.2.2": {
         "en": "better support & fixes of custom elements\nenum properties in custom controls\nsample custom controls",
         "de": "bessere unterstützung und fixierung von benutzerdefinierten elementen\nenum eigenschaften in benutzerdefinierten steuerungen\nmuster benutzerdefinierte kontrollen",
