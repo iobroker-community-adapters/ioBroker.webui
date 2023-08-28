@@ -6,20 +6,21 @@ export class ScriptSystem {
         for (let c of scriptCommands) {
             switch (c.type) {
                 case 'OpenScreen': {
+                    const screen = await ScriptSystem.getValue(c.screen, outerContext);
                     if (!c.openInDialog) {
                         if (c.noHistory) {
                             document.getElementById('viewer').relativeSignalsPath = c.relativeSignalsPath;
-                            document.getElementById('viewer').screenName = ScriptSystem.getValue(c.screen, outerContext);
+                            document.getElementById('viewer').screenName = screen;
                         }
                         else {
-                            let hash = 'screenName=' + ScriptSystem.getValue(c.screen, outerContext);
+                            let hash = 'screenName=' + screen;
                             window.location.hash = hash;
                         }
                     }
                     else {
                         let sv = new ScreenViewer();
                         sv.relativeSignalsPath = c.relativeSignalsPath;
-                        sv.screenName = ScriptSystem.getValue(c.screen, outerContext);
+                        sv.screenName = screen;
                     }
                     break;
                 }
@@ -28,53 +29,63 @@ export class ScriptSystem {
                     break;
                 }
                 case 'ToggleSignalValue': {
-                    let state = await iobrokerHandler.connection.getState(c.signal);
+                    const signal = await ScriptSystem.getValue(c.signal, outerContext);
+                    let state = await iobrokerHandler.connection.getState(signal);
                     await iobrokerHandler.connection.setState(c.signal, !state.val);
                     break;
                 }
                 case 'SetSignalValue': {
-                    await iobrokerHandler.connection.setState(c.signal, ScriptSystem.getValue(c.value, outerContext));
+                    const signal = await ScriptSystem.getValue(c.signal, outerContext);
+                    await iobrokerHandler.connection.setState(signal, await ScriptSystem.getValue(c.value, outerContext));
                     break;
                 }
                 case 'IncrementSignalValue': {
-                    let state = await iobrokerHandler.connection.getState(c.signal);
-                    await iobrokerHandler.connection.setState(c.signal, state.val + ScriptSystem.getValue(c.value, outerContext));
+                    const signal = await ScriptSystem.getValue(c.signal, outerContext);
+                    let state = await iobrokerHandler.connection.getState(signal);
+                    await iobrokerHandler.connection.setState(signal, state.val + await ScriptSystem.getValue(c.value, outerContext));
                     break;
                 }
                 case 'DecrementSignalValue': {
-                    let state = await iobrokerHandler.connection.getState(c.signal);
-                    await iobrokerHandler.connection.setState(c.signal, state.val - ScriptSystem.getValue(c.value, outerContext));
+                    const signal = await ScriptSystem.getValue(c.signal, outerContext);
+                    let state = await iobrokerHandler.connection.getState(signal);
+                    await iobrokerHandler.connection.setState(signal, state.val - await ScriptSystem.getValue(c.value, outerContext));
                     break;
                 }
                 case 'SetBitInSignal': {
-                    let state = await iobrokerHandler.connection.getState(c.signal);
+                    const signal = await ScriptSystem.getValue(c.signal, outerContext);
+                    let state = await iobrokerHandler.connection.getState(signal);
                     let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
                     const newVal = Long.fromNumber(state.val).or(mask).toNumber();
-                    await iobrokerHandler.connection.setState(c.signal, newVal);
+                    await iobrokerHandler.connection.setState(signal, newVal);
                     break;
                 }
                 case 'ClearBitInSignal': {
-                    let state = await iobrokerHandler.connection.getState(c.signal);
+                    const signal = await ScriptSystem.getValue(c.signal, outerContext);
+                    let state = await iobrokerHandler.connection.getState(signal);
                     let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
                     mask.negate();
                     const newVal = Long.fromNumber(state.val).and(mask).toNumber();
-                    await iobrokerHandler.connection.setState(c.signal, newVal);
+                    await iobrokerHandler.connection.setState(signal, newVal);
                     break;
                 }
                 case 'ToggleBitInSignal': {
-                    let state = await iobrokerHandler.connection.getState(c.signal);
+                    const signal = await ScriptSystem.getValue(c.signal, outerContext);
+                    let state = await iobrokerHandler.connection.getState(signal);
                     let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
                     const newVal = Long.fromNumber(state.val).xor(mask).toNumber();
-                    await iobrokerHandler.connection.setState(c.signal, newVal);
+                    await iobrokerHandler.connection.setState(signal, newVal);
                     break;
                 }
                 case 'Javascript': {
+                    const script = await ScriptSystem.getValue(c.script, outerContext);
                     var context = outerContext; // make context accessible from script
                     context.shadowRoot = context.element.getRootNode();
-                    eval(c.script);
+                    eval(script);
                     break;
                 }
                 case 'SetElementProperty': {
+                    const name = await ScriptSystem.getValue(c.name, outerContext);
+                    const value = await ScriptSystem.getValue(c.value, outerContext);
                     let host = outerContext.element.getRootNode().host;
                     if (c.targetSelectorTarget == 'currentElement')
                         host = outerContext.element;
@@ -87,20 +98,31 @@ export class ScriptSystem {
                         elements = host.shadowRoot.querySelectorAll(c.targetSelector);
                     for (let e of elements) {
                         if (c.target == 'attribute') {
-                            e.setAttribute(c.name, c.value);
+                            e.setAttribute(name, value);
                         }
                         else if (c.target == 'property') {
-                            e[c.name] = c.value;
+                            e[name] = value;
                         }
                         else if (c.target == 'css') {
-                            e.style[c.name] = c.value;
+                            e.style[name] = value;
                         }
                     }
                 }
             }
         }
     }
-    static getValue(value, outerContext) {
+    static async getValue(value, outerContext) {
+        if (typeof value === 'object') {
+            switch (value.source) {
+                case 'property': {
+                    return outerContext.root[value.name];
+                }
+                case 'signal': {
+                    let sng = await iobrokerHandler.connection.getState(value.name);
+                    return sng.val;
+                }
+            }
+        }
         return value;
     }
     static async assignAllScripts(shadowRoot, instance) {
@@ -128,7 +150,7 @@ export class ScriptSystem {
                         let script = a.value.trim();
                         if (script[0] == '{') {
                             let scriptObj = JSON.parse(script);
-                            e.addEventListener(evtName, (evt) => ScriptSystem.execute(scriptObj.commands, { event: evt, element: e }));
+                            e.addEventListener(evtName, (evt) => ScriptSystem.execute(scriptObj.commands, { event: evt, element: e, root: instance }));
                         }
                         else {
                             e.addEventListener(evtName, (evt) => {
