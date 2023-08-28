@@ -82,10 +82,7 @@ export class IobrokerWebuiBindingsHelper {
             return [bindingPrefixCss + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal];
         }
 
-        let bindingCopy = { ...binding }; //can be removed with custom serialization
-        //todo custom serialization
-        //let str='{"signal":"'+binding.signal+'",'+binding.
-        //remove default event name, not needed
+        let bindingCopy = { ...binding };
         if (!binding.twoWay || (binding.events != null && binding.events.length == 1)) {
             if (element instanceof HTMLInputElement && binding.events[0] == "change")
                 delete bindingCopy.events;
@@ -180,8 +177,9 @@ export class IobrokerWebuiBindingsHelper {
         for (let i = 0; i < signals.length; i++) {
             const s = signals[i];
             if (s[0] == '?') {
-                //todo: binding value changed of prop
-                IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[s.substring(1)], valuesObject, i)
+                const nm = s.substring(1);
+                root.addEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', () => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i));
+                IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i)
             } else {
                 let cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
                 unsubscribeList.push(cb);

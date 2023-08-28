@@ -21,6 +21,18 @@ It includes features like:
   - screens inside of screens
   - icons from habpanel included
 
+## Concepts
+
+### Custom Controls in WebUI
+
+You can create own reusable CustomControls in WebUI. This can have individual Javascript, Properties and a template.
+
+You can use Double-Bracket Syntax and Double-Curly-Braket Syntax of "BaseCustomWebcomponent" to create bindings from the Template to the properties defined in the Designer. Curylbrackets create two way Bindings.
+If you use the Bindings Dialog, you can Bind to a Property with ??Propertyname and to IoBroker Object in the Property via ?Propertyname.
+In Scripts you can also write to Signals defined in Custom Properties, but there is no UI for it yet, but this come soon.
+
+You could also include Javascript in your CustomControl Template. It needs to be in a Script Tag with the Attribute "type" set to "module". Also you could use export function "init(instance)" wich will be called when your CustomControl will be instanciated.
+
 ## Sponsoring
 
 If you want to help the development, sponsor this project at https://github.com/sponsors/jogibear9988
@@ -91,6 +103,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+
+### __WORK IN PROGRESS__
+
 ### 0.2.1 (2023-08-28)
 - null ref fix in bindings
 

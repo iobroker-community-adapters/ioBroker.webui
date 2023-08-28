@@ -102,6 +102,10 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         ScriptSystem.assignAllScripts(this.shadowRoot, this);
     }
 
+    _getRelativeSignalsPath(): string {
+        return this._relativeSignalsPath;
+    }
+
     /*
     _states: { [name: string]: any } = {};
     _subscriptions = new Set<string>();
