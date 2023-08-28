@@ -148,21 +148,24 @@ export class IobrokerWebuiBindingsHelper {
         }
     }
 
-    static applyAllBindings(rootElement: ParentNode, relativeSignalPath: string): (() => void)[] {
+    static applyAllBindings(rootElement: ParentNode, relativeSignalPath: string, root: HTMLElement): (() => void)[] {
         let retVal: (() => void)[] = [];
         let allElements = rootElement.querySelectorAll('*');
         for (let e of allElements) {
             const bindings = this.getBindings(e);
             for (let b of bindings) {
-                retVal.push(this.applyBinding(e, b, relativeSignalPath));
+                retVal.push(this.applyBinding(e, b, relativeSignalPath, root));
             }
         }
         return retVal;
     }
 
-    static applyBinding(element: Element, binding: namedBinding, relativeSignalPath: string): () => void {
+    static applyBinding(element: Element, binding: namedBinding, relativeSignalPath: string, root: HTMLElement): () => void {
         const signals = binding[1].signal.split(';');
         for (let i = 0; i < signals.length; i++) {
+            if (signals[i][0] === '?') { //local property access on custom controls
+                signals[i] = root[signals[i].substring(1)];
+            }
             if (signals[i][0] === '.') {
                 signals[i] = relativeSignalPath + signals[i];
             }

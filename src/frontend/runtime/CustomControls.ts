@@ -2,6 +2,7 @@ import { BaseCustomWebComponentLazyAppend, css, cssFromString } from "@node-proj
 import { PropertiesHelper } from "@node-projects/web-component-designer";
 import { IControl } from "../interfaces/IControl.js";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
+import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 
 export class BaseCustomControl extends BaseCustomWebComponentLazyAppend {
     static readonly style = css`:host { overflow: hidden }`;
@@ -9,6 +10,7 @@ export class BaseCustomControl extends BaseCustomWebComponentLazyAppend {
     constructor() {
         super();
         this._parseAttributesToProperties();
+        IobrokerWebuiBindingsHelper.applyAllBindings(this._rootDocumentFragment, '', this);
         this._bindingsParse(null, true);
     }
 }
@@ -64,7 +66,6 @@ export function generateCustomControl(name: string, control: IControl) {
 
             //@ts-ignore - todo: maybe do it in another way? _rootDocumentFragment is not accessible normaly?
             ScriptSystem.assignAllScripts(instance._rootDocumentFragment, instance);
-            
             return instance;
         }
         window['IobrokerWebuiCustomControl' + name]._template = template;

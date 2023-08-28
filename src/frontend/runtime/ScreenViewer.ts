@@ -98,7 +98,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         const documentFragment = template.content.cloneNode(true);
         //this._bindingsParse(documentFragment, true);
         this.shadowRoot.appendChild(documentFragment);
-        this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath);
+        this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
         ScriptSystem.assignAllScripts(this.shadowRoot, this);
     }
 

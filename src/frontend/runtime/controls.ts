@@ -4,7 +4,9 @@ import './HabPanelLikeMenu.js';
 
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
 import { generateCustomControl } from './CustomControls.js';
-iobrokerHandler.loadAllCustomControls();
-for (let name of await iobrokerHandler.getCustomControlNames()) {
-    generateCustomControl(name, await iobrokerHandler.getCustomControl(name));
-}
+
+iobrokerHandler.loadAllCustomControls().then(async () => {
+    for (let name of await iobrokerHandler.getCustomControlNames()) {
+        iobrokerHandler.getCustomControl(name).then((ctl) => generateCustomControl(name, ctl));
+    }
+});

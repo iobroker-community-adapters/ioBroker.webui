@@ -1,5 +1,4 @@
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
-
 //@ts-ignore
 await LazyLoader.LoadJavascript(window.iobrokerSocketScriptUrl);
 iobrokerHandler.init();
