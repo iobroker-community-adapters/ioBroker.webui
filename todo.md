@@ -1,4 +1,6 @@
-- custom controls enum properties
+- default value for bindings with converters (as fallback)
+- valuetype in bindings, store it and convert value to (or we compare strings)
+- defaultvalue for properties defined in custom controls
 - maybe refresh of only one binding in base custom webcomponent?
 - biding to signals in scripts (binding does work, but we need ui support)
 
