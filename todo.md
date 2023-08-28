@@ -1,3 +1,3 @@
 - custom controls enum properties
 - maybe refresh of only one binding in base custom webcomponent?
-- biding to signals in scripts
+- biding to signals in scripts (binding does work, but we need ui support)
