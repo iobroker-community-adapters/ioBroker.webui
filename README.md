@@ -91,7 +91,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 0.2.0 (2023-08-28)
 - Import/Export of Screens/Images/Controls
 - Define your own Controls directly in webui
 - Drag/Drop of Icons/Images to Properties
