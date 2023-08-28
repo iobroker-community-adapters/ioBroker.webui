@@ -1,17 +1,17 @@
-import { BaseCustomWebComponentLazyAppend, css, cssFromString } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, css, cssFromString } from "@node-projects/base-custom-webcomponent";
 import { PropertiesHelper } from "@node-projects/web-component-designer";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
-export class BaseCustomControl extends BaseCustomWebComponentLazyAppend {
-    ready() {
-        this._parseAttributesToProperties();
-        let root = this.shadowRoot.children.length > 0 ? this.shadowRoot : this._rootDocumentFragment;
-        ScriptSystem.assignAllScripts(root, this);
+export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
+    constructor() {
+        super();
         this._bindingsParse(null, true);
     }
     connectedCallback() {
-        let root = this.shadowRoot.children.length > 0 ? this.shadowRoot : this._rootDocumentFragment;
-        IobrokerWebuiBindingsHelper.applyAllBindings(root, this._getRelativeSignalsPath(), this);
+        this._parseAttributesToProperties();
+        this._bindingsRefresh();
+        ScriptSystem.assignAllScripts(this.shadowRoot, this);
+        IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
     }
     _getRelativeSignalsPath() {
         return this.getRootNode()?.host?._getRelativeSignalsPath?.() ?? '';

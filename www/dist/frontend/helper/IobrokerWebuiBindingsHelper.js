@@ -132,7 +132,12 @@ export class IobrokerWebuiBindingsHelper {
         for (let e of allElements) {
             const bindings = this.getBindings(e);
             for (let b of bindings) {
-                retVal.push(this.applyBinding(e, b, relativeSignalPath, root));
+                try {
+                    retVal.push(this.applyBinding(e, b, relativeSignalPath, root));
+                }
+                catch (err) {
+                    console.error("error applying binding", e, b, err);
+                }
             }
         }
         return retVal;

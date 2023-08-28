@@ -1,8 +1,8 @@
-import { BaseCustomWebComponentLazyAppend } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend } from "@node-projects/base-custom-webcomponent";
 import { IControl } from "../interfaces/IControl.js";
-export declare class BaseCustomControl extends BaseCustomWebComponentLazyAppend {
+export declare class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     static readonly style: CSSStyleSheet;
-    ready(): void;
+    constructor();
     connectedCallback(): void;
     _getRelativeSignalsPath(): string;
 }
