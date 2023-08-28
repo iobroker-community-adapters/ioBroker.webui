@@ -154,12 +154,17 @@ export class IobrokerWebuiBindingsHelper {
             }
         }
         let unsubscribeList = [];
+        let evtUnsubscriptions;
         let valuesObject = new Array(signals.length);
         for (let i = 0; i < signals.length; i++) {
             const s = signals[i];
             if (s[0] == '?') {
                 const nm = s.substring(1);
-                root.addEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', () => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i));
+                let evtCallback = () => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i);
+                root.addEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback);
+                if (!evtUnsubscriptions)
+                    evtUnsubscriptions = [];
+                evtUnsubscriptions.push(() => root.removeEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback));
                 IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i);
             }
             else {
@@ -190,6 +195,11 @@ export class IobrokerWebuiBindingsHelper {
             for (let i = 0; i < signals.length; i++) {
                 iobrokerHandler.connection.unsubscribeState(signals[i], unsubscribeList[i]);
             }
+            if (evtUnsubscriptions) {
+                for (let e of evtUnsubscriptions) {
+                    e();
+                }
+            }
         };
     }
     static handleValueChanged(element, binding, value, valuesObject, index) {
@@ -205,7 +215,7 @@ export class IobrokerWebuiBindingsHelper {
             v = eval(evalstring);
         }
         if (binding[1].converter) {
-            const stringValue = v.toString();
+            const stringValue = (v != null ? v.toString() : v);
             if (stringValue in binding[1].converter) {
                 v = binding[1].converter[stringValue];
             }

@@ -59,7 +59,7 @@ IobrokerWebuiControlPropertiesEditor.style = css `
 IobrokerWebuiControlPropertiesEditor.template = html `
         <template repeat:item="[[this.properties]]">
             <input value="{{item.name}}" @input="[[this.changed()]]">
-            <select value="{{item.type}}" @change="[this.changed()]]">
+            <select value="{{item.type}}" @change="[[this.changed()]]">
                 <option value="string">string</option>
                 <option value="boolean">boolean</option>
                 <option value="number">number</option>
