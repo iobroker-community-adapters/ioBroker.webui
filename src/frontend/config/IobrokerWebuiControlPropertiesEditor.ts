@@ -26,6 +26,7 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
                 <option value="boolean">boolean</option>
                 <option value="number">number</option>
                 <option value="color">color</option>
+                <option value="date">date</option>
             </select>
         </template>
         <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 2;" @click="add">add...</button>`;
