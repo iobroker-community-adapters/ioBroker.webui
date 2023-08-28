@@ -17,7 +17,6 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
             this.rect.style.opacity = '0.3';
             this.rectMap.set(element, this.rect);
         }
-        console.log(element);
     }
 
     dragLeave(designerCanvas: IDesignerCanvas, event: DragEvent, element: Element) {
