@@ -6,4 +6,5 @@ export declare class ScriptSystem {
         element: Element;
     }): Promise<void>;
     static getValue(value: string | number | boolean | ScriptMultiplexValue, outerContext: any): any;
+    static assignAllScripts(shadowRoot: ShadowRoot, instance: HTMLElement): Promise<void>;
 }

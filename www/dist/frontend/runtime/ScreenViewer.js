@@ -69,70 +69,7 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
         //this._bindingsParse(documentFragment, true);
         this.shadowRoot.appendChild(documentFragment);
         this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath);
-        ScreenViewer_1.assignAllScripts(this.shadowRoot, this);
-    }
-    /*
-    _states: { [name: string]: any } = {};
-    _subscriptions = new Set<string>();
-
-    state(name: string) {
-        if (!this._subscriptions.has(name)) {
-            this._subscriptions.add(name);
-            this._states[name] = null;
-            iobrokerHandler.connection.subscribeState(name, (id, state) => {
-                this._states[name] = state.val;
-                this._bindingsRefresh();
-            })
-        }
-        return this._states[name];
-    }
-
-    set(name: string, value: ioBroker.StateValue) {
-        iobrokerHandler.connection.setState(name, value);
-    }
-    */
-    static async assignAllScripts(shadowRoot, instance) {
-        const allElements = shadowRoot.querySelectorAll('*');
-        const scriptTag = shadowRoot.querySelector('script[type=module]');
-        let jsObject = null;
-        if (scriptTag) {
-            try {
-                const scriptUrl = URL.createObjectURL(new Blob([scriptTag.textContent], { type: 'application/javascript' }));
-                //@ts-ignore
-                jsObject = await importShim(scriptUrl);
-                if (jsObject.init) {
-                    jsObject.init(instance);
-                }
-            }
-            catch (err) {
-                console.warn('error parsing javascript', err);
-            }
-        }
-        for (let e of allElements) {
-            for (let a of e.attributes) {
-                if (a.name[0] == '@') {
-                    try {
-                        let evtName = a.name.substring(1);
-                        let script = a.value.trim();
-                        if (script[0] == '{') {
-                            let scriptObj = JSON.parse(script);
-                            e.addEventListener(evtName, (evt) => ScriptSystem.execute(scriptObj.commands, { event: evt, element: e }));
-                        }
-                        else {
-                            e.addEventListener(evtName, (evt) => {
-                                if (!jsObject[script])
-                                    console.warn('javascritp function named: ' + script + ' not found, maybe missing a "export" ?');
-                                else
-                                    jsObject[script](evt, e, shadowRoot);
-                            });
-                        }
-                    }
-                    catch (err) {
-                        console.warn('error assigning script', e, a);
-                    }
-                }
-            }
-        }
+        ScriptSystem.assignAllScripts(this.shadowRoot, this);
     }
 };
 ScreenViewer.style = css `

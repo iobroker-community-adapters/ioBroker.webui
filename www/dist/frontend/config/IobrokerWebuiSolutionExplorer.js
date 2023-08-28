@@ -4,6 +4,7 @@ import { iobrokerHandler } from "../common/IobrokerHandler.js";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert { type: 'css' };
 import { exportData, openFileDialog } from "../helper/Helper.js";
+import { generateCustomControl } from "../runtime/CustomControls.js";
 export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super();
@@ -16,7 +17,11 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     async initialize(serviceContainer) {
         this.serviceContainer = serviceContainer;
         iobrokerHandler.screensChanged.on(() => this._refreshScreensNode());
-        iobrokerHandler.controlsChanged.on(() => this._refreshControlsNode());
+        iobrokerHandler.controlsChanged.on(async (name) => {
+            if (name)
+                generateCustomControl(name, await iobrokerHandler.getCustomControl(name));
+            this._refreshControlsNode();
+        });
         iobrokerHandler.imagesChanged.on(() => this._refreshImagesNode());
         await sleep(100);
         this._loadTree();

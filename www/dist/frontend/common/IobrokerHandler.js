@@ -1,7 +1,6 @@
 import { Connection } from "@iobroker/socket-client";
 import { TypedEvent } from "@node-projects/base-custom-webcomponent";
-import { sleep } from "@node-projects/web-component-designer/dist/elements/helper/Helper.js";
-import { generateCustomControl } from "../runtime/CustomControls.js";
+import { sleep } from "../helper/Helper.js";
 const screenFileExtension = ".screen";
 const controlFileExtension = ".control";
 class IobrokerHandler {
@@ -87,13 +86,13 @@ class IobrokerHandler {
         this._saveObjectToFile(screen, "/" + this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
         this._screens.set(name.toLocaleLowerCase(), screen);
         this._screenNames = null;
-        this.screensChanged.emit();
+        this.screensChanged.emit(name);
     }
     async removeScreen(name) {
         await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
         this._screens.delete(name.toLocaleLowerCase());
         this._screenNames = null;
-        this.screensChanged.emit();
+        this.screensChanged.emit(null);
     }
     async loadAllCustomControls() {
         await iobrokerHandler.waitForReady();
@@ -135,21 +134,19 @@ class IobrokerHandler {
             }
             this._controls.set(name.toLocaleLowerCase(), control);
         }
-        generateCustomControl(name, control);
         return control;
     }
     async saveCustomControl(name, control) {
         this._saveObjectToFile(control, "/" + this.configPath + "controls/" + name.toLocaleLowerCase() + controlFileExtension);
-        generateCustomControl(name, control);
         this._controls.set(name.toLocaleLowerCase(), control);
         this._controlNames = null;
-        this.controlsChanged.emit();
+        this.controlsChanged.emit(name);
     }
     async removeCustomControl(name) {
         await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "controls/" + name.toLocaleLowerCase() + controlFileExtension);
         this._controls.delete(name.toLocaleLowerCase());
         this._controlNames = null;
-        this.controlsChanged.emit();
+        this.controlsChanged.emit(null);
     }
     async getImageNames() {
         if (this._readyPromises)

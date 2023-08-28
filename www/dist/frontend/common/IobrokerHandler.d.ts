@@ -22,8 +22,8 @@ declare class IobrokerHandler {
     namespaceWidgets: string;
     imagePrefix: string;
     config: IWebUiConfig;
-    screensChanged: TypedEvent<void>;
-    controlsChanged: TypedEvent<void>;
+    screensChanged: TypedEvent<string>;
+    controlsChanged: TypedEvent<string>;
     imagesChanged: TypedEvent<void>;
     configChanged: TypedEvent<void>;
     _readyPromises: (() => void)[];
