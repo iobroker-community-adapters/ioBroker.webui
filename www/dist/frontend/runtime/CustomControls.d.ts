@@ -4,5 +4,7 @@ export declare class BaseCustomControl extends BaseCustomWebComponentLazyAppend 
     static readonly style: CSSStyleSheet;
     constructor();
     ready(): void;
+    connectedCallback(): void;
+    _getRelativeSignalsPath(): string;
 }
 export declare function generateCustomControl(name: string, control: IControl): void;

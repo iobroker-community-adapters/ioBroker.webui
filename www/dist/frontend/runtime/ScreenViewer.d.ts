@@ -15,4 +15,5 @@ export declare class ScreenViewer extends BaseCustomWebComponentConstructorAppen
     removeBindings(): void;
     private _loadScreen;
     loadScreenData(html: any, style: any): void;
+    _getRelativeSignalsPath(): string;
 }

@@ -9,9 +9,13 @@ export class BaseCustomControl extends BaseCustomWebComponentLazyAppend {
     ready() {
         this._parseAttributesToProperties();
         ScriptSystem.assignAllScripts(this.shadowRoot, this);
-        //todo: relative bindings
-        IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, '', this);
         this._bindingsParse(null, true);
+    }
+    connectedCallback() {
+        IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
+    }
+    _getRelativeSignalsPath() {
+        return this.getRootNode()?.host?._getRelativeSignalsPath?.() ?? '';
     }
 }
 BaseCustomControl.style = css `:host { overflow: hidden }`;
@@ -53,8 +57,11 @@ export function generateCustomControl(name, control) {
                         return this['_' + p];
                     },
                     set(newValue) {
-                        this['_' + p] = newValue;
-                        this._bindingsRefresh(p);
+                        if (this['_' + p] !== newValue) {
+                            this['_' + p] = newValue;
+                            this._bindingsRefresh(p);
+                            instance.dispatchEvent(new CustomEvent(PropertiesHelper.camelToDashCase(p) + '-changed', { detail: { newValue } }));
+                        }
                     },
                     enumerable: true,
                     configurable: true,

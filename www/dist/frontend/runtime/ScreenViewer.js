@@ -71,6 +71,9 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
         this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
         ScriptSystem.assignAllScripts(this.shadowRoot, this);
     }
+    _getRelativeSignalsPath() {
+        return this._relativeSignalsPath;
+    }
 };
 ScreenViewer.style = css `
     :host {

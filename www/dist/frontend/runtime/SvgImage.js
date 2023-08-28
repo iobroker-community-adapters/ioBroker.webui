@@ -16,18 +16,28 @@ let SvgImage = class SvgImage extends BaseCustomWebComponentConstructorAppend {
     }
     set src(value) {
         this._src = value;
-        fetch(value).then(async (x) => {
-            this._main.innerHTML = await x.text();
-        });
+        if (value) {
+            fetch(value).then(async (x) => {
+                this._main.innerHTML = await x.text();
+            });
+        }
+        else {
+            this._main.innerHTML = '';
+        }
     }
     get bgImageSrc() {
         return this._bgImageSrc;
     }
     set bgImageSrc(value) {
         this._bgImageSrc = value;
-        fetch(value).then(async (x) => {
-            //this._main.innerHTML = await x.text();
-        });
+        if (value) {
+            fetch(value).then(async (x) => {
+                //this._main.innerHTML = await x.text();
+            });
+        }
+        else {
+            //this._main.innerHTML = '';
+        }
     }
     get value() {
         return this._value;
