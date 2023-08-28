@@ -1,7 +1,7 @@
 import { BaseCustomWebComponentLazyAppend, css, cssFromString } from "@node-projects/base-custom-webcomponent";
 import { PropertiesHelper } from "@node-projects/web-component-designer";
 import { IControl } from "../interfaces/IControl.js";
-import { ScreenViewer } from "./ScreenViewer.js";
+import { ScriptSystem } from "../scripting/ScriptSystem.js";
 
 export class BaseCustomControl extends BaseCustomWebComponentLazyAppend {
     static readonly style = css`:host { overflow: hidden }`;
@@ -63,7 +63,7 @@ export function generateCustomControl(name: string, control: IControl) {
             }
 
             //@ts-ignore - todo: maybe do it in another way? _rootDocumentFragment is not accessible normaly?
-            ScreenViewer.assignAllScripts(instance._rootDocumentFragment, instance);
+            ScriptSystem.assignAllScripts(instance._rootDocumentFragment, instance);
             
             return instance;
         }

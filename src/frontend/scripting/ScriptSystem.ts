@@ -1,5 +1,6 @@
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
+import { Script } from "./Script.js";
 import { ScriptCommands } from "./ScriptCommands.js";
 import { ScriptMultiplexValue } from "./ScriptValue.js";
 import Long from 'long'
@@ -106,5 +107,47 @@ export class ScriptSystem {
 
     static getValue(value: string | number | boolean | ScriptMultiplexValue, outerContext: any): any {
         return value;
+    }
+
+    static async assignAllScripts(shadowRoot: ShadowRoot, instance: HTMLElement) {
+        const allElements = shadowRoot.querySelectorAll('*');
+        const scriptTag = shadowRoot.querySelector('script[type=module]');
+        let jsObject: any = null;
+        if (scriptTag) {
+            try {
+                const scriptUrl = URL.createObjectURL(new Blob([scriptTag.textContent], { type: 'application/javascript' }));
+                //@ts-ignore
+                jsObject = await importShim(scriptUrl);
+                if (jsObject.init) {
+                    jsObject.init(instance);
+                }
+            } catch (err) {
+                console.warn('error parsing javascript', err)
+            }
+        }
+        for (let e of allElements) {
+            for (let a of e.attributes) {
+                if (a.name[0] == '@') {
+                    try {
+                        let evtName = a.name.substring(1);
+                        let script = a.value.trim();
+                        if (script[0] == '{') {
+                            let scriptObj: Script = JSON.parse(script);
+                            e.addEventListener(evtName, (evt) => ScriptSystem.execute(scriptObj.commands, { event: evt, element: e }));
+                        } else {
+                            e.addEventListener(evtName, (evt) => {
+                                if (!jsObject[script])
+                                    console.warn('javascritp function named: ' + script + ' not found, maybe missing a "export" ?');
+                                else
+                                    jsObject[script](evt, e, shadowRoot);
+                            });
+                        }
+                    }
+                    catch (err) {
+                        console.warn('error assigning script', e, a);
+                    }
+                }
+            }
+        }
     }
 }

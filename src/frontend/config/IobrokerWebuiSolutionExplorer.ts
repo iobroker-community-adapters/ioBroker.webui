@@ -7,6 +7,7 @@ import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBi
 import { exportData, openFileDialog } from "../helper/Helper.js";
 import { IScreen } from "../interfaces/IScreen.js";
 import { IControl } from "../interfaces/IControl.js";
+import { generateCustomControl } from "../runtime/CustomControls.js";
 
 type TreeNodeData = Fancytree.NodeData & {
     lazyload?: (event: any, data: any) => void,
@@ -42,7 +43,11 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     async initialize(serviceContainer: ServiceContainer) {
         this.serviceContainer = serviceContainer;
         iobrokerHandler.screensChanged.on(() => this._refreshScreensNode());
-        iobrokerHandler.controlsChanged.on(() => this._refreshControlsNode());
+        iobrokerHandler.controlsChanged.on(async (name) => {
+            if (name)
+                generateCustomControl(name, await iobrokerHandler.getCustomControl(name));
+            this._refreshControlsNode()
+        });
         iobrokerHandler.imagesChanged.on(() => this._refreshImagesNode());
         await sleep(100);
         this._loadTree();
