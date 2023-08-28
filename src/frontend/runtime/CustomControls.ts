@@ -40,10 +40,14 @@ export function generateCustomControl(name: string, control: IControl) {
         const val = control.properties[p];
         if (val == 'string')
             properties[p] = String;
+        else if (val == 'color')
+            properties[p] = String;
         else if (val == 'boolean')
             properties[p] = Boolean;
         else if (val == 'number')
             properties[p] = Number;
+        else
+            properties[p] = String;
     }
 
     if (window['IobrokerWebuiCustomControl' + name]) {
