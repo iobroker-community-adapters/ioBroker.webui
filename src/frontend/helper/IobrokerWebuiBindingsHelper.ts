@@ -183,7 +183,7 @@ export class IobrokerWebuiBindingsHelper {
                 //todo: binding value changed of prop
                 IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[s.substring(1)], valuesObject, i)
             } else {
-                let cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value, valuesObject, i);
+                let cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
                 unsubscribeList.push(cb);
                 iobrokerHandler.connection.subscribeState(s, cb);
                 iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x.val, valuesObject, i));
@@ -214,13 +214,13 @@ export class IobrokerWebuiBindingsHelper {
     }
 
     static handleValueChanged(element: Element, binding: namedBinding, value: any, valuesObject: any[], index: number) {
-        let v: (number | boolean | string) = value.val;
+        let v: (number | boolean | string) = value;
 
         if (binding[1].expression) {
             valuesObject[index] = value;
             let evalstring = ''
             for (let i = 0; i < valuesObject.length; i++) {
-                evalstring += 'let  __' + i + ' = valuesObject[' + i + '].val;\n';
+                evalstring += 'let  __' + i + ' = valuesObject[' + i + '];\n';
             }
             evalstring += binding[1].expression;
             var valuesObject = valuesObject;
