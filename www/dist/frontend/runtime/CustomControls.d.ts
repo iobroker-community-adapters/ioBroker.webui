@@ -2,7 +2,6 @@ import { BaseCustomWebComponentLazyAppend } from "@node-projects/base-custom-web
 import { IControl } from "../interfaces/IControl.js";
 export declare class BaseCustomControl extends BaseCustomWebComponentLazyAppend {
     static readonly style: CSSStyleSheet;
-    constructor();
     ready(): void;
     connectedCallback(): void;
     _getRelativeSignalsPath(): string;
