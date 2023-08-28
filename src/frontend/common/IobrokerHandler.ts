@@ -158,7 +158,7 @@ class IobrokerHandler {
     }
 
     async getCustomControl(name: string): Promise<IControl> {
-        let control = this._controls.get(name.toLocaleLowerCase());
+        let control = this._controls.get(name);
         if (!control) {
             if (this._readyPromises)
                 this.waitForReady();
@@ -168,21 +168,21 @@ class IobrokerHandler {
             catch (err) {
                 console.error("Error reading Control", control, err);
             }
-            this._controls.set(name.toLocaleLowerCase(), control);
+            this._controls.set(name, control);
         }
         return control;
     }
 
     async saveCustomControl(name: string, control: IControl) {
-        this._saveObjectToFile(control, "/" + this.configPath + "controls/" + name.toLocaleLowerCase() + controlFileExtension);
-        this._controls.set(name.toLocaleLowerCase(), control);
+        this._saveObjectToFile(control, "/" + this.configPath + "controls/" + name + controlFileExtension);
+        this._controls.set(name, control);
         this._controlNames = null;
         this.controlsChanged.emit(name);
     }
 
     async removeCustomControl(name: string) {
-        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "controls/" + name.toLocaleLowerCase() + controlFileExtension);
-        this._controls.delete(name.toLocaleLowerCase());
+        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "controls/" + name + controlFileExtension);
+        this._controls.delete(name);
         this._controlNames = null;
         this.controlsChanged.emit(null);
     }
