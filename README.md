@@ -106,6 +106,8 @@ runtime.html?screenName=screen2
 
 ### __WORK IN PROGRESS__
 - better support & fixes of custom elements
+- enum properties in custom controls
+- sample custom controls
 
 ### 0.2.1 (2023-08-28)
 - null ref fix in bindings
