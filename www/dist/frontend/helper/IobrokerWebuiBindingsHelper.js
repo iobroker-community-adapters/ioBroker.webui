@@ -165,7 +165,7 @@ export class IobrokerWebuiBindingsHelper {
                 IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[s.substring(1)], valuesObject, i);
             }
             else {
-                let cb = (id, value) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value, valuesObject, i);
+                let cb = (id, value) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
                 unsubscribeList.push(cb);
                 iobrokerHandler.connection.subscribeState(s, cb);
                 iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x.val, valuesObject, i));
@@ -195,12 +195,12 @@ export class IobrokerWebuiBindingsHelper {
         };
     }
     static handleValueChanged(element, binding, value, valuesObject, index) {
-        let v = value.val;
+        let v = value;
         if (binding[1].expression) {
             valuesObject[index] = value;
             let evalstring = '';
             for (let i = 0; i < valuesObject.length; i++) {
-                evalstring += 'let  __' + i + ' = valuesObject[' + i + '].val;\n';
+                evalstring += 'let  __' + i + ' = valuesObject[' + i + '];\n';
             }
             evalstring += binding[1].expression;
             var valuesObject = valuesObject;
