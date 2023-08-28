@@ -9,6 +9,9 @@ export class BaseCustomControl extends BaseCustomWebComponentLazyAppend {
 
     constructor() {
         super();
+    }
+
+    ready(){
         this._parseAttributesToProperties();
         IobrokerWebuiBindingsHelper.applyAllBindings(this._rootDocumentFragment, '', this);
         this._bindingsParse(null, true);
