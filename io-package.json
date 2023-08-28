@@ -2,7 +2,6 @@
   "common": {
     "name": "webui",
     "version": "0.1.0",
-    "title": "webui",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -17,7 +16,17 @@
       "zh-cn": "webui"
     },
     "desc": {
-      "en": "Graphical user interface for iobroker using Webcomponents"
+      "en": "Graphical user interface for iobroker using Webcomponents",
+      "de": "Grafische Benutzeroberfläche für iobroker mit Webkomponenten",
+      "ru": "Графический пользовательский интерфейс для iobroker с использованием Webcomponents",
+      "pt": "Interface gráfica do usuário para iobroker usando Webcomponents",
+      "nl": "Grafische gebruiker interface voor iobroker met webcomponenten",
+      "fr": "Interface utilisateur graphique pour iobroker en utilisant Webcomponents",
+      "it": "Interfaccia utente grafica per iobroker utilizzando Webcomponents",
+      "es": "Interfaz de usuario gráfica para iobroker utilizando Webcomponents",
+      "pl": "Graphical user interface for iobroker (ang.)",
+      "uk": "Графічний інтерфейс користувача для iobroker за допомогою Webcomponents",
+      "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
       "0.1.0": {
