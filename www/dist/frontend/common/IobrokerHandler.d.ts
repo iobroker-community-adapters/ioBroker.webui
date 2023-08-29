@@ -32,6 +32,7 @@ declare class IobrokerHandler {
     init(): Promise<void>;
     private _screenNames;
     private _screens;
+    getIconAdapterFoldernames(): AsyncGenerator<string, void, unknown>;
     loadAllScreens(): Promise<void>;
     getScreenNames(): Promise<string[]>;
     getScreen(name: string): Promise<IScreen>;

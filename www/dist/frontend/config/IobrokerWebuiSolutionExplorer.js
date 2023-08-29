@@ -323,18 +323,17 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             lazyload: (e, data) => {
                 data.result = new Promise(async (resolve) => {
                     await iobrokerHandler.waitForReady();
-                    const iconDirs = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons");
+                    const adapterInstances = await iobrokerHandler.getIconAdapterFoldernames();
                     const iconDirNodes = [];
-                    for (let d of iconDirs) {
-                        if (d.isDir)
-                            iconDirNodes.push({
-                                title: d.file,
-                                folder: true,
-                                lazy: true,
-                                lazyload: (e, data) => {
-                                    this._createIconsNodes(d.file, data);
-                                }
-                            });
+                    for await (let inst of adapterInstances) {
+                        iconDirNodes.push({
+                            title: inst,
+                            folder: true,
+                            lazy: true,
+                            lazyload: (e, data) => {
+                                this._createIconsNodes(inst, data, '');
+                            }
+                        });
                     }
                     resolve(iconDirNodes);
                 });
@@ -342,14 +341,26 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         };
         return iconsNode;
     }
-    async _createIconsNodes(dirName, data) {
+    async _createIconsNodes(instanceName, data, subFolder) {
         data.result = new Promise(async (resolve) => {
             let icons = [];
-            await iobrokerHandler.waitForReady();
-            const dirList = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons/" + dirName);
-            for (let d of dirList) {
-                if (d.file.endsWith('.svg'))
-                    icons.push({ title: d.file.substring(0, d.file.length - 4), icon: './assets/icons/' + dirName + '/' + d.file, data: { type: 'icon', file: './assets/icons/' + dirName + '/' + d.file } });
+            const fileList = await iobrokerHandler.connection.readDir(instanceName, subFolder);
+            for (let f of fileList) {
+                if (f.isDir) {
+                    icons.push({
+                        title: f.file,
+                        folder: true,
+                        lazy: true,
+                        lazyload: (e, data) => {
+                            this._createIconsNodes(instanceName, data, subFolder + '/' + f.file);
+                        }
+                    });
+                }
+                else {
+                    const posDot = f.file.lastIndexOf('.');
+                    const name = f.file.substring(0, posDot);
+                    icons.push({ title: name, icon: '/' + instanceName + '/' + f.file, data: { type: 'icon', file: '/' + instanceName + '/' + f.file } });
+                }
             }
             resolve(icons);
         });
@@ -358,7 +369,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         let imagesNodeCtxMenu = (event) => {
             ContextMenu.show([{
                     title: 'Import Images', action: async () => {
-                        let files = await openFileDialog('.png,.gif,.jpg,.jpeg,,svg', true, 'file');
+                        let files = await openFileDialog('.png,.gif,.jpg,.jpeg,.svg', true, 'file');
                         for (let f of files) {
                             let nm = f.name;
                             await iobrokerHandler.saveImage(nm, f.data);
