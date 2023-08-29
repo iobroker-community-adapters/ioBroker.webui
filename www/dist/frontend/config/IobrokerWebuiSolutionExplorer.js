@@ -357,9 +357,11 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     });
                 }
                 else {
-                    const posDot = f.file.lastIndexOf('.');
-                    const name = f.file.substring(0, posDot);
-                    icons.push({ title: name, icon: '/' + instanceName + '/' + f.file, data: { type: 'icon', file: '/' + instanceName + '/' + f.file } });
+                    if (!f.file.endsWith('.html')) {
+                        const posDot = f.file.lastIndexOf('.');
+                        const name = f.file.substring(0, posDot);
+                        icons.push({ title: name, icon: '/' + instanceName + subFolder + '/' + f.file, data: { type: 'icon', file: '/' + instanceName + subFolder + '/' + f.file } });
+                    }
                 }
             }
             resolve(icons);
