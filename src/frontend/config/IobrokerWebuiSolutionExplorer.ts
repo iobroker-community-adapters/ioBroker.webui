@@ -353,6 +353,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         return npmsNode;
     }
 
+
     private async _createIconsFolderNode() {
         let iconsNode: TreeNodeData = {
             title: 'Icons',
@@ -361,18 +362,18 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             lazyload: (e, data) => {
                 data.result = new Promise(async resolve => {
                     await iobrokerHandler.waitForReady();
-                    const iconDirs = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons");
+
+                    const adapterInstances = await iobrokerHandler.getIconAdapterFoldernames();
                     const iconDirNodes: TreeNodeData[] = [];
-                    for (let d of iconDirs) {
-                        if (d.isDir)
-                            iconDirNodes.push({
-                                title: d.file,
-                                folder: true,
-                                lazy: true,
-                                lazyload: (e, data) => {
-                                    this._createIconsNodes(d.file, data);
-                                }
-                            });
+                    for await (let inst of adapterInstances) {
+                        iconDirNodes.push({
+                            title: inst,
+                            folder: true,
+                            lazy: true,
+                            lazyload: (e, data) => {
+                                this._createIconsNodes(inst, data, '');
+                            }
+                        });
                     }
                     resolve(iconDirNodes);
                 });
@@ -382,15 +383,26 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         return iconsNode;
     }
 
-    private async _createIconsNodes(dirName: string, data) {
+    private async _createIconsNodes(instanceName: string, data, subFolder: string) {
         data.result = new Promise(async resolve => {
             let icons: TreeNodeData[] = [];
-            await iobrokerHandler.waitForReady();
-            const dirList = await iobrokerHandler.connection.readDir(iobrokerHandler.adapterName, "assets/icons/" + dirName);
+            const fileList = await iobrokerHandler.connection.readDir(instanceName, subFolder);
 
-            for (let d of dirList) {
-                if (d.file.endsWith('.svg'))
-                    icons.push({ title: d.file.substring(0, d.file.length - 4), icon: './assets/icons/' + dirName + '/' + d.file, data: { type: 'icon', file: './assets/icons/' + dirName + '/' + d.file } });
+            for (let f of fileList) {
+                if (f.isDir) {
+                    icons.push({
+                        title: f.file,
+                        folder: true,
+                        lazy: true,
+                        lazyload: (e, data) => {
+                            this._createIconsNodes(instanceName, data, subFolder + '/' + f.file);
+                        }
+                    });
+                } else {
+                    const posDot = f.file.lastIndexOf('.');
+                    const name = f.file.substring(0, posDot);
+                    icons.push({ title: name, icon: '/' + instanceName + '/' + f.file, data: { type: 'icon', file: '/' + instanceName + '/' + f.file } });
+                }
             }
             resolve(icons);
         });
@@ -400,7 +412,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         let imagesNodeCtxMenu = (event) => {
             ContextMenu.show([{
                 title: 'Import Images', action: async () => {
-                    let files = await openFileDialog('.png,.gif,.jpg,.jpeg,,svg', true, 'file');
+                    let files = await openFileDialog('.png,.gif,.jpg,.jpeg,.svg', true, 'file');
                     for (let f of files) {
                         let nm = f.name;
                         await iobrokerHandler.saveImage(nm, <File>f.data);
