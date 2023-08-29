@@ -3,6 +3,7 @@ import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelp
 import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { SvgImage } from "../runtime/SvgImage.js";
+import { BaseCustomControl } from "../runtime/CustomControls.js";
 
 export class IobrokerWebuiBindableObjectDragDropService implements IBindableObjectDragDropService {
     rectMap = new Map<Element, SVGRectElement>();
@@ -102,7 +103,8 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
                 const input = document.createElement('input');
                 di = DesignItem.createDesignItemFromInstance(input, designerCanvas.serviceContainer, designerCanvas.instanceServiceContainer);
                 grp = di.openGroup("Insert");
-                const binding: IIobrokerWebuiBinding = { signal: bindableObject.fullName, target: BindingTarget.property, twoWay: obj?.common?.write !== false };
+                let twoWay = obj?.common?.write !== false;
+                const binding: IIobrokerWebuiBinding = { signal: bindableObject.fullName, target: BindingTarget.property, twoWay: twoWay };
                 let serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value', binding);
                 if (bindableObject.originalObject.common.type === 'boolean') {
                     serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'checked', binding);
@@ -131,7 +133,8 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
             binding.target = BindingTarget.css;
         binding.signal = bindableObject.fullName;
         binding.twoWay = property.propertyType == PropertyType.property || property.propertyType == PropertyType.propertyAndAttribute;
-
+        if (designItems[0].element instanceof BaseCustomControl)
+            binding.twoWay = false;
         const group = designItems[0].openGroup('drop binding')
         for (let d of designItems) {
             const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(d.element, property.name, binding);

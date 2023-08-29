@@ -11,7 +11,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
 
     private _type: 'screen' | 'control';
 
-    private _properties: Record<string, string>;
+    private _properties: Record<string, { type: string, values?: string[], default?: any }>;
 
     private _configChangedListener: Disposable;
 
@@ -21,13 +21,13 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
 
     public static override style = css``;
 
-    public async initialize(name: string, type: 'screen' | 'control', html: string, style: string, properties: Record<string, string>, serviceContainer: ServiceContainer) {
+    public async initialize(name: string, type: 'screen' | 'control', html: string, style: string, properties: Record<string, { type: string, values?: string[], default?: any }>, serviceContainer: ServiceContainer) {
         this.title = type + ' - ' + name;
 
         this._name = name;
         this._type = type;
         if (this._type == 'control') {
-            this._properties = properties ?? {};
+            this._properties = {...properties} ?? {};
         }
 
         this.documentContainer = new DocumentContainer(serviceContainer);

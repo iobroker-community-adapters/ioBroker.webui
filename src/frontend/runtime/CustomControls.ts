@@ -35,18 +35,18 @@ export function generateCustomControl(name: string, control: IControl) {
 
     let properties = {};
     for (let p in control.properties) {
-        const val = control.properties[p];
-        if (val == 'string')
+        const prp = control.properties[p];
+        if (prp.type == 'string')
             properties[p] = String;
-        else if (val == 'color')
+        else if (prp.type == 'color')
             properties[p] = String;
-        else if (val == 'boolean')
+        else if (prp.type == 'boolean')
             properties[p] = Boolean;
-        else if (val == 'number')
+        else if (prp.type == 'number')
             properties[p] = Number;
-        else if (val == 'date')
+        else if (prp.type == 'date')
             properties[p] = Date;
-        else if (val.startsWith("[")) // enum
+        else if (prp.type == 'enum') // enum
             properties[p] = String;
         else
             properties[p] = Object;
@@ -77,6 +77,9 @@ export function generateCustomControl(name: string, control: IControl) {
                     enumerable: true,
                     configurable: true,
                 });
+                if (control.properties[p].default) {
+                    instance['_' + p] = control.properties[p].default;
+                }
             }
             return instance;
         }

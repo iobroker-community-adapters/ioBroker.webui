@@ -5,12 +5,15 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
     static override style = css`
     :host {
         display: grid;
-        grid-template-columns: 1fr 1fr 30px;
+        grid-template-columns: 1fr 1fr 1fr 30px;
         overflow-y: auto;
         align-content: start;
         height: 100%;
         padding: 5px;
         gap: 2px;
+    }
+    div {
+        font-size: 10px;
     }
     input {
         width: 100%;
@@ -19,6 +22,10 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
 
     //TODO: enum properties, will be stored like this "'aa'|'bb'" -> like typescript enums
     static override template = html`
+        <div>name</div>
+        <div>type</div>
+        <div>def.</div>
+        <div></div>
         <template repeat:item="[[this.properties]]">
             <input value="{{item.name}}" @input="[[this.changed()]]">
             <select css:display="[[item.type == 'enum' ? 'none' : '']]" value="{{item.type}}" @change="[[this.changed()]]">
@@ -29,10 +36,11 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
                 <option value="date">date</option>
             </select>
             <input css:display="[[item.type == 'enum' ? '' : 'none']]" value="{{?item.values}}" @input="[[this.changed()]]">
+            <input type="text" value="{{?item.def}}" @input="[[this.changed()]]">
             <button @click="[[this.removeProp(index)]]">del</button>
         </template>
-        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 3;" @click="addProp">add...</button>
-        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 3;" @click="addEnumProp">add enum...</button>`;
+        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 4;" @click="addProp">add...</button>
+        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 4;" @click="addEnumProp">add enum...</button>`;
 
     constructor() {
         super();
@@ -44,18 +52,16 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
         this._assignEvents();
     }
 
-    public properties: { name: string, type: string, values?: string }[];
-    public propertiesObj: Record<string, string>
+    public properties: { name: string, type: string, def?: string, values?: string }[];
+    public propertiesObj: Record<string, { type: string, values?: string[], default?: any }>
 
-    public setProperties(properties: Record<string, string>) {
+    public setProperties(properties: Record<string, { type: string, values?: string[], default?: any }>) {
         this.propertiesObj = properties;
         if (properties) {
             this.properties = [];
             for (let p in properties) {
-                if (properties[p].startsWith("["))
-                    this.properties.push({ name: p, type: 'enum', values: properties[p] });
-                else
-                    this.properties.push({ name: p, type: properties[p] });
+                let t = properties[p];
+                this.properties.push({ name: p, type: t.type, values: JSON.stringify(t.values), def: t.default });
             }
         } else {
             this.properties = null;
@@ -90,12 +96,19 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
         }
         for (let p of this.properties) {
             if (p.name) {
-                if (p.type != 'enum')
-                    this.propertiesObj[p.name] = p.type;
-                else {
-                    if (p.values)
-                        this.propertiesObj[p.name] = p.values;
+                let obj: { type: string, values?: string[], default?: any } = { type: p.type };
+                if (p.def) {
+                    if (p.type == 'number')
+                        obj.default = parseFloat(p.def);
+                    else if (p.type == 'boolean')
+                        obj.default = p.def == 'true';
+                    else
+                        obj.default = p.def;
                 }
+                if (p.type == 'enum') {
+                    obj.values = JSON.parse(p.values);
+                }
+                this.propertiesObj[p.name] = obj;
             }
         }
     }

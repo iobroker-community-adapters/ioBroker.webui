@@ -16,27 +16,27 @@ export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentProper
     protected parseProperties(control: IControl): IProperty[] {
         let properties: IProperty[] = [];
         for (const name in control.properties) {
-            let type = control.properties[name];
-            if (type === 'string') {
+            let prp = control.properties[name];
+            if (prp.type === 'string') {
                 let property: IProperty = { name: name, type: "string", service: this, propertyType: PropertyType.propertyAndAttribute };
                 properties.push(property);
-            } else if (type === 'color') {
+            } else if (prp.type === 'color') {
                 let property: IProperty = { name: name, type: "color", service: this, propertyType: PropertyType.propertyAndAttribute };
                 properties.push(property);
-            } else if (type === 'number') {
+            } else if (prp.type === 'number') {
                 let property: IProperty = { name: name, type: "number", service: this, propertyType: PropertyType.propertyAndAttribute };
                 properties.push(property);
-            } else if (type === 'date') {
+            } else if (prp.type === 'date') {
                 let property: IProperty = { name: name, type: "date", service: this, propertyType: PropertyType.propertyAndAttribute };
                 properties.push(property);
-            } else if (type === 'color') {
+            } else if (prp.type === 'color') {
                 let property: IProperty = { name: name, type: "color", service: this, propertyType: PropertyType.propertyAndAttribute };
                 properties.push(property);
-            } else if (type === 'boolean') {
+            } else if (prp.type === 'boolean') {
                 let property: IProperty = { name: name, type: "boolean", service: this, propertyType: PropertyType.propertyAndAttribute };
                 properties.push(property);
-            } else if (type.startsWith("[")) {
-                let property: IProperty = { name: name, type: "list", values: <string[]>JSON.parse(type), service: this, propertyType: PropertyType.propertyAndAttribute };
+            } else if (prp.type == 'enum') {
+                let property: IProperty = { name: name, type: "list", values: prp.values, service: this, propertyType: PropertyType.propertyAndAttribute };
                 properties.push(property);
             } else {
                 let property: IProperty = { name: name, type: "string", service: this, propertyType: PropertyType.propertyAndAttribute };
