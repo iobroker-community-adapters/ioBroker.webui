@@ -128,6 +128,19 @@ class IobrokerHandler {
                 this.waitForReady();
             try {
                 control = await this._getObjectFromFile(this.configPath + "controls/" + name + controlFileExtension);
+                //TODO: remove in a later version, fixes old props
+                let k = Object.keys(control.properties);
+                if (k.length && typeof control.properties[k[0]] == 'string') {
+                    for (let p in control.properties) {
+                        let prp = control.properties[p];
+                        if (prp.startsWith("[")) {
+                            control.properties[p] = { type: 'enum', values: JSON.parse(prp) };
+                        }
+                        else {
+                            control.properties[p] = { type: prp };
+                        }
+                    }
+                }
             }
             catch (err) {
                 console.error("Error reading Control", control, err);

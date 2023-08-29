@@ -8,7 +8,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         this._name = name;
         this._type = type;
         if (this._type == 'control') {
-            this._properties = properties ?? {};
+            this._properties = { ...properties } ?? {};
         }
         this.documentContainer = new DocumentContainer(serviceContainer);
         this.documentContainer.additionalStylesheets = [

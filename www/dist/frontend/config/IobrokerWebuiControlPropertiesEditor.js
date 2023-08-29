@@ -13,10 +13,8 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
         if (properties) {
             this.properties = [];
             for (let p in properties) {
-                if (properties[p].startsWith("["))
-                    this.properties.push({ name: p, type: 'enum', values: properties[p] });
-                else
-                    this.properties.push({ name: p, type: properties[p] });
+                let t = properties[p];
+                this.properties.push({ name: p, type: t.type, values: JSON.stringify(t.values), def: t.default });
             }
         }
         else {
@@ -47,12 +45,19 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
         }
         for (let p of this.properties) {
             if (p.name) {
-                if (p.type != 'enum')
-                    this.propertiesObj[p.name] = p.type;
-                else {
-                    if (p.values)
-                        this.propertiesObj[p.name] = p.values;
+                let obj = { type: p.type };
+                if (p.def) {
+                    if (p.type == 'number')
+                        obj.default = parseFloat(p.def);
+                    else if (p.type == 'boolean')
+                        obj.default = p.def == 'true';
+                    else
+                        obj.default = p.def;
                 }
+                if (p.type == 'enum') {
+                    obj.values = JSON.parse(p.values);
+                }
+                this.propertiesObj[p.name] = obj;
             }
         }
     }
@@ -60,12 +65,15 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
 IobrokerWebuiControlPropertiesEditor.style = css `
     :host {
         display: grid;
-        grid-template-columns: 1fr 1fr 30px;
+        grid-template-columns: 1fr 1fr 1fr 30px;
         overflow-y: auto;
         align-content: start;
         height: 100%;
         padding: 5px;
         gap: 2px;
+    }
+    div {
+        font-size: 10px;
     }
     input {
         width: 100%;
@@ -73,6 +81,10 @@ IobrokerWebuiControlPropertiesEditor.style = css `
     }`;
 //TODO: enum properties, will be stored like this "'aa'|'bb'" -> like typescript enums
 IobrokerWebuiControlPropertiesEditor.template = html `
+        <div>name</div>
+        <div>type</div>
+        <div>def.</div>
+        <div></div>
         <template repeat:item="[[this.properties]]">
             <input value="{{item.name}}" @input="[[this.changed()]]">
             <select css:display="[[item.type == 'enum' ? 'none' : '']]" value="{{item.type}}" @change="[[this.changed()]]">
@@ -83,8 +95,9 @@ IobrokerWebuiControlPropertiesEditor.template = html `
                 <option value="date">date</option>
             </select>
             <input css:display="[[item.type == 'enum' ? '' : 'none']]" value="{{?item.values}}" @input="[[this.changed()]]">
+            <input type="text" value="{{?item.def}}" @input="[[this.changed()]]">
             <button @click="[[this.removeProp(index)]]">del</button>
         </template>
-        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 3;" @click="addProp">add...</button>
-        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 3;" @click="addEnumProp">add enum...</button>`;
+        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 4;" @click="addProp">add...</button>
+        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 4;" @click="addEnumProp">add enum...</button>`;
 customElements.define("iobroker-webui-control-properties-editor", IobrokerWebuiControlPropertiesEditor);

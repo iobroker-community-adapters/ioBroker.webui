@@ -9,7 +9,11 @@ export declare class IobrokerWebuiScreenEditor extends BaseCustomWebComponentCon
     documentContainer: DocumentContainer;
     static template: HTMLTemplateElement;
     static style: CSSStyleSheet;
-    initialize(name: string, type: 'screen' | 'control', html: string, style: string, properties: Record<string, string>, serviceContainer: ServiceContainer): Promise<void>;
+    initialize(name: string, type: 'screen' | 'control', html: string, style: string, properties: Record<string, {
+        type: string;
+        values?: string[];
+        default?: any;
+    }>, serviceContainer: ServiceContainer): Promise<void>;
     executeCommand(command: IUiCommand): Promise<void>;
     canExecuteCommand(command: IUiCommand): boolean;
     activated(): void;

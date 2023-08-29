@@ -73,6 +73,19 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         this._solutionExplorer.initialize(serviceContainer);
         this.propertyGrid.serviceContainer = serviceContainer;
     }
+    isDockOpenAndActivate(id) {
+        let panels = this._dock.dockManager.getPanels();
+        for (let p of panels) {
+            if (p.elementContent instanceof HTMLSlotElement) {
+                let ct = p.elementContent.assignedElements()[0];
+                if (ct?.id == id) {
+                    this._dock.dockManager.context.documentManagerView.tabHost.setActiveTab(p);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     openDock(element) {
         element.setAttribute('dock-spawn-panel-type', 'document');
         //todo: why are this 2 styles needed? needs a fix in dock-spawn
@@ -107,16 +120,24 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         });
     }
     async openScreenEditor(name, type, html, style, properties) {
-        let screenEditor = new IobrokerWebuiScreenEditor();
-        await screenEditor.initialize(name, type, html, style, properties, serviceContainer);
-        this.openDock(screenEditor);
+        let id = type + "_" + name;
+        if (!this.isDockOpenAndActivate(id)) {
+            let screenEditor = new IobrokerWebuiScreenEditor();
+            screenEditor.id = id;
+            await screenEditor.initialize(name, type, html, style, properties, serviceContainer);
+            this.openDock(screenEditor);
+        }
     }
     async openGlobalStyleEditor(style) {
-        let styleEditor = new IobrokerWebuiStyleEditor();
-        styleEditor.title = 'global style';
-        const model = await styleEditor.createModel(style);
-        styleEditor.model = model;
-        this.openDock(styleEditor);
+        let id = "global_styleEditor";
+        if (!this.isDockOpenAndActivate(id)) {
+            let styleEditor = new IobrokerWebuiStyleEditor();
+            styleEditor.id = id;
+            styleEditor.title = 'global style';
+            const model = await styleEditor.createModel(style);
+            styleEditor.model = model;
+            this.openDock(styleEditor);
+        }
     }
 }
 IobrokerWebuiAppShell.style = css `

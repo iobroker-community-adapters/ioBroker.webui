@@ -1,7 +1,11 @@
 export interface IControl {
     html: string;
     style: string;
-    properties: Record<string, string>;
+    properties: Record<string, {
+        type: string;
+        values?: string[];
+        default?: any;
+    }>;
     settings: IControlSettings;
 }
 export interface IControlSettings {

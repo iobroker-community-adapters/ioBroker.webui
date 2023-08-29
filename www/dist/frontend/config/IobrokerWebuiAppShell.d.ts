@@ -28,12 +28,17 @@ export declare class IobrokerWebuiAppShell extends BaseCustomWebComponentConstru
     static readonly template: HTMLTemplateElement;
     ready(): Promise<void>;
     private _setupServiceContainer;
+    isDockOpenAndActivate(id: string): boolean;
     openDock(element: HTMLElement): void;
     openDialog(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement): {
         close: () => void;
     };
     openConfirmation(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement): Promise<boolean>;
-    openScreenEditor(name: string, type: 'screen' | 'control', html: string, style: string, properties?: Record<string, string>): Promise<void>;
+    openScreenEditor(name: string, type: 'screen' | 'control', html: string, style: string, properties?: Record<string, {
+        type: string;
+        values?: string[];
+        default?: any;
+    }>): Promise<void>;
     openGlobalStyleEditor(style: string): Promise<void>;
 }
 declare global {

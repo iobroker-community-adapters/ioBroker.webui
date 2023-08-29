@@ -7,10 +7,19 @@ export declare class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebC
     properties: {
         name: string;
         type: string;
+        def?: string;
         values?: string;
     }[];
-    propertiesObj: Record<string, string>;
-    setProperties(properties: Record<string, string>): void;
+    propertiesObj: Record<string, {
+        type: string;
+        values?: string[];
+        default?: any;
+    }>;
+    setProperties(properties: Record<string, {
+        type: string;
+        values?: string[];
+        default?: any;
+    }>): void;
     refresh(): void;
     addProp(): void;
     addEnumProp(): void;
