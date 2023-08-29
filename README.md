@@ -103,8 +103,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-
-### __WORK IN PROGRESS__
+### 0.3.0 (2023-08-29)
 - default value for custom properties
 - open screens only once
 - property bindings default one way

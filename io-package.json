@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.2.3",
+    "version": "0.3.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.3.0": {
+        "en": "default value for custom properties\nopen screens only once\nproperty bindings default one way",
+        "de": "standardwert für benutzerdefinierte eigenschaften\nbildschirme nur einmal öffnen\neigenschaftsbindungen standardmäßig ein weg",
+        "ru": "значение по умолчанию для пользовательских свойств\nоткрытые экраны только один раз\nсвойство связывает дефолт один путь",
+        "pt": "valor padrão para propriedades personalizadas\ntelas abertas apenas uma vez\nligações de propriedade padrão de uma maneira",
+        "nl": "defensiewaarde voor eigendommen\nopen schermen maar één keer\nbedrijven verbinden op één manier",
+        "fr": "valeur par défaut pour les propriétés personnalisées\nécrans ouverts seulement une fois\nreliures de propriété par défaut une manière",
+        "it": "valore predefinito per le proprietà personalizzate\nsolo una volta\nbinding di proprietà predefinito un modo",
+        "es": "valor predeterminado para propiedades personalizadas\npantallas abiertas sólo una vez\npropiedad vinculantes por defecto una manera",
+        "pl": "wartość domyślna\notwarte ekrany tylko raz\nwiązanie nieruchomości domyślnie domyślnie domyślnie domyśla się jedno sposób",
+        "uk": "значення за замовчуванням для індивідуальних властивостей\nвідкриті екрани тільки один раз\nоб'єкти за замовчуванням",
+        "zh-cn": "b. 习惯财产的违约价值\n公开屏幕只一次\n财产具有约束力的方式"
+      },
       "0.2.3": {
         "en": "rework how custom controls are initalized",
         "de": "nacharbeiten, wie benutzerdefinierte bedienelemente initalisiert werden",
