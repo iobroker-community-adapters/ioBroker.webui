@@ -23,6 +23,13 @@ export class Uploadhelper {
         '_socket/info.js',
         'LICENSE',
         '.ts',
+        '.map',
+        '.md',
+        '.html',
+        'package-lock.json',
+        '.release-it.json',
+        '.yml',
+        '.cjs'
     ]
 
     constructor(adapter: AdapterInstance, namespace: string) {

@@ -15,6 +15,13 @@ export class Uploadhelper {
             '_socket/info.js',
             'LICENSE',
             '.ts',
+            '.map',
+            '.md',
+            '.html',
+            'package-lock.json',
+            '.release-it.json',
+            '.yml',
+            '.cjs'
         ];
         this._adapter = adapter;
         this._namespace = namespace;
