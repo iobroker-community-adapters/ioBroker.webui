@@ -59,7 +59,9 @@ function cleanupNodeModules() {
         "./www/node_modules/monaco-editor/esm",
         "./www/node_modules/monaco-editor/min-maps",
         "./www/**/*.d.ts",
-        "./www/**/*.map"
+        "./www/**/*.map",
+        "./www/**/*.md",
+        "./www/**/*.txt",
     ]
 
     return deleteAsync(notUsed);
@@ -98,4 +100,4 @@ function copyConfigJs() {
         .pipe(dest('./www'));
 }
 
-export default series(copyNodeModules, copyNodeFiles, cleanupNodeModules, copyDist, cleanupDist, copyAssets, copyHtml, copyManifest, copyConfigJs);
+export default series(copyNodeModules, copyNodeFiles, copyDist, cleanupNodeModules, cleanupDist, copyAssets, copyHtml, copyManifest, copyConfigJs);
