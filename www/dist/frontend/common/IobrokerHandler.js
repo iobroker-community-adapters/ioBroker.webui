@@ -41,13 +41,15 @@ class IobrokerHandler {
         this._readyPromises = null;
         console.log("ioBroker handler ready.");
     }
-    async *getIconAdapterFoldernames() {
+    async getIconAdapterFoldernames() {
         const adapterInstances = await this.connection.getObjectViewSystem('instance', '');
+        let names = [];
         for (let nm in adapterInstances) {
-            if (adapterInstances[nm]?.common?.type == 'visualization-icons') {
-                yield adapterInstances[nm]?.common.name;
+            if (adapterInstances[nm]?.common?.type == 'visualization-icons' || adapterInstances[nm]?.common.name.startsWith('icons-')) {
+                names.push(adapterInstances[nm]?.common.name);
             }
         }
+        return names;
     }
     async loadAllScreens() {
         let names = await this.getScreenNames();

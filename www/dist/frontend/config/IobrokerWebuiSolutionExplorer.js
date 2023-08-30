@@ -325,7 +325,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     await iobrokerHandler.waitForReady();
                     const adapterInstances = await iobrokerHandler.getIconAdapterFoldernames();
                     const iconDirNodes = [];
-                    for await (let inst of adapterInstances) {
+                    for (let inst of adapterInstances) {
                         iconDirNodes.push({
                             title: inst,
                             folder: true,
