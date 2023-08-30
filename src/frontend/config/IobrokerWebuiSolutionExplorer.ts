@@ -600,7 +600,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
 
     private async _createWebcomponentsNode() {
         let controlsNode: TreeNodeData = {
-            title: 'Webcomponents', folder: true, children: []
+            title: 'Designer', folder: true, children: []
         }
 
         for (const s of this.serviceContainer.elementsServices) {
