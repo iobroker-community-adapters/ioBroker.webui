@@ -1,5 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from "@node-projects/base-custom-webcomponent";
-import { dragDropFormatNameBindingObject, IBindableObject, IBindableObjectsService, IElementDefinition, ServiceContainer, dragDropFormatNameElementDefinition, ContextMenu, sleep, dragDropFormatNamePropertyGrid, PropertiesHelper } from "@node-projects/web-component-designer";
+import { dragDropFormatNameBindingObject, IBindableObject, IBindableObjectsService, IElementDefinition, ServiceContainer, dragDropFormatNameElementDefinition, ContextMenu, sleep, dragDropFormatNamePropertyGrid, PropertiesHelper, copyTextToClipboard } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
@@ -408,7 +408,18 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     if (!f.file.endsWith('.html')) {
                         const posDot = f.file.lastIndexOf('.');
                         const name = f.file.substring(0, posDot);
-                        icons.push({ title: name, icon: '/' + instanceName + subFolder + '/' + f.file, data: { type: 'icon', file: '/' + instanceName + subFolder + '/' + f.file } });
+                        icons.push({
+                            title: name,
+                            contextMenu: (event) => {
+                                ContextMenu.show([{
+                                    title: 'copy path to clipboard', action: async () => {
+                                        copyTextToClipboard('/' + instanceName + subFolder + '/' + f.file);  
+                                    }
+                                }], event);
+                            },
+                            icon: '/' + instanceName + subFolder + '/' + f.file,
+                            data: { type: 'icon', file: '/' + instanceName + subFolder + '/' + f.file }
+                        });
                     }
                 }
             }
@@ -672,6 +683,13 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 data: {
                     type: 'object',
                     bindable: x
+                },
+                contextMenu: (event) => {
+                    ContextMenu.show([{
+                        title: 'copy to clipboard', action: async () => {
+                            copyTextToClipboard(x);
+                        }
+                    }], event);
                 },
                 folder: x.children !== false,
                 lazy: x.children !== false,
