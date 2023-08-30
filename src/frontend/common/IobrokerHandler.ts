@@ -75,7 +75,7 @@ class IobrokerHandler {
         const adapterInstances = await this.connection.getObjectViewSystem('instance', '');
         let names: string[] = [];
         for (let nm in adapterInstances) {
-            if (adapterInstances[nm]?.common?.type == 'visualization-icons') {
+            if (adapterInstances[nm]?.common?.type == 'visualization-icons' || adapterInstances[nm]?.common.name.startsWith('icons-')) {
                 names.push(adapterInstances[nm]?.common.name)
             }
         }
