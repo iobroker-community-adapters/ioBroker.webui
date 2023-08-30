@@ -67,16 +67,23 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
     _lazyLoadScreensNodes(event, data) {
         data.result = new Promise(async (resolve) => {
-            let screenNodeCtxMenu = (event, screen) => {
+            let screenNodeCtxMenu = (event, name) => {
                 ContextMenu.show([{
                         title: 'Export Screen', action: async () => {
-                            let data = await iobrokerHandler.getScreen(screen);
-                            await exportData(JSON.stringify(data), screen + '.screen');
+                            let data = await iobrokerHandler.getScreen(name);
+                            await exportData(JSON.stringify(data), name + '.screen');
+                        }
+                    }, {
+                        title: 'Rename Screen', action: async () => {
+                            let newName = prompt("Rename Screen: " + name, name);
+                            if (newName && name != newName) {
+                                iobrokerHandler.renameScreen(name, newName);
+                            }
                         }
                     }, {
                         title: 'Remove Screen', action: () => {
                             if (confirm("are you sure?"))
-                                iobrokerHandler.removeScreen(screen);
+                                iobrokerHandler.removeScreen(name);
                         }
                     }], event);
             };
@@ -505,16 +512,23 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
     _lazyLoadControlsNodes(event, data) {
         data.result = new Promise(async (resolve) => {
-            let controlNodeCtxMenu = (event, control) => {
+            let controlNodeCtxMenu = (event, name) => {
                 ContextMenu.show([{
                         title: 'Export Control', action: async () => {
-                            let data = await iobrokerHandler.getCustomControl(control);
-                            await exportData(JSON.stringify(data), control + '.control');
+                            let data = await iobrokerHandler.getCustomControl(name);
+                            await exportData(JSON.stringify(data), name + '.control');
+                        }
+                    }, {
+                        title: 'Rename Control', action: async () => {
+                            let newName = prompt("Rename Control: " + name, name);
+                            if (newName && name != newName) {
+                                iobrokerHandler.renameCustomControl(name, newName);
+                            }
                         }
                     }, {
                         title: 'Remove Control', action: () => {
                             if (confirm("are you sure?"))
-                                iobrokerHandler.removeCustomControl(control);
+                                iobrokerHandler.removeCustomControl(name);
                         }
                     }], event);
             };

@@ -104,6 +104,13 @@ class IobrokerHandler {
         this._screenNames = null;
         this.screensChanged.emit(null);
     }
+    async renameScreen(oldName, newName) {
+        await this.connection.renameFile(this.namespaceFiles, "/" + this.configPath + "screens/" + oldName.toLocaleLowerCase() + screenFileExtension, "/" + this.configPath + "screens/" + newName.toLocaleLowerCase() + screenFileExtension);
+        this._screens.delete(oldName);
+        this._screens.delete(newName);
+        this._screenNames = null;
+        this.screensChanged.emit(null);
+    }
     async loadAllCustomControls() {
         await iobrokerHandler.waitForReady();
         let names = await this.getCustomControlNames();
@@ -168,6 +175,13 @@ class IobrokerHandler {
     async removeCustomControl(name) {
         await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "controls/" + name + controlFileExtension);
         this._controls.delete(name);
+        this._controlNames = null;
+        this.controlsChanged.emit(null);
+    }
+    async renameCustomControl(oldName, newName) {
+        await this.connection.renameFile(this.namespaceFiles, "/" + this.configPath + "controls/" + oldName + controlFileExtension, "/" + this.configPath + "controls/" + newName + controlFileExtension);
+        this._controls.delete(oldName);
+        this._controls.delete(newName);
         this._controlNames = null;
         this.controlsChanged.emit(null);
     }
