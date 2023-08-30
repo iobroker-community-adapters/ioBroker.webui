@@ -119,6 +119,10 @@ export class IobrokerWebuiBindableObjectDragDropService {
         return 'copy';
     }
     dropOnProperty(event, property, bindableObject, designItems) {
+        if (property.type == 'signal') {
+            property.service.setValue(designItems, property, bindableObject.fullName);
+            return;
+        }
         const binding = { signal: bindableObject.fullName, target: BindingTarget.property };
         if (property.propertyType == PropertyType.attribute)
             binding.target = BindingTarget.attribute;

@@ -548,7 +548,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
     async _createWebcomponentsNode() {
         let controlsNode = {
-            title: 'Webcomponents', folder: true, children: []
+            title: 'Designer', folder: true, children: []
         };
         for (const s of this.serviceContainer.elementsServices) {
             const newNode = {

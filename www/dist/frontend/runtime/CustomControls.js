@@ -40,6 +40,8 @@ export function generateCustomControl(name, control) {
             properties[p] = Date;
         else if (prp.type == 'enum') // enum
             properties[p] = String;
+        else if (prp.type == 'signal')
+            properties[p] = String;
         else
             properties[p] = Object;
     }
@@ -48,6 +50,7 @@ export function generateCustomControl(name, control) {
         window['IobrokerWebuiCustomControl' + name].style = style;
         window['IobrokerWebuiCustomControl' + name].properties = properties;
         window['IobrokerWebuiCustomControl' + name]._control = control;
+        window['IobrokerWebuiCustomControl' + name]._propertiesDictionary = null;
     }
     else {
         window['IobrokerWebuiCustomControl' + name] = function () {
@@ -78,6 +81,7 @@ export function generateCustomControl(name, control) {
         window['IobrokerWebuiCustomControl' + name].style = style;
         window['IobrokerWebuiCustomControl' + name].properties = properties;
         window['IobrokerWebuiCustomControl' + name]._control = control;
+        window['IobrokerWebuiCustomControl' + name]._propertiesDictionary = null;
         window['IobrokerWebuiCustomControl' + name].prototype = Object.create(BaseCustomControl.prototype, { constructor: { value: window['IobrokerWebuiCustomControl' + name] } });
         customElements.define('iobroker-webui-custom-control' + nm, window['IobrokerWebuiCustomControl' + name]);
     }

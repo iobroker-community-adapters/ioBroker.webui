@@ -41,6 +41,10 @@ export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentProper
                 let property = { name: name, type: "list", values: prp.values, service: this, propertyType: PropertyType.propertyAndAttribute };
                 properties.push(property);
             }
+            else if (prp.type == 'signal') { // TODO: show signal selector
+                let property = { name: name, type: "signal", service: this, propertyType: PropertyType.propertyAndAttribute };
+                properties.push(property);
+            }
             else {
                 let property = { name: name, type: "string", service: this, propertyType: PropertyType.propertyAndAttribute };
                 properties.push(property);
