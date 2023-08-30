@@ -105,6 +105,7 @@ runtime.html?screenName=screen2
 -->
 ### __WORK IN PROGRESS__
 - signal as property type
+- removed svg-image control
 
 ### 0.4.0 (2023-08-30)
 - remove uneeded files from upload
