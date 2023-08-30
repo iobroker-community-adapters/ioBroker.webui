@@ -362,10 +362,9 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             lazyload: (e, data) => {
                 data.result = new Promise(async resolve => {
                     await iobrokerHandler.waitForReady();
-
                     const adapterInstances = await iobrokerHandler.getIconAdapterFoldernames();
                     const iconDirNodes: TreeNodeData[] = [];
-                    for await (let inst of adapterInstances) {
+                    for (let inst of adapterInstances) {
                         iconDirNodes.push({
                             title: inst,
                             folder: true,

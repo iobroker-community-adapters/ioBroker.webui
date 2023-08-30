@@ -71,13 +71,15 @@ class IobrokerHandler {
     private _screenNames: string[];
     private _screens: Map<string, IScreen> = new Map();
 
-    async * getIconAdapterFoldernames() {
+    async getIconAdapterFoldernames() {
         const adapterInstances = await this.connection.getObjectViewSystem('instance', '');
+        let names: string[] = [];
         for (let nm in adapterInstances) {
             if (adapterInstances[nm]?.common?.type == 'visualization-icons') {
-                yield adapterInstances[nm]?.common.name;
+                names.push(adapterInstances[nm]?.common.name)
             }
         }
+        return names;
     }
 
     async loadAllScreens() {
