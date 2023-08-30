@@ -138,6 +138,14 @@ class IobrokerHandler {
         this.screensChanged.emit(null);
     }
 
+    async renameScreen(oldName: string, newName) {
+        await this.connection.renameFile(this.namespaceFiles, "/" + this.configPath + "screens/" + oldName.toLocaleLowerCase() + screenFileExtension, "/" + this.configPath + "screens/" + newName.toLocaleLowerCase() + screenFileExtension);
+        this._screens.delete(oldName);
+        this._screens.delete(newName);
+        this._screenNames = null;
+        this.screensChanged.emit(null);
+    }
+
     private _controlNames: string[];
     private _controls: Map<string, IControl> = new Map();
 
@@ -208,6 +216,14 @@ class IobrokerHandler {
     async removeCustomControl(name: string) {
         await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "controls/" + name + controlFileExtension);
         this._controls.delete(name);
+        this._controlNames = null;
+        this.controlsChanged.emit(null);
+    }
+
+    async renameCustomControl(oldName: string, newName) {
+        await this.connection.renameFile(this.namespaceFiles, "/" + this.configPath + "controls/" + oldName + controlFileExtension, "/" + this.configPath + "controls/" + newName + controlFileExtension);
+        this._controls.delete(oldName);
+        this._controls.delete(newName);
         this._controlNames = null;
         this.controlsChanged.emit(null);
     }
