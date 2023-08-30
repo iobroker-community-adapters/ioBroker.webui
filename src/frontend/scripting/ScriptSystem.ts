@@ -34,7 +34,7 @@ export class ScriptSystem {
                 case 'ToggleSignalValue': {
                     const signal = await ScriptSystem.getValue(c.signal, outerContext);
                     let state = await iobrokerHandler.connection.getState(signal);
-                    await iobrokerHandler.connection.setState(c.signal, !state?.val);
+                    await iobrokerHandler.connection.setState(signal, !state?.val);
                     break;
                 }
                 case 'SetSignalValue': {
