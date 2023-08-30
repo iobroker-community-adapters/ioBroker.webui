@@ -103,8 +103,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-
-### __WORK IN PROGRESS__
+### 0.4.0 (2023-08-30)
 - remove uneeded files from upload
 - remove icons into extra iobroker packages
 - support icon adapters

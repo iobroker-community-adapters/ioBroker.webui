@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.4.0": {
+        "en": "remove uneeded files from upload\nremove icons into extra iobroker packages\nsupport icon adapters\nrename screens & controls",
+        "de": "uneeded dateien vom upload entfernen\nicons in extra iobroker pakete entfernen\nicon adapter unterstützen\numbenennen von bildschirmen und bedienelementen",
+        "ru": "удалить ненужные файлы из загрузки\nудалить иконки в дополнительные пакеты iobroker\nподдержка иконных адаптеров\nпереименовать экраны и контроль",
+        "pt": "remover arquivos não editados do upload\nremover ícones em pacotes extra iobroker\nadaptadores de ícone de suporte\nrenomear telas e controles",
+        "nl": "verwijder onbewerkte bestanden van upload\nverwijder iconen in extra iobroker pakketten\nsteun icon adapters\nhernamen schermen",
+        "fr": "supprimer les fichiers non traités de télécharger\nsupprimer les icônes dans les paquets d'iobroker supplémentaires\nadaptateurs d'icônes de support\nrenommer écrans et commandes",
+        "it": "rimuovere i file non inviati dal caricamento\nrimuovere le icone in pacchetti extra iobroker\nadattatori icona di supporto\nrinomina schermi e controlli",
+        "es": "eliminar archivos sin editar de la subida\neliminar iconos en paquetes extra de iobroker\nadaptadores de icono de soporte\nrenombrar pantallas & controles",
+        "pl": "usunąć niezabezpieczone pliki z uploadingu\nusuwać ikony w dodatkowe pakiety iobrokerowe\nadapter ikon\nekrany i kontrola",
+        "uk": "видалити файли з завантаження\nвидалити іконки в додаткові пакети iobroker\nпідтримка іконних адаптерів\nперейменування екранів та контрольів",
+        "zh-cn": "删除需要的档案\n排除在外加碘剂包中的理由\nb. 支助的适应\n重新命名的筛选和控制"
+      },
       "0.3.0": {
         "en": "default value for custom properties\nopen screens only once\nproperty bindings default one way",
         "de": "standardwert für benutzerdefinierte eigenschaften\nbildschirme nur einmal öffnen\neigenschaftsbindungen standardmäßig ein weg",
