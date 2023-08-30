@@ -108,6 +108,7 @@ runtime.html?screenName=screen2
 - remove uneeded files from upload
 - remove icons into extra iobroker packages
 - support icon adapters
+- rename screens & controls
 
 ### 0.3.0 (2023-08-29)
 - default value for custom properties
