@@ -42,7 +42,7 @@ class IobrokerHandler {
         console.log("ioBroker handler ready.");
     }
     async getIconAdapterFoldernames() {
-        const adapterInstances = await this.connection.getObjectViewSystem('instance', '');
+        const adapterInstances = await this.connection.getObjectViewSystem('adapter', '');
         let names = [];
         for (let nm in adapterInstances) {
             if (adapterInstances[nm]?.common?.type == 'visualization-icons' || adapterInstances[nm]?.common.name.startsWith('icons-')) {
