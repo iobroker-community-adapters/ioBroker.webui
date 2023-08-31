@@ -28,8 +28,8 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
 
 export function generateCustomControl(name: string, control: IControl) {
     let nm = PropertiesHelper.camelToDashCase(name);
-    if (nm[0] !== '-')
-        nm = '-' + nm;
+    if (nm[0] === '-')
+        nm = nm.substring(1);
 
     let template = document.createElement('template');
     template.innerHTML = control.html;
