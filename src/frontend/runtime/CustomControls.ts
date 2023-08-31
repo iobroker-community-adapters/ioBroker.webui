@@ -4,6 +4,8 @@ import { IControl } from "../interfaces/IControl.js";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 
+export const webuiCustomControlPrefix = 'webui-';
+
 export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     static readonly style = css`:host { overflow: hidden }`;
 
@@ -92,6 +94,6 @@ export function generateCustomControl(name: string, control: IControl) {
         window['IobrokerWebuiCustomControl' + name]._control = control;
         window['IobrokerWebuiCustomControl' + name]._propertiesDictionary = null;
         window['IobrokerWebuiCustomControl' + name].prototype = Object.create(BaseCustomControl.prototype, { constructor: { value: window['IobrokerWebuiCustomControl' + name] } })
-        customElements.define('iobroker-webui-custom-control' + nm, window['IobrokerWebuiCustomControl' + name]);
+        customElements.define(webuiCustomControlPrefix + nm, window['IobrokerWebuiCustomControl' + name]);
     }
 }

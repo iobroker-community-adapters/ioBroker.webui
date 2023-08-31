@@ -3,10 +3,15 @@ export interface IControl {
     style: string;
     properties: Record<string, { type: string, values?: string[], default?: any }>;
     settings: IControlSettings;
+
+    //neededpackages??
 }
 
 export interface IControlSettings {
     width?: number;
     height?: number;
-    scale?: null | 'noneNoScroll' | 'fit';
+    /**
+     * CustomControl does not include Global Style in it's shadowroot
+     */
+    noGlobalStyle?: boolean;
 }

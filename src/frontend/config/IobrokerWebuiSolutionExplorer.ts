@@ -7,7 +7,7 @@ import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBi
 import { exportData, openFileDialog } from "../helper/Helper.js";
 import { IScreen } from "../interfaces/IScreen.js";
 import { IControl } from "../interfaces/IControl.js";
-import { generateCustomControl } from "../runtime/CustomControls.js";
+import { generateCustomControl, webuiCustomControlPrefix } from "../runtime/CustomControls.js";
 
 type TreeNodeData = Fancytree.NodeData & {
     lazyload?: (event: any, data: any) => void,
@@ -756,7 +756,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             let nm = PropertiesHelper.camelToDashCase(control);
                             if (nm[0] !== '-')
                                 nm = '-' + nm;
-                            let name = 'iobroker-webui-custom-control' + nm;
+                            let name = webuiCustomControlPrefix + nm;
                             const elementDef: IElementDefinition = { tag: name, defaultWidth: '300px', defaultHeight: '200px' }
                             data.effectAllowed = "all";
                             data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
