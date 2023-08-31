@@ -697,8 +697,8 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         else if (data.node.data.type == 'customcontrol') {
                             const control = data.node.data.name;
                             let nm = PropertiesHelper.camelToDashCase(control);
-                            if (nm[0] !== '-')
-                                nm = '-' + nm;
+                            if (nm[0] === '-')
+                                nm = nm.substring(1);
                             let name = webuiCustomControlPrefix + nm;
                             const elementDef = { tag: name, defaultWidth: '300px', defaultHeight: '200px' };
                             data.effectAllowed = "all";

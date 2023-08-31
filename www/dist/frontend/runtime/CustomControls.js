@@ -21,8 +21,8 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
 BaseCustomControl.style = css `:host { overflow: hidden }`;
 export function generateCustomControl(name, control) {
     let nm = PropertiesHelper.camelToDashCase(name);
-    if (nm[0] !== '-')
-        nm = '-' + nm;
+    if (nm[0] === '-')
+        nm = nm.substring(1);
     let template = document.createElement('template');
     template.innerHTML = control.html;
     let style = cssFromString(control.style);
