@@ -96,6 +96,10 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
           <div id="attributeDock" title="Properties" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.2">
             <node-projects-property-grid-with-header id="propertyGrid"></node-projects-property-grid-with-header>
           </div>
+
+          <div id="settingsDock" title="Settings" style="overflow: hidden; width: 100%;" dock-spawn-dock-to="attributeDock">
+            <iobroker-webui-property-grid id="settingsEditor"></iobroker-webui-property-grid>
+          </div>
           
           <div id="eventsDock" title="Events" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.4" dock-spawn-dock-to="attributeDock">
             <iobroker-webui-event-assignment id="eventsList"></iobroker-webui-event-assignment>
@@ -159,6 +163,11 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       this.npmState = <any>state.val;
       stateElement.innerText = <any>state.val;
     });
+
+    setTimeout(() => {
+      this.activateDock(this._getDomElement('attributeDock'));
+      this.activateDock(this._getDomElement('eventsDock'));
+    }, 150);
   }
 
   private async _setupServiceContainer() {
@@ -167,6 +176,13 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   }
 
 
+
+  /* Move to a Dock Spawn Helper */
+
+  activateDock(element: Element) {
+    const nd = this._dockManager.getNodeByElement(element);
+    nd.parent.container.setActiveChild(nd.container);
+  }
 
   isDockOpenAndActivate(id: string) {
     let panels = this._dock.dockManager.getPanels();
