@@ -1,0 +1,140 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "BindingTarget": {
+            "enum": [
+                "attribute",
+                "class",
+                "content",
+                "css",
+                "event",
+                "property"
+            ],
+            "type": "string"
+        },
+        "IControl": {
+            "properties": {
+                "html": {
+                    "type": "string"
+                },
+                "properties": {
+                    "$ref": "#/definitions/Record<string,{type:string;values?:string[]|undefined;default?:any;}>"
+                },
+                "settings": {
+                    "$ref": "#/definitions/IControlSettings"
+                },
+                "style": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "IControlSettings": {
+            "properties": {
+                "height": {
+                    "type": "number"
+                },
+                "scale": {
+                    "anyOf": [
+                        {
+                            "enum": [
+                                "fit",
+                                "noneNoScroll"
+                            ],
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "width": {
+                    "type": "number"
+                }
+            },
+            "type": "object"
+        },
+        "IIobrokerWebuiBinding": {
+            "properties": {
+                "converter": {
+                    "$ref": "#/definitions/Record<string,any>"
+                },
+                "events": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "expression": {
+                    "type": "string"
+                },
+                "inverted": {
+                    "type": "boolean"
+                },
+                "signal": {
+                    "type": "string"
+                },
+                "target": {
+                    "$ref": "#/definitions/BindingTarget"
+                },
+                "twoWay": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        },
+        "IScreen": {
+            "properties": {
+                "html": {
+                    "type": "string"
+                },
+                "settings": {
+                    "$ref": "#/definitions/IScreenSettings"
+                },
+                "style": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "IScreenSettings": {
+            "properties": {
+                "height": {
+                    "type": "number"
+                },
+                "scale": {
+                    "anyOf": [
+                        {
+                            "enum": [
+                                "fit",
+                                "noneNoScroll"
+                            ],
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "width": {
+                    "type": "number"
+                }
+            },
+            "type": "object"
+        },
+        "IWebUiConfig": {
+            "properties": {
+                "globalStyle": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Record<string,any>": {
+            "type": "object"
+        },
+        "Record<string,{type:string;values?:string[]|undefined;default?:any;}>": {
+            "type": "object"
+        }
+    }
+}
