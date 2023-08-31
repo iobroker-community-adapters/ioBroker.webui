@@ -106,6 +106,9 @@ runtime.html?screenName=screen2
 ### __WORK IN PROGRESS__
 - signal as property type
 - removed svg-image control
+- shorter custom control tag name
+- better dynamics editor
+- dock ui fixes
 
 ### 0.4.0 (2023-08-30)
 - remove uneeded files from upload
