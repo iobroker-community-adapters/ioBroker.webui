@@ -4,7 +4,7 @@ import { iobrokerHandler } from "../common/IobrokerHandler.js";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert { type: 'css' };
 import { exportData, openFileDialog } from "../helper/Helper.js";
-import { generateCustomControl } from "../runtime/CustomControls.js";
+import { generateCustomControl, webuiCustomControlPrefix } from "../runtime/CustomControls.js";
 export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super();
@@ -699,7 +699,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             let nm = PropertiesHelper.camelToDashCase(control);
                             if (nm[0] !== '-')
                                 nm = '-' + nm;
-                            let name = 'iobroker-webui-custom-control' + nm;
+                            let name = webuiCustomControlPrefix + nm;
                             const elementDef = { tag: name, defaultWidth: '300px', defaultHeight: '200px' };
                             data.effectAllowed = "all";
                             data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));

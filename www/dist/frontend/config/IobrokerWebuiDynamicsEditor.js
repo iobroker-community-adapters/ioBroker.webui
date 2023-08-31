@@ -67,11 +67,15 @@ IobrokerWebuiDynamicsEditor.template = html `
                             <span style="cursor: pointer;" title="to use multiple objects, seprate them with semicolon (;). access iobroker objects in properties via ?propertyName, access the propertyValue via ??propertyName">objects</span>
                         </div>
                         <input class="row" value="{{?this.objectNames::change}}" style="flex-grow: 1;"></input>
-                        <select class="row" value="{{this.objectValueType}}">
-                            <option>number</option>
-                            <option>boolean</option>
-                            <option>string</string>
-                        </select>
+                        <div class="row">
+                            <label style="white-space: nowrap; margin-right: 4px;" title="if set, the value is converted to the type before binding is applied">type :</label>
+                            <select class="row" value="{{?this.objectValueType}}">
+                                <option selected value="">ignore</option>
+                                <option value="number">number</option>
+                                <option value="boolean">boolean</option>
+                                <option value="string">string</string>
+                            </select>
+                        </div>
                         <div class="row">
                             <input type="checkbox" disabled="[[!this.twoWayPossible]]" checked="{{this.twoWay::change}}">
                             <span>two way binding</span>
@@ -81,7 +85,7 @@ IobrokerWebuiDynamicsEditor.template = html `
                             <span>invert logic</span>
                         </div>
                         <div class="row">
-                            <span style="cursor: pointer;" title="access objects with __0, __1, ...">formula</span>
+                            <span style="cursor: pointer;" title="javascript expression. access objects with __0, __1, ...">formula</span>
                         </div>
                         <div class="row">
                             <input type="text" value="{{?this.expression}}" style="width: 100%">
@@ -89,14 +93,14 @@ IobrokerWebuiDynamicsEditor.template = html `
                     </div>
                 </div>
             </div>
-            <div class="vertical-grid">
+            <div class="vertical-grid" style="margin-top: 10px;">
                 <div>
                     <div class="input-headline">
                         <span>converter</span>:
                     </div>
                 </div>
             </div>
-            <div class="vertical-grid" style="border: solid 1px black; padding: 10px;">
+            <div class="vertical-grid" style="border: solid 1px black; padding: 10px; overflow-y: auto;">
                 <div class="bottomleft">
                     <div id="converterGrid" style="height: 100%;">
                         <div style="width: 100%; height: 20px; display: flex;">
@@ -104,7 +108,7 @@ IobrokerWebuiDynamicsEditor.template = html `
                             <div style="width: 59%">value</div>
                         </div>
                         <template repeat:item="[[this.converters]]">
-                            <div css:background-color="[[item.activeRow ? 'gray' : '']]" style="width: 100%; display: flex; height: 26px; justify-content: center; align-items: center;">
+                            <div css:background-color="[[item.activeRow ? 'gray' : '']]" style="width: 100%; display: flex; height: 26px; justify-content: center; align-items: center; gap: 5px;">
                                 <input type="text" value="{{item.key}}" @focus="[[this._focusRow(index)]]" style="width: 39%">
                                 <input type="[[this._property.type == 'color' ? 'color' : 'text']]" value="{{item.value}}" @focus="[[this._focusRow(index)]]" style="width: 59%">
                             </div>
@@ -170,8 +174,7 @@ IobrokerWebuiDynamicsEditor.style = css `
             display: grid;
             grid-template-rows: min-content min-content;
             overflow: auto;
-            gap: 20px;
-            height: calc(100% - 40px)
+            height: calc(100% - 4px)
         }
 
         .vertical-grid {

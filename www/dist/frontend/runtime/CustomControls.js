@@ -2,6 +2,7 @@ import { BaseCustomWebComponentConstructorAppend, css, cssFromString } from "@no
 import { PropertiesHelper } from "@node-projects/web-component-designer";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
+export const webuiCustomControlPrefix = 'webui-';
 export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super();
@@ -83,6 +84,6 @@ export function generateCustomControl(name, control) {
         window['IobrokerWebuiCustomControl' + name]._control = control;
         window['IobrokerWebuiCustomControl' + name]._propertiesDictionary = null;
         window['IobrokerWebuiCustomControl' + name].prototype = Object.create(BaseCustomControl.prototype, { constructor: { value: window['IobrokerWebuiCustomControl' + name] } });
-        customElements.define('iobroker-webui-custom-control' + nm, window['IobrokerWebuiCustomControl' + name]);
+        customElements.define(webuiCustomControlPrefix + nm, window['IobrokerWebuiCustomControl' + name]);
     }
 }

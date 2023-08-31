@@ -34,19 +34,9 @@
                 "height": {
                     "type": "number"
                 },
-                "scale": {
-                    "anyOf": [
-                        {
-                            "enum": [
-                                "fit",
-                                "noneNoScroll"
-                            ],
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ]
+                "noGlobalStyle": {
+                    "description": "CustomControl does not include Global Style in it's shadowroot",
+                    "type": "boolean"
                 },
                 "width": {
                     "type": "number"
