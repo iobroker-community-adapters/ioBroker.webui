@@ -211,6 +211,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     element.style.zIndex = '1';
     element.style.position = 'relative';
     let container = new PanelContainer(element as HTMLElement, this._dock.dockManager, element.title, PanelType.panel);
+    element.title = '';
     let d = this._dock.dockManager.floatDialog(container, x, y, getPanelContainerForElement(parent), false);
     d.resize(width, height);
     d.noDocking = true;
