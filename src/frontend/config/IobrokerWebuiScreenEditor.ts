@@ -79,12 +79,12 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
 
         this.shadowRoot.appendChild(this.documentContainer);
 
-        requestAnimationFrame(() => {
+        setTimeout(() => {
             this.applyBindings();
             this.documentContainer.designerView.designerCanvas.onContentChanged.on(() => {
                 this.applyBindings();
             });
-        });
+        }, 50);
     }
 
     //TODO: maybe reload designer, when bindings are disabled???
