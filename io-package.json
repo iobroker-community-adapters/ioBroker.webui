@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.5.1": {
+        "en": "show version in ui",
+        "de": "ausführung in ui",
+        "ru": "показать версию в ui",
+        "pt": "mostrar versão em ui",
+        "nl": "show versie inui",
+        "fr": "show version in ui",
+        "it": "mostra la versione in ui",
+        "es": "mostrar versión en ui",
+        "pl": "wersja pokazowa w ui",
+        "uk": "версія шоу в ui",
+        "zh-cn": "脚注"
+      },
       "0.5.0": {
         "en": "signal as property type\nremoved svg-image control\nshorter custom control tag name\nbetter dynamics editor\ndock ui fixes\ncontrol ui from backend (switch view, reload)",
         "de": "signal als eigenschaftstyp\nsvg-bildkontrolle entfernt\nkürzere benutzerdefinierte steuerung tag name\nmehr dynamik editor\ndock ui fixes\nsteuerung ui vom backend (schalteransicht, nachladen)",
@@ -106,19 +119,6 @@
         "pl": "ukończenie naprawy w wiązaniach",
         "uk": "null реф виправити в зв'язках",
         "zh-cn": "无约束力的驳斥"
-      },
-      "0.2.0": {
-        "en": "Import/Export of Screens/Images/Controls\nDefine your own Controls directly in webui\nDrag/Drop of Icons/Images to Properties\nDrag/Drop of objects to Bindings-Editor Signalname\nBasic functionality of CustomControls",
-        "de": "Import/Export von Screens/Images/Controls\nDefinieren Sie Ihre eigenen Steuerungen direkt in webui\nDrag/Drop von Icons/Images zu Eigenschaften\nDrag/Drop von Objekten zu Bindings-Editor Signalname\nGrundlegende Funktionalität von CustomControls",
-        "ru": "Импорт/экспорт экранов/Images/Controls\nОпределите свой Управление непосредственно в webui\nDrag/Drop Icons/Images в свойства\nПеретащите объекты в Bindings-Editor Signalname\nОсновной функционал CustomControls",
-        "pt": "Importação/Exporto de Telas/Imagens/Controles\nDefina sua própria Controles diretamente em webui\nArraste/Drop de ícones/Imagens para Propriedades\nArraste/Drop de objetos para Bindings-Editor Nome de Sinal\nFuncionalidade básica de CustomControls",
-        "nl": "Import/Export of Screens/Images/Control\nJe eigen definieer. Controle rechtstreeks in webouw\nDrag/Drop of Icons/Images naar Properties\nDrag/Drop van objecten naar Bindings-Editor Signal\nBasis functionaliteit van CustomControl",
-        "fr": "Import/Export des écrans/Images/Contrôles\nDéfinir vos propres Contrôles directement dans webui\nFaites glisser/déposer des Icônes/Images aux Propriétés\nFaites glisser/déposer des objets sur Bindings-Editor Signalname\nFonctionnalité de base de CustomControls",
-        "it": "Importazione/esportazione di schermi/immagini/controlli\nDefinisci il tuo Controlli direttamente in webui\nDrag/Drop di icone/Images a Proprietà\nDrag/Drop di oggetti a Bindings-Editor Signalname\nFunzionalità di base di CustomControls",
-        "es": "Importación/Exporte de pantallas/imágenes/Controles\nDefine tu propio Controles directamente en webui\nDrag/Drop of Icons/Images to Properties\nDrag/Drop of objects to Bindings-Editor Signalname\nFunción básica de controles personalizados",
-        "pl": "Oficjalna strona serialu\nObrońcy Kontrola bezpośrednio w webui\nDrag/Drop of Icons/Images (ang.)\nDrag/Drop of objects (ang.)\nFunkcja podstawowa",
-        "uk": "Імпорт/експорт екранів/Images/Controls\nВизначте себе самостійно Керування безпосередньо в webui\nПеретягування іконок/Імагнітів на властивості\nПеретягніть об'єкти до Bindings-Editor Signalname\nБазова функціональність CustomControls",
-        "zh-cn": "进口/进口Screens/Images/Controls\n保护你自己 B. 直接在网络ui的控制\nDrag/Drop of Icons/Images toper\nDrag/Drops to Bindings-Editor签名\n习俗的基本功能"
       }
     },
     "icon": "logo.png",
