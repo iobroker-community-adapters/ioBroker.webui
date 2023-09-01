@@ -58,13 +58,35 @@ function cleanupNodeModules() {
         "./www/node_modules/monaco-editor/dev",
         "./www/node_modules/monaco-editor/esm",
         "./www/node_modules/monaco-editor/min-maps",
-        "./www/**/*.d.ts",
+        "./www/**/*.ts",
         "./www/**/*.map",
         "./www/**/*.md",
         "./www/**/*.txt",
+        "./www/**/*.less",
+        "./www/**/*.BSD",
+        "./www/**/*.cjs",
+        "./www/**/cjs/**/*",
+        "./www/**/LICENSE",
+        "./www/**/package.json",
+        "./www/**/tsconfig.json",
+        "./www/**/*.bat",
+        "./www/node_modules/mobile-drag-drop/**/*",
+        "!./www/node_modules/mobile-drag-drop/index.js"
     ]
 
     return deleteAsync(notUsed);
+}
+
+function cleanupMonaco() {
+    return deleteAsync([
+        './www/node_modules/monaco-editor/min/vs/basic-languages/**/*', 
+        '!./www/node_modules/monaco-editor/min/vs/basic-languages/javascript',
+        '!./www/node_modules/monaco-editor/min/vs/basic-languages/typescript',
+        '!./www/node_modules/monaco-editor/min/vs/basic-languages/html',
+        '!./www/node_modules/monaco-editor/min/vs/basic-languages/css',
+        './www/node_modules/monaco-editor/min/vs/editor/*.js',
+        '!./www/node_modules/monaco-editor/min/vs/editor/editor.main.js',
+    ]);
 }
 
 function copyDist() {
@@ -112,4 +134,4 @@ function saveGitCommitHash(done) {
 }
 
 //git rev-parse HEAD
-export default series(copyNodeModules, copyNodeFiles, copyDist, cleanupNodeModules, cleanupDist, copyAssets, copyHtml, copyManifest, copyConfigJs, saveGitCommitHash);
+export default series(copyNodeModules, copyNodeFiles, copyDist, cleanupNodeModules, cleanupDist, copyAssets, copyHtml, copyManifest, copyConfigJs, cleanupMonaco, saveGitCommitHash);
