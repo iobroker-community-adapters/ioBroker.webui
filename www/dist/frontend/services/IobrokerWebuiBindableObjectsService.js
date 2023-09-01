@@ -38,7 +38,7 @@ export class IobrokerWebuiBindableObjectsService {
                     folder = { name: fldName, fullName: parent ? parent.fullName + '.' + fldName : fldName, type: BindableObjectType.folder };
                     retVal.push(folder);
                 }
-                if (splits.length === 1 && splits[0]) {
+                if (splits.length === 1 && splits[0] && (this._states[k].type != 'channel' && this._states[k].type != 'device')) {
                     const signal = { name: splits[0], fullName: k, type: BindableObjectType.undefined, originalObject: this._states[k], children: false };
                     retVal.push(signal);
                 }

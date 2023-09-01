@@ -25,6 +25,10 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         iobrokerHandler.imagesChanged.on(() => this._refreshImagesNode());
         await sleep(100);
         this._loadTree();
+        //Preload after a timeout
+        setTimeout(() => {
+            serviceContainer.bindableObjectsServices[0].getBindableObjects();
+        }, 1000);
     }
     async createTreeNodes() {
         const result = await Promise.allSettled([
