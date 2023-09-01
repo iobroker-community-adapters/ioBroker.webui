@@ -13,6 +13,7 @@ import { IobrokerWebuiCopyPasteService } from "../services/IobrokerWebuiCopyPast
 import { IobrokerWebuiEventsService } from "../services/IobrokerWebuiEventsService.js";
 import { IobrokerWebuiPropertyGridDragDropService } from "../services/IobrokerWebuiPropertyGridDragDropService.js";
 import { IobrokerWebuiPropertiesService } from "../services/IobrokerWebuiPropertiesService.js";
+import { IobrokerWebuiConfigButtonProvider } from "../services/IobrokerWebuiConfigButtonProvider.js";
 
 const rootPath = new URL(import.meta.url).pathname.split('/').slice(0, -4).join('/'); // -2 remove file & dist
 
@@ -33,6 +34,8 @@ serviceContainer.config.codeViewWidget = CodeViewMonaco;
 serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/frontend/elements-webui.json'));
 serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
 serviceContainer.register('propertyService', new IobrokerWebuiPropertiesService());
+
+serviceContainer.designViewConfigButtons.push(new IobrokerWebuiConfigButtonProvider());
 
 for (let l of customElementsObserver.getElements()) {
     if (l[1].length > 0) {
@@ -89,14 +92,14 @@ import(window.iobrokerWebRootUrl + 'webui.0.widgets/designerAddons.js').then(x =
 serviceContainer.globalContext.onToolChanged.on((e) => {
     let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue.tool).map(([k]) => k)[0];
     if (e.newValue == null)
-      name = "Pointer"
+        name = "Pointer"
     const buttons = Array.from<HTMLButtonElement>(document.getElementById('tools').querySelectorAll('[data-command]'));
     for (const b of buttons) {
-      if (b.dataset.commandParameter == name)
-        b.style.backgroundColor = "green"
-      else
-        b.style.backgroundColor = ""
+        if (b.dataset.commandParameter == name)
+            b.style.backgroundColor = "green"
+        else
+            b.style.backgroundColor = ""
     }
-  });
+});
 
 export default serviceContainer;

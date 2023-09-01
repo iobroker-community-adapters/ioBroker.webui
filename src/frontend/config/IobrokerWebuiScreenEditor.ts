@@ -3,6 +3,7 @@ import { DocumentContainer, IUiCommand, IUiCommandHandler, ServiceContainer, } f
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IScreen } from "../interfaces/IScreen.js";
 import { IControl } from "../interfaces/IControl.js";
+import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
 
@@ -21,13 +22,15 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
 
     public static override style = css``;
 
+    private _bindings: (() => void)[]
+
     public async initialize(name: string, type: 'screen' | 'control', html: string, style: string, properties: Record<string, { type: string, values?: string[], default?: any }>, serviceContainer: ServiceContainer) {
         this.title = type + ' - ' + name;
 
         this._name = name;
         this._type = type;
         if (this._type == 'control') {
-            this._properties = {...properties} ?? {};
+            this._properties = { ...properties } ?? {};
         }
 
         this.documentContainer = new DocumentContainer(serviceContainer);
@@ -75,6 +78,26 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         });
 
         this.shadowRoot.appendChild(this.documentContainer);
+
+        requestAnimationFrame(() => {
+            this.applyBindings();
+            this.documentContainer.designerView.designerCanvas.onContentChanged.on(() => {
+                this.applyBindings();
+            });
+        });
+    }
+
+    //TODO: maybe reload designer, when bindings are disabled???
+    bindingsEnabled = true;
+    applyBindings() {
+        this.removeBindings();
+        if (this.bindingsEnabled)
+            this._bindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element, '', null);
+    }
+
+    removeBindings() {
+        this._bindings?.forEach(x => x());
+        this._bindings = null;
     }
 
     async executeCommand(command: IUiCommand) {

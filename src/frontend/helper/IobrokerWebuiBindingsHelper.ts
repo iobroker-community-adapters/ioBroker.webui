@@ -165,11 +165,13 @@ export class IobrokerWebuiBindingsHelper {
         const signals = binding[1].signal.split(';');
         for (let i = 0; i < signals.length; i++) {
             if (signals[i][0] === '?') { //access object path in property in custom control, todo: bind direct to property value in local property
-                let s = signals[i].substring(1);
-                if (s[0] == '?') {
-                    signals[i] = s;
-                } else {
-                    signals[i] = root[s];
+                if (root) { //root is null when opened in designer, then do not apply property bindings
+                    let s = signals[i].substring(1);
+                    if (s[0] == '?') {
+                        signals[i] = s;
+                    } else {
+                        signals[i] = root[s];
+                    }
                 }
             }
             if (signals[i][0] === '.') {
@@ -183,13 +185,15 @@ export class IobrokerWebuiBindingsHelper {
         for (let i = 0; i < signals.length; i++) {
             const s = signals[i];
             if (s[0] == '?') {
-                const nm = s.substring(1);
-                let evtCallback = () => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i);
-                root.addEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback);
-                if (!evtUnsubscriptions)
-                    evtUnsubscriptions = [];
-                evtUnsubscriptions.push(() => root.removeEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback));
-                IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i)
+                if (root) {
+                    const nm = s.substring(1);
+                    let evtCallback = () => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i);
+                    root.addEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback);
+                    if (!evtUnsubscriptions)
+                        evtUnsubscriptions = [];
+                    evtUnsubscriptions.push(() => root.removeEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback));
+                    IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i);
+                }
             } else {
                 let cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
                 unsubscribeList.push(cb);
