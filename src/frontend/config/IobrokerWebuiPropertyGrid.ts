@@ -76,6 +76,32 @@ export function setDeepValue(obj, path: string, value) {
         obj[pathParts[pathParts.length - 1]] = value;
 }
 
+export function typeInfoFromJsonSchema(jsonSchemaObj: any, obj: any, type: string): ITypeInfo {
+    let usedType = type ?? obj.type;
+    if (usedType) {
+        const def = jsonSchemaObj.definitions[usedType];
+        let tInfo: ITypeInfo = {};
+        tInfo.name = usedType;
+        tInfo.properties = [];
+        for (let prp in def.properties) {
+            if (prp != 'type') {
+                let p: IProperty = {};
+                p.name = prp;
+                p.type = def.properties[prp].type ?? 'any';
+                if (def.properties[prp].enum) {
+                    p.type = 'enum';
+                    p.values = [...def.properties[prp].enum];
+                }
+                p.description = def.properties[prp].description;
+                p.format = def.properties[prp].format;
+                tInfo.properties.push(p);
+            }
+        }
+        return tInfo;
+    }
+    return null;
+}
+
 export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructorAppend {
     public static readonly style = css`
         :host {
@@ -509,6 +535,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 editor.style.width = '100%';
                 editor.value = currentValue ?? '';
                 editor.onblur = e => { setValue(editor.value); }
+                editor.onkeyup = e => { if (e.key == 'Enter') setValue(editor.value); }
                 return editor;
             }
             case 'number': {
@@ -518,6 +545,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 editor.style.width = '100%';
                 editor.value = currentValue ?? '';
                 editor.onblur = e => { setValue(editor.valueAsNumber); }
+                editor.onkeyup = e => { if (e.key == 'Enter') setValue(editor.value); }
                 return editor;
             }
             case 'boolean': {
@@ -563,10 +591,11 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             if (this.selectedObject) {
                 let tInfo = this.getTypeInfo(this.selectedObject, this.typeName);
                 this._head.innerText = tInfo.name;
+                this._renderTree();
             } else {
                 this._head.innerText = '';
+                this.clear();
             }
-            this._renderTree();
         }
     }
 

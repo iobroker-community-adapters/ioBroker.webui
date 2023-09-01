@@ -1,5 +1,5 @@
 import { Connection } from "@iobroker/socket-client";
-import { TypedEvent } from "@node-projects/base-custom-webcomponent";
+import { TypedEvent, cssFromString } from "@node-projects/base-custom-webcomponent";
 import { IScreen } from "../interfaces/IScreen.js";
 import { IWebUiConfig } from "../interfaces/IWebUiConfig.js";
 import { IControl } from "../interfaces/IControl.js";
@@ -32,6 +32,7 @@ class IobrokerHandler {
     imagePrefix = '/' + this.namespaceFiles + '/config/images/';
 
     config: IWebUiConfig;
+    gloablStylesheet: CSSStyleSheet;
 
     screensChanged = new TypedEvent<string>();
     controlsChanged = new TypedEvent<string>();
@@ -99,6 +100,7 @@ class IobrokerHandler {
         
         let cfg = await this._getConfig();
         this.config = cfg ?? { globalStyle: null };
+        this.gloablStylesheet = cssFromString(this.config.globalStyle);
 
         for (let p of this._readyPromises)
             p();
@@ -318,6 +320,7 @@ class IobrokerHandler {
 
     public async saveConfig() {
         this._saveObjectToFile(this.config, this.configPath + "config.json");
+        this.gloablStylesheet = cssFromString(this.config.globalStyle);
         this.configChanged.emit();
     }
 

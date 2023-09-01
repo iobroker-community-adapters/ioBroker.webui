@@ -5,7 +5,7 @@ import { Script } from "../scripting/Script.js";
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
 import { ScriptCommands } from "../scripting/ScriptCommands.js";
 import { ContextMenu, IUiCommand, IUiCommandHandler } from "@node-projects/web-component-designer";
-import { IProperty, ITypeInfo, IobrokerWebuiPropertyGrid } from "./IobrokerWebuiPropertyGrid.js";
+import { IobrokerWebuiPropertyGrid, typeInfoFromJsonSchema } from "./IobrokerWebuiPropertyGrid.js";
 
 export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
     static readonly style = css`
@@ -74,7 +74,7 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         this._commandListDiv = this._getDomElement<HTMLDivElement>('commandList');
         this._possibleCommands = this._getDomElement<HTMLSelectElement>('possibleCommands');
         this._propertygrid = this._getDomElement<IobrokerWebuiPropertyGrid>('propertygrid');
-        this._propertygrid.getTypeInfo = this._getTypeInfo;
+        this._propertygrid.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(scriptCommandsTypeInfo, obj, type);
 
         this.addPossibleCommands();
         this.shadowRoot.adoptedStyleSheets = [fancyTreeStyleSheet, IobrokerWebuiScriptEditor.style];
@@ -87,30 +87,7 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
     }
 
     //Converter from TypscriptJsonSchema to our Property list...
-    private _getTypeInfo(obj: any, type: string): ITypeInfo {
-        if (!type && obj.type) {
-            const def = scriptCommandsTypeInfo.definitions[obj.type];
-            let tInfo: ITypeInfo = {};
-            tInfo.name = obj.type;
-            tInfo.properties = [];
-            for (let prp in def.properties) {
-                if (prp != 'type') {
-                    let p: IProperty = {};
-                    p.name = prp;
-                    p.type = def.properties[prp].type ?? 'any'; 
-                    if (def.properties[prp].enum) {
-                        p.type = 'enum';
-                        p.values = [...def.properties[prp].enum];
-                    }
-                    p.description = def.properties[prp].description;
-                    p.format = def.properties[prp].format;
-                    tInfo.properties.push(p);
-                }
-            }
-            return tInfo;
-        }
-        return null;
-    }
+
 
     private async addPossibleCommands() {
         let commands = Object.keys(scriptCommandsTypeInfo.definitions);

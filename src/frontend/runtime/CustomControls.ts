@@ -3,6 +3,7 @@ import { PropertiesHelper } from "@node-projects/web-component-designer";
 import { IControl } from "../interfaces/IControl.js";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
+import { iobrokerHandler } from "../common/IobrokerHandler.js";
 
 export const webuiCustomControlPrefix = 'webui-';
 
@@ -12,6 +13,8 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super();
         this._bindingsParse(null, true);
+        if ((<IControl>(<any>this.constructor)._control).settings.useGlobalStyle)
+            this.shadowRoot.adoptedStyleSheets = [iobrokerHandler.gloablStylesheet, ...this.shadowRoot.adoptedStyleSheets]
     }
 
     connectedCallback() {

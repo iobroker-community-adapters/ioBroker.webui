@@ -87,6 +87,7 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
     public removeProp(index: number) {
         this.properties.splice(index, 1);
         this._bindingsRefresh();
+        this.changed();
     }
 
     public changed() {

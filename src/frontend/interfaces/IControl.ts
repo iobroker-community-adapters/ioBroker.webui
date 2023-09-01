@@ -11,7 +11,7 @@ export interface IControlSettings {
     width?: string;
     height?: string;
     /**
-     * CustomControl does not include Global Style in it's shadowroot
+     * CustomControl does include Global Style in it's shadowroot
      */
-    noGlobalStyle?: boolean;
+    useGlobalStyle?: boolean;
 }
