@@ -1,5 +1,5 @@
 import { Connection } from "@iobroker/socket-client";
-import { TypedEvent } from "@node-projects/base-custom-webcomponent";
+import { TypedEvent, cssFromString } from "@node-projects/base-custom-webcomponent";
 import { sleep } from "../helper/Helper.js";
 const screenFileExtension = ".screen";
 const controlFileExtension = ".control";
@@ -68,6 +68,7 @@ class IobrokerHandler {
         await this.connection.waitForFirstConnection();
         let cfg = await this._getConfig();
         this.config = cfg ?? { globalStyle: null };
+        this.gloablStylesheet = cssFromString(this.config.globalStyle);
         for (let p of this._readyPromises)
             p();
         this._readyPromises = null;
@@ -151,6 +152,7 @@ class IobrokerHandler {
         this._screens.delete(oldName);
         this._screens.delete(newName);
         this._screenNames = null;
+        this.getScreen(newName);
         this.screensChanged.emit(null);
     }
     async loadAllCustomControls() {
@@ -225,6 +227,7 @@ class IobrokerHandler {
         this._controls.delete(oldName);
         this._controls.delete(newName);
         this._controlNames = null;
+        this.getCustomControl(newName);
         this.controlsChanged.emit(null);
     }
     async getImageNames() {
@@ -262,6 +265,7 @@ class IobrokerHandler {
     }
     async saveConfig() {
         this._saveObjectToFile(this.config, this.configPath + "config.json");
+        this.gloablStylesheet = cssFromString(this.config.globalStyle);
         this.configChanged.emit();
     }
     async _getObjectFromFile(name) {

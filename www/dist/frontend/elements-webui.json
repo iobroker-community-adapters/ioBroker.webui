@@ -1,8 +1,6 @@
 {
     "elements": [
         { "tag": "iobroker-webui-screen-viewer", "defaultWidth": "300px", "defaultHeight": "200px" },
-        { "tag": "iobroker-webui-svg-image", "defaultWidth": "300px", "defaultHeight": "200px" },
-        { "tag": "iobroker-webui-hab-panel-like-menu", "defaultWidth": "300px", "defaultHeight": "200px" },
         { "name": "text", "tag": "span", "defaultContent": "hello world" },
         { "name": "text input", "tag": "input", "defaultWidth": "140px", "defaultAttributes": { "type": "text" } },
         { "name": "number", "tag": "input", "defaultWidth": "140px", "defaultAttributes": { "type": "number" } },
@@ -12,6 +10,7 @@
         { "name": "meter", "tag": "meter" },
         { "name": "progress", "tag": "progress" },
         { "name": "password", "tag": "input", "defaultWidth": "140px", "defaultAttributes": { "type": "password" } },
-        { "name": "container", "tag": "div", "defaultWidth": "200px", "defaultHeight": "200px" }
+        { "name": "container", "tag": "div", "defaultWidth": "200px", "defaultHeight": "200px" },
+        { "tag": "iobroker-webui-hab-panel-like-menu", "defaultWidth": "300px", "defaultHeight": "200px" }
     ]
 }

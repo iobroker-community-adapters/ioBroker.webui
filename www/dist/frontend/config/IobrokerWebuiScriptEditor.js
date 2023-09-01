@@ -3,6 +3,7 @@ import scriptCommandsTypeInfo from "../generated/ScriptCommands.json" assert { t
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert { type: 'css' };
 import { ContextMenu } from "@node-projects/web-component-designer";
+import { typeInfoFromJsonSchema } from "./IobrokerWebuiPropertyGrid.js";
 export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super();
@@ -10,7 +11,7 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         this._commandListDiv = this._getDomElement('commandList');
         this._possibleCommands = this._getDomElement('possibleCommands');
         this._propertygrid = this._getDomElement('propertygrid');
-        this._propertygrid.getTypeInfo = this._getTypeInfo;
+        this._propertygrid.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(scriptCommandsTypeInfo, obj, type);
         this.addPossibleCommands();
         this.shadowRoot.adoptedStyleSheets = [fancyTreeStyleSheet, IobrokerWebuiScriptEditor.style];
     }
@@ -20,30 +21,6 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         this._assignEvents();
     }
     //Converter from TypscriptJsonSchema to our Property list...
-    _getTypeInfo(obj, type) {
-        if (!type && obj.type) {
-            const def = scriptCommandsTypeInfo.definitions[obj.type];
-            let tInfo = {};
-            tInfo.name = obj.type;
-            tInfo.properties = [];
-            for (let prp in def.properties) {
-                if (prp != 'type') {
-                    let p = {};
-                    p.name = prp;
-                    p.type = def.properties[prp].type ?? 'any';
-                    if (def.properties[prp].enum) {
-                        p.type = 'enum';
-                        p.values = [...def.properties[prp].enum];
-                    }
-                    p.description = def.properties[prp].description;
-                    p.format = def.properties[prp].format;
-                    tInfo.properties.push(p);
-                }
-            }
-            return tInfo;
-        }
-        return null;
-    }
     async addPossibleCommands() {
         let commands = Object.keys(scriptCommandsTypeInfo.definitions);
         for (let c of commands) {

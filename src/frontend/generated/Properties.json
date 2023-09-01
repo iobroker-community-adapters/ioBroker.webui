@@ -34,8 +34,8 @@
                 "height": {
                     "type": "string"
                 },
-                "noGlobalStyle": {
-                    "description": "CustomControl does not include Global Style in it's shadowroot",
+                "useGlobalStyle": {
+                    "description": "CustomControl does include Global Style in it's shadowroot",
                     "type": "boolean"
                 },
                 "width": {
