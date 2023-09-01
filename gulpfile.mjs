@@ -1,11 +1,11 @@
 import gulp from 'gulp';
 const { src, dest, series } = gulp;
-import path from 'path';
-import fs from 'fs';
 import { deleteAsync } from 'del';
-import through2 from 'through2';
+import git from 'gulp-git'
+import replace from 'gulp-replace';
+import fs from 'fs';
 
-const rootPath = '/webui';
+const pkg = JSON.parse(fs.readFileSync('package.json'));
 
 function copyNodeModules() {
     let runtimeModules = [
@@ -100,4 +100,16 @@ function copyConfigJs() {
         .pipe(dest('./www'));
 }
 
-export default series(copyNodeModules, copyNodeFiles, copyDist, cleanupNodeModules, cleanupDist, copyAssets, copyHtml, copyManifest, copyConfigJs);
+function saveGitCommitHash(done) {
+    git.revParse({ args: '--short HEAD' }, (err, hash) => {
+        if (err) throw err;
+        gulp.src('index.html')
+            .pipe(replace('{{COMMIT_HASH}}', hash))
+            .pipe(replace('{{VERSION}}', pkg.version))
+            .pipe(gulp.dest('./www'));
+        done();
+    });
+}
+
+//git rev-parse HEAD
+export default series(copyNodeModules, copyNodeFiles, copyDist, cleanupNodeModules, cleanupDist, copyAssets, copyHtml, copyManifest, copyConfigJs, saveGitCommitHash);

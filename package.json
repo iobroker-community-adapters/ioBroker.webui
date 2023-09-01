@@ -64,6 +64,8 @@
     "eslint": "^8.48.0",
     "esprima-next": "^5.8.4",
     "gulp": "^4.0.2",
+    "gulp-git": "^2.10.1",
+    "gulp-replace": "^1.1.4",
     "jquery": "^3.7.1",
     "jquery.fancytree": "^2.38.3",
     "long": "^5.2.3",
