@@ -801,7 +801,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             data.dropEffect = "copy";
                             return true;
                         } else if (data.node.data.type == 'icon') {
-                            const elementDef: IElementDefinition = { tag: "img", defaultAttributes: { 'src': data.node.data.file }, defaultWidth: '32px', defaultHeight: '32px' }
+                            const elementDef: IElementDefinition = { tag: "img", defaultAttributes: { 'src': data.node.data.file } }
                             data.effectAllowed = "all";
                             data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
                             data.dataTransfer.setData(dragDropFormatNamePropertyGrid, JSON.stringify({ 'type': 'icon', 'text': data.node.data.file }));
