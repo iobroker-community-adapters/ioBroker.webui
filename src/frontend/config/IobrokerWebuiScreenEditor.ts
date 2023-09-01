@@ -22,7 +22,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
 
     public static override style = css``;
 
-    private _bindings: (() => void)[]
+    private _webuiBindings: (() => void)[]
 
     public async initialize(name: string, type: 'screen' | 'control', html: string, style: string, properties: Record<string, { type: string, values?: string[], default?: any }>, serviceContainer: ServiceContainer) {
         this.title = type + ' - ' + name;
@@ -92,12 +92,12 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     applyBindings() {
         this.removeBindings();
         if (this.bindingsEnabled)
-            this._bindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element, '', null);
+            this._webuiBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element, '', null);
     }
 
     removeBindings() {
-        this._bindings?.forEach(x => x());
-        this._bindings = null;
+        this._webuiBindings?.forEach(x => x());
+        this._webuiBindings = null;
     }
 
     async executeCommand(command: IUiCommand) {
