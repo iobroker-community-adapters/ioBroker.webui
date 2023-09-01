@@ -8,8 +8,8 @@ export interface IControl {
 }
 
 export interface IControlSettings {
-    width?: number;
-    height?: number;
+    width?: string;
+    height?: string;
     /**
      * CustomControl does not include Global Style in it's shadowroot
      */
