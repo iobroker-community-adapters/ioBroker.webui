@@ -7,6 +7,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         super(...arguments);
         //TODO: maybe reload designer, when bindings are disabled???
         this.bindingsEnabled = true;
+        this.relativeBindingsPrefix = '';
     }
     get name() { return this._name; }
     async initialize(name, type, html, style, properties, serviceContainer) {
@@ -67,7 +68,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     applyBindings() {
         this.removeBindings();
         if (this.bindingsEnabled)
-            this._webuiBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element, '', null);
+            this._webuiBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element, this.relativeBindingsPrefix, null);
     }
     removeBindings() {
         this._webuiBindings?.forEach(x => x());

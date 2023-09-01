@@ -74,6 +74,12 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
     _getRelativeSignalsPath() {
         return this._relativeSignalsPath;
     }
+    connectedCallback() {
+        this._refreshCb = iobrokerHandler.refreshView.on(() => this._loadScreen());
+    }
+    disconnectedCallback() {
+        this._refreshCb?.dispose();
+    }
 };
 ScreenViewer.style = css `
     :host {

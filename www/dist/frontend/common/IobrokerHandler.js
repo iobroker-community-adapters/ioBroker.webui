@@ -15,9 +15,12 @@ class IobrokerHandler {
         this.controlsChanged = new TypedEvent();
         this.imagesChanged = new TypedEvent();
         this.configChanged = new TypedEvent();
+        this.changeView = new TypedEvent();
+        this.refreshView = new TypedEvent();
         this._readyPromises = [];
         this._screens = new Map();
         this._controls = new Map();
+        this.clientId = Date.now().toString(16);
     }
     waitForReady() {
         if (!this._readyPromises)
@@ -40,6 +43,16 @@ class IobrokerHandler {
             p();
         this._readyPromises = null;
         console.log("ioBroker handler ready.");
+        let commandData;
+        let commandClientIds;
+        await this.connection.subscribeState(this.namespace + '.control.data', (id, state) => { commandData = state.val; });
+        await this.connection.subscribeState(this.namespace + '.control.clientIds', (id, state) => { commandClientIds = state.val; });
+        let v = await this.connection.getState(this.namespace + '.control.command');
+        this.connection.subscribeState(this.namespace + '.control.command', (id, state) => {
+            if (state.ack && state.ts != v.ts)
+                this.handleCommand(state.val, commandData, commandClientIds);
+        });
+        this.sendCommand("uiConnected", "");
     }
     async getIconAdapterFoldernames() {
         const adapterInstances = await this.connection.getObjectViewSystem('adapter', '');
@@ -241,13 +254,45 @@ class IobrokerHandler {
     async _saveBinaryToFile(binary, name) {
         await this.connection.writeFile64(this.namespaceFiles, name, await binary.arrayBuffer());
     }
-    async sendCommand(command, data, clientId = '') {
+    async sendCommand(command, data) {
         let p = [
             this.connection.setState(this.namespace + '.control.data', { val: data }),
-            this.connection.setState(this.namespace + '.control.clientIds', { val: clientId })
+            this.connection.setState(this.namespace + '.control.clientIds', { val: this.clientId })
         ];
         await Promise.all(p);
         await this.connection.setState(this.namespace + '.control.command', { val: command });
+    }
+    async handleCommand(command, data, clientId = '') {
+        if (clientId == '' || clientId == '*' || clientId == this.clientId) {
+            switch (command) {
+                case "uiReload":
+                    window.location.reload();
+                    break;
+                case "uiRefresh":
+                    this._controls.clear();
+                    this._screens.clear();
+                    this._screenNames = null;
+                    this._controlNames = null;
+                    this.refreshView.emit(data);
+                    break;
+                case "uiChangeView":
+                    this.changeView.emit(data);
+                    break;
+                case "uiOpenDialog":
+                    //TODO...
+                    break;
+                case "uiPlaySound":
+                    const audio = new Audio(data);
+                    audio.play();
+                    break;
+                case "uiRunScript":
+                    //TODO...
+                    break;
+                case "uiAlert":
+                    alert(data);
+                    break;
+            }
+        }
     }
 }
 IobrokerHandler.instance = new IobrokerHandler();
