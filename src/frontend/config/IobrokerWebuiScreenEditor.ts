@@ -130,6 +130,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     }
 
     dispose() {
+        this.removeBindings();
         this.documentContainer.dispose();
         this._configChangedListener?.dispose();
         window.appShell.controlpropertiesEditor.setProperties(null);
