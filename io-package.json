@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.5.1",
+    "version": "0.6.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.6.0": {
+        "en": "removed many uneeded files from installation",
+        "de": "viele unededed dateien von der installation entfernt",
+        "ru": "удалено много ненужных файлов с установки",
+        "pt": "removeu muitos arquivos não feitos da instalação",
+        "nl": "_",
+        "fr": "supprimé beaucoup de fichiers non comestibles de l'installation",
+        "it": "rimosso molti file non inviati dall'installazione",
+        "es": "quitar muchos archivos sin editar de la instalación",
+        "pl": "usunąć wiele niezauważonych plików z instalacji",
+        "uk": "видалено багато необрізних файлів з установки",
+        "zh-cn": "拆除许多需要的档案"
+      },
       "0.5.1": {
         "en": "show version in ui",
         "de": "ausführung in ui",
@@ -106,19 +119,6 @@
         "pl": "lepsze wsparcie i naprawa elementów zwyczajowych\nwłaściwości enum\nkontrola próbkowa",
         "uk": "краща підтримка і кріплення користувальницьких елементів\nоб'ємні властивості в користувацьких управліннях\nзразок користувацького контролю",
         "zh-cn": "更好地支持和确定习俗要素\na. 习俗控制的扩展财产\n抽样管制"
-      },
-      "0.2.1": {
-        "en": "null ref fix in bindings",
-        "de": "null ref fix in bindungen",
-        "ru": "null реф исправить в связываниях",
-        "pt": "null ref fix em ligações",
-        "nl": "nul ref fix in binding",
-        "fr": "null ref fix in bindings",
-        "it": "null ref fix in binding",
-        "es": "null ref fijado en acoplamientos",
-        "pl": "ukończenie naprawy w wiązaniach",
-        "uk": "null реф виправити в зв'язках",
-        "zh-cn": "无约束力的驳斥"
       }
     },
     "icon": "logo.png",
