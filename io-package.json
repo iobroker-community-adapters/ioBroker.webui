@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.5.0": {
+        "en": "signal as property type\nremoved svg-image control\nshorter custom control tag name\nbetter dynamics editor\ndock ui fixes\ncontrol ui from backend (switch view, reload)",
+        "de": "signal als eigenschaftstyp\nsvg-bildkontrolle entfernt\nkürzere benutzerdefinierte steuerung tag name\nmehr dynamik editor\ndock ui fixes\nsteuerung ui vom backend (schalteransicht, nachladen)",
+        "ru": "сигнал как тип недвижимости\nудаленный svg-образный контроль\nshorter custom control название тега\nлучший редактор динамики\ndock ui исправления\nконтроль ui с backend (посмотреть на питомнике, перезагрузить)",
+        "pt": "sinal como tipo de propriedade\ncontrole de imagem removido\nnome de tag de controle personalizado mais curto\nmelhor editor dinâmica\ncorreções do dock ui\ncontrol ui de backend (switch view, reload)",
+        "nl": "signaal van eigendom\nverwijder de controle\nkortere gebruikscontrole naam\nbetere dynamica editor\ndock ui fixes\ncontrole ui van backend (switch view, herladen)",
+        "fr": "signal comme type de propriété\nenlevé svg-image control\nnom de marque de contrôle personnalisé plus court\nmeilleur éditeur dynamique\ndock ui corrige\ncontrol ui from backend (switch view, reload)",
+        "it": "segnale come tipo di proprietà\ncontrollo dell'immagine svg rimosso\nnome del tag di controllo personalizzato più breve\neditor di dinamiche migliori\nattacchi portuali\ncontrollo ui da backend (switch view, reload)",
+        "es": "señal como tipo de propiedad\ncontrol svg-image eliminado\nnombre de la etiqueta de control personalizado más corto\nmejor editor dinámico\ndock ui fixes\ncontrol ui desde backend (switch view, reload)",
+        "pl": "sygnał jako typ własności\nusunięta kontrola svg-image\nkrótsza nazwa ta\nlepszy edytor dynamiki\ndokować\nkontrola ui od tyłu (punkt zwrotny, przeładunek)",
+        "uk": "сигнал як тип майна\nвиданий контроль зображення\nкоротший користувальницький контроль тег\nкращий редактор динаміки\ndock ui кріплення\nконтроль ui від backend (дивитись свербіж, перезавантаження)",
+        "zh-cn": "信号\n拆除围墙控制\na. 短的习惯控制\n评 注\nck ui fix\n后端(巫术观点,重载)控制"
+      },
       "0.4.0": {
         "en": "remove uneeded files from upload\nremove icons into extra iobroker packages\nsupport icon adapters\nrename screens & controls",
         "de": "uneeded dateien vom upload entfernen\nicons in extra iobroker pakete entfernen\nicon adapter unterstützen\numbenennen von bildschirmen und bedienelementen",
@@ -106,19 +119,6 @@
         "pl": "Oficjalna strona serialu\nObrońcy Kontrola bezpośrednio w webui\nDrag/Drop of Icons/Images (ang.)\nDrag/Drop of objects (ang.)\nFunkcja podstawowa",
         "uk": "Імпорт/експорт екранів/Images/Controls\nВизначте себе самостійно Керування безпосередньо в webui\nПеретягування іконок/Імагнітів на властивості\nПеретягніть об'єкти до Bindings-Editor Signalname\nБазова функціональність CustomControls",
         "zh-cn": "进口/进口Screens/Images/Controls\n保护你自己 B. 直接在网络ui的控制\nDrag/Drop of Icons/Images toper\nDrag/Drops to Bindings-Editor签名\n习俗的基本功能"
-      },
-      "0.1.0": {
-        "en": "initial public release",
-        "de": "erste öffentliche veröffentlichung",
-        "ru": "начальный публичный релиз",
-        "pt": "lançamento público inicial",
-        "nl": "eerste openbare vrijlating",
-        "fr": "initial public release",
-        "it": "primo rilascio pubblico",
-        "es": "liberación pública inicial",
-        "pl": "wstępne wydanie",
-        "uk": "початковий публічний реліз",
-        "zh-cn": "最初的公共释放"
       }
     },
     "icon": "logo.png",
