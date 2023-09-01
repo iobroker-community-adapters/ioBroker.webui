@@ -89,10 +89,11 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
 
     //TODO: maybe reload designer, when bindings are disabled???
     bindingsEnabled = true;
+    relativeBindingsPrefix = '';
     applyBindings() {
         this.removeBindings();
         if (this.bindingsEnabled)
-            this._webuiBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element, '', null);
+            this._webuiBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element, this.relativeBindingsPrefix, null);
     }
 
     removeBindings() {

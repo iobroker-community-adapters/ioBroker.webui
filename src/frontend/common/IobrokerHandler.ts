@@ -38,9 +38,15 @@ class IobrokerHandler {
     imagesChanged = new TypedEvent<void>();
     configChanged = new TypedEvent<void>();
 
+    changeView = new TypedEvent<string>();
+    refreshView = new TypedEvent<string>();
+
     _readyPromises: (() => void)[] = [];
 
+    readonly clientId;
+
     constructor() {
+        this.clientId = Date.now().toString(16);
     }
 
     waitForReady(): Promise<void> {
@@ -65,7 +71,19 @@ class IobrokerHandler {
         for (let p of this._readyPromises)
             p();
         this._readyPromises = null;
-        console.log("ioBroker handler ready.")
+        console.log("ioBroker handler ready.");
+
+        let commandData;
+        let commandClientIds;
+        await this.connection.subscribeState(this.namespace + '.control.data', (id, state) => { commandData = state.val });
+        await this.connection.subscribeState(this.namespace + '.control.clientIds', (id, state) => { commandClientIds = state.val });
+        let v = await this.connection.getState(this.namespace + '.control.command')
+        this.connection.subscribeState(this.namespace + '.control.command', (id, state) => {
+            if (state.ack && state.ts != v.ts)
+                this.handleCommand(<any>state.val, commandData, commandClientIds);
+        });
+
+        this.sendCommand("uiConnected", "");
     }
 
     private _screenNames: string[];
@@ -293,13 +311,46 @@ class IobrokerHandler {
         await this.connection.writeFile64(this.namespaceFiles, name, await <any>binary.arrayBuffer());
     }
 
-    async sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm', data: string, clientId: string = ''): Promise<void> {
+    async sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected', data: string): Promise<void> {
         let p = [
             this.connection.setState(this.namespace + '.control.data', { val: data }),
-            this.connection.setState(this.namespace + '.control.clientIds', { val: clientId })
+            this.connection.setState(this.namespace + '.control.clientIds', { val: this.clientId })
         ];
         await Promise.all(p);
         await this.connection.setState(this.namespace + '.control.command', { val: command });
+    }
+
+    async handleCommand(command: "uiReloadPackages" | "uiReload" | "uiRefresh" | "uiChangeView" | "uiChangedView" | "uiOpenDialog" | "uiOpenedDialog" | "uiPlaySound" | "uiRunScript" | "uiAlert", data: string, clientId: string = ''): Promise<void> {
+        if (clientId == '' || clientId == '*' || clientId == this.clientId) {
+            switch (command) {
+                case "uiReload":
+                    window.location.reload();
+                    break;
+                case "uiRefresh":
+                    this._controls.clear();
+                    this._screens.clear();
+                    this._screenNames = null;
+                    this._controlNames = null;
+                    this.refreshView.emit(data);
+                    break;
+                case "uiChangeView":
+                    this.changeView.emit(data);
+                    break;
+                case "uiOpenDialog":
+                    //TODO...
+                    break;
+                case "uiPlaySound":
+                    const audio = new Audio(data);
+                    audio.play();
+                    break;
+                case "uiRunScript":
+                    //TODO...
+                    break;
+                case "uiAlert":
+                    alert(data);
+                    break;
+            }
+        }
     }
 }
 

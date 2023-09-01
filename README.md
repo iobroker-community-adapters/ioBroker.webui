@@ -109,6 +109,7 @@ runtime.html?screenName=screen2
 - shorter custom control tag name
 - better dynamics editor
 - dock ui fixes
+- control ui from backend (switch view, reload)
 
 ### 0.4.0 (2023-08-30)
 - remove uneeded files from upload

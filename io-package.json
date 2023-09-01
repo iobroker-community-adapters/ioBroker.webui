@@ -221,13 +221,17 @@
           "updateNpm": "updateNpm",
           "refreshWww": "refreshWww",
           "createImportmap": "createImportmap",
+          "uiConnected": "uiConnected",
           "uiReloadPackages": "uiReloadPackages",
           "uiReload": "uiReload",
+          "uiRefresh": "uiRefresh",
           "uiChangeView": "uiChangeView",
           "uiChangedView": "uiChangedView",
           "uiOpenDialog": "uiOpenDialog",
           "uiOpenedDialog": "uiOpenedDialog",
-          "uiPlaySound": "uiPlaySound"
+          "uiPlaySound": "uiPlaySound",
+          "uiRunScript": "uiRunScript",
+          "uiAlert": "uiAlert"
         },
         "read": true,
         "write": true,

@@ -1,4 +1,4 @@
-import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, DomHelper, htmlFromString, property } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, Disposable, DomHelper, htmlFromString, property } from "@node-projects/base-custom-webcomponent";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
@@ -20,6 +20,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
     private _iobBindings: (() => void)[];
     private _loading: boolean;
+    private _refreshCb: Disposable;
 
     _screenName: string;
     @property()
@@ -106,26 +107,11 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         return this._relativeSignalsPath;
     }
 
-    /*
-    _states: { [name: string]: any } = {};
-    _subscriptions = new Set<string>();
-
-    state(name: string) {
-        if (!this._subscriptions.has(name)) {
-            this._subscriptions.add(name);
-            this._states[name] = null;
-            iobrokerHandler.connection.subscribeState(name, (id, state) => {
-                this._states[name] = state.val;
-                this._bindingsRefresh();
-            })
-        }
-        return this._states[name];
+    connectedCallback() {
+        this._refreshCb = iobrokerHandler.refreshView.on(() => this._loadScreen());
     }
 
-    set(name: string, value: ioBroker.StateValue) {
-        iobrokerHandler.connection.setState(name, value);
+    disconnectedCallback() {
+        this._refreshCb?.dispose();
     }
-    */
-
-    
 }
