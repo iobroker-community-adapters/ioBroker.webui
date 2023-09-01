@@ -21,6 +21,12 @@ It includes features like:
   - screens inside of screens
   - icons from habpanel included
 
+## Installation
+
+### Dependecies
+
+  - You need the Web Adapter installed. It works with the following settings: ![image](https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.webui/master)
+  
 ## Concepts
 
 ### Custom Controls in WebUI
