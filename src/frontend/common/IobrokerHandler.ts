@@ -97,7 +97,7 @@ class IobrokerHandler {
         });
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
-        
+
         let cfg = await this._getConfig();
         this.config = cfg ?? { globalStyle: null };
         this.gloablStylesheet = cssFromString(this.config.globalStyle);
@@ -190,11 +190,12 @@ class IobrokerHandler {
         this.screensChanged.emit(null);
     }
 
-    async renameScreen(oldName: string, newName) {
+    async renameScreen(oldName: string, newName: string) {
         await this.connection.renameFile(this.namespaceFiles, "/" + this.configPath + "screens/" + oldName.toLocaleLowerCase() + screenFileExtension, "/" + this.configPath + "screens/" + newName.toLocaleLowerCase() + screenFileExtension);
         this._screens.delete(oldName);
         this._screens.delete(newName);
         this._screenNames = null;
+        this.getScreen(newName);
         this.screensChanged.emit(null);
     }
 
@@ -272,11 +273,12 @@ class IobrokerHandler {
         this.controlsChanged.emit(null);
     }
 
-    async renameCustomControl(oldName: string, newName) {
+    async renameCustomControl(oldName: string, newName: string) {
         await this.connection.renameFile(this.namespaceFiles, "/" + this.configPath + "controls/" + oldName + controlFileExtension, "/" + this.configPath + "controls/" + newName + controlFileExtension);
         this._controls.delete(oldName);
         this._controls.delete(newName);
         this._controlNames = null;
+        this.getCustomControl(newName);
         this.controlsChanged.emit(null);
     }
 
