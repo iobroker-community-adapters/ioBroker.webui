@@ -61,10 +61,42 @@ class IobrokerHandler {
         //@ts-ignore
         while (!window.io)
             await sleep(5);
-        this.connection = new Connection({ protocol: 'ws', host: window.iobrokerHost, port: window.iobrokerPort, admin5only: false, autoSubscribes: [] });
+
+        let ci = document.getElementById('connectionInfo');
+        if (ci) {
+            ci.innerHTML = 'connecting...';
+        }
+
+        this.connection = new Connection({
+            protocol: 'ws',
+            host: window.iobrokerHost,
+            port: window.iobrokerPort,
+            admin5only: false,
+            autoSubscribes: [],
+            onError: (err) => {
+                let ci = document.getElementById('connectionInfo');
+                if (ci) {
+                    ci.innerHTML = err;
+                }
+                let cs = document.getElementById('connectionState');
+                if (cs) {
+                    cs.style.background = 'red';
+                }
+            },
+            onReady: () => {
+                let ci = document.getElementById('connectionInfo');
+                if (ci) {
+                    ci.innerHTML = 'ready';
+                }
+                let cs = document.getElementById('connectionState');
+                if (cs) {
+                    cs.style.background = 'lightgreen';
+                }
+            }
+        });
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
-        //await this.loadAllScreens();
+        
         let cfg = await this._getConfig();
         this.config = cfg ?? { globalStyle: null };
 
