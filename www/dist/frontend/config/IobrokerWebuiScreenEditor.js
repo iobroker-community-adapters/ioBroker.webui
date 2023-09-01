@@ -1,7 +1,13 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
 import { DocumentContainer, } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
+import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend {
+    constructor() {
+        super(...arguments);
+        //TODO: maybe reload designer, when bindings are disabled???
+        this.bindingsEnabled = true;
+    }
     get name() { return this._name; }
     async initialize(name, type, html, style, properties, serviceContainer) {
         this.title = type + ' - ' + name;
@@ -51,6 +57,21 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
             this.documentContainer.additionalStyleString = iobrokerHandler.config?.globalStyle ?? '';
         });
         this.shadowRoot.appendChild(this.documentContainer);
+        requestAnimationFrame(() => {
+            this.applyBindings();
+            this.documentContainer.designerView.designerCanvas.onContentChanged.on(() => {
+                this.applyBindings();
+            });
+        });
+    }
+    applyBindings() {
+        this.removeBindings();
+        if (this.bindingsEnabled)
+            this._webuiBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element, '', null);
+    }
+    removeBindings() {
+        this._webuiBindings?.forEach(x => x());
+        this._webuiBindings = null;
     }
     async executeCommand(command) {
         if (command.type == 'save') {
