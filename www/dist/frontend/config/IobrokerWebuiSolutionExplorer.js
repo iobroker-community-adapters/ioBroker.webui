@@ -689,7 +689,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     preventVoidMoves: false,
                     dropMarkerOffsetX: -24,
                     dropMarkerInsertOffsetX: -16,
-                    dragStart: (node, data) => {
+                    dragStart: async (node, data) => {
                         if (data.node.data.type == 'screen') {
                             const screen = data.node.data.name;
                             const elementDef = { tag: "iobroker-webui-screen-viewer", defaultAttributes: { 'screen-name': screen }, defaultWidth: '300px', defaultHeight: '200px' };
@@ -704,7 +704,12 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             if (nm[0] === '-')
                                 nm = nm.substring(1);
                             let name = webuiCustomControlPrefix + nm;
-                            const elementDef = { tag: name, defaultWidth: '300px', defaultHeight: '200px' };
+                            const elementDef = { tag: name };
+                            const controlDef = await iobrokerHandler.getCustomControl(control);
+                            if (controlDef.settings.width)
+                                elementDef.defaultWidth = controlDef.settings.width;
+                            if (controlDef.settings.height)
+                                elementDef.defaultHeight = controlDef.settings.height;
                             data.effectAllowed = "all";
                             data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
                             data.dropEffect = "copy";

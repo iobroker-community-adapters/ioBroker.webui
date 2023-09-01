@@ -32,14 +32,14 @@
         "IControlSettings": {
             "properties": {
                 "height": {
-                    "type": "number"
+                    "type": "string"
                 },
                 "noGlobalStyle": {
                     "description": "CustomControl does not include Global Style in it's shadowroot",
                     "type": "boolean"
                 },
                 "width": {
-                    "type": "number"
+                    "type": "string"
                 }
             },
             "type": "object"
@@ -90,7 +90,7 @@
         "IScreenSettings": {
             "properties": {
                 "height": {
-                    "type": "number"
+                    "type": "string"
                 },
                 "scale": {
                     "anyOf": [
@@ -107,7 +107,7 @@
                     ]
                 },
                 "width": {
-                    "type": "number"
+                    "type": "string"
                 }
             },
             "type": "object"
