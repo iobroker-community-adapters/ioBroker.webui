@@ -56,7 +56,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         setTimeout(() => {
             serviceContainer.bindableObjectsServices[0].getBindableObjects();
         }, 1000);
-        
+
     }
 
     private async createTreeNodes() {
@@ -419,7 +419,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             contextMenu: (event) => {
                                 ContextMenu.show([{
                                     title: 'copy path to clipboard', action: async () => {
-                                        copyTextToClipboard('/' + instanceName + subFolder + '/' + f.file);  
+                                        copyTextToClipboard('/' + instanceName + subFolder + '/' + f.file);
                                     }
                                 }], event);
                             },
@@ -749,7 +749,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     dropMarkerOffsetX: -24,
                     dropMarkerInsertOffsetX: -16,
 
-                    dragStart: (node, data) => {
+                    dragStart: async (node, data) => {
                         if (data.node.data.type == 'screen') {
                             const screen = data.node.data.name;
                             const elementDef: IElementDefinition = { tag: "iobroker-webui-screen-viewer", defaultAttributes: { 'screen-name': screen }, defaultWidth: '300px', defaultHeight: '200px' }
@@ -763,7 +763,14 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             if (nm[0] === '-')
                                 nm = nm.substring(1);
                             let name = webuiCustomControlPrefix + nm;
-                            const elementDef: IElementDefinition = { tag: name, defaultWidth: '300px', defaultHeight: '200px' }
+
+                            const elementDef: IElementDefinition = { tag: name }
+                            const controlDef = await iobrokerHandler.getCustomControl(control);
+                            if (controlDef.settings.width)
+                                elementDef.defaultWidth = controlDef.settings.width;
+                            if (controlDef.settings.height)
+                                elementDef.defaultHeight = controlDef.settings.height;
+
                             data.effectAllowed = "all";
                             data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
                             data.dropEffect = "copy";
