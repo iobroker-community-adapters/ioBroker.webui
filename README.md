@@ -109,6 +109,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- screens and controls have now settings (width, height, useGlobalStyle)
+
 ### 0.6.0 (2023-09-01)
 - removed many uneeded files from installation
 
