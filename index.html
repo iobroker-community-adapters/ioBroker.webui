@@ -299,7 +299,20 @@
           </div>
           <span class="title">Tools</span>
         </div>
-        <div style="position: absolute; right: 0;">
+        <div class="group flex-column" style="display: flex; align-items: center;">
+          <div>
+            webui
+          </div>
+          <div style="font-size: 10px;">
+            {{VERSION}}
+          </div>
+          <div style="font-size: 10px;">
+            {{COMMIT_HASH}}
+          </div>
+          <span class="title">Version</span>
+        </div>
+        <div style="flex-grow: 1;"></div>
+        <div>
           <div class="group" style="height: 111px; border-left: 1px solid #dadbdc; inline-size: fit-content;">
             <button class="ribbon-button" data-command="runtime">
               <span class="icon">
