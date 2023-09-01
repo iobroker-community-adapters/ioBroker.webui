@@ -27,6 +27,7 @@ export class Uploadhelper {
         '.md',
         '.html',
         'package-lock.json',
+        'tsconfig.json',
         '.release-it.json',
         '.yml',
         '.cjs'
