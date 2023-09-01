@@ -57,12 +57,12 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
             this.documentContainer.additionalStyleString = iobrokerHandler.config?.globalStyle ?? '';
         });
         this.shadowRoot.appendChild(this.documentContainer);
-        requestAnimationFrame(() => {
+        setTimeout(() => {
             this.applyBindings();
             this.documentContainer.designerView.designerCanvas.onContentChanged.on(() => {
                 this.applyBindings();
             });
-        });
+        }, 50);
     }
     applyBindings() {
         this.removeBindings();
@@ -102,6 +102,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         window.appShell.controlpropertiesEditor.setProperties(this._properties);
     }
     dispose() {
+        this.removeBindings();
         this.documentContainer.dispose();
         this._configChangedListener?.dispose();
         window.appShell.controlpropertiesEditor.setProperties(null);
