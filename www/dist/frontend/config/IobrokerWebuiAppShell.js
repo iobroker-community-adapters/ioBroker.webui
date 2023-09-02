@@ -14,12 +14,12 @@ import propertiesTypeInfo from "../generated/Properties.json" assert { type: 'js
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 import "../runtime/controls.js";
 import "./IobrokerWebuiSolutionExplorer.js";
-import "./IobrokerWebuiStyleEditor.js";
+import "./IobrokerWebuiMonacoEditor.js";
 import "./IobrokerWebuiEventAssignment.js";
 import "./IobrokerWebuiSplitView.js";
 import "./IobrokerWebuiPropertyGrid.js";
 import "./IobrokerWebuiControlPropertiesEditor.js";
-import { IobrokerWebuiStyleEditor } from './IobrokerWebuiStyleEditor.js';
+import { IobrokerWebuiMonacoEditor } from './IobrokerWebuiMonacoEditor.js';
 import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
 import { IobrokerWebuiConfirmationWrapper } from './IobrokerWebuiConfirmationWrapper.js';
 import { getPanelContainerForElement } from './DockHelper.js';
@@ -35,6 +35,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         this.treeViewExtended = this._getDomElement('treeViewExtended');
         this.propertyGrid = this._getDomElement('propertyGrid');
         this.styleEditor = this._getDomElement('styleEditor');
+        this.javascriptEditor = this._getDomElement('javascriptEditor');
         this.controlpropertiesEditor = this._getDomElement('propertiesEditor');
         this.eventsAssignment = this._getDomElement('eventsList');
         this.settingsEditor = this._getDomElement('settingsEditor');
@@ -78,8 +79,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             stateElement.innerText = state.val;
         });
         setTimeout(() => {
-            this.activateDock(this._getDomElement('attributeDock'));
-            this.activateDock(this._getDomElement('eventsDock'));
+            this.activateDockById('attributeDock');
+            this.activateDockById('eventsDock');
+            this.activateDockById('styleDock');
         }, 150);
     }
     async _setupServiceContainer() {
@@ -87,6 +89,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         this.propertyGrid.serviceContainer = serviceContainer;
     }
     /* Move to a Dock Spawn Helper */
+    activateDockById(name) {
+        this.activateDock(this._getDomElement(name));
+    }
     activateDock(element) {
         const nd = this._dockManager.getNodeByElement(element);
         nd.parent.container.setActiveChild(nd.container);
@@ -138,19 +143,20 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             });
         });
     }
-    async openScreenEditor(name, type, html, style, settings, properties) {
+    async openScreenEditor(name, type, html, style, script, settings, properties) {
         let id = type + "_" + name;
         if (!this.isDockOpenAndActivate(id)) {
             let screenEditor = new IobrokerWebuiScreenEditor();
             screenEditor.id = id;
-            await screenEditor.initialize(name, type, html, style, settings, properties, serviceContainer);
+            await screenEditor.initialize(name, type, html, style, script, settings, properties, serviceContainer);
             this.openDock(screenEditor);
         }
     }
     async openGlobalStyleEditor(style) {
         let id = "global_styleEditor";
         if (!this.isDockOpenAndActivate(id)) {
-            let styleEditor = new IobrokerWebuiStyleEditor();
+            let styleEditor = new IobrokerWebuiMonacoEditor();
+            styleEditor.language = 'css';
             styleEditor.id = id;
             styleEditor.title = 'global style';
             const model = await styleEditor.createModel(style);
@@ -213,8 +219,12 @@ IobrokerWebuiAppShell.template = html `
             <iobroker-webui-event-assignment id="eventsList"></iobroker-webui-event-assignment>
           </div>
 
-          <div id="lower" title="style" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.25" style="overflow: hidden; width: 100%;">
-            <iobroker-webui-style-editor id="styleEditor"></iobroker-webui-style-editor>
+          <div id="styleDock" title="style" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.25" style="overflow: hidden; width: 100%;">
+            <iobroker-webui-monaco-editor language="css" id="styleEditor"></iobroker-webui-monaco-editor>
+          </div>
+
+          <div id="javascriptDock" title="javascript" dock-spawn-dock-to="styleDock" style="overflow: hidden; width: 100%;">
+            <iobroker-webui-monaco-editor language="javascript" id="javascriptEditor"></iobroker-webui-monaco-editor>
           </div>
 
           <div id="propertiesDock" title="control prop." style="overflow: hidden; width: 100%;" dock-spawn-dock-to="eventsDock">

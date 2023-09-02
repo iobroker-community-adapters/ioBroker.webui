@@ -8,6 +8,7 @@ export class IobrokerWebuiConfigButtonProvider {
         c.style.marginLeft = '20px';
         c.style.marginRight = '20px';
         c.style.alignItems = 'center';
+        c.style.whiteSpace = 'nowrap';
         const chk = document.createElement('input');
         chk.style.margin = '0';
         chk.style.width = 'auto';

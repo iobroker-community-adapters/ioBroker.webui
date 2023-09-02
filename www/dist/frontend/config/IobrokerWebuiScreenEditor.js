@@ -10,11 +10,12 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         this.relativeBindingsPrefix = '';
     }
     get name() { return this._name; }
-    async initialize(name, type, html, style, settings, properties, serviceContainer) {
+    async initialize(name, type, html, style, script, settings, properties, serviceContainer) {
         this.title = type + ' - ' + name;
         this._name = name;
         this._type = type;
         this._settings = settings ?? {};
+        this.scriptModel = await window.appShell.javascriptEditor.createModel(script ?? '');
         if (this._type == 'control') {
             this._properties = { ...properties } ?? {};
         }
@@ -80,12 +81,13 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         if (command.type == 'save') {
             let html = this.documentContainer.designerView.getHTML();
             let style = this.documentContainer.additionalData.model.getValue();
+            let script = this.scriptModel.getValue();
             if (this._type == 'screen') {
-                let screen = { html, style, settings: this._settings };
+                let screen = { html, style, script, settings: this._settings };
                 await iobrokerHandler.saveScreen(this._name, screen);
             }
             else {
-                let control = { html, style, settings: this._settings, properties: this._properties };
+                let control = { html, style, script, settings: this._settings, properties: this._properties };
                 await iobrokerHandler.saveCustomControl(this._name, control);
             }
         }
@@ -100,10 +102,13 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     deactivated() {
         window.appShell.controlpropertiesEditor.setProperties(null);
         window.appShell.settingsEditor.selectedObject = null;
+        window.appShell.styleEditor.model = null;
+        window.appShell.javascriptEditor.model = null;
         this._settingsChanged?.dispose();
     }
     activated() {
         window.appShell.styleEditor.model = this.documentContainer.additionalData.model;
+        window.appShell.javascriptEditor.model = this.scriptModel;
         window.appShell.propertyGrid.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
         window.appShell.treeViewExtended.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
         window.appShell.eventsAssignment.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
@@ -125,6 +130,8 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         this._settingsChanged?.dispose();
         window.appShell.controlpropertiesEditor.setProperties(null);
         window.appShell.settingsEditor.selectedObject = null;
+        window.appShell.styleEditor.model = null;
+        window.appShell.javascriptEditor.model = null;
     }
 }
 IobrokerWebuiScreenEditor.template = html ``;

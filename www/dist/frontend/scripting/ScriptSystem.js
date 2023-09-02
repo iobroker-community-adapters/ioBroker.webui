@@ -125,13 +125,12 @@ export class ScriptSystem {
         }
         return value;
     }
-    static async assignAllScripts(shadowRoot, instance) {
+    static async assignAllScripts(javascriptCode, shadowRoot, instance) {
         const allElements = shadowRoot.querySelectorAll('*');
-        const scriptTag = shadowRoot.querySelector('script[type=module]');
         let jsObject = null;
-        if (scriptTag) {
+        if (javascriptCode) {
             try {
-                const scriptUrl = URL.createObjectURL(new Blob([scriptTag.textContent], { type: 'application/javascript' }));
+                const scriptUrl = URL.createObjectURL(new Blob([javascriptCode], { type: 'application/javascript' }));
                 //@ts-ignore
                 jsObject = await importShim(scriptUrl);
                 if (jsObject.init) {

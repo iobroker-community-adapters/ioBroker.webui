@@ -14,7 +14,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     connectedCallback() {
         this._parseAttributesToProperties();
         this._bindingsRefresh();
-        ScriptSystem.assignAllScripts(this.shadowRoot, this);
+        ScriptSystem.assignAllScripts(this.constructor._control.script, this.shadowRoot, this);
         IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
     }
     _getRelativeSignalsPath() {

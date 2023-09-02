@@ -1,6 +1,7 @@
-import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
-import { CodeViewMonaco, ContextMenu, DesignItem, PropertiesHelper } from "@node-projects/web-component-designer";
+import { BaseCustomWebComponentConstructorAppend, DomHelper, css, html } from "@node-projects/base-custom-webcomponent";
+import { ContextMenu, PropertiesHelper } from "@node-projects/web-component-designer";
 import { IobrokerWebuiScriptEditor } from "./IobrokerWebuiScriptEditor.js";
+import { IobrokerWebuiScreenEditor } from "./IobrokerWebuiScreenEditor.js";
 export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super();
@@ -72,29 +73,20 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
     }
     async _editEvent(e, eventItem) {
         if (this._getEventType(eventItem) == 'js') {
-            let scriptTag = this.selectedItems[0].instanceServiceContainer.designerCanvas.shadowRoot.querySelector('script[type=module]');
-            if (!scriptTag) {
+            let screenEditor = DomHelper.findParentNodeOfType(this.selectedItems[0].instanceServiceContainer.designerCanvas, IobrokerWebuiScreenEditor);
+            let sc = screenEditor.scriptModel.getValue().trim();
+            if (!sc) {
                 let jsName = this.selectedItems[0].getAttribute('@' + eventItem.name);
                 let templateScript = `
 export function ${jsName}(event, element, shadowRoot) {
 
 }
 `;
-                scriptTag = document.createElement('script');
-                scriptTag.setAttribute('type', 'module');
-                scriptTag.textContent = templateScript;
-                let di = DesignItem.createDesignItemFromInstance(scriptTag, this.selectedItems[0].serviceContainer, this.selectedItems[0].instanceServiceContainer);
-                di.instanceServiceContainer.designerCanvas.rootDesignItem.insertChild(di, 0);
+                screenEditor.scriptModel.setValue(templateScript);
             }
-            let scriptDesignItem = DesignItem.GetDesignItem(scriptTag);
-            let cvm = new CodeViewMonaco();
-            cvm.language = 'javascript';
-            cvm.code = scriptDesignItem.content;
-            cvm.style.position = 'relative';
-            let res = await window.appShell.openConfirmation(cvm, 200, 200, 600, 400, this);
-            if (res) {
-                scriptDesignItem.content = cvm.getText();
+            else {
             }
+            window.appShell.activateDockById('javascriptDock');
         }
         else {
             let scriptString = this.selectedItems[0].getAttribute('@' + eventItem.name);
