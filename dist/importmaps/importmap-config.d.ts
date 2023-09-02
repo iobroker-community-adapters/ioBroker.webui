@@ -6,6 +6,7 @@ declare const importMapConfig: {
         "@node-projects/web-component-designer/": string;
         "@adobe/css-tools": string;
         "dock-spawn-ts/": string;
+        "esprima-next": string;
         "@node-projects/base-custom-webcomponent/": string;
         "@node-projects/base-custom-webcomponent": string;
         "@node-projects/lean-he-esm/": string;

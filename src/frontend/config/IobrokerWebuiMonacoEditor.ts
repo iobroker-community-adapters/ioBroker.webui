@@ -3,7 +3,7 @@ import { IUiCommand, IUiCommandHandler, sleep } from "@node-projects/web-compone
 import type * as monaco from 'monaco-editor';
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 
-export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
+export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
 
     static readonly style = css`
         :host {
@@ -21,10 +21,14 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
         <div id="container" style="width: 100%; height: 100%; position: absolute;"></div>
     `;
 
+    static readonly properties = {
+        language: String
+    }
+
     public async createModel(text: string) {
-        await IobrokerWebuiStyleEditor.initMonacoEditor();
+        await IobrokerWebuiMonacoEditor.initMonacoEditor();
         //@ts-ignore
-        return monaco.editor.createModel(text, 'css');
+        return monaco.editor.createModel(text, this.language);
     }
     private _model: monaco.editor.ITextModel;
     public get model() {
@@ -35,6 +39,8 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
         if (this._editor)
             this._editor.setModel(value);
     }
+
+    language: 'css' | 'javascript' = 'css';
 
     private _errorLine: number;
     public get errorLine() {
@@ -56,12 +62,11 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
 
     constructor() {
         super();
-        this._parseAttributesToProperties();
     }
 
     static initMonacoEditor() {
         return new Promise(async resolve => {
-            if (!IobrokerWebuiStyleEditor._initalized) {
+            if (!IobrokerWebuiMonacoEditor._initalized) {
                 await sleep(500);
                 //@ts-ignore
                 require.config({ paths: { 'vs': 'node_modules/monaco-editor/min/vs', 'vs/css': { disabled: true } } });
@@ -69,7 +74,7 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
                 //@ts-ignore
                 require(['vs/editor/editor.main'], () => {
                     resolve(undefined);
-                    IobrokerWebuiStyleEditor._initalized = true;
+                    IobrokerWebuiMonacoEditor._initalized = true;
                 });
             } else {
                 resolve(undefined);
@@ -78,6 +83,8 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
     }
 
     async ready() {
+        this._parseAttributesToProperties();
+
         //@ts-ignore
         const style = await import("monaco-editor/min/vs/editor/editor.main.css", { assert: { type: 'css' } });
         //@ts-ignore
@@ -85,12 +92,12 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
 
         this._container = this._getDomElement<HTMLDivElement>('container')
 
-        await IobrokerWebuiStyleEditor.initMonacoEditor();
+        await IobrokerWebuiMonacoEditor.initMonacoEditor();
 
         //@ts-ignore
         this._editor = monaco.editor.create(this._container, {
             automaticLayout: true,
-            language: 'css',
+            language: this.language,
             minimap: {
                 size: 'fill'
             },
@@ -138,4 +145,4 @@ export class IobrokerWebuiStyleEditor extends BaseCustomWebComponentConstructorA
     }
 }
 
-customElements.define('iobroker-webui-style-editor', IobrokerWebuiStyleEditor);
+customElements.define('iobroker-webui-monaco-editor', IobrokerWebuiMonacoEditor);

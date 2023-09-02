@@ -21,14 +21,14 @@ DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css
 
 import "../runtime/controls.js";
 import "./IobrokerWebuiSolutionExplorer.js";
-import "./IobrokerWebuiStyleEditor.js";
+import "./IobrokerWebuiMonacoEditor.js";
 import "./IobrokerWebuiEventAssignment.js";
 import "./IobrokerWebuiSplitView.js";
 import "./IobrokerWebuiPropertyGrid.js";
 import "./IobrokerWebuiControlPropertiesEditor.js";
 
 import { IobrokerWebuiSolutionExplorer } from './IobrokerWebuiSolutionExplorer.js';
-import { IobrokerWebuiStyleEditor } from './IobrokerWebuiStyleEditor.js';
+import { IobrokerWebuiMonacoEditor } from './IobrokerWebuiMonacoEditor.js';
 import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
 import { IobrokerWebuiEventAssignment } from './IobrokerWebuiEventAssignment.js';
 import { IobrokerWebuiConfirmationWrapper } from './IobrokerWebuiConfirmationWrapper.js';
@@ -45,7 +45,8 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   _solutionExplorer: IobrokerWebuiSolutionExplorer
 
 
-  public styleEditor: IobrokerWebuiStyleEditor;
+  public styleEditor: IobrokerWebuiMonacoEditor;
+  public javascriptEditor: IobrokerWebuiMonacoEditor;
   public controlpropertiesEditor: IobrokerWebuiControlPropertiesEditor;
   public propertyGrid: PropertyGrid;
   public treeViewExtended: TreeViewExtended;
@@ -108,8 +109,12 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             <iobroker-webui-event-assignment id="eventsList"></iobroker-webui-event-assignment>
           </div>
 
-          <div id="lower" title="style" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.25" style="overflow: hidden; width: 100%;">
-            <iobroker-webui-style-editor id="styleEditor"></iobroker-webui-style-editor>
+          <div id="styleDock" title="style" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.25" style="overflow: hidden; width: 100%;">
+            <iobroker-webui-monaco-editor language="css" id="styleEditor"></iobroker-webui-monaco-editor>
+          </div>
+
+          <div id="javascriptDock" title="javascript" dock-spawn-dock-to="styleDock" style="overflow: hidden; width: 100%;">
+            <iobroker-webui-monaco-editor language="javascript" id="javascriptEditor"></iobroker-webui-monaco-editor>
           </div>
 
           <div id="propertiesDock" title="control prop." style="overflow: hidden; width: 100%;" dock-spawn-dock-to="eventsDock">
@@ -125,7 +130,8 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
 
     this.treeViewExtended = this._getDomElement<TreeViewExtended>('treeViewExtended');
     this.propertyGrid = this._getDomElement<PropertyGrid>('propertyGrid');
-    this.styleEditor = this._getDomElement<IobrokerWebuiStyleEditor>('styleEditor');
+    this.styleEditor = this._getDomElement<IobrokerWebuiMonacoEditor>('styleEditor');
+    this.javascriptEditor = this._getDomElement<IobrokerWebuiMonacoEditor>('javascriptEditor');
     this.controlpropertiesEditor = this._getDomElement<IobrokerWebuiControlPropertiesEditor>('propertiesEditor');
     this.eventsAssignment = this._getDomElement<IobrokerWebuiEventAssignment>('eventsList');
     
@@ -176,8 +182,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     });
 
     setTimeout(() => {
-      this.activateDock(this._getDomElement('attributeDock'));
-      this.activateDock(this._getDomElement('eventsDock'));
+      this.activateDockById('attributeDock');
+      this.activateDockById('eventsDock');
+      this.activateDockById('styleDock');
     }, 150);
   }
 
@@ -187,8 +194,11 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   }
 
 
-
   /* Move to a Dock Spawn Helper */
+
+  activateDockById(name: string) {
+    this.activateDock(this._getDomElement(name));
+  }
 
   activateDock(element: Element) {
     const nd = this._dockManager.getNodeByElement(element);
@@ -247,12 +257,12 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     });
   }
 
-  public async openScreenEditor(name: string, type: 'screen' | 'control', html: string, style: string, settings: any, properties?: Record<string, { type: string, values?: string[], default?: any }>) {
+  public async openScreenEditor(name: string, type: 'screen' | 'control', html: string, style: string, script: string, settings: any, properties?: Record<string, { type: string, values?: string[], default?: any }>) {
     let id = type + "_" + name;
     if (!this.isDockOpenAndActivate(id)) {
       let screenEditor = new IobrokerWebuiScreenEditor();
       screenEditor.id = id;
-      await screenEditor.initialize(name, type, html, style, settings, properties, serviceContainer);
+      await screenEditor.initialize(name, type, html, style, script, settings, properties, serviceContainer);
       this.openDock(screenEditor);
     }
   }
@@ -260,7 +270,8 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   public async openGlobalStyleEditor(style: string) {
     let id = "global_styleEditor";
     if (!this.isDockOpenAndActivate(id)) {
-      let styleEditor = new IobrokerWebuiStyleEditor();
+      let styleEditor = new IobrokerWebuiMonacoEditor();
+      styleEditor.language = 'css';
       styleEditor.id = id;
       styleEditor.title = 'global style';
       const model = await styleEditor.createModel(style);

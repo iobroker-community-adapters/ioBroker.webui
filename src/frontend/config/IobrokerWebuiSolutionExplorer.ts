@@ -131,7 +131,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 contextMenu: (event => screenNodeCtxMenu(event, x)),
                 dblclick: (e, d) => {
                     iobrokerHandler.getScreen(d.node.data.name).then(s => {
-                        window.appShell.openScreenEditor(d.node.data.name, 'screen', s.html, s.style, s.settings);
+                        window.appShell.openScreenEditor(d.node.data.name, 'screen', s.html, s.style, s.script, s.settings);
                     });
                 },
                 data: { type: 'screen', name: x }
@@ -607,7 +607,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 contextMenu: (event => controlNodeCtxMenu(event, x)),
                 dblclick: (e, d) => {
                     iobrokerHandler.getCustomControl(d.node.data.name).then(s => {
-                        window.appShell.openScreenEditor(d.node.data.name, 'control', s.html, s.style, s.settings, s.properties);
+                        window.appShell.openScreenEditor(d.node.data.name, 'control', s.html, s.style, s.script, s.settings, s.properties);
                     });
                 },
                 data: { type: 'customcontrol', name: x }

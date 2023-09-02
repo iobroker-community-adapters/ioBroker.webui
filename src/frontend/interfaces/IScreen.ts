@@ -1,6 +1,7 @@
 export interface IScreen {
     html: string;
     style: string;
+    script: string;
     settings: IScreenSettings;
 }
 

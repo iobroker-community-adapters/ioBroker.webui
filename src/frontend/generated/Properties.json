@@ -20,6 +20,9 @@
                 "properties": {
                     "$ref": "#/definitions/Record<string,{type:string;values?:string[]|undefined;default?:any;}>"
                 },
+                "script": {
+                    "type": "string"
+                },
                 "settings": {
                     "$ref": "#/definitions/IControlSettings"
                 },
@@ -76,6 +79,9 @@
         "IScreen": {
             "properties": {
                 "html": {
+                    "type": "string"
+                },
+                "script": {
                     "type": "string"
                 },
                 "settings": {

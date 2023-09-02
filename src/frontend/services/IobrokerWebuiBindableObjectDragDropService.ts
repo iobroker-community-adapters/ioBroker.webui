@@ -58,7 +58,8 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
             let grp: ChangeGroup;
 
             let state = await iobrokerHandler.connection.getState(bindableObject.fullName);
-            if ((obj?.common?.role === 'url' || obj?.common?.role === 'text.url' || obj?.common?.role.includes('icon') || obj?.common?.role.includes('image')) && typeof state.val === 'string') {
+            //TODO: only icon&image if val is a url with extension 
+            if ((obj?.common?.role === 'url' || obj?.common?.role === 'text.url' || obj?.common?.role.includes('icon') || obj?.common?.role.includes('image')) && typeof state?.val === 'string') {
                 if (state.val.endsWith('jpg') || state.val.endsWith('jpeg') || state.val.endsWith('png') || state.val.endsWith('gif') || state.val.endsWith('svg')) {
                     const img = document.createElement('img');
                     di = DesignItem.createDesignItemFromInstance(img, designerCanvas.serviceContainer, designerCanvas.instanceServiceContainer);

@@ -4,6 +4,7 @@ import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IScreen } from "../interfaces/IScreen.js";
 import { IControl } from "../interfaces/IControl.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
+import type { editor } from "monaco-editor";
 
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
 
@@ -15,6 +16,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     private _properties: Record<string, { type: string, values?: string[], default?: any }>;
 
     private _settings: { width?: string, height?: string };
+    public scriptModel: editor.ITextModel;
 
     private _configChangedListener: Disposable;
 
@@ -27,12 +29,13 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     private _webuiBindings: (() => void)[];
     private _settingsChanged: Disposable;
 
-    public async initialize(name: string, type: 'screen' | 'control', html: string, style: string, settings: { width?: string, height?: string }, properties: Record<string, { type: string, values?: string[], default?: any }>, serviceContainer: ServiceContainer) {
+    public async initialize(name: string, type: 'screen' | 'control', html: string, style: string, script: string, settings: { width?: string, height?: string }, properties: Record<string, { type: string, values?: string[], default?: any }>, serviceContainer: ServiceContainer) {
         this.title = type + ' - ' + name;
 
         this._name = name;
         this._type = type;
         this._settings = settings ?? {};
+        this.scriptModel  = await window.appShell.javascriptEditor.createModel(script ?? '');
 
         if (this._type == 'control') {
             this._properties = { ...properties } ?? {};
@@ -111,11 +114,12 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         if ((<string>command.type) == 'save') {
             let html = this.documentContainer.designerView.getHTML();
             let style = this.documentContainer.additionalData.model.getValue();
+            let script = this.scriptModel.getValue();
             if (this._type == 'screen') {
-                let screen: IScreen = { html, style, settings: this._settings };
+                let screen: IScreen = { html, style, script, settings: this._settings };
                 await iobrokerHandler.saveScreen(this._name, screen);
             } else {
-                let control: IControl = { html, style, settings: this._settings, properties: this._properties };
+                let control: IControl = { html, style, script, settings: this._settings, properties: this._properties };
                 await iobrokerHandler.saveCustomControl(this._name, control);
             }
         } else
@@ -131,11 +135,14 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     deactivated() {
         window.appShell.controlpropertiesEditor.setProperties(null);
         window.appShell.settingsEditor.selectedObject = null;
+        window.appShell.styleEditor.model = null;
+        window.appShell.javascriptEditor.model = null;
         this._settingsChanged?.dispose();
     }
 
     activated() {
         window.appShell.styleEditor.model = this.documentContainer.additionalData.model;
+        window.appShell.javascriptEditor.model = this.scriptModel;
         window.appShell.propertyGrid.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
         window.appShell.treeViewExtended.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
         window.appShell.eventsAssignment.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
@@ -159,6 +166,8 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         this._settingsChanged?.dispose();
         window.appShell.controlpropertiesEditor.setProperties(null);
         window.appShell.settingsEditor.selectedObject = null;
+        window.appShell.styleEditor.model = null;
+        window.appShell.javascriptEditor.model = null;
     }
 }
 

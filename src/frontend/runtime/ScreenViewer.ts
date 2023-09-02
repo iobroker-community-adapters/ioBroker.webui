@@ -78,12 +78,12 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             DomHelper.removeAllChildnodes(this.shadowRoot);
             const screen = await iobrokerHandler.getScreen(this.screenName)
             if (screen) {
-                this.loadScreenData(screen.html, screen.style);
+                this.loadScreenData(screen.html, screen.style, screen.script);
             }
         }
     }
 
-    public loadScreenData(html, style) {
+    public loadScreenData(html: string, style: string, script: string,) {
         let globalStyle = iobrokerHandler.config?.globalStyle ?? '';
 
         if (globalStyle && style)
@@ -100,7 +100,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         //this._bindingsParse(documentFragment, true);
         this.shadowRoot.appendChild(documentFragment);
         this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
-        ScriptSystem.assignAllScripts(this.shadowRoot, this);
+        ScriptSystem.assignAllScripts(script, this.shadowRoot, this);
     }
 
     _getRelativeSignalsPath(): string {
