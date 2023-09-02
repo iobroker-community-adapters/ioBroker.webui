@@ -75,12 +75,12 @@ class IobrokerHandler {
         console.log("ioBroker handler ready.");
         let commandData;
         let commandClientIds;
-        await this.connection.subscribeState(this.namespace + '.control.data', (id, state) => { commandData = state.val; });
-        await this.connection.subscribeState(this.namespace + '.control.clientIds', (id, state) => { commandClientIds = state.val; });
+        await this.connection.subscribeState(this.namespace + '.control.data', (id, state) => { commandData = state?.val; });
+        await this.connection.subscribeState(this.namespace + '.control.clientIds', (id, state) => { commandClientIds = state?.val; });
         let v = await this.connection.getState(this.namespace + '.control.command');
         this.connection.subscribeState(this.namespace + '.control.command', (id, state) => {
-            if (state.ack && state.ts != v.ts)
-                this.handleCommand(state.val, commandData, commandClientIds);
+            if (state?.ack && state?.ts != v?.ts)
+                this.handleCommand(state?.val, commandData, commandClientIds);
         });
         this.sendCommand("uiConnected", "");
     }

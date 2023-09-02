@@ -85,6 +85,10 @@ export function ${jsName}(event, element, shadowRoot) {
                 screenEditor.scriptModel.setValue(templateScript);
             }
             else {
+                /*let esprima = await import('esprima-next');
+                let tree = esprima.parseModule(sc);
+                console.log(tree);*/
+                //findFunctionDeclaration(eventItem.name)
             }
             window.appShell.activateDockById('javascriptDock');
         }
