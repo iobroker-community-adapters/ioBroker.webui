@@ -113,6 +113,7 @@ runtime.html?screenName=screen2
 - update designer to add and fix some commands
 - move screen/control scripts out of html code
 - add a javascript editor view
+- bugfix when states where null after a fresh install
 
 ### 0.7.0 (2023-09-01)
 - screens and controls have now settings (width, height, useGlobalStyle)
