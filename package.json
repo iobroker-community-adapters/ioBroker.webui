@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.0.3",
-    "@types/node": "^20.5.8"
+    "@types/node": "^20.5.9"
   },
   "devDependencies": {
     "@adobe/css-tools": "4.3.1",
@@ -59,7 +59,7 @@
     "chai-as-promised": "^7.1.1",
     "construct-style-sheets-polyfill": "^3.1.0",
     "del": "^7.1.0",
-    "dock-spawn-ts": "^2.520.0",
+    "dock-spawn-ts": "^2.521.0",
     "es-module-shims": "^1.8.0",
     "eslint": "^8.48.0",
     "esprima-next": "^5.8.4",

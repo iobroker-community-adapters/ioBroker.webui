@@ -114,6 +114,8 @@ runtime.html?screenName=screen2
 - move screen/control scripts out of html code
 - add a javascript editor view
 - bugfix when states where null after a fresh install
+- designer addons do now work again
+- docking framework updated, cause of bugs with undocking
 
 ### 0.7.0 (2023-09-01)
 - screens and controls have now settings (width, height, useGlobalStyle)

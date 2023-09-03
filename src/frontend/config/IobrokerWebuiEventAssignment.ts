@@ -2,6 +2,7 @@ import { BaseCustomWebComponentConstructorAppend, Disposable, DomHelper, css, ht
 import { ContextMenu, IDesignItem, IEvent, InstanceServiceContainer, PropertiesHelper } from "@node-projects/web-component-designer";
 import { IobrokerWebuiScriptEditor } from "./IobrokerWebuiScriptEditor.js";
 import { IobrokerWebuiScreenEditor } from "./IobrokerWebuiScreenEditor.js";
+import { findFunctionDeclarations } from "../helper/EsprimaHelper.js";
 
 export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstructorAppend {
 
@@ -128,19 +129,20 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
             let screenEditor = DomHelper.findParentNodeOfType(this.selectedItems[0].instanceServiceContainer.designerCanvas, IobrokerWebuiScreenEditor);
             let sc = screenEditor.scriptModel.getValue().trim();
 
-            if (!sc) {
+            let decl = await findFunctionDeclarations(sc);
+            if (decl) {
                 let jsName = this.selectedItems[0].getAttribute('@' + eventItem.name);
-                let templateScript = `
+                let funcDecl = decl.find(x => x.id.name == jsName)
+                if (!funcDecl) {
+                    let templateScript = `
 export function ${jsName}(event, element, shadowRoot) {
 
 }
 `;
-                screenEditor.scriptModel.setValue(templateScript);
-            } else {
-                /*let esprima = await import('esprima-next');
-                let tree = esprima.parseModule(sc);
-                console.log(tree);*/
-                //findFunctionDeclaration(eventItem.name)
+                    screenEditor.scriptModel.setValue(sc + templateScript);
+                } else {
+                    //console.log(funcDecl);
+                }
             }
             window.appShell.activateDockById('javascriptDock');
         } else {
