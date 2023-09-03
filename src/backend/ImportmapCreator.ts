@@ -82,11 +82,11 @@ export async function registerDesignerAddons(serviceContainer) {
 
         importWidgetFiles += this.importFiles.map(x => "p.push(import('" + x + "').catch(err => console.error('error during import of " + x + "', err)));").join('\n');
         importWidgetFiles += '\nPromise.allSettled(p)\n\n';
-        importWidgetFiles += this.importUndefinedElementFiles.map(x => "observer.setCurrentLib('" + x[0] + "');\ntry {\nawait import('" + x[1] + "');\n}catch (err) { console.error('error during import of ' + x, err); }\nobserver.finishedCurrentLib();").join('\n');
+        importWidgetFiles += this.importUndefinedElementFiles.map(x => "observer.setCurrentLib('" + x[0] + "');\ntry {\nawait import('" + x[1] + "');\n}catch (err) { console.error('error during import of " + x + "', err); }\nobserver.finishedCurrentLib();").join('\n');
         await fs.writeFile(path.join(this._packageBaseDirectory, 'importWidgetFiles.js'), importWidgetFiles);
 
         let importWidgetFilesRuntime = '';
-        importWidgetFilesRuntime += this.importFiles.map(x => "import('" + x + "').catch(err => console.error('error during import of ' + x, err));").join('\n');
+        importWidgetFilesRuntime += this.importFiles.map(x => "import('" + x + "').catch(err => console.error('error during import of " + x + "', err));").join('\n');
         importWidgetFilesRuntime += '\n\n';
         importWidgetFilesRuntime += this.importUndefinedElementFiles.map(x => "import('" + x[1] + "').catch(err => console.error('error during import of " + x + "', err));").join('\n');
         await fs.writeFile(path.join(this._packageBaseDirectory, 'importWidgetFilesRuntime.js'), importWidgetFilesRuntime);
