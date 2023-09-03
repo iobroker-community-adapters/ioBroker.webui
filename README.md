@@ -109,7 +109,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 0.8.0 (2023-09-03)
 - update designer to add and fix some commands
 - move screen/control scripts out of html code
 - add a javascript editor view

@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.7.0",
+    "version": "0.8.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.8.0": {
+        "en": "update designer to add and fix some commands\nmove screen/control scripts out of html code\nadd a javascript editor view\nbugfix when states where null after a fresh install\ndesigner addons do now work again\ndocking framework updated, cause of bugs with undocking",
+        "de": "update-designer, um einige befehle hinzuzufügen und zu beheben\nbildschirm/steuerungsskripte aus html-code verschieben\nhinzufügen eines javascript editors\nbugfix wenn zustände, wo null nach einer neuen installation\ndesigner addons arbeiten jetzt wieder\ndocking framework aktualisiert, ursache von fehlern mit undocking",
+        "ru": "обновить дизайнер, чтобы добавить и исправить некоторые команды\nпереместить сценарии экрана/контроля из html кода\nдобавить просмотр редактора javascript\nbugfix когда состояния, где null после новой установки\nдизайнерские аддоны теперь работают снова\nстыковка обновлена, причина ошибок с undocking",
+        "pt": "atualize o designer para adicionar e corrigir alguns comandos\nmover scripts de tela / controle fora do código html\nadicionar um editor javascript view\nbugfix quando afirma onde null após uma nova instalação\naddons designer agora trabalhar novamente\nframework de ancoragem atualizado, causa de bugs com ondulação",
+        "nl": "vertaling:\nverplaats scripts uit htmi code\nvoeg een javascript\ninsectfix wanneer staat waar na een nieuwe installatie\nde ontwerpers doen het nu weer\ndocking frame geüpload, oorzaak van insecten met ontstopping",
+        "fr": "mettre à jour le designer pour ajouter et réparer certaines commandes\ndéplacer des scripts écran/contrôle hors du code html\nadd a javascript editor view\nbugfix lorsque les états où nul après une nouvelle installation\nles addons de designer font maintenant travailler à nouveau\ndocking framework updated, cause of bugs with undocking",
+        "it": "aggiornamento designer per aggiungere e correggere alcuni comandi\nspostare gli script dello schermo/controllo dal codice html\naggiungere una vista editor javascript\nbugfix quando afferma dove null dopo una nuova installazione\ndesigner addons fare ora lavoro di nuovo\ndocking framework aggiornato, causa di bug con disfare",
+        "es": "actualizar diseñador para agregar y fijar algunos comandos\nmover scripts de pantalla/control fuera de código html\nañadir una vista de editor de javascript\nbugfix cuando estados donde null después de una instalación fresca\ncomplementos de diseño ahora trabajan de nuevo\ndocking framework updated, cause of bugs with undocking",
+        "pl": "zaktualizator dodać i naprawić niektóre komendy\nskrypty ruchowe lub kontrolne z kodu html\ndodać do edytora javascript\nbłąd w stany, w których nieważne jest po świeżej instalacji\naktualnie nowa praca\nuaktualniać ramy",
+        "uk": "оновлення дизайнера, щоб додати і виправити деякі команди\nперемістити екран/контроль сценарії з html коду\nдодати перегляд редактора javascript\nвиправлення помилок при станах, де null після свіжої установки\nдизайнерські додатки тепер працюють знову\ndocking framework оновлено, причина помилок з undocking",
+        "zh-cn": "更新设计员以增加和固定一些指挥\n导 言\n增 编\nb 在新安装装置后失效的国家\n设计的附加情况现在再次工作\n检查框架最新更新,带宽度的制药"
+      },
       "0.7.0": {
         "en": "screens and controls have now settings (width, height, useGlobalStyle)",
         "de": "bildschirme und Bedienelemente haben nun Einstellungen (Breite, Höhe, Verwendung GlobalStyle)",
@@ -106,19 +119,6 @@
         "pl": "wartość domyślna\notwarte ekrany tylko raz\nwiązanie nieruchomości domyślnie domyślnie domyślnie domyśla się jedno sposób",
         "uk": "значення за замовчуванням для індивідуальних властивостей\nвідкриті екрани тільки один раз\nоб'єкти за замовчуванням",
         "zh-cn": "b. 习惯财产的违约价值\n公开屏幕只一次\n财产具有约束力的方式"
-      },
-      "0.2.3": {
-        "en": "rework how custom controls are initalized",
-        "de": "nacharbeiten, wie benutzerdefinierte bedienelemente initalisiert werden",
-        "ru": "переработайте, как пользовательские управления инитализованы",
-        "pt": "retrabalhe como os controles personalizados são initalizados",
-        "nl": "_",
-        "fr": "retravailler comment les contrôles personnalisés sont initalisés",
-        "it": "rielaborare i controlli personalizzati",
-        "es": "rework how custom controls are initalized",
-        "pl": "przepracowanie, w jaki sposób systemy są inicjalizowane",
-        "uk": "переробити, як користувацькі елементи керування",
-        "zh-cn": "b. 重新调整习俗控制的设想"
       }
     },
     "icon": "logo.png",
