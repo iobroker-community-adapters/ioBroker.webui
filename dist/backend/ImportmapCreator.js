@@ -67,7 +67,7 @@ export async function registerDesignerAddons(serviceContainer) {
         let importWidgetFilesRuntime = '';
         importWidgetFilesRuntime += this.importFiles.map(x => "import('" + x + "').catch(err => console.error('error during import of ' + x, err));").join('\n');
         importWidgetFilesRuntime += '\n\n';
-        importWidgetFilesRuntime += this.importUndefinedElementFiles.map(x => "import('" + x[1] + "').catch(err => console.error('error during import of ' + x, err));").join('\n');
+        importWidgetFilesRuntime += this.importUndefinedElementFiles.map(x => "import('" + x[1] + "').catch(err => console.error('error during import of " + x + "', err));").join('\n');
         await fs.writeFile(path.join(this._packageBaseDirectory, 'importWidgetFilesRuntime.js'), importWidgetFilesRuntime);
     }
     async parseNpmPackageInternal(pkg, reportState) {
