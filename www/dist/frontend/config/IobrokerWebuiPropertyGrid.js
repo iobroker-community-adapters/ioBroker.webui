@@ -1,7 +1,8 @@
 import { BaseCustomWebComponentConstructorAppend, TypedEvent, css, html } from "@node-projects/base-custom-webcomponent";
-import { CodeViewMonaco } from "@node-projects/web-component-designer";
+import { BindableObjectsBrowser, CodeViewMonaco } from "@node-projects/web-component-designer";
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert { type: 'css' };
+import { iobrokerHandler } from "../common/IobrokerHandler.js";
 let nullObject;
 export function deepValue(obj, path, returnNullObject = false) {
     if (path === undefined || path === null) {
@@ -77,7 +78,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             keyboard: false,
             source: [],
             copyFunctionsToData: true,
-            renderColumns: (_event, data) => {
+            renderColumns: async (_event, data) => {
                 const row = data.node.tr;
                 const cell = row.children[1];
                 cell.innerHTML = "";
@@ -85,7 +86,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                     const pPath = data.node.data.propertyPath;
                     const currentValue = deepValue(this._selectedObject, pPath);
                     const pInfo = data.node.data.property;
-                    const ctl = this._getEditorForType(pInfo, currentValue, pPath);
+                    const ctl = await this._getEditorForType(pInfo, currentValue, pPath);
                     if (ctl) {
                         if (pInfo.defaultValue && ctl.value == '' && !pInfo.nullable) {
                             ctl.placeholder = pInfo.defaultValue;
@@ -206,12 +207,60 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             }
         }
     }
-    _getEditorForType(property, currentValue, propertyPath) {
+    async _getEditorForType(property, currentValue, propertyPath) {
         let setValue = (value) => {
             setDeepValue(this._selectedObject, propertyPath, value);
             this.propertyChanged.emit({ property: propertyPath, newValue: value });
         };
         switch (property.format) {
+            case 'screen': {
+                let editor = document.createElement('select');
+                editor.style.width = '100%';
+                for (let v of await iobrokerHandler.getScreenNames()) {
+                    const op = document.createElement('option');
+                    op.value = v;
+                    op.innerText = v;
+                    editor.appendChild(op);
+                }
+                editor.onchange = () => {
+                    setDeepValue(this._selectedObject, propertyPath, editor.value);
+                };
+                editor.value = currentValue;
+                return editor;
+            }
+            case 'signal': {
+                let cnt = document.createElement('div');
+                cnt.style.display = 'flex';
+                let inp = document.createElement('input');
+                inp.value = currentValue ?? '';
+                inp.style.flexGrow = '1';
+                inp.onchange = (e) => setValue(inp.value);
+                inp.onfocus = (e) => {
+                    inp.selectionStart = 0;
+                    inp.selectionEnd = inp.value?.length;
+                };
+                cnt.appendChild(inp);
+                let btn = document.createElement('button');
+                btn.textContent = '...';
+                btn.onclick = async () => {
+                    let b = new BindableObjectsBrowser();
+                    b.initialize(window.appShell.serviceContainer);
+                    b.title = 'select signal...';
+                    const abortController = new AbortController();
+                    b.objectDoubleclicked.on(() => {
+                        abortController.abort();
+                        inp.value = b.selectedObject.fullName;
+                        setValue(inp.value);
+                    });
+                    let res = await window.appShell.openConfirmation(b, 100, 100, 400, 300, null, abortController.signal);
+                    if (res) {
+                        inp.value = b.selectedObject.fullName;
+                        setValue(inp.value);
+                    }
+                };
+                cnt.appendChild(btn);
+                return cnt;
+            }
             case 'script': {
                 let editor = document.createElement('div');
                 editor.style.boxSizing = 'border-box';
@@ -354,6 +403,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             }
             case 'enum': {
                 let editor = document.createElement('select');
+                editor.style.width = '100%';
                 for (let v of property.values) {
                     const op = document.createElement('option');
                     op.value = v;

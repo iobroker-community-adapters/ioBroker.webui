@@ -45,6 +45,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         linkElement.href = "./assets/dockspawn.css";
         this._dock.shadowRoot.appendChild(linkElement);
         this._dockManager = this._dock.dockManager;
+        this.serviceContainer = serviceContainer;
         new CommandHandling(this._dockManager, this, serviceContainer);
         this._dockManager.addLayoutListener({
             onActiveDocumentChange: (manager, panel, previousPanel) => {
@@ -127,11 +128,17 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         d.noDocking = true;
         return { close: () => container.close() };
     }
-    openConfirmation(element, x, y, width, height, parent) {
+    openConfirmation(element, x, y, width, height, parent, signal) {
         return new Promise((resolve) => {
             let cw = new IobrokerWebuiConfirmationWrapper();
             cw.title = element.title;
             cw.appendChild(element);
+            if (signal) {
+                signal.onabort = () => {
+                    dlg.close();
+                    resolve(false);
+                };
+            }
             let dlg = window.appShell.openDialog(cw, x, y, width, height, parent);
             cw.okClicked.on(() => {
                 dlg.close();
