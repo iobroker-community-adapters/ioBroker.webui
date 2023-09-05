@@ -1,4 +1,4 @@
-import { BaseCustomWebComponentPropertiesService, BindableObjectsBrowser, IDesignItem, IProperty, PropertyType } from "@node-projects/web-component-designer";
+import { BaseCustomWebComponentPropertiesService, IDesignItem, IProperty, PropertyType } from "@node-projects/web-component-designer";
 import { BaseCustomControl } from "../runtime/CustomControls.js";
 import { IControl } from "../interfaces/IControl.js";
 import { IobrokerSignalPropertyEditor } from "./IobrokerSignalPropertyEditor.js";
