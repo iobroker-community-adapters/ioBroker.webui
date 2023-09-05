@@ -43,7 +43,7 @@ export class CommandHandling {
                 }
                 if (commandParameter == 'control')
                     screentype = 'control';
-                this.iobrokerWebuiAppShell.openScreenEditor(screen, screentype, '', null, style, {});
+                this.iobrokerWebuiAppShell.openScreenEditor(screen, screentype, '', style, null, {});
             }
         }
         else if (commandName === 'save') {
