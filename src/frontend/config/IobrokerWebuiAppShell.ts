@@ -5,7 +5,7 @@ iobrokerHandler.init();
 LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
 
 import '@node-projects/web-component-designer'
-import { TreeViewExtended, PropertyGrid } from '@node-projects/web-component-designer';
+import { TreeViewExtended, PropertyGrid, ServiceContainer } from '@node-projects/web-component-designer';
 import type { IDisposable } from 'monaco-editor';
 import { PanelContainer } from 'dock-spawn-ts/lib/js/PanelContainer.js';
 import { PanelType } from 'dock-spawn-ts/lib/js/enums/PanelType.js';
@@ -39,6 +39,8 @@ import { IobrokerWebuiPropertyGrid, typeInfoFromJsonSchema } from './IobrokerWeb
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
   activeElement: HTMLElement;
   mainPage = 'designer';
+
+  serviceContainer : ServiceContainer 
 
   private _dock: DockSpawnTsWebcomponent;
   private _dockManager: DockManager;
@@ -134,7 +136,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     this.javascriptEditor = this._getDomElement<IobrokerWebuiMonacoEditor>('javascriptEditor');
     this.controlpropertiesEditor = this._getDomElement<IobrokerWebuiControlPropertiesEditor>('propertiesEditor');
     this.eventsAssignment = this._getDomElement<IobrokerWebuiEventAssignment>('eventsList');
-    
+
     this.settingsEditor = this._getDomElement<IobrokerWebuiPropertyGrid>('settingsEditor');
     this.settingsEditor.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
 
@@ -144,6 +146,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     this._dock.shadowRoot.appendChild(linkElement);
 
     this._dockManager = this._dock.dockManager;
+    this.serviceContainer = serviceContainer;
     new CommandHandling(this._dockManager, this, serviceContainer);
 
     this._dockManager.addLayoutListener({
@@ -239,12 +242,17 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     return { close: () => container.close() };
   }
 
-  openConfirmation(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement): Promise<boolean> {
+  openConfirmation(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement, signal?: AbortSignal): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
       let cw = new IobrokerWebuiConfirmationWrapper();
       cw.title = element.title;
       cw.appendChild(element);
-
+      if (signal) {
+        signal.onabort = () => {
+          dlg.close();
+          resolve(false);
+        }
+      }
       let dlg = window.appShell.openDialog(cw, x, y, width, height, parent);
       cw.okClicked.on(() => {
         dlg.close();

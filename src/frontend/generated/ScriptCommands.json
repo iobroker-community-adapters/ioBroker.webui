@@ -8,6 +8,7 @@
                 },
                 "signal": {
                     "description": "Name of the ioBroker object",
+                    "format": "signal",
                     "type": "string"
                 },
                 "type": {
@@ -21,6 +22,7 @@
             "properties": {
                 "signal": {
                     "description": "Name of the ioBroker object",
+                    "format": "signal",
                     "type": "string"
                 },
                 "type": {
@@ -37,6 +39,7 @@
             "properties": {
                 "signal": {
                     "description": "Name of the ioBroker object",
+                    "format": "signal",
                     "type": "string"
                 },
                 "type": {
@@ -76,6 +79,8 @@
                     "type": "string"
                 },
                 "screen": {
+                    "description": "Name of the Screen",
+                    "format": "screen",
                     "type": "string"
                 },
                 "type": {
@@ -148,6 +153,7 @@
                 },
                 "signal": {
                     "description": "Name of the ioBroker object",
+                    "format": "signal",
                     "type": "string"
                 },
                 "type": {
@@ -200,6 +206,7 @@
             "properties": {
                 "signal": {
                     "description": "Name of the ioBroker object",
+                    "format": "signal",
                     "type": "string"
                 },
                 "type": {
@@ -219,6 +226,7 @@
                 },
                 "signal": {
                     "description": "Name of the ioBroker object",
+                    "format": "signal",
                     "type": "string"
                 },
                 "type": {
@@ -232,6 +240,7 @@
             "properties": {
                 "signal": {
                     "description": "Name of the ioBroker object",
+                    "format": "signal",
                     "type": "string"
                 },
                 "type": {
