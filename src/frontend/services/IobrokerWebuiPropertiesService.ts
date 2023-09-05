@@ -2,6 +2,7 @@ import { BaseCustomWebComponentPropertiesService, IDesignItem, IProperty, Proper
 import { BaseCustomControl } from "../runtime/CustomControls.js";
 import { IControl } from "../interfaces/IControl.js";
 import { IobrokerSignalPropertyEditor } from "./IobrokerSignalPropertyEditor.js";
+import { iobrokerHandler } from "../common/IobrokerHandler.js";
 
 export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentPropertiesService {
     override isHandledElement(designItem: IDesignItem): boolean {
@@ -39,6 +40,10 @@ export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentProper
                 properties.push(property);
             } else if (prp.type == 'signal') {
                 let property: IProperty = { name: name, type: "signal", service: this, propertyType: PropertyType.propertyAndAttribute, createEditor: p => new IobrokerSignalPropertyEditor(p) };
+                properties.push(property);
+            } else if (prp.type == 'screen') {
+                //TODO: hack, getProperties should be async in designer
+                let property: IProperty = { name: name, type: "list", values: (<any>iobrokerHandler)._screenNames, service: this, propertyType: PropertyType.propertyAndAttribute };
                 properties.push(property);
             } else {
                 let property: IProperty = { name: name, type: "string", service: this, propertyType: PropertyType.propertyAndAttribute };

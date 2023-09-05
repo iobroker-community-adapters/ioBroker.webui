@@ -55,6 +55,8 @@ export function generateCustomControl(name: string, control: IControl) {
             properties[p] = String;
         else if (prp.type == 'signal')
             properties[p] = String;
+        else if (prp.type == 'screen')
+            properties[p] = String;
         else
             properties[p] = Object;
     }

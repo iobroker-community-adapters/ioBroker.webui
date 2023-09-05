@@ -35,6 +35,7 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
                 <option value="color">color</option>
                 <option value="date">date</option>
                 <option value="signal">signal</option>
+                <option value="screen">screen</option>
             </select>
             <input css:display="[[item.type == 'enum' ? '' : 'none']]" value="{{?item.values}}" @input="[[this.changed()]]">
             <input type="text" value="{{?item.def}}" @input="[[this.changed()]]">
