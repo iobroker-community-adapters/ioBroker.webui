@@ -13,7 +13,7 @@ export class ScriptSystem {
                     const screen = await ScriptSystem.getValue(c.screen, outerContext);
                     if (!c.openInDialog) {
                         if (c.noHistory) {
-                            (<ScreenViewer>document.getElementById('viewer')).relativeSignalsPath = c.relativeSignalsPath;
+                            (<ScreenViewer>document.getElementById('viewer')).relativeSignalsPath = await ScriptSystem.getValue(c.relativeSignalsPath, outerContext);
                             (<ScreenViewer>document.getElementById('viewer')).screenName = screen;
                         } else {
                             let hash = 'screenName=' + screen;
@@ -27,7 +27,7 @@ export class ScriptSystem {
                     break;
                 }
                 case 'OpenUrl': {
-                    window.open(c.url, c.target);
+                    window.open(await ScriptSystem.getValue(c.url, outerContext), c.target);
                     break;
                 }
 
