@@ -72,11 +72,11 @@ export class IobrokerWebuiBindingsHelper {
         }
         let bindingCopy = { ...binding };
         if (!binding.twoWay || (binding.events != null && binding.events.length == 1)) {
-            if (element instanceof HTMLInputElement && binding.events[0] == "change")
+            if (element instanceof HTMLInputElement && binding.events?.[0] == "change")
                 delete bindingCopy.events;
-            else if (element instanceof HTMLInputElement && binding.events[0] == "change")
+            else if (element instanceof HTMLInputElement && binding.events?.[0] == "change")
                 delete bindingCopy.events;
-            else if (element instanceof HTMLInputElement && binding.events[0] == targetName + '-changed')
+            else if (element instanceof HTMLInputElement && binding.events?.[0] == targetName + '-changed')
                 delete bindingCopy.events;
         }
         if (binding.expression === null || binding.expression === '') {

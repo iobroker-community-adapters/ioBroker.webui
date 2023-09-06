@@ -93,6 +93,13 @@ export class IobrokerWebuiBindableObjectDragDropService {
                     serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'checked', binding);
                     di.setAttribute("type", "checkbox");
                 }
+                else if (obj?.common?.role == 'date') {
+                    binding.expression = "new Date(__0).toISOString().split('.')[0]";
+                    binding.twoWay = false;
+                    serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value', binding);
+                    di.setAttribute("type", "datetime-local");
+                    di.setAttribute("readonly", "");
+                }
                 di.setAttribute(serializedBinding[0], serializedBinding[1]);
             }
             di.setStyle('position', 'absolute');

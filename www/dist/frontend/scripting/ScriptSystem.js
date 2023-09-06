@@ -1,6 +1,7 @@
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
 import Long from 'long';
+import { sleep } from "../helper/Helper.js";
 export class ScriptSystem {
     static async execute(scriptCommands, outerContext) {
         for (let c of scriptCommands) {
@@ -26,6 +27,21 @@ export class ScriptSystem {
                 }
                 case 'OpenUrl': {
                     window.open(await ScriptSystem.getValue(c.url, outerContext), c.target);
+                    break;
+                }
+                case 'Delay': {
+                    const value = await ScriptSystem.getValue(c.value, outerContext);
+                    await sleep(value);
+                    break;
+                }
+                case 'Delay': {
+                    const value = await ScriptSystem.getValue(c.value, outerContext);
+                    await sleep(value);
+                    break;
+                }
+                case 'SwitchLanguage': {
+                    const language = await ScriptSystem.getValue(c.language, outerContext);
+                    iobrokerHandler.language = language;
                     break;
                 }
                 case 'ToggleSignalValue': {
@@ -107,6 +123,14 @@ export class ScriptSystem {
                             e.style[name] = value;
                         }
                     }
+                    break;
+                }
+                case 'IobrokerSendTo': {
+                    const instance = await ScriptSystem.getValue(c.instance, outerContext);
+                    const command = await ScriptSystem.getValue(c.command, outerContext);
+                    const data = await ScriptSystem.getValue(c.data, outerContext);
+                    await iobrokerHandler.connection.sendTo(instance, command, data);
+                    break;
                 }
             }
         }

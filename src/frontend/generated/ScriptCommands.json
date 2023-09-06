@@ -35,6 +35,19 @@
             },
             "type": "object"
         },
+        "Delay": {
+            "properties": {
+                "type": {
+                    "const": "Delay",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "miliseconds to delay",
+                    "type": "number"
+                }
+            },
+            "type": "object"
+        },
         "IncrementSignalValue": {
             "properties": {
                 "signal": {
@@ -48,6 +61,24 @@
                 },
                 "value": {
                     "type": "number"
+                }
+            },
+            "type": "object"
+        },
+        "IobrokerSendTo": {
+            "properties": {
+                "command": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "string"
+                },
+                "instance": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "IobrokerSendTo",
+                    "type": "string"
                 }
             },
             "type": "object"
@@ -143,6 +174,15 @@
                 },
                 {
                     "$ref": "#/definitions/SetElementProperty"
+                },
+                {
+                    "$ref": "#/definitions/Delay"
+                },
+                {
+                    "$ref": "#/definitions/IobrokerSendTo"
+                },
+                {
+                    "$ref": "#/definitions/SwitchLanguage"
                 }
             ]
         },
@@ -214,6 +254,18 @@
                     "type": "string"
                 },
                 "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "SwitchLanguage": {
+            "properties": {
+                "language": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "SwitchLanguage",
                     "type": "string"
                 }
             },
