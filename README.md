@@ -109,7 +109,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 0.9.0 (2023-09-06)
 - signal selector in properties
 - screen selector in properties
 - new screen had style in scripts
