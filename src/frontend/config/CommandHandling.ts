@@ -1,4 +1,4 @@
-import { IUiCommandHandler, ServiceContainer } from '@node-projects/web-component-designer';
+import { ContextMenu, IContextMenuItem, IUiCommandHandler, ServiceContainer } from '@node-projects/web-component-designer';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js'
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
 import { IobrokerWebuiAppShell } from './IobrokerWebuiAppShell.js';
@@ -94,6 +94,39 @@ export class CommandHandling {
           serviceContainer.globalContext.onFillBrushChanged.on(e => b.value = e.newValue);
       }
     });
+
+    let undoButton = <HTMLButtonElement>document.querySelector('[data-command="undo"]')
+    let mouseDownTimer = null;
+    undoButton.onmousedown = (e) => {
+      mouseDownTimer = setTimeout(() => {
+        let target: IobrokerWebuiScreenEditor = <any>(<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
+        let entries = target.documentContainer.instanceServiceContainer.undoService.getUndoEntries(20);
+        let mnu: IContextMenuItem[] = Array.from(entries).map((x, idx) => ({ title: 'undo: ' + x, action: () => { for (let i = 0; i <= idx; i++) target.documentContainer.instanceServiceContainer.undoService.undo() } }));
+        ContextMenu.show(mnu, e, { mode: 'undo' });
+      }, 300)
+    }
+    undoButton.onmouseup = (e) => {
+      if (mouseDownTimer) {
+        clearTimeout(mouseDownTimer);
+        mouseDownTimer = null;
+      }
+    }
+
+    let redoButton = <HTMLButtonElement>document.querySelector('[data-command="redo"]')
+    redoButton.onmousedown = (e) => {
+      mouseDownTimer = setTimeout(() => {
+        let target: IobrokerWebuiScreenEditor = <any>(<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
+        let entries = target.documentContainer.instanceServiceContainer.undoService.getRedoEntries(20);
+        let mnu: IContextMenuItem[] = Array.from(entries).map((x, idx) => ({ title: 'redo: ' + x, action: () => { for (let i = 0; i <= idx; i++) target.documentContainer.instanceServiceContainer.undoService.redo() } }));
+        ContextMenu.show(mnu, e, { mode: 'undo' })
+      }, 300)
+    }
+    redoButton.onmouseup = (e) => {
+      if (mouseDownTimer) {
+        clearTimeout(mouseDownTimer);
+        mouseDownTimer = null;
+      }
+    }
 
     setInterval(() => {
       if (this.dockManager.activeDocument) {
