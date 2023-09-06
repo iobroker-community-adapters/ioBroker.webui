@@ -119,7 +119,10 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
 
     async executeCommand(command: Omit<IUiCommand, 'type'> & { type: string }) {
         if (command.type == 'save') {
-            iobrokerHandler.config.globalStyle = this.model.getValue();
+            if (this.language == 'css')
+                iobrokerHandler.config.globalStyle = this.model.getValue();
+            else if (this.language == 'javascript')
+                iobrokerHandler.config.globalScript = this.model.getValue();
             await iobrokerHandler.saveConfig();
         }
     }

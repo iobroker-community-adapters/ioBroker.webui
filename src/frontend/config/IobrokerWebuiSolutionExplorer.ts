@@ -180,7 +180,10 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     private _createGlobalSettingsNode(): TreeNodeData {
         return {
             title: 'Settings',
-            folder: false
+            folder: false,
+            dblclick: (e, data) => {
+                window.appShell.openGlobalConfigEditor();
+            }
         }
     }
 
@@ -209,15 +212,18 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
 
     private _createGlobalScriptsNode(): TreeNodeData {
         return {
-            title: 'Scripts',
+            title: 'Script',
             folder: false,
         }
     }
 
     private _createGlobalJavascriptsNode(): TreeNodeData {
         return {
-            title: 'Javascripts',
+            title: 'Javascript',
             folder: false,
+            dblclick: (e, data) => {
+                window.appShell.openGlobalScriptEditor(iobrokerHandler.config.globalScript ?? '');
+            }
         }
     }
 

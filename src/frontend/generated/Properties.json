@@ -47,6 +47,12 @@
             },
             "type": "object"
         },
+        "ICustomControlScript": {
+            "type": "object"
+        },
+        "IGlobalConfig": {
+            "type": "object"
+        },
         "IIobrokerWebuiBinding": {
             "properties": {
                 "converter": {
@@ -140,6 +146,12 @@
         },
         "IWebUiConfig": {
             "properties": {
+                "config": {
+                    "$ref": "#/definitions/IGlobalConfig"
+                },
+                "globalScript": {
+                    "type": "string"
+                },
                 "globalStyle": {
                     "type": "string"
                 }

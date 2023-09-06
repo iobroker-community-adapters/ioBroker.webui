@@ -287,6 +287,32 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       this.openDock(styleEditor);
     }
   }
+
+  public async openGlobalConfigEditor() {
+    let id = "global_ConfigEditor";
+    if (!this.isDockOpenAndActivate(id)) {
+      let pg = new IobrokerWebuiPropertyGrid();
+      pg.id = id;
+      pg.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
+      pg.typeName = 'IGlobalConfig'
+      pg.selectedObject = iobrokerHandler.config ?? {};
+      pg.title = 'global config';
+      this.openDock(pg);
+    }
+  }
+
+  public async openGlobalScriptEditor(script: string) {
+    let id = "global_scriptEditor";
+    if (!this.isDockOpenAndActivate(id)) {
+      let scriptEditor = new IobrokerWebuiMonacoEditor();
+      scriptEditor.language = 'javascript';
+      scriptEditor.id = id;
+      scriptEditor.title = 'global javascript';
+      const model = await scriptEditor.createModel(script);
+      scriptEditor.model = model;
+      this.openDock(scriptEditor);
+    }
+  }
 }
 
 window.customElements.define('iobroker-webui-app-shell', IobrokerWebuiAppShell);

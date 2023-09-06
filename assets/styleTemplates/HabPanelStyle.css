@@ -1,9 +1,12 @@
+:host {
+    background-color: black;
+}
+
 * {
     --primary-color: #0db9f0;
 }
 
-
-*[\@click]:hover {
+webui-habpanel-image-button:hover,*[\@click]:hover {
     background-color: rgb(44, 61, 78);
 }
 
@@ -11,11 +14,7 @@
     background-color: rgb(54, 71, 88);
 }
 
-:host {
-    background-color: black;
-}
-
-button, iobroker-webui-svg-image {
+webui-habpanel-value-display,webui-habpanel-image-button,*[\@click] {
     background: rgb(34, 51, 68);
     border: none;
     color: white;
