@@ -62,6 +62,8 @@ serviceContainer.config.openBindingsEditor = async (property, designItems, bindi
         bnd.inverted = dynEdt.invert;
         bnd.twoWay = dynEdt.twoWay;
         bnd.expression = dynEdt.expression;
+        if (dynEdt.objectValueType)
+            bnd.type = dynEdt.objectValueType;
         if (dynEdt.converters.length > 0) {
             let cObj = {};
             for (let c of dynEdt.converters) {

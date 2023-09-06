@@ -1,5 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, html, css } from '@node-projects/base-custom-webcomponent';
-import { BindingMode, BindingTarget, IBinding, IProperty } from '@node-projects/web-component-designer';
+import { BindableObjectsBrowser, BindingMode, BindingTarget, IBinding, IProperty } from '@node-projects/web-component-designer';
 
 export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstructorAppend {
 
@@ -11,7 +11,11 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
                         <div class="row">
                             <span style="cursor: pointer;" title="to use multiple objects, seprate them with semicolon (;). access iobroker objects in properties via ?propertyName, access the propertyValue via ??propertyName">objects</span>
                         </div>
-                        <input class="row" value="{{?this.objectNames::change}}" style="flex-grow: 1;"></input>
+                        <div style="display:flex;align-items: flex-end;">
+                            <input class="row" value="{{?this.objectNames::change}}" style="flex-grow: 1;">
+                            <button @click="_clear" style="height: 22px">X</button>
+                            <button @click="_select" style="height: 22px">...</button>
+                        </div>
                         <div class="row">
                             <label style="white-space: nowrap; margin-right: 4px;" title="if set, the value is converted to the type before binding is applied">type :</label>
                             <select class="row" value="{{?this.objectValueType}}">
@@ -155,6 +159,7 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
     public objectNames: string = '';
     public invert: boolean = false;
     public converters: { key: string, value: any }[] = [];
+    public objectValueType: string;
 
     _property: IProperty;
     private _binding: IBinding & { converter: Record<string, any> };
@@ -182,6 +187,7 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
             this.twoWay = this._binding.mode == BindingMode.twoWay;
             this.expression = this._binding.expression;
             this.invert = this._binding.invert;
+            this.objectValueType = this._binding.type;
             if (this._binding.bindableObjectNames)
                 this.objectNames = this._binding.bindableObjectNames.join(';');
             if (this._binding.converter) {
@@ -204,6 +210,32 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
         g.querySelectorAll('div').forEach(x => x.style.background = '');
         if (this._activeRow >= 0)
             (<HTMLDivElement>g.children[this._activeRow + 1]).style.background = 'gray';
+    }
+
+    _clear() {
+        this.objectNames = '';
+        this._bindingsRefresh();
+    }
+
+    async _select() {
+        let b = new BindableObjectsBrowser();
+        b.initialize(window.appShell.serviceContainer);
+        b.title = 'select signal...';
+        const abortController = new AbortController();
+        b.objectDoubleclicked.on(() => {
+            abortController.abort();
+            if (this.objectNames != '')
+                this.objectNames += ';'
+            this.objectNames += b.selectedObject.fullName;
+            this._bindingsRefresh();
+        });
+        let res = await window.appShell.openConfirmation(b, 100, 100, 400, 300, this, abortController.signal);
+        if (res) {
+            if (this.objectNames != '')
+                this.objectNames += ';'
+            this.objectNames += b.selectedObject.fullName;
+            this._bindingsRefresh();
+        }
     }
 
     addConverter() {

@@ -60,6 +60,7 @@ export class IobrokerWebuiBindingsHelper {
         if (binding.target == BindingTarget.property &&
             !binding.expression &&
             binding.converter == null &&
+            !binding.type &&
             (binding.events == null || binding.events.length == 0)) {
             if (targetName == 'textContent')
                 return [bindingPrefixContent + 'text', (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
@@ -71,6 +72,7 @@ export class IobrokerWebuiBindingsHelper {
         if (binding.target == BindingTarget.attribute &&
             !binding.expression &&
             binding.converter == null &&
+            !binding.type &&
             (binding.events == null || binding.events.length == 0)) {
             return [bindingPrefixAttribute + PropertiesHelper.camelToDashCase(targetName), (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
         }
@@ -78,6 +80,7 @@ export class IobrokerWebuiBindingsHelper {
         if (binding.target == BindingTarget.css &&
             !binding.expression &&
             binding.converter == null &&
+            !binding.type &&
             (binding.events == null || binding.events.length == 0)) {
             return [bindingPrefixCss + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal];
         }
@@ -96,6 +99,9 @@ export class IobrokerWebuiBindingsHelper {
         }
         if (binding.twoWay === null || binding.twoWay === false) {
             delete bindingCopy.twoWay;
+        }
+        if (binding.type === null || binding.type === '') {
+            delete bindingCopy.type;
         }
         delete bindingCopy.target;
 
@@ -233,6 +239,19 @@ export class IobrokerWebuiBindingsHelper {
     static handleValueChanged(element: Element, binding: namedBinding, value: any, valuesObject: any[], index: number) {
         let v: (number | boolean | string) = value;
 
+        if (binding[1].type) {
+            switch (binding[1].type) {
+                case 'number':
+                    v = parseFloat(<any>v);
+                    break;
+                case 'boolean':
+                    v = v === true || v === 'true' || !!parseInt(<any>v);
+                    break;
+                case 'string':
+                    v = v.toString();
+                    break;
+            }
+        }
         if (binding[1].expression) {
             valuesObject[index] = value;
             let evalstring = ''
