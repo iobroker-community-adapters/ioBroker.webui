@@ -142,7 +142,10 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     _createGlobalSettingsNode() {
         return {
             title: 'Settings',
-            folder: false
+            folder: false,
+            dblclick: (e, data) => {
+                window.appShell.openGlobalConfigEditor();
+            }
         };
     }
     _createGlobalStyleNode() {
@@ -169,14 +172,17 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
     _createGlobalScriptsNode() {
         return {
-            title: 'Scripts',
+            title: 'Script',
             folder: false,
         };
     }
     _createGlobalJavascriptsNode() {
         return {
-            title: 'Javascripts',
+            title: 'Javascript',
             folder: false,
+            dblclick: (e, data) => {
+                window.appShell.openGlobalScriptEditor(iobrokerHandler.config.globalScript ?? '');
+            }
         };
     }
     async _createNpmsNode() {

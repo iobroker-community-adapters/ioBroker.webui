@@ -146,7 +146,7 @@
         },
         "IWebUiConfig": {
             "properties": {
-                "config": {
+                "globalConfig": {
                     "$ref": "#/definitions/IGlobalConfig"
                 },
                 "globalScript": {

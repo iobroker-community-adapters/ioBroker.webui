@@ -96,6 +96,7 @@ export class ScriptSystem {
                     const script = await ScriptSystem.getValue(c.script, outerContext);
                     var context = outerContext; // make context accessible from script
                     context.shadowRoot = context.element.getRootNode();
+                    context.instance = context.shadowRoot.host;
                     eval(script);
                     break;
                 }
@@ -155,7 +156,6 @@ export class ScriptSystem {
         if (javascriptCode) {
             try {
                 const scriptUrl = URL.createObjectURL(new Blob([javascriptCode], { type: 'application/javascript' }));
-                //@ts-ignore
                 jsObject = await importShim(scriptUrl);
                 if (jsObject.init) {
                     jsObject.init(instance);
@@ -180,7 +180,7 @@ export class ScriptSystem {
                                 if (!jsObject[script])
                                     console.warn('javascritp function named: ' + script + ' not found, maybe missing a "export" ?');
                                 else
-                                    jsObject[script](evt, e, shadowRoot);
+                                    jsObject[script](evt, e, shadowRoot, instance);
                             });
                         }
                     }

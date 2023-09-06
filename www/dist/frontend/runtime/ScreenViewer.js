@@ -28,11 +28,6 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
     }
     ready() {
         this._parseAttributesToProperties();
-        //Todo: unsubscribe from this event (or it causes memory leaks)
-        iobrokerHandler.screensChanged.on(() => {
-            if (this._screenName)
-                this._loadScreen();
-        });
         if (this._screenName)
             this._loadScreen();
     }
@@ -66,7 +61,6 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
             this.shadowRoot.adoptedStyleSheets = [ScreenViewer_1.style];
         const template = htmlFromString(html);
         const documentFragment = template.content.cloneNode(true);
-        //this._bindingsParse(documentFragment, true);
         this.shadowRoot.appendChild(documentFragment);
         this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
         ScriptSystem.assignAllScripts(script, this.shadowRoot, this);
@@ -75,10 +69,15 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
         return this._relativeSignalsPath;
     }
     connectedCallback() {
-        this._refreshCb = iobrokerHandler.refreshView.on(() => this._loadScreen());
+        this._refreshViewSubscription = iobrokerHandler.refreshView.on(() => this._loadScreen());
+        this._screensChangedSubscription = iobrokerHandler.screensChanged.on(() => {
+            if (this._screenName)
+                this._loadScreen();
+        });
     }
     disconnectedCallback() {
-        this._refreshCb?.dispose();
+        this._refreshViewSubscription?.dispose();
+        this._screensChangedSubscription?.dispose();
     }
 };
 ScreenViewer.style = css `

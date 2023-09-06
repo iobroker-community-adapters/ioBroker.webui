@@ -23,7 +23,7 @@ import { IobrokerWebuiMonacoEditor } from './IobrokerWebuiMonacoEditor.js';
 import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
 import { IobrokerWebuiConfirmationWrapper } from './IobrokerWebuiConfirmationWrapper.js';
 import { getPanelContainerForElement } from './DockHelper.js';
-import { typeInfoFromJsonSchema } from './IobrokerWebuiPropertyGrid.js';
+import { IobrokerWebuiPropertyGrid, typeInfoFromJsonSchema } from './IobrokerWebuiPropertyGrid.js';
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super(...arguments);
@@ -169,6 +169,30 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             const model = await styleEditor.createModel(style);
             styleEditor.model = model;
             this.openDock(styleEditor);
+        }
+    }
+    async openGlobalConfigEditor() {
+        let id = "global_ConfigEditor";
+        if (!this.isDockOpenAndActivate(id)) {
+            let pg = new IobrokerWebuiPropertyGrid();
+            pg.id = id;
+            pg.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
+            pg.typeName = 'IGlobalConfig';
+            pg.selectedObject = iobrokerHandler.config ?? {};
+            pg.title = 'global config';
+            this.openDock(pg);
+        }
+    }
+    async openGlobalScriptEditor(script) {
+        let id = "global_scriptEditor";
+        if (!this.isDockOpenAndActivate(id)) {
+            let scriptEditor = new IobrokerWebuiMonacoEditor();
+            scriptEditor.language = 'javascript';
+            scriptEditor.id = id;
+            scriptEditor.title = 'global javascript';
+            const model = await scriptEditor.createModel(script);
+            scriptEditor.model = model;
+            this.openDock(scriptEditor);
         }
     }
 }

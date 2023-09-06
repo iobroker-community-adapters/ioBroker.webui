@@ -2,7 +2,7 @@ import { BaseCustomWebComponentConstructorAppend, DomHelper, css, html } from "@
 import { ContextMenu, PropertiesHelper } from "@node-projects/web-component-designer";
 import { IobrokerWebuiScriptEditor } from "./IobrokerWebuiScriptEditor.js";
 import { IobrokerWebuiScreenEditor } from "./IobrokerWebuiScreenEditor.js";
-import { findFunctionDeclarations } from "../helper/EsprimaHelper.js";
+import { findExportFunctionDeclarations } from "../helper/EsprimaHelper.js";
 export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super();
@@ -75,21 +75,22 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
     async _editEvent(e, eventItem) {
         if (this._getEventType(eventItem) == 'js') {
             let screenEditor = DomHelper.findParentNodeOfType(this.selectedItems[0].instanceServiceContainer.designerCanvas, IobrokerWebuiScreenEditor);
-            let sc = screenEditor.scriptModel.getValue().trim();
-            let decl = await findFunctionDeclarations(sc);
+            let sc = screenEditor.scriptModel.getValue();
+            let decl = await findExportFunctionDeclarations(sc);
             if (decl) {
                 let jsName = this.selectedItems[0].getAttribute('@' + eventItem.name);
-                let funcDecl = decl.find(x => x.id.name == jsName);
+                let funcDecl = decl.find(x => x.declaration.id.name == jsName);
                 if (!funcDecl) {
                     let templateScript = `
-export function ${jsName}(event, element, shadowRoot) {
+export function ${jsName}(event, element, shadowRoot, instance) {
 
 }
 `;
                     screenEditor.scriptModel.setValue(sc + templateScript);
                 }
                 else {
-                    //console.log(funcDecl);
+                    //@ts-ignore
+                    window.appShell.javascriptEditor.setSelection(funcDecl.loc.start.line, funcDecl.loc.start.column, funcDecl.loc.end.line, funcDecl.loc.end.column + 1);
                 }
             }
             window.appShell.activateDockById('javascriptDock');

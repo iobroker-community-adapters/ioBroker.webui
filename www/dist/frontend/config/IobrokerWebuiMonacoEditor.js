@@ -15,18 +15,6 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
         if (this._editor)
             this._editor.setModel(value);
     }
-    get errorLine() {
-        return this._errorLine;
-    }
-    set errorLine(value) {
-        if (this._editor && value >= 0) {
-            this._editor.deltaDecorations([], [
-                //@ts-ignore
-                { range: new monaco.Range(value, 1, value, 1), options: { isWholeLine: true, inlineClassName: 'errorDecoration' } },
-            ]);
-        }
-        this._errorLine = value;
-    }
     constructor() {
         super();
         this.language = 'css';
@@ -88,7 +76,10 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
     }
     async executeCommand(command) {
         if (command.type == 'save') {
-            iobrokerHandler.config.globalStyle = this.model.getValue();
+            if (this.language == 'css')
+                iobrokerHandler.config.globalStyle = this.model.getValue();
+            else if (this.language == 'javascript')
+                iobrokerHandler.config.globalScript = this.model.getValue();
             await iobrokerHandler.saveConfig();
         }
     }
@@ -96,6 +87,13 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
         if (command.type == 'save')
             return true;
         return false;
+    }
+    setSelection(lineStart, columnStart, lineEnd, columnEnd) {
+        setTimeout(() => {
+            this._editor.setSelection({ startLineNumber: lineStart, startColumn: columnStart, endLineNumber: lineEnd, endColumn: columnEnd });
+            //@ts-ignore
+            this._editor.revealRangeInCenterIfOutsideViewport(new monaco.Range(lineStart, columnStart, lineEnd, columnEnd), 1);
+        }, 50);
     }
 }
 IobrokerWebuiMonacoEditor.style = css `

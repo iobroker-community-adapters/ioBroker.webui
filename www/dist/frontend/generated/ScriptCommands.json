@@ -86,7 +86,7 @@
         "Javascript": {
             "properties": {
                 "script": {
-                    "description": "Usable objects in Script: \ncontext : {event : Event, element: Element, shadowRoot: ShadowRoot }",
+                    "description": "Usable objects in Script: \ncontext : {event : Event, element: Element, shadowRoot: ShadowRoot, instance: Element }",
                     "format": "script",
                     "type": "string"
                 },
