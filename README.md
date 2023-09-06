@@ -113,6 +113,8 @@ runtime.html?screenName=screen2
 - signal selector in properties
 - screen selector in properties
 - new screen had style in scripts
+- indirect value/property acces from scripts via editor
+- list multiple undo entries (on hold of undo)
 
 ### 0.8.0 (2023-09-03)
 - update designer to add and fix some commands
