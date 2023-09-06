@@ -1,17 +1,17 @@
 export declare type ScriptCommands = OpenScreen | OpenUrl |
     ToggleSignalValue | SetSignalValue | IncrementSignalValue | DecrementSignalValue |
     SetBitInSignal | ClearBitInSignal | ToggleBitInSignal |
-    Javascript | SetElementProperty;
+    Javascript | SetElementProperty | Delay | IobrokerSendTo | SwitchLanguage;
 
 
-    /* 
-    TODO:
-    Indirect Values in Scripts:
-    
-    Indirection Source:
-    Object Values,
-    Current Element Property
-     */
+/* 
+TODO:
+Indirect Values in Scripts:
+ 
+Indirection Source:
+Object Values,
+Current Element Property
+ */
 
 
 export interface OpenScreen {
@@ -139,3 +139,24 @@ export interface SetElementProperty {
      */
     value: any;
 }
+
+export interface Delay {
+    type: 'Delay';
+    /**
+     * miliseconds to delay
+     */
+    value: number;
+}
+
+export interface SwitchLanguage {
+    type: 'SwitchLanguage';
+    language: string;
+}
+
+export interface IobrokerSendTo {
+    type: 'IobrokerSendTo';
+    instance: string;
+    command: string;
+    data: string;
+}
+

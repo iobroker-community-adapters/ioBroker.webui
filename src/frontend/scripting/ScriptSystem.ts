@@ -4,6 +4,7 @@ import { Script } from "./Script.js";
 import { ScriptCommands } from "./ScriptCommands.js";
 import { IScriptMultiplexValue } from "../interfaces/IScriptMultiplexValue.js";
 import Long from 'long'
+import { sleep } from "../helper/Helper.js";
 
 export class ScriptSystem {
     static async execute(scriptCommands: ScriptCommands[], outerContext: { event: Event, element: Element, root: HTMLElement }) {
@@ -28,6 +29,24 @@ export class ScriptSystem {
                 }
                 case 'OpenUrl': {
                     window.open(await ScriptSystem.getValue(c.url, outerContext), c.target);
+                    break;
+                }
+
+                case 'Delay': {
+                    const value = await ScriptSystem.getValue(c.value, outerContext);
+                    await sleep(value)
+                    break;
+                }
+
+                case 'Delay': {
+                    const value = await ScriptSystem.getValue(c.value, outerContext);
+                    await sleep(value)
+                    break;
+                }
+
+                case 'SwitchLanguage': {
+                    const language = await ScriptSystem.getValue(c.language, outerContext);
+                    iobrokerHandler.language = language;
                     break;
                 }
 
@@ -111,7 +130,17 @@ export class ScriptSystem {
                             (<HTMLElement>e).style[name] = value;
                         }
                     }
+                    break;
                 }
+
+                case 'IobrokerSendTo': {
+                    const instance = await ScriptSystem.getValue(c.instance, outerContext);
+                    const command = await ScriptSystem.getValue(c.command, outerContext);
+                    const data = await ScriptSystem.getValue(c.data, outerContext);
+                    await iobrokerHandler.connection.sendTo(instance, command, data);
+                    break;
+                }
+
             }
         }
     }
