@@ -474,7 +474,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                         inp.value = b.selectedObject.fullName;
                         this.setPropertyValue(propertyPath, inp.value);
                     });
-                    let res = await window.appShell.openConfirmation(b, 100, 100, 400, 300, null, abortController.signal);
+                    let res = await window.appShell.openConfirmation(b, 100, 100, 400, 300, this, abortController.signal);
                     if (res) {
                         inp.value = b.selectedObject.fullName;
                         this.setPropertyValue(propertyPath, inp.value);
