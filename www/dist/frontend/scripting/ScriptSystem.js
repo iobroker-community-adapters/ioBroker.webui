@@ -9,7 +9,7 @@ export class ScriptSystem {
                     const screen = await ScriptSystem.getValue(c.screen, outerContext);
                     if (!c.openInDialog) {
                         if (c.noHistory) {
-                            document.getElementById('viewer').relativeSignalsPath = c.relativeSignalsPath;
+                            document.getElementById('viewer').relativeSignalsPath = await ScriptSystem.getValue(c.relativeSignalsPath, outerContext);
                             document.getElementById('viewer').screenName = screen;
                         }
                         else {
@@ -25,7 +25,7 @@ export class ScriptSystem {
                     break;
                 }
                 case 'OpenUrl': {
-                    window.open(c.url, c.target);
+                    window.open(await ScriptSystem.getValue(c.url, outerContext), c.target);
                     break;
                 }
                 case 'ToggleSignalValue': {

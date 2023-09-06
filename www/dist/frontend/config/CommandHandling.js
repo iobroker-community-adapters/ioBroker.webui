@@ -1,3 +1,4 @@
+import { ContextMenu } from '@node-projects/web-component-designer';
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
 import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
 export class CommandHandling {
@@ -83,6 +84,39 @@ export class CommandHandling {
                     serviceContainer.globalContext.onFillBrushChanged.on(e => b.value = e.newValue);
             }
         });
+        let undoButton = document.querySelector('[data-command="undo"]');
+        let mouseDownTimer = null;
+        undoButton.onmousedown = (e) => {
+            mouseDownTimer = setTimeout(() => {
+                let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
+                let entries = target.documentContainer.instanceServiceContainer.undoService.getUndoEntries(20);
+                let mnu = Array.from(entries).map((x, idx) => ({ title: 'undo: ' + x, action: () => { for (let i = 0; i <= idx; i++)
+                        target.documentContainer.instanceServiceContainer.undoService.undo(); } }));
+                ContextMenu.show(mnu, e, { mode: 'undo' });
+            }, 300);
+        };
+        undoButton.onmouseup = (e) => {
+            if (mouseDownTimer) {
+                clearTimeout(mouseDownTimer);
+                mouseDownTimer = null;
+            }
+        };
+        let redoButton = document.querySelector('[data-command="redo"]');
+        redoButton.onmousedown = (e) => {
+            mouseDownTimer = setTimeout(() => {
+                let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
+                let entries = target.documentContainer.instanceServiceContainer.undoService.getRedoEntries(20);
+                let mnu = Array.from(entries).map((x, idx) => ({ title: 'redo: ' + x, action: () => { for (let i = 0; i <= idx; i++)
+                        target.documentContainer.instanceServiceContainer.undoService.redo(); } }));
+                ContextMenu.show(mnu, e, { mode: 'undo' });
+            }, 300);
+        };
+        redoButton.onmouseup = (e) => {
+            if (mouseDownTimer) {
+                clearTimeout(mouseDownTimer);
+                mouseDownTimer = null;
+            }
+        };
         setInterval(() => {
             if (this.dockManager.activeDocument) {
                 let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];

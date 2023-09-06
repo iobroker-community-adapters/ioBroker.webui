@@ -124,6 +124,8 @@
         "IScriptMultiplexValue": {
             "properties": {
                 "name": {
+                    "description": "Name of the ioBroker object or the property of the component",
+                    "format": "signal",
                     "type": "string"
                 },
                 "source": {
