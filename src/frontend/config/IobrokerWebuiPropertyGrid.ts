@@ -73,8 +73,12 @@ export function setDeepValue(obj, path: string, value) {
         }
     }
 
-    if (obj != null)
-        obj[pathParts[pathParts.length - 1]] = value;
+    if (obj != null) {
+        if (value === undefined)
+            delete obj[pathParts[pathParts.length - 1]]
+        else
+            obj[pathParts[pathParts.length - 1]] = value;
+    }
 }
 
 export function typeInfoFromJsonSchema(jsonSchemaObj: any, obj: any, type: string): ITypeInfo {
@@ -246,6 +250,8 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
     public hideProperties: string;
     public expanded: boolean;
 
+    public propertyNodeContextMenu = new TypedEvent<{ event: MouseEvent, property: IProperty, propertyPath: string, value: any }>;
+
     public getTypeInfo: (obj: any, type: string) => ITypeInfo;
 
     private _table: HTMLTableElement;
@@ -271,6 +277,13 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             copyFunctionsToData: true,
             renderColumns: async (_event, data) => {
                 const row = data.node.tr;
+                (<HTMLElement>row.children[0]).oncontextmenu = (e) => {
+                    e.preventDefault();
+                    const pPath = <string>data.node.data.propertyPath;
+                    const currentValue = deepValue(this._selectedObject, pPath);
+                    const pInfo = <IProperty>data.node.data.property;
+                    this.propertyNodeContextMenu.emit({ event: e, property: pInfo, propertyPath: pPath, value: currentValue });
+                }
                 const cell = <HTMLTableCellElement>row.children[1];
                 cell.innerHTML = "";
                 if (!data.node.folder) {
@@ -408,12 +421,19 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
         }
     }
 
-    private async _getEditorForType(property: IProperty, currentValue, propertyPath: string): Promise<HTMLElement> {
-        let setValue = (value) => {
-            setDeepValue(this._selectedObject, propertyPath, value);
-            this.propertyChanged.emit({ property: propertyPath, newValue: value });
-        };
+    public setPropertyValue(propertyPath: string, value: any) {
+        setDeepValue(this._selectedObject, propertyPath, value);
+        this.propertyChanged.emit({ property: propertyPath, newValue: value });
+    }
 
+    public getSpecialEditorForType: (property: IProperty, currentValue, propertyPath: string) => Promise<HTMLElement | null>
+
+    private async _getEditorForType(property: IProperty, currentValue, propertyPath: string): Promise<HTMLElement> {
+        if (this.getSpecialEditorForType) {
+            let edt = await this.getSpecialEditorForType(property, currentValue, propertyPath);
+            if (edt)
+                return edt;
+        }
         switch (property.format) {
             case 'screen': {
                 let editor = document.createElement('select');
@@ -436,7 +456,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 let inp = document.createElement('input');
                 inp.value = currentValue ?? '';
                 inp.style.flexGrow = '1';
-                inp.onchange = (e) => setValue(inp.value);
+                inp.onchange = (e) => this.setPropertyValue(propertyPath, inp.value);
                 inp.onfocus = (e) => {
                     inp.selectionStart = 0;
                     inp.selectionEnd = inp.value?.length;
@@ -452,12 +472,12 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                     b.objectDoubleclicked.on(() => {
                         abortController.abort();
                         inp.value = b.selectedObject.fullName;
-                        setValue(inp.value);
+                        this.setPropertyValue(propertyPath, inp.value);
                     });
                     let res = await window.appShell.openConfirmation(b, 100, 100, 400, 300, null, abortController.signal);
                     if (res) {
                         inp.value = b.selectedObject.fullName;
-                        setValue(inp.value);
+                        this.setPropertyValue(propertyPath, inp.value);
                     }
                 }
                 cnt.appendChild(btn);
@@ -474,7 +494,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 inp.style.boxSizing = 'border-box';
                 inp.value = currentValue ?? '';
                 inp.style.width = '100%';
-                inp.onblur = e => { setValue(inp.value); }
+                inp.onblur = e => { this.setPropertyValue(propertyPath, inp.value); }
                 editor.appendChild(inp);
 
                 let btn = document.createElement('button');
@@ -495,7 +515,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                     let res = await window.appShell.openConfirmation(cvm, 200, 200, 600, 400, this);
                     if (res) {
                         inp.value = cvm.getText();
-                        setValue(inp.value);
+                        this.setPropertyValue(propertyPath, inp.value);
                     }
                 }
                 editor.appendChild(btn);
@@ -532,14 +552,14 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 stringEditor.style.boxSizing = 'border-box';
                 stringEditor.style.width = '100%';
                 stringEditor.value = currentValue ?? '';
-                stringEditor.onblur = e => { setValue(stringEditor.value); }
+                stringEditor.onblur = e => { this.setPropertyValue(propertyPath, stringEditor.value); }
                 editor.appendChild(stringEditor);
 
                 let boolEditor = document.createElement('input');
                 boolEditor.style.display = 'none';
                 boolEditor.type = 'checkbox'
                 boolEditor.checked = currentValue ?? false;
-                boolEditor.onblur = e => { setValue(boolEditor.checked); }
+                boolEditor.onblur = e => { this.setPropertyValue(propertyPath, boolEditor.checked); }
                 editor.appendChild(boolEditor);
 
                 let numberEditor = document.createElement('input');
@@ -548,7 +568,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 numberEditor.style.boxSizing = 'border-box';
                 numberEditor.style.width = '100%';
                 numberEditor.value = currentValue ?? '';
-                numberEditor.onblur = e => { setValue(numberEditor.valueAsNumber); }
+                numberEditor.onblur = e => { this.setPropertyValue(propertyPath, numberEditor.valueAsNumber); }
                 editor.appendChild(numberEditor);
 
                 let showEdt = () => {
@@ -565,7 +585,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
 
                 sel.onchange = () => {
                     if (sel.value == 'null')
-                        setValue(null);
+                        this.setPropertyValue(propertyPath, null);
                     showEdt();
                 };
 
@@ -584,8 +604,8 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 editor.style.boxSizing = 'border-box';
                 editor.style.width = '100%';
                 editor.value = currentValue ?? '';
-                editor.onblur = e => { setValue(editor.value); }
-                editor.onkeyup = e => { if (e.key == 'Enter') setValue(editor.value); }
+                editor.onblur = e => { this.setPropertyValue(propertyPath, editor.value); }
+                editor.onkeyup = e => { if (e.key == 'Enter') this.setPropertyValue(propertyPath, editor.value); }
                 return editor;
             }
             case 'number': {
@@ -594,15 +614,15 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 editor.style.boxSizing = 'border-box';
                 editor.style.width = '100%';
                 editor.value = currentValue ?? '';
-                editor.onblur = e => { setValue(editor.valueAsNumber); }
-                editor.onkeyup = e => { if (e.key == 'Enter') setValue(editor.value); }
+                editor.onblur = e => { this.setPropertyValue(propertyPath, editor.valueAsNumber); }
+                editor.onkeyup = e => { if (e.key == 'Enter') this.setPropertyValue(propertyPath, editor.value); }
                 return editor;
             }
             case 'boolean': {
                 let editor = document.createElement('input');
                 editor.type = 'checkbox'
                 editor.checked = currentValue ?? false;
-                editor.onblur = e => { setValue(editor.value); }
+                editor.onblur = e => { this.setPropertyValue(propertyPath, editor.value); }
                 return editor;
             }
             case 'color': {
@@ -625,11 +645,15 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 editor.onchange = () => {
                     setDeepValue(this._selectedObject, propertyPath, editor.value);
                 };
-                editor.value = currentValue ?? property.values[0];
+                editor.value = currentValue;
                 return editor;
             }
         }
         return null;
+    }
+
+    public refresh() {
+        this.updateTree();
     }
 
     private updateTree() {

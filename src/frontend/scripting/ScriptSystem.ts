@@ -2,7 +2,7 @@ import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
 import { Script } from "./Script.js";
 import { ScriptCommands } from "./ScriptCommands.js";
-import { ScriptMultiplexValue } from "./ScriptValue.js";
+import { IScriptMultiplexValue } from "../interfaces/IScriptMultiplexValue.js";
 import Long from 'long'
 
 export class ScriptSystem {
@@ -116,14 +116,14 @@ export class ScriptSystem {
         }
     }
 
-    static async getValue(value: string | number | boolean | ScriptMultiplexValue, outerContext: { event: Event, element: Element, root: HTMLElement }): Promise<any> {
+    static async getValue(value: string | number | boolean | IScriptMultiplexValue, outerContext: { event: Event, element: Element, root: HTMLElement }): Promise<any> {
         if (typeof value === 'object') {
-            switch ((<ScriptMultiplexValue>value).source) {
+            switch ((<IScriptMultiplexValue>value).source) {
                 case 'property': {
-                    return outerContext.root[(<ScriptMultiplexValue>value).name];
+                    return outerContext.root[(<IScriptMultiplexValue>value).name];
                 }
                 case 'signal': {
-                    let sng = await iobrokerHandler.connection.getState((<ScriptMultiplexValue>value).name);
+                    let sng = await iobrokerHandler.connection.getState((<IScriptMultiplexValue>value).name);
                     return sng.val;
                 }
             }

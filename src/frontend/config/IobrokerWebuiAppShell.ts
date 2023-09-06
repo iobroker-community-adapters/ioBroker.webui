@@ -15,7 +15,7 @@ import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockS
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js';
 import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from '@node-projects/base-custom-webcomponent';
 import { CommandHandling } from './CommandHandling.js'
-import propertiesTypeInfo from "../generated/Properties.json" assert {type: 'json'};
+import propertiesTypeInfo from "../generated/Properties.json" assert { type: 'json' };
 
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 
