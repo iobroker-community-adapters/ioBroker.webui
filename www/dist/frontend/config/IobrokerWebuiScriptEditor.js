@@ -1,9 +1,10 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
 import scriptCommandsTypeInfo from "../generated/ScriptCommands.json" assert { type: 'json' };
+import propertiesTypeInfo from "../generated/Properties.json" assert { type: 'json' };
 //@ts-ignore
 import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert { type: 'css' };
 import { ContextMenu } from "@node-projects/web-component-designer";
-import { typeInfoFromJsonSchema } from "./IobrokerWebuiPropertyGrid.js";
+import { IobrokerWebuiPropertyGrid, typeInfoFromJsonSchema } from "./IobrokerWebuiPropertyGrid.js";
 export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super();
@@ -11,7 +12,6 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         this._commandListDiv = this._getDomElement('commandList');
         this._possibleCommands = this._getDomElement('possibleCommands');
         this._propertygrid = this._getDomElement('propertygrid');
-        this._propertygrid.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(scriptCommandsTypeInfo, obj, type);
         this.addPossibleCommands();
         this.shadowRoot.adoptedStyleSheets = [fancyTreeStyleSheet, IobrokerWebuiScriptEditor.style];
     }
@@ -19,6 +19,58 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         this._parseAttributesToProperties();
         this._bindingsParse(null, true);
         this._assignEvents();
+        let editComplex = async (data) => {
+            let pg = new IobrokerWebuiPropertyGrid();
+            pg.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
+            pg.typeName = 'IScriptMultiplexValue';
+            if (typeof data.value === 'object')
+                pg.selectedObject = data.value ?? {};
+            else
+                pg.selectedObject = {};
+            let res = await window.appShell.openConfirmation(pg, 100, 100, 300, 300, this);
+            if (res) {
+                this._propertygrid.setPropertyValue(data.propertyPath, pg.selectedObject);
+                this._propertygrid.refresh();
+            }
+        };
+        this._propertygrid.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(scriptCommandsTypeInfo, obj, type);
+        this._propertygrid.getSpecialEditorForType = async (property, currentValue, propertyPath) => {
+            if (typeof currentValue === 'object') {
+                let d = document.createElement('div');
+                d.style.display = 'flex';
+                let sp = document.createElement('span');
+                sp.innerText = 'complex: ' + JSON.stringify(currentValue);
+                sp.style.overflow = 'hidden';
+                sp.style.whiteSpace = 'nowrap';
+                sp.style.textOverflow = 'ellipsis';
+                sp.style.flexGrow = '1';
+                sp.title = JSON.stringify(currentValue);
+                d.appendChild(sp);
+                let b = document.createElement('button');
+                b.innerText = '...';
+                b.onclick = () => {
+                    editComplex({ value: currentValue, propertyPath });
+                };
+                d.appendChild(b);
+                return d;
+            }
+            return null;
+        };
+        this._propertygrid.propertyNodeContextMenu.on((data) => {
+            ContextMenu.show([{
+                    title: 'edit complex value',
+                    action: async () => {
+                        editComplex(data);
+                    }
+                },
+                {
+                    title: 'remove complex value',
+                    action: async () => {
+                        this._propertygrid.setPropertyValue(data.propertyPath, undefined);
+                        this._propertygrid.refresh();
+                    }
+                }], data.event);
+        });
     }
     //Converter from TypscriptJsonSchema to our Property list...
     async addPossibleCommands() {

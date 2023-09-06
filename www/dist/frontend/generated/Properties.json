@@ -72,6 +72,9 @@
                 },
                 "twoWay": {
                     "type": "boolean"
+                },
+                "type": {
+                    "type": "string"
                 }
             },
             "type": "object"
@@ -113,6 +116,21 @@
                     ]
                 },
                 "width": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "IScriptMultiplexValue": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "source": {
+                    "enum": [
+                        "property",
+                        "signal"
+                    ],
                     "type": "string"
                 }
             },
