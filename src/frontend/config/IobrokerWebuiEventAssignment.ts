@@ -2,7 +2,8 @@ import { BaseCustomWebComponentConstructorAppend, Disposable, DomHelper, css, ht
 import { ContextMenu, IDesignItem, IEvent, InstanceServiceContainer, PropertiesHelper } from "@node-projects/web-component-designer";
 import { IobrokerWebuiScriptEditor } from "./IobrokerWebuiScriptEditor.js";
 import { IobrokerWebuiScreenEditor } from "./IobrokerWebuiScreenEditor.js";
-import { findFunctionDeclarations } from "../helper/EsprimaHelper.js";
+import { findExportFunctionDeclarations } from "../helper/EsprimaHelper.js";
+import type { FunctionDeclaration } from "esprima-next";
 
 export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstructorAppend {
 
@@ -127,21 +128,22 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
     public async _editEvent(e: MouseEvent, eventItem: IEvent) {
         if (this._getEventType(eventItem) == 'js') {
             let screenEditor = DomHelper.findParentNodeOfType(this.selectedItems[0].instanceServiceContainer.designerCanvas, IobrokerWebuiScreenEditor);
-            let sc = screenEditor.scriptModel.getValue().trim();
+            let sc = screenEditor.scriptModel.getValue();
 
-            let decl = await findFunctionDeclarations(sc);
+            let decl = await findExportFunctionDeclarations(sc);
             if (decl) {
                 let jsName = this.selectedItems[0].getAttribute('@' + eventItem.name);
-                let funcDecl = decl.find(x => x.id.name == jsName)
+                let funcDecl = decl.find(x => (<FunctionDeclaration>x.declaration).id.name == jsName)
                 if (!funcDecl) {
                     let templateScript = `
-export function ${jsName}(event, element, shadowRoot) {
+export function ${jsName}(event, element, shadowRoot, instance) {
 
 }
 `;
                     screenEditor.scriptModel.setValue(sc + templateScript);
                 } else {
-                    //console.log(funcDecl);
+                    //@ts-ignore
+                    window.appShell.javascriptEditor.setSelection(funcDecl.loc.start.line, funcDecl.loc.start.column, funcDecl.loc.end.line, funcDecl.loc.end.column + 1);
                 }
             }
             window.appShell.activateDockById('javascriptDock');

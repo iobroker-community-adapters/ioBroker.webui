@@ -40,7 +40,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   activeElement: HTMLElement;
   mainPage = 'designer';
 
-  serviceContainer : ServiceContainer 
+  serviceContainer: ServiceContainer
 
   private _dock: DockSpawnTsWebcomponent;
   private _dockManager: DockManager;
@@ -292,6 +292,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
 window.customElements.define('iobroker-webui-app-shell', IobrokerWebuiAppShell);
 
 declare global {
+  var importShim: (file: string) => any;
   interface Window {
     appShell: IobrokerWebuiAppShell;
   }

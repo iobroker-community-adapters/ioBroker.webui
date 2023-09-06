@@ -20,9 +20,11 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
     private _iobBindings: (() => void)[];
     private _loading: boolean;
-    private _refreshCb: Disposable;
+    private _refreshViewSubscription: Disposable;
 
-    _screenName: string;
+    private _screenName: string;
+    private _screensChangedSubscription: Disposable;
+
     @property()
     get screenName() {
         return this._screenName;
@@ -54,11 +56,6 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
     ready() {
         this._parseAttributesToProperties();
-        //Todo: unsubscribe from this event (or it causes memory leaks)
-        iobrokerHandler.screensChanged.on(() => {
-            if (this._screenName)
-                this._loadScreen();
-        });
         if (this._screenName)
             this._loadScreen();
     }
@@ -97,7 +94,6 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
         const template = htmlFromString(html);
         const documentFragment = template.content.cloneNode(true);
-        //this._bindingsParse(documentFragment, true);
         this.shadowRoot.appendChild(documentFragment);
         this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
         ScriptSystem.assignAllScripts(script, this.shadowRoot, this);
@@ -108,10 +104,15 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     }
 
     connectedCallback() {
-        this._refreshCb = iobrokerHandler.refreshView.on(() => this._loadScreen());
+        this._refreshViewSubscription = iobrokerHandler.refreshView.on(() => this._loadScreen());
+        this._screensChangedSubscription = iobrokerHandler.screensChanged.on(() => {
+            if (this._screenName)
+                this._loadScreen();
+        });
     }
 
     disconnectedCallback() {
-        this._refreshCb?.dispose();
+        this._refreshViewSubscription?.dispose();
+        this._screensChangedSubscription?.dispose()
     }
 }

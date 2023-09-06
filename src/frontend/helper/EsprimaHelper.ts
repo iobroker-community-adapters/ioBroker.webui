@@ -1,14 +1,14 @@
 import { ExportNamedDeclaration, FunctionDeclaration } from 'esprima-next';
 
-export async function findFunctionDeclarations(script: string): Promise<FunctionDeclaration[]> {
+export async function findExportFunctionDeclarations(script: string): Promise<ExportNamedDeclaration[]> {
     try {
         let esprima = await import('esprima-next');
-        let tree = esprima.parseModule(script);
+        let tree = esprima.parseModule(script, { loc: true });
 
-        let f: FunctionDeclaration[] = [];
+        let f: ExportNamedDeclaration[] = [];
         for (let ast of tree.body) {
             if (ast instanceof ExportNamedDeclaration && ast.declaration instanceof FunctionDeclaration) {
-                f.push(ast.declaration);
+                f.push(ast);
             }
         }
         return f;

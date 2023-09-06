@@ -42,20 +42,6 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
 
     language: 'css' | 'javascript' = 'css';
 
-    private _errorLine: number;
-    public get errorLine() {
-        return this._errorLine;
-    }
-    public set errorLine(value: number) {
-        if (this._editor && value >= 0) {
-            this._editor.deltaDecorations([], [
-                //@ts-ignore
-                { range: new monaco.Range(value, 1, value, 1), options: { isWholeLine: true, inlineClassName: 'errorDecoration' } },
-            ]);
-        }
-        this._errorLine = value;
-    }
-
     private _container: HTMLDivElement;
     private _editor: monaco.editor.IStandaloneCodeEditor;
     private static _initalized: boolean;
@@ -143,6 +129,15 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
             return true;
         return false;
     }
+
+    setSelection(lineStart: number, columnStart: number, lineEnd: number, columnEnd: number) {
+        setTimeout(() => {
+            this._editor.setSelection({ startLineNumber: lineStart, startColumn: columnStart, endLineNumber: lineEnd, endColumn: columnEnd });
+            //@ts-ignore
+            this._editor.revealRangeInCenterIfOutsideViewport(new monaco.Range(lineStart, columnStart, lineEnd, columnEnd), 1);
+        }, 50);
+    }
 }
+
 
 customElements.define('iobroker-webui-monaco-editor', IobrokerWebuiMonacoEditor);

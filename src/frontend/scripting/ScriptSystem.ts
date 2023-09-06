@@ -5,6 +5,7 @@ import { ScriptCommands } from "./ScriptCommands.js";
 import { IScriptMultiplexValue } from "../interfaces/IScriptMultiplexValue.js";
 import Long from 'long'
 import { sleep } from "../helper/Helper.js";
+import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
 
 export class ScriptSystem {
     static async execute(scriptCommands: ScriptCommands[], outerContext: { event: Event, element: Element, root: HTMLElement }) {
@@ -104,7 +105,7 @@ export class ScriptSystem {
                     const script = await ScriptSystem.getValue(c.script, outerContext);
                     var context: { event: Event, element: Element } = outerContext; // make context accessible from script
                     (<any>context).shadowRoot = (<ShadowRoot>context.element.getRootNode());
-                    (<any>context).instance =(<any>context).shadowRoot.host;
+                    (<any>context).instance = (<any>context).shadowRoot.host;
                     eval(script);
                     break;
                 }
@@ -163,11 +164,10 @@ export class ScriptSystem {
 
     static async assignAllScripts(javascriptCode: string, shadowRoot: ShadowRoot, instance: HTMLElement) {
         const allElements = shadowRoot.querySelectorAll('*');
-        let jsObject: any = null;
+        let jsObject: ICustomControlScript = null;
         if (javascriptCode) {
             try {
                 const scriptUrl = URL.createObjectURL(new Blob([javascriptCode], { type: 'application/javascript' }));
-                //@ts-ignore
                 jsObject = await importShim(scriptUrl);
                 if (jsObject.init) {
                     jsObject.init(instance);
