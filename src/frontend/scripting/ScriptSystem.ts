@@ -104,6 +104,7 @@ export class ScriptSystem {
                     const script = await ScriptSystem.getValue(c.script, outerContext);
                     var context: { event: Event, element: Element } = outerContext; // make context accessible from script
                     (<any>context).shadowRoot = (<ShadowRoot>context.element.getRootNode());
+                    (<any>context).instance =(<any>context).shadowRoot.host;
                     eval(script);
                     break;
                 }
@@ -189,7 +190,7 @@ export class ScriptSystem {
                                 if (!jsObject[script])
                                     console.warn('javascritp function named: ' + script + ' not found, maybe missing a "export" ?');
                                 else
-                                    jsObject[script](evt, e, shadowRoot);
+                                    jsObject[script](evt, e, shadowRoot, instance);
                             });
                         }
                     }

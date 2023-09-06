@@ -110,7 +110,7 @@ export interface Javascript {
     type: 'Javascript';
     /**
      * Usable objects in Script: 
-     * context : {event : Event, element: Element, shadowRoot: ShadowRoot }
+     * context : {event : Event, element: Element, shadowRoot: ShadowRoot, instance: Element }
      * @TJS-format script
      */
     script: string;
