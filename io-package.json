@@ -254,7 +254,7 @@
         "name": "state of package installation",
         "type": "string",
         "read": true,
-        "write": true,
+        "write": false,
         "role": "text"
       },
       "native": {}
