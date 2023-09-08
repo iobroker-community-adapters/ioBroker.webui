@@ -18,5 +18,5 @@
     "@microsoft/fast-components",
     "emoji-picker-element",
     "@fluentui/web-components",
-    "@material/web/all.js"
+    "@material/web"
 ]

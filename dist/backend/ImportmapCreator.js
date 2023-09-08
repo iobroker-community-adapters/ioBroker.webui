@@ -137,7 +137,10 @@ export async function registerDesignerAddons(serviceContainer) {
         }
         else {
             this._adapter.log.warn('npm package: ' + pkg + ' - no custom-elements.json found, only loading javascript module');
-            if (packageJsonObj.module) {
+            if (packageHacks[pkg]?.import) {
+                this.importUndefinedElementFiles.push([packageJsonObj.name, packageHacks[pkg]?.import]);
+            }
+            else if (packageJsonObj.module) {
                 this.importUndefinedElementFiles.push([packageJsonObj.name, elementsRootPathWeb + "/" + removeLeading(packageJsonObj.module, '/')]);
             }
             else if (packageJsonObj.main) {
@@ -148,9 +151,6 @@ export async function registerDesignerAddons(serviceContainer) {
             }
             else {
                 console.warn('npm package: ' + pkg + ' - no entry point in package found.');
-            }
-            if (packageHacks[pkg]?.import) {
-                this.importUndefinedElementFiles.push(packageHacks[pkg]?.import);
             }
         }
         if (reportState)
