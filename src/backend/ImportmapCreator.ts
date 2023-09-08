@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs/promises';
 import fsSync from 'fs';
 import type { AdapterInstance } from '@iobroker/adapter-core';
+const packageHacks = JSON.parse(fsSync.readFileSync(new URL('./NpmPackageHacks.json', import.meta.url)).toString());
 
 let skipPackages = ['@node-projects/base-custom-webcomponent', 'tslib', 'long'];
 
@@ -173,6 +174,10 @@ export async function registerDesignerAddons(serviceContainer) {
                 this.importUndefinedElementFiles.push([packageJsonObj.name, elementsRootPathWeb + "/" + removeLeading(packageJsonObj.unpkg, '/')]);
             } else {
                 console.warn('npm package: ' + pkg + ' - no entry point in package found.');
+            }
+
+            if (packageHacks[pkg]?.import) {
+                this.importUndefinedElementFiles.push(packageHacks[pkg]?.import);
             }
         }
         if (reportState)
