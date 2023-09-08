@@ -1,13 +1,22 @@
 [
+    "@vanillawc/wc-arrow",
+    "@vanillawc/wc-blink",
+    "@vanillawc/wc-bullet-chain",
+    "@vanillawc/wc-datepicker",
+    "@vanillawc/wc-icon-rule",
+    "@vanillawc/wc-marquee",
+    "@vanillawc/wc-json",
+    "@vanillawc/wc-markdown",
     "@node-projects/tab.webcomponent",
     "@node-projects/gauge.webcomponent",
     "@node-projects/input-knob",
-    "@christianliebel/paint",
-    "vanilla-colorful",
     "@node-projects/hsluv-webcomponent",
     "@node-projects/wired-elements",
+    "@christianliebel/paint",
+    "vanilla-colorful",
     "@shoelace-style/shoelace",
     "@microsoft/fast-components",
     "emoji-picker-element",
-    "@fluentui/web-components"
+    "@fluentui/web-components",
+    "@material/web/all.js"
 ]
