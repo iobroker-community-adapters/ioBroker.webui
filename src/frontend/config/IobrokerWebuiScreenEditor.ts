@@ -112,7 +112,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
 
     async executeCommand(command: IUiCommand) {
         if ((<string>command.type) == 'save') {
-            let html = this.documentContainer.designerView.getHTML();
+            let html = this.documentContainer.content;
             let style = this.documentContainer.additionalData.model.getValue();
             let script = this.scriptModel.getValue();
             if (this._type == 'screen') {
