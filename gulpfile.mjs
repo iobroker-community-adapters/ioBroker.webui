@@ -59,6 +59,8 @@ function cleanupNodeModules() {
         "./www/node_modules/monaco-editor/esm",
         "./www/node_modules/monaco-editor/min-maps",
         "./www/**/*.ts",
+        "!./www/dist/frontend/common/IobrokerHandler.d.ts",
+        "!./www/node_modules/@iobroker/socket-client/dist/esm/Connection.d.ts",
         "./www/**/*.map",
         "./www/**/*.md",
         "./www/**/*.txt",
