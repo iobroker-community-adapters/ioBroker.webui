@@ -68,7 +68,7 @@ class IobrokerHandler {
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
         let cfg = await this._getConfig();
-        this.config = cfg ?? { globalStyle: null, globalScript: null, globalConfig: null };
+        this.config = cfg ?? { globalStyle: null, globalScript: null, globalTypeScript: null, globalConfig: null };
         this.gloablStylesheet = cssFromString(this.config.globalStyle);
         for (let p of this._readyPromises)
             p();

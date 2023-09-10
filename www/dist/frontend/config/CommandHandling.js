@@ -25,7 +25,10 @@ export class CommandHandling {
             if (!(await iobrokerHandler.getScreenNames()).includes('start'))
                 defaultName = 'start';
             let screen = prompt("New Screen Name:", defaultName);
-            let style = `* {
+            let style = `:host {
+}
+
+* {
     box-sizing: border-box;
 }`;
             if (screen) {

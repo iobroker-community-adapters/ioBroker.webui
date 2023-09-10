@@ -28,6 +28,9 @@
                 },
                 "style": {
                     "type": "string"
+                },
+                "typeScript": {
+                    "type": "string"
                 }
             },
             "type": "object"
@@ -98,6 +101,9 @@
                 },
                 "style": {
                     "type": "string"
+                },
+                "typeScript": {
+                    "type": "string"
                 }
             },
             "type": "object"
@@ -153,6 +159,9 @@
                     "type": "string"
                 },
                 "globalStyle": {
+                    "type": "string"
+                },
+                "globalTypeScript": {
                     "type": "string"
                 }
             },

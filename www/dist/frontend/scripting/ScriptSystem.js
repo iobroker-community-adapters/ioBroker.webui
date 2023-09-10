@@ -162,7 +162,7 @@ export class ScriptSystem {
                 }
             }
             catch (err) {
-                console.warn('error parsing javascript', err);
+                console.error('error parsing javascript', err);
             }
         }
         for (let e of allElements) {

@@ -2,6 +2,7 @@ import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projec
 import { DocumentContainer, } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
+import { IobrokerWebuiMonacoEditor } from "./IobrokerWebuiMonacoEditor.js";
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super(...arguments);
@@ -81,13 +82,14 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         if (command.type == 'save') {
             let html = this.documentContainer.content;
             let style = this.documentContainer.additionalData.model.getValue();
-            let script = this.scriptModel.getValue();
+            let typeScript = this.scriptModel.getValue();
+            let script = await IobrokerWebuiMonacoEditor.getCompiledJavascriptCode(this.scriptModel);
             if (this._type == 'screen') {
-                let screen = { html, style, script, settings: this._settings };
+                let screen = { html, style, typeScript, script, settings: this._settings };
                 await iobrokerHandler.saveScreen(this._name, screen);
             }
             else {
-                let control = { html, style, script, settings: this._settings, properties: this._properties };
+                let control = { html, style, typeScript, script, settings: this._settings, properties: this._properties };
                 await iobrokerHandler.saveCustomControl(this._name, control);
             }
         }

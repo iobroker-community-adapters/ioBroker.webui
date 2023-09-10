@@ -82,7 +82,7 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
                 let funcDecl = decl.find(x => x.declaration.id.name == jsName);
                 if (!funcDecl) {
                     let templateScript = `
-export function ${jsName}(event, element, shadowRoot, instance) {
+export function ${jsName}(event: ${eventItem.eventObjectName ?? 'Event'}, eventRaisingElement: Element, shadowRoot: Shadowroot, instance: HTMLElement) {
 
 }
 `;
