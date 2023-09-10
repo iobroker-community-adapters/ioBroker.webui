@@ -288,6 +288,12 @@ class IobrokerHandler {
     async _saveBinaryToFile(binary, name) {
         await this.connection.writeFile64(this.namespaceFiles, name, await binary.arrayBuffer());
     }
+    getState(id) {
+        return this.connection.getState(id);
+    }
+    setState(id, val, ack) {
+        return this.connection.setState(id, val, ack);
+    }
     async sendCommand(command, data) {
         let p = [
             this.connection.setState(this.namespace + '.control.data', { val: data }),
