@@ -44,6 +44,9 @@ class IobrokerHandler {
 
     _readyPromises: (() => void)[] = [];
 
+    language: string;
+    languageChanged = new TypedEvent<string>();
+
     readonly clientId;
 
     constructor() {
@@ -99,7 +102,7 @@ class IobrokerHandler {
         await this.connection.waitForFirstConnection();
 
         let cfg = await this._getConfig();
-        this.config = cfg ?? { globalStyle: null };
+        this.config = cfg ?? { globalStyle: null, globalScript: null, globalTypeScript: null, globalConfig: null };
         this.gloablStylesheet = cssFromString(this.config.globalStyle);
 
         for (let p of this._readyPromises)

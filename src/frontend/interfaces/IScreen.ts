@@ -2,6 +2,7 @@ export interface IScreen {
     html: string;
     style: string;
     script: string;
+    typeScript: string;
     settings: IScreenSettings;
 }
 

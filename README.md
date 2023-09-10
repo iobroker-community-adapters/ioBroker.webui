@@ -29,6 +29,11 @@ It includes features like:
   
 ## Concepts
 
+### Description
+
+The Designer uses Webcomponents, so the HTML you Design is inside of a Shdowroot of a Webcomponent. This mens, you cannot style <body> or <html> inside of the Stylesheet. To style the outer Layout, use the ":host" selector.
+This also means, you cannot use "on..." eventhandlers. Use the "@..." event assignment.
+
 ### Custom Controls in WebUI
 
 You can create own reusable CustomControls in WebUI. This can have individual Javascript, Properties and a template.
@@ -113,6 +118,9 @@ runtime.html?screenName=screen2
 - new script commands
 - bugfix with bindings and empty events
 - select exported function in javascript
+- bugfix in save of screens
+- typescript in scripts
+- started work on translateable runtime
 
 ### 0.9.0 (2023-09-06)
 - signal selector in properties

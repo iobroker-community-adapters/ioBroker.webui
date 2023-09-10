@@ -2,6 +2,7 @@ export interface IControl {
     html: string;
     style: string;
     script: string;
+    typeScript: string;
     properties: Record<string, { type: string, values?: string[], default?: any }>;
     settings: IControlSettings;
 

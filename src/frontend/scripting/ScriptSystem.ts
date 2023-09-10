@@ -173,7 +173,7 @@ export class ScriptSystem {
                     jsObject.init(instance);
                 }
             } catch (err) {
-                console.warn('error parsing javascript', err)
+                console.error('error parsing javascript', err)
             }
         }
         for (let e of allElements) {

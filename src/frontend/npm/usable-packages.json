@@ -18,5 +18,6 @@
     "@microsoft/fast-components",
     "emoji-picker-element",
     "@fluentui/web-components",
-    "@material/web"
+    "@material/web",
+    "@zooplus/zoo-web-components"
 ]

@@ -40,7 +40,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
             this._editor.setModel(value);
     }
 
-    language: 'css' | 'javascript' = 'css';
+    language: 'css'| 'typescript' = 'css';
 
     private _container: HTMLDivElement;
     private _editor: monaco.editor.IStandaloneCodeEditor;
@@ -117,12 +117,23 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
         this._editor.trigger('', 'editor.action.clipboardDeleteAction', null)
     }
 
+    public static async getCompiledJavascriptCode(model: monaco.editor.ITextModel): Promise<string> {
+        const uri = model.uri;
+        //@ts-ignore
+        const worker = await monaco.languages.typescript.getTypeScriptWorker();
+        const client = await worker(uri);
+        const result = await client.getEmitOutput(uri.toString());
+        return result.outputFiles[0].text;
+    }
+
     async executeCommand(command: Omit<IUiCommand, 'type'> & { type: string }) {
         if (command.type == 'save') {
             if (this.language == 'css')
                 iobrokerHandler.config.globalStyle = this.model.getValue();
-            else if (this.language == 'javascript')
-                iobrokerHandler.config.globalScript = this.model.getValue();
+            else if (this.language == 'typescript') {
+                iobrokerHandler.config.globalTypeScript = this.model.getValue();
+                iobrokerHandler.config.globalScript = await IobrokerWebuiMonacoEditor.getCompiledJavascriptCode(this.model);
+            }
             await iobrokerHandler.saveConfig();
         }
     }
