@@ -114,7 +114,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 0.10.0 (2023-09-10)
 - new script commands
 - bugfix with bindings and empty events
 - select exported function in javascript
