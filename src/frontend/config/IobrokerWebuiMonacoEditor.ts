@@ -1,4 +1,4 @@
-import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from "@node-projects/base-custom-webcomponent";
 import { IUiCommand, IUiCommandHandler, sleep } from "@node-projects/web-component-designer";
 import type * as monaco from 'monaco-editor';
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
@@ -40,7 +40,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
             this._editor.setModel(value);
     }
 
-    language: 'css'| 'typescript' = 'css';
+    language: 'css' | 'typescript' = 'css';
 
     private _container: HTMLDivElement;
     private _editor: monaco.editor.IStandaloneCodeEditor;
@@ -61,6 +61,23 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
                 require(['vs/editor/editor.main'], () => {
                     resolve(undefined);
                     IobrokerWebuiMonacoEditor._initalized = true;
+                    import('./importDescriptions.json', { assert: { type: 'json'}}).then(async json => {
+                        let files: {name:string, file:string}[] = json.default;
+                        const chunkSize = 500;
+                        let libs: { content: string, filePath?: string }[] = [];
+                        for (let i = 0; i < files.length; i += chunkSize) {
+                            const chunk = files.slice(i, i + chunkSize);
+                            let promises: Promise<void>[] = [];
+                            chunk.forEach((f) => {
+                                promises.push(LazyLoader.LoadText(f.file).then(content => {
+                                    libs.push({ content, filePath: f.name });
+                                }));
+                            });
+                            await Promise.allSettled(promises);
+                        }
+                        //@ts-ignore
+                        monaco.languages.typescript.typescriptDefaults.setExtraLibs(libs);
+                    });
                 });
             } else {
                 resolve(undefined);

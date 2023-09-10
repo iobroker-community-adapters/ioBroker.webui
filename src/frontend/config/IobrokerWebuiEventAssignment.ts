@@ -4,6 +4,7 @@ import { IobrokerWebuiScriptEditor } from "./IobrokerWebuiScriptEditor.js";
 import { IobrokerWebuiScreenEditor } from "./IobrokerWebuiScreenEditor.js";
 import { findExportFunctionDeclarations } from "../helper/EsprimaHelper.js";
 import type { FunctionDeclaration } from "esprima-next";
+import { IobrokerWebuiMonacoEditor } from "./IobrokerWebuiMonacoEditor.js";
 
 export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstructorAppend {
 
@@ -128,22 +129,24 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
     public async _editEvent(e: MouseEvent, eventItem: IEvent) {
         if (this._getEventType(eventItem) == 'js') {
             let screenEditor = DomHelper.findParentNodeOfType(this.selectedItems[0].instanceServiceContainer.designerCanvas, IobrokerWebuiScreenEditor);
-            let sc = screenEditor.scriptModel.getValue();
+            let sc = await IobrokerWebuiMonacoEditor.getCompiledJavascriptCode(screenEditor.scriptModel);
 
             let decl = await findExportFunctionDeclarations(sc);
             if (decl) {
                 let jsName = this.selectedItems[0].getAttribute('@' + eventItem.name);
                 let funcDecl = decl.find(x => (<FunctionDeclaration>x.declaration).id.name == jsName)
                 if (!funcDecl) {
-                    let templateScript = `
-export function ${jsName}(event: ${eventItem.eventObjectName ?? 'Event'}, eventRaisingElement: Element, shadowRoot: Shadowroot, instance: HTMLElement) {
+                    let templateScript = `export function ${jsName}(event: ${eventItem.eventObjectName ?? 'Event'}, eventRaisingElement: Element, shadowRoot: ShadowRoot, instance: HTMLElement) {
 
 }
 `;
+                    if (!sc)
+                        sc = 'import { iobrokerHandler } from "/dist/frontend/common/IobrokerHandler.js";\n\n';
                     screenEditor.scriptModel.setValue(sc + templateScript);
                 } else {
                     //@ts-ignore
-                    window.appShell.javascriptEditor.setSelection(funcDecl.loc.start.line, funcDecl.loc.start.column, funcDecl.loc.end.line, funcDecl.loc.end.column + 1);
+                    //window.appShell.javascriptEditor.setSelection(funcDecl.loc.start.line, funcDecl.loc.start.column, funcDecl.loc.end.line, funcDecl.loc.end.column + 1);
+                    //as we use typescript, the line does not match the resulting code, need to use ts compiler
                 }
             }
             window.appShell.activateDockById('javascriptDock');

@@ -1,0 +1,10 @@
+[
+    {
+        "name": "/dist/frontend/common/IobrokerHandler.d.ts",
+        "file": "/dist/frontend/common/IobrokerHandler.d.ts"
+    },
+    {
+        "name": "@iobroker/socket-client",
+        "file": "/node_modules/@iobroker/socket-client/dist/esm/Connection.d.ts"
+    }
+]

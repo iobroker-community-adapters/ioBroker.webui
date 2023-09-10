@@ -20,10 +20,18 @@
 
   <script src="./node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js"></script>
 
-  <script type="esms-options">
-    {
-      "shimMode": true,
-      "mapOverrides": true
+  <script>
+    let storedParentUrl;
+    window.esmsInitOptions = {
+      shimMode: true,
+      mapOverrides: true,
+      resolve: (id, parentUrl, resolve) => {
+        if (!storedParentUrl)
+          storedParentUrl = parentUrl;
+        if (parentUrl.startsWith('blob:'))
+          parentUrl = storedParentUrl;
+        return resolve(id, parentUrl)
+      }
     }
   </script>
   <script src="./node_modules/es-module-shims/dist/es-module-shims.js"></script>
@@ -137,7 +145,7 @@
     }
 
 
-    #statusbar > div {
+    #statusbar>div {
       font-size: 14px;
       font-family: sans-serif;
     }
@@ -329,10 +337,16 @@
   <iobroker-webui-app-shell id="shell">
   </iobroker-webui-app-shell>
   <div id="statusbar">
-    <div>npm status:&nbsp;&nbsp;</div><div id="npmState"></div>
-    <div style="margin-left: 15px; display: flex; align-items: center;"><div id="connectionState" style="background-color: yellow; margin-right: 5px; border-radius: 50%; border: 1px solid gray; height: 70%;aspect-ratio: 1;"></div> Connection: <div style="margin-left: 3px;" id="connectionInfo"></div></div>
+    <div>npm status:&nbsp;&nbsp;</div>
+    <div id="npmState"></div>
+    <div style="margin-left: 15px; display: flex; align-items: center;">
+      <div id="connectionState"
+        style="background-color: yellow; margin-right: 5px; border-radius: 50%; border: 1px solid gray; height: 70%;aspect-ratio: 1;">
+      </div> Connection: <div style="margin-left: 3px;" id="connectionInfo"></div>
+    </div>
   </div>
-  <div id="load" style="position: absolute; width: 100%; height: 100%; z-index: 9999999999; top: 0; left: 0; background: white;">
+  <div id="load"
+    style="position: absolute; width: 100%; height: 100%; z-index: 9999999999; top: 0; left: 0; background: white;">
     <div class="lds-facebook">
       <div></div>
       <div></div>
