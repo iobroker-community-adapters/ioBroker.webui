@@ -75,12 +75,12 @@ import(window.iobrokerWebRootUrl + 'webui.0.widgets/configWidgets.js').then(x =>
     x.registerNpmWidgets(serviceContainer);
     //paletteTree.loadControls(serviceContainer, serviceContainer.elementsServices);
 }).catch(err => {
-    console.error('error loading widgets designer generated code', err);
+    //console.warn('error loading widgets designer generated code', err);
 });
 import(window.iobrokerWebRootUrl + 'webui.0.widgets/designerAddons.js').then(x => {
     x.registerDesignerAddons(serviceContainer);
 }).catch(err => {
-    console.error('error loading widgets designer addons', err);
+    //console.warn('error loading widgets designer addons', err);
 });
 serviceContainer.globalContext.onToolChanged.on((e) => {
     let name = [...serviceContainer.designerTools.entries()].filter(({ 1: v }) => v === e.newValue.tool).map(([k]) => k)[0];
