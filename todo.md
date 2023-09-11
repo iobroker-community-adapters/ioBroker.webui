@@ -1,3 +1,0 @@
-- a script wich is handeled when a object is destroyed
-
-- globalJavascript and globalConfig do nothing yet....
