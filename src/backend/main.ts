@@ -88,7 +88,7 @@ class WebUi extends utils.Adapter {
             this.log.info(`Install NPM package (${name}), check dirs...`);
             await this.creatWidgetsDirAndRestorePackageJsonIfneeded();
             this.log.info(`Install NPM package (${name})...`);
-            const child = spawn('npm', ['install', '--omit=dev', name], { cwd: this.widgetsDir });
+            const child = spawn('npm', ['install', '--omit=dev', '--ignore-scripts', name], { cwd: this.widgetsDir });
             child.stdout.on('data', data => {
                 this.log.debug(data.toString().replace('\n', ''));
             });
