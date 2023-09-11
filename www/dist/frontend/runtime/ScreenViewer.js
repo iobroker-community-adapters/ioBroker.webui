@@ -52,9 +52,9 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
     loadScreenData(html, style, script) {
         let globalStyle = iobrokerHandler.config?.globalStyle ?? '';
         if (globalStyle && style)
-            this.shadowRoot.adoptedStyleSheets = [ScreenViewer_1.style, iobrokerHandler.gloablStylesheet, cssFromString(style)];
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer_1.style, iobrokerHandler.globalStylesheet, cssFromString(style)];
         else if (globalStyle)
-            this.shadowRoot.adoptedStyleSheets = [ScreenViewer_1.style, iobrokerHandler.gloablStylesheet];
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer_1.style, iobrokerHandler.globalStylesheet];
         else if (style)
             this.shadowRoot.adoptedStyleSheets = [ScreenViewer_1.style, cssFromString(style)];
         else

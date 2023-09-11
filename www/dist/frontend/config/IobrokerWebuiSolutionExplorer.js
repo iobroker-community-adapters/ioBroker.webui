@@ -178,7 +178,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
     _createGlobalJavascriptsNode() {
         return {
-            title: 'Javascript',
+            title: 'Typescript',
             folder: false,
             dblclick: (e, data) => {
                 window.appShell.openGlobalScriptEditor(iobrokerHandler.config.globalTypeScript ?? '');

@@ -9,7 +9,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
         super();
         this._bindingsParse(null, true);
         if (this.constructor._control.settings.useGlobalStyle)
-            this.shadowRoot.adoptedStyleSheets = [iobrokerHandler.gloablStylesheet, ...this.shadowRoot.adoptedStyleSheets];
+            this.shadowRoot.adoptedStyleSheets = [iobrokerHandler.globalStylesheet, ...this.shadowRoot.adoptedStyleSheets];
     }
     connectedCallback() {
         this._parseAttributesToProperties();

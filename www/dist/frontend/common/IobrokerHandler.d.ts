@@ -3,6 +3,7 @@ import { TypedEvent } from "@node-projects/base-custom-webcomponent";
 import { IScreen } from "../interfaces/IScreen.js";
 import { IWebUiConfig } from "../interfaces/IWebUiConfig.js";
 import { IControl } from "../interfaces/IControl.js";
+import { IGlobalScript } from "../interfaces/IGlobalScript.js";
 export type StateValue = string | number | boolean | null;
 export interface State {
     /** The value of the state. */
@@ -43,7 +44,8 @@ declare class IobrokerHandler {
     namespaceWidgets: string;
     imagePrefix: string;
     config: IWebUiConfig;
-    gloablStylesheet: CSSStyleSheet;
+    globalStylesheet: CSSStyleSheet;
+    globalScriptInstance: IGlobalScript;
     screensChanged: TypedEvent<string>;
     controlsChanged: TypedEvent<string>;
     imagesChanged: TypedEvent<void>;

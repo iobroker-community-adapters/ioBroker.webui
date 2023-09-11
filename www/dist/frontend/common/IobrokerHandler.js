@@ -69,7 +69,14 @@ class IobrokerHandler {
         await this.connection.waitForFirstConnection();
         let cfg = await this._getConfig();
         this.config = cfg ?? { globalStyle: null, globalScript: null, globalTypeScript: null, globalConfig: null };
-        this.gloablStylesheet = cssFromString(this.config.globalStyle);
+        if (this.config.globalStyle)
+            this.globalStylesheet = cssFromString(this.config.globalStyle);
+        if (this.config.globalScript) {
+            const scriptUrl = URL.createObjectURL(new Blob([this.config.globalScript], { type: 'application/javascript' }));
+            this.globalScriptInstance = await importShim(scriptUrl);
+            if (this.globalScriptInstance.init)
+                this.globalScriptInstance.init();
+        }
         for (let p of this._readyPromises)
             p();
         this._readyPromises = null;
@@ -266,7 +273,16 @@ class IobrokerHandler {
     }
     async saveConfig() {
         this._saveObjectToFile(this.config, this.configPath + "config.json");
-        this.gloablStylesheet = cssFromString(this.config.globalStyle);
+        this.globalStylesheet = null;
+        this.globalScriptInstance = null;
+        if (this.config.globalStyle)
+            this.globalStylesheet = cssFromString(this.config.globalStyle);
+        if (this.config.globalScript) {
+            const scriptUrl = URL.createObjectURL(new Blob([this.config.globalScript], { type: 'application/javascript' }));
+            this.globalScriptInstance = await importShim(scriptUrl);
+            if (this.globalScriptInstance.init)
+                this.globalScriptInstance.init();
+        }
         this.configChanged.emit();
     }
     async _getObjectFromFile(name) {
