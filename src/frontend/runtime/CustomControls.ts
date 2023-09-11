@@ -1,9 +1,9 @@
 import { BaseCustomWebComponentConstructorAppend, css, cssFromString } from "@node-projects/base-custom-webcomponent";
-import { PropertiesHelper } from "@node-projects/web-component-designer";
 import { IControl } from "../interfaces/IControl.js";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
+import { PropertiesHelper } from "@node-projects/web-component-designer/dist/elements/services/propertiesService/services/PropertiesHelper.js";
 
 export const webuiCustomControlPrefix = 'webui-';
 
