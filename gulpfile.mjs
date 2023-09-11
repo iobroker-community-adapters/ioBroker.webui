@@ -88,6 +88,7 @@ function cleanupMonaco() {
         '!./www/node_modules/monaco-editor/min/vs/basic-languages/css',
         './www/node_modules/monaco-editor/min/vs/editor/*.js',
         '!./www/node_modules/monaco-editor/min/vs/editor/editor.main.js',
+        '!./www/node_modules/monaco-editor/min/vs/editor/editor.main.nls.js',
     ]);
 }
 
