@@ -2,6 +2,7 @@ import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElem
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
+import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
 
 @customElement("iobroker-webui-screen-viewer")
 export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
@@ -24,6 +25,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
     private _screenName: string;
     private _screensChangedSubscription: Disposable;
+    private _scriptObject: ICustomControlScript;
 
     @property()
     get screenName() {
@@ -80,7 +82,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         }
     }
 
-    public loadScreenData(html: string, style: string, script: string,) {
+    public async loadScreenData(html: string, style: string, script: string,) {
         let globalStyle = iobrokerHandler.config?.globalStyle ?? '';
 
         if (globalStyle && style)
@@ -96,7 +98,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         const documentFragment = template.content.cloneNode(true);
         this.shadowRoot.appendChild(documentFragment);
         this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
-        ScriptSystem.assignAllScripts(script, this.shadowRoot, this);
+        this._scriptObject = await ScriptSystem.assignAllScripts(script, this.shadowRoot, this);
     }
 
     _getRelativeSignalsPath(): string {
@@ -109,10 +111,12 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             if (this._screenName)
                 this._loadScreen();
         });
+        this._scriptObject?.connectedCallback?.(this);
     }
 
     disconnectedCallback() {
         this._refreshViewSubscription?.dispose();
         this._screensChangedSubscription?.dispose()
+        this._scriptObject?.disconnectedCallback?.(this);
     }
 }

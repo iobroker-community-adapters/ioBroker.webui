@@ -4,11 +4,13 @@ import { ScriptSystem } from "../scripting/ScriptSystem.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { PropertiesHelper } from "@node-projects/web-component-designer/dist/elements/services/propertiesService/services/PropertiesHelper.js";
+import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
 
 export const webuiCustomControlPrefix = 'webui-';
 
 export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     static readonly style = css`:host { overflow: hidden }`;
+    private _scriptObject: ICustomControlScript;
 
     constructor() {
         super();
@@ -17,11 +19,16 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
             this.shadowRoot.adoptedStyleSheets = [iobrokerHandler.globalStylesheet, ...this.shadowRoot.adoptedStyleSheets]
     }
 
-    connectedCallback() {
+    async connectedCallback() {
         this._parseAttributesToProperties();
         this._bindingsRefresh();
-        ScriptSystem.assignAllScripts((<IControl>(<any>this.constructor)._control).script, this.shadowRoot, this);
         IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
+        this._scriptObject = await ScriptSystem.assignAllScripts((<IControl>(<any>this.constructor)._control).script, this.shadowRoot, this);
+        this._scriptObject?.connectedCallback?.(this);
+    }
+
+    disconnectedCallback() {
+        this._scriptObject?.disconnectedCallback?.(this);
     }
 
     _getRelativeSignalsPath(): string {

@@ -162,7 +162,7 @@ export class ScriptSystem {
         return value;
     }
 
-    static async assignAllScripts(javascriptCode: string, shadowRoot: ShadowRoot, instance: HTMLElement) {
+    static async assignAllScripts(javascriptCode: string, shadowRoot: ShadowRoot, instance: HTMLElement) : Promise<ICustomControlScript> {
         const allElements = shadowRoot.querySelectorAll('*');
         let jsObject: ICustomControlScript = null;
         if (javascriptCode) {
@@ -200,5 +200,7 @@ export class ScriptSystem {
                 }
             }
         }
+
+        return jsObject;
     }
 }
