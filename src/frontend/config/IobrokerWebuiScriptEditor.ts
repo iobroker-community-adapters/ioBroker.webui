@@ -16,7 +16,7 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         .list{
             display: grid;
             grid-template-columns: 1fr 40px;
-            width: 100%;
+            width: calc(100% - 6px);
             box-sizing: border-box;
             margin: 3px;
         }
