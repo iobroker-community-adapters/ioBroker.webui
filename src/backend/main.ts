@@ -17,6 +17,7 @@ class WebUi extends utils.Adapter {
     _npmNamespace = this._instanceName + '.widgets'
     _dataNamespace = this._instanceName + '.data'
     _stateNpm = 'state.npm';
+    _stateCommand = 'webui.0.control.command';
 
     /**
      * @param {Partial<utils.AdapterOptions>} [options={}]
@@ -37,7 +38,7 @@ class WebUi extends utils.Adapter {
 
     async refreshWWW() {
         await this.runUpload();
-        this.setState('webui.0.control.command', { val: 'uiReloadPackages', ack: true });
+        this.setState(this._stateCommand, { val: 'uiReloadPackages', ack: true });
     }
 
     widgetsDir = __dirname + '/widgets';
@@ -45,6 +46,8 @@ class WebUi extends utils.Adapter {
     npmRunning = false;
 
     async creatWidgetsDirAndRestorePackageJsonIfneeded() {
+        if (this._unloaded)
+            return;
         if (!fs.existsSync(this.widgetsDir))
             await fs.promises.mkdir(this.widgetsDir)
         if (!fs.existsSync(this.widgetsDir + '/package.json')) {
@@ -60,6 +63,8 @@ class WebUi extends utils.Adapter {
     }
 
     async backupPackageJson() {
+        if (this._unloaded)
+            return;
         if (fs.existsSync(this.widgetsDir + '/package.json')) {
             if (await this.fileExistsAsync(this._dataNamespace, 'package.json')) {
                 await this.delFileAsync(this._dataNamespace, 'package.json');
@@ -73,6 +78,10 @@ class WebUi extends utils.Adapter {
         return new Promise(async resolve => {
             if (this.npmRunning) {
                 this.log.info(`NPM already running`);
+                resolve(null);
+            }
+            if (this._unloaded) {
+                this.log.info(`unloaded`);
                 resolve(null);
             }
             this.npmRunning = true;
@@ -97,6 +106,10 @@ class WebUi extends utils.Adapter {
         return new Promise(async resolve => {
             if (this.npmRunning) {
                 this.log.info(`NPM already running`);
+                resolve(null);
+            }
+            if (this._unloaded) {
+                this.log.info(`unloaded`);
                 resolve(null);
             }
             this.npmRunning = true;
@@ -128,13 +141,15 @@ class WebUi extends utils.Adapter {
         }
 
         this.states[id] = state.val;
-        if (id === 'webui.0.control.command')
-            await this.runCommand(this.states["webui.0.control.command"], this.states["webui.0.control.data"])
+        if (id === this._stateCommand)
+            await this.runCommand(this.states[this._stateCommand], this.states["webui.0.control.data"])
         await this.setStateAsync(id, state, true);
     }
 
     async createImportMapAndLoaderFiles() {
         try {
+            if (this._unloaded)
+                return;
             this.log.info(`create importMap...`);
             const imc = new ImportmapCreator(this, this.widgetsDir, '/' + this._npmNamespace + '/node_modules');
             await imc.parsePackages();
