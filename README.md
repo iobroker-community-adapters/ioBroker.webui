@@ -114,7 +114,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 0.11.0 (2023-09-11)
 - dragdrop fixes
 - screen/control size fixes
 - connected/disconnected callbacks

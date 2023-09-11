@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.10.0",
+    "version": "0.11.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.11.0": {
+        "en": "dragdrop fixes\nscreen/control size fixes\nconnected/disconnected callbacks",
+        "de": "dragdrop fixes\nbildschirm/steuerung größe korrekturen\nangeschlossene/vernetzte rückrufe",
+        "ru": "dragdrop исправления\nзафиксы размера экрана/контроля\nподключены/отключены звонки",
+        "pt": "correções de arrastardrop\ncorreções de tamanho de tela / controle\ncallbacks conectados/desconectados",
+        "nl": "dragrop fix\nscherm/controle materie herstelt\nvertaling:",
+        "fr": "dragdrop corrections\nla taille d'écran/contrôle corrige\ncallbacks connectés/connectés",
+        "it": "dragdrop correzioni\nmisura schermo/controllo correzioni\ninterconnessi/disconnessi",
+        "es": "soluciones de dragdrop\npantalla / control tamaño correcciones\ncallbacks conectados/desconectados",
+        "pl": "przepustka\nscreen/control\nlink-disconnected callback",
+        "uk": "застібки перетягування\nфіксатори розміру екрану / керування\nпідключені / відключені виклики",
+        "zh-cn": "d. 拖拉的作物装置\n筛选/控制规模\na. 联系/截断的呼吁"
+      },
       "0.10.0": {
         "en": "new script commands\nbugfix with bindings and empty events\nselect exported function in javascript\nbugfix in save of screens\ntypescript in scripts\nstarted work on translateable runtime",
         "de": "neue skriptbefehle\nbugfix mit bindungen und leeren ereignissen\nwählen sie exportierte funktion in javascript\nbugfix in bildschirmen speichern\nschrift in skripten\nbegann die arbeit an übersetzbarer laufzeit",
@@ -106,19 +119,6 @@
         "pl": "wersja pokazowa w ui",
         "uk": "версія шоу в ui",
         "zh-cn": "脚注"
-      },
-      "0.5.0": {
-        "en": "signal as property type\nremoved svg-image control\nshorter custom control tag name\nbetter dynamics editor\ndock ui fixes\ncontrol ui from backend (switch view, reload)",
-        "de": "signal als eigenschaftstyp\nsvg-bildkontrolle entfernt\nkürzere benutzerdefinierte steuerung tag name\nmehr dynamik editor\ndock ui fixes\nsteuerung ui vom backend (schalteransicht, nachladen)",
-        "ru": "сигнал как тип недвижимости\nудаленный svg-образный контроль\nshorter custom control название тега\nлучший редактор динамики\ndock ui исправления\nконтроль ui с backend (посмотреть на питомнике, перезагрузить)",
-        "pt": "sinal como tipo de propriedade\ncontrole de imagem removido\nnome de tag de controle personalizado mais curto\nmelhor editor dinâmica\ncorreções do dock ui\ncontrol ui de backend (switch view, reload)",
-        "nl": "signaal van eigendom\nverwijder de controle\nkortere gebruikscontrole naam\nbetere dynamica editor\ndock ui fixes\ncontrole ui van backend (switch view, herladen)",
-        "fr": "signal comme type de propriété\nenlevé svg-image control\nnom de marque de contrôle personnalisé plus court\nmeilleur éditeur dynamique\ndock ui corrige\ncontrol ui from backend (switch view, reload)",
-        "it": "segnale come tipo di proprietà\ncontrollo dell'immagine svg rimosso\nnome del tag di controllo personalizzato più breve\neditor di dinamiche migliori\nattacchi portuali\ncontrollo ui da backend (switch view, reload)",
-        "es": "señal como tipo de propiedad\ncontrol svg-image eliminado\nnombre de la etiqueta de control personalizado más corto\nmejor editor dinámico\ndock ui fixes\ncontrol ui desde backend (switch view, reload)",
-        "pl": "sygnał jako typ własności\nusunięta kontrola svg-image\nkrótsza nazwa ta\nlepszy edytor dynamiki\ndokować\nkontrola ui od tyłu (punkt zwrotny, przeładunek)",
-        "uk": "сигнал як тип майна\nвиданий контроль зображення\nкоротший користувальницький контроль тег\nкращий редактор динаміки\ndock ui кріплення\nконтроль ui від backend (дивитись свербіж, перезавантаження)",
-        "zh-cn": "信号\n拆除围墙控制\na. 短的习惯控制\n评 注\nck ui fix\n后端(巫术观点,重载)控制"
       }
     },
     "icon": "logo.png",
