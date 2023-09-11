@@ -84,9 +84,9 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         let globalStyle = iobrokerHandler.config?.globalStyle ?? '';
 
         if (globalStyle && style)
-            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, iobrokerHandler.gloablStylesheet, cssFromString(style)];
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, iobrokerHandler.globalStylesheet, cssFromString(style)];
         else if (globalStyle)
-            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, iobrokerHandler.gloablStylesheet];
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, iobrokerHandler.globalStylesheet];
         else if (style)
             this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, cssFromString(style)];
         else

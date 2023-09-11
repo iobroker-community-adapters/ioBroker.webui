@@ -4,6 +4,7 @@ import { IScreen } from "../interfaces/IScreen.js";
 import { IWebUiConfig } from "../interfaces/IWebUiConfig.js";
 import { IControl } from "../interfaces/IControl.js";
 import { sleep } from "../helper/Helper.js";
+import { IGlobalScript } from "../interfaces/IGlobalScript.js";
 
 //iob types as export so code completition in ui could be used
 export type StateValue = string | number | boolean | null;
@@ -63,7 +64,8 @@ class IobrokerHandler {
     imagePrefix = '/' + this.namespaceFiles + '/config/images/';
 
     config: IWebUiConfig;
-    gloablStylesheet: CSSStyleSheet;
+    globalStylesheet: CSSStyleSheet;
+    globalScriptInstance: IGlobalScript;
 
     screensChanged = new TypedEvent<string>();
     controlsChanged = new TypedEvent<string>();
@@ -134,7 +136,14 @@ class IobrokerHandler {
 
         let cfg = await this._getConfig();
         this.config = cfg ?? { globalStyle: null, globalScript: null, globalTypeScript: null, globalConfig: null };
-        this.gloablStylesheet = cssFromString(this.config.globalStyle);
+        if (this.config.globalStyle)
+            this.globalStylesheet = cssFromString(this.config.globalStyle);
+        if (this.config.globalScript) {
+            const scriptUrl = URL.createObjectURL(new Blob([this.config.globalScript], { type: 'application/javascript' }));
+            this.globalScriptInstance = await importShim(scriptUrl);
+            if (this.globalScriptInstance.init)
+                this.globalScriptInstance.init();
+        }
 
         for (let p of this._readyPromises)
             p();
@@ -356,7 +365,16 @@ class IobrokerHandler {
 
     public async saveConfig() {
         this._saveObjectToFile(this.config, this.configPath + "config.json");
-        this.gloablStylesheet = cssFromString(this.config.globalStyle);
+        this.globalStylesheet = null;
+        this.globalScriptInstance = null;
+        if (this.config.globalStyle)
+            this.globalStylesheet = cssFromString(this.config.globalStyle);
+        if (this.config.globalScript) {
+            const scriptUrl = URL.createObjectURL(new Blob([this.config.globalScript], { type: 'application/javascript' }));
+            this.globalScriptInstance = await importShim(scriptUrl);
+            if (this.globalScriptInstance.init)
+                this.globalScriptInstance.init();
+        }
         this.configChanged.emit();
     }
 
