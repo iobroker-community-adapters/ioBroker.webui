@@ -9,5 +9,5 @@ export interface IScreen {
 export interface IScreenSettings {
     width?: string;
     height?: string;
-    scale?: null | 'noneNoScroll' | 'fit';
+    //scale?: 'none' | 'noneNoScroll' | 'fit';
 }

@@ -732,6 +732,13 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         e.preventDefault();
                         return false;
                     }
+                    span.onpointerdown = async (e) => {
+                        if (data.node.data.type == 'screen') {
+                            data.node.data.screen = await iobrokerHandler.getScreen(data.node.data.name)
+                        } else if (data.node.data.type == 'customcontrol') {
+                            data.node.data.control = await iobrokerHandler.getCustomControl(data.node.data.name)
+                        }
+                    }
                 },
                 init: function (event, data) {
                     let expandChildren = (node) => {
@@ -755,12 +762,17 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     dropMarkerOffsetX: -24,
                     dropMarkerInsertOffsetX: -16,
 
-                    dragStart: async (node, data) => {
+                    dragStart: (node, data) => {
                         if (data.node.data.type == 'screen') {
                             const screen = data.node.data.name;
                             const elementDef: IElementDefinition = { tag: "iobroker-webui-screen-viewer", defaultAttributes: { 'screen-name': screen }, defaultWidth: '300px', defaultHeight: '200px' }
+                            const screenDef: IScreen = data.node.data.screen;
+                            if (screenDef?.settings?.width)
+                                elementDef.defaultWidth = screenDef.settings.width;
+                            if (screenDef?.settings?.height)
+                                elementDef.defaultHeight = screenDef.settings.height;
+                            data.dataTransfer.setData(dragDropFormatNameElementDefinition, JSON.stringify(elementDef));
                             data.effectAllowed = "all";
-                            data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
                             data.dropEffect = "copy";
                             return true;
                         } else if (data.node.data.type == 'customcontrol') {
@@ -769,23 +781,21 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             if (nm[0] === '-')
                                 nm = nm.substring(1);
                             let name = webuiCustomControlPrefix + nm;
-
                             const elementDef: IElementDefinition = { tag: name }
-                            const controlDef = await iobrokerHandler.getCustomControl(control);
-                            if (controlDef.settings.width)
+                            const controlDef: IScreen = data.node.data.control;
+                            if (controlDef?.settings.width)
                                 elementDef.defaultWidth = controlDef.settings.width;
-                            if (controlDef.settings.height)
+                            if (controlDef?.settings.height)
                                 elementDef.defaultHeight = controlDef.settings.height;
-
                             data.effectAllowed = "all";
-                            data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
+                            data.dataTransfer.setData(dragDropFormatNameElementDefinition, JSON.stringify(elementDef));
                             data.dropEffect = "copy";
                             return true;
                         } else if (data.node.data.type == 'image') {
                             const image = data.node.data.name;
                             const elementDef: IElementDefinition = { tag: "img", defaultAttributes: { 'src': iobrokerHandler.imagePrefix + image } }
                             data.effectAllowed = "all";
-                            data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
+                            data.dataTransfer.setData(dragDropFormatNameElementDefinition, JSON.stringify(elementDef));
                             data.dataTransfer.setData(dragDropFormatNamePropertyGrid, JSON.stringify({ 'type': 'image', 'text': iobrokerHandler.imagePrefix + image }));
                             data.dropEffect = "copy";
                             return true;
@@ -793,14 +803,14 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             const url = 'http://' + window.iobrokerHost + ':' + window.iobrokerPort + '/flot/index.html?' + data.node.data.name;
                             const elementDef: IElementDefinition = { tag: "iframe", defaultAttributes: { 'src': url }, defaultStyles: { 'border': '1px solid black;' }, defaultWidth: '400px', defaultHeight: '300px' }
                             data.effectAllowed = "all";
-                            data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
+                            data.dataTransfer.setData(dragDropFormatNameElementDefinition, JSON.stringify(elementDef));
                             data.dropEffect = "copy";
                             return true;
                         } else if (data.node.data.type == 'echart') {
                             const url = 'http://' + window.iobrokerHost + ':' + window.iobrokerPort + '/echarts/index.html?preset=' + data.node.data.name;
                             const elementDef: IElementDefinition = { tag: "iframe", defaultAttributes: { 'src': url }, defaultStyles: { 'border': '1px solid black;' }, defaultWidth: '400px', defaultHeight: '300px' }
                             data.effectAllowed = "all";
-                            data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
+                            data.dataTransfer.setData(dragDropFormatNameElementDefinition, JSON.stringify(elementDef));
                             data.dropEffect = "copy";
                             return true;
                         } else if (data.node.data.type == 'object') {
@@ -816,7 +826,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         } else if (data.node.data.type == 'icon') {
                             const elementDef: IElementDefinition = { tag: "img", defaultAttributes: { 'src': data.node.data.file } }
                             data.effectAllowed = "all";
-                            data.dataTransfer.setData('text/json/elementDefintion', JSON.stringify(elementDef));
+                            data.dataTransfer.setData(dragDropFormatNameElementDefinition, JSON.stringify(elementDef));
                             data.dataTransfer.setData(dragDropFormatNamePropertyGrid, JSON.stringify({ 'type': 'icon', 'text': data.node.data.file }));
                             data.dropEffect = "copy";
                             return true;
