@@ -116,20 +116,6 @@
                 "height": {
                     "type": "string"
                 },
-                "scale": {
-                    "anyOf": [
-                        {
-                            "enum": [
-                                "fit",
-                                "noneNoScroll"
-                            ],
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ]
-                },
                 "width": {
                     "type": "string"
                 }

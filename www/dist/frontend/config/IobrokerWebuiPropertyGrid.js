@@ -251,6 +251,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 let inp = document.createElement('input');
                 inp.value = currentValue ?? '';
                 inp.style.flexGrow = '1';
+                inp.style.width = '0';
                 inp.onchange = (e) => this.setPropertyValue(propertyPath, inp.value);
                 inp.onfocus = (e) => {
                     inp.selectionStart = 0;

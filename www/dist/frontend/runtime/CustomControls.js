@@ -11,11 +11,15 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
         if (this.constructor._control.settings.useGlobalStyle)
             this.shadowRoot.adoptedStyleSheets = [iobrokerHandler.globalStylesheet, ...this.shadowRoot.adoptedStyleSheets];
     }
-    connectedCallback() {
+    async connectedCallback() {
         this._parseAttributesToProperties();
         this._bindingsRefresh();
-        ScriptSystem.assignAllScripts(this.constructor._control.script, this.shadowRoot, this);
         IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
+        this._scriptObject = await ScriptSystem.assignAllScripts(this.constructor._control.script, this.shadowRoot, this);
+        this._scriptObject?.connectedCallback?.(this);
+    }
+    disconnectedCallback() {
+        this._scriptObject?.disconnectedCallback?.(this);
     }
     _getRelativeSignalsPath() {
         return this.getRootNode()?.host?._getRelativeSignalsPath?.() ?? '';

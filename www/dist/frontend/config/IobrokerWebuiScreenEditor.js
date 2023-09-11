@@ -64,6 +64,9 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         this.shadowRoot.appendChild(this.documentContainer);
         setTimeout(() => {
             this.applyBindings();
+            this.setWidth(this._settings.width);
+            this.setHeight(this._settings.height);
+            this.documentContainer.designerView.zoomToFit();
             this.documentContainer.designerView.designerCanvas.onContentChanged.on(() => {
                 this.applyBindings();
             });
@@ -120,6 +123,12 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         this._settingsChanged = window.appShell.settingsEditor.propertyChanged.on(() => {
             this.handlePropertyChanges();
         });
+    }
+    setWidth(w) {
+        this.documentContainer.designerView.designerWidth = w ?? '100%';
+    }
+    setHeight(h) {
+        this.documentContainer.designerView.designerHeight = h ?? '100%';
     }
     handlePropertyChanges() {
         this.documentContainer.designerView.designerWidth = this._settings.width ?? '';

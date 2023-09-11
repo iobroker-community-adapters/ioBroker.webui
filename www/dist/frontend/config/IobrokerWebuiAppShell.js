@@ -40,6 +40,16 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         this.eventsAssignment = this._getDomElement('eventsList');
         this.settingsEditor = this._getDomElement('settingsEditor');
         this.settingsEditor.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
+        this.settingsEditor.propertyChanged.on((prp) => {
+            if (prp.property == 'width') {
+                if (this._dockManager.activeDocument instanceof IobrokerWebuiScreenEditor)
+                    this._dockManager.activeDocument.setWidth(prp.newValue);
+            }
+            else if (prp.property == 'height') {
+                if (this._dockManager.activeDocument instanceof IobrokerWebuiScreenEditor)
+                    this._dockManager.activeDocument.setHeight(prp.newValue);
+            }
+        });
         const linkElement = document.createElement("link");
         linkElement.rel = "stylesheet";
         linkElement.href = "./assets/dockspawn.css";
