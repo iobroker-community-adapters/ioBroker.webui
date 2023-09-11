@@ -73,7 +73,8 @@ function cleanupNodeModules() {
         "./www/**/tsconfig.json",
         "./www/**/*.bat",
         "./www/node_modules/mobile-drag-drop/**/*",
-        "!./www/node_modules/mobile-drag-drop/index.js"
+        "!./www/node_modules/mobile-drag-drop/index.js",
+        "!./www/node_modules/mobile-drag-drop/default.css"
     ]
 
     return deleteAsync(notUsed);
