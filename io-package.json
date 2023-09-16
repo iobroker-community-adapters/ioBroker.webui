@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.11.0",
+    "version": "0.11.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.11.1": {
+        "en": "fix build on windows",
+        "de": "befestigung auf fenstern",
+        "ru": "исправить построить на окнах",
+        "pt": "corrigir a construção em janelas",
+        "nl": "vertaling:",
+        "fr": "réparer les fenêtres",
+        "it": "fissare la costruzione su finestre",
+        "es": "fijar la construcción en ventanas",
+        "pl": "budowanie okien",
+        "uk": "кріплення на вікна",
+        "zh-cn": "fix 在窗口的基础上建造"
+      },
       "0.11.0": {
         "en": "dragdrop fixes\nscreen/control size fixes\nconnected/disconnected callbacks",
         "de": "dragdrop fixes\nbildschirm/steuerung größe korrekturen\nangeschlossene/vernetzte rückrufe",
@@ -106,19 +119,6 @@
         "pl": "usunąć wiele niezauważonych plików z instalacji",
         "uk": "видалено багато необрізних файлів з установки",
         "zh-cn": "拆除许多需要的档案"
-      },
-      "0.5.1": {
-        "en": "show version in ui",
-        "de": "ausführung in ui",
-        "ru": "показать версию в ui",
-        "pt": "mostrar versão em ui",
-        "nl": "show versie inui",
-        "fr": "show version in ui",
-        "it": "mostra la versione in ui",
-        "es": "mostrar versión en ui",
-        "pl": "wersja pokazowa w ui",
-        "uk": "версія шоу в ui",
-        "zh-cn": "脚注"
       }
     },
     "icon": "logo.png",
