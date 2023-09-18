@@ -73,7 +73,7 @@
     "metro4-dist": "^4.5.0",
     "mobile-drag-drop": "^3.0.0-rc.0",
     "mocha": "^10.2.0",
-    "monaco-editor": "^0.41.0",
+    "monaco-editor": "^0.43.0",
     "nyc": "^15.1.0",
     "sinon-chai": "^3.7.0",
     "ts-node": "^10.9.1",
