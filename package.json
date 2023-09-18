@@ -53,7 +53,7 @@
     "@node-projects/web-component-designer": "^0.0.292",
     "@types/jquery": "^3.5.18",
     "@types/jquery.fancytree": "^0.0.7",
-    "@types/json-schema": "^7.0.12",
+    "@types/json-schema": "^7.0.13",
     "@web/dev-server": "^0.3.1",
     "chai": "^4.3.8",
     "chai-as-promised": "^7.1.1",
