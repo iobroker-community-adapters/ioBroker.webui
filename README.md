@@ -12,14 +12,18 @@ It includes features like:
 
   - own simple scripting language
   - binding to ioBroker objects including converters & javascript expressions
+  - paste of images from clipboard
   - drag drop of external images
   - drag drop of ioBroker objects to automaticy create bindings
-  - relative signal paths to ioBroker objects
+  - drag drop of ioBroker objects to Properties to create Bindings to them
+  - relative signal paths to ioBroker objects in screens (the full path can be hand over from outside to screen)
   - split view edit of html code
-  - global styling support
+  - global stylesheet support
   - usage of npm packages containing webcomponents
   - screens inside of screens
-  - icons from habpanel included
+  - use all icon packages from ioBroker
+  - use charts from ioBroker
+  - use combined signals object id's  e.g. "webui.0.test3.{webui.0.test3.select}" -> this will use the value from webui.0.test3.select for the signal name
 
 ## Installation
 
