@@ -7,6 +7,7 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
         this.twoWay = false;
         this.expression = '';
         this.objectNames = '';
+        this.events = '';
         this.invert = false;
         this.converters = [];
         this._activeRow = -1;
@@ -33,6 +34,8 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
                     this.converters.push({ key: c, value: this._binding.converter[c] });
                 }
             }
+            if (this._binding.changedEvents && this._binding.changedEvents.length)
+                this.events = this._binding.changedEvents.join(';');
         }
         this._bindingsParse();
     }
@@ -49,6 +52,11 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
     _clear() {
         this.objectNames = '';
         this._bindingsRefresh();
+    }
+    _refresh() {
+        requestAnimationFrame(() => {
+            this._bindingsRefresh();
+        });
     }
     async _select() {
         let b = new BindableObjectsBrowser();
@@ -106,8 +114,10 @@ IobrokerWebuiDynamicsEditor.template = html `
                             </select>
                         </div>
                         <div class="row">
-                            <input type="checkbox" disabled="[[!this.twoWayPossible]]" checked="{{this.twoWay::change}}">
+                            <input type="checkbox" disabled="[[!this.twoWayPossible]]" checked="{{this.twoWay::change}}" @change="_refresh">
                             <span>two way binding</span>
+                            <span style="margin-left: 15px">events:&nbsp;</span>
+                            <input title="to use multiple events, seprate them with semicolon (;)" class="row" disabled="[[!this.twoWay]]" value="{{?this.events::change}}" style="flex-grow: 1; margin-right: 10px;">
                         </div>
                         <div class="row">
                             <input type="checkbox" checked="{{this.invert::change}}">
@@ -226,6 +236,7 @@ IobrokerWebuiDynamicsEditor.properties = {
     twoWay: Boolean,
     expression: String,
     objectNames: String,
+    events: String,
     invert: Boolean,
     converters: Array
 };
