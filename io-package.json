@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.12.2",
+    "version": "0.12.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.12.3": {
+        "en": "after eval removal, functions need a return",
+        "de": "nach eval entfernung, funktionen brauchen eine rückgabe",
+        "ru": "после удаления eval функции нуждаются в возврате",
+        "pt": "após a remoção do eval, as funções precisam de um retorno",
+        "nl": "na evaluatieverwijdering, hebben functies een terugkeer nodig",
+        "fr": "après enlèvement, les fonctions ont besoin d'un retour",
+        "it": "dopo la rimozione evale, le funzioni hanno bisogno di un ritorno",
+        "es": "después de la eliminación de eval, las funciones necesitan un retorno",
+        "pl": "po usunięciu ewalu funkcje wymagają zwrotu",
+        "uk": "після видалення овд, функції потрібно повернути",
+        "zh-cn": "在离去之后,需要恢复职能。"
+      },
       "0.12.2": {
         "en": "events names for 2way bindings need a editor",
         "de": "veranstaltungen namen für 2way bindungen benötigen einen editor",
@@ -106,19 +119,6 @@
         "pl": "przepustka\nscreen/control\nlink-disconnected callback",
         "uk": "застібки перетягування\nфіксатори розміру екрану / керування\nпідключені / відключені виклики",
         "zh-cn": "d. 拖拉的作物装置\n筛选/控制规模\na. 联系/截断的呼吁"
-      },
-      "0.10.0": {
-        "en": "new script commands\nbugfix with bindings and empty events\nselect exported function in javascript\nbugfix in save of screens\ntypescript in scripts\nstarted work on translateable runtime",
-        "de": "neue skriptbefehle\nbugfix mit bindungen und leeren ereignissen\nwählen sie exportierte funktion in javascript\nbugfix in bildschirmen speichern\nschrift in skripten\nbegann die arbeit an übersetzbarer laufzeit",
-        "ru": "новые команды сценариев\nbugfix с привязками и пустыми событиями\nвыберите экспортированную функцию в javascript\nbugfix в спасении экранов\ntypescript в сценариях\nначал работу над переводимым runtime",
-        "pt": "novos comandos de script\nbugfix com ligações e eventos vazios\nselecionar função exportada no javascript\nbugfix em salvar de telas\ntypescript em scripts\ncomeçou a trabalhar em tempo de execução traduzível",
-        "nl": "nieuw script commandeert\nquality over quantity (qoq) releases vertaling:\ngeselecteerde functie in javascript\nquality over quantity (qoq) releases vertaling:\nscript in scripts\nbegon te werken aan vertaling",
-        "fr": "nouvelles commandes script\nbugfix avec reliures et événements vides\nselect exported function in javascript\nbugfix dans la sauvegarde des écrans\ntypescript in scripts\ncommencé le travail sur le temps d'exécution traduisible",
-        "it": "nuovi comandi script\nbugfix con attacchi ed eventi vuoti\nselezionare la funzione esportata in javascript\nbugfix in salva di schermi\ntypescript in script\nlavoro iniziato su runtime traducibile",
-        "es": "comandos nuevos script\nbugfix con encuadernaciones y eventos vacíos\nfunción exportada selecta en javascript\nbugfix en guardar pantallas\ntiposcript en scripts\ncomenzó a trabajar en tiempo de ejecución traducible",
-        "pl": "nowy scenariusz\ntrąbka z wiązkami i pustymi zdarzeniami\nwybrane funkcje eksportowe w javascriptu\ntrąbka na ekranie\npisownia\nrozpoczęła pracę nad translatywną runtime",
-        "uk": "нові команди скриптів\nвиправлення помилок з обов’язками та порожніми подіями\nвиберіть експортну функцію в javascript\nвиправлення помилок у збереженні екранів\nскрипт у скриптах\nпочав працювати на перекладацьких runtime",
-        "zh-cn": "新员额\nb 有约束力和空洞事件的预兆\n选择在手木图中的出口功能\nb 用于挽救屏幕\n说明\n启动可兑换经营时间的工作"
       }
     },
     "icon": "logo.png",
