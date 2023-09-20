@@ -13,6 +13,69 @@ export const bindingPrefixContent = 'bind-content:';
 
 export type namedBinding = [name: string, binding: IIobrokerWebuiBinding];
 
+export class IndirectSignal {
+    private parts: string[];
+    private signals: string[];
+    private values: string[];
+    private unsubscribeList: ((id: string, value: any) => void)[] = [];
+    private unsubscribeTargetValue: ((id: string, value: any) => void);
+    private combinedName: string;
+
+    constructor(id: string) {
+        this.parseIndirectBinding(id);
+        this.values = new Array(this.signals.length);
+        for (let i = 0; i < this.signals.length; i++) {
+            let cb = (id: string, value: any) => this.handleValueChanged(value.val, i);
+            this.unsubscribeList.push(cb);
+            iobrokerHandler.connection.subscribeState(this.signals[i], cb);
+        }
+    }
+
+    private parseIndirectBinding(id: string) {
+        let parts: string[] = [];
+        let signals: string[] = [];
+        let tx = '';
+        for (let n = 0; n < id.length; n++) {
+            if (id[n] == '{') {
+                parts.push(tx);
+                tx = '';
+            } else if (id[n] == '}') {
+                signals.push(tx);
+                tx = '';
+            } else {
+                tx += id[n];
+            }
+        }
+        parts.push(tx);
+        this.parts = parts;
+        this.signals = signals;
+    }
+
+    handleValueChanged(value: any, index: number) {
+        this.values[index] = value;
+        let nm = this.parts[0];
+        for (let i = 0; i < this.parts.length; i++) {
+            let v = this.values[i];
+            if (v == null)
+                return;
+            nm += v + this.parts[i + 1];
+        }
+        if (this.combinedName != nm) {
+            if (this.unsubscribeTargetValue) {
+                iobrokerHandler.connection.unsubscribeState(this.combinedName, this.unsubscribeTargetValue);
+            }
+            this.combinedName = nm;
+            let cb = (id: string, value: any) => this.handleValueChangedTargetValue(value.val);
+            this.unsubscribeTargetValue = cb;
+            iobrokerHandler.connection.subscribeState(nm, cb);
+        }
+    }
+
+    handleValueChangedTargetValue(value: any) {
+
+    }
+}
+
 export class IobrokerWebuiBindingsHelper {
     static parseBinding(element: Element, name: string, value: string, bindingTarget: BindingTarget, prefix: string): namedBinding {
         const propname = name.substring(prefix.length);
@@ -236,6 +299,8 @@ export class IobrokerWebuiBindingsHelper {
         }
     }
 
+
+
     static handleValueChanged(element: Element, binding: namedBinding, value: any, valuesObject: any[], index: number) {
         let v: (number | boolean | string) = value;
 
@@ -254,13 +319,14 @@ export class IobrokerWebuiBindingsHelper {
         }
         if (binding[1].expression) {
             valuesObject[index] = value;
-            let evalstring = ''
-            for (let i = 0; i < valuesObject.length; i++) {
-                evalstring += 'let  __' + i + ' = valuesObject[' + i + '];\n';
+            if (!binding[1].compiledExpression) {
+                let names: string[] = new Array(valuesObject.length);
+                for (let i = 0; i < valuesObject.length; i++) {
+                    names[i] = '__' + i;
+                }
+                binding[1].compiledExpression = new Function(<any>names, binding[1].expression);
             }
-            evalstring += binding[1].expression;
-            var valuesObject = valuesObject;
-            v = eval(evalstring);
+            v = binding[1].compiledExpression(...valuesObject);
         }
         if (binding[1].converter) {
             const stringValue = <string>(v != null ? v.toString() : v);
