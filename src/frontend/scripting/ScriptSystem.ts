@@ -39,12 +39,6 @@ export class ScriptSystem {
                     break;
                 }
 
-                case 'Delay': {
-                    const value = await ScriptSystem.getValue(c.value, outerContext);
-                    await sleep(value)
-                    break;
-                }
-
                 case 'SwitchLanguage': {
                     const language = await ScriptSystem.getValue(c.language, outerContext);
                     iobrokerHandler.language = language;
@@ -103,10 +97,12 @@ export class ScriptSystem {
 
                 case 'Javascript': {
                     const script = await ScriptSystem.getValue(c.script, outerContext);
-                    var context: { event: Event, element: Element } = outerContext; // make context accessible from script
+                    let context: { event: Event, element: Element } = outerContext; // make context accessible from script
                     (<any>context).shadowRoot = (<ShadowRoot>context.element.getRootNode());
                     (<any>context).instance = (<any>context).shadowRoot.host;
-                    eval(script);
+                    if (!(<any>c).compiledScript)
+                        (<any>c).compiledScript = new Function('context', script);
+                    (<any>c).compiledScript();
                     break;
                 }
 
@@ -162,7 +158,7 @@ export class ScriptSystem {
         return value;
     }
 
-    static async assignAllScripts(javascriptCode: string, shadowRoot: ShadowRoot, instance: HTMLElement) : Promise<ICustomControlScript> {
+    static async assignAllScripts(javascriptCode: string, shadowRoot: ShadowRoot, instance: HTMLElement): Promise<ICustomControlScript> {
         const allElements = shadowRoot.querySelectorAll('*');
         let jsObject: ICustomControlScript = null;
         if (javascriptCode) {
