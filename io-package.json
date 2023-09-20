@@ -149,9 +149,7 @@
         "web": ">=3.4.16"
       }
     ],
-    "restartAdapters": [
-      "webui"
-    ],
+    "restartAdapters": [],
     "serviceStates": false,
     "singleton": true,
     "type": "visualization",
