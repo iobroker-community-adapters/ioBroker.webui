@@ -366,7 +366,10 @@ export class IobrokerWebuiBindingsHelper {
                 for (let i = 0; i < valuesObject.length; i++) {
                     names[i] = '__' + i;
                 }
-                binding[1].compiledExpression = new Function(<any>names, binding[1].expression);
+                if (binding[1].expression.includes('return '))
+                    binding[1].compiledExpression = new Function(<any>names, binding[1].expression);
+                else
+                    binding[1].compiledExpression = new Function(<any>names, 'return ' + binding[1].expression);
             }
             v = binding[1].compiledExpression(...valuesObject);
         }
