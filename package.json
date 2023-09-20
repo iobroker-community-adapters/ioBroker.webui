@@ -1,6 +1,6 @@
 {
   "name": "iobroker.webui",
-  "version": "0.11.0",
+  "version": "0.11.2",
   "description": "ioBroker webui",
   "type": "module",
   "main": "dist/backend/main.js",
@@ -9,7 +9,7 @@
     "start": "web-dev-server --open",
     "startwww": "cd www && web-dev-server --node-resolve --open",
     "prepublishOnly": "npm run build",
-    "build": "npm i && npm run reflection && rm -r -f www && rm -r -f dist && tsc && gulp",
+    "build": "npm i && npm run reflection && gulp delAll && tsc && gulp",
     "test:ts": "mocha --config test/mocharc.custom.json test/tests/*.js",
     "test:package": "mocha test/package --exit",
     "test:unit": "mocha test/unit --exit",
@@ -19,8 +19,8 @@
     "coverage": "nyc npm run test:ts",
     "lint": "eslint --ext .ts src/",
     "reflection": "npm run reflection-scripts && npm run reflection-props",
-    "reflection-scripts": "typescript-json-schema './src/frontend/scripting/ScriptCommands.ts' '*' --ignoreErrors --strictNullChecks > ./src/frontend/generated/ScriptCommands.json",
-    "reflection-props": "typescript-json-schema './src/frontend/interfaces/*.ts' '*' --ignoreErrors --strictNullChecks > ./src/frontend/generated/Properties.json",
+    "reflection-scripts": "cross-env typescript-json-schema './src/frontend/scripting/ScriptCommands.ts' '*' --ignoreErrors --strictNullChecks > ./src/frontend/generated/ScriptCommands.json",
+    "reflection-props": "cross-env typescript-json-schema './src/frontend/interfaces/*.ts' '*' --ignoreErrors --strictNullChecks > ./src/frontend/generated/Properties.json",
     "release": "release-script"
   },
   "repository": {
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.0.3",
-    "@types/node": "^20.6.0"
+    "@types/node": "^20.6.2"
   },
   "devDependencies": {
     "@adobe/css-tools": "4.3.1",
@@ -47,17 +47,18 @@
     "@alcalzone/release-script-plugin-license": "^3.5.9",
     "@iobroker/socket-client": "^2.3.4",
     "@iobroker/testing": "^4.1.0",
-    "@node-projects/base-custom-webcomponent": "0.17.2",
+    "@node-projects/base-custom-webcomponent": "0.18.1",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^6.1.5",
     "@node-projects/web-component-designer": "^0.0.292",
-    "@types/jquery": "^3.5.18",
-    "@types/jquery.fancytree": "^0.0.7",
-    "@types/json-schema": "^7.0.12",
+    "@types/jquery": "^3.5.19",
+    "@types/jquery.fancytree": "^0.0.8",
+    "@types/json-schema": "^7.0.13",
     "@web/dev-server": "^0.3.1",
     "chai": "^4.3.8",
     "chai-as-promised": "^7.1.1",
     "construct-style-sheets-polyfill": "^3.1.0",
+    "cross-env": "^7.0.3",
     "del": "^7.1.0",
     "dock-spawn-ts": "^2.521.0",
     "es-module-shims": "^1.8.0",
@@ -72,7 +73,7 @@
     "metro4-dist": "^4.5.0",
     "mobile-drag-drop": "^3.0.0-rc.0",
     "mocha": "^10.2.0",
-    "monaco-editor": "^0.41.0",
+    "monaco-editor": "^0.43.0",
     "nyc": "^15.1.0",
     "sinon-chai": "^3.7.0",
     "ts-node": "^10.9.1",

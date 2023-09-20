@@ -98,6 +98,15 @@ function copyDist() {
         .pipe(dest('./www/dist'));
 }
 
+export function delAll() {
+    let notUsed = [
+        "./www",
+        "./dist"
+    ]
+
+    return deleteAsync(notUsed);
+}
+
 function cleanupDist() {
     let notUsed = [
         "./www/dist/backend"

@@ -64,8 +64,15 @@ class WebUi extends utils.Adapter {
             await this.writeFileAsync(this._dataNamespace, 'package.json', data);
         }
     }
+    checkPackageName(name) {
+        return /[a-z@\-_\/]/.test(name);
+    }
     installNpm(name) {
         return new Promise(async (resolve) => {
+            if (!this.checkPackageName(name)) {
+                this.log.error(`Invalid NPM Package Name: ${name}`);
+                resolve(null);
+            }
             if (this.npmRunning) {
                 this.log.info(`NPM already running`);
                 resolve(null);
@@ -93,6 +100,10 @@ class WebUi extends utils.Adapter {
     }
     removeNpm(name) {
         return new Promise(async (resolve) => {
+            if (!this.checkPackageName(name)) {
+                this.log.error(`Invalid NPM Package Name: ${name}`);
+                resolve(null);
+            }
             if (this.npmRunning) {
                 this.log.info(`NPM already running`);
                 resolve(null);

@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.11.0",
+    "version": "0.11.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,32 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.11.2": {
+        "en": "check npm package name",
+        "de": "npm paketname",
+        "ru": "проверьте имя пакета npm",
+        "pt": "check npm nome do pacote",
+        "nl": "controleer de naam npm",
+        "fr": "vérifier le nom du paquet npm",
+        "it": "check npm nome del pacchetto",
+        "es": "check npm nombre del paquete",
+        "pl": "pakiet",
+        "uk": "ім'я пакета npm",
+        "zh-cn": "检查包件"
+      },
+      "0.11.1": {
+        "en": "fix build on windows",
+        "de": "befestigung auf fenstern",
+        "ru": "исправить построить на окнах",
+        "pt": "corrigir a construção em janelas",
+        "nl": "vertaling:",
+        "fr": "réparer les fenêtres",
+        "it": "fissare la costruzione su finestre",
+        "es": "fijar la construcción en ventanas",
+        "pl": "budowanie okien",
+        "uk": "кріплення на вікна",
+        "zh-cn": "fix 在窗口的基础上建造"
+      },
       "0.11.0": {
         "en": "dragdrop fixes\nscreen/control size fixes\nconnected/disconnected callbacks",
         "de": "dragdrop fixes\nbildschirm/steuerung größe korrekturen\nangeschlossene/vernetzte rückrufe",
@@ -93,32 +119,6 @@
         "pl": "sklepy i kontrola mają teraz ustawienia (współczucie, wysokość, użycie GlobalStyle)",
         "uk": "екрани та елементи керування тепер настройки (ширина, висота, useGlobalStyle)",
         "zh-cn": "筛查和控制目前有环境(最坏、高强度、全球安全线)"
-      },
-      "0.6.0": {
-        "en": "removed many uneeded files from installation",
-        "de": "viele unededed dateien von der installation entfernt",
-        "ru": "удалено много ненужных файлов с установки",
-        "pt": "removeu muitos arquivos não feitos da instalação",
-        "nl": "_",
-        "fr": "supprimé beaucoup de fichiers non comestibles de l'installation",
-        "it": "rimosso molti file non inviati dall'installazione",
-        "es": "quitar muchos archivos sin editar de la instalación",
-        "pl": "usunąć wiele niezauważonych plików z instalacji",
-        "uk": "видалено багато необрізних файлів з установки",
-        "zh-cn": "拆除许多需要的档案"
-      },
-      "0.5.1": {
-        "en": "show version in ui",
-        "de": "ausführung in ui",
-        "ru": "показать версию в ui",
-        "pt": "mostrar versão em ui",
-        "nl": "show versie inui",
-        "fr": "show version in ui",
-        "it": "mostra la versione in ui",
-        "es": "mostrar versión en ui",
-        "pl": "wersja pokazowa w ui",
-        "uk": "версія шоу в ui",
-        "zh-cn": "脚注"
       }
     },
     "icon": "logo.png",
