@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.11.2",
+    "version": "0.12.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.12.0": {
+        "en": "support indirect bindings via {...} in signals (like in vis)",
+        "de": "indirekte bindungen über {...} in signalen (wie in vis) unterstützen",
+        "ru": "поддержка непрямых привязок через {...} в сигналах (как в vis)",
+        "pt": "suporte ligações indiretas via {...} em sinais (como em vis)",
+        "nl": "ondersteuning indirecte bindingen via... in signalen zoals in zicht",
+        "fr": "soutenir les liaisons indirectes via {...} dans les signaux (comme dans vis)",
+        "it": "supporti indiretti tramite {...} in segnali (come in vis)",
+        "es": "soporte de unión indirecta vía {...} en señales (como en vis)",
+        "pl": "wsparcie pośrednie poprzez {...} w sygnałach (np. w vis)",
+        "uk": "підтримка непрямих зв'язків через {...} в сигналах (наприклад, в vis)",
+        "zh-cn": "支持间接具有约束力的信号(例如)"
+      },
       "0.11.2": {
         "en": "check npm package name",
         "de": "npm paketname",
@@ -106,19 +119,6 @@
         "pl": "zaktualizator dodać i naprawić niektóre komendy\nskrypty ruchowe lub kontrolne z kodu html\ndodać do edytora javascript\nbłąd w stany, w których nieważne jest po świeżej instalacji\naktualnie nowa praca\nuaktualniać ramy",
         "uk": "оновлення дизайнера, щоб додати і виправити деякі команди\nперемістити екран/контроль сценарії з html коду\nдодати перегляд редактора javascript\nвиправлення помилок при станах, де null після свіжої установки\nдизайнерські додатки тепер працюють знову\ndocking framework оновлено, причина помилок з undocking",
         "zh-cn": "更新设计员以增加和固定一些指挥\n导 言\n增 编\nb 在新安装装置后失效的国家\n设计的附加情况现在再次工作\n检查框架最新更新,带宽度的制药"
-      },
-      "0.7.0": {
-        "en": "screens and controls have now settings (width, height, useGlobalStyle)",
-        "de": "bildschirme und Bedienelemente haben nun Einstellungen (Breite, Höhe, Verwendung GlobalStyle)",
-        "ru": "экраны и контроль теперь имеют настройки (ширина, высота, использованиеGlobalStyle)",
-        "pt": "telas e controles agora têm configurações (largura, altura, usoGlobalStyle)",
-        "nl": "schermen en controles hebben nu plaatsen (width, lengte, gebruik GlobalStyle)",
-        "fr": "les écrans et les commandes ont maintenant des réglages (largeur, hauteur, utilisationGlobalStyle)",
-        "it": "schermi e controlli hanno ora impostazioni (larghezza, altezza, usoGlobalStyle)",
-        "es": "pantallas y controles tienen ahora configuraciones (ancho, altura, usoGlobalStyle)",
-        "pl": "sklepy i kontrola mają teraz ustawienia (współczucie, wysokość, użycie GlobalStyle)",
-        "uk": "екрани та елементи керування тепер настройки (ширина, висота, useGlobalStyle)",
-        "zh-cn": "筛查和控制目前有环境(最坏、高强度、全球安全线)"
       }
     },
     "icon": "logo.png",

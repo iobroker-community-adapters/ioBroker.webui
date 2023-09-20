@@ -114,7 +114,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 0.12.0 (2023-09-20)
 - support indirect bindings via {...} in signals (like in vis)
 
 ### 0.11.2 (2023-09-17)
