@@ -79,7 +79,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         this.documentContainer.additionalStyleString = iobrokerHandler.config?.globalStyle ?? '';
 
         if (html) {
-            this.documentContainer.designerView.parseHTML(html, true);
+            this.documentContainer.content = html;
             this.handlePropertyChanges();
         }
 
