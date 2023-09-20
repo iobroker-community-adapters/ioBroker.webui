@@ -20,8 +20,11 @@ export class IndirectSignal {
     private unsubscribeList: ((id: string, value: any) => void)[] = [];
     private unsubscribeTargetValue: ((id: string, value: any) => void);
     private combinedName: string;
+    private disposed: boolean;
+    private valueChangedCb: (value: any) => void
 
-    constructor(id: string) {
+    constructor(id: string, valueChangedCb: (value: any) => void) {
+        this.valueChangedCb = valueChangedCb;
         this.parseIndirectBinding(id);
         this.values = new Array(this.signals.length);
         for (let i = 0; i < this.signals.length; i++) {
@@ -54,7 +57,7 @@ export class IndirectSignal {
     handleValueChanged(value: any, index: number) {
         this.values[index] = value;
         let nm = this.parts[0];
-        for (let i = 0; i < this.parts.length; i++) {
+        for (let i = 0; i < this.parts.length - 1; i++) {
             let v = this.values[i];
             if (v == null)
                 return;
@@ -64,15 +67,24 @@ export class IndirectSignal {
             if (this.unsubscribeTargetValue) {
                 iobrokerHandler.connection.unsubscribeState(this.combinedName, this.unsubscribeTargetValue);
             }
-            this.combinedName = nm;
-            let cb = (id: string, value: any) => this.handleValueChangedTargetValue(value.val);
-            this.unsubscribeTargetValue = cb;
-            iobrokerHandler.connection.subscribeState(nm, cb);
+            if (!this.disposed) {
+                this.combinedName = nm;
+                let cb = (id: string, value: any) => this.valueChangedCb(value);
+                this.unsubscribeTargetValue = cb;
+                iobrokerHandler.connection.subscribeState(nm, cb);
+            }
         }
     }
 
-    handleValueChangedTargetValue(value: any) {
-
+    dispose() {
+        this.disposed = true;
+        if (this.unsubscribeTargetValue) {
+            iobrokerHandler.connection.unsubscribeState(this.combinedName, this.unsubscribeTargetValue);
+            this.unsubscribeTargetValue = null;
+        }
+        for (let i = 0; i < this.signals.length; i++) {
+            iobrokerHandler.connection.unsubscribeState(this.signals[i], this.unsubscribeList[i]);
+        }
     }
 }
 
@@ -248,7 +260,7 @@ export class IobrokerWebuiBindingsHelper {
             }
         }
         let unsubscribeList: ((id: string, value: any) => void)[] = [];
-        let evtUnsubscriptions: (() => void)[];
+        let cleanupCalls: (() => void)[];
 
         let valuesObject = new Array(signals.length);
         for (let i = 0; i < signals.length; i++) {
@@ -258,16 +270,23 @@ export class IobrokerWebuiBindingsHelper {
                     const nm = s.substring(1);
                     let evtCallback = () => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i);
                     root.addEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback);
-                    if (!evtUnsubscriptions)
-                        evtUnsubscriptions = [];
-                    evtUnsubscriptions.push(() => root.removeEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback));
+                    if (!cleanupCalls)
+                        cleanupCalls = [];
+                    cleanupCalls.push(() => root.removeEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback));
                     IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i);
                 }
             } else {
-                let cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
-                unsubscribeList.push(cb);
-                iobrokerHandler.connection.subscribeState(s, cb);
-                iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i));
+                if (s.includes('{')) {
+                    let indirectSignal = new IndirectSignal(s, (value) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i));
+                    if (!cleanupCalls)
+                        cleanupCalls = [];
+                    cleanupCalls.push(() => indirectSignal.dispose());
+                } else {
+                    let cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
+                    unsubscribeList.push(cb);
+                    iobrokerHandler.connection.subscribeState(s, cb);
+                    iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i));
+                }
                 if (binding[1].twoWay) {
                     for (let e of binding[1].events) {
                         const evt = element[e];
@@ -291,15 +310,13 @@ export class IobrokerWebuiBindingsHelper {
             for (let i = 0; i < signals.length; i++) {
                 iobrokerHandler.connection.unsubscribeState(signals[i], unsubscribeList[i]);
             }
-            if (evtUnsubscriptions) {
-                for (let e of evtUnsubscriptions) {
+            if (cleanupCalls) {
+                for (let e of cleanupCalls) {
                     e();
                 }
             }
         }
     }
-
-
 
     static handleValueChanged(element: Element, binding: namedBinding, value: any, valuesObject: any[], index: number) {
         let v: (number | boolean | string) = value;
@@ -373,11 +390,11 @@ export class IobrokerWebuiBindingsHelper {
         if (binding[1].inverted)
             v = !v;
         if (binding[1].target == BindingTarget.property)
-            element[binding[0]] = v
+            element[binding[0]] = v;
         else if (binding[1].target == BindingTarget.attribute)
-            element.setAttribute(binding[0], <string>v)
+            element.setAttribute(binding[0], <string>v);
         else if (binding[1].target == BindingTarget.css)
-            (<HTMLElement>element).style[binding[0]] = v
+            (<HTMLElement>element).style[binding[0]] = v;
     }
 }
 
