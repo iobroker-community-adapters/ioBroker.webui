@@ -86,6 +86,12 @@ export class IndirectSignal {
             iobrokerHandler.connection.unsubscribeState(this.signals[i], this.unsubscribeList[i]);
         }
     }
+
+    setState(value) {
+        if (!this.disposed) {
+            iobrokerHandler.connection.setState(this.combinedName, value);
+        }
+    }
 }
 
 export class IobrokerWebuiBindingsHelper {
@@ -281,28 +287,45 @@ export class IobrokerWebuiBindingsHelper {
                     if (!cleanupCalls)
                         cleanupCalls = [];
                     cleanupCalls.push(() => indirectSignal.dispose());
+                    if (binding[1].twoWay) {
+                        for (let e of binding[1].events) {
+                            const evt = element[e];
+                            if (evt instanceof TypedEvent) {
+                                evt.on(() => {
+                                    if (binding[1].target == BindingTarget.property)
+                                        indirectSignal.setState(element[binding[0]]);
+                                })
+                            } else {
+                                element.addEventListener(e, () => {
+                                    if (binding[1].target == BindingTarget.property)
+                                        indirectSignal.setState(element[binding[0]]);
+                                });
+                            }
+                        }
+                    }
                 } else {
                     let cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
                     unsubscribeList.push(cb);
                     iobrokerHandler.connection.subscribeState(s, cb);
                     iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i));
-                }
-                if (binding[1].twoWay) {
-                    for (let e of binding[1].events) {
-                        const evt = element[e];
-                        if (evt instanceof TypedEvent) {
-                            evt.on(() => {
-                                if (binding[1].target == BindingTarget.property)
-                                    iobrokerHandler.connection.setState(s, element[binding[0]]);
-                            })
-                        } else {
-                            element.addEventListener(e, () => {
-                                if (binding[1].target == BindingTarget.property)
-                                    iobrokerHandler.connection.setState(s, element[binding[0]]);
-                            });
+                    if (binding[1].twoWay) {
+                        for (let e of binding[1].events) {
+                            const evt = element[e];
+                            if (evt instanceof TypedEvent) {
+                                evt.on(() => {
+                                    if (binding[1].target == BindingTarget.property)
+                                        iobrokerHandler.connection.setState(s, element[binding[0]]);
+                                })
+                            } else {
+                                element.addEventListener(e, () => {
+                                    if (binding[1].target == BindingTarget.property)
+                                        iobrokerHandler.connection.setState(s, element[binding[0]]);
+                                });
+                            }
                         }
                     }
                 }
+
             }
         }
 
