@@ -71,6 +71,8 @@ serviceContainer.config.openBindingsEditor = async (property, designItems, bindi
             }
             bnd.converter = cObj;
         }
+        if (dynEdt.events)
+            bnd.events = dynEdt.events.split(';');
         let serializedBnd = IobrokerWebuiBindingsHelper.serializeBinding(designItems[0].element, property.name, bnd);
         let group = designItems[0].openGroup('edit_binding');
         designItems[0].setAttribute(serializedBnd[0], serializedBnd[1]);

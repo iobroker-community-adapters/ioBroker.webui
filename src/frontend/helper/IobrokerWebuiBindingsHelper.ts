@@ -109,7 +109,7 @@ export class IobrokerWebuiBindingsHelper {
                 binding.twoWay = true;
                 if (element instanceof HTMLInputElement)
                     binding.events = ['change'];
-                else if (element instanceof HTMLInputElement)
+                else if (element instanceof HTMLSelectElement)
                     binding.events = ['change'];
                 else
                     binding.events = [propname + '-changed'];
@@ -129,7 +129,7 @@ export class IobrokerWebuiBindingsHelper {
         if (binding.twoWay && (binding.events == null || binding.events.length == 0)) {
             if (element instanceof HTMLInputElement)
                 binding.events = ['change'];
-            else if (element instanceof HTMLInputElement)
+            else if (element instanceof HTMLSelectElement)
                 binding.events = ['change'];
             else
                 binding.events = [propname + '-changed'];
@@ -167,12 +167,14 @@ export class IobrokerWebuiBindingsHelper {
         }
 
         let bindingCopy = { ...binding };
-        if (!binding.twoWay || (binding.events != null && binding.events.length == 1)) {
+        if (!binding.twoWay) {
+            delete bindingCopy.events;
+        } else if ((binding.events != null && binding.events.length == 1)) {
             if (element instanceof HTMLInputElement && binding.events?.[0] == "change")
                 delete bindingCopy.events;
-            else if (element instanceof HTMLInputElement && binding.events?.[0] == "change")
+            else if (element instanceof HTMLSelectElement && binding.events?.[0] == "change")
                 delete bindingCopy.events;
-            else if (element instanceof HTMLInputElement && binding.events?.[0] == targetName + '-changed')
+            else if (binding.events?.[0] == targetName + '-changed')
                 delete bindingCopy.events;
         }
         if (binding.expression === null || binding.expression === '') {

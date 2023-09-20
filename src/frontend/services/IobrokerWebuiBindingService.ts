@@ -12,7 +12,8 @@ export class IobrokerWebuiBindingService implements IBindingService {
       bindableObjectNames: x[1].signal.split(';'),
       expression: x[1].expression,
       converter: x[1].converter,
-      type: x[1].type
+      type: x[1].type,
+      changedEvents: x[1].events
     }));
   }
 
