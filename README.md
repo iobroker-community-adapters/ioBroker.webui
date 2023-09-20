@@ -118,6 +118,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- events names for 2way bindings need a editor
+
 ### 0.12.1 (2023-09-20)
 - two way for indirect bindings
 
