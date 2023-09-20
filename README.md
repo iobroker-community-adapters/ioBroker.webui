@@ -118,6 +118,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- after eval removal, functions need a return
+
 ### 0.12.2 (2023-09-20)
 - events names for 2way bindings need a editor
 
