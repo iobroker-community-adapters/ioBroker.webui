@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.12.1",
+    "version": "0.12.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.12.2": {
+        "en": "events names for 2way bindings need a editor",
+        "de": "veranstaltungen namen für 2way bindungen benötigen einen editor",
+        "ru": "имена событий для 2way связывает нужен редактор",
+        "pt": "nomes de eventos para ligações 2way precisam de um editor",
+        "nl": "de gebeurtenissen hebben een redacteur nodig",
+        "fr": "les noms d'événements pour les liaisons 2way besoin d'un éditeur",
+        "it": "i nomi degli eventi per i binding 2way hanno bisogno di un editor",
+        "es": "nombres de eventos para 2way bindings necesita un editor",
+        "pl": "nazwy imprez dla dwóch autostrad potrzebują edytora",
+        "uk": "імена подій на 2way обов'язкові редактори",
+        "zh-cn": "需要编辑的2条路具有约束力的事件名称"
+      },
       "0.12.1": {
         "en": "two way for indirect bindings",
         "de": "zwei möglichkeiten für indirekte bindungen",
@@ -106,19 +119,6 @@
         "pl": "nowy scenariusz\ntrąbka z wiązkami i pustymi zdarzeniami\nwybrane funkcje eksportowe w javascriptu\ntrąbka na ekranie\npisownia\nrozpoczęła pracę nad translatywną runtime",
         "uk": "нові команди скриптів\nвиправлення помилок з обов’язками та порожніми подіями\nвиберіть експортну функцію в javascript\nвиправлення помилок у збереженні екранів\nскрипт у скриптах\nпочав працювати на перекладацьких runtime",
         "zh-cn": "新员额\nb 有约束力和空洞事件的预兆\n选择在手木图中的出口功能\nb 用于挽救屏幕\n说明\n启动可兑换经营时间的工作"
-      },
-      "0.9.0": {
-        "en": "signal selector in properties\nscreen selector in properties\nnew screen had style in scripts\nindirect value/property acces from scripts via editor\nlist multiple undo entries (on hold of undo)",
-        "de": "signalwähler in eigenschaften\nbildschirmauswahl in eigenschaften\nneue bildschirm hatte stil in skripten\nindirekter wert/eigentum von skripten über editor\nmehrere undo-einträge (auf halten von undo)",
-        "ru": "селектор сигнала в свойствах\nэкранный селектор в свойствах\nновый экран имел стиль в сценариях\nкосвенное значение/собственность происходит от скриптов через редактор\nсписок множественные записи undo (на держании undo)",
-        "pt": "seletor de sinal em propriedades\nseletor de tela em propriedades\nnova tela tinha estilo em scripts\nvalor/propriedade indireta acces de scripts via editor\nlista várias entradas de desfazer (em espera de desfazer)",
-        "nl": "quality over quantity (qoq) releases vertaling:\nschermselecteur in eigendommen\nnieuw scherm had stijl in scripts\nindirecte waarde/property acces van scripts via de redacteur\nvertaling:",
-        "fr": "sélecteur de signal dans les propriétés\nsélecteur d'écran dans les propriétés\nnouvel écran avait style dans les scripts\nvaleur indirecte/property acces from scripts via editor\nliste de multiples entrées indo (en attente de dédo)",
-        "it": "selettore di segnale in proprietà\nselettore schermo in proprietà\nnuovo schermo aveva stile in script\nvalore/proprietà indiretta matura dagli script tramite editor\nelencare più voci di annullare (in attesa di annullare)",
-        "es": "selector de señal en propiedades\nselector de pantalla en propiedades\nnueva pantalla tenía estilo en scripts\nvalor indirecto/propiedad acces de scripts a través de editor\nlista múltiples entradas de deshacer (en espera de deshacer)",
-        "pl": "selektor sygnału\nselektor ekranu\nnowy ekran miał styl w skryptach\nbezpośrednia wartość/poziomowa wynika z skryptów poprzez edytory\nlista powiewień (otrzymywać się)",
-        "uk": "вибірка сигналу в властивості\nселектор екрана в властивостях\nновий екран мав стиль в скриптах\nнепряме значення / прострочення від сценаріїв через редактор\nсписок кількох записів (на утримання недо)",
-        "zh-cn": "财产通知\nb. 财产的选择\n新筛查的格式\n通过编辑摘录的间接价值/建议\n多条目(持有无记名)"
       }
     },
     "icon": "logo.png",
