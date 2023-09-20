@@ -34,11 +34,6 @@ export class ScriptSystem {
                     await sleep(value);
                     break;
                 }
-                case 'Delay': {
-                    const value = await ScriptSystem.getValue(c.value, outerContext);
-                    await sleep(value);
-                    break;
-                }
                 case 'SwitchLanguage': {
                     const language = await ScriptSystem.getValue(c.language, outerContext);
                     iobrokerHandler.language = language;
@@ -94,10 +89,12 @@ export class ScriptSystem {
                 }
                 case 'Javascript': {
                     const script = await ScriptSystem.getValue(c.script, outerContext);
-                    var context = outerContext; // make context accessible from script
+                    let context = outerContext; // make context accessible from script
                     context.shadowRoot = context.element.getRootNode();
                     context.instance = context.shadowRoot.host;
-                    eval(script);
+                    if (!c.compiledScript)
+                        c.compiledScript = new Function('context', script);
+                    c.compiledScript();
                     break;
                 }
                 case 'SetElementProperty': {

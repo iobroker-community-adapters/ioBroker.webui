@@ -41,7 +41,9 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
         return 'none';
     }
     _getEventMethodname(eventItem) {
-        return this.selectedItems[0].getAttribute('@' + eventItem.name);
+        if (this.selectedItems.length)
+            return this.selectedItems[0].getAttribute('@' + eventItem.name);
+        return '';
     }
     _inputMthName(event, eventItem) {
         let el = event.target;

@@ -7,6 +7,71 @@ export const bindingPrefixProperty = 'bind-prop:';
 export const bindingPrefixAttribute = 'bind-attr:';
 export const bindingPrefixCss = 'bind-css:';
 export const bindingPrefixContent = 'bind-content:';
+export class IndirectSignal {
+    constructor(id, valueChangedCb) {
+        this.unsubscribeList = [];
+        this.valueChangedCb = valueChangedCb;
+        this.parseIndirectBinding(id);
+        this.values = new Array(this.signals.length);
+        for (let i = 0; i < this.signals.length; i++) {
+            let cb = (id, value) => this.handleValueChanged(value.val, i);
+            this.unsubscribeList.push(cb);
+            iobrokerHandler.connection.subscribeState(this.signals[i], cb);
+        }
+    }
+    parseIndirectBinding(id) {
+        let parts = [];
+        let signals = [];
+        let tx = '';
+        for (let n = 0; n < id.length; n++) {
+            if (id[n] == '{') {
+                parts.push(tx);
+                tx = '';
+            }
+            else if (id[n] == '}') {
+                signals.push(tx);
+                tx = '';
+            }
+            else {
+                tx += id[n];
+            }
+        }
+        parts.push(tx);
+        this.parts = parts;
+        this.signals = signals;
+    }
+    handleValueChanged(value, index) {
+        this.values[index] = value;
+        let nm = this.parts[0];
+        for (let i = 0; i < this.parts.length - 1; i++) {
+            let v = this.values[i];
+            if (v == null)
+                return;
+            nm += v + this.parts[i + 1];
+        }
+        if (this.combinedName != nm) {
+            if (this.unsubscribeTargetValue) {
+                iobrokerHandler.connection.unsubscribeState(this.combinedName, this.unsubscribeTargetValue);
+            }
+            if (!this.disposed) {
+                this.combinedName = nm;
+                let cb = (id, value) => this.valueChangedCb(value);
+                this.unsubscribeTargetValue = cb;
+                iobrokerHandler.connection.subscribeState(nm, cb);
+            }
+        }
+    }
+    dispose() {
+        this.disposed = true;
+        if (this.unsubscribeTargetValue) {
+            iobrokerHandler.connection.unsubscribeState(this.combinedName, this.unsubscribeTargetValue);
+            this.unsubscribeTargetValue = null;
+        }
+        for (let i = 0; i < this.signals.length; i++) {
+            iobrokerHandler.connection.unsubscribeState(this.signals[i], this.unsubscribeList[i]);
+        }
+    }
+}
 export class IobrokerWebuiBindingsHelper {
     static parseBinding(element, name, value, bindingTarget, prefix) {
         const propname = name.substring(prefix.length);
@@ -167,7 +232,7 @@ export class IobrokerWebuiBindingsHelper {
             }
         }
         let unsubscribeList = [];
-        let evtUnsubscriptions;
+        let cleanupCalls;
         let valuesObject = new Array(signals.length);
         for (let i = 0; i < signals.length; i++) {
             const s = signals[i];
@@ -176,17 +241,25 @@ export class IobrokerWebuiBindingsHelper {
                     const nm = s.substring(1);
                     let evtCallback = () => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i);
                     root.addEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback);
-                    if (!evtUnsubscriptions)
-                        evtUnsubscriptions = [];
-                    evtUnsubscriptions.push(() => root.removeEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback));
+                    if (!cleanupCalls)
+                        cleanupCalls = [];
+                    cleanupCalls.push(() => root.removeEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback));
                     IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i);
                 }
             }
             else {
-                let cb = (id, value) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
-                unsubscribeList.push(cb);
-                iobrokerHandler.connection.subscribeState(s, cb);
-                iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i));
+                if (s.includes('{')) {
+                    let indirectSignal = new IndirectSignal(s, (value) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i));
+                    if (!cleanupCalls)
+                        cleanupCalls = [];
+                    cleanupCalls.push(() => indirectSignal.dispose());
+                }
+                else {
+                    let cb = (id, value) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
+                    unsubscribeList.push(cb);
+                    iobrokerHandler.connection.subscribeState(s, cb);
+                    iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i));
+                }
                 if (binding[1].twoWay) {
                     for (let e of binding[1].events) {
                         const evt = element[e];
@@ -210,8 +283,8 @@ export class IobrokerWebuiBindingsHelper {
             for (let i = 0; i < signals.length; i++) {
                 iobrokerHandler.connection.unsubscribeState(signals[i], unsubscribeList[i]);
             }
-            if (evtUnsubscriptions) {
-                for (let e of evtUnsubscriptions) {
+            if (cleanupCalls) {
+                for (let e of cleanupCalls) {
                     e();
                 }
             }
@@ -234,13 +307,14 @@ export class IobrokerWebuiBindingsHelper {
         }
         if (binding[1].expression) {
             valuesObject[index] = value;
-            let evalstring = '';
-            for (let i = 0; i < valuesObject.length; i++) {
-                evalstring += 'let  __' + i + ' = valuesObject[' + i + '];\n';
+            if (!binding[1].compiledExpression) {
+                let names = new Array(valuesObject.length);
+                for (let i = 0; i < valuesObject.length; i++) {
+                    names[i] = '__' + i;
+                }
+                binding[1].compiledExpression = new Function(names, binding[1].expression);
             }
-            evalstring += binding[1].expression;
-            var valuesObject = valuesObject;
-            v = eval(evalstring);
+            v = binding[1].compiledExpression(...valuesObject);
         }
         if (binding[1].converter) {
             const stringValue = (v != null ? v.toString() : v);

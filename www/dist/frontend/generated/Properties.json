@@ -12,6 +12,22 @@
             ],
             "type": "string"
         },
+        "Function": {
+            "properties": {
+                "arguments": {},
+                "caller": {
+                    "$ref": "#/definitions/Function"
+                },
+                "length": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "prototype": {}
+            },
+            "type": "object"
+        },
         "IControl": {
             "properties": {
                 "html": {
@@ -61,6 +77,9 @@
         },
         "IIobrokerWebuiBinding": {
             "properties": {
+                "compiledExpression": {
+                    "$ref": "#/definitions/Function"
+                },
                 "converter": {
                     "$ref": "#/definitions/Record<string,any>"
                 },
