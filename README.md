@@ -44,9 +44,9 @@ You can create own reusable CustomControls in WebUI. This can have individual Ja
 
 You can use Double-Bracket Syntax and Double-Curly-Braket Syntax of "BaseCustomWebcomponent" to create bindings from the Template to the properties defined in the Designer. Curylbrackets create two way Bindings.
 If you use the Bindings Dialog, you can Bind to a Property with ??Propertyname and to IoBroker Object in the Property via ?Propertyname.
-In Scripts you can also write to Signals defined in Custom Properties, but there is no UI for it yet, but this come soon.
+In Scripts you can also write to Signals defined in Custom Properties.
 
-You could also include Javascript in your CustomControl Template. It needs to be in a Script Tag with the Attribute "type" set to "module". Also you could use export function "init(instance)" wich will be called when your CustomControl will be instanciated.
+You could also include Javascript in your CustomControl or Screen. Also you could use export a function "init(instance)" wich will be called when your CustomControl will be instanciated. (and also the connected and disconnected functions could be used)
 
 ## Sponsoring
 
