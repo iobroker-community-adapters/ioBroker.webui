@@ -55,7 +55,7 @@
     "@types/jquery.fancytree": "^0.0.8",
     "@types/json-schema": "^7.0.13",
     "@web/dev-server": "^0.3.1",
-    "chai": "^4.3.8",
+    "chai": "^4.3.10",
     "chai-as-promised": "^7.1.1",
     "construct-style-sheets-polyfill": "^3.1.0",
     "cross-env": "^7.0.3",
