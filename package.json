@@ -61,7 +61,7 @@
     "cross-env": "^7.0.3",
     "del": "^7.1.0",
     "dock-spawn-ts": "^2.523.0",
-    "es-module-shims": "^1.8.0",
+    "es-module-shims": "^1.8.1",
     "eslint": "^8.52.0",
     "esprima-next": "^5.8.4",
     "gulp": "^4.0.2",
