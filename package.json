@@ -51,7 +51,7 @@
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^6.1.5",
     "@node-projects/web-component-designer": "^0.0.292",
-    "@types/jquery": "^3.5.24",
+    "@types/jquery": "^3.5.25",
     "@types/jquery.fancytree": "^0.0.9",
     "@types/json-schema": "^7.0.14",
     "@web/dev-server": "^0.3.6",
