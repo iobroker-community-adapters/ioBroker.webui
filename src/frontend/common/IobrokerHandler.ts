@@ -209,7 +209,7 @@ class IobrokerHandler {
             if (this._readyPromises)
                 this.waitForReady();
             try {
-                screen = await this._getObjectFromFile<IScreen>(this.configPath + "screens/" + name + screenFileExtension);
+                screen = await this._getObjectFromFile<IScreen>(this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
             }
             catch (err) {
                 console.error("Error reading Screen", screen, err);
