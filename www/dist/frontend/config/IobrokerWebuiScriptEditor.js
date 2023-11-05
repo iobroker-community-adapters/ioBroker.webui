@@ -1,10 +1,12 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
 import scriptCommandsTypeInfo from "../generated/ScriptCommands.json" assert { type: 'json' };
 import propertiesTypeInfo from "../generated/Properties.json" assert { type: 'json' };
-//@ts-ignore
-import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert { type: 'css' };
 import { ContextMenu } from "@node-projects/web-component-designer";
 import { IobrokerWebuiPropertyGrid, typeInfoFromJsonSchema } from "./IobrokerWebuiPropertyGrid.js";
+import { defaultOptions } from "@node-projects/web-component-designer-widgets-wunderbaum";
+import { Wunderbaum } from 'wunderbaum';
+//@ts-ignore
+import wunderbaumStyle from 'wunderbaum/dist/wunderbaum.css' assert { type: 'css' };
 export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super();
@@ -13,7 +15,7 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         this._possibleCommands = this._getDomElement('possibleCommands');
         this._propertygrid = this._getDomElement('propertygrid');
         this.addPossibleCommands();
-        this.shadowRoot.adoptedStyleSheets = [fancyTreeStyleSheet, IobrokerWebuiScriptEditor.style];
+        this.shadowRoot.adoptedStyleSheets = [wunderbaumStyle, IobrokerWebuiScriptEditor.style];
     }
     async ready() {
         this._parseAttributesToProperties();
@@ -90,86 +92,49 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
             commandListTreeItems.push(this.createTreeItem(c));
         }
         ;
-        $(this._commandListDiv).fancytree({
+        this._commandListFancyTree = new Wunderbaum({
+            ...defaultOptions,
+            element: this._commandListDiv,
             icon: false,
             source: commandListTreeItems,
-            copyFunctionsToData: true,
-            extensions: ['dnd5'],
-            nodata: false,
-            activate: (event, data) => {
-                let node = data.node;
-                this._propertygrid.selectedObject = node.data.item;
+            activate: (e) => {
+                this._propertygrid.selectedObject = e.node.data.data.item;
             },
-            createNode: (event, data) => {
-                let span = data.node.span;
-                span.oncontextmenu = (e) => {
-                    data.node.setActive();
-                    if (data.node.data.contextMenu)
-                        data.node.data.contextMenu(e, data);
-                    e.preventDefault();
-                    return false;
-                };
+            render: (e) => {
+                if (e.isNew) {
+                    let span = e.nodeElem;
+                    span.oncontextmenu = (ev) => {
+                        e.node.setActive();
+                        if (e.node.data.contextMenu) {
+                            e.node.data.contextMenu(ev, e.node.data);
+                        }
+                        ev.preventDefault();
+                        return false;
+                    };
+                }
             },
-            dnd5: {
-                dropMarkerParent: this.shadowRoot,
+            dnd: {
+                guessDropEffect: true,
                 preventRecursion: true,
                 preventVoidMoves: false,
-                dropMarkerOffsetX: -24,
-                dropMarkerInsertOffsetX: -16,
-                dragStart: (node, data) => {
-                    data.effectAllowed = "all";
-                    data.dropEffect = "move";
+                serializeClipboardData: false,
+                dragStart: (e) => {
+                    e.event.dataTransfer.effectAllowed = "move";
+                    e.event.dataTransfer.dropEffect = "move";
                     return true;
                 },
-                dragEnter: (node, data) => {
-                    return ["before", "after"];
+                dragEnter: (e) => {
+                    e.event.dataTransfer.dropEffect = 'move';
+                    return true;
                 },
-                dragOver: (node, data) => {
-                    if (data.hitMode == 'over')
-                        data.dropEffect = 'none';
-                    else
-                        data.dropEffect = data.dropEffectSuggested;
+                dragOver: (e) => {
+                    e.event.dataTransfer.dropEffect = 'move';
                 },
-                dragDrop: (node, data) => {
-                    if (!(node.getLevel() == 1 && (data.hitMode == 'after' || data.hitMode == 'before'))) {
-                        return;
-                    }
-                    let newNode, transfer = data.dataTransfer, sourceNodes = data.otherNodeList, mode = data.dropEffect;
-                    if (data.hitMode === "after") {
-                        sourceNodes.reverse();
-                    }
-                    if (data.otherNode) {
-                        if (mode === "move") {
-                            data.otherNode.moveTo(node, data.hitMode);
-                        }
-                        else {
-                            newNode = data.otherNode.copyTo(node, data.hitMode);
-                            if (mode === "link") {
-                                newNode.setTitle("Link to " + newNode.title);
-                            }
-                            else {
-                                newNode.setTitle("Copy of " + newNode.title);
-                            }
-                        }
-                    }
-                    else if (data.otherNodeData) {
-                        //@ts-ignore
-                        node.addChild(data.otherNodeData, data.hitMode);
-                    }
-                    else if (data.files.length) {
-                        for (let i = 0; i < data.files.length; i++) {
-                            let file = data.files[i];
-                            node.addNode({ title: "'" + file.name + "' (" + file.size + " bytes)" }, data.hitMode);
-                        }
-                    }
-                    else {
-                        node.addNode({ title: transfer.getData("text") }, data.hitMode);
-                    }
-                    node.setExpanded();
-                },
-            },
+                drop: async (e) => {
+                    e.sourceNode.moveTo(e.node, e.region == 'before' ? 'before' : 'after');
+                }
+            }
         });
-        this._commandListFancyTree = $(this._commandListDiv).fancytree('getRootNode');
     }
     createTreeItem(currentItem) {
         let cti = {
@@ -185,14 +150,14 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         const cmdName = this._possibleCommands.value;
         const command = { type: cmdName };
         const ti = this.createTreeItem(command);
-        this._commandListFancyTree.addNode(ti);
+        this._commandListFancyTree.addChildren(ti);
     }
     async removeItem(data) {
         data.node.remove();
     }
     getScriptCommands() {
-        let children = this._commandListFancyTree.children;
-        return children.map(x => x.data.item);
+        let children = this._commandListFancyTree.root.children;
+        return children.map(x => x.data.data.item);
     }
     async executeCommand(command) {
         if (command.type === 'save') {
@@ -238,7 +203,7 @@ IobrokerWebuiScriptEditor.template = html `
         <div style="width:100%; height:100%; overflow: hidden;">
             <iobroker-webui-split-view style="height: 100%; width: 100%; position: relative;" orientation="horizontal">
                 <div style="width: 40%;  position: relative;">
-                    <div style="width:100%; height:100%">
+                    <div style="width:calc(100% - 4px); height:calc(100% - 4px)">
                         <div id="commandList" style="overflow-x: hidden; overflow-y: auto; width:100%; height: calc(100% - 34px);"></div>
                         <div class="list">
                             <select id="possibleCommands" style="width: 100%"></select>  

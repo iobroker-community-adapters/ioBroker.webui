@@ -1,4 +1,7 @@
-import { BaseCustomWebcomponentBindingsService, CodeViewMonaco, CssToolsStylesheetService, JsonFileElementsService, NodeHtmlParserService, PreDefinedElementsService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
+import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, PreDefinedElementsService, SeperatorContextMenu, createDefaultServiceContainer } from "@node-projects/web-component-designer";
+import { NodeHtmlParserService } from '@node-projects/web-component-designer-htmlparserservice-nodehtmlparser';
+import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
+import { CssToolsStylesheetService } from '@node-projects/web-component-designer-stylesheetservice-css-tools';
 import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
 import { IobrokerWebuiBindableObjectDragDropService } from "../services/IobrokerWebuiBindableObjectDragDropService.js";
 import { IobrokerWebuiBindingService } from "../services/IobrokerWebuiBindingService.js";
@@ -13,10 +16,10 @@ import { IobrokerWebuiEventsService } from "../services/IobrokerWebuiEventsServi
 import { IobrokerWebuiPropertyGridDragDropService } from "../services/IobrokerWebuiPropertyGridDragDropService.js";
 import { IobrokerWebuiPropertiesService } from "../services/IobrokerWebuiPropertiesService.js";
 import { IobrokerWebuiConfigButtonProvider } from "../services/IobrokerWebuiConfigButtonProvider.js";
-const rootPath = new URL(import.meta.url).pathname.split('/').slice(0, -4).join('/'); // -2 remove file & dist
+import { IobrokerWebuiCustomElementContextMenu } from "../services/IobrokerWebuiCustomElementContextMenu.js";
 const serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
-serviceContainer.register("htmlParserService", new NodeHtmlParserService(rootPath + '/node_modules/@node-projects/node-html-parser-esm/dist/index.js'));
+serviceContainer.register("htmlParserService", new NodeHtmlParserService());
 serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableObjectsService());
 serviceContainer.register("bindableObjectDragDropService", new IobrokerWebuiBindableObjectDragDropService());
 serviceContainer.register("bindingService", new IobrokerWebuiBindingService());
@@ -31,6 +34,8 @@ serviceContainer.register('elementsService', new JsonFileElementsService('webui'
 serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
 serviceContainer.register('propertyService', new IobrokerWebuiPropertiesService());
 serviceContainer.designViewConfigButtons.push(new IobrokerWebuiConfigButtonProvider());
+serviceContainer.designerContextMenuExtensions.push(new SeperatorContextMenu());
+serviceContainer.designerContextMenuExtensions.push(new IobrokerWebuiCustomElementContextMenu());
 for (let l of customElementsObserver.getElements()) {
     if (l[1].length > 0) {
         const elementsCfg = {

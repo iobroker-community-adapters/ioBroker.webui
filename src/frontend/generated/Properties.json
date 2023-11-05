@@ -3,12 +3,12 @@
     "definitions": {
         "BindingTarget": {
             "enum": [
+                "property",
                 "attribute",
                 "class",
-                "content",
                 "css",
                 "event",
-                "property"
+                "content"
             ],
             "type": "string"
         },
