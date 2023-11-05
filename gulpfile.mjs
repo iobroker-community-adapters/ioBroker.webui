@@ -15,19 +15,20 @@ function copyNodeModules() {
         "@node-projects/lean-he-esm",
         "@node-projects/node-html-parser-esm",
         "@node-projects/web-component-designer",
+        "@node-projects/web-component-designer-codeview-monaco",
+        "@node-projects/web-component-designer-htmlparserservice-nodehtmlparser",
+        "@node-projects/web-component-designer-stylesheetservice-css-tools",
+        "@node-projects/web-component-designer-widgets-wunderbaum",
         "construct-style-sheets-polyfill",
         "es-module-shims",
         "dock-spawn-ts",
         "esprima-next",
-        //"jquery",
-        //"jquery.fancytree",
         "long",
         //"metro4-dist",
         "mobile-drag-drop",
         "monaco-editor",
         //"tslib"
-
-        "jquery.fancytree/dist/skin-win8",
+        //"wunderbaum",
     ]
 
     runtimeModules = runtimeModules.map(x => './node_modules/' + x + '/**/*')
@@ -41,10 +42,9 @@ function copyNodeFiles() {
         "metro4-dist/css/metro-all.min.css",
         "metro4-dist/js/metro.min.js",
         "metro4-dist/mif/metro.woff",
-        "jquery/dist/jquery.min.js",
-        "jquery.fancytree/dist/jquery.fancytree-all-deps.min.js",
-        "jquery.fancytree/dist/modules/jquery.fancytree.table.js",
         "tslib/tslib.es6.mjs",
+        "wunderbaum/dist/wunderbaum.css",
+        "wunderbaum/dist/wunderbaum.esm.min.js",
     ]
 
     runtimeModules = runtimeModules.map(x => './node_modules/' + x)
