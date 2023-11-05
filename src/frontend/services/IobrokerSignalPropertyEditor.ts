@@ -1,4 +1,5 @@
-import { BasePropertyEditor, BindableObjectsBrowser, IProperty, ValueType } from "@node-projects/web-component-designer";
+import { BasePropertyEditor, IProperty, ValueType } from "@node-projects/web-component-designer";
+import { BindableObjectsBrowser } from "@node-projects/web-component-designer-widgets-wunderbaum";
 
 export class IobrokerSignalPropertyEditor extends BasePropertyEditor<HTMLElement> {
 

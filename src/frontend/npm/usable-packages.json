@@ -12,6 +12,8 @@
     "@node-projects/input-knob",
     "@node-projects/hsluv-webcomponent",
     "@node-projects/wired-elements",
+    "@node-projects/sweethome3d-webcomponent",
+    "@node-projects/imask-webcomponent",
     "@christianliebel/paint",
     "vanilla-colorful",
     "@shoelace-style/shoelace",

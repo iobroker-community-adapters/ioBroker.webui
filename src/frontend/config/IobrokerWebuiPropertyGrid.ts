@@ -1,8 +1,12 @@
 import { BaseCustomWebComponentConstructorAppend, TypedEvent, css, html } from "@node-projects/base-custom-webcomponent";
-import { BindableObjectsBrowser, CodeViewMonaco } from "@node-projects/web-component-designer";
-//@ts-ignore
-import fancyTreeStyleSheet from "jquery.fancytree/dist/skin-win8/ui.fancytree.css" assert {type: 'css'};
+import { CodeViewMonaco } from "@node-projects/web-component-designer-codeview-monaco";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
+import { BindableObjectsBrowser, defaultOptions } from "@node-projects/web-component-designer-widgets-wunderbaum";
+import { Wunderbaum } from 'wunderbaum';
+//@ts-ignore
+import wunderbaumStyle from 'wunderbaum/dist/wunderbaum.css' assert { type: 'css' };
+import { WunderbaumNode } from "wb_node";
+import { WbNodeData } from "types";
 
 export interface ITypeInfo {
     properties?: IProperty[];
@@ -20,23 +24,9 @@ export interface IProperty {
     format?: string;
 }
 
-export interface IFancyTreeItem {
-    title?: string;
-    icon?: string;
-    folder?: boolean;
-
-    expanded?: boolean;
-    children?: IFancyTreeItem[];
-
-    nodeType?: string;
-    data?: any;
-}
-
-interface IPropertyGridFancyTreeItem extends IFancyTreeItem {
+interface IPropertyGridFancyTreeItem extends WbNodeData {
     property?: IProperty;
     propertyPath?: string;
-    tooltip?: string;
-    format?: string;
 }
 
 let nullObject: {};
@@ -159,38 +149,18 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             padding-left: 5px;
         }
 
-        #tableDiv {
+        #tableInnerDiv {
             overflow: auto;
             width: 100%;
             height: 100%;
             grid-area: properties;
         }
 
-        table {
+        #table {
             user-select: none;
             overflow: auto;
             width: calc(100% - 1px);
             table-layout: fixed;
-        }
-
-        table td {
-            overflow: hidden;
-        }
-
-        table td:nth-child(2) {
-            overflow: visible;
-        }
-
-        table th {
-            overflow: visible;
-        }
-
-        table th.resizing {
-            cursor: col-resize;
-        }
-
-        tr.fancytree-folder {
-            background-color: #e6e6e6;
         }
 
         #lastCol {
@@ -211,25 +181,17 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
 
         span.fancytree-node {
             white-space: nowrap;
+        }
+        
+        textarea {
+            resize: none;
         }`;
 
     public static readonly template = html` 
         <div id="tableDiv">
             <div id="head"></div>
-            <div id="tableDiv">
-                <table id="table">
-                    <colgroup>
-                        <col style="width: 70%;" />
-                        <col id="lastCol" />
-                    </colgroup>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody"></tbody>
-                </table>
+            <div id="tableInnerDiv">
+                <div id="table"></div>
             </div>
 
             <div id="description">
@@ -254,93 +216,89 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
 
     public getTypeInfo: (obj: any, type: string) => ITypeInfo;
 
-    private _table: HTMLTableElement;
-    private _tree: Fancytree.Fancytree;
+    private _table: HTMLDivElement;
+    private _tree: Wunderbaum;
     private _head: HTMLDivElement;
 
     public constructor() {
         super();
         this._restoreCachedInititalValues();
 
-        this._table = this._getDomElement<HTMLTableElement>('table');
+        this._table = this._getDomElement<HTMLDivElement>('table');
         this._head = this._getDomElement<HTMLDivElement>('head');
     }
 
     public ready(): void {
         this._parseAttributesToProperties();
 
-        $(this._table).fancytree(<Fancytree.FancytreeOptions>{
+        this._tree = new Wunderbaum({
+            ...defaultOptions,
+            element: this._table,
             icon: false,
-            extensions: ['table', 'gridnav'],
-            keyboard: false,
             source: [],
-            copyFunctionsToData: true,
-            renderColumns: async (_event, data) => {
-                const row = data.node.tr;
-                (<HTMLElement>row.children[0]).oncontextmenu = (e) => {
-                    e.preventDefault();
-                    const pPath = <string>data.node.data.propertyPath;
-                    const currentValue = deepValue(this._selectedObject, pPath);
-                    const pInfo = <IProperty>data.node.data.property;
-                    this.propertyNodeContextMenu.emit({ event: e, property: pInfo, propertyPath: pPath, value: currentValue });
-                }
-                const cell = <HTMLTableCellElement>row.children[1];
-                cell.innerHTML = "";
-                if (!data.node.folder) {
-                    const pPath = <string>data.node.data.propertyPath;
-                    const currentValue = deepValue(this._selectedObject, pPath);
-                    const pInfo = <IProperty>data.node.data.property;
-                    const ctl = await this._getEditorForType(pInfo, currentValue, pPath);
-                    if (ctl) {
-                        if (pInfo.defaultValue && (ctl as HTMLInputElement).value == '' && !pInfo.nullable) {
-                            (ctl as HTMLInputElement).placeholder = pInfo.defaultValue;
+            render: async e => {
+                if (e.isNew) {
+                    const node = e.node;
+                    if (!node.children) {
+                        const valueCol = e.renderColInfosById['value'];
+                        const pPath = <string>node.data.propertyPath;
+                        const currentValue = deepValue(this._selectedObject, pPath);
+                        const pInfo = <IProperty>node.data.property;
+                        const ctl = await this._getEditorForType(pInfo, currentValue, pPath);
+                        if (ctl) {
+                            if (pInfo.defaultValue && (ctl as HTMLInputElement).value == '' && !pInfo.nullable) {
+                                (ctl as HTMLInputElement).placeholder = pInfo.defaultValue;
+                            }
+                            ctl.style.flexGrow = '1';
+                            ctl.style.width = '100%';
+                            valueCol.elem.style.display = 'flex';
+                            valueCol.elem.appendChild(ctl);
                         }
-                        cell.appendChild(ctl);
+
+                        const mainCol = e.allColInfosById['*'];
+                        mainCol.elem.title = mainCol.elem.innerText;
+                        mainCol.elem.oncontextmenu = (e) => {
+                            e.preventDefault();
+                            const pPath = <string>node.data.propertyPath;
+                            const currentValue = deepValue(this._selectedObject, pPath);
+                            const pInfo = <IProperty>node.data.property;
+                            this.propertyNodeContextMenu.emit({ event: e, property: pInfo, propertyPath: pPath, value: currentValue });
+                        }
                     }
                 }
             },
-            table: {
-                indentation: 20,
-                nodeColumnIdx: 0,
-                checkboxColumnIdx: 0,
-            },
-            gridnav: {
-                autofocusInput: false,
-                handleCursorKeys: true,
-            },
-            focus: (_event, data) => {
-                this.updateDescription(data);
-            },
-            click: (_event, data) => {
-                this.updateDescription(data);
+            columns: [
+                { id: "*", title: "name", width: "*" },
+                { id: "value", title: "value", width: "*" },
+            ],
+            click: (e) => {
+                this.updateDescription(e.node);
                 return true;
             },
-            init: (_event, data) => {
+            init: (e) => {
                 if (this.expanded)
-                    data.tree.expandAll(true);
+                    this._tree.root.expandAll(true);
             }
         });
-
-        this._tree = $.ui.fancytree.getTree(this._table);
 
         if (this.selectedObject) {
             this.updateTree();
         }
 
-        this.shadowRoot.adoptedStyleSheets = [fancyTreeStyleSheet, IobrokerWebuiPropertyGrid.style];
+        this.shadowRoot.adoptedStyleSheets = [wunderbaumStyle, IobrokerWebuiPropertyGrid.style];
     }
 
-    private updateDescription(data: Fancytree.EventData) {
-        if (data.node.folder) {
+    private updateDescription(data: WunderbaumNode) {
+        if (data.data.folder) {
             return;
         }
-        this._getDomElement<HTMLElement>('descTitel').innerText = data.node.title;
-        if (data.node.tooltip && data.node.data.property.defaultValue) {
-            this._getDomElement<HTMLElement>('descText').innerHTML = data.node.tooltip + '<br />Default Value: ' + data.node.data.property.defaultValue;
-        } else if (data.node.tooltip) {
-            this._getDomElement<HTMLElement>('descText').innerText = data.node.tooltip;
-        } else if (data.node.data.property.defaultValue) {
-            this._getDomElement<HTMLElement>('descText').innerText = 'Default Value: ' + data.node.data.property.defaultValue;
+        this._getDomElement<HTMLElement>('descTitel').innerText = data.title;
+        if (data.data?.property?.description && data.data.property.defaultValue) {
+            this._getDomElement<HTMLElement>('descText').innerHTML = data.data.property.description + '<br />Default Value: ' + data.data.property.defaultValue;
+        } else if (data.data?.property?.description) {
+            this._getDomElement<HTMLElement>('descText').innerText = data.data.property.description;
+        } else if (data.data.property.defaultValue) {
+            this._getDomElement<HTMLElement>('descText').innerText = 'Default Value: ' + data.data.property.defaultValue;
         } else {
             this._getDomElement<HTMLElement>('descText').innerText = '';
         }
@@ -402,7 +360,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                     const children = [];
                     baseNode.push({
                         title: name,
-                        folder: true,
+                        //folder: true,
                         children: children,
                         property: p,
                         expanded: this.expanded,
@@ -411,10 +369,9 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 } else {
                     baseNode.push({
                         title: name,
-                        folder: false,
+                        //folder: false,
                         property: p,
-                        propertyPath: prefix + name,
-                        tooltip: p.description
+                        propertyPath: prefix + name
                     });
                 }
             }
@@ -677,17 +634,17 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
 
     private _renderTree() {
         if (this._tree) {
-            this._tree.getRootNode().removeChildren();
+            this._tree.root.removeChildren();
 
             const rootObject: IPropertyGridFancyTreeItem[] = [];
 
             this.createPropertyNodes(rootObject, this.getTypeInfo(this.selectedObject, this.typeName).properties);
-            this._tree.reload(rootObject);
+            this._tree.addChildren(rootObject);
         }
     }
 
     public clear() {
-        this._tree.getRootNode().removeChildren();
+        this._tree.root.removeChildren();
     }
 }
 customElements.define("iobroker-webui-property-grid", IobrokerWebuiPropertyGrid);

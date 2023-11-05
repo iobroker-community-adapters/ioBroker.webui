@@ -1,6 +1,5 @@
 const importMapConfig = {
     "imports": {
-        "jquery.fancytree/": "./node_modules/jquery.fancytree/",
         "monaco-editor/": "./node_modules/monaco-editor/",
         "@node-projects/web-component-designer": "./node_modules/@node-projects/web-component-designer/dist/index.js",
         "@node-projects/web-component-designer/": "./node_modules/@node-projects/web-component-designer/",
@@ -9,11 +8,22 @@ const importMapConfig = {
         "esprima-next": "./node_modules/esprima-next/dist/esm/esprima.js",
         "@node-projects/base-custom-webcomponent/": "./node_modules/@node-projects/base-custom-webcomponent/",
         "@node-projects/base-custom-webcomponent": "./node_modules/@node-projects/base-custom-webcomponent/dist/index.js",
+        "@node-projects/node-html-parser-esm": "./node_modules/@node-projects/node-html-parser-esm/dist/index.js",
+        "@node-projects/web-component-designer-htmlparserservice-nodehtmlparser": "./node_modules/@node-projects/web-component-designer-htmlparserservice-nodehtmlparser/dist/service/htmlParserService/NodeHtmlParserService.js",
+        "@node-projects/web-component-designer-htmlparserservice-nodehtmlparser/": "./node_modules/@node-projects/web-component-designer-htmlparserservice-nodehtmlparser/",
+        "@node-projects/web-component-designer-codeview-monaco": "./node_modules/@node-projects/web-component-designer-codeview-monaco/dist/widgets/codeView/code-view-monaco.js",
+        "@node-projects/web-component-designer-codeview-monaco/": "./node_modules/@node-projects/web-component-designer-codeview-monaco/",
+        "@node-projects/web-component-designer-stylesheetservice-css-tools": "./node_modules/@node-projects/web-component-designer-stylesheetservice-css-tools/dist/service/stylesheetservice/CssToolsStylesheetService.js",
+        "@node-projects/web-component-designer-stylesheetservice-css-tools/": "./node_modules/@node-projects/web-component-designer-stylesheetservice-css-tools/",
+        "@node-projects/web-component-designer-widgets-wunderbaum": "./node_modules/@node-projects/web-component-designer-widgets-wunderbaum/dist/index.js",
+        "@node-projects/web-component-designer-widgets-wunderbaum/": "./node_modules/@node-projects/web-component-designer-widgets-wunderbaum/",
         "@node-projects/lean-he-esm/": "./node_modules/@node-projects/lean-he-esm/",
         "@iobroker/socket-client/": "./node_modules/@iobroker/socket-client/",
         "@iobroker/socket-client": "./node_modules/@iobroker/socket-client/dist/esm/index.js",
         "tslib": "./node_modules/tslib/tslib.es6.mjs",
-        "long": "./node_modules/long/index.js"
+        "long": "./node_modules/long/index.js",
+        "wunderbaum": "./node_modules/wunderbaum/dist/wunderbaum.esm.min.js",
+        "wunderbaum/": "./node_modules/wunderbaum/"
     }
 }
 //@ts-ignore

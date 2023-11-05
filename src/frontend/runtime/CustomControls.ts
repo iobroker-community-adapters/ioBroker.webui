@@ -7,6 +7,11 @@ import { PropertiesHelper } from "@node-projects/web-component-designer/dist/ele
 import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
 
 export const webuiCustomControlPrefix = 'webui-';
+export const webuiCustomControlSymbol = Symbol('webuiCustomControlSymbol');
+export type CustomControlInfo = {
+    control: IControl,
+    name: string
+}
 
 export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     static readonly style = css`:host { overflow: hidden }`;
@@ -15,7 +20,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     constructor() {
         super();
         this._bindingsParse(null, true);
-        if ((<IControl>(<any>this.constructor)._control).settings.useGlobalStyle)
+        if ((<IControl>(<CustomControlInfo>(<any>this.constructor)[webuiCustomControlSymbol]).control).settings.useGlobalStyle)
             this.shadowRoot.adoptedStyleSheets = [iobrokerHandler.globalStylesheet, ...this.shadowRoot.adoptedStyleSheets]
     }
 
@@ -23,7 +28,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
         this._parseAttributesToProperties();
         this._bindingsRefresh();
         IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
-        this._scriptObject = await ScriptSystem.assignAllScripts((<IControl>(<any>this.constructor)._control).script, this.shadowRoot, this);
+        this._scriptObject = await ScriptSystem.assignAllScripts((<IControl>(<CustomControlInfo>(<any>this.constructor)[webuiCustomControlSymbol]).control).script, this.shadowRoot, this);
         this._scriptObject?.connectedCallback?.(this);
     }
 
@@ -72,8 +77,9 @@ export function generateCustomControl(name: string, control: IControl) {
         window['IobrokerWebuiCustomControl' + name].template = template;
         window['IobrokerWebuiCustomControl' + name].style = style;
         window['IobrokerWebuiCustomControl' + name].properties = properties;
-        window['IobrokerWebuiCustomControl' + name]._control = control;
         window['IobrokerWebuiCustomControl' + name]._propertiesDictionary = null;
+        const ccInfo : CustomControlInfo = window['IobrokerWebuiCustomControl' + name][webuiCustomControlSymbol];
+        ccInfo.control = control;
     } else {
         window['IobrokerWebuiCustomControl' + name] = function () {
             //@ts-ignore
@@ -100,10 +106,17 @@ export function generateCustomControl(name: string, control: IControl) {
             }
             return instance;
         }
+
+
+        let ccInfo: CustomControlInfo = {
+            control,
+            name
+        }
+
+        window['IobrokerWebuiCustomControl' + name][webuiCustomControlSymbol] = ccInfo;
         window['IobrokerWebuiCustomControl' + name].template = template;
         window['IobrokerWebuiCustomControl' + name].style = style;
         window['IobrokerWebuiCustomControl' + name].properties = properties;
-        window['IobrokerWebuiCustomControl' + name]._control = control;
         window['IobrokerWebuiCustomControl' + name]._propertiesDictionary = null;
         window['IobrokerWebuiCustomControl' + name].prototype = Object.create(BaseCustomControl.prototype, { constructor: { value: window['IobrokerWebuiCustomControl' + name] } })
         customElements.define(webuiCustomControlPrefix + nm, window['IobrokerWebuiCustomControl' + name]);

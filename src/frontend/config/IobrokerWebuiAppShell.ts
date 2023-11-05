@@ -5,7 +5,9 @@ iobrokerHandler.init();
 LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
 
 import '@node-projects/web-component-designer'
-import { TreeViewExtended, PropertyGrid, ServiceContainer } from '@node-projects/web-component-designer';
+import { PropertyGrid, ServiceContainer } from '@node-projects/web-component-designer';
+import { TreeViewExtended } from '@node-projects/web-component-designer-widgets-wunderbaum';
+
 import type { IDisposable } from 'monaco-editor';
 import { PanelContainer } from 'dock-spawn-ts/lib/js/PanelContainer.js';
 import { PanelType } from 'dock-spawn-ts/lib/js/enums/PanelType.js';

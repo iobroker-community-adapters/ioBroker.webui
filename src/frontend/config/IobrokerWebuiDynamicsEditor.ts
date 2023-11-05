@@ -1,5 +1,6 @@
 import { BaseCustomWebComponentConstructorAppend, html, css } from '@node-projects/base-custom-webcomponent';
-import { BindableObjectsBrowser, BindingMode, BindingTarget, IBinding, IProperty } from '@node-projects/web-component-designer';
+import { BindingMode, BindingTarget, IBinding, IProperty } from '@node-projects/web-component-designer';
+import { BindableObjectsBrowser } from "@node-projects/web-component-designer-widgets-wunderbaum";
 
 export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstructorAppend {
 
