@@ -134,9 +134,9 @@ runtime.html?screenName=screen2
 - raster in designer is now adjustable
 - copy object nodes now copies complete string
 - context menu to directly edit custom element
-TODO: fix handler path in script
+- fix handler path in script
 TODO: uiChangedView
-TODO: error when importing invalid file (for example html instead of json)
+- error when importing invalid file (for example html instead of json)
 
 ### 0.12.3 (2023-09-20)
 - after eval removal, functions need a return

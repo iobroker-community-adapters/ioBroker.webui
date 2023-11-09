@@ -81,13 +81,18 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         let screenNodeCtxMenu = (event) => {
             ContextMenu.show([{
                 title: 'Import Screen', action: async () => {
-                    let files = await openFileDialog('.screen', true, 'text');
-                    for (let f of files) {
-                        let screen: IScreen = JSON.parse(<string>f.data);
-                        let nm = f.name;
-                        if (nm.endsWith('.screen'))
-                            nm = nm.substring(0, nm.length - 7);
-                        await iobrokerHandler.saveScreen(nm, screen);
+                    try {
+                        let files = await openFileDialog('.screen', true, 'text');
+                        for (let f of files) {
+                            let screen: IScreen = JSON.parse(<string>f.data);
+                            let nm = f.name;
+                            if (nm.endsWith('.screen'))
+                                nm = nm.substring(0, nm.length - 7);
+                            await iobrokerHandler.saveScreen(nm, screen);
+                        }
+                    }
+                    catch (err) {
+                        alert("error importing files: " + err);
                     }
                 }
             }], event);
@@ -546,13 +551,18 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         let controlsNodeCtxMenu = (event) => {
             ContextMenu.show([{
                 title: 'Import Control', action: async () => {
-                    let files = await openFileDialog('.control', true, 'text');
-                    for (let f of files) {
-                        let control: IControl = JSON.parse(<string>f.data);
-                        let nm = f.name;
-                        if (nm.endsWith('.control'))
-                            nm = nm.substring(0, nm.length - 8);
-                        await iobrokerHandler.saveCustomControl(nm, control);
+                    try {
+                        let files = await openFileDialog('.control', true, 'text');
+                        for (let f of files) {
+                            let control: IControl = JSON.parse(<string>f.data);
+                            let nm = f.name;
+                            if (nm.endsWith('.control'))
+                                nm = nm.substring(0, nm.length - 8);
+                            await iobrokerHandler.saveCustomControl(nm, control);
+                        }
+                    }
+                    catch (err) {
+                        alert("error importing files: " + err);
                     }
                 }
             }], event);
@@ -712,7 +722,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             if (e.node.data.contextMenu) {
                                 e.node.data.contextMenu(ev, e.node.data);
                             }
-                            ev.preventDefault();  
+                            ev.preventDefault();
                             return false;
                         }
                         span.onpointerdown = async (ev) => {
