@@ -135,7 +135,7 @@ runtime.html?screenName=screen2
 - copy object nodes now copies complete string
 - context menu to directly edit custom element
 - fix handler path in script
-TODO: uiChangedView
+- uiChangedView now workin
 - error when importing invalid file (for example html instead of json)
 
 ### 0.12.3 (2023-09-20)

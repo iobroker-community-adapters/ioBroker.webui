@@ -408,7 +408,7 @@ class IobrokerHandler {
         return this.connection.setState(id, val, ack);
     }
 
-    async sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected', data: string): Promise<void> {
+    async sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected' | 'uiChangedView', data: string): Promise<void> {
         let p = [
             this.connection.setState(this.namespace + '.control.data', { val: data }),
             this.connection.setState(this.namespace + '.control.clientIds', { val: this.clientId })
