@@ -143,7 +143,7 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
 }
 `;
                     if (!sc)
-                        sc = 'import { iobrokerHandler } from "/dist/frontend/common/IobrokerHandler.js";\n\n';
+                        sc = 'import { iobrokerHandler } from "/webui/dist/frontend/common/IobrokerHandler.js";\n\n';
                     screenEditor.scriptModel.setValue(sc + templateScript);
                 } else {
                     //@ts-ignore
