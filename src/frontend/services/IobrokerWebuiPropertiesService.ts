@@ -1,5 +1,5 @@
 import { BaseCustomWebComponentPropertiesService, IDesignItem, IProperty, PropertyType } from "@node-projects/web-component-designer";
-import { BaseCustomControl } from "../runtime/CustomControls.js";
+import { BaseCustomControl, CustomControlInfo, webuiCustomControlSymbol } from "../runtime/CustomControls.js";
 import { IControl } from "../interfaces/IControl.js";
 import { IobrokerSignalPropertyEditor } from "./IobrokerSignalPropertyEditor.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
@@ -12,7 +12,7 @@ export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentProper
     public override getProperties(designItem: IDesignItem): IProperty[] {
         if (!this.isHandledElement(designItem))
             return null;
-        let control: IControl = (<any>designItem.element.constructor)._control;
+        let control: IControl = (<CustomControlInfo>(<any>designItem.element.constructor)[webuiCustomControlSymbol]).control;
 
         let properties: IProperty[] = [];
         for (const name in control.properties) {
