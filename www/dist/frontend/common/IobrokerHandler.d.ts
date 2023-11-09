@@ -90,7 +90,7 @@ declare class IobrokerHandler {
     private _saveBinaryToFile;
     getState(id: string): Promise<State>;
     setState(id: string, val: State | StateValue, ack?: boolean): Promise<void>;
-    sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected', data: string): Promise<void>;
+    sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected' | 'uiChangedView', data: string): Promise<void>;
     handleCommand(command: "uiReloadPackages" | "uiReload" | "uiRefresh" | "uiChangeView" | "uiChangedView" | "uiOpenDialog" | "uiOpenedDialog" | "uiPlaySound" | "uiRunScript" | "uiAlert", data: string, clientId?: string): Promise<void>;
 }
 export declare const iobrokerHandler: IobrokerHandler;

@@ -1,5 +1,5 @@
 import { BaseCustomWebComponentPropertiesService, PropertyType } from "@node-projects/web-component-designer";
-import { BaseCustomControl } from "../runtime/CustomControls.js";
+import { BaseCustomControl, webuiCustomControlSymbol } from "../runtime/CustomControls.js";
 import { IobrokerSignalPropertyEditor } from "./IobrokerSignalPropertyEditor.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentPropertiesService {
@@ -9,7 +9,7 @@ export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentProper
     getProperties(designItem) {
         if (!this.isHandledElement(designItem))
             return null;
-        let control = designItem.element.constructor._control;
+        let control = designItem.element.constructor[webuiCustomControlSymbol].control;
         let properties = [];
         for (const name in control.properties) {
             let prp = control.properties[name];

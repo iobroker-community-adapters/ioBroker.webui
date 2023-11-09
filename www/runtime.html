@@ -58,14 +58,16 @@
   <iobroker-webui-screen-viewer id="viewer"></iobroker-webui-screen-viewer>
   <script type="module">
     async function checkHash() {
-      const screen = (new URLSearchParams(location.hash.substring(1))).get('screenName');
+      let screen = (new URLSearchParams(location.hash.substring(1))).get('screenName');
       if (screen) {
         const viewer = document.getElementById('viewer');
         await customElements.whenDefined(viewer.localName);
-        viewer.screenName = screen;
       } else {
-        viewer.screenName = 'start';
+        screen = 'start';
       }
+      viewer.screenName = screen;
+      let imp = await importShim("/dist/frontend/common/IobrokerHandler.js");
+      imp.iobrokerHandler.sendCommand("uiChangedView", screen);
     }
     checkHash();
     window.onhashchange = checkHash;
