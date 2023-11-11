@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.13.0",
+    "version": "0.13.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.13.1": {
+        "en": "two way bindings with expressions",
+        "de": "zwei wege bindungen mit ausdrücken",
+        "ru": "два способа связывания с выражениями",
+        "pt": "duas vias vinculativas com expressões",
+        "nl": "twee manieren binding met uitdrukkingen",
+        "fr": "reliures à deux voies avec des expressions",
+        "it": "leganti a due vie con espressioni",
+        "es": "dos formas de unión con expresiones",
+        "pl": "łączy się z wyrazami",
+        "uk": "два способи зв'язування з виразами",
+        "zh-cn": "两种方式具有约束力的言论"
+      },
       "0.13.0": {
         "en": "fix upercase screen names in runtime\nraster in designer is now adjustable\ncopy object nodes now copies complete string\ncontext menu to directly edit custom element\nfix handler path in script\nuiChangedView now workin\nerror when importing invalid file (for example html instead of json)",
         "de": "reparieren upercase-bildschirmnamen in laufzeit\nraster im designer ist jetzt einstellbar\ncopy object nodes kopiert nun komplett string\nkontextmenü direkt benutzerdefiniertes element bearbeiten\nfix-handlerpfad in skript\nuiChanged Jetzt arbeiten ansehen\nfehler beim import von ungültiger datei (z.b. html statt json)",
@@ -106,19 +119,6 @@
         "pl": "pakiet",
         "uk": "ім'я пакета npm",
         "zh-cn": "检查包件"
-      },
-      "0.11.1": {
-        "en": "fix build on windows",
-        "de": "befestigung auf fenstern",
-        "ru": "исправить построить на окнах",
-        "pt": "corrigir a construção em janelas",
-        "nl": "vertaling:",
-        "fr": "réparer les fenêtres",
-        "it": "fissare la costruzione su finestre",
-        "es": "fijar la construcción en ventanas",
-        "pl": "budowanie okien",
-        "uk": "кріплення на вікна",
-        "zh-cn": "fix 在窗口的基础上建造"
       }
     },
     "icon": "logo.png",
