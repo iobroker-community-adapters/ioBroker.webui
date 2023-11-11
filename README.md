@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- two way bindings with expressions
+
 ### 0.13.0 (2023-11-09)
 - fix upercase screen names in runtime
 - raster in designer is now adjustable

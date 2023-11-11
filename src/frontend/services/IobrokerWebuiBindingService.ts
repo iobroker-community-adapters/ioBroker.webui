@@ -11,6 +11,7 @@ export class IobrokerWebuiBindingService implements IBindingService {
       invert: x[1].inverted,
       bindableObjectNames: x[1].signal.split(';'),
       expression: x[1].expression,
+      expressionTwoWay: x[1].expressionTwoWay,
       converter: x[1].converter,
       type: x[1].type,
       changedEvents: x[1].events

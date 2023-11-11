@@ -12,6 +12,8 @@ export interface IIobrokerWebuiBinding {
     target: BindingTarget;
     converter?: Record<string, any>;
     expression?: string;
+    expressionTwoWay?: string;
     compiledExpression?: Function;
+    compiledExpressionTwoWay?: Function;
     type?: string;
 }

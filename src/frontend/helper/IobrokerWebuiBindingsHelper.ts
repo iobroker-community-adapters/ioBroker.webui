@@ -139,7 +139,7 @@ export class IobrokerWebuiBindingsHelper {
 
     static serializeBinding(element: Element, targetName: string, binding: IIobrokerWebuiBinding): [name: string, value: string] {
         if (binding.target == BindingTarget.property &&
-            !binding.expression &&
+            !binding.expression && !binding.expressionTwoWay &&
             binding.converter == null &&
             !binding.type &&
             (binding.events == null || binding.events.length == 0)) {
@@ -151,7 +151,7 @@ export class IobrokerWebuiBindingsHelper {
         }
 
         if (binding.target == BindingTarget.attribute &&
-            !binding.expression &&
+            !binding.expression && !binding.expressionTwoWay &&
             binding.converter == null &&
             !binding.type &&
             (binding.events == null || binding.events.length == 0)) {
@@ -159,7 +159,7 @@ export class IobrokerWebuiBindingsHelper {
         }
 
         if (binding.target == BindingTarget.css &&
-            !binding.expression &&
+            !binding.expression && !binding.expressionTwoWay &&
             binding.converter == null &&
             !binding.type &&
             (binding.events == null || binding.events.length == 0)) {
@@ -169,6 +169,7 @@ export class IobrokerWebuiBindingsHelper {
         let bindingCopy = { ...binding };
         if (!binding.twoWay) {
             delete bindingCopy.events;
+            delete bindingCopy.expressionTwoWay;
         } else if ((binding.events != null && binding.events.length == 1)) {
             if (element instanceof HTMLInputElement && binding.events?.[0] == "change")
                 delete bindingCopy.events;
@@ -178,6 +179,9 @@ export class IobrokerWebuiBindingsHelper {
                 delete bindingCopy.events;
         }
         if (binding.expression === null || binding.expression === '') {
+            delete bindingCopy.expression;
+        }
+        if (binding.expressionTwoWay === null || binding.expressionTwoWay === '') {
             delete bindingCopy.expression;
         }
         if (binding.twoWay === null || binding.twoWay === false) {
@@ -292,15 +296,30 @@ export class IobrokerWebuiBindingsHelper {
                     if (binding[1].twoWay) {
                         for (let e of binding[1].events) {
                             const evt = element[e];
+                            if (binding[1].expressionTwoWay) {
+                                if (!binding[1].compiledExpressionTwoWay) {
+                                    if (binding[1].expressionTwoWay.includes('return '))
+                                        binding[1].compiledExpressionTwoWay = new Function(<any>['value'], binding[1].expressionTwoWay);
+                                    else
+                                        binding[1].compiledExpressionTwoWay = new Function(<any>['value'], 'return ' + binding[1].expressionTwoWay);
+                                }
+                            }
+
                             if (evt instanceof TypedEvent) {
                                 evt.on(() => {
+                                    let v = element[binding[0]];
+                                    if (binding[1].compiledExpressionTwoWay)
+                                        v = binding[1].compiledExpressionTwoWay(v);
                                     if (binding[1].target == BindingTarget.property)
-                                        indirectSignal.setState(element[binding[0]]);
+                                        indirectSignal.setState(v);
                                 })
                             } else {
                                 element.addEventListener(e, () => {
+                                    let v = element[binding[0]];
+                                    if (binding[1].compiledExpressionTwoWay)
+                                        v = binding[1].compiledExpressionTwoWay(v);
                                     if (binding[1].target == BindingTarget.property)
-                                        indirectSignal.setState(element[binding[0]]);
+                                        indirectSignal.setState(v);
                                 });
                             }
                         }
@@ -311,17 +330,32 @@ export class IobrokerWebuiBindingsHelper {
                     iobrokerHandler.connection.subscribeState(s, cb);
                     iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i));
                     if (binding[1].twoWay) {
+                        if (binding[1].expressionTwoWay) {
+                            if (!binding[1].compiledExpressionTwoWay) {
+                                if (binding[1].expressionTwoWay.includes('return '))
+                                    binding[1].compiledExpressionTwoWay = new Function(<any>['value'], binding[1].expressionTwoWay);
+                                else
+                                    binding[1].compiledExpressionTwoWay = new Function(<any>['value'], 'return ' + binding[1].expressionTwoWay);
+                            }
+                        }
+
                         for (let e of binding[1].events) {
                             const evt = element[e];
                             if (evt instanceof TypedEvent) {
                                 evt.on(() => {
+                                    let v = element[binding[0]];
+                                    if (binding[1].compiledExpressionTwoWay)
+                                        v = binding[1].compiledExpressionTwoWay(v);
                                     if (binding[1].target == BindingTarget.property)
-                                        iobrokerHandler.connection.setState(s, element[binding[0]]);
+                                        iobrokerHandler.connection.setState(s, v);
                                 })
                             } else {
                                 element.addEventListener(e, () => {
+                                    let v = element[binding[0]];
+                                    if (binding[1].compiledExpressionTwoWay)
+                                        v = binding[1].compiledExpressionTwoWay(v);
                                     if (binding[1].target == BindingTarget.property)
-                                        iobrokerHandler.connection.setState(s, element[binding[0]]);
+                                        iobrokerHandler.connection.setState(s, v);
                                 });
                             }
                         }
