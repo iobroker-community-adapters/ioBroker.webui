@@ -95,8 +95,15 @@ export class IobrokerWebuiBindableObjectDragDropService {
                 }
                 else if (obj?.common?.role == 'date') {
                     binding.expression = "new Date(__0).toISOString().split('.')[0]";
+                    binding.expressionTwoWay = "new Date(value).getTime()";
                     binding.twoWay = false;
                     serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value', binding);
+                    di.setAttribute("type", "datetime-local");
+                    di.setAttribute("readonly", "");
+                }
+                else if (obj?.common?.role == 'value.time') {
+                    binding.twoWay = true;
+                    serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value-as-number', binding);
                     di.setAttribute("type", "datetime-local");
                     di.setAttribute("readonly", "");
                 }

@@ -7,6 +7,7 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
         this.twoWayPossible = false;
         this.twoWay = false;
         this.expression = '';
+        this.expressionTwoWay = '';
         this.objectNames = '';
         this.events = '';
         this.invert = false;
@@ -26,6 +27,7 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
         if (this._binding) {
             this.twoWay = this._binding.mode == BindingMode.twoWay;
             this.expression = this._binding.expression;
+            this.expressionTwoWay = this._binding.expressionTwoWay;
             this.invert = this._binding.invert;
             this.objectValueType = this._binding.type;
             if (this._binding.bindableObjectNames)
@@ -129,6 +131,12 @@ IobrokerWebuiDynamicsEditor.template = html `
                         </div>
                         <div class="row">
                             <input type="text" value="{{?this.expression}}" style="width: 100%">
+                        </div>
+                        <div class="row">
+                            <span style="cursor: pointer;" title="javascript expression. access property with 'value'">formula write back (two way)</span>
+                        </div>
+                        <div class="row">
+                            <input type="text" disabled="[[!this.twoWay]]" value="{{?this.expressionTwoWay}}" style="width: 100%">
                         </div>
                     </div>
                 </div>

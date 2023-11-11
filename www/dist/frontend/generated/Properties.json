@@ -80,6 +80,9 @@
                 "compiledExpression": {
                     "$ref": "#/definitions/Function"
                 },
+                "compiledExpressionTwoWay": {
+                    "$ref": "#/definitions/Function"
+                },
                 "converter": {
                     "$ref": "#/definitions/Record<string,any>"
                 },
@@ -90,6 +93,9 @@
                     "type": "array"
                 },
                 "expression": {
+                    "type": "string"
+                },
+                "expressionTwoWay": {
                     "type": "string"
                 },
                 "inverted": {
