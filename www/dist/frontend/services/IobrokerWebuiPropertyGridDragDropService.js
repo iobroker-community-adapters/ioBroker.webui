@@ -1,7 +1,6 @@
 export class IobrokerWebuiPropertyGridDragDropService {
-    constructor() {
-        this.rectMap = new Map();
-    }
+    rectMap = new Map();
+    rect;
     dragOverOnProperty(event, property, designItems) {
         return 'copy';
     }

@@ -1,6 +1,7 @@
 class CustomElementsObserver {
+    _newElements = new Map;
+    currentLib;
     constructor() {
-        this._newElements = new Map;
         let customElementsRegistry = window.customElements;
         const registry = {};
         registry.define = (name, constructor, options) => {

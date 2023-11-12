@@ -6,6 +6,8 @@ import { PropertiesHelper } from "@node-projects/web-component-designer/dist/ele
 export const webuiCustomControlPrefix = 'webui-';
 export const webuiCustomControlSymbol = Symbol('webuiCustomControlSymbol');
 export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
+    static style = css `:host { overflow: hidden }`;
+    _scriptObject;
     constructor() {
         super();
         this._bindingsParse(null, true);
@@ -26,7 +28,6 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
         return this.getRootNode()?.host?._getRelativeSignalsPath?.() ?? '';
     }
 }
-BaseCustomControl.style = css `:host { overflow: hidden }`;
 export function generateCustomControl(name, control) {
     let nm = PropertiesHelper.camelToDashCase(name);
     if (nm[0] === '-')

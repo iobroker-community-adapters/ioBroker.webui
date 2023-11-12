@@ -2,11 +2,29 @@ import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from "
 import { sleep } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructorAppend {
+    static style = css `
+        :host {
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+
+        .errorDecoration {
+            background-color: red !important;
+        }
+    `;
+    static template = html `
+        <div id="container" style="width: 100%; height: 100%; position: absolute;"></div>
+    `;
+    static properties = {
+        language: String
+    };
     async createModel(text) {
         await IobrokerWebuiMonacoEditor.initMonacoEditor();
         //@ts-ignore
         return monaco.editor.createModel(text, this.language);
     }
+    _model;
     get model() {
         return this._model;
     }
@@ -15,9 +33,12 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
         if (this._editor)
             this._editor.setModel(value);
     }
+    language = 'css';
+    _container;
+    _editor;
+    static _initalized;
     constructor() {
         super();
-        this.language = 'css';
     }
     static initMonacoEditor() {
         return new Promise(async (resolve) => {
@@ -123,21 +144,4 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
         }, 50);
     }
 }
-IobrokerWebuiMonacoEditor.style = css `
-        :host {
-            display: block;
-            height: 100%;
-            width: 100%;
-        }
-
-        .errorDecoration {
-            background-color: red !important;
-        }
-    `;
-IobrokerWebuiMonacoEditor.template = html `
-        <div id="container" style="width: 100%; height: 100%; position: absolute;"></div>
-    `;
-IobrokerWebuiMonacoEditor.properties = {
-    language: String
-};
 customElements.define('iobroker-webui-monaco-editor', IobrokerWebuiMonacoEditor);

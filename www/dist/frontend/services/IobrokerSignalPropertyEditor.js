@@ -1,6 +1,7 @@
 import { BasePropertyEditor } from "@node-projects/web-component-designer";
 import { BindableObjectsBrowser } from "@node-projects/web-component-designer-widgets-wunderbaum";
 export class IobrokerSignalPropertyEditor extends BasePropertyEditor {
+    _ip;
     constructor(property) {
         super(property);
         let cnt = document.createElement('div');

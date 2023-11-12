@@ -4,23 +4,29 @@ import { sleep } from "../helper/Helper.js";
 const screenFileExtension = ".screen";
 const controlFileExtension = ".control";
 class IobrokerHandler {
+    static instance = new IobrokerHandler();
+    host;
+    connection;
+    adapterName = "webui";
+    configPath = "config/";
+    namespace = "webui.0";
+    namespaceFiles = this.namespace + '.data';
+    namespaceWidgets = this.namespace + '.widgets';
+    imagePrefix = '/' + this.namespaceFiles + '/config/images/';
+    config;
+    globalStylesheet;
+    globalScriptInstance;
+    screensChanged = new TypedEvent();
+    controlsChanged = new TypedEvent();
+    imagesChanged = new TypedEvent();
+    configChanged = new TypedEvent();
+    changeView = new TypedEvent();
+    refreshView = new TypedEvent();
+    _readyPromises = [];
+    language;
+    languageChanged = new TypedEvent();
+    clientId;
     constructor() {
-        this.adapterName = "webui";
-        this.configPath = "config/";
-        this.namespace = "webui.0";
-        this.namespaceFiles = this.namespace + '.data';
-        this.namespaceWidgets = this.namespace + '.widgets';
-        this.imagePrefix = '/' + this.namespaceFiles + '/config/images/';
-        this.screensChanged = new TypedEvent();
-        this.controlsChanged = new TypedEvent();
-        this.imagesChanged = new TypedEvent();
-        this.configChanged = new TypedEvent();
-        this.changeView = new TypedEvent();
-        this.refreshView = new TypedEvent();
-        this._readyPromises = [];
-        this.languageChanged = new TypedEvent();
-        this._screens = new Map();
-        this._controls = new Map();
         this.clientId = Date.now().toString(16);
     }
     waitForReady() {
@@ -92,6 +98,8 @@ class IobrokerHandler {
         });
         this.sendCommand("uiConnected", "");
     }
+    _screenNames;
+    _screens = new Map();
     async getIconAdapterFoldernames() {
         const adapterInstances = await this.connection.getObjectViewSystem('adapter', '');
         let names = [];
@@ -163,6 +171,8 @@ class IobrokerHandler {
         this.getScreen(newName);
         this.screensChanged.emit(null);
     }
+    _controlNames;
+    _controls = new Map();
     async loadAllCustomControls() {
         await iobrokerHandler.waitForReady();
         let names = await this.getCustomControlNames();
@@ -351,5 +361,4 @@ class IobrokerHandler {
         }
     }
 }
-IobrokerHandler.instance = new IobrokerHandler();
 export const iobrokerHandler = IobrokerHandler.instance;

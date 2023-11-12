@@ -3,9 +3,8 @@ import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelp
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { BaseCustomControl } from "../runtime/CustomControls.js";
 export class IobrokerWebuiBindableObjectDragDropService {
-    constructor() {
-        this.rectMap = new Map();
-    }
+    rectMap = new Map();
+    rect;
     dragEnter(designerCanvas, event, element) {
         const designItem = DesignItem.GetDesignItem(element);
         if (designItem && !designItem.isRootItem) {

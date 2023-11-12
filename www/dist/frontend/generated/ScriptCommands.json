@@ -16,6 +16,23 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "type",
+                "signal",
+                "bitNumber"
+            ],
+            "type": "object"
+        },
+        "CloseDialog": {
+            "properties": {
+                "type": {
+                    "const": "CloseDialog",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type"
+            ],
             "type": "object"
         },
         "DecrementSignalValue": {
@@ -33,6 +50,11 @@
                     "type": "number"
                 }
             },
+            "propertyOrder": [
+                "type",
+                "signal",
+                "value"
+            ],
             "type": "object"
         },
         "Delay": {
@@ -46,6 +68,10 @@
                     "type": "number"
                 }
             },
+            "propertyOrder": [
+                "type",
+                "value"
+            ],
             "type": "object"
         },
         "IncrementSignalValue": {
@@ -63,6 +89,11 @@
                     "type": "number"
                 }
             },
+            "propertyOrder": [
+                "type",
+                "signal",
+                "value"
+            ],
             "type": "object"
         },
         "IobrokerSendTo": {
@@ -81,6 +112,12 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "type",
+                "instance",
+                "command",
+                "data"
+            ],
             "type": "object"
         },
         "Javascript": {
@@ -95,14 +132,62 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "type",
+                "script"
+            ],
+            "type": "object"
+        },
+        "OpenDialog": {
+            "properties": {
+                "height": {
+                    "type": "string"
+                },
+                "left": {
+                    "type": "string"
+                },
+                "moveable": {
+                    "type": "boolean"
+                },
+                "relativeSignalsPath": {
+                    "description": "If signals in screen are defined relative (starting with a '.'), this will be prepended",
+                    "type": "string"
+                },
+                "screen": {
+                    "description": "Name of the Screen",
+                    "format": "screen",
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "top": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "OpenDialog",
+                    "type": "string"
+                },
+                "width": {
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "screen",
+                "relativeSignalsPath",
+                "title",
+                "moveable",
+                "width",
+                "height",
+                "left",
+                "top"
+            ],
             "type": "object"
         },
         "OpenScreen": {
             "properties": {
                 "noHistory": {
-                    "type": "boolean"
-                },
-                "openInDialog": {
                     "type": "boolean"
                 },
                 "relativeSignalsPath": {
@@ -119,6 +204,12 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "type",
+                "screen",
+                "relativeSignalsPath",
+                "noHistory"
+            ],
             "type": "object"
         },
         "OpenUrl": {
@@ -138,6 +229,12 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "type",
+                "url",
+                "target",
+                "openInDialog"
+            ],
             "type": "object"
         },
         "ScriptCommands": {
@@ -147,6 +244,12 @@
                 },
                 {
                     "$ref": "#/definitions/OpenUrl"
+                },
+                {
+                    "$ref": "#/definitions/OpenDialog"
+                },
+                {
+                    "$ref": "#/definitions/CloseDialog"
                 },
                 {
                     "$ref": "#/definitions/ToggleSignalValue"
@@ -201,6 +304,11 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "type",
+                "signal",
+                "bitNumber"
+            ],
             "type": "object"
         },
         "SetElementProperty": {
@@ -240,6 +348,14 @@
                     "description": "value you want to set"
                 }
             },
+            "propertyOrder": [
+                "type",
+                "target",
+                "targetSelectorTarget",
+                "targetSelector",
+                "name",
+                "value"
+            ],
             "type": "object"
         },
         "SetSignalValue": {
@@ -257,6 +373,11 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "type",
+                "signal",
+                "value"
+            ],
             "type": "object"
         },
         "SwitchLanguage": {
@@ -269,6 +390,10 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "type",
+                "language"
+            ],
             "type": "object"
         },
         "ToggleBitInSignal": {
@@ -286,6 +411,11 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "type",
+                "signal",
+                "bitNumber"
+            ],
             "type": "object"
         },
         "ToggleSignalValue": {
@@ -300,6 +430,10 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "type",
+                "signal"
+            ],
             "type": "object"
         }
     }

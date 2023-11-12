@@ -2,6 +2,8 @@ import { ContextMenu } from '@node-projects/web-component-designer';
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
 import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
 export class CommandHandling {
+    dockManager;
+    iobrokerWebuiAppShell;
     constructor(dockManager, iobrokerWebuiAppShell, serviceContainer) {
         this.dockManager = dockManager;
         this.iobrokerWebuiAppShell = iobrokerWebuiAppShell;

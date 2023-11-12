@@ -4,13 +4,18 @@ import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { IobrokerWebuiMonacoEditor } from "./IobrokerWebuiMonacoEditor.js";
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend {
-    constructor() {
-        super(...arguments);
-        //TODO: maybe reload designer, when bindings are disabled???
-        this.bindingsEnabled = true;
-        this.relativeBindingsPrefix = '';
-    }
+    _name;
     get name() { return this._name; }
+    _type;
+    _properties;
+    _settings;
+    scriptModel;
+    _configChangedListener;
+    documentContainer;
+    static template = html ``;
+    static style = css ``;
+    _webuiBindings;
+    _settingsChanged;
     async initialize(name, type, html, style, script, settings, properties, serviceContainer) {
         this.title = type + ' - ' + name;
         this._name = name;
@@ -72,6 +77,9 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
             });
         }, 50);
     }
+    //TODO: maybe reload designer, when bindings are disabled???
+    bindingsEnabled = true;
+    relativeBindingsPrefix = '';
     applyBindings() {
         this.removeBindings();
         if (this.bindingsEnabled)
@@ -145,6 +153,4 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         window.appShell.javascriptEditor.model = null;
     }
 }
-IobrokerWebuiScreenEditor.template = html ``;
-IobrokerWebuiScreenEditor.style = css ``;
 customElements.define("iobroker-webui-screen-editor", IobrokerWebuiScreenEditor);

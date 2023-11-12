@@ -2,17 +2,176 @@ import { BaseCustomWebComponentConstructorAppend, html, css } from '@node-projec
 import { BindingMode, BindingTarget } from '@node-projects/web-component-designer';
 import { BindableObjectsBrowser } from "@node-projects/web-component-designer-widgets-wunderbaum";
 export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstructorAppend {
+    static template = html `
+        <div id="root">
+            <div class="vertical-grid">
+                <div style="grid-column: 1/3">
+                    <div style="display: flex; flex-direction: column;">
+                        <div class="row">
+                            <span style="cursor: pointer;" title="to use multiple objects, seprate them with semicolon (;). access iobroker objects in properties via ?propertyName, access the propertyValue via ??propertyName">objects</span>
+                        </div>
+                        <div style="display:flex;align-items: flex-end;">
+                            <input class="row" value="{{?this.objectNames::change}}" style="flex-grow: 1;">
+                            <button @click="_clear" style="height: 22px">X</button>
+                            <button @click="_select" style="height: 22px">...</button>
+                        </div>
+                        <div class="row">
+                            <label style="white-space: nowrap; margin-right: 4px;" title="if set, the value is converted to the type before binding is applied">type :</label>
+                            <select class="row" value="{{?this.objectValueType}}">
+                                <option selected value="">ignore</option>
+                                <option value="number">number</option>
+                                <option value="boolean">boolean</option>
+                                <option value="string">string</string>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <input type="checkbox" disabled="[[!this.twoWayPossible]]" checked="{{this.twoWay::change}}" @change="_refresh">
+                            <span>two way binding</span>
+                            <span style="margin-left: 15px">events:&nbsp;</span>
+                            <input title="to use multiple events, seprate them with semicolon (;)" class="row" disabled="[[!this.twoWay]]" value="{{?this.events::change}}" style="flex-grow: 1; margin-right: 10px;">
+                        </div>
+                        <div class="row">
+                            <input type="checkbox" checked="{{this.invert::change}}">
+                            <span>invert logic</span>
+                        </div>
+                        <div class="row">
+                            <span style="cursor: pointer;" title="javascript expression. access objects with __0, __1, ...">formula</span>
+                        </div>
+                        <div class="row">
+                            <input type="text" value="{{?this.expression}}" style="width: 100%">
+                        </div>
+                        <div class="row">
+                            <span style="cursor: pointer;" title="javascript expression. access property with 'value'">formula write back (two way)</span>
+                        </div>
+                        <div class="row">
+                            <input type="text" disabled="[[!this.twoWay]]" value="{{?this.expressionTwoWay}}" style="width: 100%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="vertical-grid" style="margin-top: 10px;">
+                <div>
+                    <div class="input-headline">
+                        <span>converter</span>:
+                    </div>
+                </div>
+            </div>
+            <div class="vertical-grid" style="border: solid 1px black; padding: 10px; overflow-y: auto;">
+                <div class="bottomleft">
+                    <div id="converterGrid" style="height: 100%;">
+                        <div style="width: 100%; height: 20px; display: flex;">
+                            <div style="width: 39%">condition</div>
+                            <div style="width: 59%">value</div>
+                        </div>
+                        <template repeat:item="[[this.converters]]">
+                            <div css:background-color="[[item.activeRow ? 'gray' : '']]" style="width: 100%; display: flex; height: 26px; justify-content: center; align-items: center; gap: 5px;">
+                                <input type="text" value="{{item.key}}" @focus="[[this._focusRow(index)]]" style="width: 39%">
+                                <input type="[[this._property.type == 'color' ? 'color' : 'text']]" value="{{item.value}}" @focus="[[this._focusRow(index)]]" style="width: 59%">
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <div class="controlbox" id="grid-controls">
+                    <button type="button" id="add-row-button" value="add" @click="addConverter">
+                        <span>add</span>
+                    </button>
+                    <button id="remove-row-button" value="remove" style="margin-top: 6px;" @click="removeConverter">
+                        <span>remove</span>
+                    </button>
+                </div>
+            </div>
+        </div>`;
+    static style = css `
+        :host {
+            box-sizing: border-box;
+        }
+        
+        #converterGrid {
+            display: flex;
+            gap: 2px;
+            flex-direction: column;
+        }
+        #converterGrid input {
+            height: 20px;
+            box-sizing: border-box;
+        }
+
+        .padding_top {
+            padding-top: 30px;
+        }
+
+        .row{
+            margin-top: 3px;
+            display: flex;
+            align-items: center;
+        }
+
+        .controlbox {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-headline {
+            height: 30px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 15px;
+            width: 15px;
+            height: 15px;
+        }
+
+        select {
+            width: 100%;
+        }
+
+        #root {
+            padding: 2px 10px;
+            display: grid;
+            grid-template-rows: min-content min-content;
+            overflow: auto;
+            height: calc(100% - 4px)
+        }
+
+        .vertical-grid {
+            display: grid;
+            grid-template-columns: calc((100% - 150px) - 30px) 150px;
+            gap: 30px;
+        }
+
+        #grid input, #list input { 
+            border:0px;
+        }
+
+        #tagdata_type {
+            height: 24px;
+            font-size: inherit;
+        }`;
+    static is = 'iobroker-webui-dynamics-editor';
+    static properties = {
+        twoWayPossible: Boolean,
+        twoWay: Boolean,
+        expression: String,
+        objectNames: String,
+        events: String,
+        invert: Boolean,
+        converters: Array
+    };
+    twoWayPossible = false;
+    twoWay = false;
+    expression = '';
+    expressionTwoWay = '';
+    objectNames = '';
+    events = '';
+    invert = false;
+    converters = [];
+    objectValueType;
+    _property;
+    _binding;
+    _bindingTarget;
+    _activeRow = -1;
     constructor(property, binding, bindingTarget) {
         super();
-        this.twoWayPossible = false;
-        this.twoWay = false;
-        this.expression = '';
-        this.expressionTwoWay = '';
-        this.objectNames = '';
-        this.events = '';
-        this.invert = false;
-        this.converters = [];
-        this._activeRow = -1;
         super._restoreCachedInititalValues();
         this._property = property;
         this._binding = binding;
@@ -94,159 +253,4 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
         this._updatefocusedRow();
     }
 }
-IobrokerWebuiDynamicsEditor.template = html `
-        <div id="root">
-            <div class="vertical-grid">
-                <div style="grid-column: 1/3">
-                    <div style="display: flex; flex-direction: column;">
-                        <div class="row">
-                            <span style="cursor: pointer;" title="to use multiple objects, seprate them with semicolon (;). access iobroker objects in properties via ?propertyName, access the propertyValue via ??propertyName">objects</span>
-                        </div>
-                        <div style="display:flex;align-items: flex-end;">
-                            <input class="row" value="{{?this.objectNames::change}}" style="flex-grow: 1;">
-                            <button @click="_clear" style="height: 22px">X</button>
-                            <button @click="_select" style="height: 22px">...</button>
-                        </div>
-                        <div class="row">
-                            <label style="white-space: nowrap; margin-right: 4px;" title="if set, the value is converted to the type before binding is applied">type :</label>
-                            <select class="row" value="{{?this.objectValueType}}">
-                                <option selected value="">ignore</option>
-                                <option value="number">number</option>
-                                <option value="boolean">boolean</option>
-                                <option value="string">string</string>
-                            </select>
-                        </div>
-                        <div class="row">
-                            <input type="checkbox" disabled="[[!this.twoWayPossible]]" checked="{{this.twoWay::change}}" @change="_refresh">
-                            <span>two way binding</span>
-                            <span style="margin-left: 15px">events:&nbsp;</span>
-                            <input title="to use multiple events, seprate them with semicolon (;)" class="row" disabled="[[!this.twoWay]]" value="{{?this.events::change}}" style="flex-grow: 1; margin-right: 10px;">
-                        </div>
-                        <div class="row">
-                            <input type="checkbox" checked="{{this.invert::change}}">
-                            <span>invert logic</span>
-                        </div>
-                        <div class="row">
-                            <span style="cursor: pointer;" title="javascript expression. access objects with __0, __1, ...">formula</span>
-                        </div>
-                        <div class="row">
-                            <input type="text" value="{{?this.expression}}" style="width: 100%">
-                        </div>
-                        <div class="row">
-                            <span style="cursor: pointer;" title="javascript expression. access property with 'value'">formula write back (two way)</span>
-                        </div>
-                        <div class="row">
-                            <input type="text" disabled="[[!this.twoWay]]" value="{{?this.expressionTwoWay}}" style="width: 100%">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="vertical-grid" style="margin-top: 10px;">
-                <div>
-                    <div class="input-headline">
-                        <span>converter</span>:
-                    </div>
-                </div>
-            </div>
-            <div class="vertical-grid" style="border: solid 1px black; padding: 10px; overflow-y: auto;">
-                <div class="bottomleft">
-                    <div id="converterGrid" style="height: 100%;">
-                        <div style="width: 100%; height: 20px; display: flex;">
-                            <div style="width: 39%">condition</div>
-                            <div style="width: 59%">value</div>
-                        </div>
-                        <template repeat:item="[[this.converters]]">
-                            <div css:background-color="[[item.activeRow ? 'gray' : '']]" style="width: 100%; display: flex; height: 26px; justify-content: center; align-items: center; gap: 5px;">
-                                <input type="text" value="{{item.key}}" @focus="[[this._focusRow(index)]]" style="width: 39%">
-                                <input type="[[this._property.type == 'color' ? 'color' : 'text']]" value="{{item.value}}" @focus="[[this._focusRow(index)]]" style="width: 59%">
-                            </div>
-                        </template>
-                    </div>
-                </div>
-                <div class="controlbox" id="grid-controls">
-                    <button type="button" id="add-row-button" value="add" @click="addConverter">
-                        <span>add</span>
-                    </button>
-                    <button id="remove-row-button" value="remove" style="margin-top: 6px;" @click="removeConverter">
-                        <span>remove</span>
-                    </button>
-                </div>
-            </div>
-        </div>`;
-IobrokerWebuiDynamicsEditor.style = css `
-        :host {
-            box-sizing: border-box;
-        }
-        
-        #converterGrid {
-            display: flex;
-            gap: 2px;
-            flex-direction: column;
-        }
-        #converterGrid input {
-            height: 20px;
-            box-sizing: border-box;
-        }
-
-        .padding_top {
-            padding-top: 30px;
-        }
-
-        .row{
-            margin-top: 3px;
-            display: flex;
-            align-items: center;
-        }
-
-        .controlbox {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .input-headline {
-            height: 30px;
-        }
-
-        input[type="checkbox"] {
-            margin-right: 15px;
-            width: 15px;
-            height: 15px;
-        }
-
-        select {
-            width: 100%;
-        }
-
-        #root {
-            padding: 2px 10px;
-            display: grid;
-            grid-template-rows: min-content min-content;
-            overflow: auto;
-            height: calc(100% - 4px)
-        }
-
-        .vertical-grid {
-            display: grid;
-            grid-template-columns: calc((100% - 150px) - 30px) 150px;
-            gap: 30px;
-        }
-
-        #grid input, #list input { 
-            border:0px;
-        }
-
-        #tagdata_type {
-            height: 24px;
-            font-size: inherit;
-        }`;
-IobrokerWebuiDynamicsEditor.is = 'iobroker-webui-dynamics-editor';
-IobrokerWebuiDynamicsEditor.properties = {
-    twoWayPossible: Boolean,
-    twoWay: Boolean,
-    expression: String,
-    objectNames: String,
-    events: String,
-    invert: Boolean,
-    converters: Array
-};
 customElements.define(IobrokerWebuiDynamicsEditor.is, IobrokerWebuiDynamicsEditor);

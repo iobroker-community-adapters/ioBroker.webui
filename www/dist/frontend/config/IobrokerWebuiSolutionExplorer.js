@@ -8,6 +8,14 @@ import { Wunderbaum } from 'wunderbaum';
 //@ts-ignore
 import wunderbaumStyle from 'wunderbaum/dist/wunderbaum.css' assert { type: 'css' };
 export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
+    static template = html `
+        <div id="treeDiv" class="" style="overflow: auto; width:100%; height: 100%;">
+        </div>`;
+    static style = css ``;
+    serviceContainer;
+    _treeDiv;
+    _tree;
+    _screensNodeData;
     constructor() {
         super();
         this._treeDiv = this._getDomElement('treeDiv');
@@ -788,8 +796,4 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         }
     }
 }
-IobrokerWebuiSolutionExplorer.template = html `
-        <div id="treeDiv" class="" style="overflow: auto; width:100%; height: 100%;">
-        </div>`;
-IobrokerWebuiSolutionExplorer.style = css ``;
 customElements.define("iobroker-webui-solution-explorer", IobrokerWebuiSolutionExplorer);

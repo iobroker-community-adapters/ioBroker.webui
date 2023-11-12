@@ -5,6 +5,38 @@ import { IobrokerWebuiScreenEditor } from "./IobrokerWebuiScreenEditor.js";
 import { findExportFunctionDeclarations } from "../helper/EsprimaHelper.js";
 import { IobrokerWebuiMonacoEditor } from "./IobrokerWebuiMonacoEditor.js";
 export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstructorAppend {
+    static style = css `
+    :host {
+        display: grid;
+        grid-template-columns: 20px 1fr auto 30px;
+        overflow-y: auto;
+        align-content: start;
+        height: 100%;
+    }
+    .rect {
+        width: 7px;
+        height: 7px;
+        border: 1px solid black;
+        justify-self: center;
+    }
+    input.mth {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    div {
+        width: 40px;
+        align-self: center;
+        white-space: nowrap;
+    }`;
+    static template = html `
+        <template repeat:item="[[this.events]]">
+            <div @contextmenu="[[this._ctxMenu(event, item)]]" class="rect" css:background-color="[[this._getEventColor(item)]]"></div>
+            <div css:grid-column-end="[[this._getEventType(item) == 'js' ? 'span 1' : 'span 2']]" title="[[item.name]]">[[item.name]]</div>
+            <input @input="[[this._inputMthName(event, item)]]" class="mth" value="[[this._getEventMethodname(item)]]" css:display="[[this._getEventType(item) == 'js' ? 'block' : 'none']]" type="text">
+            <button @contextmenu="[[this._contextMenuAddEvent(event, item)]]" @click="[[this._editEvent(event, item)]]">...</button>
+        </template>
+        <span style="grid-column: 1 / span 3; margin-top: 8px; margin-left: 3px;">add event:</span>
+        <input id="addEventInput" style="grid-column: 1 / span 3; margin: 5px;" @keypress=[[this._addEvent(event)]] type="text">`;
     constructor() {
         super();
         this._restoreCachedInititalValues();
@@ -12,6 +44,10 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
     ready() {
         this._bindingsParse();
     }
+    _instanceServiceContainer;
+    _selectionChangedHandler;
+    _selectedItems;
+    events;
     set instanceServiceContainer(value) {
         this._instanceServiceContainer = value;
         this._selectionChangedHandler?.dispose();
@@ -140,36 +176,4 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
         }
     }
 }
-IobrokerWebuiEventAssignment.style = css `
-    :host {
-        display: grid;
-        grid-template-columns: 20px 1fr auto 30px;
-        overflow-y: auto;
-        align-content: start;
-        height: 100%;
-    }
-    .rect {
-        width: 7px;
-        height: 7px;
-        border: 1px solid black;
-        justify-self: center;
-    }
-    input.mth {
-        width: 100%;
-        box-sizing: border-box;
-    }
-    div {
-        width: 40px;
-        align-self: center;
-        white-space: nowrap;
-    }`;
-IobrokerWebuiEventAssignment.template = html `
-        <template repeat:item="[[this.events]]">
-            <div @contextmenu="[[this._ctxMenu(event, item)]]" class="rect" css:background-color="[[this._getEventColor(item)]]"></div>
-            <div css:grid-column-end="[[this._getEventType(item) == 'js' ? 'span 1' : 'span 2']]" title="[[item.name]]">[[item.name]]</div>
-            <input @input="[[this._inputMthName(event, item)]]" class="mth" value="[[this._getEventMethodname(item)]]" css:display="[[this._getEventType(item) == 'js' ? 'block' : 'none']]" type="text">
-            <button @contextmenu="[[this._contextMenuAddEvent(event, item)]]" @click="[[this._editEvent(event, item)]]">...</button>
-        </template>
-        <span style="grid-column: 1 / span 3; margin-top: 8px; margin-left: 3px;">add event:</span>
-        <input id="addEventInput" style="grid-column: 1 / span 3; margin: 5px;" @keypress=[[this._addEvent(event)]] type="text">`;
 customElements.define("iobroker-webui-event-assignment", IobrokerWebuiEventAssignment);

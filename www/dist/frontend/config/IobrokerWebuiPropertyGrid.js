@@ -50,7 +50,10 @@ export function typeInfoFromJsonSchema(jsonSchemaObj, obj, type) {
         let tInfo = {};
         tInfo.name = usedType;
         tInfo.properties = [];
-        for (let prp in def.properties) {
+        let lst = Object.keys(def.properties);
+        if (def.propertyOrder)
+            lst = def.propertyOrder;
+        for (let prp of lst) {
             if (prp != 'type') {
                 let p = {};
                 p.name = prp;
@@ -69,10 +72,123 @@ export function typeInfoFromJsonSchema(jsonSchemaObj, obj, type) {
     return null;
 }
 export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructorAppend {
+    static style = css `
+        :host {
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+
+        #tableDiv {
+            height: 100%;
+            display: grid;
+            overflow: auto;
+            grid-template-rows: auto 1fr auto auto;
+            grid-template-areas:
+                'head'
+                'properties'
+                '.'
+                'description';
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-control {
+            width: 100%;
+            box-sizing: border-box;
+            min-height: unset;
+            height: 21px;
+        }
+
+        #clear {
+            height: 11px;
+        }
+
+        #head {
+            border-bottom: 1px lightgray solid;
+            grid-area: head;
+            font-size: 10pt;
+            overflow: hidden;
+        }
+
+        thead th,
+        #head {
+            position: sticky;
+            top: 0;
+            left: 1px;
+            background: #f0f0f0;
+            padding-left: 5px;
+        }
+
+        #tableInnerDiv {
+            overflow: auto;
+            width: 100%;
+            height: 100%;
+            grid-area: properties;
+        }
+
+        #table {
+            user-select: none;
+            overflow: auto;
+            width: calc(100% - 1px);
+            table-layout: fixed;
+        }
+
+        #lastCol {
+            width: 100%;
+        }
+
+        #description {
+            font-family: tahoma, arial, helvetica;
+            font-size: 10pt;
+            padding: 5px;
+            grid-area: description;
+            background-color: #e6e6e6;
+        }
+
+        #descText {
+            white-space: break-spaces;
+        }
+
+        span.fancytree-node {
+            white-space: nowrap;
+        }
+        
+        textarea {
+            resize: none;
+        }`;
+    static template = html ` 
+        <div id="tableDiv">
+            <div id="head"></div>
+            <div id="tableInnerDiv">
+                <div id="table"></div>
+            </div>
+
+            <div id="description">
+                <h4 id="descTitel"></h4>
+                <p id="descText"></p>
+            </div>
+        </div>`;
+    static properties = {
+        noCategory: Boolean,
+        hideProperties: String,
+        expanded: Boolean,
+        selectedObject: Object,
+        getTypeInfo: Function
+    };
+    noCategory;
+    hideProperties;
+    expanded;
+    propertyNodeContextMenu = new TypedEvent;
+    getTypeInfo;
+    _table;
+    _tree;
+    _head;
     constructor() {
         super();
-        this.propertyNodeContextMenu = new TypedEvent;
-        this.propertyChanged = new TypedEvent();
         this._restoreCachedInititalValues();
         this._table = this._getDomElement('table');
         this._head = this._getDomElement('head');
@@ -150,6 +266,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             this._getDomElement('descText').innerText = '';
         }
     }
+    _selectedObject;
     get selectedObject() {
         return this._selectedObject;
     }
@@ -157,6 +274,8 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
         this._selectedObject = value;
         this.updateTree();
     }
+    propertyChanged = new TypedEvent();
+    typeName;
     createPropertyNodes(baseNode, properties, prefix = '') {
         if (!this.noCategory) {
             const groups = new Map();
@@ -220,6 +339,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
         setDeepValue(this._selectedObject, propertyPath, value);
         this.propertyChanged.emit({ property: propertyPath, newValue: value });
     }
+    getSpecialEditorForType;
     async _getEditorForType(property, currentValue, propertyPath) {
         if (this.getSpecialEditorForType) {
             let edt = await this.getSpecialEditorForType(property, currentValue, propertyPath);
@@ -467,111 +587,4 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
         this._tree.root.removeChildren();
     }
 }
-IobrokerWebuiPropertyGrid.style = css `
-        :host {
-            display: block;
-            height: 100%;
-            width: 100%;
-        }
-
-        #tableDiv {
-            height: 100%;
-            display: grid;
-            overflow: auto;
-            grid-template-rows: auto 1fr auto auto;
-            grid-template-areas:
-                'head'
-                'properties'
-                '.'
-                'description';
-        }
-
-        .input-group {
-            display: flex;
-            align-items: center;
-        }
-
-        .form-control {
-            width: 100%;
-            box-sizing: border-box;
-            min-height: unset;
-            height: 21px;
-        }
-
-        #clear {
-            height: 11px;
-        }
-
-        #head {
-            border-bottom: 1px lightgray solid;
-            grid-area: head;
-            font-size: 10pt;
-            overflow: hidden;
-        }
-
-        thead th,
-        #head {
-            position: sticky;
-            top: 0;
-            left: 1px;
-            background: #f0f0f0;
-            padding-left: 5px;
-        }
-
-        #tableInnerDiv {
-            overflow: auto;
-            width: 100%;
-            height: 100%;
-            grid-area: properties;
-        }
-
-        #table {
-            user-select: none;
-            overflow: auto;
-            width: calc(100% - 1px);
-            table-layout: fixed;
-        }
-
-        #lastCol {
-            width: 100%;
-        }
-
-        #description {
-            font-family: tahoma, arial, helvetica;
-            font-size: 10pt;
-            padding: 5px;
-            grid-area: description;
-            background-color: #e6e6e6;
-        }
-
-        #descText {
-            white-space: break-spaces;
-        }
-
-        span.fancytree-node {
-            white-space: nowrap;
-        }
-        
-        textarea {
-            resize: none;
-        }`;
-IobrokerWebuiPropertyGrid.template = html ` 
-        <div id="tableDiv">
-            <div id="head"></div>
-            <div id="tableInnerDiv">
-                <div id="table"></div>
-            </div>
-
-            <div id="description">
-                <h4 id="descTitel"></h4>
-                <p id="descText"></p>
-            </div>
-        </div>`;
-IobrokerWebuiPropertyGrid.properties = {
-    noCategory: Boolean,
-    hideProperties: String,
-    expanded: Boolean,
-    selectedObject: Object,
-    getTypeInfo: Function
-};
 customElements.define("iobroker-webui-property-grid", IobrokerWebuiPropertyGrid);

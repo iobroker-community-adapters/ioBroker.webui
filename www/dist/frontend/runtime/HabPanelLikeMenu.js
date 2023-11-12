@@ -1,30 +1,7 @@
 import { __decorate } from "tslib";
 import { BaseCustomWebComponentConstructorAppend, css, customElement, html, property } from "@node-projects/base-custom-webcomponent";
 let HabPanelLikeMenu = class HabPanelLikeMenu extends BaseCustomWebComponentConstructorAppend {
-    get expanded() {
-        return this._expanded;
-    }
-    set expanded(value) {
-        this._expanded = value;
-        if (this._expanded)
-            this.style.setProperty('--menu-offset', '200px');
-        else
-            this.style.setProperty('--menu-offset', '0');
-    }
-    constructor() {
-        super();
-        this._expanded = false;
-        this._restoreCachedInititalValues();
-    }
-    ready() {
-        this._parseAttributesToProperties();
-        this._assignEvents();
-    }
-    switchMenu() {
-        this.expanded = !this.expanded;
-    }
-};
-HabPanelLikeMenu.style = css `
+    static style = css `
     :host {
         height: 100%;
         position: relative;
@@ -74,7 +51,7 @@ HabPanelLikeMenu.style = css `
     #content {
         height: 100%;
     }`;
-HabPanelLikeMenu.template = html `
+    static template = html `
     <div id="outer"> 
         <div id="menu">
             <slot name="menu"></part>
@@ -93,6 +70,30 @@ HabPanelLikeMenu.template = html `
             </div>
         </div>
     </div>`;
+    screens;
+    _expanded = false;
+    get expanded() {
+        return this._expanded;
+    }
+    set expanded(value) {
+        this._expanded = value;
+        if (this._expanded)
+            this.style.setProperty('--menu-offset', '200px');
+        else
+            this.style.setProperty('--menu-offset', '0');
+    }
+    constructor() {
+        super();
+        this._restoreCachedInititalValues();
+    }
+    ready() {
+        this._parseAttributesToProperties();
+        this._assignEvents();
+    }
+    switchMenu() {
+        this.expanded = !this.expanded;
+    }
+};
 __decorate([
     property(Array)
 ], HabPanelLikeMenu.prototype, "screens", void 0);

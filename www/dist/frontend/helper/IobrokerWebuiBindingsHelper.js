@@ -8,8 +8,15 @@ export const bindingPrefixAttribute = 'bind-attr:';
 export const bindingPrefixCss = 'bind-css:';
 export const bindingPrefixContent = 'bind-content:';
 export class IndirectSignal {
+    parts;
+    signals;
+    values;
+    unsubscribeList = [];
+    unsubscribeTargetValue;
+    combinedName;
+    disposed;
+    valueChangedCb;
     constructor(id, valueChangedCb) {
-        this.unsubscribeList = [];
         this.valueChangedCb = valueChangedCb;
         this.parseIndirectBinding(id);
         this.values = new Array(this.signals.length);

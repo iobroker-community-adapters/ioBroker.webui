@@ -3,94 +3,7 @@
 import { __decorate } from "tslib";
 import { BaseCustomWebComponentConstructorAppend, css, customElement, html, property } from "@node-projects/base-custom-webcomponent";
 let IobrokerWebuiSplitView = class IobrokerWebuiSplitView extends BaseCustomWebComponentConstructorAppend {
-    constructor() {
-        super();
-        this.orientation = 'horizontal';
-        this._splitter = this._getDomElement('splitter');
-        this._splitter.onpointerdown = this._pointerDown.bind(this);
-        this._splitter.onpointermove = this._pointerMove.bind(this);
-        this._splitter.onpointerup = this._pointerUp.bind(this);
-        this._parseAttributesToProperties();
-    }
-    ready() {
-        if (this.observe) {
-            this._observer = new MutationObserver(this._processChildren);
-            this._observer.observe(this, { childList: true });
-        }
-        this._processChildren();
-    }
-    _processChildren() {
-        let i = 0;
-        for (let c of this.children) {
-            if (i === 0) {
-                this._primaryChild = c;
-                c.setAttribute('slot', 'primary');
-            }
-            else if (i == 1) {
-                this._secondaryChild = c;
-                c.setAttribute('slot', 'secondary');
-            }
-            else {
-                c.removeAttribute('slot');
-            }
-            i++;
-        }
-    }
-    _setFlexBasis(element, flexBasis, containerSize) {
-        flexBasis = Math.max(0, Math.min(flexBasis, containerSize));
-        element.style.flex = '1 1 ' + flexBasis + 'px';
-    }
-    _pointerDown(event) {
-        this._splitter.setPointerCapture(event.pointerId);
-        this._startResize(event.x, event.y);
-        event.preventDefault();
-    }
-    _startResize(x, y) {
-        if (!this._primaryChild || !this._secondaryChild) {
-            return;
-        }
-        this._startX = x;
-        this._startY = y;
-        this._previousPrimaryPointerEvents = this._primaryChild.style.pointerEvents;
-        this._previousSecondaryPointerEvents = this._secondaryChild.style.pointerEvents;
-        this._primaryChild.style.pointerEvents = 'none';
-        this._secondaryChild.style.pointerEvents = 'none';
-        var size = this.orientation === 'vertical' ? 'height' : 'width';
-        this._startSize = {
-            container: this.getBoundingClientRect()[size] - this._splitter.getBoundingClientRect()[size],
-            primary: this._primaryChild.getBoundingClientRect()[size],
-            secondary: this._secondaryChild.getBoundingClientRect()[size]
-        };
-    }
-    _pointerUp(event) {
-        this._splitter.releasePointerCapture(event.pointerId);
-        this._stopresize();
-    }
-    _stopresize() {
-        if (!this._primaryChild || !this._secondaryChild) {
-            return;
-        }
-        this._primaryChild.style.pointerEvents = this._previousPrimaryPointerEvents;
-        this._secondaryChild.style.pointerEvents = this._previousSecondaryPointerEvents;
-        this._startSize = null;
-    }
-    _pointerMove(event) {
-        this._onHandleMove(event.x, event.y);
-    }
-    _onHandleMove(x, y) {
-        if (!this._startSize) {
-            return;
-        }
-        let dy = y - this._startY;
-        let dx = x - this._startX;
-        var distance = this.orientation === 'vertical' ? dy : dx;
-        const isRtl = this.orientation !== 'vertical' && this.getAttribute('dir') === 'rtl';
-        const dirDistance = isRtl ? -distance : distance;
-        this._setFlexBasis(this._primaryChild, this._startSize.primary + dirDistance, this._startSize.container);
-        this._setFlexBasis(this._secondaryChild, this._startSize.secondary - dirDistance, this._startSize.container);
-    }
-};
-IobrokerWebuiSplitView.style = css `
+    static style = css `
         :host {
             display: flex;
             overflow: hidden !important;
@@ -180,12 +93,109 @@ IobrokerWebuiSplitView.style = css `
         [part="splitter"]:active [part="handle"]::after {
             background-color: hsla(214, 45%, 20%, 0.5);
         }`;
-IobrokerWebuiSplitView.template = html `
+    static template = html `
         <slot id="primary" name="primary"></slot>
         <div part="splitter" id="splitter">
             <div part="handle"></div>
         </div>
         <slot id="secondary" name="secondary"></slot>`;
+    orientation = 'horizontal';
+    observe;
+    _observer;
+    _primaryChild;
+    _secondaryChild;
+    _previousPrimaryPointerEvents;
+    _previousSecondaryPointerEvents;
+    _splitter;
+    _startSize;
+    _startX;
+    _startY;
+    constructor() {
+        super();
+        this._splitter = this._getDomElement('splitter');
+        this._splitter.onpointerdown = this._pointerDown.bind(this);
+        this._splitter.onpointermove = this._pointerMove.bind(this);
+        this._splitter.onpointerup = this._pointerUp.bind(this);
+        this._parseAttributesToProperties();
+    }
+    ready() {
+        if (this.observe) {
+            this._observer = new MutationObserver(this._processChildren);
+            this._observer.observe(this, { childList: true });
+        }
+        this._processChildren();
+    }
+    _processChildren() {
+        let i = 0;
+        for (let c of this.children) {
+            if (i === 0) {
+                this._primaryChild = c;
+                c.setAttribute('slot', 'primary');
+            }
+            else if (i == 1) {
+                this._secondaryChild = c;
+                c.setAttribute('slot', 'secondary');
+            }
+            else {
+                c.removeAttribute('slot');
+            }
+            i++;
+        }
+    }
+    _setFlexBasis(element, flexBasis, containerSize) {
+        flexBasis = Math.max(0, Math.min(flexBasis, containerSize));
+        element.style.flex = '1 1 ' + flexBasis + 'px';
+    }
+    _pointerDown(event) {
+        this._splitter.setPointerCapture(event.pointerId);
+        this._startResize(event.x, event.y);
+        event.preventDefault();
+    }
+    _startResize(x, y) {
+        if (!this._primaryChild || !this._secondaryChild) {
+            return;
+        }
+        this._startX = x;
+        this._startY = y;
+        this._previousPrimaryPointerEvents = this._primaryChild.style.pointerEvents;
+        this._previousSecondaryPointerEvents = this._secondaryChild.style.pointerEvents;
+        this._primaryChild.style.pointerEvents = 'none';
+        this._secondaryChild.style.pointerEvents = 'none';
+        var size = this.orientation === 'vertical' ? 'height' : 'width';
+        this._startSize = {
+            container: this.getBoundingClientRect()[size] - this._splitter.getBoundingClientRect()[size],
+            primary: this._primaryChild.getBoundingClientRect()[size],
+            secondary: this._secondaryChild.getBoundingClientRect()[size]
+        };
+    }
+    _pointerUp(event) {
+        this._splitter.releasePointerCapture(event.pointerId);
+        this._stopresize();
+    }
+    _stopresize() {
+        if (!this._primaryChild || !this._secondaryChild) {
+            return;
+        }
+        this._primaryChild.style.pointerEvents = this._previousPrimaryPointerEvents;
+        this._secondaryChild.style.pointerEvents = this._previousSecondaryPointerEvents;
+        this._startSize = null;
+    }
+    _pointerMove(event) {
+        this._onHandleMove(event.x, event.y);
+    }
+    _onHandleMove(x, y) {
+        if (!this._startSize) {
+            return;
+        }
+        let dy = y - this._startY;
+        let dx = x - this._startX;
+        var distance = this.orientation === 'vertical' ? dy : dx;
+        const isRtl = this.orientation !== 'vertical' && this.getAttribute('dir') === 'rtl';
+        const dirDistance = isRtl ? -distance : distance;
+        this._setFlexBasis(this._primaryChild, this._startSize.primary + dirDistance, this._startSize.container);
+        this._setFlexBasis(this._secondaryChild, this._startSize.secondary - dirDistance, this._startSize.container);
+    }
+};
 __decorate([
     property(String)
 ], IobrokerWebuiSplitView.prototype, "orientation", void 0);

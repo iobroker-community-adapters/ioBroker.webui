@@ -4,7 +4,25 @@ import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElem
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
-let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
+let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
+    static { ScreenViewer_1 = this; }
+    static style = css `
+    :host {
+        height: 100%;
+        position: relative;
+        display: block;
+    }
+
+    *[node-projects-hide-at-run-time] {
+        display: none !important;
+    }
+    `;
+    _iobBindings;
+    _loading;
+    _refreshViewSubscription;
+    _screenName;
+    _screensChangedSubscription;
+    _scriptObject;
     get screenName() {
         return this._screenName;
     }
@@ -14,6 +32,7 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
             this._loadScreen();
         }
     }
+    _relativeSignalsPath;
     get relativeSignalsPath() {
         return this._relativeSignalsPath;
     }
@@ -22,6 +41,7 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
             this._relativeSignalsPath = value;
         }
     }
+    objects;
     constructor() {
         super();
         this._restoreCachedInititalValues();
@@ -82,17 +102,6 @@ let ScreenViewer = ScreenViewer_1 = class ScreenViewer extends BaseCustomWebComp
         this._scriptObject?.disconnectedCallback?.(this);
     }
 };
-ScreenViewer.style = css `
-    :host {
-        height: 100%;
-        position: relative;
-        display: block;
-    }
-
-    *[node-projects-hide-at-run-time] {
-        display: none !important;
-    }
-    `;
 __decorate([
     property()
 ], ScreenViewer.prototype, "screenName", null);

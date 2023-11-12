@@ -1,5 +1,45 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
 export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponentConstructorAppend {
+    static style = css `
+    :host {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 30px;
+        overflow-y: auto;
+        align-content: start;
+        height: 100%;
+        padding: 5px;
+        gap: 2px;
+    }
+    div {
+        font-size: 10px;
+    }
+    input {
+        width: 100%;
+        box-sizing: border-box; 
+    }`;
+    //TODO: enum properties, will be stored like this "'aa'|'bb'" -> like typescript enums
+    static template = html `
+        <div>name</div>
+        <div>type</div>
+        <div>def.</div>
+        <div></div>
+        <template repeat:item="[[this.properties]]">
+            <input value="{{item.name}}" @input="[[this.changed()]]">
+            <select css:display="[[item.type == 'enum' ? 'none' : '']]" value="{{item.type}}" @change="[[this.changed()]]">
+                <option value="string">string</option>
+                <option value="boolean">boolean</option>
+                <option value="number">number</option>
+                <option value="color">color</option>
+                <option value="date">date</option>
+                <option value="signal">signal</option>
+                <option value="screen">screen</option>
+            </select>
+            <input css:display="[[item.type == 'enum' ? '' : 'none']]" value="{{?item.values}}" @input="[[this.changed()]]">
+            <input type="text" value="{{?item.def}}" @input="[[this.changed()]]">
+            <button @click="[[this.removeProp(index)]]">del</button>
+        </template>
+        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 4;" @click="addProp">add...</button>
+        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 4;" @click="addEnumProp">add enum...</button>`;
     constructor() {
         super();
         this._restoreCachedInititalValues();
@@ -8,6 +48,8 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
         this._bindingsParse();
         this._assignEvents();
     }
+    properties;
+    propertiesObj;
     setProperties(properties) {
         this.propertiesObj = properties;
         if (properties) {
@@ -63,44 +105,4 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
         }
     }
 }
-IobrokerWebuiControlPropertiesEditor.style = css `
-    :host {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 30px;
-        overflow-y: auto;
-        align-content: start;
-        height: 100%;
-        padding: 5px;
-        gap: 2px;
-    }
-    div {
-        font-size: 10px;
-    }
-    input {
-        width: 100%;
-        box-sizing: border-box; 
-    }`;
-//TODO: enum properties, will be stored like this "'aa'|'bb'" -> like typescript enums
-IobrokerWebuiControlPropertiesEditor.template = html `
-        <div>name</div>
-        <div>type</div>
-        <div>def.</div>
-        <div></div>
-        <template repeat:item="[[this.properties]]">
-            <input value="{{item.name}}" @input="[[this.changed()]]">
-            <select css:display="[[item.type == 'enum' ? 'none' : '']]" value="{{item.type}}" @change="[[this.changed()]]">
-                <option value="string">string</option>
-                <option value="boolean">boolean</option>
-                <option value="number">number</option>
-                <option value="color">color</option>
-                <option value="date">date</option>
-                <option value="signal">signal</option>
-                <option value="screen">screen</option>
-            </select>
-            <input css:display="[[item.type == 'enum' ? '' : 'none']]" value="{{?item.values}}" @input="[[this.changed()]]">
-            <input type="text" value="{{?item.def}}" @input="[[this.changed()]]">
-            <button @click="[[this.removeProp(index)]]">del</button>
-        </template>
-        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 4;" @click="addProp">add...</button>
-        <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 4;" @click="addEnumProp">add enum...</button>`;
 customElements.define("iobroker-webui-control-properties-editor", IobrokerWebuiControlPropertiesEditor);

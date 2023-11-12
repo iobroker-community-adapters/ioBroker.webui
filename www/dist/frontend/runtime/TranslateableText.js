@@ -2,6 +2,15 @@ import { __decorate } from "tslib";
 import { BaseCustomWebComponentConstructorAppend, DomHelper, css, customElement } from "@node-projects/base-custom-webcomponent";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 let TranslateableText = class TranslateableText extends BaseCustomWebComponentConstructorAppend {
+    static style = css `
+        :host {
+            display: inline;
+        }
+
+        *[node-projects-hide-at-run-time] {
+            display: none !important;
+        }`;
+    _languageChangedHandler;
     constructor() {
         super();
         this._restoreCachedInititalValues();
@@ -19,14 +28,6 @@ let TranslateableText = class TranslateableText extends BaseCustomWebComponentCo
             this.shadowRoot.appendChild(document.createTextNode(n.textContent));
     }
 };
-TranslateableText.style = css `
-        :host {
-            display: inline;
-        }
-
-        *[node-projects-hide-at-run-time] {
-            display: none !important;
-        }`;
 TranslateableText = __decorate([
     customElement("t-t")
 ], TranslateableText);
