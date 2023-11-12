@@ -9,6 +9,12 @@ const __dirname = path.normalize(path.join(path.dirname(fileURLToPath(import.met
 const pkg = JSON.parse(fs.readFileSync(new URL('../../package.json', import.meta.url)).toString());
 const adapterName = pkg.name.split('.').pop();
 class WebUi extends utils.Adapter {
+    _unloaded;
+    _instanceName = 'webui.0';
+    _npmNamespace = this._instanceName + '.widgets';
+    _dataNamespace = this._instanceName + '.data';
+    _stateNpm = 'state.npm';
+    _stateCommand = 'webui.0.control.command';
     /**
      * @param {Partial<utils.AdapterOptions>} [options={}]
      */
@@ -17,14 +23,6 @@ class WebUi extends utils.Adapter {
             ...options,
             name: adapterName,
         });
-        this._instanceName = 'webui.0';
-        this._npmNamespace = this._instanceName + '.widgets';
-        this._dataNamespace = this._instanceName + '.data';
-        this._stateNpm = 'state.npm';
-        this._stateCommand = 'webui.0.control.command';
-        this.widgetsDir = __dirname + '/widgets';
-        this.npmRunning = false;
-        this.states = {};
         this.on('ready', this.main.bind(this));
         this.on('stateChange', this.stateChange.bind(this));
         this.on('unload', this.onUnload.bind(this));
@@ -36,6 +34,8 @@ class WebUi extends utils.Adapter {
         await this.runUpload();
         this.setState(this._stateCommand, { val: 'uiReloadPackages', ack: true });
     }
+    widgetsDir = __dirname + '/widgets';
+    npmRunning = false;
     async creatWidgetsDirAndRestorePackageJsonIfneeded() {
         if (this._unloaded)
             return;
@@ -129,6 +129,7 @@ class WebUi extends utils.Adapter {
             });
         });
     }
+    states = {};
     async stateChange(id, state) {
         this.log.info(`stateChange: ${id}, value: ${state.val}, ack: ${state.ack}`);
         if (!id || !state)

@@ -19,8 +19,8 @@
     "coverage": "nyc npm run test:ts",
     "lint": "eslint --ext .ts src/",
     "reflection": "npm run reflection-scripts && npm run reflection-props",
-    "reflection-scripts": "cross-env typescript-json-schema './src/frontend/scripting/ScriptCommands.ts' '*' --ignoreErrors --strictNullChecks > ./src/frontend/generated/ScriptCommands.json",
-    "reflection-props": "cross-env typescript-json-schema './src/frontend/interfaces/*.ts' '*' --ignoreErrors --strictNullChecks > ./src/frontend/generated/Properties.json",
+    "reflection-scripts": "cross-env typescript-json-schema './src/frontend/scripting/ScriptCommands.ts' '*' --ignoreErrors --strictNullChecks --propOrder > ./src/frontend/generated/ScriptCommands.json",
+    "reflection-props": "cross-env typescript-json-schema './src/frontend/interfaces/*.ts' '*' --ignoreErrors --strictNullChecks --propOrder > ./src/frontend/generated/Properties.json",
     "release": "release-script"
   },
   "repository": {

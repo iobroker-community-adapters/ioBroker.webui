@@ -1,4 +1,4 @@
-export declare type ScriptCommands = OpenScreen | OpenUrl |
+export declare type ScriptCommands = OpenScreen | OpenUrl | OpenDialog | CloseDialog |
     ToggleSignalValue | SetSignalValue | IncrementSignalValue | DecrementSignalValue |
     SetBitInSignal | ClearBitInSignal | ToggleBitInSignal |
     Javascript | SetElementProperty | Delay | IobrokerSendTo | SwitchLanguage;
@@ -25,8 +25,43 @@ export interface OpenScreen {
      * If signals in screen are defined relative (starting with a '.'), this will be prepended
      */
     relativeSignalsPath: string;
-    openInDialog: boolean;
     noHistory: boolean;
+}
+
+export interface OpenDialog {
+    type: 'OpenDialog';
+    /**
+     * Name of the Screen
+     * @TJS-format screen
+     */
+    screen: string;
+    /**
+     * If signals in screen are defined relative (starting with a '.'), this will be prepended
+     */
+    relativeSignalsPath: string;
+    title: string;
+    moveable: boolean;
+
+    width?: string;
+    height?: string;
+
+    left?: string;
+    top?: string;
+    /**
+     * Name of the ioBroker object in wich the dialogId is stored
+     * @TJS-format signal
+     */
+    //dialogId: string;
+}
+
+//TODO: dialogId, closeChildDialogs
+export interface CloseDialog {
+    type: 'CloseDialog';
+    /**
+     * A dialogId. If empty the parent dialog will be closed
+     * @TJS-format signal
+     */
+    //dialogId: string;
 }
 
 export interface OpenUrl {

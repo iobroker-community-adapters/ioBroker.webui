@@ -14,13 +14,17 @@ function removeLeading(text, char) {
     return text;
 }
 export class ImportmapCreator {
+    _packageBaseDirectory;
+    _importmapBaseDirectory;
+    _nodeModulesBaseDirectory;
+    _dependecies = new Map();
+    _adapter;
+    importMap = { imports: {}, scopes: {} };
+    designerServicesCode = '';
+    designerAddonsCode = '';
+    importFiles = [];
+    importUndefinedElementFiles = [];
     constructor(adapter, packageBaseDirectory, importmapBaseDirectory) {
-        this._dependecies = new Map();
-        this.importMap = { imports: {}, scopes: {} };
-        this.designerServicesCode = '';
-        this.designerAddonsCode = '';
-        this.importFiles = [];
-        this.importUndefinedElementFiles = [];
         this._adapter = adapter;
         this._packageBaseDirectory = packageBaseDirectory;
         this._importmapBaseDirectory = importmapBaseDirectory;

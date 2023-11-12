@@ -26,6 +26,18 @@
                 },
                 "prototype": {}
             },
+            "propertyOrder": [
+                "apply",
+                "call",
+                "bind",
+                "toString",
+                "prototype",
+                "length",
+                "arguments",
+                "caller",
+                "name",
+                "__@hasInstance@5226"
+            ],
             "type": "object"
         },
         "IControl": {
@@ -49,6 +61,14 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "html",
+                "style",
+                "script",
+                "typeScript",
+                "properties",
+                "settings"
+            ],
             "type": "object"
         },
         "IControlSettings": {
@@ -64,15 +84,29 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "width",
+                "height",
+                "useGlobalStyle"
+            ],
             "type": "object"
         },
         "ICustomControlScript": {
+            "propertyOrder": [
+                "init",
+                "connectedCallback",
+                "disconnectedCallback"
+            ],
             "type": "object"
         },
         "IGlobalConfig": {
+            "propertyOrder": [],
             "type": "object"
         },
         "IGlobalScript": {
+            "propertyOrder": [
+                "init"
+            ],
             "type": "object"
         },
         "IIobrokerWebuiBinding": {
@@ -114,6 +148,19 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "signal",
+                "inverted",
+                "twoWay",
+                "events",
+                "target",
+                "converter",
+                "expression",
+                "expressionTwoWay",
+                "compiledExpression",
+                "compiledExpressionTwoWay",
+                "type"
+            ],
             "type": "object"
         },
         "IScreen": {
@@ -134,6 +181,13 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "html",
+                "style",
+                "script",
+                "typeScript",
+                "settings"
+            ],
             "type": "object"
         },
         "IScreenSettings": {
@@ -145,6 +199,10 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "width",
+                "height"
+            ],
             "type": "object"
         },
         "IScriptMultiplexValue": {
@@ -162,6 +220,10 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "name",
+                "source"
+            ],
             "type": "object"
         },
         "IWebUiConfig": {
@@ -179,12 +241,20 @@
                     "type": "string"
                 }
             },
+            "propertyOrder": [
+                "globalStyle",
+                "globalScript",
+                "globalTypeScript",
+                "globalConfig"
+            ],
             "type": "object"
         },
         "Record<string,any>": {
+            "propertyOrder": [],
             "type": "object"
         },
         "Record<string,{type:string;values?:string[]|undefined;default?:any;}>": {
+            "propertyOrder": [],
             "type": "object"
         }
     }

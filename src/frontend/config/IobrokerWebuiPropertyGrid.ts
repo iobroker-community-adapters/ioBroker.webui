@@ -78,7 +78,10 @@ export function typeInfoFromJsonSchema(jsonSchemaObj: any, obj: any, type: strin
         let tInfo: ITypeInfo = {};
         tInfo.name = usedType;
         tInfo.properties = [];
-        for (let prp in def.properties) {
+        let lst = Object.keys(def.properties);
+        if (def.propertyOrder)
+            lst = def.propertyOrder;
+        for (let prp of lst) {
             if (prp != 'type') {
                 let p: IProperty = {};
                 p.name = prp;

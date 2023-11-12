@@ -6,6 +6,7 @@ import { IScriptMultiplexValue } from "../interfaces/IScriptMultiplexValue.js";
 import Long from 'long'
 import { sleep } from "../helper/Helper.js";
 import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
+import { IoBrokerWebuiDialog } from "../helper/DialogHelper.js";
 
 export class ScriptSystem {
     static async execute(scriptCommands: ScriptCommands[], outerContext: { event: Event, element: Element, root: HTMLElement }) {
@@ -13,21 +14,44 @@ export class ScriptSystem {
             switch (c.type) {
                 case 'OpenScreen': {
                     const screen = await ScriptSystem.getValue(c.screen, outerContext);
-                    if (!c.openInDialog) {
-                        if (c.noHistory) {
-                            (<ScreenViewer>document.getElementById('viewer')).relativeSignalsPath = await ScriptSystem.getValue(c.relativeSignalsPath, outerContext);
-                            (<ScreenViewer>document.getElementById('viewer')).screenName = screen;
-                        } else {
-                            let hash = 'screenName=' + screen;
-                            window.location.hash = hash;
-                        }
+                    if (c.noHistory) {
+                        (<ScreenViewer>document.getElementById('viewer')).relativeSignalsPath = await ScriptSystem.getValue(c.relativeSignalsPath, outerContext);
+                        (<ScreenViewer>document.getElementById('viewer')).screenName = screen;
                     } else {
-                        let sv = new ScreenViewer();
-                        sv.relativeSignalsPath = c.relativeSignalsPath;
-                        sv.screenName = screen;
+                        let hash = 'screenName=' + screen;
+                        window.location.hash = hash;
                     }
                     break;
                 }
+
+                case 'OpenDialog': {
+                    const screen = await ScriptSystem.getValue(c.screen, outerContext);
+                    const title = await ScriptSystem.getValue(c.title, outerContext);
+                    const moveable = await ScriptSystem.getValue(c.moveable, outerContext);
+
+                    let width = await ScriptSystem.getValue(c.width, outerContext);
+                    let height = await ScriptSystem.getValue(c.height, outerContext);
+                    const left = await ScriptSystem.getValue(c.left, outerContext);
+                    const top = await ScriptSystem.getValue(c.top, outerContext);
+
+                    let sv = new ScreenViewer();
+                    sv.relativeSignalsPath = c.relativeSignalsPath;
+                    sv.screenName = screen;
+                    if (!width)
+                        width = await (await iobrokerHandler.getScreen(screen)).settings.width;
+                    if (!height)
+                        height = await (await iobrokerHandler.getScreen(screen)).settings.height
+                    IoBrokerWebuiDialog.openDialog({ title, content: sv, moveable, width, height, top, left });
+                    break;
+                }
+
+                case 'CloseDialog': {
+                    //const dialogdId = await ScriptSystem.getValue(c.dialogId, outerContext);
+
+                    IoBrokerWebuiDialog.closeDialog({ element: <HTMLElement>outerContext.element });
+                    break;
+                }
+
                 case 'OpenUrl': {
                     window.open(await ScriptSystem.getValue(c.url, outerContext), c.target);
                     break;
@@ -143,7 +167,7 @@ export class ScriptSystem {
         }
     }
 
-    static async getValue(value: string | number | boolean | IScriptMultiplexValue, outerContext: { event: Event, element: Element, root: HTMLElement }): Promise<any> {
+    static async getValue<T>(value: string | number | boolean | IScriptMultiplexValue, outerContext: { event: Event, element: Element, root: HTMLElement }): Promise<any> {
         if (typeof value === 'object') {
             switch ((<IScriptMultiplexValue>value).source) {
                 case 'property': {

@@ -5,25 +5,28 @@ export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 export class Uploadhelper {
+    _adapter;
+    _stoppingPromise = false;
+    _lastProgressUpdate;
+    _namespace;
+    _stateNpm = 'state.npm';
+    _ignoredFileExtensions = [
+        '.npmignore',
+        '.gitignore',
+        '.DS_Store',
+        '_socket/info.js',
+        'LICENSE',
+        '.ts',
+        '.map',
+        '.md',
+        '.html',
+        'package-lock.json',
+        'tsconfig.json',
+        '.release-it.json',
+        '.yml',
+        '.cjs'
+    ];
     constructor(adapter, namespace) {
-        this._stoppingPromise = false;
-        this._stateNpm = 'state.npm';
-        this._ignoredFileExtensions = [
-            '.npmignore',
-            '.gitignore',
-            '.DS_Store',
-            '_socket/info.js',
-            'LICENSE',
-            '.ts',
-            '.map',
-            '.md',
-            '.html',
-            'package-lock.json',
-            'tsconfig.json',
-            '.release-it.json',
-            '.yml',
-            '.cjs'
-        ];
         this._adapter = adapter;
         this._namespace = namespace;
         //this._uploadStateObjectName = `system.adapter.${this._adapterName}.upload`;
