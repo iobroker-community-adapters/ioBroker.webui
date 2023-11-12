@@ -140,6 +140,9 @@
         },
         "OpenDialog": {
             "properties": {
+                "closeable": {
+                    "type": "boolean"
+                },
                 "height": {
                     "type": "string"
                 },
@@ -178,6 +181,7 @@
                 "relativeSignalsPath",
                 "title",
                 "moveable",
+                "closeable",
                 "width",
                 "height",
                 "left",

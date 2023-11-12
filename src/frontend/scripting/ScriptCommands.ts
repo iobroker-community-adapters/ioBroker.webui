@@ -41,6 +41,7 @@ export interface OpenDialog {
     relativeSignalsPath: string;
     title: string;
     moveable: boolean;
+    closeable: boolean;
 
     width?: string;
     height?: string;

@@ -4,6 +4,7 @@ export type Options = {
     title: string | HTMLElement,
     content: string | HTMLElement,
     moveable?: boolean,
+    closeable?: boolean,
     width?: string,
     height?: string,
     left?: string,
@@ -43,13 +44,12 @@ export class IoBrokerWebuiDialog extends BaseCustomWebComponentConstructorAppend
 
             .dialog-content {
                 border-top:1px solid #ccc;
-                padding:1em;
                 position:absolute;
                 top:2em;
                 right:0;
                 left:0;
                 overflow:auto;
-                height: calc(100% - 4em);
+                height: calc(100% - 2em);
             }
 
             .dialog-content::-webkit-scrollbar {
@@ -66,8 +66,7 @@ export class IoBrokerWebuiDialog extends BaseCustomWebComponentConstructorAppend
             .dialog-content::-webkit-scrollbar-thumb:active {background-color:#444}
           
 
-            .dialog-close,
-            .dialog-minmax {
+            .dialog-close {
                 border:none;
                 outline:none;
                 background:none;
@@ -85,18 +84,13 @@ export class IoBrokerWebuiDialog extends BaseCustomWebComponentConstructorAppend
                 text-align:center;
                 cursor:pointer;
             }
-            .dialog-minmax { right: 1.5em }
-            .dialog-close:focus,
-            .dialog-minmax:focus {
+            .dialog-close:focus {
                 border-width:0;
                 outline:none;
             }
             .dialog-close:hover,
-            .dialog-minmax:hover { color: #777 }
-            .dialog-close:focus,
-            .dialog-minmax:focus { color: #C90000 }
-            .dialog-close:active,
-            .dialog-minmax:active { color: #444 }
+            .dialog-close:focus { color: #C90000 }
+            .dialog-close:active { color: #444 }
         `;
 
     public static is = 'iobroker-webui-dialog';
@@ -113,6 +107,18 @@ export class IoBrokerWebuiDialog extends BaseCustomWebComponentConstructorAppend
             };
         }
     }
+
+    public get closeable() {
+        return this.#dialogClose.style.display != 'none'
+    }
+    public set closeable(value) {
+        if (value) {
+            this.#dialogClose.style.display = 'block';
+        } else {
+            this.#dialogClose.style.display = 'none';
+        }
+    }
+
     #dialogTitle: HTMLHeadingElement;
     #dialogClose: HTMLAnchorElement;
     #dialogContent: HTMLDivElement;
@@ -157,6 +163,9 @@ export class IoBrokerWebuiDialog extends BaseCustomWebComponentConstructorAppend
 
         if (options.moveable) {
             dlg.moveable = true;
+        }
+        if (options.closeable === false || options.closeable === true) {
+            dlg.closeable = options.closeable;
         }
 
         document.getElementById('overlayLayer').appendChild(dlg);
