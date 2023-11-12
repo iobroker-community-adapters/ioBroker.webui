@@ -128,8 +128,8 @@ export class IoBrokerWebuiDialog extends BaseCustomWebComponentConstructorAppend
             dlg.#dialogContent.appendChild(options.content);
         dlg.style.width = options.width ?? "300px";
         dlg.style.height = options.height ?? "200px";
-        dlg.style.top = options.top ?? 'calc(50% - (' + dlg.style.width + '))';
-        dlg.style.left = options.left ?? 'calc(50% - (' + dlg.style.height + '))';
+        dlg.style.top = options.top ?? 'calc(50% - ((' + dlg.style.height + ') / 2))';
+        dlg.style.left = options.left ?? 'calc(50% - ((' + dlg.style.width + ') / 2))';
         if (options.moveable) {
             dlg.moveable = true;
         }
