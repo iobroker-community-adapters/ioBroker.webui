@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.14.0",
+    "version": "0.14.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.14.1": {
+        "en": "dialog centered",
+        "de": "dialog zentriert",
+        "ru": "диалоговый центрированный",
+        "pt": "diálogo centrado",
+        "nl": "dialog centrum",
+        "fr": "dialogue centré",
+        "it": "dialogo incentrato",
+        "es": "diálogo centrado",
+        "pl": "dialogi koncentrowały się wokół dialogu",
+        "uk": "діалогове вікно",
+        "zh-cn": "口号中心"
+      },
       "0.14.0": {
         "en": "add simple dialog",
         "de": "einfacher dialog",
@@ -106,19 +119,6 @@
         "pl": "dwa sposoby na wiązanie pośrednie",
         "uk": "два способи непрямих зв'язків",
         "zh-cn": "间接约束力的两种方式"
-      },
-      "0.12.0": {
-        "en": "support indirect bindings via {...} in signals (like in vis)",
-        "de": "indirekte bindungen über {...} in signalen (wie in vis) unterstützen",
-        "ru": "поддержка непрямых привязок через {...} в сигналах (как в vis)",
-        "pt": "suporte ligações indiretas via {...} em sinais (como em vis)",
-        "nl": "ondersteuning indirecte bindingen via... in signalen zoals in zicht",
-        "fr": "soutenir les liaisons indirectes via {...} dans les signaux (comme dans vis)",
-        "it": "supporti indiretti tramite {...} in segnali (come in vis)",
-        "es": "soporte de unión indirecta vía {...} en señales (como en vis)",
-        "pl": "wsparcie pośrednie poprzez {...} w sygnałach (np. w vis)",
-        "uk": "підтримка непрямих зв'язків через {...} в сигналах (наприклад, в vis)",
-        "zh-cn": "支持间接具有约束力的信号(例如)"
       }
     },
     "icon": "logo.png",
