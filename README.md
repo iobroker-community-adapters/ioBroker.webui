@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 0.15.0 (2023-11-19)
 - uncloseable dialog 
 - css properties for dialog
 - binding to hitoric data

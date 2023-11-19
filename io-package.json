@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.14.1",
+    "version": "0.15.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.15.0": {
+        "en": "uncloseable dialog \ncss properties for dialog\nbinding to hitoric data",
+        "de": "ungeschlossener dialog\ncss eigenschaften für dialog\nbindung an hitorische daten",
+        "ru": "незакрытый диалог\ncss свойства для диалога\nпривязка к хторическим данным",
+        "pt": "diálogo não fechado\npropriedades do css para diálogo\nvinculação a dados hitóricos",
+        "nl": "onbeschikbare dialog\ncs-eigenschappen voor dialoog\nverbinding met hitorische gegevens",
+        "fr": "dialogue inaccessible\ncs propriétés pour dialogue\nreliant les données hitoriques",
+        "it": "dialogo non chiuso\ncss proprietà per la finestra di dialogo\nvincolo ai dati hitorici",
+        "es": "diálogo no visible\npropiedades de css para el diálogo\nvinculantes para datos hitóricos",
+        "pl": "dialogowy\nwłasności dialogowe\nwiążące się z danymi hitlerowymi",
+        "uk": "діалогове вікно\ncss властивості для діалогу\nобов'язковий для ударних даних",
+        "zh-cn": "不可排除的口号\nc 口号财产\n对受攻击数据具有约束力"
+      },
       "0.14.1": {
         "en": "dialog centered",
         "de": "dialog zentriert",
@@ -106,19 +119,6 @@
         "pl": "nazwy imprez dla dwóch autostrad potrzebują edytora",
         "uk": "імена подій на 2way обов'язкові редактори",
         "zh-cn": "需要编辑的2条路具有约束力的事件名称"
-      },
-      "0.12.1": {
-        "en": "two way for indirect bindings",
-        "de": "zwei möglichkeiten für indirekte bindungen",
-        "ru": "два способа для косвенных привязок",
-        "pt": "duas vias para ligações indirectas",
-        "nl": "twee manieren voor indirecte bindingen",
-        "fr": "deux moyens pour les liaisons indirectes",
-        "it": "due modi per legare indiretti",
-        "es": "dos vías para la fijación indirecta",
-        "pl": "dwa sposoby na wiązanie pośrednie",
-        "uk": "два способи непрямих зв'язків",
-        "zh-cn": "间接约束力的两种方式"
       }
     },
     "icon": "logo.png",
