@@ -14,7 +14,8 @@ export class IobrokerWebuiBindingService implements IBindingService {
       expressionTwoWay: x[1].expressionTwoWay,
       converter: x[1].converter,
       type: x[1].type,
-      changedEvents: x[1].events
+      changedEvents: x[1].events,
+      historic: x[1].historic
     }));
   }
 

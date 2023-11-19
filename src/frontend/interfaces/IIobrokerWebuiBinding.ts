@@ -16,4 +16,5 @@ export interface IIobrokerWebuiBinding {
     compiledExpression?: Function;
     compiledExpressionTwoWay?: Function;
     type?: string;
+    historic?: ioBroker.GetHistoryOptions;
 }

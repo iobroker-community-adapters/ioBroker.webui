@@ -167,6 +167,7 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
     public twoWay: boolean = false;
     public expression: string = '';
     public expressionTwoWay: string = '';
+    public historic: any;
     public objectNames: string = '';
     public events: string = '';
     public invert: boolean = false;
@@ -199,6 +200,7 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
             this.twoWay = this._binding.mode == BindingMode.twoWay;
             this.expression = this._binding.expression;
             this.expressionTwoWay = (<any>this._binding).expressionTwoWay;
+            this.historic = (<any>this._binding).historic;
             this.invert = this._binding.invert;
             this.objectValueType = this._binding.type;
             if (this._binding.bindableObjectNames)
