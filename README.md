@@ -132,6 +132,7 @@ runtime.html?screenName=screen2
 ### __WORK IN PROGRESS__
 - uncloseable dialog 
 - css properties for dialog
+- binding to hitoric data
 
 ### 0.14.1 (2023-11-12)
 - dialog centered
