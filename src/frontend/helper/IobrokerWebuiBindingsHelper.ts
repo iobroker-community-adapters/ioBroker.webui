@@ -178,11 +178,14 @@ export class IobrokerWebuiBindingsHelper {
             else if (binding.events?.[0] == targetName + '-changed')
                 delete bindingCopy.events;
         }
+        if (binding.inverted === null || binding.inverted === false) {
+            delete bindingCopy.inverted;
+        }
         if (binding.expression === null || binding.expression === '') {
             delete bindingCopy.expression;
         }
         if (binding.expressionTwoWay === null || binding.expressionTwoWay === '') {
-            delete bindingCopy.expression;
+            delete bindingCopy.expressionTwoWay;
         }
         if (binding.twoWay === null || binding.twoWay === false) {
             delete bindingCopy.twoWay;
