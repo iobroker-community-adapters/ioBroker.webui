@@ -36,7 +36,7 @@
                 "arguments",
                 "caller",
                 "name",
-                "__@hasInstance@5226"
+                "__@hasInstance@5228"
             ],
             "type": "object"
         },
@@ -132,6 +132,7 @@
                 "expressionTwoWay": {
                     "type": "string"
                 },
+                "historic": {},
                 "inverted": {
                     "type": "boolean"
                 },
@@ -159,7 +160,8 @@
                 "expressionTwoWay",
                 "compiledExpression",
                 "compiledExpressionTwoWay",
-                "type"
+                "type",
+                "historic"
             ],
             "type": "object"
         },

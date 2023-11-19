@@ -23,6 +23,7 @@ export class ScriptSystem {
                     const screen = await ScriptSystem.getValue(c.screen, outerContext);
                     const title = await ScriptSystem.getValue(c.title, outerContext);
                     const moveable = await ScriptSystem.getValue(c.moveable, outerContext);
+                    const closeable = await ScriptSystem.getValue(c.closeable, outerContext);
                     let width = await ScriptSystem.getValue(c.width, outerContext);
                     let height = await ScriptSystem.getValue(c.height, outerContext);
                     const left = await ScriptSystem.getValue(c.left, outerContext);
@@ -34,7 +35,7 @@ export class ScriptSystem {
                         width = await (await iobrokerHandler.getScreen(screen)).settings.width;
                     if (!height)
                         height = await (await iobrokerHandler.getScreen(screen)).settings.height;
-                    IoBrokerWebuiDialog.openDialog({ title, content: sv, moveable, width, height, top, left });
+                    IoBrokerWebuiDialog.openDialog({ title, content: sv, moveable, closeable, width, height, top, left });
                     break;
                 }
                 case 'CloseDialog': {

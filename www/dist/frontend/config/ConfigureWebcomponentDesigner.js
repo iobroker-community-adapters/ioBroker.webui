@@ -61,6 +61,7 @@ serviceContainer.config.openBindingsEditor = async (property, designItems, bindi
         bnd.twoWay = dynEdt.twoWay;
         bnd.expression = dynEdt.expression;
         bnd.expressionTwoWay = dynEdt.expressionTwoWay;
+        bnd.historic = dynEdt.historic;
         if (dynEdt.objectValueType)
             bnd.type = dynEdt.objectValueType;
         if (dynEdt.converters.length > 0) {

@@ -525,7 +525,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 let editor = document.createElement('input');
                 editor.type = 'checkbox';
                 editor.checked = currentValue ?? false;
-                editor.onblur = e => { this.setPropertyValue(propertyPath, editor.value); };
+                editor.onblur = e => { this.setPropertyValue(propertyPath, editor.checked); };
                 return editor;
             }
             case 'color': {

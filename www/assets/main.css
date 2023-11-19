@@ -1,3 +1,10 @@
+:root {
+  --dialog-text-color: #666;
+  --dialog-border-color: #ccc;
+  --dialog-background-color: white;
+  --dialog-border-width: 1px;
+}
+
 #overlayLayer {
   position: absolute;
   left: 0;
@@ -9,12 +16,12 @@
 }
 
 iobroker-webui-dialog {
-  background-color: white;
-  border: 1px solid #ccc;
-  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, .2);
-  -mz-box-shadow: 0 1px 5px rgba(0, 0, 0, .2);
+  background-color: var(--dialog-background-color);
+  border-color: var(--dialog-border-color);
+  border-style: solid;
+  border-width: var(--dialog-border-width);
   box-shadow: 0 1px 5px rgba(0, 0, 0, .2);
   position: absolute;
-  color: #666;
+  color: var(--dialog-text-color);
   pointer-events: auto;
 }
