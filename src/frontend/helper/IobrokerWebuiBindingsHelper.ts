@@ -230,7 +230,7 @@ export class IobrokerWebuiBindingsHelper {
                 yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.property, bindingPrefixProperty);
             }
             else if (a.name.startsWith(bindingPrefixContent)) {
-                yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name == 'bind-content:html' ? 'bind-prop:inner-h-t-m-l' : 'bind-prop:text-content', a.value, BindingTarget.property, bindingPrefixProperty);
+                yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name === 'bind-content:html' ? 'bind-prop:inner-h-t-m-l' : 'bind-prop:text-content', a.value, BindingTarget.property, bindingPrefixProperty);
             }
             else if (a.name.startsWith(bindingPrefixAttribute)) {
                 yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.attribute, bindingPrefixAttribute);
@@ -243,8 +243,9 @@ export class IobrokerWebuiBindingsHelper {
 
     static applyAllBindings(rootElement: ParentNode, relativeSignalPath: string, root: HTMLElement): (() => void)[] {
         let retVal: (() => void)[] = [];
-        let allElements = rootElement.querySelectorAll('*');
-        for (let e of allElements) {
+        const tw = document.createTreeWalker(rootElement, NodeFilter.SHOW_ELEMENT);
+        let e: Element;
+        while (e = <Element>tw.nextNode()) {
             const bindings = this.getBindings(e);
             for (let b of bindings) {
                 try {
