@@ -129,10 +129,14 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- export as xml (screens & controls)
+- binding historic with reload
+
 ### 0.15.0 (2023-11-19)
 - uncloseable dialog 
 - css properties for dialog
-- binding to hitoric data
+- binding to historic data
 
 ### 0.14.1 (2023-11-12)
 - dialog centered
