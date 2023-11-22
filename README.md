@@ -132,6 +132,7 @@ runtime.html?screenName=screen2
 ### __WORK IN PROGRESS__
 - export as xml (screens & controls)
 - binding historic with reload
+- fix dialog
 
 ### 0.15.0 (2023-11-19)
 - uncloseable dialog 
