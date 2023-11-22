@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 0.15.1 (2023-11-22)
 - export as xml (screens & controls)
 - binding historic with reload
 - fix dialog

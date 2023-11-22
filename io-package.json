@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.15.0",
+    "version": "0.15.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.15.1": {
+        "en": "export as xml (screens & controls)\nbinding historic with reload\nfix dialog",
+        "de": "export als xml (bildschirme & kontrollen)\nhistorische bindung mit nachladung\nwählen sie den dialog",
+        "ru": "экспорт как xml (экраны и контроль)\nпривязка историческая с перезагрузкой\nисправить диалог",
+        "pt": "exportação como xml (telas e controles)\nhistórico de ligação com recarga\ndiálogo de correção",
+        "nl": "export als xmil (screens)\nvertaling:\ndialog",
+        "fr": "export comme xml (écrans et commandes)\nreliure historique avec recharge\ncorrection",
+        "it": "esportazione come xml (schermi e controlli)\nrilegatura storica con ricarica\nfine dialogo",
+        "es": "exportar como xml (controles de pantallas)\nhistórico vinculante con recarga\nfijar diálogo",
+        "pl": "eksport jako xml (systemy i sterowania)\nhistoryczne połączenie\ndialog",
+        "uk": "експорт як xml (екрани та елементи керування)\nісторичний з перевантаженням\nвиправити діалог",
+        "zh-cn": "出口为xml(包装和管制)\n具有历史约束力的重载\nfix 口号"
+      },
       "0.15.0": {
         "en": "uncloseable dialog \ncss properties for dialog\nbinding to hitoric data",
         "de": "ungeschlossener dialog\ncss eigenschaften für dialog\nbindung an hitorische daten",
@@ -106,19 +119,6 @@
         "pl": "po usunięciu ewalu funkcje wymagają zwrotu",
         "uk": "після видалення овд, функції потрібно повернути",
         "zh-cn": "在离去之后,需要恢复职能。"
-      },
-      "0.12.2": {
-        "en": "events names for 2way bindings need a editor",
-        "de": "veranstaltungen namen für 2way bindungen benötigen einen editor",
-        "ru": "имена событий для 2way связывает нужен редактор",
-        "pt": "nomes de eventos para ligações 2way precisam de um editor",
-        "nl": "de gebeurtenissen hebben een redacteur nodig",
-        "fr": "les noms d'événements pour les liaisons 2way besoin d'un éditeur",
-        "it": "i nomi degli eventi per i binding 2way hanno bisogno di un editor",
-        "es": "nombres de eventos para 2way bindings necesita un editor",
-        "pl": "nazwy imprez dla dwóch autostrad potrzebują edytora",
-        "uk": "імена подій на 2way обов'язкові редактори",
-        "zh-cn": "需要编辑的2条路具有约束力的事件名称"
       }
     },
     "icon": "logo.png",
