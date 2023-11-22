@@ -90,7 +90,8 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         let data = await iobrokerHandler.getScreen(name);
                         await exportData(JSON.stringify(data), name + '.screen');
                     }
-                }, {
+                },
+                {
                     title: 'Rename Screen', action: async () => {
                         let newName = prompt("Rename Screen: " + name, name);
                         if (newName && name != newName) {
@@ -540,7 +541,8 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         let data = await iobrokerHandler.getCustomControl(name);
                         await exportData(JSON.stringify(data), name + '.control');
                     }
-                }, {
+                },
+                {
                     title: 'Rename Control', action: async () => {
                         let newName = prompt("Rename Control: " + name, name);
                         if (newName && name != newName) {

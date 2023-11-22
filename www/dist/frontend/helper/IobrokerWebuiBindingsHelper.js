@@ -314,8 +314,14 @@ export class IobrokerWebuiBindingsHelper {
                 else {
                     let cb = (id, value) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
                     unsubscribeList.push(cb);
-                    if (binding[1].historic)
-                        iobrokerHandler.connection.getHistoryEx(s, binding[1].historic).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.values, valuesObject, i));
+                    if (binding[1].historic) {
+                        if (binding[1].historic.reloadInterval) {
+                            const intervalId = setInterval(() => iobrokerHandler.connection.getHistoryEx(s, binding[1].historic).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.values, valuesObject, i)), binding[1].historic.reloadInterval);
+                            unsubscribeList.push(() => clearInterval(intervalId));
+                        }
+                        else
+                            iobrokerHandler.connection.getHistoryEx(s, binding[1].historic).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.values, valuesObject, i));
+                    }
                     else {
                         iobrokerHandler.connection.subscribeState(s, cb);
                         iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i));

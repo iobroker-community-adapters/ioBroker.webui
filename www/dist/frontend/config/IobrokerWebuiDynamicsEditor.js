@@ -155,7 +155,8 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
         objectNames: String,
         events: String,
         invert: Boolean,
-        converters: Array
+        converters: Array,
+        historic: Object
     };
     twoWayPossible = false;
     twoWay = false;
