@@ -49,7 +49,7 @@ export class IoBrokerWebuiDialog extends BaseCustomWebComponentConstructorAppend
                 right:0;
                 left:0;
                 overflow:auto;
-                height: calc(100% - 2em);
+                height: calc(100% - 2em - 1px);
             }
 
             .dialog-content::-webkit-scrollbar {
@@ -142,6 +142,9 @@ export class IoBrokerWebuiDialog extends BaseCustomWebComponentConstructorAppend
         this.#moveEndBound = this.#moveEnd.bind(this);
     }
 
+    static offsetWidth = 2;
+    static offsetHeight = 35;
+
     static openDialog(options: Options): string {
         const uniqueId = 'id' + new Date().getTime();
 
@@ -158,6 +161,10 @@ export class IoBrokerWebuiDialog extends BaseCustomWebComponentConstructorAppend
 
         dlg.style.width = options.width ?? "300px";
         dlg.style.height = options.height ?? "200px";
+
+        dlg.style.width = "calc(" + dlg.style.width + " + " + this.offsetWidth + "px)";
+        dlg.style.height = "calc(" + dlg.style.height + " + " + this.offsetHeight + "px)";
+
         dlg.style.top = options.top ?? 'calc(50% - ((' + dlg.style.height + ') / 2))';
         dlg.style.left = options.left ?? 'calc(50% - ((' + dlg.style.width + ') / 2))';
 
