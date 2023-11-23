@@ -43,12 +43,14 @@ declare class IobrokerHandler {
     namespaceFiles: string;
     namespaceWidgets: string;
     imagePrefix: string;
+    additionalFilePrefix: string;
     config: IWebUiConfig;
     globalStylesheet: CSSStyleSheet;
     globalScriptInstance: IGlobalScript;
     screensChanged: TypedEvent<string>;
     controlsChanged: TypedEvent<string>;
     imagesChanged: TypedEvent<void>;
+    additionalFilesChanged: TypedEvent<void>;
     configChanged: TypedEvent<void>;
     changeView: TypedEvent<string>;
     refreshView: TypedEvent<string>;
@@ -79,10 +81,17 @@ declare class IobrokerHandler {
     getImageNames(): Promise<string[]>;
     saveImage(name: string, imageData: Blob): Promise<void>;
     getImage(name: string): Promise<{
-        mimType: string;
+        mimeType: string;
         file: ArrayBuffer;
     }>;
     removeImage(name: string): Promise<void>;
+    getAdditionalFileNames(): Promise<string[]>;
+    saveAdditionalFile(name: string, data: Blob): Promise<void>;
+    getAdditionalFile(name: string): Promise<{
+        mimeType: string;
+        file: ArrayBuffer;
+    }>;
+    removeAdditionalFile(name: string): Promise<void>;
     private _getConfig;
     saveConfig(): Promise<void>;
     private _getObjectFromFile;

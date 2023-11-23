@@ -13,12 +13,14 @@ class IobrokerHandler {
     namespaceFiles = this.namespace + '.data';
     namespaceWidgets = this.namespace + '.widgets';
     imagePrefix = '/' + this.namespaceFiles + '/config/images/';
+    additionalFilePrefix = '/' + this.namespaceFiles + '/config/additionalfiles/';
     config;
     globalStylesheet;
     globalScriptInstance;
     screensChanged = new TypedEvent();
     controlsChanged = new TypedEvent();
     imagesChanged = new TypedEvent();
+    additionalFilesChanged = new TypedEvent();
     configChanged = new TypedEvent();
     changeView = new TypedEvent();
     refreshView = new TypedEvent();
@@ -270,6 +272,29 @@ class IobrokerHandler {
     async removeImage(name) {
         await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "images/" + name);
         this.imagesChanged.emit();
+    }
+    async getAdditionalFileNames() {
+        if (this._readyPromises)
+            this.waitForReady();
+        try {
+            const files = await this.connection.readDir(this.namespaceFiles, this.configPath + "additionalfiles");
+            const additionalFileNames = files.map(x => x.file);
+            return additionalFileNames;
+        }
+        catch (err) { }
+        return [];
+    }
+    async saveAdditionalFile(name, data) {
+        await this._saveBinaryToFile(data, "/" + this.configPath + "additionalfiles/" + name);
+        this.additionalFilesChanged.emit();
+    }
+    async getAdditionalFile(name) {
+        const file = await this.connection.readFile(this.namespaceFiles, "/" + this.configPath + "additionalfiles/" + name, false);
+        return file;
+    }
+    async removeAdditionalFile(name) {
+        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "additionalfiles/" + name);
+        this.additionalFilesChanged.emit();
     }
     async _getConfig() {
         try {
