@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- additional file dnd
+
 ### 0.16.0 (2023-11-23)
 - add additional files node and upload
 
