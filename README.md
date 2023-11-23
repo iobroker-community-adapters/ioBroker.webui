@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 0.16.1 (2023-11-23)
 - additional file dnd
 
 ### 0.16.0 (2023-11-23)

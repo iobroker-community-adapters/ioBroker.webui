@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.16.0",
+    "version": "0.16.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.16.1": {
+        "en": "additional file dnd",
+        "de": "weitere datei dnd",
+        "ru": "дополнительный файл dnd",
+        "pt": "arquivo adicional dnd",
+        "nl": "vertaling:",
+        "fr": "fichier supplémentaire dnd",
+        "it": "file aggiuntivo",
+        "es": "archivo adicional dnd",
+        "pl": "dodatkowy plik",
+        "uk": "додатковий файл",
+        "zh-cn": "增案"
+      },
       "0.16.0": {
         "en": "add additional files node and upload",
         "de": "zusätzliche dateien knoten hinzufügen und hochladen",
@@ -106,19 +119,6 @@
         "pl": "łączy się z wyrazami",
         "uk": "два способи зв'язування з виразами",
         "zh-cn": "两种方式具有约束力的言论"
-      },
-      "0.13.0": {
-        "en": "fix upercase screen names in runtime\nraster in designer is now adjustable\ncopy object nodes now copies complete string\ncontext menu to directly edit custom element\nfix handler path in script\nuiChangedView now workin\nerror when importing invalid file (for example html instead of json)",
-        "de": "reparieren upercase-bildschirmnamen in laufzeit\nraster im designer ist jetzt einstellbar\ncopy object nodes kopiert nun komplett string\nkontextmenü direkt benutzerdefiniertes element bearbeiten\nfix-handlerpfad in skript\nuiChanged Jetzt arbeiten ansehen\nfehler beim import von ungültiger datei (z.b. html statt json)",
-        "ru": "исправить имена экранов upercase в runtime\nraster в дизайнере теперь регулируется\ncopy object nodes теперь копирует полную строку\nконтекстное меню для прямого редактирования пользовательского элемента\nисправить путь обработчика в скрипте\nuiChanged Посмотреть сейчас workin\nошибка при импорте недействительного файла (например html вместо json)",
-        "pt": "corrigir nomes de tela upercase no tempo de execução\nraster no designer é agora ajustável\ncopie os nós de objeto agora copie a string completa\nmenu de contexto para editar diretamente elemento personalizado\ncorrigir caminho do manipulador no script\nuiChanged Ver agora workin\nerro ao importar arquivo inválido (por exemplo html em vez de json)",
-        "nl": "vertaling:\nraster in designer is nu aangepast\nvertaling:\ncontext menu rechtstreekse elementen\nvertaling:\nuiChang View werkt nu\nerror als importeren van invalide bestand (voorbeeld html in plaats van json)",
-        "fr": "fixer les noms d'écran de la valise en cours d'exécution\nraster in designer est maintenant réglable\ncopie nodes objet maintenant copies chaîne complète\nmenu contextuel pour modifier directement l'élément personnalisé\ncorrection du chemin du gestionnaire dans le script\nuiChanged Voir le produit maintenant\nerreur lors de l'importation de fichier invalid (par exemple html au lieu de json)",
-        "it": "fissare i nomi dello schermo upercase in runtime\nraster in designer è ora regolabile\ncopia nodi oggetto ora copie stringa completa\nmenu contestuale per modificare direttamente elemento personalizzato\ncorrezione del percorso del handler in script\nuiChanged Visualizza ora il lavoro\nerrore durante l'importazione di file non validi (ad esempio html anziché json)",
-        "es": "fijar los nombres de pantalla de upercase en tiempo de ejecución\nraster en diseñador ahora es ajustable\ncopia objetos nodos ahora copias completa cadena\ncontext menu para editar directamente elemento personalizado\narreglar el camino del manejador en script\nuiChanged Ver ahora workin\nerror al importar el archivo inválido (por ejemplo html en lugar de json)",
-        "pl": "nazwa na ekrany\nraster jest obecnie dostosowalny\nwęzły kopalne\nmenu kontekstowego, aby bezpośrednio redagować odpowiednie elementy\nukierunkowany sposób w scenariuszu\nsimple past tense and past participle of uiChang Obecnie pracuje nad pracą\nbłędy, gdy importowanie nieprawidłowego pliku (np. html, zamiast json)",
-        "uk": "фіксувати імена екрана в режимі runtime\nraster в дизайнера тепер регульований\nкопіювання вузлів об'єкта тепер копії повного рядка\nконтекстне меню для безпосередньо редагування користувацького елемента\nвиправити шлях обробника в скрипт\nувійти Переглянути зараз робота\nпомилка при імпорті недійсного файлу (наприклад, html замість json)",
-        "zh-cn": "f 随时间筛选姓名\n设计员的黑体现在可以调整\n复印件\n男性直接采用习俗要素\nfix 文字上的道路\n被占 现在很少工作。\n进口无效档案(例如,html而不是 json)的错误"
       }
     },
     "icon": "logo.png",
