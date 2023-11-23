@@ -178,7 +178,7 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
                     span.oncontextmenu = (ev) => {
                         e.node.setActive();
                         if (e.node.data.contextMenu) {
-                            e.node.data.contextMenu(ev, e.node.data);
+                            e.node.data.contextMenu(ev, e.node.data, e.node);
                         }
                         ev.preventDefault();
                         return false;
@@ -213,8 +213,8 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         let cti = {
             title: currentItem.type,
             data: { item: currentItem },
-            contextMenu: (e, data) => {
-                ContextMenu.show([{ title: 'Remove Item', action: (e) => this.removeItem(data) }], e);
+            contextMenu: (e, data, node) => {
+                ContextMenu.show([{ title: 'Remove Item', action: (e) => node.remove() }], e);
             }
         };
         return cti;
@@ -225,10 +225,6 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         const command = { type: cmdName }
         const ti = this.createTreeItem(<any>command);
         this._commandListFancyTree.addChildren(ti);
-    }
-
-    private async removeItem(data) {
-        data.node.remove();
     }
 
     getScriptCommands() {
