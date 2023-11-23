@@ -872,6 +872,12 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             e.event.dataTransfer.setData(dragDropFormatNamePropertyGrid, JSON.stringify({ 'type': 'image', 'text': iobrokerHandler.imagePrefix + image }));
                             e.event.dataTransfer.dropEffect = "copy";
                             return true;
+                        } else if (e.node.data.data.type == 'additionalFile') {
+                            const file = e.node.data.data.name;
+                            e.event.dataTransfer.effectAllowed = "all";
+                            e.event.dataTransfer.setData("text/plain", iobrokerHandler.additionalFilePrefix + file);
+                            e.event.dataTransfer.dropEffect = "copy";
+                            return true;
                         } else if (e.node.data.data.type == 'flot') {
                             const url = 'http://' + window.iobrokerHost + ':' + window.iobrokerPort + '/flot/index.html?' + e.node.data.data.name;
                             const elementDef: IElementDefinition = { tag: "iframe", defaultAttributes: { 'src': url }, defaultStyles: { 'border': '1px solid black;' }, defaultWidth: '400px', defaultHeight: '300px' }
