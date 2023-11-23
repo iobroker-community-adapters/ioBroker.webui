@@ -62,6 +62,7 @@ class IobrokerHandler {
     namespaceFiles = this.namespace + '.data';
     namespaceWidgets = this.namespace + '.widgets';
     imagePrefix = '/' + this.namespaceFiles + '/config/images/';
+    additionalFilePrefix = '/' + this.namespaceFiles + '/config/additionalfiles/';
 
     config: IWebUiConfig;
     globalStylesheet: CSSStyleSheet;
@@ -70,6 +71,7 @@ class IobrokerHandler {
     screensChanged = new TypedEvent<string>();
     controlsChanged = new TypedEvent<string>();
     imagesChanged = new TypedEvent<void>();
+    additionalFilesChanged = new TypedEvent<void>();
     configChanged = new TypedEvent<void>();
 
     changeView = new TypedEvent<string>();
@@ -343,7 +345,7 @@ class IobrokerHandler {
 
     async getImage(name: string) {
         const file = await this.connection.readFile(this.namespaceFiles, "/" + this.configPath + "images/" + name, false);
-        return <{ mimType: string, file: ArrayBuffer }><any>file;
+        return <{ mimeType: string, file: ArrayBuffer }><any>file;
     }
 
     async removeImage(name: string) {
@@ -351,6 +353,31 @@ class IobrokerHandler {
         this.imagesChanged.emit();
     }
 
+    async getAdditionalFileNames() {
+        if (this._readyPromises)
+            this.waitForReady();
+        try {
+            const files = await this.connection.readDir(this.namespaceFiles, this.configPath + "additionalfiles")
+            const additionalFileNames = files.map(x => x.file);
+            return additionalFileNames;
+        } catch (err) { }
+        return []
+    }
+
+    async saveAdditionalFile(name: string, data: Blob) {
+        await this._saveBinaryToFile(data, "/" + this.configPath + "additionalfiles/" + name);
+        this.additionalFilesChanged.emit();
+    }
+
+    async getAdditionalFile(name: string) {
+        const file = await this.connection.readFile(this.namespaceFiles, "/" + this.configPath + "additionalfiles/" + name, false);
+        return <{ mimeType: string, file: ArrayBuffer }><any>file;
+    }
+
+    async removeAdditionalFile(name: string) {
+        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "additionalfiles/" + name);
+        this.additionalFilesChanged.emit();
+    }
 
     private async _getConfig(): Promise<IWebUiConfig> {
         try {

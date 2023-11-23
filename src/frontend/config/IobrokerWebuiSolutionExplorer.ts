@@ -26,7 +26,12 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         <div id="treeDiv" class="" style="overflow: auto; width:100%; height: 100%;">
         </div>`
 
-    public static override style = css``
+    public static override style = css`
+        * {
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: pointer;
+        }`
 
     serviceContainer: ServiceContainer;
 
@@ -37,7 +42,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     constructor() {
         super();
         this._treeDiv = this._getDomElement<HTMLDivElement>('treeDiv');
-        this.shadowRoot.adoptedStyleSheets = [wunderbaumStyle, defaultStyle];
+        this.shadowRoot.adoptedStyleSheets = [wunderbaumStyle, defaultStyle, IobrokerWebuiSolutionExplorer.style];
     }
 
     async ready() {
@@ -52,6 +57,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             this._refreshControlsNode()
         });
         iobrokerHandler.imagesChanged.on(() => this._refreshImagesNode());
+        iobrokerHandler.additionalFilesChanged.on(() => this._refreshAdditionalFilesNode());
         await sleep(100);
         this._loadTree();
 
@@ -70,6 +76,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 this._createGlobalNode(),
                 this._createNpmsNode(),
                 this._createImagesNode(),
+                this._createAdditionalFilesNode(),
                 this._createChartsNode(),
                 this._createIconsFolderNode(),
                 this._createObjectsNode()
@@ -172,6 +179,13 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         const imagesNode = this._tree.findKey('images');
         if (imagesNode) {
             imagesNode.resetLazy();
+        }
+    }
+
+    private async _refreshAdditionalFilesNode() {
+        const additionalFilesNode = this._tree.findKey('additionalFiles');
+        if (additionalFilesNode) {
+            additionalFilesNode.resetLazy();
         }
     }
 
@@ -455,7 +469,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             ContextMenu.show([{
                 title: 'Export Image', action: async () => {
                     let data = await iobrokerHandler.getImage(image);
-                    await exportData(data.file, image, data.mimType)
+                    await exportData(data.file, image, data.mimeType)
                 }
             }, {
                 title: 'Remove Image', action: () => {
@@ -484,12 +498,69 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     }));
                 }
                 catch (err) {
-                    console.warn("error loading images charts", err);
+                    console.warn("error loading images", err);
                 }
                 return [];
             }
         }
         return imagesNode;
+    }
+
+    private async _createAdditionalFilesNode() {
+        let additionalFilesNodeCtxMenu = (event) => {
+            ContextMenu.show([{
+                title: 'Import File', action: async () => {
+                    let files = await openFileDialog('*.*', true, 'file');
+                    for (let f of files) {
+                        let nm = f.name;
+                        await iobrokerHandler.saveAdditionalFile(nm, <File>f.data);
+                    }
+                }
+            }], event);
+        }
+
+        let additionalFileNodeCtxMenu = (event, name) => {
+            ContextMenu.show([{
+                title: 'Copy Path', action: async () => {
+                    copyTextToClipboard(iobrokerHandler.additionalFilePrefix + name);
+                }
+            }, {
+                title: 'Export File', action: async () => {
+                    let data = await iobrokerHandler.getAdditionalFile(name);
+                    await exportData(data.file, name, data.mimeType)
+                }
+            }, {
+                title: 'Remove File', action: () => {
+                    if (confirm("are you sure?"))
+                        iobrokerHandler.removeAdditionalFile(name);
+                }
+            }], event);
+        }
+
+        let additionalFilesNode: TreeNodeData = {
+            title: 'Additional Files',
+            contextMenu: (event => additionalFilesNodeCtxMenu(event)),
+            folder: true,
+            lazy: true,
+            key: 'additionalFiles',
+            lazyload: async (e, data) => {
+                try {
+                    await iobrokerHandler.waitForReady();
+                    let additionalFiles = await iobrokerHandler.getAdditionalFileNames();
+                    additionalFiles.sort();
+                    return additionalFiles.map(x => ({
+                        title: x,
+                        contextMenu: (event => additionalFileNodeCtxMenu(event, x)),
+                        data: { type: 'additionalFile', name: x }
+                    }));
+                }
+                catch (err) {
+                    console.warn("error loading additional files", err);
+                }
+                return [];
+            }
+        }
+        return additionalFilesNode;
     }
 
     private async _createChartsNode() {
