@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- extra style for font declarations, they are not allowed in shadow dom
+
 ### 0.16.2 (2023-11-23)
 - fix remove script command
 
