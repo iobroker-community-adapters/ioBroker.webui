@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.16.2",
+    "version": "0.16.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.16.3": {
+        "en": "extra style for font declarations, they are not allowed in shadow dom",
+        "de": "extra stil für schriftdeklarationen, sie sind nicht erlaubt in schatten dom",
+        "ru": "дополнительный стиль для карточных деклараций, они не допускаются в тени доми",
+        "pt": "estilo extra para declarações de fonte, eles não são permitidos na sombra dom",
+        "nl": "extra stijl voor lettertypes, ze zijn niet toegestaan in schaduw domein",
+        "fr": "style supplémentaire pour les déclarations de police, ils ne sont pas autorisés dans l'ombre dom",
+        "it": "stile extra per le dichiarazioni di carattere, non sono ammessi in dom ombra",
+        "es": "estilo extra para las declaraciones de fuentes, no se permite en dom sombra",
+        "pl": "dodatkowy styl deklaracji fontów nie jest dozwolony w cieniu domowego",
+        "uk": "додатковий стиль для декларацій шрифтів, вони не допускаються в тіні",
+        "zh-cn": "独裁声明的外部风格,不准在阴影中使用。"
+      },
       "0.16.2": {
         "en": "fix remove script command",
         "de": "entfernen des skriptbefehls",
@@ -106,19 +119,6 @@
         "pl": "dialogi koncentrowały się wokół dialogu",
         "uk": "діалогове вікно",
         "zh-cn": "口号中心"
-      },
-      "0.14.0": {
-        "en": "add simple dialog",
-        "de": "einfacher dialog",
-        "ru": "добавить простой диалог",
-        "pt": "adicionar diálogo simples",
-        "nl": "een simpele dialoog",
-        "fr": "ajouter un dialogue simple",
-        "it": "aggiungi semplice dialogo",
-        "es": "agregar diálogo simple",
-        "pl": "dodać",
-        "uk": "додати простий діалог",
-        "zh-cn": "简言"
       }
     },
     "icon": "logo.png",
