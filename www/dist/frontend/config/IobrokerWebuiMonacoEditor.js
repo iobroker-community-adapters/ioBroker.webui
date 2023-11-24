@@ -34,6 +34,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
             this._editor.setModel(value);
     }
     language = 'css';
+    editPart;
     _container;
     _editor;
     static _initalized;
@@ -122,8 +123,12 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
     }
     async executeCommand(command) {
         if (command.type == 'save') {
-            if (this.language == 'css')
-                iobrokerHandler.config.globalStyle = this.model.getValue();
+            if (this.language === 'css') {
+                if (this.editPart === 'globalStyle')
+                    iobrokerHandler.config.globalStyle = this.model.getValue();
+                else if (this.editPart === 'fontDeclarations')
+                    iobrokerHandler.config.fontDeclarations = this.model.getValue();
+            }
             else if (this.language == 'typescript') {
                 iobrokerHandler.config.globalTypeScript = this.model.getValue();
                 iobrokerHandler.config.globalScript = await IobrokerWebuiMonacoEditor.getCompiledJavascriptCode(this.model);

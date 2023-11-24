@@ -97,7 +97,12 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         let data = await iobrokerHandler.getScreen(name);
                         await exportData(JSON.stringify(data), name + '.screen');
                     }
-                },
+                }, /*{
+                    title: 'Export Screen as XML', action: async () => {
+                        let data = await iobrokerHandler.getScreen(name);
+                        await exportData(screenToXml(data), name + '.screen')
+                    }
+                },*/
                 {
                     title: 'Rename Screen', action: async () => {
                         let newName = prompt("Rename Screen: " + name, name);
@@ -160,6 +165,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             children: [
                 this._createGlobalSettingsNode(),
                 this._createGlobalStyleNode(),
+                this._createFontDeclarationsNode(),
                 this._createGlobalScriptsNode(),
                 this._createGlobalJavascriptsNode()
             ]
@@ -192,7 +198,16 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             folder: false,
             contextMenu: (e, data) => ctxMenu(e),
             dblclick: (e, data) => {
-                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.globalStyle ?? '');
+                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.globalStyle ?? '', 'global style', 'globalStyle');
+            }
+        };
+    }
+    _createFontDeclarationsNode() {
+        return {
+            title: 'Font Declaration Style',
+            folder: false,
+            dblclick: (e, data) => {
+                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.fontDeclarations ?? '', 'font declarations style', 'fontDeclarations');
             }
         };
     }
@@ -608,7 +623,12 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         let data = await iobrokerHandler.getCustomControl(name);
                         await exportData(JSON.stringify(data), name + '.control');
                     }
-                },
+                }, /*{
+                    title: 'Export Control as XML', action: async () => {
+                        let data = await iobrokerHandler.getCustomControl(name);
+                        await exportData(controlToXml(data), name + '.control')
+                    }
+                },*/
                 {
                     title: 'Rename Control', action: async () => {
                         let newName = prompt("Rename Control: " + name, name);
@@ -769,7 +789,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 },
                 dnd: {
                     guessDropEffect: true,
-                    preventRecursion: true,
+                    preventRecursion: true, // Prevent dropping nodes on own descendants
                     preventVoidMoves: false,
                     dragStart: (e) => {
                         if (e.node.data.data.type == 'screen') {

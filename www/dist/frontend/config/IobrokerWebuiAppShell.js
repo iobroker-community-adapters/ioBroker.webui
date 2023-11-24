@@ -247,13 +247,14 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             this.openDock(screenEditor);
         }
     }
-    async openGlobalStyleEditor(style) {
+    async openGlobalStyleEditor(style, title, editPart) {
         let id = "global_styleEditor";
         if (!this.isDockOpenAndActivate(id)) {
             let styleEditor = new IobrokerWebuiMonacoEditor();
             styleEditor.language = 'css';
+            styleEditor.editPart = editPart;
             styleEditor.id = id;
-            styleEditor.title = 'global style';
+            styleEditor.title = title;
             const model = await styleEditor.createModel(style);
             styleEditor.model = model;
             this.openDock(styleEditor);

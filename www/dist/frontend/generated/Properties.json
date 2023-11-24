@@ -230,6 +230,9 @@
         },
         "IWebUiConfig": {
             "properties": {
+                "fontDeclarations": {
+                    "type": "string"
+                },
                 "globalConfig": {
                     "$ref": "#/definitions/IGlobalConfig"
                 },
@@ -247,7 +250,8 @@
                 "globalStyle",
                 "globalScript",
                 "globalTypeScript",
-                "globalConfig"
+                "globalConfig",
+                "fontDeclarations"
             ],
             "type": "object"
         },

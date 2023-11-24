@@ -1,29 +1,24 @@
 import { BaseCustomWebComponentConstructorAppend, html, css } from '@node-projects/base-custom-webcomponent';
 export class IobrokerWebuiDynamicsEditorHistoric extends BaseCustomWebComponentConstructorAppend {
     static template = html `
-        <span style="position:absolute;left:31.570300000000003px;top:26px;">from</span>
-        <span style="position:absolute;left:30.6367px;top:77.7188px;">count</span>
-        <span style="position:absolute;left:30.8867px;top:123px;">limit</span>
-        <span style="position:absolute;left:30.8359px;top:150px;">round</span>
-        <span style="position:absolute;left:55.652325px;top:181px;">return newest entries</span>
-        <span style="position:absolute;left:54.249959999999994px;top:201px;">remove border values</span>
-        <span style="position:absolute;left:341px;top:24px;">from</span>
-        <span style="position:absolute;left:341px;top:47px;">ack</span>
-        <span style="position:absolute;left:341px;top:68px;">q</span>
-        <span style="position:absolute;left:341px;top:89px;">user</span>
-        <span style="position:absolute;left:340px;top:116px;">comment</span>
-        <span style="position:absolute;left:341px;top:139px;">id</span>
-        <span style="position:absolute;left:31.1289px;top:301px;">step</span>
-        <span style="position:absolute;left:30.6367px;top:274px;">aggregate</span>
-        <span style="position:absolute;left:32.14842px;top:224px;">ignore null</span>
-        <input type="datetime-local" style="position:absolute;left:76px;top:26px;">
-        <span style="position:absolute;left:31.125px;top:52.5px;">to</span>
-        <input type="datetime-local" style="position:absolute;left:76px;top:51.4375px;">
-        <input type="number" value="500" style="position:absolute;left:75.8438px;top:78.4415px;width:172px;">
-        <input type="number" style="position:absolute;left:76.0938px;top:125px;width:172px;">
-        <input type="number" style="position:absolute;left:76.043px;top:152px;width:172px;">
-        <input type="number" style="position:absolute;left:75.211px;top:301px;width:172px;">
-        <select style="position:absolute;left:141.656px;top:273px;width:113px;height:21px;">
+        <span style="position:absolute;left:30px;top:26px;">from</span>
+        <span style="position:absolute;left:30px;top:77px;">count</span>
+        <span style="position:absolute;left:30px;top:123px;">limit</span>
+        <span style="position:absolute;left:276.102px;top:24px;">include fields</span>
+        <span style="position:absolute;left:30px;top:150px;">round</span>
+        <span style="position:absolute;left:55px;top:181px;">return newest entries</span>
+        <span style="position:absolute;left:55px;top:201px;">remove border values</span>
+        <span style="position:absolute;left:30px;top:301px;">step</span>
+        <span style="position:absolute;left:30px;top:270px;">aggregate</span>
+        <span style="position:absolute;left:30px;top:227px;">ignore null</span>
+        <input type="datetime-local" value="{{this.from}}" style="position:absolute;left:75.921875px;top:26px;">
+        <span style="position:absolute;left:31px;top:52px;">to</span>
+        <input type="datetime-local" value="{{this.to}}" style="position:absolute;left:76px;top:51.4375px;">
+        <input type="number" value="{{this.count}}" style="position:absolute;left:76px;top:78.4415px;width:172px;">
+        <input type="number" value="{{this.limit}}" style="position:absolute;left:76px;top:125.5px;width:172px;">
+        <input type="number" value="{{this.round}}" style="position:absolute;left:76px;top:152px;width:172px;">
+        <input type="number" style="position:absolute;left:76px;top:301px;width:180px;">
+        <select style="position:absolute;left:142px;top:273px;width:113px;height:21px;">
             <option>none</option>
             <option>minmax</option>
             <option>max</option>
@@ -35,19 +30,27 @@ export class IobrokerWebuiDynamicsEditorHistoric extends BaseCustomWebComponentC
             <option>quantile</option>
             <option>integral</option>
         </select>
-        <select style="position:absolute;left:143.16772px;top:223px;width:113px;height:21px;">
+        <select style="position:absolute;left:142px;top:230px;width:113px;height:21px;">
             <option>false</option>
             <option>true</option>
             <option>0</option>
         </select>
-        <input type="checkbox" style="position:absolute;left:35.06200000000001px;top:184px;">
-        <input type="checkbox" style="position:absolute;left:33.659659999999995px;top:204px;">
-        <input type="checkbox" style="position:absolute;left:321px;top:26px;">
-        <input type="checkbox" style="position:absolute;left:320px;top:49px;">
-        <input type="checkbox" style="position:absolute;left:320px;top:70px;">
-        <input type="checkbox" style="position:absolute;left:320px;top:91px;">
-        <input type="checkbox" style="position:absolute;left:320px;top:118px;">
-        <input type="checkbox" style="position:absolute;left:320px;top:141px;">
+        <input type="checkbox" checked="{{this.returnNewestEntries}}" style="position:absolute;left:35px;top:184px;">
+        <input type="checkbox" checked="{{this.removeBorderValues}}" style="position:absolute;left:35px;top:204px;">
+        <div style="position:absolute;left:293px;top:54px;width:117px;height:154px;grid-template-columns:20px 1fr;display:grid;">
+            <input type="checkbox">
+            <span>from</span>
+            <input type="checkbox">
+            <span>ack</span>
+            <input type="checkbox">
+            <span>q</span>
+            <input type="checkbox">
+            <span>user</span>
+            <input type="checkbox">
+            <span>comment</span>
+            <input type="checkbox">
+            <span>id</span>
+        </div>    
     `;
     static style = css `
         :host {

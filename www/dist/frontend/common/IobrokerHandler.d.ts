@@ -46,6 +46,7 @@ declare class IobrokerHandler {
     additionalFilePrefix: string;
     config: IWebUiConfig;
     globalStylesheet: CSSStyleSheet;
+    fontDeclarationsStylesheet: CSSStyleSheet;
     globalScriptInstance: IGlobalScript;
     screensChanged: TypedEvent<string>;
     controlsChanged: TypedEvent<string>;
