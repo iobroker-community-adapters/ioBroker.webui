@@ -5,4 +5,5 @@ export interface IWebUiConfig {
     globalScript: string;
     globalTypeScript: string;
     globalConfig: IGlobalConfig;
+    fontDeclarations: string;
 }

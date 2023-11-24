@@ -41,6 +41,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
     }
 
     language: 'css' | 'typescript' = 'css';
+    editPart: 'local' | 'globalStyle' | 'fontDeclarations';
 
     private _container: HTMLDivElement;
     private _editor: monaco.editor.IStandaloneCodeEditor;
@@ -61,8 +62,8 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
                 require(['vs/editor/editor.main'], () => {
                     resolve(undefined);
                     IobrokerWebuiMonacoEditor._initalized = true;
-                    import('./importDescriptions.json', { assert: { type: 'json'}}).then(async json => {
-                        let files: {name:string, file:string}[] = json.default;
+                    import('./importDescriptions.json', { assert: { type: 'json' } }).then(async json => {
+                        let files: { name: string, file: string }[] = json.default;
                         const chunkSize = 500;
                         let libs: { content: string, filePath?: string }[] = [];
                         for (let i = 0; i < files.length; i += chunkSize) {
@@ -145,9 +146,12 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
 
     async executeCommand(command: Omit<IUiCommand, 'type'> & { type: string }) {
         if (command.type == 'save') {
-            if (this.language == 'css')
-                iobrokerHandler.config.globalStyle = this.model.getValue();
-            else if (this.language == 'typescript') {
+            if (this.language === 'css') {
+                if (this.editPart === 'globalStyle')
+                    iobrokerHandler.config.globalStyle = this.model.getValue();
+                else if (this.editPart === 'fontDeclarations')
+                    iobrokerHandler.config.fontDeclarations = this.model.getValue();
+            } else if (this.language == 'typescript') {
                 iobrokerHandler.config.globalTypeScript = this.model.getValue();
                 iobrokerHandler.config.globalScript = await IobrokerWebuiMonacoEditor.getCompiledJavascriptCode(this.model);
             }

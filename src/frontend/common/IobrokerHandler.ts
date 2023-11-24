@@ -66,6 +66,7 @@ class IobrokerHandler {
 
     config: IWebUiConfig;
     globalStylesheet: CSSStyleSheet;
+    fontDeclarationsStylesheet: CSSStyleSheet;
     globalScriptInstance: IGlobalScript;
 
     screensChanged = new TypedEvent<string>();
@@ -137,9 +138,13 @@ class IobrokerHandler {
         await this.connection.waitForFirstConnection();
 
         let cfg = await this._getConfig();
-        this.config = cfg ?? { globalStyle: null, globalScript: null, globalTypeScript: null, globalConfig: null };
+        this.config = cfg ?? { globalStyle: null, globalScript: null, globalTypeScript: null, globalConfig: null, fontDeclarations: null };
         if (this.config.globalStyle)
             this.globalStylesheet = cssFromString(this.config.globalStyle);
+        if (this.config.fontDeclarations) {
+            this.fontDeclarationsStylesheet = cssFromString(this.config.fontDeclarations);
+            document.adoptedStyleSheets = [this.fontDeclarationsStylesheet];
+        }
         if (this.config.globalScript) {
             const scriptUrl = URL.createObjectURL(new Blob([this.config.globalScript], { type: 'application/javascript' }));
             this.globalScriptInstance = await importShim(scriptUrl);
@@ -396,6 +401,13 @@ class IobrokerHandler {
         this.globalScriptInstance = null;
         if (this.config.globalStyle)
             this.globalStylesheet = cssFromString(this.config.globalStyle);
+        if (this.config.fontDeclarations) {
+            this.fontDeclarationsStylesheet = cssFromString(this.config.fontDeclarations);
+            document.adoptedStyleSheets = [this.fontDeclarationsStylesheet];
+        } else {
+            this.fontDeclarationsStylesheet = null;
+            document.adoptedStyleSheets = [];
+        }
         if (this.config.globalScript) {
             const scriptUrl = URL.createObjectURL(new Blob([this.config.globalScript], { type: 'application/javascript' }));
             this.globalScriptInstance = await importShim(scriptUrl);

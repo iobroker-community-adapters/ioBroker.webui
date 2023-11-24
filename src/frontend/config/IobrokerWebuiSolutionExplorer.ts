@@ -196,6 +196,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             children: [
                 this._createGlobalSettingsNode(),
                 this._createGlobalStyleNode(),
+                this._createFontDeclarationsNode(),
                 this._createGlobalScriptsNode(),
                 this._createGlobalJavascriptsNode()
             ]
@@ -230,10 +231,21 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             folder: false,
             contextMenu: (e, data) => ctxMenu(e),
             dblclick: (e, data) => {
-                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.globalStyle ?? '');
+                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.globalStyle ?? '', 'global style', 'globalStyle');
             }
         }
     }
+
+    private _createFontDeclarationsNode(): TreeNodeData {
+        return {
+            title: 'Font Declaration Style',
+            folder: false,
+            dblclick: (e, data) => {
+                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.fontDeclarations ?? '', 'font declarations style', 'fontDeclarations');
+            }
+        }
+    }
+
 
     private _createGlobalScriptsNode(): TreeNodeData {
         return {
