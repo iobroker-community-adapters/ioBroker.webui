@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.16.3",
+    "version": "0.16.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.16.4": {
+        "en": "fix usage of webui in windows",
+        "de": "die nutzung von webui in den fenstern",
+        "ru": "исправить использование webui в окнах",
+        "pt": "corrigir o uso de webui em janelas",
+        "nl": "vertaling:",
+        "fr": "fixer l'utilisation de webui dans les fenêtres",
+        "it": "uso corretto di webui in finestre",
+        "es": "arreglar el uso de webui en ventanas",
+        "pl": "ulepszenie w oknach",
+        "uk": "фіксувати використання webui в вікнах",
+        "zh-cn": "fix 在窗口中使用网络ui"
+      },
       "0.16.3": {
         "en": "extra style for font declarations, they are not allowed in shadow dom",
         "de": "extra stil für schriftdeklarationen, sie sind nicht erlaubt in schatten dom",
@@ -106,19 +119,6 @@
         "pl": "dialogowy\nwłasności dialogowe\nwiążące się z danymi hitlerowymi",
         "uk": "діалогове вікно\ncss властивості для діалогу\nобов'язковий для ударних даних",
         "zh-cn": "不可排除的口号\nc 口号财产\n对受攻击数据具有约束力"
-      },
-      "0.14.1": {
-        "en": "dialog centered",
-        "de": "dialog zentriert",
-        "ru": "диалоговый центрированный",
-        "pt": "diálogo centrado",
-        "nl": "dialog centrum",
-        "fr": "dialogue centré",
-        "it": "dialogo incentrato",
-        "es": "diálogo centrado",
-        "pl": "dialogi koncentrowały się wokół dialogu",
-        "uk": "діалогове вікно",
-        "zh-cn": "口号中心"
       }
     },
     "icon": "logo.png",
