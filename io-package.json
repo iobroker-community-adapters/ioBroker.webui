@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.16.4",
+    "version": "0.16.5",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.16.5": {
+        "en": "copy screen and custom controls",
+        "de": "kopierbildschirm und benutzerdefinierte bedienelemente",
+        "ru": "скопируйте экран и пользовательский контроль",
+        "pt": "tela de cópia e controles personalizados",
+        "nl": "vertaling:",
+        "fr": "écran de copie et contrôles personnalisés",
+        "it": "copia schermo e controlli personalizzati",
+        "es": "copiar pantalla y controles personalizados",
+        "pl": "ekrany i obsługa klienta",
+        "uk": "копіювання екрана та користувацького керування",
+        "zh-cn": "复印和习惯控制"
+      },
       "0.16.4": {
         "en": "fix usage of webui in windows",
         "de": "die nutzung von webui in den fenstern",
@@ -106,19 +119,6 @@
         "pl": "eksport jako xml (systemy i sterowania)\nhistoryczne połączenie\ndialog",
         "uk": "експорт як xml (екрани та елементи керування)\nісторичний з перевантаженням\nвиправити діалог",
         "zh-cn": "出口为xml(包装和管制)\n具有历史约束力的重载\nfix 口号"
-      },
-      "0.15.0": {
-        "en": "uncloseable dialog \ncss properties for dialog\nbinding to hitoric data",
-        "de": "ungeschlossener dialog\ncss eigenschaften für dialog\nbindung an hitorische daten",
-        "ru": "незакрытый диалог\ncss свойства для диалога\nпривязка к хторическим данным",
-        "pt": "diálogo não fechado\npropriedades do css para diálogo\nvinculação a dados hitóricos",
-        "nl": "onbeschikbare dialog\ncs-eigenschappen voor dialoog\nverbinding met hitorische gegevens",
-        "fr": "dialogue inaccessible\ncs propriétés pour dialogue\nreliant les données hitoriques",
-        "it": "dialogo non chiuso\ncss proprietà per la finestra di dialogo\nvincolo ai dati hitorici",
-        "es": "diálogo no visible\npropiedades de css para el diálogo\nvinculantes para datos hitóricos",
-        "pl": "dialogowy\nwłasności dialogowe\nwiążące się z danymi hitlerowymi",
-        "uk": "діалогове вікно\ncss властивості для діалогу\nобов'язковий для ударних даних",
-        "zh-cn": "不可排除的口号\nc 口号财产\n对受攻击数据具有约束力"
       }
     },
     "icon": "logo.png",
