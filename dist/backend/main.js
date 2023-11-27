@@ -85,7 +85,7 @@ class WebUi extends utils.Adapter {
             this.log.info(`Install NPM package (${name}), check dirs...`);
             await this.creatWidgetsDirAndRestorePackageJsonIfneeded();
             this.log.info(`Install NPM package (${name})...`);
-            const child = spawn('npm', ['install', '--omit=dev', '--ignore-scripts', name], { cwd: this.widgetsDir });
+            const child = spawn('npm', ['install', '--omit=dev', '--ignore-scripts', name], { cwd: this.widgetsDir, shell: process.platform == 'win32' });
             child.stdout.on('data', data => {
                 this.log.debug(data.toString().replace('\n', ''));
             });
@@ -116,7 +116,7 @@ class WebUi extends utils.Adapter {
             this.log.info(`Remove NPM package (${name}), check dirs...`);
             await this.creatWidgetsDirAndRestorePackageJsonIfneeded();
             this.log.info(`Remove NPM package (${name})...`);
-            const child = spawn('npm', ['remove', name], { cwd: this.widgetsDir });
+            const child = spawn('npm', ['remove', name], { cwd: this.widgetsDir, shell: process.platform == 'win32' });
             child.stdout.on('data', data => {
                 this.log.debug(data.toString().replace('\n', ''));
             });
