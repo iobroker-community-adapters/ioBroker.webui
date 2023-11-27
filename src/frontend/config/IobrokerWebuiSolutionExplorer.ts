@@ -130,6 +130,15 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     await exportData(screenToXml(data), name + '.screen')
                 }
             },*/ {
+                title: 'Copy Screen', action: async () => {
+                    let newName = prompt("New Name", name);
+                    if (newName && newName != name) {
+                        let data = await iobrokerHandler.getScreen(name);
+                        let copy = JSON.parse(JSON.stringify(data));
+                        iobrokerHandler.saveScreen(newName, copy);
+                    }
+                }
+            }, {
                 title: 'Rename Screen', action: async () => {
                     let newName = prompt("Rename Screen: " + name, name);
                     if (newName && name != newName) {
@@ -680,6 +689,15 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     await exportData(controlToXml(data), name + '.control')
                 }
             },*/ {
+                title: 'Copy Control', action: async () => {
+                    let newName = prompt("New Name", name);
+                    if (newName && newName != name) {
+                        let data = await iobrokerHandler.getCustomControl(name);
+                        let copy = JSON.parse(JSON.stringify(data));
+                        iobrokerHandler.saveCustomControl(newName, copy);
+                    }
+                }
+            }, {
                 title: 'Rename Control', action: async () => {
                     let newName = prompt("Rename Control: " + name, name);
                     if (newName && name != newName) {
