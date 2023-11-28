@@ -7,6 +7,7 @@
     "@vanillawc/wc-marquee",
     "@vanillawc/wc-json",
     "@vanillawc/wc-markdown",
+    "@node-projects/chart-js-webcomponent",
     "@node-projects/tab.webcomponent",
     "@node-projects/gauge.webcomponent",
     "@node-projects/input-knob",
