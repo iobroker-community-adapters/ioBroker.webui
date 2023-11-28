@@ -1,9 +1,10 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
+const notAllowedChars = '!"§$%&/()=?`´-:.,;<>|\\\'#+*°^';
 export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponentConstructorAppend {
     static style = css `
     :host {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 30px;
+        grid-template-columns: 1fr 1fr 1fr 30px 10px 10px;
         overflow-y: auto;
         align-content: start;
         height: 100%;
@@ -16,12 +17,17 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
     input {
         width: 100%;
         box-sizing: border-box; 
+    }
+    button {
+        padding: 0;
     }`;
     //TODO: enum properties, will be stored like this "'aa'|'bb'" -> like typescript enums
     static template = html `
         <div>name</div>
         <div>type</div>
         <div>def.</div>
+        <div></div>
+        <div></div>
         <div></div>
         <template repeat:item="[[this.properties]]">
             <input value="{{item.name}}" @input="[[this.changed()]]">
@@ -37,6 +43,8 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
             <input css:display="[[item.type == 'enum' ? '' : 'none']]" value="{{?item.values}}" @input="[[this.changed()]]">
             <input type="text" value="{{?item.def}}" @input="[[this.changed()]]">
             <button @click="[[this.removeProp(index)]]">del</button>
+            <button @click="[[this.up(index)]]">↑</button>
+            <button @click="[[this.down(index)]]">↓</button>
         </template>
         <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 4;" @click="addProp">add...</button>
         <button css:display="[[this.properties ? 'block' : 'none']]" style="grid-column-end: span 4;" @click="addEnumProp">add enum...</button>`;
@@ -80,6 +88,24 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
         this._bindingsRefresh();
         this.changed();
     }
+    up(index) {
+        if (index > 0) {
+            const element = this.properties[index];
+            this.properties.splice(index, 1);
+            this.properties.splice(--index, 0, element);
+            this._bindingsRefresh();
+            this.changed();
+        }
+    }
+    down(index) {
+        if (index < this.properties.length - 1) {
+            const element = this.properties[index];
+            this.properties.splice(index, 1);
+            this.properties.splice(++index, 0, element);
+            this._bindingsRefresh();
+            this.changed();
+        }
+    }
     changed() {
         if (this.propertiesObj) {
             for (let p in this.propertiesObj) {
@@ -88,6 +114,9 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
         }
         for (let p of this.properties) {
             if (p.name) {
+                for (let c of notAllowedChars)
+                    p.name = p.name.replaceAll(c, "");
+                p.name = p.name[0].toLowerCase() + p.name.substring(1);
                 let obj = { type: p.type };
                 if (p.def) {
                     if (p.type == 'number')
