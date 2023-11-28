@@ -32,9 +32,6 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
             margin-left: 5px;
         }
 
-        span.fancytree-expander {
-            display: none;
-        }
         iobroker-webui-property-grid {
             width: 100%;
             height: 100%;
