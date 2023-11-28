@@ -129,7 +129,11 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### 0.16.5 (2023-11-27)_
+### __WORK IN PROGRESS__
+- check for invalid propertynames
+- move properties
+
+### 0.16.5 (2023-11-27)
 - copy screen and custom controls
 
 ### 0.16.4 (2023-11-27)
