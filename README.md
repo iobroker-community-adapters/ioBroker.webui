@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- tooltip in solution explorer
+- npm upgrade of designer
+
 ### 0.17.0 (2023-11-29)
 - remove 2 uneeded files
 - designer update
