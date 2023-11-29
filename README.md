@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- remove 2 uneeded files
+- designer update
+
 ### 0.16.6 (2023-11-28)
 - check for invalid propertynames
 - move properties
