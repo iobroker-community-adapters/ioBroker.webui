@@ -20,7 +20,7 @@ function copyNodeModules() {
         "@node-projects/web-component-designer-stylesheetservice-css-tools",
         "@node-projects/web-component-designer-widgets-wunderbaum",
         "construct-style-sheets-polyfill",
-        "es-module-shims",
+        //"es-module-shims",
         "dock-spawn-ts",
         "esprima-next",
         "long",
@@ -43,6 +43,7 @@ function copyNodeFiles() {
         "metro4-dist/js/metro.min.js",
         "metro4-dist/mif/metro.woff",
         "tslib/tslib.es6.mjs",
+        "es-module-shims/dist/es-module-shims.js",
         "wunderbaum/dist/wunderbaum.css",
         "wunderbaum/dist/wunderbaum.esm.min.js",
     ]
