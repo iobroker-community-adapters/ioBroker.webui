@@ -772,6 +772,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 render: (e) => {
                     if (e.isNew) {
                         let span = e.nodeElem;
+                        span.title = span.innerText;
                         span.oncontextmenu = (ev) => {
                             e.node.setActive();
                             if (e.node.data.contextMenu) {
