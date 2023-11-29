@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.16.6",
+    "version": "0.17.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.17.0": {
+        "en": "remove 2 uneeded files\ndesigner update",
+        "de": "2 uneed dateien entfernen\ndesigner-update",
+        "ru": "удалить 2 ненужные файлы\nдизайнерское обновление",
+        "pt": "remover 2 arquivos não editados\natualização do designer",
+        "nl": "verwijder 2 onbewerkte bestanden\nontwerp",
+        "fr": "supprimer 2 fichiers sans traitement\ndesigner update",
+        "it": "rimuovere 2 file non inviati\naggiornamento designer",
+        "es": "eliminar 2 archivos sin editar\nactualización de diseñador",
+        "pl": "usunąć 2 niezauważone pliki\nprojektant",
+        "uk": "видалити 2 без вихідних файлів\nоновлення дизайнера",
+        "zh-cn": "删除2个需要的档案\n设计更新"
+      },
       "0.16.6": {
         "en": "check for invalid propertynames\nmove properties",
         "de": "suche nach ungültigen immobiliennamen\nbewegen eigenschaften",
@@ -106,19 +119,6 @@
         "pl": "dodatkowy plik",
         "uk": "додатковий файл",
         "zh-cn": "增案"
-      },
-      "0.16.0": {
-        "en": "add additional files node and upload",
-        "de": "zusätzliche dateien knoten hinzufügen und hochladen",
-        "ru": "добавить дополнительный узел файлов и загрузить",
-        "pt": "adicionar nó de arquivos adicionais e fazer upload",
-        "nl": "voeg extra dossiers node en upload",
-        "fr": "ajouter des fichiers supplémentaires noeud et télécharger",
-        "it": "aggiungere nodo di file aggiuntivi e caricare",
-        "es": "añadir nodo de archivos adicionales y subir",
-        "pl": "dodawać dodatkowe pliki i upload",
-        "uk": "додати додатковий вузол файлів і завантажити",
-        "zh-cn": "增聘档案"
       }
     },
     "icon": "logo.png",
