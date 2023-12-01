@@ -1,6 +1,7 @@
 import { BaseCustomWebComponentConstructorAppend, html, css } from '@node-projects/base-custom-webcomponent';
 import { BindingMode, BindingTarget, IBinding, IProperty } from '@node-projects/web-component-designer';
 import { BindableObjectsBrowser } from "@node-projects/web-component-designer-widgets-wunderbaum";
+import { IobrokerWebuiDynamicsEditorHistoric } from './IobrokerWebuiDynamicsEditorHistoric.js';
 
 export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstructorAppend {
 
@@ -29,12 +30,13 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
                         <div class="row">
                             <input type="checkbox" disabled="[[!this.twoWayPossible]]" checked="{{this.twoWay::change}}" @change="_refresh">
                             <span>two way binding</span>
-                            <span style="margin-left: 15px">events:&nbsp;</span>
-                            <input title="to use multiple events, seprate them with semicolon (;)" class="row" disabled="[[!this.twoWay]]" value="{{?this.events::change}}" style="flex-grow: 1; margin-right: 10px;">
+                            <span css:display="[[this.twoWay ? 'inline' : 'none']]" style="margin-left: 15px">events:&nbsp;</span>
+                            <input css:display="[[this.twoWay ? 'inline-block' : 'none']]" title="to use multiple events, seprate them with semicolon (;)" class="row" value="{{?this.events::change}}" style="flex-grow: 1;">
                         </div>
-                        <div class="row">
+                        <div class="row" style="position: relative">
                             <input type="checkbox" checked="{{this.invert::change}}">
                             <span>invert logic</span>
+                            <button css:border="[[this.historic ? 'solid lime 5px' : 'none']]" style="position: absolute; right: 1px; top: 5px; padding: 10px;" @click="showHistoric">historic</button>
                         </div>
                         <div class="row">
                             <span style="cursor: pointer;" title="javascript expression. access objects with __0, __1, ...">formula</span>
@@ -262,13 +264,25 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
         }
     }
 
+    async showHistoric() {
+        let h = new IobrokerWebuiDynamicsEditorHistoric();
+        const abortController = new AbortController();
+        h.title = "Edit historic binding to: " + this._property.name;
+        let res = await window.appShell.openConfirmation(h, 100, 100, 400, 400, this, abortController.signal, true);
+        if (!res) {
+            this.historic = null;
+        } else {
+
+        }
+        this._bindingsRefresh();
+    }
+
     addConverter() {
         this.converters.push({ key: '', value: '' });
         this._activeRow = this.converters.length - 1;
         this._bindingsRefresh();
         this._updatefocusedRow();
     }
-
 
     removeConverter() {
         this.converters.splice(this._activeRow, 1);

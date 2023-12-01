@@ -240,20 +240,20 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     this._dock.appendChild(element);
   }
 
-  openDialog(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement): { close: () => void } {
+  openDialog(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement, disableResize?: boolean): { close: () => void } {
     element.setAttribute('dock-spawn-panel-type', 'document');
     //todo: why are this 2 styles needed? needs a fix in dock-spawn
     element.style.zIndex = '1';
     element.style.position = 'relative';
     let container = new PanelContainer(element as HTMLElement, this._dock.dockManager, element.title, PanelType.panel);
     element.title = '';
-    let d = this._dock.dockManager.floatDialog(container, x, y, getPanelContainerForElement(parent), false);
+    let d = this._dock.dockManager.floatDialog(container, x, y, getPanelContainerForElement(parent), disableResize ?? false);
     d.resize(width, height);
     d.noDocking = true;
     return { close: () => container.close() };
   }
 
-  openConfirmation(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement, signal?: AbortSignal): Promise<boolean> {
+  openConfirmation(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement, signal?: AbortSignal, disableResize?: boolean): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
       let cw = new IobrokerWebuiConfirmationWrapper();
       cw.title = element.title;
@@ -264,7 +264,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
           resolve(false);
         }
       }
-      let dlg = window.appShell.openDialog(cw, x, y, width, height, parent);
+      let dlg = window.appShell.openDialog(cw, x, y, width, height, parent, disableResize);
       cw.okClicked.on(() => {
         dlg.close();
         resolve(true);
