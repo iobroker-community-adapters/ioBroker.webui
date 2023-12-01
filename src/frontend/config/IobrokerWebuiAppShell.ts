@@ -5,7 +5,7 @@ iobrokerHandler.init();
 LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
 
 import '@node-projects/web-component-designer'
-import { PropertyGrid, ServiceContainer } from '@node-projects/web-component-designer';
+import { PropertyGrid, RefactorView, ServiceContainer } from '@node-projects/web-component-designer';
 import { TreeViewExtended } from '@node-projects/web-component-designer-widgets-wunderbaum';
 
 import type { IDisposable } from 'monaco-editor';
@@ -56,6 +56,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   public treeViewExtended: TreeViewExtended;
   public eventsAssignment: IobrokerWebuiEventAssignment;
   public settingsEditor: IobrokerWebuiPropertyGrid;
+  public refactorView: RefactorView;
   public npmState: string;
 
   static readonly style = css`
@@ -108,6 +109,10 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
           <div id="settingsDock" title="Settings" style="overflow: hidden; width: 100%;" dock-spawn-dock-to="attributeDock">
             <iobroker-webui-property-grid id="settingsEditor"></iobroker-webui-property-grid>
           </div>
+
+          <div id="refactorDock" title="Refactor" style="overflow: hidden; width: 100%;" dock-spawn-dock-to="attributeDock">
+            <node-projects-refactor-view id="refactorView"></node-projects-refactor-view>
+          </div>
           
           <div id="eventsDock" title="Events" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.4" dock-spawn-dock-to="attributeDock">
             <iobroker-webui-event-assignment id="eventsList"></iobroker-webui-event-assignment>
@@ -138,6 +143,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     this.javascriptEditor = this._getDomElement<IobrokerWebuiMonacoEditor>('javascriptEditor');
     this.controlpropertiesEditor = this._getDomElement<IobrokerWebuiControlPropertiesEditor>('propertiesEditor');
     this.eventsAssignment = this._getDomElement<IobrokerWebuiEventAssignment>('eventsList');
+    this.refactorView = this._getDomElement<RefactorView>('refactorView');
 
     this.settingsEditor = this._getDomElement<IobrokerWebuiPropertyGrid>('settingsEditor');
     this.settingsEditor.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);

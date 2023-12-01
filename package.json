@@ -38,19 +38,19 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.0.4",
-    "@types/node": "^20.10.0"
+    "@types/node": "^20.10.1"
   },
   "devDependencies": {
-    "@adobe/css-tools": "4.3.1",
-    "@alcalzone/release-script": "^3.6.0",
-    "@alcalzone/release-script-plugin-iobroker": "^3.6.0",
-    "@alcalzone/release-script-plugin-license": "^3.5.9",
+    "@adobe/css-tools": "4.3.2",
+    "@alcalzone/release-script": "^3.7.0",
+    "@alcalzone/release-script-plugin-iobroker": "^3.7.0",
+    "@alcalzone/release-script-plugin-license": "^3.7.0",
     "@iobroker/socket-client": "^2.3.11",
     "@iobroker/testing": "^4.1.0",
-    "@node-projects/base-custom-webcomponent": "0.21.1",
+    "@node-projects/base-custom-webcomponent": "0.21.2",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^6.1.5",
-    "@node-projects/web-component-designer": "^0.1.25",
+    "@node-projects/web-component-designer": "^0.1.27",
     "@node-projects/web-component-designer-codeview-monaco": "^0.1.11",
     "@node-projects/web-component-designer-htmlparserservice-nodehtmlparser": "^0.1.4",
     "@node-projects/web-component-designer-stylesheetservice-css-tools": "^0.1.3",

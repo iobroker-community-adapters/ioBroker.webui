@@ -132,6 +132,7 @@ runtime.html?screenName=screen2
 ### __WORK IN PROGRESS__
 - tooltip in solution explorer
 - npm upgrade of designer
+- refactor view for bindings and scripts
 
 ### 0.17.0 (2023-11-29)
 - remove 2 uneeded files

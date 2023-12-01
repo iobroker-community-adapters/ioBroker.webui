@@ -151,6 +151,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         window.appShell.propertyGrid.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
         window.appShell.treeViewExtended.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
         window.appShell.eventsAssignment.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
+        window.appShell.refactorView.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
         window.appShell.controlpropertiesEditor.setProperties(this._properties);
         window.appShell.settingsEditor.typeName = this._type == 'control' ? 'IControlSettings' : 'IScreenSettings';
         window.appShell.settingsEditor.selectedObject = this._settings;
