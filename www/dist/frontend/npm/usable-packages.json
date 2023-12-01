@@ -22,5 +22,6 @@
     "emoji-picker-element",
     "@fluentui/web-components",
     "@material/web",
-    "@zooplus/zoo-web-components"
+    "@zooplus/zoo-web-components",
+    "dial-gauge"
 ]

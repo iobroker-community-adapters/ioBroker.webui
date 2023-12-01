@@ -38,6 +38,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     treeViewExtended;
     eventsAssignment;
     settingsEditor;
+    refactorView;
     npmState;
     static style = css `
     :host {
@@ -88,6 +89,10 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
           <div id="settingsDock" title="Settings" style="overflow: hidden; width: 100%;" dock-spawn-dock-to="attributeDock">
             <iobroker-webui-property-grid id="settingsEditor"></iobroker-webui-property-grid>
           </div>
+
+          <div id="refactorDock" title="Refactor" style="overflow: hidden; width: 100%;" dock-spawn-dock-to="attributeDock">
+            <node-projects-refactor-view id="refactorView"></node-projects-refactor-view>
+          </div>
           
           <div id="eventsDock" title="Events" dock-spawn-dock-type="down" dock-spawn-dock-ratio="0.4" dock-spawn-dock-to="attributeDock">
             <iobroker-webui-event-assignment id="eventsList"></iobroker-webui-event-assignment>
@@ -116,6 +121,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         this.javascriptEditor = this._getDomElement('javascriptEditor');
         this.controlpropertiesEditor = this._getDomElement('propertiesEditor');
         this.eventsAssignment = this._getDomElement('eventsList');
+        this.refactorView = this._getDomElement('refactorView');
         this.settingsEditor = this._getDomElement('settingsEditor');
         this.settingsEditor.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
         this.settingsEditor.propertyChanged.on((prp) => {
@@ -204,19 +210,19 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         element.style.zIndex = '1';
         this._dock.appendChild(element);
     }
-    openDialog(element, x, y, width, height, parent) {
+    openDialog(element, x, y, width, height, parent, disableResize) {
         element.setAttribute('dock-spawn-panel-type', 'document');
         //todo: why are this 2 styles needed? needs a fix in dock-spawn
         element.style.zIndex = '1';
         element.style.position = 'relative';
         let container = new PanelContainer(element, this._dock.dockManager, element.title, PanelType.panel);
         element.title = '';
-        let d = this._dock.dockManager.floatDialog(container, x, y, getPanelContainerForElement(parent), false);
+        let d = this._dock.dockManager.floatDialog(container, x, y, getPanelContainerForElement(parent), disableResize ?? false);
         d.resize(width, height);
         d.noDocking = true;
         return { close: () => container.close() };
     }
-    openConfirmation(element, x, y, width, height, parent, signal) {
+    openConfirmation(element, x, y, width, height, parent, signal, disableResize) {
         return new Promise((resolve) => {
             let cw = new IobrokerWebuiConfirmationWrapper();
             cw.title = element.title;
@@ -227,7 +233,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
                     resolve(false);
                 };
             }
-            let dlg = window.appShell.openDialog(cw, x, y, width, height, parent);
+            let dlg = window.appShell.openDialog(cw, x, y, width, height, parent, disableResize);
             cw.okClicked.on(() => {
                 dlg.close();
                 resolve(true);

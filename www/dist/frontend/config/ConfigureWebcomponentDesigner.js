@@ -1,4 +1,4 @@
-import { BaseCustomWebcomponentBindingsService, JsonFileElementsService, PreDefinedElementsService, SeperatorContextMenu, createDefaultServiceContainer } from "@node-projects/web-component-designer";
+import { BaseCustomWebcomponentBindingsService, BindingsRefactorService, JsonFileElementsService, PreDefinedElementsService, SeperatorContextMenu, createDefaultServiceContainer } from "@node-projects/web-component-designer";
 import { NodeHtmlParserService } from '@node-projects/web-component-designer-htmlparserservice-nodehtmlparser';
 import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
 import { CssToolsStylesheetService } from '@node-projects/web-component-designer-stylesheetservice-css-tools';
@@ -17,6 +17,7 @@ import { IobrokerWebuiPropertyGridDragDropService } from "../services/IobrokerWe
 import { IobrokerWebuiPropertiesService } from "../services/IobrokerWebuiPropertiesService.js";
 import { IobrokerWebuiConfigButtonProvider } from "../services/IobrokerWebuiConfigButtonProvider.js";
 import { IobrokerWebuiCustomElementContextMenu } from "../services/IobrokerWebuiCustomElementContextMenu.js";
+import { IobrokerScriptRefactorService } from "../services/IobrokerScriptRefactorService.js";
 const serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
 serviceContainer.register("htmlParserService", new NodeHtmlParserService());
@@ -28,6 +29,8 @@ serviceContainer.register("externalDragDropService", new IobrokerWebuiExternalDr
 serviceContainer.register("copyPasteService", new IobrokerWebuiCopyPasteService());
 serviceContainer.register("eventsService", new IobrokerWebuiEventsService());
 serviceContainer.register("propertyGridDragDropService", new IobrokerWebuiPropertyGridDragDropService());
+serviceContainer.register("refactorService", new BindingsRefactorService());
+serviceContainer.register("refactorService", new IobrokerScriptRefactorService());
 serviceContainer.register("stylesheetService", designerCanvas => new CssToolsStylesheetService(designerCanvas));
 serviceContainer.config.codeViewWidget = CodeViewMonaco;
 serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/frontend/elements-webui.json'));

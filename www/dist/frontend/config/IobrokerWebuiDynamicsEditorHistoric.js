@@ -11,14 +11,14 @@ export class IobrokerWebuiDynamicsEditorHistoric extends BaseCustomWebComponentC
         <span style="position:absolute;left:30px;top:301px;">step</span>
         <span style="position:absolute;left:30px;top:270px;">aggregate</span>
         <span style="position:absolute;left:30px;top:227px;">ignore null</span>
-        <input type="datetime-local" value="{{this.from}}" style="position:absolute;left:75.921875px;top:26px;">
+        <input type="datetime-local" value="{{this.from}}" style="position:absolute;left:75.9219px;top:26px;width:184px;">
         <span style="position:absolute;left:31px;top:52px;">to</span>
-        <input type="datetime-local" value="{{this.to}}" style="position:absolute;left:76px;top:51.4375px;">
-        <input type="number" value="{{this.count}}" style="position:absolute;left:76px;top:78.4415px;width:172px;">
-        <input type="number" value="{{this.limit}}" style="position:absolute;left:76px;top:125.5px;width:172px;">
-        <input type="number" value="{{this.round}}" style="position:absolute;left:76px;top:152px;width:172px;">
-        <input type="number" style="position:absolute;left:76px;top:301px;width:180px;">
-        <select style="position:absolute;left:142px;top:273px;width:113px;height:21px;">
+        <input type="datetime-local" value="{{this.to}}" style="position:absolute;left:76px;top:51.4375px;width:184px;">
+        <input type="number" value="{{this.count}}" style="position:absolute;left:76px;top:78.4415px;width:184px;">
+        <input type="number" value="{{this.limit}}" style="position:absolute;left:76px;top:125.5px;width:184px;">
+        <input type="number" value="{{this.round}}" style="position:absolute;left:76px;top:152px;width:184px;">
+        <input type="number" style="position:absolute;left:76px;top:301px;width:184px;">
+        <select style="position:absolute;left:142px;top:273px;width:118px;height:21px;">
             <option>none</option>
             <option>minmax</option>
             <option>max</option>
@@ -30,7 +30,7 @@ export class IobrokerWebuiDynamicsEditorHistoric extends BaseCustomWebComponentC
             <option>quantile</option>
             <option>integral</option>
         </select>
-        <select style="position:absolute;left:142px;top:230px;width:113px;height:21px;">
+        <select style="position:absolute;left:142px;top:230px;width:119px;height:21px;">
             <option>false</option>
             <option>true</option>
             <option>0</option>
@@ -50,7 +50,7 @@ export class IobrokerWebuiDynamicsEditorHistoric extends BaseCustomWebComponentC
             <span>comment</span>
             <input type="checkbox">
             <span>id</span>
-        </div>    
+        </div>     
     `;
     static style = css `
         :host {
