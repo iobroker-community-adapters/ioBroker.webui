@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 0.18.0 (2023-12-01)
 - tooltip in solution explorer
 - npm upgrade of designer
 - refactor view for bindings and scripts

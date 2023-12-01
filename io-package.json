@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.17.0",
+    "version": "0.18.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.0": {
+        "en": "tooltip in solution explorer\nnpm upgrade of designer\nrefactor view for bindings and scripts",
+        "de": "tooltip in lösung explorer\nnpm upgrade des designers\nrefactor-ansicht für bindungen und skripte",
+        "ru": "tooltip в поиске решения\nnpm обновление дизайнера\nрефакторный вид на привязки и скрипты",
+        "pt": "ponta da ferramenta no explorador da solução\nnpm upgrade de designer\nvista de refator para vinculações e scripts",
+        "nl": "toon een oplossing\nnpm upgrade of designer\nrefactor view for binding and scripts",
+        "fr": "tooltip in solution explorateur\nnpm upgrade of designer\nrefactor view for bindings and scripts",
+        "it": "tooltip in soluzione explorer\nnpm aggiornamento del designer\nrefactor view for bindings and scripts",
+        "es": "tooltip en el explorador de soluciones\nnpm actualización del diseñador\nrefactor view for bindings and scripts",
+        "pl": "narzędzie do roztworu\nulepszenie nośnika\nodpowiedzialność za więzy i scenariusze",
+        "uk": "інструмент для вивчення розчину\nnpm модернізація дизайнера\nрефакторний перегляд для обов'язків та сценаріїв",
+        "zh-cn": "b. 接受解决办法的工具\n设计人员升级\n对具有约束力和说明的重新定性看法"
+      },
       "0.17.0": {
         "en": "remove 2 uneeded files\ndesigner update",
         "de": "2 uneed dateien entfernen\ndesigner-update",
@@ -106,19 +119,6 @@
         "pl": "usunąć pismo",
         "uk": "виправлено видалення команди скрипта",
         "zh-cn": "fix 撤职指挥"
-      },
-      "0.16.1": {
-        "en": "additional file dnd",
-        "de": "weitere datei dnd",
-        "ru": "дополнительный файл dnd",
-        "pt": "arquivo adicional dnd",
-        "nl": "vertaling:",
-        "fr": "fichier supplémentaire dnd",
-        "it": "file aggiuntivo",
-        "es": "archivo adicional dnd",
-        "pl": "dodatkowy plik",
-        "uk": "додатковий файл",
-        "zh-cn": "增案"
       }
     },
     "icon": "logo.png",
