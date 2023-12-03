@@ -1,4 +1,4 @@
-import { BaseCustomWebcomponentBindingsService, BindingsRefactorService, IElementsJson, JsonFileElementsService, PreDefinedElementsService, SeperatorContextMenu, createDefaultServiceContainer } from "@node-projects/web-component-designer";
+import { BaseCustomWebcomponentBindingsService, BindingsRefactorService, IElementsJson, JsonFileElementsService, PreDefinedElementsService, SeperatorContextMenu, TextRefactorService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
 import { NodeHtmlParserService } from '@node-projects/web-component-designer-htmlparserservice-nodehtmlparser';
 import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
 import { CssToolsStylesheetService } from '@node-projects/web-component-designer-stylesheetservice-css-tools';
@@ -33,6 +33,7 @@ serviceContainer.register("copyPasteService", new IobrokerWebuiCopyPasteService(
 serviceContainer.register("eventsService", new IobrokerWebuiEventsService());
 serviceContainer.register("propertyGridDragDropService", new IobrokerWebuiPropertyGridDragDropService());
 serviceContainer.register("refactorService", new BindingsRefactorService());
+serviceContainer.register("refactorService", new TextRefactorService());
 serviceContainer.register("refactorService", new IobrokerScriptRefactorService());
 serviceContainer.register("stylesheetService", designerCanvas => new CssToolsStylesheetService(designerCanvas));
 serviceContainer.config.codeViewWidget = CodeViewMonaco;
