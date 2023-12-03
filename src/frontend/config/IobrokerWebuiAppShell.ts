@@ -259,9 +259,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     return { close: () => container.close() };
   }
 
-  openConfirmation(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement, signal?: AbortSignal, disableResize?: boolean): Promise<boolean> {
+  openConfirmation(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement, signal?: AbortSignal, disableResize?: boolean, additional?: { okText?: string, cancelText?: string }): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
-      let cw = new IobrokerWebuiConfirmationWrapper();
+      let cw = new IobrokerWebuiConfirmationWrapper(additional);
       cw.title = element.title;
       cw.appendChild(element);
       if (signal) {
@@ -292,7 +292,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     }
   }
 
-  public async openGlobalStyleEditor(style: string, title: string, editPart: 'globalStyle'|'fontDeclarations') {
+  public async openGlobalStyleEditor(style: string, title: string, editPart: 'globalStyle' | 'fontDeclarations') {
     let id = "global_styleEditor";
     if (!this.isDockOpenAndActivate(id)) {
       let styleEditor = new IobrokerWebuiMonacoEditor();

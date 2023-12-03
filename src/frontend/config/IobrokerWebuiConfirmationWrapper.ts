@@ -19,13 +19,18 @@ export class IobrokerWebuiConfirmationWrapper extends BaseCustomWebComponentCons
     static override readonly template = html`
         <div id="upper"><slot></slot></div>
         <div id="lower">
-            <button @click="_ok">Ok</button>
-            <button @click="_cancel">Cancel</button>
+            <button id="ok" @click="_ok">Ok</button>
+            <button id="cancel" @click="_cancel">Cancel</button>
         </div>`;
 
-    constructor() {
+    constructor(additional?: { okText?: string, cancelText?: string }) {
         super();
         this._restoreCachedInititalValues();
+
+        if (additional?.okText)
+            this._getDomElement('ok').textContent = additional.okText;
+        if (additional?.cancelText)
+            this._getDomElement('cancel').textContent = additional.cancelText;
     }
 
     ready() {
