@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.3",
+    "version": "0.18.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.4": {
+        "en": "better text for historic bindings cancel",
+        "de": "besserer text für historische bindungen stornieren",
+        "ru": "лучший текст для исторических привязок отменить",
+        "pt": "melhor texto para ligações históricas cancelar",
+        "nl": "vertaling:",
+        "fr": "meilleur texte pour les reliures historiques annuler",
+        "it": "testo migliore per gli attacchi storici annullare",
+        "es": "mejor texto para cancelaciones históricas",
+        "pl": "więcej tekstu do historycznych wiązań wiążących się z tekstem",
+        "uk": "кращий текст для скасування історичних обов'язків",
+        "zh-cn": "改善历史约束力的取消案文"
+      },
       "0.18.3": {
         "en": "fix reload in dynamics editor",
         "de": "reload in dynamics editor beheben",
@@ -106,19 +119,6 @@
         "pl": "wskaźnik dla nieprawidłowej nazwy nieruchomości\nwłasność ruchu",
         "uk": "реєстрація за недійсними іменами майна\nрухомі властивості",
         "zh-cn": "对无效财产名称的检查\n财产流动"
-      },
-      "0.16.5": {
-        "en": "copy screen and custom controls",
-        "de": "kopierbildschirm und benutzerdefinierte bedienelemente",
-        "ru": "скопируйте экран и пользовательский контроль",
-        "pt": "tela de cópia e controles personalizados",
-        "nl": "vertaling:",
-        "fr": "écran de copie et contrôles personnalisés",
-        "it": "copia schermo e controlli personalizzati",
-        "es": "copiar pantalla y controles personalizados",
-        "pl": "ekrany i obsługa klienta",
-        "uk": "копіювання екрана та користувацького керування",
-        "zh-cn": "复印和习惯控制"
       }
     },
     "icon": "logo.png",
