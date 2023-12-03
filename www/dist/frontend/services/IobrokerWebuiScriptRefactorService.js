@@ -1,5 +1,5 @@
 import { BindingTarget } from "@node-projects/web-component-designer";
-export class IobrokerScriptRefactorService {
+export class IobrokerWebuiScriptRefactorService {
     getRefactorings(designItems) {
         let refactorings = [];
         for (let d of designItems) {
