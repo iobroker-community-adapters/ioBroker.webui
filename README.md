@@ -129,6 +129,11 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+
+### __WORK IN PROGRESS__
+- ui for historic binding
+- fixes in refactor view
+
 ### 0.18.1 (2023-12-03)
 - fixes in refactor service
 
