@@ -249,7 +249,7 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
         let h = new IobrokerWebuiDynamicsEditorHistoric(this.historic);
         const abortController = new AbortController();
         h.title = "Edit historic binding to: " + this._property.name;
-        let res = await window.appShell.openConfirmation(h, 100, 100, 420, 510, this, abortController.signal, true);
+        let res = await window.appShell.openConfirmation(h, 100, 100, 420, 510, this, abortController.signal, true, { cancelText: 'Remove' });
         if (!res) {
             this.historic = null;
         }

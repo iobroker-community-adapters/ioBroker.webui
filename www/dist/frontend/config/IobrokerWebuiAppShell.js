@@ -222,9 +222,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         d.noDocking = true;
         return { close: () => container.close() };
     }
-    openConfirmation(element, x, y, width, height, parent, signal, disableResize) {
+    openConfirmation(element, x, y, width, height, parent, signal, disableResize, additional) {
         return new Promise((resolve) => {
-            let cw = new IobrokerWebuiConfirmationWrapper();
+            let cw = new IobrokerWebuiConfirmationWrapper(additional);
             cw.title = element.title;
             cw.appendChild(element);
             if (signal) {
