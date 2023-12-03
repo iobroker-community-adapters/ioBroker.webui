@@ -129,8 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-
-### __WORK IN PROGRESS__
+### 0.18.3 (2023-12-03)
 - fix reload in dynamics editor
 
 ### 0.18.2 (2023-12-03)

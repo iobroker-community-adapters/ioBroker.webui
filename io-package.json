@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.2",
+    "version": "0.18.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.3": {
+        "en": "fix reload in dynamics editor",
+        "de": "reload in dynamics editor beheben",
+        "ru": "исправить перезагрузку в динамический редактор",
+        "pt": "corrigir recarga no editor dinâmico",
+        "nl": "vertaling:",
+        "fr": "réparer reload dans l'éditeur dynamique",
+        "it": "fix reload nell'editor di dinamica",
+        "es": "fijar reload en el editor de dinámicas",
+        "pl": "reaktor naprawy w edytorze dynamiki",
+        "uk": "виправити перевантаження в редакторі динаміки",
+        "zh-cn": "f 动态编辑的固定载荷"
+      },
       "0.18.2": {
         "en": "ui for historic binding\nfixes in refactor view",
         "de": "ui für historische bindung\nin refactor view",
@@ -106,19 +119,6 @@
         "pl": "ekrany i obsługa klienta",
         "uk": "копіювання екрана та користувацького керування",
         "zh-cn": "复印和习惯控制"
-      },
-      "0.16.4": {
-        "en": "fix usage of webui in windows",
-        "de": "die nutzung von webui in den fenstern",
-        "ru": "исправить использование webui в окнах",
-        "pt": "corrigir o uso de webui em janelas",
-        "nl": "vertaling:",
-        "fr": "fixer l'utilisation de webui dans les fenêtres",
-        "it": "uso corretto di webui in finestre",
-        "es": "arreglar el uso de webui en ventanas",
-        "pl": "ulepszenie w oknach",
-        "uk": "фіксувати використання webui в вікнах",
-        "zh-cn": "fix 在窗口中使用网络ui"
       }
     },
     "icon": "logo.png",
