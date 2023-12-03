@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.1",
+    "version": "0.18.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.2": {
+        "en": "ui for historic binding\nfixes in refactor view",
+        "de": "ui für historische bindung\nin refactor view",
+        "ru": "ui для исторического привязки\nисправления в рефакторном виде",
+        "pt": "ui para ligação histórica\ncorreções na vista do refator",
+        "nl": "ui for historische binding\nvertaling:",
+        "fr": "ui pour reliure historique\ncorrections dans la vue refactor",
+        "it": "ui per legare storico\ncorrezioni in vista refactor",
+        "es": "ui para la unión histórica\nfijaciones en la vista del refactor",
+        "pl": "ui dla historycznego wiązania\nnaprawić",
+        "uk": "ui для історичної прив'язки\nвиправлення в рефакторному перегляді",
+        "zh-cn": "具有历史约束力的\nf 重新定性观点"
+      },
       "0.18.1": {
         "en": "fixes in refactor service",
         "de": "reparaturen im refactor-service",
@@ -106,19 +119,6 @@
         "pl": "ulepszenie w oknach",
         "uk": "фіксувати використання webui в вікнах",
         "zh-cn": "fix 在窗口中使用网络ui"
-      },
-      "0.16.3": {
-        "en": "extra style for font declarations, they are not allowed in shadow dom",
-        "de": "extra stil für schriftdeklarationen, sie sind nicht erlaubt in schatten dom",
-        "ru": "дополнительный стиль для карточных деклараций, они не допускаются в тени доми",
-        "pt": "estilo extra para declarações de fonte, eles não são permitidos na sombra dom",
-        "nl": "extra stijl voor lettertypes, ze zijn niet toegestaan in schaduw domein",
-        "fr": "style supplémentaire pour les déclarations de police, ils ne sont pas autorisés dans l'ombre dom",
-        "it": "stile extra per le dichiarazioni di carattere, non sono ammessi in dom ombra",
-        "es": "estilo extra para las declaraciones de fuentes, no se permite en dom sombra",
-        "pl": "dodatkowy styl deklaracji fontów nie jest dozwolony w cieniu domowego",
-        "uk": "додатковий стиль для декларацій шрифтів, вони не допускаються в тіні",
-        "zh-cn": "独裁声明的外部风格,不准在阴影中使用。"
       }
     },
     "icon": "logo.png",
