@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.0",
+    "version": "0.18.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.1": {
+        "en": "fixes in refactor service",
+        "de": "reparaturen im refactor-service",
+        "ru": "исправления в рефакторной службе",
+        "pt": "correções no serviço de refator",
+        "nl": "vertaling:",
+        "fr": "corrections dans le service refactor",
+        "it": "correzioni nel servizio refactor",
+        "es": "fijaciones en el servicio de refactor",
+        "pl": "naprawić usługi rekwizycyjne",
+        "uk": "виправлення в рефакторному режимі",
+        "zh-cn": "f 重新计算服务"
+      },
       "0.18.0": {
         "en": "tooltip in solution explorer\nnpm upgrade of designer\nrefactor view for bindings and scripts",
         "de": "tooltip in lösung explorer\nnpm upgrade des designers\nrefactor-ansicht für bindungen und skripte",
@@ -106,19 +119,6 @@
         "pl": "dodatkowy styl deklaracji fontów nie jest dozwolony w cieniu domowego",
         "uk": "додатковий стиль для декларацій шрифтів, вони не допускаються в тіні",
         "zh-cn": "独裁声明的外部风格,不准在阴影中使用。"
-      },
-      "0.16.2": {
-        "en": "fix remove script command",
-        "de": "entfernen des skriptbefehls",
-        "ru": "исправить удалить команду сценария",
-        "pt": "corrigir o comando de script",
-        "nl": "verwijder het script",
-        "fr": "correction",
-        "it": "fix rimuovere il comando script",
-        "es": "fijar el comando script",
-        "pl": "usunąć pismo",
-        "uk": "виправлено видалення команди скрипта",
-        "zh-cn": "fix 撤职指挥"
       }
     },
     "icon": "logo.png",
