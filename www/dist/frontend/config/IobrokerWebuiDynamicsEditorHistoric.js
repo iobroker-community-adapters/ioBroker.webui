@@ -54,7 +54,7 @@ export class IobrokerWebuiDynamicsEditorHistoric extends BaseCustomWebComponentC
             <span style="position:absolute;left:8px;top:6px;">include fields</span>
         </div>
         <span style="position:absolute;left:31.8203px;top:390px;">update all (ms)</span>
-        <input type="number" style="position:absolute;left:142px;top:390px;width:119px;">
+        <input value="{{this.historic.reloadInterval}}" type="number" style="position:absolute;left:142px;top:390px;width:119px;">
         <span css:visibility="[[this.historic.aggregate == 'percentile' ? 'visible' : 'collapse']]" id="lblPercentile" style="position:absolute;left:30px;top:325px;">percentile</span>
         <input css:visibility="[[this.historic.aggregate == 'percentile' ? 'visible' : 'collapse']]" value="{{this.historic.percentile}}" type="number" id="percentile" style="position:absolute;left:109px;top:325px;width:151px;">
         <span css:visibility="[[this.historic.aggregate == 'integral' ? 'visible' : 'collapse']]" id="lblIntegral" style="position:absolute;left:30px;top:325px;">integral unit</span>
@@ -80,7 +80,7 @@ export class IobrokerWebuiDynamicsEditorHistoric extends BaseCustomWebComponentC
     constructor(historic) {
         super();
         this._restoreCachedInititalValues();
-        this.historic = historic ?? {};
+        this.historic = historic ?? { reloadInterval: 2000 };
     }
     ready() {
         this._bindingsParse();
