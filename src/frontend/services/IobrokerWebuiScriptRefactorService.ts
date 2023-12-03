@@ -1,8 +1,8 @@
 import { BindingTarget, IDesignItem, IRefactorService, IRefactoring } from "@node-projects/web-component-designer";
-import { Script } from "../scripting/Script";
-import { IScriptMultiplexValue } from "../interfaces/IScriptMultiplexValue";
+import { Script } from "../scripting/Script.js";
+import { IScriptMultiplexValue } from "../interfaces/IScriptMultiplexValue.js";
 
-export class IobrokerScriptRefactorService implements IRefactorService {
+export class IobrokerWebuiScriptRefactorService implements IRefactorService {
     getRefactorings(designItems: IDesignItem[]): (IRefactoring & { refactor: (newValue) => void })[] {
         let refactorings: (IRefactoring & { refactor: (newValue) => void })[] = [];
         for (let d of designItems) {

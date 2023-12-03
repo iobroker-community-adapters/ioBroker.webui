@@ -19,7 +19,8 @@ import { IobrokerWebuiPropertyGridDragDropService } from "../services/IobrokerWe
 import { IobrokerWebuiPropertiesService } from "../services/IobrokerWebuiPropertiesService.js";
 import { IobrokerWebuiConfigButtonProvider } from "../services/IobrokerWebuiConfigButtonProvider.js";
 import { IobrokerWebuiCustomElementContextMenu } from "../services/IobrokerWebuiCustomElementContextMenu.js";
-import { IobrokerScriptRefactorService } from "../services/IobrokerScriptRefactorService.js";
+import { IobrokerWebuiScriptRefactorService } from "../services/IobrokerWebuiScriptRefactorService.js";
+import { IobrokerWebuiRefactorService } from "../services/IobrokerWebuiRefactorService.js";
 
 const serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
@@ -34,7 +35,8 @@ serviceContainer.register("eventsService", new IobrokerWebuiEventsService());
 serviceContainer.register("propertyGridDragDropService", new IobrokerWebuiPropertyGridDragDropService());
 serviceContainer.register("refactorService", new BindingsRefactorService());
 serviceContainer.register("refactorService", new TextRefactorService());
-serviceContainer.register("refactorService", new IobrokerScriptRefactorService());
+serviceContainer.register("refactorService", new IobrokerWebuiScriptRefactorService());
+serviceContainer.register("refactorService", new IobrokerWebuiRefactorService());
 serviceContainer.register("stylesheetService", designerCanvas => new CssToolsStylesheetService(designerCanvas));
 serviceContainer.config.codeViewWidget = CodeViewMonaco;
 

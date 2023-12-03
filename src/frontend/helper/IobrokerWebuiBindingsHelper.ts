@@ -228,18 +228,20 @@ export class IobrokerWebuiBindingsHelper {
     }
 
     static * getBindings(element: Element) {
-        for (let a of element.attributes) {
-            if (a.name.startsWith(bindingPrefixProperty)) {
-                yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.property, bindingPrefixProperty);
-            }
-            else if (a.name.startsWith(bindingPrefixContent)) {
-                yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name === 'bind-content:html' ? 'bind-prop:inner-h-t-m-l' : 'bind-prop:text-content', a.value, BindingTarget.property, bindingPrefixProperty);
-            }
-            else if (a.name.startsWith(bindingPrefixAttribute)) {
-                yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.attribute, bindingPrefixAttribute);
-            }
-            else if (a.name.startsWith(bindingPrefixCss)) {
-                yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.css, bindingPrefixCss);
+        if (element.attributes) {
+            for (let a of element.attributes) {
+                if (a.name.startsWith(bindingPrefixProperty)) {
+                    yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.property, bindingPrefixProperty);
+                }
+                else if (a.name.startsWith(bindingPrefixContent)) {
+                    yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name === 'bind-content:html' ? 'bind-prop:inner-h-t-m-l' : 'bind-prop:text-content', a.value, BindingTarget.property, bindingPrefixProperty);
+                }
+                else if (a.name.startsWith(bindingPrefixAttribute)) {
+                    yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.attribute, bindingPrefixAttribute);
+                }
+                else if (a.name.startsWith(bindingPrefixCss)) {
+                    yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.css, bindingPrefixCss);
+                }
             }
         }
     }
