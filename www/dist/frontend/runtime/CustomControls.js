@@ -54,6 +54,8 @@ export function generateCustomControl(name, control) {
             properties[p] = String;
         else if (prp.type == 'screen')
             properties[p] = String;
+        else if (prp.type == 'object')
+            properties[p] = Object;
         else
             properties[p] = Object;
     }

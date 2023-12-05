@@ -6,5 +6,9 @@
     {
         "name": "@iobroker/socket-client",
         "file": "/webui/node_modules/@iobroker/socket-client/dist/esm/Connection.d.ts"
+    },
+    {
+        "name": "@node-projects/base-custom-webcomponent",
+        "file": "/webui/node_modules/@node-projects/base-custom-webcomponent/dist/BaseCustomWebComponent.d.ts"
     }
 ]
