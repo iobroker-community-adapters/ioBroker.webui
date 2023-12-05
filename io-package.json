@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.5",
+    "version": "0.18.6",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.6": {
+        "en": "fix for monaco bug\ntitle removed",
+        "de": "fix für monaco bug\ntitel entfernt",
+        "ru": "исправить для монако баг\nназвание удалено",
+        "pt": "correção para o bug do monaco\ntítulo removido",
+        "nl": "_\nverwijder de titel",
+        "fr": "fix pour monaco bug\ntitre supprimé",
+        "it": "fix per monaco bug\ntitolo rimosso",
+        "es": "fijación para monaco bug\ntítulo eliminado",
+        "pl": "naprawić bugle monaco\ntytuł",
+        "uk": "виправити для monaco помилок\nназва вилучена",
+        "zh-cn": "fix\n标题"
+      },
       "0.18.5": {
         "en": "code completition for base custom webcomponent\nobject property type",
         "de": "code-kompletition für basis benutzerdefinierte webkomponenten\nobjekt eigenschaft typ",
@@ -106,19 +119,6 @@
         "pl": "narzędzie do roztworu\nulepszenie nośnika\nodpowiedzialność za więzy i scenariusze",
         "uk": "інструмент для вивчення розчину\nnpm модернізація дизайнера\nрефакторний перегляд для обов'язків та сценаріїв",
         "zh-cn": "b. 接受解决办法的工具\n设计人员升级\n对具有约束力和说明的重新定性看法"
-      },
-      "0.17.0": {
-        "en": "remove 2 uneeded files\ndesigner update",
-        "de": "2 uneed dateien entfernen\ndesigner-update",
-        "ru": "удалить 2 ненужные файлы\nдизайнерское обновление",
-        "pt": "remover 2 arquivos não editados\natualização do designer",
-        "nl": "verwijder 2 onbewerkte bestanden\nontwerp",
-        "fr": "supprimer 2 fichiers sans traitement\ndesigner update",
-        "it": "rimuovere 2 file non inviati\naggiornamento designer",
-        "es": "eliminar 2 archivos sin editar\nactualización de diseñador",
-        "pl": "usunąć 2 niezauważone pliki\nprojektant",
-        "uk": "видалити 2 без вихідних файлів\nоновлення дизайнера",
-        "zh-cn": "删除2个需要的档案\n设计更新"
       }
     },
     "icon": "logo.png",
