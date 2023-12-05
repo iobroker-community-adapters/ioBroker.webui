@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.6",
+    "version": "0.18.7",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.7": {
+        "en": "better fix for monaco",
+        "de": "besser fix für monaco",
+        "ru": "лучше исправить для monaco",
+        "pt": "melhor correção para monaco",
+        "nl": "beter gemaakt voor monaco",
+        "fr": "meilleure solution pour monaco",
+        "it": "migliore correzione per monaco",
+        "es": "mejor arreglo para monaco",
+        "pl": "lepszy od monaco",
+        "uk": "краще виправити для monaco",
+        "zh-cn": "改善野生动nacoix"
+      },
       "0.18.6": {
         "en": "fix for monaco bug\ntitle removed",
         "de": "fix für monaco bug\ntitel entfernt",
@@ -106,19 +119,6 @@
         "pl": "naprawić usługi rekwizycyjne",
         "uk": "виправлення в рефакторному режимі",
         "zh-cn": "f 重新计算服务"
-      },
-      "0.18.0": {
-        "en": "tooltip in solution explorer\nnpm upgrade of designer\nrefactor view for bindings and scripts",
-        "de": "tooltip in lösung explorer\nnpm upgrade des designers\nrefactor-ansicht für bindungen und skripte",
-        "ru": "tooltip в поиске решения\nnpm обновление дизайнера\nрефакторный вид на привязки и скрипты",
-        "pt": "ponta da ferramenta no explorador da solução\nnpm upgrade de designer\nvista de refator para vinculações e scripts",
-        "nl": "toon een oplossing\nnpm upgrade of designer\nrefactor view for binding and scripts",
-        "fr": "tooltip in solution explorateur\nnpm upgrade of designer\nrefactor view for bindings and scripts",
-        "it": "tooltip in soluzione explorer\nnpm aggiornamento del designer\nrefactor view for bindings and scripts",
-        "es": "tooltip en el explorador de soluciones\nnpm actualización del diseñador\nrefactor view for bindings and scripts",
-        "pl": "narzędzie do roztworu\nulepszenie nośnika\nodpowiedzialność za więzy i scenariusze",
-        "uk": "інструмент для вивчення розчину\nnpm модернізація дизайнера\nрефакторний перегляд для обов'язків та сценаріїв",
-        "zh-cn": "b. 接受解决办法的工具\n设计人员升级\n对具有约束力和说明的重新定性看法"
       }
     },
     "icon": "logo.png",
