@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.4",
+    "version": "0.18.5",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.5": {
+        "en": "code completition for base custom webcomponent\nobject property type",
+        "de": "code-kompletition für basis benutzerdefinierte webkomponenten\nobjekt eigenschaft typ",
+        "ru": "завершение кода для базового пользовательского webcomponent\nобъект тип недвижимости",
+        "pt": "completition de código para base personalizado webcomponent\ntipo de propriedade objeto",
+        "nl": "codecomlet\nvoorwerpen",
+        "fr": "code completition pour base webcomponent\nobjet type",
+        "it": "completamento del codice per base webcomponent personalizzato\ntipo di proprietà oggetto",
+        "es": "completition de código para webcomponente personalizado base\nobjeto tipo de propiedad",
+        "pl": "kodowanie do standardowych stron internetowych\ntype własnościowy",
+        "uk": "складання коду для базового користувача веб-компонента\nтип об'єкта",
+        "zh-cn": "a. 完成基础习俗网络责任守则\n财产类型"
+      },
       "0.18.4": {
         "en": "better text for historic bindings cancel",
         "de": "besserer text für historische bindungen stornieren",
@@ -106,19 +119,6 @@
         "pl": "usunąć 2 niezauważone pliki\nprojektant",
         "uk": "видалити 2 без вихідних файлів\nоновлення дизайнера",
         "zh-cn": "删除2个需要的档案\n设计更新"
-      },
-      "0.16.6": {
-        "en": "check for invalid propertynames\nmove properties",
-        "de": "suche nach ungültigen immobiliennamen\nbewegen eigenschaften",
-        "ru": "проверить недействительные названия недвижимости\nдвигаться свойства",
-        "pt": "verificar se há nomes de propriedade inválidos\npropriedades de movimento",
-        "nl": "controleer op ongeldige eigendommen\nquality over quantity (qoq) releases vertaling:",
-        "fr": "vérifier pour les noms de propriété invalides\ndéplacer les propriétés",
-        "it": "controllare i nomi di proprietà non validi\nspostare le proprietà",
-        "es": "check for invalid propertynames\npropiedades de movimiento",
-        "pl": "wskaźnik dla nieprawidłowej nazwy nieruchomości\nwłasność ruchu",
-        "uk": "реєстрація за недійсними іменами майна\nрухомі властивості",
-        "zh-cn": "对无效财产名称的检查\n财产流动"
       }
     },
     "icon": "logo.png",
