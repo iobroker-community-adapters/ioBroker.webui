@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.8",
+    "version": "0.18.9",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.9": {
+        "en": "fix tooltips",
+        "de": "fix tooltips",
+        "ru": "исправить tooltips",
+        "pt": "corrigir dicas de ferramentas",
+        "nl": "vertaling:",
+        "fr": "fixer les outils",
+        "it": "correggere i tempi degli strumenti",
+        "es": "fijar puntas de herramienta",
+        "pl": "naprawiona płatka",
+        "uk": "фіксація інструментів",
+        "zh-cn": "f 固定工具"
+      },
       "0.18.8": {
         "en": "lazy remove the title",
         "de": "lazy entfernen sie den titel",
@@ -106,19 +119,6 @@
         "pl": "reaktor naprawy w edytorze dynamiki",
         "uk": "виправити перевантаження в редакторі динаміки",
         "zh-cn": "f 动态编辑的固定载荷"
-      },
-      "0.18.2": {
-        "en": "ui for historic binding\nfixes in refactor view",
-        "de": "ui für historische bindung\nin refactor view",
-        "ru": "ui для исторического привязки\nисправления в рефакторном виде",
-        "pt": "ui para ligação histórica\ncorreções na vista do refator",
-        "nl": "ui for historische binding\nvertaling:",
-        "fr": "ui pour reliure historique\ncorrections dans la vue refactor",
-        "it": "ui per legare storico\ncorrezioni in vista refactor",
-        "es": "ui para la unión histórica\nfijaciones en la vista del refactor",
-        "pl": "ui dla historycznego wiązania\nnaprawić",
-        "uk": "ui для історичної прив'язки\nвиправлення в рефакторному перегляді",
-        "zh-cn": "具有历史约束力的\nf 重新定性观点"
       }
     },
     "icon": "logo.png",
