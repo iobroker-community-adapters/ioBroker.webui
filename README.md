@@ -129,6 +129,11 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+
+### __WORK IN PROGRESS__
+- fix for monaco bug
+- title removed
+
 ### 0.18.5 (2023-12-05)
 - code completition for base custom webcomponent
 - object property type

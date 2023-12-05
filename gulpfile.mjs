@@ -7,6 +7,21 @@ import fs from 'fs';
 
 const pkg = JSON.parse(fs.readFileSync('package.json'));
 
+async function fixMonaco() {
+    //fix for monaco editor (issue https://github.com/microsoft/monaco-editor/issues/3409)
+    console.log("fix ./node_modules/monaco-editor/min/vs/editor/editor.main.js");
+    fs.readFile("./node_modules/monaco-editor/min/vs/editor/editor.main.js", function (err, buf) {
+        let code = buf.toString();
+        let newcode = code.replaceAll('this.viewHelper.viewDomNode.contains(p.target)', 'this.viewHelper.viewDomNode.contains(m.composedPath()[0])');
+        if (code != newcode) {
+            console.log("monaco was fixed!!");
+            fs.writeFile("./node_modules/monaco-editor/min/vs/editor/editor.main.js", newcode, (err) => {
+                if (err) console.log(err);
+            });
+        }
+    });
+}
+
 function copyNodeModules() {
     let runtimeModules = [
         "@adobe/css-tools",
@@ -149,4 +164,4 @@ function saveGitCommitHash(done) {
 }
 
 //git rev-parse HEAD
-export default series(copyNodeModules, copyNodeFiles, copyDist, cleanupNodeModules, cleanupDist, copyAssets, copyHtml, copyManifest, copyConfigJs, cleanupMonaco, saveGitCommitHash);
+export default series(fixMonaco, copyNodeModules, copyNodeFiles, copyDist, cleanupNodeModules, cleanupDist, copyAssets, copyHtml, copyManifest, copyConfigJs, cleanupMonaco, saveGitCommitHash);
