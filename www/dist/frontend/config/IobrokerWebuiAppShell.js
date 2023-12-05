@@ -209,7 +209,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         //todo: why are this 2 styles needed? needs a fix in dock-spawn
         element.style.zIndex = '1';
         this._dock.appendChild(element);
-        element.title = '';
+        setTimeout(() => element.title = '', 100);
     }
     openDialog(element, x, y, width, height, parent, disableResize) {
         element.setAttribute('dock-spawn-panel-type', 'document');
