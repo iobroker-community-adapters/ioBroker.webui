@@ -12,7 +12,8 @@ async function fixMonaco() {
     console.log("fix ./node_modules/monaco-editor/min/vs/editor/editor.main.js");
     fs.readFile("./node_modules/monaco-editor/min/vs/editor/editor.main.js", function (err, buf) {
         let code = buf.toString();
-        let newcode = code.replaceAll('this.viewHelper.viewDomNode.contains(p.target)', 'this.viewHelper.viewDomNode.contains(m.composedPath()[0])');
+        let rgx = /(.)=>{this\.viewHelper\.viewDomNode\.contains\((.)\.target\)/;
+        let newcode = code.replace(rgx, '$1=>{this.viewHelper.viewDomNode.contains($1.composedPath()[0])');
         if (code != newcode) {
             console.log("monaco was fixed!!");
             fs.writeFile("./node_modules/monaco-editor/min/vs/editor/editor.main.js", newcode, (err) => {

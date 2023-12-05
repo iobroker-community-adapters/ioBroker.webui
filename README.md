@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- better fix for monaco
+
 ### 0.18.6 (2023-12-05)
 - fix for monaco bug
 - title removed
