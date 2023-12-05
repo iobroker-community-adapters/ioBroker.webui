@@ -69,6 +69,8 @@ export function generateCustomControl(name: string, control: IControl) {
             properties[p] = String;
         else if (prp.type == 'screen')
             properties[p] = String;
+        else if (prp.type == 'object')
+            properties[p] = Object;
         else
             properties[p] = Object;
     }
@@ -78,7 +80,7 @@ export function generateCustomControl(name: string, control: IControl) {
         window['IobrokerWebuiCustomControl' + name].style = style;
         window['IobrokerWebuiCustomControl' + name].properties = properties;
         window['IobrokerWebuiCustomControl' + name]._propertiesDictionary = null;
-        const ccInfo : CustomControlInfo = window['IobrokerWebuiCustomControl' + name][webuiCustomControlSymbol];
+        const ccInfo: CustomControlInfo = window['IobrokerWebuiCustomControl' + name][webuiCustomControlSymbol];
         ccInfo.control = control;
     } else {
         window['IobrokerWebuiCustomControl' + name] = function () {
