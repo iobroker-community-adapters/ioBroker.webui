@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.7",
+    "version": "0.18.8",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.8": {
+        "en": "lazy remove the title",
+        "de": "lazy entfernen sie den titel",
+        "ru": "lazy удалить название",
+        "pt": "preguiçoso remover o título",
+        "nl": "lui verwijder de titel",
+        "fr": "supprimer paresseux le titre",
+        "it": "lazy rimuovere il titolo",
+        "es": "perezoso quitar el título",
+        "pl": "lazy usunąć tytuł",
+        "uk": "ліза видалити назву",
+        "zh-cn": "删除标题"
+      },
       "0.18.7": {
         "en": "better fix for monaco",
         "de": "besser fix für monaco",
@@ -106,19 +119,6 @@
         "pl": "ui dla historycznego wiązania\nnaprawić",
         "uk": "ui для історичної прив'язки\nвиправлення в рефакторному перегляді",
         "zh-cn": "具有历史约束力的\nf 重新定性观点"
-      },
-      "0.18.1": {
-        "en": "fixes in refactor service",
-        "de": "reparaturen im refactor-service",
-        "ru": "исправления в рефакторной службе",
-        "pt": "correções no serviço de refator",
-        "nl": "vertaling:",
-        "fr": "corrections dans le service refactor",
-        "it": "correzioni nel servizio refactor",
-        "es": "fijaciones en el servicio de refactor",
-        "pl": "naprawić usługi rekwizycyjne",
-        "uk": "виправлення в рефакторному режимі",
-        "zh-cn": "f 重新计算服务"
       }
     },
     "icon": "logo.png",
