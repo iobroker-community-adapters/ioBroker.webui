@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+
+### __WORK IN PROGRESS__
+- fix tooltips
+
 ### 0.18.8 (2023-12-05)
 - lazy remove the title
 

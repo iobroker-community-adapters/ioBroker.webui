@@ -177,6 +177,8 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             this.activateDockById('attributeDock');
             this.activateDockById('eventsDock');
             this.activateDockById('styleDock');
+            this._getDomElement('javascriptDock').title = '';
+            this._getDomElement('styleDock').title = '';
         }, 150);
     }
     async _setupServiceContainer() {
