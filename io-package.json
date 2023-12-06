@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.10",
+    "version": "0.18.11",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.11": {
+        "en": "fix broken load historic",
+        "de": "defekte last historische",
+        "ru": "исправить сломанные нагрузки исторический",
+        "pt": "corrigir carga quebrada histórica",
+        "nl": "vertaling:",
+        "fr": "charge historique",
+        "it": "fix carico rotto storico",
+        "es": "reparación de carga histórica rota",
+        "pl": "naprawa zabytków",
+        "uk": "фіксувати застаріле навантаження",
+        "zh-cn": "f 断续"
+      },
       "0.18.10": {
         "en": "load historic only when previous load is finished",
         "de": "last historisch nur, wenn die vorherige last beendet ist",
@@ -106,19 +119,6 @@
         "pl": "kodowanie do standardowych stron internetowych\ntype własnościowy",
         "uk": "складання коду для базового користувача веб-компонента\nтип об'єкта",
         "zh-cn": "a. 完成基础习俗网络责任守则\n财产类型"
-      },
-      "0.18.4": {
-        "en": "better text for historic bindings cancel",
-        "de": "besserer text für historische bindungen stornieren",
-        "ru": "лучший текст для исторических привязок отменить",
-        "pt": "melhor texto para ligações históricas cancelar",
-        "nl": "vertaling:",
-        "fr": "meilleur texte pour les reliures historiques annuler",
-        "it": "testo migliore per gli attacchi storici annullare",
-        "es": "mejor texto para cancelaciones históricas",
-        "pl": "więcej tekstu do historycznych wiązań wiążących się z tekstem",
-        "uk": "кращий текст для скасування історичних обов'язків",
-        "zh-cn": "改善历史约束力的取消案文"
       }
     },
     "icon": "logo.png",

@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 0.18.11 (2023-12-06)
 - fix broken load historic
 
 ### 0.18.10 (2023-12-06)
