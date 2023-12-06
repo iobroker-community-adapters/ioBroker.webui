@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+
+### __WORK IN PROGRESS__
+- load historic only when previous load is finished
+
 ### 0.18.9 (2023-12-05)
 - fix tooltips
 
