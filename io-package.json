@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.13",
+    "version": "0.18.14",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.14": {
+        "en": "fix normal binding unsubscribe",
+        "de": "normale bindung abbestellen",
+        "ru": "исправить нормальную привязку отписаться",
+        "pt": "corrigir o cancelamento de ligação normal",
+        "nl": "vertaling:",
+        "fr": "désabonnement normal",
+        "it": "correzione normale disiscrizione del binding",
+        "es": "fijar el suscripto de unión normal",
+        "pl": "naprawa normalna",
+        "uk": "фіксувати нормальний зв'язковий відпис",
+        "zh-cn": "f 确定具有常规约束力的、无约束力的"
+      },
       "0.18.13": {
         "en": "fix historic binding unsubscribe",
         "de": "historisch verbindliche abmeldung",
@@ -106,19 +119,6 @@
         "pl": "lazy usunąć tytuł",
         "uk": "ліза видалити назву",
         "zh-cn": "删除标题"
-      },
-      "0.18.7": {
-        "en": "better fix for monaco",
-        "de": "besser fix für monaco",
-        "ru": "лучше исправить для monaco",
-        "pt": "melhor correção para monaco",
-        "nl": "beter gemaakt voor monaco",
-        "fr": "meilleure solution pour monaco",
-        "it": "migliore correzione per monaco",
-        "es": "mejor arreglo para monaco",
-        "pl": "lepszy od monaco",
-        "uk": "краще виправити для monaco",
-        "zh-cn": "改善野生动nacoix"
       }
     },
     "icon": "logo.png",
