@@ -280,7 +280,7 @@ export class IobrokerWebuiBindingsHelper {
                 signals[i] = relativeSignalPath + signals[i];
             }
         }
-        let unsubscribeList: ((id: string, value: any) => void)[] = [];
+        let unsubscribeList:[id:string, ((id: string, value: any) => void)][] = [];
         let cleanupCalls: (() => void)[];
 
         let valuesObject = new Array(signals.length);
@@ -353,7 +353,7 @@ export class IobrokerWebuiBindingsHelper {
                             iobrokerHandler.connection.getHistoryEx(s, binding[1].historic).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.values, valuesObject, i))
                     } else {
                         const cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
-                        unsubscribeList.push(cb);
+                        unsubscribeList.push([s, cb]);
                         iobrokerHandler.connection.subscribeState(s, cb);
                         iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i));
                         if (binding[1].twoWay) {
@@ -393,8 +393,8 @@ export class IobrokerWebuiBindingsHelper {
         }
 
         return () => {
-            for (let i = 0; i < signals.length; i++) {
-                iobrokerHandler.connection.unsubscribeState(signals[i], unsubscribeList[i]);
+            for (const u of unsubscribeList) {
+                iobrokerHandler.connection.unsubscribeState(u[0], u[1]);
             }
             if (cleanupCalls) {
                 for (let e of cleanupCalls) {
