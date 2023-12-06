@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.9",
+    "version": "0.18.10",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.10": {
+        "en": "load historic only when previous load is finished",
+        "de": "last historisch nur, wenn die vorherige last beendet ist",
+        "ru": "загружать исторические только когда предыдущая нагрузка закончена",
+        "pt": "carga histórica somente quando a carga anterior terminar",
+        "nl": "alleen als de vorige lading voorbij is",
+        "fr": "charge historique seulement lorsque la charge précédente est terminée",
+        "it": "carico storico solo quando il carico precedente è finito",
+        "es": "carga histórica sólo cuando la carga anterior se termina",
+        "pl": "załadowanie trwało tylko wtedy, gdy poprzednie obciążenie zostało zakończone",
+        "uk": "завантаження історичного лише при закінченні попереднього навантаження",
+        "zh-cn": "只在以前的装载工作完成时,历史装载量"
+      },
       "0.18.9": {
         "en": "fix tooltips",
         "de": "fix tooltips",
@@ -106,19 +119,6 @@
         "pl": "więcej tekstu do historycznych wiązań wiążących się z tekstem",
         "uk": "кращий текст для скасування історичних обов'язків",
         "zh-cn": "改善历史约束力的取消案文"
-      },
-      "0.18.3": {
-        "en": "fix reload in dynamics editor",
-        "de": "reload in dynamics editor beheben",
-        "ru": "исправить перезагрузку в динамический редактор",
-        "pt": "corrigir recarga no editor dinâmico",
-        "nl": "vertaling:",
-        "fr": "réparer reload dans l'éditeur dynamique",
-        "it": "fix reload nell'editor di dinamica",
-        "es": "fijar reload en el editor de dinámicas",
-        "pl": "reaktor naprawy w edytorze dynamiki",
-        "uk": "виправити перевантаження в редакторі динаміки",
-        "zh-cn": "f 动态编辑的固定载荷"
       }
     },
     "icon": "logo.png",
