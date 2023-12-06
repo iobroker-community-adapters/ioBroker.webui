@@ -319,12 +319,11 @@ export class IobrokerWebuiBindingsHelper {
                     if (binding[1].historic) {
                         if (binding[1].historic.reloadInterval) {
                             let myTimer = { timerId: -1 };
-                            function loadHistoric() {
-                                () => iobrokerHandler.connection.getHistoryEx(s, binding[1].historic).then(x => {
-                                    IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.values, valuesObject, i);
-                                    if (myTimer.timerId !== null)
-                                        myTimer.timerId = setTimeout(loadHistoric, binding[1].historic.reloadInterval);
-                                });
+                            async function loadHistoric() {
+                                const res = await iobrokerHandler.connection.getHistoryEx(s, binding[1].historic);
+                                IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, res?.values, valuesObject, i);
+                                if (myTimer.timerId !== null)
+                                    myTimer.timerId = setTimeout(loadHistoric, binding[1].historic.reloadInterval);
                             }
                             loadHistoric();
                             unsubscribeList.push(() => {
