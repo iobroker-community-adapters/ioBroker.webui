@@ -15,7 +15,8 @@ export type CustomControlInfo = {
 
 export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     static readonly style = css`:host { overflow: hidden }`;
-    private _scriptObject: ICustomControlScript;
+    #scriptObject: ICustomControlScript;
+    #bindings: (() => void)[];
 
     constructor() {
         super();
@@ -27,13 +28,16 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     async connectedCallback() {
         this._parseAttributesToProperties();
         this._bindingsRefresh();
-        IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
-        this._scriptObject = await ScriptSystem.assignAllScripts((<IControl>(<CustomControlInfo>(<any>this.constructor)[webuiCustomControlSymbol]).control).script, this.shadowRoot, this);
-        this._scriptObject?.connectedCallback?.(this);
+        this.#bindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
+        this.#scriptObject = await ScriptSystem.assignAllScripts((<IControl>(<CustomControlInfo>(<any>this.constructor)[webuiCustomControlSymbol]).control).script, this.shadowRoot, this);
+        this.#scriptObject?.connectedCallback?.(this);
     }
 
     disconnectedCallback() {
-        this._scriptObject?.disconnectedCallback?.(this);
+        this.#scriptObject?.disconnectedCallback?.(this);
+        for (const b of this.#bindings)
+            b();
+        this.#bindings = null;
     }
 
     _getRelativeSignalsPath(): string {

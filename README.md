@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- remove bindings in customcontrols
+
 ### 0.18.11 (2023-12-06)
 - fix broken load historic
 

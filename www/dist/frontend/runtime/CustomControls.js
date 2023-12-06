@@ -7,7 +7,8 @@ export const webuiCustomControlPrefix = 'webui-';
 export const webuiCustomControlSymbol = Symbol('webuiCustomControlSymbol');
 export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     static style = css `:host { overflow: hidden }`;
-    _scriptObject;
+    #scriptObject;
+    #bindings;
     constructor() {
         super();
         this._bindingsParse(null, true);
@@ -17,12 +18,15 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     async connectedCallback() {
         this._parseAttributesToProperties();
         this._bindingsRefresh();
-        IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
-        this._scriptObject = await ScriptSystem.assignAllScripts(this.constructor[webuiCustomControlSymbol].control.script, this.shadowRoot, this);
-        this._scriptObject?.connectedCallback?.(this);
+        this.#bindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
+        this.#scriptObject = await ScriptSystem.assignAllScripts(this.constructor[webuiCustomControlSymbol].control.script, this.shadowRoot, this);
+        this.#scriptObject?.connectedCallback?.(this);
     }
     disconnectedCallback() {
-        this._scriptObject?.disconnectedCallback?.(this);
+        this.#scriptObject?.disconnectedCallback?.(this);
+        for (const b of this.#bindings)
+            b();
+        this.#bindings = null;
     }
     _getRelativeSignalsPath() {
         return this.getRootNode()?.host?._getRelativeSignalsPath?.() ?? '';
