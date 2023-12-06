@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.12",
+    "version": "0.18.13",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.13": {
+        "en": "fix historic binding unsubscribe",
+        "de": "historisch verbindliche abmeldung",
+        "ru": "исправить историческую привязку отписаться",
+        "pt": "corrigir histórico vinculação de cancelamento",
+        "nl": "vertaling:",
+        "fr": "un désabonnement historique",
+        "it": "correzione storica vincolante disiscrizione",
+        "es": "fijar histórico vinculante su suscripción",
+        "pl": "naprawa niepodkreślona",
+        "uk": "виправити історичну прив'язку",
+        "zh-cn": "f 确定具有历史约束力的、无所禁止的"
+      },
       "0.18.12": {
         "en": "remove bindings in customcontrols",
         "de": "binden in customcontrols entfernen",
@@ -106,19 +119,6 @@
         "pl": "lepszy od monaco",
         "uk": "краще виправити для monaco",
         "zh-cn": "改善野生动nacoix"
-      },
-      "0.18.6": {
-        "en": "fix for monaco bug\ntitle removed",
-        "de": "fix für monaco bug\ntitel entfernt",
-        "ru": "исправить для монако баг\nназвание удалено",
-        "pt": "correção para o bug do monaco\ntítulo removido",
-        "nl": "_\nverwijder de titel",
-        "fr": "fix pour monaco bug\ntitre supprimé",
-        "it": "fix per monaco bug\ntitolo rimosso",
-        "es": "fijación para monaco bug\ntítulo eliminado",
-        "pl": "naprawić bugle monaco\ntytuł",
-        "uk": "виправити для monaco помилок\nназва вилучена",
-        "zh-cn": "fix\n标题"
       }
     },
     "icon": "logo.png",
