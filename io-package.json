@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.14",
+    "version": "0.18.15",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.15": {
+        "en": "fix missing null check",
+        "de": "fehlende null-check",
+        "ru": "исправить отсутствует проверка null",
+        "pt": "corrigir verificação null ausente",
+        "nl": "vermiste check",
+        "fr": "correction de null check",
+        "it": "correzione mancante null check",
+        "es": "comprobación nula faltante",
+        "pl": "błąd",
+        "uk": "виправити відсутність null контроль",
+        "zh-cn": "fix 遗失"
+      },
       "0.18.14": {
         "en": "fix normal binding unsubscribe",
         "de": "normale bindung abbestellen",
@@ -106,19 +119,6 @@
         "pl": "naprawiona płatka",
         "uk": "фіксація інструментів",
         "zh-cn": "f 固定工具"
-      },
-      "0.18.8": {
-        "en": "lazy remove the title",
-        "de": "lazy entfernen sie den titel",
-        "ru": "lazy удалить название",
-        "pt": "preguiçoso remover o título",
-        "nl": "lui verwijder de titel",
-        "fr": "supprimer paresseux le titre",
-        "it": "lazy rimuovere il titolo",
-        "es": "perezoso quitar el título",
-        "pl": "lazy usunąć tytuł",
-        "uk": "ліза видалити назву",
-        "zh-cn": "删除标题"
       }
     },
     "icon": "logo.png",
