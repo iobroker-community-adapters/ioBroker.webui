@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.11",
+    "version": "0.18.12",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.18.12": {
+        "en": "remove bindings in customcontrols",
+        "de": "binden in customcontrols entfernen",
+        "ru": "удалить привязки в customcontrols",
+        "pt": "remover ligações em controles personalizados",
+        "nl": "verwijder bindingen in gebruikelijke controle",
+        "fr": "supprimer les reliures dans les contrôles personnalisés",
+        "it": "rimuovere gli attacchi in controlli personalizzati",
+        "es": "eliminar las fijaciones en controles personalizados",
+        "pl": "usuwanie wiązań w celach kontrolnych",
+        "uk": "видалення зв'язків у користуванні",
+        "zh-cn": "取消对习俗控制的约束力"
+      },
       "0.18.11": {
         "en": "fix broken load historic",
         "de": "defekte last historische",
@@ -106,19 +119,6 @@
         "pl": "naprawić bugle monaco\ntytuł",
         "uk": "виправити для monaco помилок\nназва вилучена",
         "zh-cn": "fix\n标题"
-      },
-      "0.18.5": {
-        "en": "code completition for base custom webcomponent\nobject property type",
-        "de": "code-kompletition für basis benutzerdefinierte webkomponenten\nobjekt eigenschaft typ",
-        "ru": "завершение кода для базового пользовательского webcomponent\nобъект тип недвижимости",
-        "pt": "completition de código para base personalizado webcomponent\ntipo de propriedade objeto",
-        "nl": "codecomlet\nvoorwerpen",
-        "fr": "code completition pour base webcomponent\nobjet type",
-        "it": "completamento del codice per base webcomponent personalizzato\ntipo di proprietà oggetto",
-        "es": "completition de código para webcomponente personalizado base\nobjeto tipo de propiedad",
-        "pl": "kodowanie do standardowych stron internetowych\ntype własnościowy",
-        "uk": "складання коду для базового користувача веб-компонента\nтип об'єкта",
-        "zh-cn": "a. 完成基础习俗网络责任守则\n财产类型"
       }
     },
     "icon": "logo.png",
