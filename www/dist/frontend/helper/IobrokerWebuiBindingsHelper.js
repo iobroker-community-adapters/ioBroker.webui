@@ -324,6 +324,8 @@ export class IobrokerWebuiBindingsHelper {
                                     myTimer.timerId = setTimeout(loadHistoric, binding[1].historic.reloadInterval);
                             }
                             loadHistoric();
+                            if (!cleanupCalls)
+                                cleanupCalls = [];
                             cleanupCalls.push(() => {
                                 if (myTimer.timerId > 0)
                                     clearTimeout(myTimer.timerId);

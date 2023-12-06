@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix missing null check
+
 ### 0.18.14 (2023-12-06)
 - fix normal binding unsubscribe
 

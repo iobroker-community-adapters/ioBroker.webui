@@ -280,7 +280,7 @@ export class IobrokerWebuiBindingsHelper {
                 signals[i] = relativeSignalPath + signals[i];
             }
         }
-        let unsubscribeList:[id:string, ((id: string, value: any) => void)][] = [];
+        let unsubscribeList: [id: string, ((id: string, value: any) => void)][] = [];
         let cleanupCalls: (() => void)[];
 
         let valuesObject = new Array(signals.length);
@@ -344,6 +344,8 @@ export class IobrokerWebuiBindingsHelper {
                                     myTimer.timerId = setTimeout(loadHistoric, binding[1].historic.reloadInterval);
                             }
                             loadHistoric();
+                            if (!cleanupCalls)
+                                cleanupCalls = [];
                             cleanupCalls.push(() => {
                                 if (myTimer.timerId > 0)
                                     clearTimeout(myTimer.timerId);
