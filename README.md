@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix historic binding unsubscribe
+
 ### 0.18.12 (2023-12-06)
 - remove bindings in customcontrols
 

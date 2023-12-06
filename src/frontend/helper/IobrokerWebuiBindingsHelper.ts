@@ -334,9 +334,6 @@ export class IobrokerWebuiBindingsHelper {
                         }
                     }
                 } else {
-                    let cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
-                    unsubscribeList.push(cb);
-
                     if (binding[1].historic) {
                         if (binding[1].historic.reloadInterval) {
                             let myTimer = { timerId: <any>-1 };
@@ -347,7 +344,7 @@ export class IobrokerWebuiBindingsHelper {
                                     myTimer.timerId = setTimeout(loadHistoric, binding[1].historic.reloadInterval);
                             }
                             loadHistoric();
-                            unsubscribeList.push(() => {
+                            cleanupCalls.push(() => {
                                 if (myTimer.timerId > 0)
                                     clearTimeout(myTimer.timerId);
                                 myTimer.timerId = null;
@@ -355,6 +352,8 @@ export class IobrokerWebuiBindingsHelper {
                         } else
                             iobrokerHandler.connection.getHistoryEx(s, binding[1].historic).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.values, valuesObject, i))
                     } else {
+                        const cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
+                        unsubscribeList.push(cb);
                         iobrokerHandler.connection.subscribeState(s, cb);
                         iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i));
                         if (binding[1].twoWay) {
