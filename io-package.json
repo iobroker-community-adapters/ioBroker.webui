@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.18.15",
+    "version": "0.19.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.19.0": {
+        "en": "waitForReady needs to be awaited",
+        "de": "warte! FürReady muss erwartet werden",
+        "ru": "подождите ДляReady нужно ожидать",
+        "pt": "espera. ForReady precisa ser aguardado",
+        "nl": "wacht. Forredy moet worden gewacht",
+        "fr": "attends. ForReady doit être attendu",
+        "it": "aspetta. ForReady ha bisogno di essere aspettato",
+        "es": "espera. ParaReady necesita ser esperada",
+        "pl": "czekać Dla Ready potrzeba być oczekiwana",
+        "uk": "доля Длячитати потрібно",
+        "zh-cn": "等候 需要等待阅读"
+      },
       "0.18.15": {
         "en": "fix missing null check",
         "de": "fehlende null-check",
@@ -106,19 +119,6 @@
         "pl": "załadowanie trwało tylko wtedy, gdy poprzednie obciążenie zostało zakończone",
         "uk": "завантаження історичного лише при закінченні попереднього навантаження",
         "zh-cn": "只在以前的装载工作完成时,历史装载量"
-      },
-      "0.18.9": {
-        "en": "fix tooltips",
-        "de": "fix tooltips",
-        "ru": "исправить tooltips",
-        "pt": "corrigir dicas de ferramentas",
-        "nl": "vertaling:",
-        "fr": "fixer les outils",
-        "it": "correggere i tempi degli strumenti",
-        "es": "fijar puntas de herramienta",
-        "pl": "naprawiona płatka",
-        "uk": "фіксація інструментів",
-        "zh-cn": "f 固定工具"
       }
     },
     "icon": "logo.png",
