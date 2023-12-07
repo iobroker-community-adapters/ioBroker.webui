@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.19.0",
+    "version": "0.19.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.19.1": {
+        "en": "fix load error",
+        "de": "lastfehler beheben",
+        "ru": "исправить ошибку нагрузки",
+        "pt": "corrigir erro de carga",
+        "nl": "ladingsfout",
+        "fr": "correction",
+        "it": "correzione errore di carico",
+        "es": "error de carga",
+        "pl": "naprawa błędów",
+        "uk": "виправити помилку завантаження",
+        "zh-cn": "f 固定载荷错误"
+      },
       "0.19.0": {
         "en": "waitForReady needs to be awaited",
         "de": "warte! FürReady muss erwartet werden",
@@ -106,19 +119,6 @@
         "pl": "naprawa zabytków",
         "uk": "фіксувати застаріле навантаження",
         "zh-cn": "f 断续"
-      },
-      "0.18.10": {
-        "en": "load historic only when previous load is finished",
-        "de": "last historisch nur, wenn die vorherige last beendet ist",
-        "ru": "загружать исторические только когда предыдущая нагрузка закончена",
-        "pt": "carga histórica somente quando a carga anterior terminar",
-        "nl": "alleen als de vorige lading voorbij is",
-        "fr": "charge historique seulement lorsque la charge précédente est terminée",
-        "it": "carico storico solo quando il carico precedente è finito",
-        "es": "carga histórica sólo cuando la carga anterior se termina",
-        "pl": "załadowanie trwało tylko wtedy, gdy poprzednie obciążenie zostało zakończone",
-        "uk": "завантаження історичного лише при закінченні попереднього навантаження",
-        "zh-cn": "只在以前的装载工作完成时,历史装载量"
       }
     },
     "icon": "logo.png",
