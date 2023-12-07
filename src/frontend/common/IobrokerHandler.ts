@@ -386,8 +386,6 @@ class IobrokerHandler {
 
     private async _getConfig(): Promise<IWebUiConfig> {
         try {
-            if (this._readyPromises)
-                await this.waitForReady();
             return await this._getObjectFromFile<IWebUiConfig>(this.configPath + "config.json");
         }
         catch (err) {

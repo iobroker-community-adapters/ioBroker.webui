@@ -303,8 +303,6 @@ class IobrokerHandler {
     }
     async _getConfig() {
         try {
-            if (this._readyPromises)
-                await this.waitForReady();
             return await this._getObjectFromFile(this.configPath + "config.json");
         }
         catch (err) {
