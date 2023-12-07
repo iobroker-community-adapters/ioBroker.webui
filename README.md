@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+
+### __WORK IN PROGRESS__
+- waitForReady needs to be awaited
+
 ### 0.18.15 (2023-12-06)
 - fix missing null check
 

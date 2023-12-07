@@ -196,7 +196,7 @@ class IobrokerHandler {
     async getScreenNames() {
         if (this._screenNames) return this._screenNames;
         if (this._readyPromises)
-            this.waitForReady();
+            await this.waitForReady();
         try {
             const files = await this.connection.readDir(this.namespaceFiles, this.configPath + "screens")
             const screenNames = files
@@ -214,7 +214,7 @@ class IobrokerHandler {
         let screen = this._screens.get(name.toLocaleLowerCase());
         if (!screen) {
             if (this._readyPromises)
-                this.waitForReady();
+                await this.waitForReady();
             try {
                 screen = await this._getObjectFromFile<IScreen>(this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
             }
@@ -265,7 +265,7 @@ class IobrokerHandler {
     async getCustomControlNames() {
         if (this._controlNames) return this._controlNames;
         if (this._readyPromises)
-            this.waitForReady();
+            await this.waitForReady();
         try {
             const files = await this.connection.readDir(this.namespaceFiles, this.configPath + "controls")
             const controlNames = files
@@ -283,7 +283,7 @@ class IobrokerHandler {
         let control = this._controls.get(name);
         if (!control) {
             if (this._readyPromises)
-                this.waitForReady();
+                await this.waitForReady();
             try {
                 control = await this._getObjectFromFile<IControl>(this.configPath + "controls/" + name + controlFileExtension);
 
@@ -334,7 +334,7 @@ class IobrokerHandler {
 
     async getImageNames() {
         if (this._readyPromises)
-            this.waitForReady();
+            await this.waitForReady();
         try {
             const files = await this.connection.readDir(this.namespaceFiles, this.configPath + "images")
             const imageNames = files.map(x => x.file);
@@ -360,7 +360,7 @@ class IobrokerHandler {
 
     async getAdditionalFileNames() {
         if (this._readyPromises)
-            this.waitForReady();
+            await this.waitForReady();
         try {
             const files = await this.connection.readDir(this.namespaceFiles, this.configPath + "additionalfiles")
             const additionalFileNames = files.map(x => x.file);
@@ -387,7 +387,7 @@ class IobrokerHandler {
     private async _getConfig(): Promise<IWebUiConfig> {
         try {
             if (this._readyPromises)
-                this.waitForReady();
+                await this.waitForReady();
             return await this._getObjectFromFile<IWebUiConfig>(this.configPath + "config.json");
         }
         catch (err) {
