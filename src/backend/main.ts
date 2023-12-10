@@ -145,7 +145,7 @@ class WebUi extends utils.Adapter {
     states = {}
 
     async stateChange(id, state) {
-        this.log.info(`stateChange: ${id}, value: ${state.val}, ack: ${state.ack}`);
+        this.log.debug(`stateChange: ${id}, value: ${state.val}, ack: ${state.ack}`);
         if (!id || !state) return;
 
         if (state.ack) {
