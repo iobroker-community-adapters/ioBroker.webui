@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.19.1",
+    "version": "0.19.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.19.2": {
+        "en": "package updates",
+        "de": "paket-updates",
+        "ru": "пакет обновлений",
+        "pt": "atualizações do pacote",
+        "nl": "vertaling:",
+        "fr": "mises à jour des paquets",
+        "it": "aggiornamenti pacchetto",
+        "es": "actualizaciones de paquetes",
+        "pl": "aktualizacja pakietu",
+        "uk": "оновлення пакета",
+        "zh-cn": "一揽子更新"
+      },
       "0.19.1": {
         "en": "fix load error",
         "de": "lastfehler beheben",
@@ -106,19 +119,6 @@
         "pl": "usuwanie wiązań w celach kontrolnych",
         "uk": "видалення зв'язків у користуванні",
         "zh-cn": "取消对习俗控制的约束力"
-      },
-      "0.18.11": {
-        "en": "fix broken load historic",
-        "de": "defekte last historische",
-        "ru": "исправить сломанные нагрузки исторический",
-        "pt": "corrigir carga quebrada histórica",
-        "nl": "vertaling:",
-        "fr": "charge historique",
-        "it": "fix carico rotto storico",
-        "es": "reparación de carga histórica rota",
-        "pl": "naprawa zabytków",
-        "uk": "фіксувати застаріле навантаження",
-        "zh-cn": "f 断续"
       }
     },
     "icon": "logo.png",
