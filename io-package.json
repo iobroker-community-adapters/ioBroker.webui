@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.19.2",
+    "version": "0.19.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.19.3": {
+        "en": "switch loglevel",
+        "de": "schalter loglevel",
+        "ru": "переключатель loglevel",
+        "pt": "nível de log do interruptor",
+        "nl": "wissel loglevel",
+        "fr": "switch loglevel",
+        "it": "livello di interruttore",
+        "es": "nivel de registro",
+        "pl": "transmisja",
+        "uk": "вимикач логів",
+        "zh-cn": "转换逻辑"
+      },
       "0.19.2": {
         "en": "package updates",
         "de": "paket-updates",
@@ -106,19 +119,6 @@
         "pl": "naprawa niepodkreślona",
         "uk": "виправити історичну прив'язку",
         "zh-cn": "f 确定具有历史约束力的、无所禁止的"
-      },
-      "0.18.12": {
-        "en": "remove bindings in customcontrols",
-        "de": "binden in customcontrols entfernen",
-        "ru": "удалить привязки в customcontrols",
-        "pt": "remover ligações em controles personalizados",
-        "nl": "verwijder bindingen in gebruikelijke controle",
-        "fr": "supprimer les reliures dans les contrôles personnalisés",
-        "it": "rimuovere gli attacchi in controlli personalizzati",
-        "es": "eliminar las fijaciones en controles personalizados",
-        "pl": "usuwanie wiązań w celach kontrolnych",
-        "uk": "видалення зв'язків у користуванні",
-        "zh-cn": "取消对习俗控制的约束力"
       }
     },
     "icon": "logo.png",
