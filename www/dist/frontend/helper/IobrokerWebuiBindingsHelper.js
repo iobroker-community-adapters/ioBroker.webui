@@ -125,6 +125,8 @@ export class IobrokerWebuiBindingsHelper {
             else
                 binding.events = [propname + '-changed'];
         }
+        if (bindingTarget === BindingTarget.cssvar || bindingTarget === BindingTarget.class)
+            return [IobrokerWebuiBindingsHelper.dotToCamelCase(propname), binding];
         return [PropertiesHelper.dashToCamelCase(propname), binding];
     }
     static serializeBinding(element, targetName, binding) {
