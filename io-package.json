@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.20.1",
+    "version": "0.20.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.20.2": {
+        "en": "fix for class binding",
+        "de": "fixierung für klassenbindung",
+        "ru": "исправить для класса привязки",
+        "pt": "correção para ligação de classe",
+        "nl": "_",
+        "fr": "fixation pour reliure de classe",
+        "it": "fissaggio per legatura di classe",
+        "es": "fijado para la unión de clase",
+        "pl": "naprawić klasę",
+        "uk": "фіксація для обов'язки класу",
+        "zh-cn": "具有约束力的阶级"
+      },
       "0.20.1": {
         "en": "binding for classes",
         "de": "bindung für klassen",
@@ -106,19 +119,6 @@
         "pl": "czekać Dla Ready potrzeba być oczekiwana",
         "uk": "доля Длячитати потрібно",
         "zh-cn": "等候 需要等待阅读"
-      },
-      "0.18.15": {
-        "en": "fix missing null check",
-        "de": "fehlende null-check",
-        "ru": "исправить отсутствует проверка null",
-        "pt": "corrigir verificação null ausente",
-        "nl": "vermiste check",
-        "fr": "correction de null check",
-        "it": "correzione mancante null check",
-        "es": "comprobación nula faltante",
-        "pl": "błąd",
-        "uk": "виправити відсутність null контроль",
-        "zh-cn": "fix 遗失"
       }
     },
     "icon": "logo.png",
