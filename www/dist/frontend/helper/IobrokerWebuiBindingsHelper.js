@@ -89,7 +89,7 @@ export class IndirectSignal {
 export class IobrokerWebuiBindingsHelper {
     static parseBinding(element, name, value, bindingTarget, prefix) {
         let propname = name.substring(prefix.length);
-        if (bindingTarget === BindingTarget.cssvar || bindingTarget === BindingTarget.class)
+        if (bindingTarget === BindingTarget.cssvar)
             propname = '--' + propname;
         if (!value.startsWith('{')) {
             let binding = {
@@ -111,7 +111,7 @@ export class IobrokerWebuiBindingsHelper {
                 binding.signal = value.substring(1);
                 binding.inverted = true;
             }
-            if (bindingTarget == BindingTarget.cssvar)
+            if (bindingTarget === BindingTarget.cssvar || bindingTarget === BindingTarget.class)
                 return [IobrokerWebuiBindingsHelper.dotToCamelCase(propname), binding];
             return [PropertiesHelper.dashToCamelCase(propname), binding];
         }
