@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 0.20.0 (2023-12-11)
 - allow bindings to css vars
 
 ### 0.19.3 (2023-12-10)

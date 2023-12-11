@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.19.3",
+    "version": "0.20.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.20.0": {
+        "en": "allow bindings to css vars",
+        "de": "ermöglichen bindungen an css vars",
+        "ru": "позволяют связывать с css vars",
+        "pt": "permitir ligações para css vars",
+        "nl": "_",
+        "fr": "permettre des reliures à css vars",
+        "it": "consentire gli attacchi a css vars",
+        "es": "permite la unión a css vars",
+        "pl": "umożliwia wiązania do cs vars",
+        "uk": "дозволяють прив'язувати до css варів",
+        "zh-cn": "允许有约束力的品种"
+      },
       "0.19.3": {
         "en": "switch loglevel",
         "de": "schalter loglevel",
@@ -106,19 +119,6 @@
         "pl": "naprawa normalna",
         "uk": "фіксувати нормальний зв'язковий відпис",
         "zh-cn": "f 确定具有常规约束力的、无约束力的"
-      },
-      "0.18.13": {
-        "en": "fix historic binding unsubscribe",
-        "de": "historisch verbindliche abmeldung",
-        "ru": "исправить историческую привязку отписаться",
-        "pt": "corrigir histórico vinculação de cancelamento",
-        "nl": "vertaling:",
-        "fr": "un désabonnement historique",
-        "it": "correzione storica vincolante disiscrizione",
-        "es": "fijar histórico vinculante su suscripción",
-        "pl": "naprawa niepodkreślona",
-        "uk": "виправити історичну прив'язку",
-        "zh-cn": "f 确定具有历史约束力的、无所禁止的"
       }
     },
     "icon": "logo.png",
