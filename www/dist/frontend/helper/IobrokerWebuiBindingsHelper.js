@@ -5,6 +5,7 @@ import { BindingTarget } from "@node-projects/web-component-designer/dist/elemen
 //;,[ are not allowed in bindings, so they could be used for a short form...
 export const bindingPrefixProperty = 'bind-prop:';
 export const bindingPrefixAttribute = 'bind-attr:';
+export const bindingPrefixClass = 'bind-class:';
 export const bindingPrefixCss = 'bind-css:';
 export const bindingPrefixCssVar = 'bind-cssvar:';
 export const bindingPrefixContent = 'bind-content:';
@@ -88,7 +89,7 @@ export class IndirectSignal {
 export class IobrokerWebuiBindingsHelper {
     static parseBinding(element, name, value, bindingTarget, prefix) {
         let propname = name.substring(prefix.length);
-        if (prefix == bindingPrefixCssVar)
+        if (bindingTarget === BindingTarget.cssvar || bindingTarget === BindingTarget.class)
             propname = '--' + propname;
         if (!value.startsWith('{')) {
             let binding = {
@@ -147,6 +148,14 @@ export class IobrokerWebuiBindingsHelper {
             (binding.events == null || binding.events.length == 0)) {
             return [bindingPrefixAttribute + PropertiesHelper.camelToDashCase(targetName), (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
         }
+        if (binding.target == BindingTarget.class &&
+            !binding.expression && !binding.expressionTwoWay &&
+            binding.converter == null &&
+            !binding.type &&
+            !binding.historic &&
+            (binding.events == null || binding.events.length == 0)) {
+            return [bindingPrefixClass + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal];
+        }
         if (binding.target == BindingTarget.css &&
             !binding.expression && !binding.expressionTwoWay &&
             binding.converter == null &&
@@ -196,6 +205,8 @@ export class IobrokerWebuiBindingsHelper {
             return [bindingPrefixContent + 'html', JSON.stringify(bindingCopy)];
         if (binding.target == BindingTarget.attribute)
             return [bindingPrefixAttribute + PropertiesHelper.camelToDashCase(targetName), JSON.stringify(bindingCopy)];
+        if (binding.target == BindingTarget.class)
+            return [bindingPrefixClass + IobrokerWebuiBindingsHelper.camelToDotCase(targetName), JSON.stringify(bindingCopy)];
         if (binding.target == BindingTarget.css)
             return [bindingPrefixCss + PropertiesHelper.camelToDashCase(targetName), JSON.stringify(bindingCopy)];
         if (binding.target == BindingTarget.cssvar)
@@ -210,8 +221,14 @@ export class IobrokerWebuiBindingsHelper {
         if (propertyTarget == BindingTarget.attribute) {
             return bindingPrefixAttribute + PropertiesHelper.camelToDashCase(propertyName);
         }
+        if (propertyTarget == BindingTarget.class) {
+            return bindingPrefixClass + IobrokerWebuiBindingsHelper.camelToDotCase(propertyName);
+        }
         if (propertyTarget == BindingTarget.css) {
             return bindingPrefixCss + PropertiesHelper.camelToDashCase(propertyName);
+        }
+        if (propertyTarget == BindingTarget.cssvar) {
+            return bindingPrefixCssVar + IobrokerWebuiBindingsHelper.camelToDotCase(propertyName);
         }
         if (propertyTarget == BindingTarget.property && propertyName == 'innerHTML') {
             return bindingPrefixContent + 'html';
@@ -232,6 +249,9 @@ export class IobrokerWebuiBindingsHelper {
                 }
                 else if (a.name.startsWith(bindingPrefixAttribute)) {
                     yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.attribute, bindingPrefixAttribute);
+                }
+                else if (a.name.startsWith(bindingPrefixClass)) {
+                    yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.class, bindingPrefixClass);
                 }
                 else if (a.name.startsWith(bindingPrefixCss)) {
                     yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.css, bindingPrefixCss);
@@ -490,6 +510,12 @@ export class IobrokerWebuiBindingsHelper {
             element.style[binding[0]] = v;
         else if (binding[1].target == BindingTarget.cssvar)
             element.style.setProperty(binding[0], v);
+        else if (binding[1].target == BindingTarget.class) {
+            if (v)
+                element.classList.add(binding[0]);
+            else
+                element.classList.remove(binding[0]);
+        }
     }
     static camelToDotCase(text) {
         return text.replace(/([A-Z])/g, (g) => `.${g[0].toLowerCase()}`);
