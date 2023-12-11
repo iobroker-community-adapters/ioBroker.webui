@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.20.2",
+    "version": "0.20.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.20.3": {
+        "en": "update designer npm",
+        "de": "update designer npm",
+        "ru": "обновление дизайнера npm",
+        "pt": "atualização designer npm",
+        "nl": "vertaling:",
+        "fr": "mise à jour designer npm",
+        "it": "aggiornamento designer npm",
+        "es": "actualización diseñador npm",
+        "pl": "aktualizacja",
+        "uk": "оновлення дизайнера npm",
+        "zh-cn": "更新设计"
+      },
       "0.20.2": {
         "en": "fix for class binding",
         "de": "fixierung für klassenbindung",
@@ -106,19 +119,6 @@
         "pl": "naprawa błędów",
         "uk": "виправити помилку завантаження",
         "zh-cn": "f 固定载荷错误"
-      },
-      "0.19.0": {
-        "en": "waitForReady needs to be awaited",
-        "de": "warte! FürReady muss erwartet werden",
-        "ru": "подождите ДляReady нужно ожидать",
-        "pt": "espera. ForReady precisa ser aguardado",
-        "nl": "wacht. Forredy moet worden gewacht",
-        "fr": "attends. ForReady doit être attendu",
-        "it": "aspetta. ForReady ha bisogno di essere aspettato",
-        "es": "espera. ParaReady necesita ser esperada",
-        "pl": "czekać Dla Ready potrzeba być oczekiwana",
-        "uk": "доля Длячитати потрібно",
-        "zh-cn": "等候 需要等待阅读"
       }
     },
     "icon": "logo.png",
