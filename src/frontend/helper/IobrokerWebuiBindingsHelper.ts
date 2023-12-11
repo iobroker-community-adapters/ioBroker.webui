@@ -9,6 +9,7 @@ import { BindingTarget } from "@node-projects/web-component-designer/dist/elemen
 export const bindingPrefixProperty = 'bind-prop:';
 export const bindingPrefixAttribute = 'bind-attr:';
 export const bindingPrefixCss = 'bind-css:';
+export const bindingPrefixCssVar = 'bind-cssvar:';
 export const bindingPrefixContent = 'bind-content:';
 
 export type namedBinding = [name: string, binding: IIobrokerWebuiBinding];
@@ -96,7 +97,9 @@ export class IndirectSignal {
 
 export class IobrokerWebuiBindingsHelper {
     static parseBinding(element: Element, name: string, value: string, bindingTarget: BindingTarget, prefix: string): namedBinding {
-        const propname = name.substring(prefix.length);
+        let propname = name.substring(prefix.length);
+        if (prefix == bindingPrefixCssVar)
+            propname = '--' + propname;
         if (!value.startsWith('{')) {
             let binding: IIobrokerWebuiBinding = {
                 signal: value,
@@ -119,7 +122,8 @@ export class IobrokerWebuiBindingsHelper {
                 binding.signal = value.substring(1);
                 binding.inverted = true;
             }
-
+            if (bindingTarget == BindingTarget.cssvar)
+                return [IobrokerWebuiBindingsHelper.dotToCamelCase(propname), binding];
             return [PropertiesHelper.dashToCamelCase(propname), binding];
         }
 
@@ -169,6 +173,15 @@ export class IobrokerWebuiBindingsHelper {
             return [bindingPrefixCss + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal];
         }
 
+        if (binding.target == BindingTarget.cssvar &&
+            !binding.expression && !binding.expressionTwoWay &&
+            binding.converter == null &&
+            !binding.type &&
+            !binding.historic &&
+            (binding.events == null || binding.events.length == 0)) {
+            return [bindingPrefixCssVar + IobrokerWebuiBindingsHelper.camelToDotCase(targetName.substring(2)), (binding.inverted ? '!' : '') + binding.signal];
+        }
+
         let bindingCopy = { ...binding };
         if (!binding.twoWay) {
             delete bindingCopy.events;
@@ -204,6 +217,8 @@ export class IobrokerWebuiBindingsHelper {
             return [bindingPrefixAttribute + PropertiesHelper.camelToDashCase(targetName), JSON.stringify(bindingCopy)];
         if (binding.target == BindingTarget.css)
             return [bindingPrefixCss + PropertiesHelper.camelToDashCase(targetName), JSON.stringify(bindingCopy)];
+        if (binding.target == BindingTarget.cssvar)
+            return [bindingPrefixCssVar + IobrokerWebuiBindingsHelper.camelToDotCase(targetName.substring(2)), JSON.stringify(bindingCopy)];
         if (binding.target == BindingTarget.property && targetName == 'innerHTML')
             return [bindingPrefixContent + 'html', JSON.stringify(bindingCopy)];
         if (binding.target == BindingTarget.property && targetName == 'textContent')
@@ -241,6 +256,9 @@ export class IobrokerWebuiBindingsHelper {
                 }
                 else if (a.name.startsWith(bindingPrefixCss)) {
                     yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.css, bindingPrefixCss);
+                }
+                else if (a.name.startsWith(bindingPrefixCssVar)) {
+                    yield IobrokerWebuiBindingsHelper.parseBinding(element, a.name, a.value, BindingTarget.cssvar, bindingPrefixCssVar);
                 }
             }
         }
@@ -486,6 +504,16 @@ export class IobrokerWebuiBindingsHelper {
             element.setAttribute(binding[0], <string>v);
         else if (binding[1].target == BindingTarget.css)
             (<HTMLElement>element).style[binding[0]] = v;
+        else if (binding[1].target == BindingTarget.cssvar)
+            (<HTMLElement>element).style.setProperty(binding[0], <string>v);
+    }
+
+    public static camelToDotCase(text: string) {
+        return text.replace(/([A-Z])/g, (g) => `.${g[0].toLowerCase()}`);
+    }
+
+    public static dotToCamelCase(text: string) {
+        return text.replace(/\.([a-z])/g, (i) => i[1].toUpperCase());
     }
 }
 
