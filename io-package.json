@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.20.3",
+    "version": "0.20.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.20.4": {
+        "en": "fix in css prop binding",
+        "de": "fixieren in css prop bindung",
+        "ru": "исправить в css pro связывание",
+        "pt": "corrigir em ligação de adereço css",
+        "nl": "vertaling:",
+        "fr": "fix in css prop binding",
+        "it": "fissaggio in legatura di prop css",
+        "es": "fijado en la fijación de pro css",
+        "pl": "naprawa w cs",
+        "uk": "фіксація в css пропорція",
+        "zh-cn": "f 装有约束力"
+      },
       "0.20.3": {
         "en": "update designer npm",
         "de": "update designer npm",
@@ -106,19 +119,6 @@
         "pl": "aktualizacja pakietu",
         "uk": "оновлення пакета",
         "zh-cn": "一揽子更新"
-      },
-      "0.19.1": {
-        "en": "fix load error",
-        "de": "lastfehler beheben",
-        "ru": "исправить ошибку нагрузки",
-        "pt": "corrigir erro de carga",
-        "nl": "ladingsfout",
-        "fr": "correction",
-        "it": "correzione errore di carico",
-        "es": "error de carga",
-        "pl": "naprawa błędów",
-        "uk": "виправити помилку завантаження",
-        "zh-cn": "f 固定载荷错误"
       }
     },
     "icon": "logo.png",
