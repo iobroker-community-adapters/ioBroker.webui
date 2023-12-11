@@ -50,7 +50,7 @@
     "@node-projects/base-custom-webcomponent": "0.21.3",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^6.1.5",
-    "@node-projects/web-component-designer": "^0.1.35",
+    "@node-projects/web-component-designer": "^0.1.36",
     "@node-projects/web-component-designer-codeview-monaco": "^0.1.11",
     "@node-projects/web-component-designer-htmlparserservice-nodehtmlparser": "^0.1.4",
     "@node-projects/web-component-designer-stylesheetservice-css-tools": "^0.1.3",
