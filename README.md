@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- update designer npm
+
 ### 0.20.2 (2023-12-11)
 - fix for class binding
 
