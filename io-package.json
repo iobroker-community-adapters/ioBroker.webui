@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.20.4",
+    "version": "0.20.5",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.20.5": {
+        "en": "better custom properties view",
+        "de": "bessere benutzerdefinierte eigenschaften",
+        "ru": "лучший пользовательский вид недвижимости",
+        "pt": "melhor exibição de propriedades personalizadas",
+        "nl": "betere eigenschappen zien",
+        "fr": "meilleures propriétés personnalisées vue",
+        "it": "migliori proprietà personalizzate",
+        "es": "mejor vista de propiedades personalizadas",
+        "pl": "lepsza własność",
+        "uk": "краще користувацькі властивості вигляд",
+        "zh-cn": "更好的习俗财产"
+      },
       "0.20.4": {
         "en": "fix in css prop binding",
         "de": "fixieren in css prop bindung",
@@ -106,19 +119,6 @@
         "pl": "transmisja",
         "uk": "вимикач логів",
         "zh-cn": "转换逻辑"
-      },
-      "0.19.2": {
-        "en": "package updates",
-        "de": "paket-updates",
-        "ru": "пакет обновлений",
-        "pt": "atualizações do pacote",
-        "nl": "vertaling:",
-        "fr": "mises à jour des paquets",
-        "it": "aggiornamenti pacchetto",
-        "es": "actualizaciones de paquetes",
-        "pl": "aktualizacja pakietu",
-        "uk": "оновлення пакета",
-        "zh-cn": "一揽子更新"
       }
     },
     "icon": "logo.png",
