@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.20.0",
+    "version": "0.20.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.20.1": {
+        "en": "binding for classes",
+        "de": "bindung für klassen",
+        "ru": "привязка для занятий",
+        "pt": "vinculação para classes",
+        "nl": "binding voor lessen",
+        "fr": "obligatoires pour les classes",
+        "it": "vincolante per le classi",
+        "es": "vinculante para las clases",
+        "pl": "klasa",
+        "uk": "супровід занять",
+        "zh-cn": "对班级具有约束力"
+      },
       "0.20.0": {
         "en": "allow bindings to css vars",
         "de": "ermöglichen bindungen an css vars",
@@ -106,19 +119,6 @@
         "pl": "błąd",
         "uk": "виправити відсутність null контроль",
         "zh-cn": "fix 遗失"
-      },
-      "0.18.14": {
-        "en": "fix normal binding unsubscribe",
-        "de": "normale bindung abbestellen",
-        "ru": "исправить нормальную привязку отписаться",
-        "pt": "corrigir o cancelamento de ligação normal",
-        "nl": "vertaling:",
-        "fr": "désabonnement normal",
-        "it": "correzione normale disiscrizione del binding",
-        "es": "fijar el suscripto de unión normal",
-        "pl": "naprawa normalna",
-        "uk": "фіксувати нормальний зв'язковий відпис",
-        "zh-cn": "f 确定具有常规约束力的、无约束力的"
       }
     },
     "icon": "logo.png",
