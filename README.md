@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- better custom properties view
+
 ### 0.20.4 (2023-12-11)
 - fix in css prop binding
 
