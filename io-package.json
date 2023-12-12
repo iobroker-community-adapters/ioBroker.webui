@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.20.5",
+    "version": "0.20.6",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.20.6": {
+        "en": "few wunderbaum fixes",
+        "de": "wunderbaum fixes",
+        "ru": "несколько исправлений wunderbaum",
+        "pt": "poucas correções de wunderbaum",
+        "nl": "een paar wunderbaum reparaties",
+        "fr": "quelques wunderbaum corrige",
+        "it": "poche correzioni wunderbaum",
+        "es": "pocos wunderbaum correcciones",
+        "pl": "niekiedy naprawa",
+        "uk": "кілька запобіжників",
+        "zh-cn": "数不多的妻子"
+      },
       "0.20.5": {
         "en": "better custom properties view",
         "de": "bessere benutzerdefinierte eigenschaften",
@@ -106,19 +119,6 @@
         "pl": "umożliwia wiązania do cs vars",
         "uk": "дозволяють прив'язувати до css варів",
         "zh-cn": "允许有约束力的品种"
-      },
-      "0.19.3": {
-        "en": "switch loglevel",
-        "de": "schalter loglevel",
-        "ru": "переключатель loglevel",
-        "pt": "nível de log do interruptor",
-        "nl": "wissel loglevel",
-        "fr": "switch loglevel",
-        "it": "livello di interruttore",
-        "es": "nivel de registro",
-        "pl": "transmisja",
-        "uk": "вимикач логів",
-        "zh-cn": "转换逻辑"
       }
     },
     "icon": "logo.png",
