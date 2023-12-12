@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- few wunderbaum fixes
+
 ### 0.20.5 (2023-12-11)
 - better custom properties view
 
