@@ -102,6 +102,8 @@ export async function registerDesignerAddons(serviceContainer) {
                 elementsRootPathWeb = customElementsPathWeb.substring(0, idx2 + 1);
             }
         }
+        if (!elementsRootPathWeb.endsWith('/'))
+            elementsRootPathWeb += "/";
         let webComponentDesignerPath = path.join(basePath, 'web-component-designer.json');
         if (packageJsonObj.webComponentDesigner) {
             webComponentDesignerPath = path.join(basePath, removeLeading(packageJsonObj.webComponentDesigner, '/'));
@@ -145,13 +147,13 @@ export async function registerDesignerAddons(serviceContainer) {
                 this.importUndefinedElementFiles.push([packageJsonObj.name, packageHacks[pkg]?.import]);
             }
             else if (packageJsonObj.module) {
-                this.importUndefinedElementFiles.push([packageJsonObj.name, elementsRootPathWeb + "/" + removeLeading(packageJsonObj.module, '/')]);
+                this.importUndefinedElementFiles.push([packageJsonObj.name, elementsRootPathWeb + removeLeading(packageJsonObj.module, '/')]);
             }
             else if (packageJsonObj.main) {
-                this.importUndefinedElementFiles.push([packageJsonObj.name, elementsRootPathWeb + "/" + removeLeading(packageJsonObj.main, '/')]);
+                this.importUndefinedElementFiles.push([packageJsonObj.name, elementsRootPathWeb + removeLeading(packageJsonObj.main, '/')]);
             }
             else if (packageJsonObj.unpkg) {
-                this.importUndefinedElementFiles.push([packageJsonObj.name, elementsRootPathWeb + "/" + removeLeading(packageJsonObj.unpkg, '/')]);
+                this.importUndefinedElementFiles.push([packageJsonObj.name, elementsRootPathWeb + removeLeading(packageJsonObj.unpkg, '/')]);
             }
             else {
                 console.warn('npm package: ' + pkg + ' - no entry point in package found.');
