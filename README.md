@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 0.20.7 (2023-12-15)
 - fix importmap creation missed "/"
 
 ### 0.20.6 (2023-12-12)

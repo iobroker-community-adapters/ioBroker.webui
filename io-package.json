@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.20.6",
+    "version": "0.20.7",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.20.7": {
+        "en": "fix importmap creation missed \"/\"",
+        "de": "importmap-erstellung verpasst \"/\"",
+        "ru": "исправить создание импортной карты пропущено \"/\"",
+        "pt": "corrigir a criação do importmap perdido \"/\"",
+        "nl": "de importmap creatie miste \"/\"",
+        "fr": "corriger la création importmap manquée \"/\"",
+        "it": "fix importmap creazione mancato \"/\"",
+        "es": "fijar importaciónmap creación perdida \"/\"",
+        "pl": "rekonstrukcja importmap została utracona \"//\"",
+        "uk": "виправлено створення імпортної карти пропущено \"/\"",
+        "zh-cn": "fix 进口量造成“/”"
+      },
       "0.20.6": {
         "en": "few wunderbaum fixes",
         "de": "wunderbaum fixes",
@@ -106,19 +119,6 @@
         "pl": "klasa",
         "uk": "супровід занять",
         "zh-cn": "对班级具有约束力"
-      },
-      "0.20.0": {
-        "en": "allow bindings to css vars",
-        "de": "ermöglichen bindungen an css vars",
-        "ru": "позволяют связывать с css vars",
-        "pt": "permitir ligações para css vars",
-        "nl": "_",
-        "fr": "permettre des reliures à css vars",
-        "it": "consentire gli attacchi a css vars",
-        "es": "permite la unión a css vars",
-        "pl": "umożliwia wiązania do cs vars",
-        "uk": "дозволяють прив'язувати до css варів",
-        "zh-cn": "允许有约束力的品种"
       }
     },
     "icon": "logo.png",
