@@ -3,7 +3,7 @@ export class IobrokerWebuiConfirmationWrapper extends BaseCustomWebComponentCons
     static style = css `
         #upper {
             height: calc(100% - 35px);
-
+            position: relative;
         }
         #lower {
             height: 35px;

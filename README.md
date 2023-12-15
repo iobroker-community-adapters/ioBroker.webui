@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix importmap creation missed "/"
+
 ### 0.20.6 (2023-12-12)
 - few wunderbaum fixes
 
