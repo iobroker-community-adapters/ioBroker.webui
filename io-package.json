@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.20.7",
+    "version": "0.21.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.21.0": {
+        "en": "start of blockly support\nbindings (directscript & blockly)\nevent when enter pressed ??",
+        "de": "start von blockweiser unterstützung\nbindungen (directscript & blockly)\n?",
+        "ru": "запуск заблокированной поддержки\nпривязки (directscript & blockly)\nсобытие когда введите нажатый??",
+        "pt": "início de suporte bloqueado\nligações (directscript & blockly)\nevento quando entrar pressionado??",
+        "nl": "begin blokkeert\nverbindingen\nevent als je onder druk staat?",
+        "fr": "démarrage d'un support bloqué\nfixations (directscript & blockly)\névénement lorsque vous entrez pressé ??",
+        "it": "avvio di supporto blocco\nbindings (directscript & blockly)\nevento quando viene premuto??",
+        "es": "inicio de apoyo bloqueado\nfijaciones (directriz \" bloqueada)\nevento cuando entra presionado ??",
+        "pl": "rozpoczęcie wsparcia blokowego\nwiązania (dyrektywy i blokady)\nczy wstąpisz?",
+        "uk": "початок блокнотної підтримки\nпосилання (режим і блоклі)\nякщо ввести пресований?",
+        "zh-cn": "开始断然支持\n具有约束力(直接说明和阻挠)\n何时进入?"
+      },
       "0.20.7": {
         "en": "fix importmap creation missed \"/\"",
         "de": "importmap-erstellung verpasst \"/\"",
@@ -106,19 +119,6 @@
         "pl": "naprawić klasę",
         "uk": "фіксація для обов'язки класу",
         "zh-cn": "具有约束力的阶级"
-      },
-      "0.20.1": {
-        "en": "binding for classes",
-        "de": "bindung für klassen",
-        "ru": "привязка для занятий",
-        "pt": "vinculação para classes",
-        "nl": "binding voor lessen",
-        "fr": "obligatoires pour les classes",
-        "it": "vincolante per le classi",
-        "es": "vinculante para las clases",
-        "pl": "klasa",
-        "uk": "супровід занять",
-        "zh-cn": "对班级具有约束力"
       }
     },
     "icon": "logo.png",
