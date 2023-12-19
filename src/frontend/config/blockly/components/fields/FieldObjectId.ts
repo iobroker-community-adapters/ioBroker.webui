@@ -1,7 +1,7 @@
 import type Blockly from 'blockly';
 
 //@ts-ignore
-class FieldObjectId extends Blockly.Field {
+class FieldObjectId extends Blockly.FieldTextInput {
     /*
     constructor(value, type) {
         super(value);

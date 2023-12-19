@@ -130,7 +130,7 @@ runtime.html?screenName=screen2
 	### __WORK IN PROGRESS__
 -->
 ### __WORK IN PROGRESS__
-- blockly support (todo: getSignalValue(name), getElment(s)(selector), setElementProperty(element, type (css, attribute, prop), prop, value), )
+- start of blockly support
 - bindings (directscript & blockly)
 - event when enter pressed ??
 

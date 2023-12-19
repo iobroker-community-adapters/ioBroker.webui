@@ -17,6 +17,7 @@ Blockly.defineBlocksWithJsonArray([
 
 //@ts-ignore
 Blockly.JavaScript['start_event'] = function (block) {
-    
-    return '';
+    //@ts-ignore
+    let name = Blockly.JavaScript.getVariableName(block.getField('EVENTVAR').variable.name);
+    return name + ' = ' + 'eventData;\n';
 };

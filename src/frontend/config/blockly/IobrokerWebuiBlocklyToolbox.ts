@@ -1,6 +1,4 @@
-import './components/fields/FieldObjectId.js';
-import './components/Control.js';
-import './components/StartEvent.js';
+import './components/components.js';
 
 export default {
     kind: 'categoryToolbox',
@@ -22,8 +20,33 @@ export default {
             contents: [
                 {
                     kind: 'block',
-                    type: 'control',
-                }]
+                    type: 'set_state',
+                    inputs: {
+                        OID: {
+                            shadow: {
+                                type: 'text',
+                                fields: {
+                                    TEXT: '',
+                                },
+                            },
+                        },
+                    },
+                },
+                {
+                    kind: 'block',
+                    type: 'get_state',
+                    inputs: {
+                        OID: {
+                            shadow: {
+                                type: 'text',
+                                fields: {
+                                    TEXT: '',
+                                },
+                            },
+                        },
+                    },
+                },
+            ]
         },
         {
             kind: 'category',

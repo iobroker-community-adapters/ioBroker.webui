@@ -1,5 +1,6 @@
 import { BaseCustomWebComponentConstructorAppend, html, css } from '@node-projects/base-custom-webcomponent';
 import toolbox from './IobrokerWebuiBlocklyToolbox.js'
+import { generateEventCodeFromBlockly } from './IobrokerWebuiBlocklyJavascriptHelper.js';
 //import Blockly from 'blockly';
 
 export class IobrokerWebuiBlocklyScriptEditor extends BaseCustomWebComponentConstructorAppend {
@@ -30,6 +31,7 @@ export class IobrokerWebuiBlocklyScriptEditor extends BaseCustomWebComponentCons
 
         this.blocklyDiv = this._getDomElement<HTMLDivElement>('blocklyDiv');
 
+        this._assignEvents();
         this.createBlockly();
     }
 
@@ -120,5 +122,10 @@ export class IobrokerWebuiBlocklyScriptEditor extends BaseCustomWebComponentCons
         //@ts-ignore
         Blockly.serialization.workspaces.load(data, this.workspace);
     }
+
+    async test() {
+        const fnc = await generateEventCodeFromBlockly(this.save());
+        fnc({ a: 1 });
+    }
 }
-customElements.define(IobrokerWebuiBlocklyScriptEditor.is, IobrokerWebuiBlocklyScriptEditor)
+customElements.define(IobrokerWebuiBlocklyScriptEditor.is, IobrokerWebuiBlocklyScriptEditor);

@@ -7,6 +7,7 @@ import Long from 'long'
 import { sleep } from "../helper/Helper.js";
 import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
 import { IoBrokerWebuiDialog } from "../helper/DialogHelper.js";
+import { generateEventCodeFromBlockly } from "../config/blockly/IobrokerWebuiBlocklyJavascriptHelper.js";
 
 export class ScriptSystem {
     static async execute(scriptCommands: ScriptCommands[], outerContext: { event: Event, element: Element, root: HTMLElement }) {
@@ -205,7 +206,16 @@ export class ScriptSystem {
                         let script = a.value.trim();
                         if (script[0] == '{') {
                             let scriptObj: Script = JSON.parse(script);
-                            e.addEventListener(evtName, (evt) => ScriptSystem.execute(scriptObj.commands, { event: evt, element: e, root: instance }));
+                            if ('commands' in scriptObj) {
+                                e.addEventListener(evtName, (evt) => ScriptSystem.execute(scriptObj.commands, { event: evt, element: e, root: instance }));
+                            } else if ('blocks' in scriptObj) {
+                                let compiledFunc = null;
+                                e.addEventListener(evtName, async (evt) => {
+                                    if (!compiledFunc)
+                                        compiledFunc = await generateEventCodeFromBlockly(scriptObj);
+                                    compiledFunc(evt);
+                                });
+                            }
                         } else {
                             e.addEventListener(evtName, (evt) => {
                                 if (!jsObject[script])
