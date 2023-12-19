@@ -4,6 +4,7 @@ import { IobrokerWebuiScriptEditor } from "./IobrokerWebuiScriptEditor.js";
 import { IobrokerWebuiScreenEditor } from "./IobrokerWebuiScreenEditor.js";
 import { findExportFunctionDeclarations } from "../helper/EsprimaHelper.js";
 import { IobrokerWebuiMonacoEditor } from "./IobrokerWebuiMonacoEditor.js";
+import { IobrokerWebuiBlocklyScriptEditor } from "./blockly/IobrokerWebuiBlocklyScriptEditor.js";
 export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstructorAppend {
     static style = css `
     :host {
@@ -33,7 +34,7 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
             <div @contextmenu="[[this._ctxMenu(event, item)]]" class="rect" css:background-color="[[this._getEventColor(item)]]"></div>
             <div css:grid-column-end="[[this._getEventType(item) == 'js' ? 'span 1' : 'span 2']]" title="[[item.name]]">[[item.name]]</div>
             <input @input="[[this._inputMthName(event, item)]]" class="mth" value="[[this._getEventMethodname(item)]]" css:display="[[this._getEventType(item) == 'js' ? 'block' : 'none']]" type="text">
-            <button @contextmenu="[[this._contextMenuAddEvent(event, item)]]" @click="[[this._editEvent(event, item)]]">...</button>
+            <button @click="[[this._contextMenuAddEvent(event, item)]]">...</button>
         </template>
         <span style="grid-column: 1 / span 3; margin-top: 8px; margin-left: 3px;">add event:</span>
         <input id="addEventInput" style="grid-column: 1 / span 3; margin: 5px;" @keypress=[[this._addEvent(event)]] type="text">`;
@@ -60,6 +61,8 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
         switch (this._getEventType(eventItem)) {
             case 'js':
                 return 'purple';
+            case 'blockly':
+                return 'yellow';
             case 'script':
                 return 'lightgreen';
         }
@@ -68,8 +71,14 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
     _getEventType(eventItem) {
         if (this.selectedItems && this.selectedItems.length) {
             if (this.selectedItems[0].hasAttribute('@' + eventItem.name)) {
-                if (this.selectedItems[0].getAttribute('@' + eventItem.name).startsWith('{'))
-                    return 'script';
+                const val = this.selectedItems[0].getAttribute('@' + eventItem.name);
+                if (val.startsWith('{')) {
+                    const parsed = JSON.parse(val);
+                    if ('blocks' in parsed)
+                        return 'blockly';
+                    if ('commands' in parsed)
+                        return 'script';
+                }
                 else
                     return 'js';
             }
@@ -99,20 +108,64 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
         }
     }
     async _contextMenuAddEvent(event, eventItem) {
-        ContextMenu.show([{
-                title: 'Add JS Handler',
-                action: () => {
-                    let nm = prompt('name of function ?');
-                    if (nm) {
-                        this._selectedItems[0].setAttribute('@' + eventItem.name, nm);
-                        this.refresh();
-                        this._editEvent(null, eventItem);
+        const evtType = this._getEventType(eventItem);
+        if (evtType != 'none') {
+            this._editEvent(evtType, event, eventItem);
+        }
+        else {
+            ContextMenu.show([
+                {
+                    title: 'Simple Script',
+                    action: () => {
+                        this._editEvent('script', event, eventItem);
                     }
-                }
-            }], event);
+                },
+                /* {
+                    title: 'Javascript (direct)',
+                    action: () => {
+                        let nm = prompt('name of function ?');
+                        if (nm) {
+                            this._selectedItems[0].setAttribute('@' + eventItem.name, nm);
+                            this.refresh();
+                            this._editEvent('jsdirect', null, eventItem);
+                        }
+                    }
+                }, */
+                {
+                    title: 'Javascript',
+                    action: () => {
+                        let nm = prompt('name of function ?');
+                        if (nm) {
+                            this._selectedItems[0].setAttribute('@' + eventItem.name, nm);
+                            this.refresh();
+                            this._editEvent('js', null, eventItem);
+                        }
+                    }
+                },
+                {
+                    title: 'Blockly',
+                    action: () => {
+                        this._editBlockly(null, eventItem);
+                    }
+                },
+            ], event);
+        }
     }
-    async _editEvent(e, eventItem) {
-        if (this._getEventType(eventItem) == 'js') {
+    async _editBlockly(e, eventItem) {
+        const edt = new IobrokerWebuiBlocklyScriptEditor();
+        edt.title = "Blockly Script for '" + eventItem.name + "'";
+        let data = this._selectedItems[0].getAttribute('@' + eventItem.name);
+        if (data) {
+            edt.load(JSON.parse(data));
+        }
+        const result = await window.appShell.openConfirmation(edt, 100, 100, 700, 500);
+        if (result) {
+            const blockObj = edt.save();
+            this._selectedItems[0].setAttribute('@' + eventItem.name, JSON.stringify(blockObj));
+        }
+    }
+    async _editEvent(evtType, e, eventItem) {
+        if (evtType == 'js') {
             let screenEditor = DomHelper.findParentNodeOfType(this.selectedItems[0].instanceServiceContainer.designerCanvas, IobrokerWebuiScreenEditor);
             let sc = await IobrokerWebuiMonacoEditor.getCompiledJavascriptCode(screenEditor.scriptModel);
             let decl = await findExportFunctionDeclarations(sc);
@@ -135,6 +188,9 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
                 }
             }
             window.appShell.activateDockById('javascriptDock');
+        }
+        else if (evtType == 'blockly') {
+            this._editBlockly(e, eventItem);
         }
         else {
             let scriptString = this.selectedItems[0].getAttribute('@' + eventItem.name);
