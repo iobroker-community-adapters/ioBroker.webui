@@ -129,6 +129,11 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- blockly support (todo: getSignalValue(name), getElment(s)(selector), setElementProperty(element, type (css, attribute, prop), prop, value), )
+- bindings (directscript & blockly)
+- event when enter pressed ??
+
 ### 0.20.7 (2023-12-15)
 - fix importmap creation missed "/"
 

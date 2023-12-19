@@ -45,6 +45,12 @@ function copyNodeModules() {
         "monaco-editor",
         //"tslib"
         //"wunderbaum",
+        
+        "/node_modules/blockly/blockly_compressed.js",
+        "/node_modules/blockly/blocks_compressed.js",
+        "/node_modules/blockly/javascript_compressed.js",
+        "/node_modules/blockly/msg/en.js",
+        "/node_modules/@blockly/zoom-to-fit/dist/index.js",
     ]
 
     runtimeModules = runtimeModules.map(x => './node_modules/' + x + '/**/*')
@@ -62,6 +68,11 @@ function copyNodeFiles() {
         "es-module-shims/dist/es-module-shims.js",
         "wunderbaum/dist/wunderbaum.css",
         "wunderbaum/dist/wunderbaum.esm.min.js",
+        "blockly/blockly_compressed.js",
+        "blockly/blocks_compressed.js",
+        "blockly/javascript_compressed.js",
+        "blockly/msg/en.js",
+        "@blockly/zoom-to-fit/dist/index.js"
     ]
 
     runtimeModules = runtimeModules.map(x => './node_modules/' + x)
