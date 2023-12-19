@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.21.0",
+    "version": "0.21.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.21.1": {
+        "en": "fixed paths",
+        "de": "feste wege",
+        "ru": "фиксированные пути",
+        "pt": "caminhos fixos",
+        "nl": "vertaling:",
+        "fr": "voies fixes",
+        "it": "percorsi fissi",
+        "es": "caminos fijos",
+        "pl": "ścieżka stała",
+        "uk": "фіксовані доріжки",
+        "zh-cn": "固定途径"
+      },
       "0.21.0": {
         "en": "start of blockly support\nbindings (directscript & blockly)\nevent when enter pressed ??",
         "de": "start von blockweiser unterstützung\nbindungen (directscript & blockly)\n?",
@@ -106,19 +119,6 @@
         "pl": "aktualizacja",
         "uk": "оновлення дизайнера npm",
         "zh-cn": "更新设计"
-      },
-      "0.20.2": {
-        "en": "fix for class binding",
-        "de": "fixierung für klassenbindung",
-        "ru": "исправить для класса привязки",
-        "pt": "correção para ligação de classe",
-        "nl": "_",
-        "fr": "fixation pour reliure de classe",
-        "it": "fissaggio per legatura di classe",
-        "es": "fijado para la unión de clase",
-        "pl": "naprawić klasę",
-        "uk": "фіксація для обов'язки класу",
-        "zh-cn": "具有约束力的阶级"
       }
     },
     "icon": "logo.png",
