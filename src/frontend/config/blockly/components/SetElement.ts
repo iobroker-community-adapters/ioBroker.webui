@@ -41,7 +41,7 @@ Blockly.JavaScript['set_element'] = function (block) {
     } else if (dropdown_target === 'ATTRIBUTE') {
         code += element + '.setAttribute(' + name + ', ' + value + ');\n';
     } else if (dropdown_target === 'STYLE') {
-        code += element + '.style.setProperty(' + name + ', ' + value + ');\n';
+        code += element + '.style[' + name + '] = ' + value + ';\n';
     }
 
     return code;
