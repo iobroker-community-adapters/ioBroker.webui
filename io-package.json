@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.21.2",
+    "version": "0.21.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.21.3": {
+        "en": "fix set style",
+        "de": "fixed style",
+        "ru": "fix стиль",
+        "pt": "corrigir o estilo do conjunto",
+        "nl": "stijl",
+        "fr": "fix style",
+        "it": "fisso set stile",
+        "es": "estilo set",
+        "pl": "styl",
+        "uk": "фіксований стиль",
+        "zh-cn": "f 固定风格"
+      },
       "0.21.2": {
         "en": "more commands in blockly",
         "de": "mehr kommandos blockweise",
@@ -106,19 +119,6 @@
         "pl": "lepsza własność",
         "uk": "краще користувацькі властивості вигляд",
         "zh-cn": "更好的习俗财产"
-      },
-      "0.20.4": {
-        "en": "fix in css prop binding",
-        "de": "fixieren in css prop bindung",
-        "ru": "исправить в css pro связывание",
-        "pt": "corrigir em ligação de adereço css",
-        "nl": "vertaling:",
-        "fr": "fix in css prop binding",
-        "it": "fissaggio in legatura di prop css",
-        "es": "fijado en la fijación de pro css",
-        "pl": "naprawa w cs",
-        "uk": "фіксація в css пропорція",
-        "zh-cn": "f 装有约束力"
       }
     },
     "icon": "logo.png",
