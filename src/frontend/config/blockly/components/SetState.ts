@@ -8,7 +8,7 @@ Blockly.Blocks['set_state'] = {
 
         this.appendValueInput('VALUE')
             .setCheck(null)
-            .appendField('control_with');
+            .appendField('with');
 
         this.setInputsInline(true);
         this.setPreviousStatement(true, null);

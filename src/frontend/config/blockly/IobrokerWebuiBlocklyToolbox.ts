@@ -20,6 +20,10 @@ export default {
             contents: [
                 {
                     kind: 'block',
+                    type: 'debugger',
+                },
+                {
+                    kind: 'block',
                     type: 'set_state',
                     inputs: {
                         OID: {
@@ -37,6 +41,47 @@ export default {
                     type: 'get_state',
                     inputs: {
                         OID: {
+                            shadow: {
+                                type: 'text',
+                                fields: {
+                                    TEXT: '',
+                                },
+                            },
+                        },
+                    },
+                },
+                {
+                    kind: 'block',
+                    type: 'query_selector',
+                    inputs: {
+                        SELECTOR: {
+                            shadow: {
+                                type: 'text',
+                                fields: {
+                                    TEXT: '',
+                                },
+                            },
+                        },
+                    },
+                },
+                {
+                    kind: 'block',
+                    type: 'query_selector_all',
+                    inputs: {
+                        SELECTOR: {
+                            shadow: {
+                                type: 'text',
+                                fields: {
+                                    TEXT: '',
+                                },
+                            },
+                        },
+                    },
+                },
+                {
+                    kind: 'block',
+                    type: 'set_element',inputs: {
+                        NAME: {
                             shadow: {
                                 type: 'text',
                                 fields: {

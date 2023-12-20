@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- more commands in blockly
+
 ### 0.21.1 (2023-12-19)
 - fixed paths
 

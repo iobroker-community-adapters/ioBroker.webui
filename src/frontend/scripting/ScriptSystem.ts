@@ -209,11 +209,11 @@ export class ScriptSystem {
                             if ('commands' in scriptObj) {
                                 e.addEventListener(evtName, (evt) => ScriptSystem.execute(scriptObj.commands, { event: evt, element: e, root: instance }));
                             } else if ('blocks' in scriptObj) {
-                                let compiledFunc = null;
+                                let compiledFunc : Awaited<ReturnType<typeof generateEventCodeFromBlockly>> = null;
                                 e.addEventListener(evtName, async (evt) => {
                                     if (!compiledFunc)
                                         compiledFunc = await generateEventCodeFromBlockly(scriptObj);
-                                    compiledFunc(evt);
+                                    compiledFunc(evt, shadowRoot);
                                 });
                             }
                         } else {
