@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.21.1",
+    "version": "0.21.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.21.2": {
+        "en": "more commands in blockly",
+        "de": "mehr kommandos blockweise",
+        "ru": "больше команд в блоки",
+        "pt": "mais comandos em blockly",
+        "nl": "meer commando's in blokken",
+        "fr": "plus de commandes en bloc",
+        "it": "più comandi in blocco",
+        "es": "más comandos en bloque",
+        "pl": "blokady",
+        "uk": "більше команд в блоклі",
+        "zh-cn": "b. 被阻挠的指挥"
+      },
       "0.21.1": {
         "en": "fixed paths",
         "de": "feste wege",
@@ -106,19 +119,6 @@
         "pl": "naprawa w cs",
         "uk": "фіксація в css пропорція",
         "zh-cn": "f 装有约束力"
-      },
-      "0.20.3": {
-        "en": "update designer npm",
-        "de": "update designer npm",
-        "ru": "обновление дизайнера npm",
-        "pt": "atualização designer npm",
-        "nl": "vertaling:",
-        "fr": "mise à jour designer npm",
-        "it": "aggiornamento designer npm",
-        "es": "actualización diseñador npm",
-        "pl": "aktualizacja",
-        "uk": "оновлення дизайнера npm",
-        "zh-cn": "更新设计"
       }
     },
     "icon": "logo.png",
