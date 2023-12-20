@@ -197,7 +197,7 @@ export class ScriptSystem {
                                 e.addEventListener(evtName, async (evt) => {
                                     if (!compiledFunc)
                                         compiledFunc = await generateEventCodeFromBlockly(scriptObj);
-                                    compiledFunc(evt);
+                                    compiledFunc(evt, shadowRoot);
                                 });
                             }
                         }

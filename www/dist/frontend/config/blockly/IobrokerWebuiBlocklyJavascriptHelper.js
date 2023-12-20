@@ -2,7 +2,7 @@
 import './components/components.js';
 const prefix = `import { iobrokerHandler } from "${window.iobrokerWebuiRootUrl}dist/frontend/common/IobrokerHandler.js";
  
-export async function run(eventData) {
+export async function run(eventData, shadowRoot) {
 `;
 const postfix = `}`;
 export async function generateEventCodeFromBlockly(data) {
@@ -12,6 +12,8 @@ export async function generateEventCodeFromBlockly(data) {
     Blockly.serialization.workspaces.load(data, workspace);
     //@ts-ignore
     Blockly.JavaScript.addReservedWords('eventData');
+    //@ts-ignore
+    Blockly.JavaScript.addReservedWords('shadowRoot');
     //@ts-ignore
     let code = Blockly.JavaScript.workspaceToCode(workspace);
     const scriptUrl = URL.createObjectURL(new Blob([prefix + code + postfix], { type: 'application/javascript' }));
