@@ -5,6 +5,7 @@
   "type": "module",
   "main": "dist/backend/main.js",
   "scripts": {
+    "esbuild": "node esbuild.js",
     "tsc": "tsc",
     "start": "web-dev-server --open",
     "startwww": "cd www && web-dev-server --node-resolve --open",
@@ -59,6 +60,7 @@
     "@node-projects/web-component-designer-widgets-wunderbaum": "^0.1.10",
     "@types/json-schema": "^7.0.15",
     "@web/dev-server": "^0.4.1",
+    "esbuild": "^0.19.10",
     "chai": "^4.3.10",
     "chai-as-promised": "^7.1.1",
     "construct-style-sheets-polyfill": "^3.1.0",
