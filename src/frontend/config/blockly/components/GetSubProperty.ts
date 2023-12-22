@@ -1,6 +1,9 @@
 //@ts-ignore
 Blockly.Blocks['get_sub_property'] = {
     init: function () {
+        this.appendDummyInput()
+            .appendField("getSubProperty");
+
         this.appendValueInput('OBJECT')
             .setCheck('Object')
             .appendField('object');

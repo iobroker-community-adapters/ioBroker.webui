@@ -39,7 +39,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         this.scriptModel = await window.appShell.javascriptEditor.createModel(script ?? '');
 
         if (this._type == 'control') {
-            this._properties = { ...properties } ?? {};
+            this._properties = properties ? { ...properties } : {};
         }
 
         this.documentContainer = new DocumentContainer(serviceContainer);
