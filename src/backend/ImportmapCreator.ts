@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'path/posix';
 import fs from 'fs/promises';
 import fsSync from 'fs';
 import type { AdapterInstance } from '@iobroker/adapter-core';

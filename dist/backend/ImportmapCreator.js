@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'path/posix';
 import fs from 'fs/promises';
 import fsSync from 'fs';
 const packageHacks = JSON.parse(fsSync.readFileSync(new URL('./NpmPackageHacks.json', import.meta.url)).toString());
