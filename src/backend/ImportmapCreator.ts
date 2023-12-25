@@ -215,61 +215,71 @@ export async function registerDesignerAddons(serviceContainer) {
     }
 
     async addToImportmap(basePath: string, packageJsonObj: { name?: string, module?: string, main?: string, unpkg?: string, exports?: Record<string, string> }) {
-        const map = this.importMap.imports;
-        if (!map.hasOwnProperty(packageJsonObj.name)) {
-            if (packageJsonObj.exports) {
-                let getImport = (obj: any) => {
-                    if (obj?.browser)
-                        return obj.browser;
-                    if (obj?.import)
-                        return obj.import;
-                    if (obj?.module)
-                        return obj.module;
-                    if (obj?.default)
-                        return obj.default;
-                    return obj?.node;
-                }
-                let getImportFlat = (obj: any) => {
-                    let i = getImport(obj);
-                    if (!(typeof i == 'string'))
-                        i = getImport(i);
-                    if (!(typeof i == 'string'))
-                        i = getImport(i);
-                    if (!(typeof i == 'string'))
-                        i = null;
-                    return i;
-                }
-                let imp = getImportFlat(packageJsonObj.exports);
-                if (imp) {
-                    this.importMap.imports[packageJsonObj.name] = basePath + removeLeading(removeTrailing(imp, '/'), '.');
-                } else if (imp = getImportFlat(packageJsonObj.exports?.['.'])) {
-                    this.importMap.imports[packageJsonObj.name] = basePath + removeLeading(removeTrailing(imp, '/'), '.');
+        try {
+            const map = this.importMap.imports;
+            if (!map.hasOwnProperty(packageJsonObj.name)) {
+                if (packageJsonObj.exports) {
+                    let getImport = (obj: any) => {
+                        if (obj?.browser)
+                            return obj.browser;
+                        if (obj?.import)
+                            return obj.import;
+                        if (obj?.module)
+                            return obj.module;
+                        if (obj?.default)
+                            return obj.default;
+                        return obj?.node;
+                    }
+                    let getImportFlat = (obj: any) => {
+                        let i = getImport(obj);
+                        if (!(typeof i == 'string'))
+                            i = getImport(i);
+                        if (!(typeof i == 'string'))
+                            i = getImport(i);
+                        if (!(typeof i == 'string'))
+                            i = null;
+                        return i;
+                    }
+                    let imp = getImportFlat(packageJsonObj.exports);
+                    if (imp) {
+                        this.importMap.imports[packageJsonObj.name] = basePath + removeLeading(removeTrailing(imp, '/'), '.');
+                    } else if (imp = getImportFlat(packageJsonObj.exports?.['.'])) {
+                        this.importMap.imports[packageJsonObj.name] = basePath + removeLeading(removeTrailing(imp, '/'), '.');
+                    }
+
+
+                    for (let exp in packageJsonObj.exports) {
+                        try {
+                            if (exp === '.')
+                                continue;
+                            let nm = exp;
+                            if (nm.startsWith('.'))
+                                nm = nm.substring(1);
+                            if (nm.startsWith('/'))
+                                nm = nm.substring(1);
+                            this.importMap.imports[packageJsonObj.name + '/' + nm] = basePath + removeLeading(getImportFlat(packageJsonObj.exports[exp]), '/');
+                        } catch (err) {
+                            this._adapter.log.error("error creating importmap, " + exp + " in package: " + packageJsonObj.name + ", " + err);
+                        }
+                    }
                 }
 
-                for (let exp in packageJsonObj.exports) {
-                    if (exp === '.')
-                        continue;
-                    let nm = exp;
-                    if (nm.startsWith('.'))
-                        nm = nm.substring(1);
-                    if (nm.startsWith('/'))
-                        nm = nm.substring(1);
-                    this.importMap.imports[packageJsonObj.name + '/' + nm] = basePath + removeLeading(getImportFlat(packageJsonObj.exports[exp]), '/');
+                let mainImport = packageJsonObj.main;
+                if (packageJsonObj.module)
+                    mainImport = packageJsonObj.module;
+                if (packageJsonObj.unpkg && !mainImport)
+                    mainImport = packageJsonObj.unpkg;
+                if (mainImport) {
+                    if (!this.importMap.imports[packageJsonObj.name])
+                        this.importMap.imports[packageJsonObj.name] = path.join(basePath, removeTrailing(mainImport, '/'));
+                } else {
+                    this._adapter.log.warn('main is undefined for "' + packageJsonObj.name + '"');
                 }
-            }
 
-            let mainImport = packageJsonObj.main;
-            if (packageJsonObj.module)
-                mainImport = packageJsonObj.module;
-            if (packageJsonObj.unpkg && !mainImport)
-                mainImport = packageJsonObj.unpkg;
-            if (mainImport) {
-                if (!this.importMap.imports[packageJsonObj.name])
-                    this.importMap.imports[packageJsonObj.name] = path.join(basePath, removeTrailing(mainImport, '/'));
-            } else {
-                this._adapter.log.warn('main is undefined for "' + packageJsonObj.name + '"');
+                this.importMap.imports[packageJsonObj.name + '/'] = basePath + '/';
             }
-            this.importMap.imports[packageJsonObj.name + '/'] = basePath + '/';
+        } catch (err) {
+            this._adapter.log.error("error creating importmap in package: " + packageJsonObj.name + ", " + err);
         }
     }
 }
