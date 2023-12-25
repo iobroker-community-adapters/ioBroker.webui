@@ -88,7 +88,7 @@ function cleanupNodeModules() {
         "./www/node_modules/monaco-editor/min-maps",
         "./www/**/*.ts",
         "!./www/node_modules/@node-projects/base-custom-webcomponent/dist/BaseCustomWebComponent.d.ts",
-        "!./www/dist/frontend/common/IobrokerHandler.d.ts",
+        "!./www/dist/frontend/common/*.d.ts",
         "!./www/node_modules/@iobroker/socket-client/dist/esm/Connection.d.ts",
         "./www/**/*.map",
         "./www/**/*.md",
