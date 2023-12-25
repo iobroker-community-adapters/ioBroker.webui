@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.22.0",
+    "version": "0.22.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.22.1": {
+        "en": "add open screen in blockly",
+        "de": "freier bildschirm blockweise hinzufügen",
+        "ru": "добавить открытый экран в блоки",
+        "pt": "adicionar tela aberta em bloco",
+        "nl": "voeg open scherm in blok",
+        "fr": "ajouter l'écran ouvert en bloc",
+        "it": "aggiungere schermo aperto in blocco",
+        "es": "añadir pantalla abierta en bloque",
+        "pl": "dodać otwarte ekrany w bloku",
+        "uk": "додати відкритий екран в блоклі",
+        "zh-cn": "软禁增"
+      },
       "0.22.0": {
         "en": "work on esbuild (but not yet ready, delayed till blockly is ESM)\nbugfixes with scripts\nremove typescript, use javascript directly\ntyped value on SetValue function",
         "de": "arbeit an esbuild (aber noch nicht fertig, verzögert, bis blockweise ist ESM)\nbugfixes mit skripten\ntypscript entfernen, javascript direkt verwenden\ntypischer Wert auf SetValue-Funktion",
@@ -106,19 +119,6 @@
         "pl": "rekonstrukcja importmap została utracona \"//\"",
         "uk": "виправлено створення імпортної карти пропущено \"/\"",
         "zh-cn": "fix 进口量造成“/”"
-      },
-      "0.20.6": {
-        "en": "few wunderbaum fixes",
-        "de": "wunderbaum fixes",
-        "ru": "несколько исправлений wunderbaum",
-        "pt": "poucas correções de wunderbaum",
-        "nl": "een paar wunderbaum reparaties",
-        "fr": "quelques wunderbaum corrige",
-        "it": "poche correzioni wunderbaum",
-        "es": "pocos wunderbaum correcciones",
-        "pl": "niekiedy naprawa",
-        "uk": "кілька запобіжників",
-        "zh-cn": "数不多的妻子"
       }
     },
     "icon": "logo.png",
