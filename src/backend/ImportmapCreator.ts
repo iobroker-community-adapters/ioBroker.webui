@@ -245,6 +245,17 @@ export async function registerDesignerAddons(serviceContainer) {
                 } else if (imp = getImportFlat(packageJsonObj.exports?.['.'])) {
                     this.importMap.imports[packageJsonObj.name] = basePath + removeLeading(removeTrailing(imp, '/'), '.');
                 }
+
+                for (let exp in packageJsonObj.exports) {
+                    if (exp === '.')
+                        continue;
+                    let nm = exp;
+                    if (nm.startsWith('.'))
+                        nm = nm.substring(1);
+                    if (nm.startsWith('/'))
+                        nm = nm.substring(1);
+                    this.importMap.imports[packageJsonObj.name + '/' + nm] = basePath + removeLeading(getImportFlat(packageJsonObj.exports[exp]), '/');
+                }
             }
 
             let mainImport = packageJsonObj.main;
