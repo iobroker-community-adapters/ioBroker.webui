@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.21.3",
+    "version": "0.22.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.22.0": {
+        "en": "work on esbuild (but not yet ready, delayed till blockly is ESM)\nbugfixes with scripts\nremove typescript, use javascript directly\ntyped value on SetValue function",
+        "de": "arbeit an esbuild (aber noch nicht fertig, verzögert, bis blockweise ist ESM)\nbugfixes mit skripten\ntypscript entfernen, javascript direkt verwenden\ntypischer Wert auf SetValue-Funktion",
+        "ru": "работа над esbuild (но еще не готова, задерживается до блокировки ESM)\nбагфиксы с сценариями\nудалить typescript, использовать javascript непосредственно\nтипизированное значение на функции SetValue",
+        "pt": "trabalho em esbuild (mas ainda não pronto, atrasado até blockly é ESM)\nbugfixes com scripts\nremove typescript, use javascript diretamente\nvalor digitado na função SetValue",
+        "nl": "werk op esbuild (maar nog niet klaar, vertraagd tot het blokkeert\nquality over quantity (qoq) releases vertaling:\nverwijder typescript, gebruik javascript direct\ngetypte waarde op SetValue-function",
+        "fr": "travaux sur esbuild (mais pas encore prêt, retardé jusqu'à ce que bloqué est ESM)\nbugfixes avec scripts\nsupprimer typescript, use javascript directly\nvaleur typed sur la fonction SetValue",
+        "it": "lavoro su esbuild (ma non ancora pronto, ritardato fino blocco è ESM)\nbugfix con script\nrimuovere typescript, utilizzare javascript direttamente\nvalore digitato sulla funzione SetValue",
+        "es": "trabajo en esbuild (pero aún no está listo, retrasado hasta que sea bloque ESM)\nbugfixes con scripts\neliminar el tiposcript, utilizar javascript directamente\nvalor escrito en función SetValue",
+        "pl": "prace nad budową (ale nie są jeszcze gotowe, opóźnione do blokowania ESM)\ntrąbka z skryptami\nusunąć typescriptus, używa javascriptu bezpośrednio\nwartość typowa dla funkcji SetValue",
+        "uk": "робота над створенням (але не готово, затриманий до блоклі ЄСМ)\nвиправлення помилок з скриптами\nвидалити ш┐щцца, використовуйте javascript безпосередньо\nтиповане значення на функції SetValue",
+        "zh-cn": "布置工作(但尚未准备,拖延到底是ESM)\nb 写信\n摘录\na. 特有职能的类型价值"
+      },
       "0.21.3": {
         "en": "fix set style",
         "de": "fixed style",
@@ -106,19 +119,6 @@
         "pl": "niekiedy naprawa",
         "uk": "кілька запобіжників",
         "zh-cn": "数不多的妻子"
-      },
-      "0.20.5": {
-        "en": "better custom properties view",
-        "de": "bessere benutzerdefinierte eigenschaften",
-        "ru": "лучший пользовательский вид недвижимости",
-        "pt": "melhor exibição de propriedades personalizadas",
-        "nl": "betere eigenschappen zien",
-        "fr": "meilleures propriétés personnalisées vue",
-        "it": "migliori proprietà personalizzate",
-        "es": "mejor vista de propiedades personalizadas",
-        "pl": "lepsza własność",
-        "uk": "краще користувацькі властивості вигляд",
-        "zh-cn": "更好的习俗财产"
       }
     },
     "icon": "logo.png",
