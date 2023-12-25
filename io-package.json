@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.22.4",
+    "version": "0.22.5",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.22.5": {
+        "en": "more fixes with import map",
+        "de": "mehr fixierungen mit importkarte",
+        "ru": "больше исправлений с картой импорта",
+        "pt": "mais correções com mapa de importação",
+        "nl": "meer reparaties met importkaart",
+        "fr": "plus de corrections avec carte d'importation",
+        "it": "più correzioni con mappa di importazione",
+        "es": "más correcciones con mapa de importación",
+        "pl": "naprawy z mapą importu",
+        "uk": "більше виправлень з імпортною картою",
+        "zh-cn": "进口图的更固定"
+      },
       "0.22.4": {
         "en": "work on export directive",
         "de": "arbeit an der exportrichtlinie",
@@ -106,19 +119,6 @@
         "pl": "styl",
         "uk": "фіксований стиль",
         "zh-cn": "f 固定风格"
-      },
-      "0.21.2": {
-        "en": "more commands in blockly",
-        "de": "mehr kommandos blockweise",
-        "ru": "больше команд в блоки",
-        "pt": "mais comandos em blockly",
-        "nl": "meer commando's in blokken",
-        "fr": "plus de commandes en bloc",
-        "it": "più comandi in blocco",
-        "es": "más comandos en bloque",
-        "pl": "blokady",
-        "uk": "більше команд в блоклі",
-        "zh-cn": "b. 被阻挠的指挥"
       }
     },
     "icon": "logo.png",
