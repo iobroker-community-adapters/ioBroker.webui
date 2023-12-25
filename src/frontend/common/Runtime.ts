@@ -1,5 +1,5 @@
-import { OpenDialog, OpenScreen } from "../scripting/ScriptCommands";
-import { ScriptSystem } from "../scripting/ScriptSystem";
+import { OpenDialog, OpenScreen } from "../scripting/ScriptCommands.js";
+import { ScriptSystem } from "../scripting/ScriptSystem.js";
 
 export class Runtime {
     public static openScreen(config: Omit<OpenScreen, 'type'>) {
