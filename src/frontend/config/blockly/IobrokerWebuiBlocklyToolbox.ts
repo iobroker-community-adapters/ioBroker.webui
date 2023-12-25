@@ -30,6 +30,20 @@ export default {
                 },
                 {
                     kind: 'block',
+                    type: 'open_screen',
+                    inputs: {
+                        SCREEN: {
+                            shadow: {
+                                type: 'text',
+                                fields: {
+                                    TEXT: '',
+                                },
+                            },
+                        },
+                    },
+                },
+                {
+                    kind: 'block',
                     type: 'set_state',
                     inputs: {
                         OID: {
