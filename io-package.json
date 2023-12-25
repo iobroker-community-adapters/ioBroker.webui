@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.22.1",
+    "version": "0.22.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.22.2": {
+        "en": "fix scripts",
+        "de": "skripte fixieren",
+        "ru": "исправить скрипты",
+        "pt": "corrigir scripts",
+        "nl": "vertaling:",
+        "fr": "corriger les scripts",
+        "it": "correggere gli script",
+        "es": "corregir scripts",
+        "pl": "scenariusz",
+        "uk": "фіксувати сценарії",
+        "zh-cn": "fix 说明"
+      },
       "0.22.1": {
         "en": "add open screen in blockly",
         "de": "freier bildschirm blockweise hinzufügen",
@@ -106,19 +119,6 @@
         "pl": "rozpoczęcie wsparcia blokowego\nwiązania (dyrektywy i blokady)\nczy wstąpisz?",
         "uk": "початок блокнотної підтримки\nпосилання (режим і блоклі)\nякщо ввести пресований?",
         "zh-cn": "开始断然支持\n具有约束力(直接说明和阻挠)\n何时进入?"
-      },
-      "0.20.7": {
-        "en": "fix importmap creation missed \"/\"",
-        "de": "importmap-erstellung verpasst \"/\"",
-        "ru": "исправить создание импортной карты пропущено \"/\"",
-        "pt": "corrigir a criação do importmap perdido \"/\"",
-        "nl": "de importmap creatie miste \"/\"",
-        "fr": "corriger la création importmap manquée \"/\"",
-        "it": "fix importmap creazione mancato \"/\"",
-        "es": "fijar importaciónmap creación perdida \"/\"",
-        "pl": "rekonstrukcja importmap została utracona \"//\"",
-        "uk": "виправлено створення імпортної карти пропущено \"/\"",
-        "zh-cn": "fix 进口量造成“/”"
       }
     },
     "icon": "logo.png",
