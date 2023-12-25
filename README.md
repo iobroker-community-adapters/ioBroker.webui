@@ -129,8 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-
-### __WORK IN PROGRESS__
+### 0.22.7 (2023-12-25)
 - and one more...
 
 ### 0.22.6 (2023-12-25)
