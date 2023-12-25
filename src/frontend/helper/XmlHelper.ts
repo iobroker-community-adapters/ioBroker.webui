@@ -35,17 +35,11 @@ export function screenToXml(screen: IScreen) {
         xml += escapeCData(screen.style);
         xml += "\n]]></style>\n";
     }
-    if (screen.typeScript) {
-        xml += "    <typeScript><![CDATA[\n";
-        xml += escapeCData(screen.typeScript);
-        xml += "\n]]></typeScript>\n";
-    }
     if (screen.settings && Object.getOwnPropertyNames(screen.settings).length) {
         xml += "    <settings>\n";
         for (let p in screen.settings) {
             xml += "        <" + p + ">" + screen.settings[p] + "</" + p + ">\n";
         }
-        xml += escapeCData(screen.typeScript);
         xml += "</settings>\n";
     }
     xml += "</screen>\n";
@@ -65,11 +59,6 @@ export function controlToXml(control: IControl) {
         xml += escapeCData(control.style);
         xml += "\n]]></style>\n";
     }
-    if (control.typeScript) {
-        xml += "    <typeScript><![CDATA[\n";
-        xml += escapeCData(control.typeScript);
-        xml += "\n]]></typeScript>\n";
-    }
     if (control.properties && Object.getOwnPropertyNames(control.properties).length) {
         xml += "    <properties>\n";
         for (let p in control.properties) {
@@ -82,7 +71,6 @@ export function controlToXml(control: IControl) {
         for (let p in control.settings) {
             xml += "        <" + p + ">" + control.settings[p] + "</" + p + ">\n";
         }
-        xml += escapeCData(control.typeScript);
         xml += "</settings>\n";
     }
     xml += "</control>\n";

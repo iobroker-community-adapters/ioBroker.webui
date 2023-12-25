@@ -5,7 +5,6 @@ import { IScreen } from "../interfaces/IScreen.js";
 import { IControl } from "../interfaces/IControl.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import type { editor } from "monaco-editor";
-import { IobrokerWebuiMonacoEditor } from "./IobrokerWebuiMonacoEditor.js";
 
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
 
@@ -118,13 +117,12 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         if ((<string>command.type) == 'save') {
             let html = this.documentContainer.content;
             let style = this.documentContainer.additionalData.model.getValue();
-            let typeScript = this.scriptModel.getValue();
-            let script = await IobrokerWebuiMonacoEditor.getCompiledJavascriptCode(this.scriptModel);
+            let script = this.scriptModel.getValue();
             if (this._type == 'screen') {
-                let screen: IScreen = { html, style, typeScript, script, settings: this._settings };
+                let screen: IScreen = { html, style, script, settings: this._settings };
                 await iobrokerHandler.saveScreen(this._name, screen);
             } else {
-                let control: IControl = { html, style, typeScript, script, settings: this._settings, properties: this._properties };
+                let control: IControl = { html, style, script, settings: this._settings, properties: this._properties };
                 await iobrokerHandler.saveCustomControl(this._name, control);
             }
         } else

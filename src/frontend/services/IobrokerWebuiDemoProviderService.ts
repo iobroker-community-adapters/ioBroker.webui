@@ -2,7 +2,6 @@ import { DomHelper } from "@node-projects/base-custom-webcomponent";
 import { IDemoProviderService, InstanceServiceContainer, ServiceContainer } from "@node-projects/web-component-designer";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
 import { IobrokerWebuiScreenEditor } from "../config/IobrokerWebuiScreenEditor.js";
-import { IobrokerWebuiMonacoEditor } from "../config/IobrokerWebuiMonacoEditor.js";
 
 export class IobrokerWebuiDemoProviderService implements IDemoProviderService {
   async provideDemo(container: HTMLElement, serviceContainer: ServiceContainer, instanceServiceContainer: InstanceServiceContainer, code: string) {
@@ -23,7 +22,7 @@ export class IobrokerWebuiDemoProviderService implements IDemoProviderService {
     container.appendChild(screenViewer);
 
     let designer: IobrokerWebuiScreenEditor = instanceServiceContainer.designer;
-    screenViewer.loadScreenData(code, designer.documentContainer.additionalData.model.getValue(), await IobrokerWebuiMonacoEditor.getCompiledJavascriptCode(designer.scriptModel));
+    screenViewer.loadScreenData(code, designer.documentContainer.additionalData.model.getValue(), designer.scriptModel.getValue());
     screenViewer.style.display = '';
     screenViewer.shadowRoot.querySelectorAll('a').forEach(x => x.onclick = () => false); // disable links in preview view...
   }

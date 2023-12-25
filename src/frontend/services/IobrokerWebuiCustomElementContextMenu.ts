@@ -14,7 +14,7 @@ export class IobrokerWebuiCustomElementContextMenu implements IContextMenuExtens
                 title: 'edit custom element', action: () => {
                     let ccInfo = (<CustomControlInfo>(<any>designItem.element.constructor)[webuiCustomControlSymbol]);
                     iobrokerHandler.getCustomControl(ccInfo.name).then(s => {
-                        window.appShell.openScreenEditor(ccInfo.name, 'control', s.html, s.style, s.typeScript ?? s.script, s.settings, s.properties);
+                        window.appShell.openScreenEditor(ccInfo.name, 'control', s.html, s.style, s.script, s.settings, s.properties);
                     });
                 }, shortCut: 'Ctrl + E'
             },

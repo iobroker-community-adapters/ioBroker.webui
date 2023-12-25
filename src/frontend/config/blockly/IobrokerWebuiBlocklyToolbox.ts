@@ -1,5 +1,7 @@
 import './components/components.js';
 
+//TODO: OpenScreen
+//setTimeout
 export default {
     kind: 'categoryToolbox',
     contents: [

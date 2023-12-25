@@ -123,7 +123,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
           </div>
 
           <div id="javascriptDock" title="javascript" dock-spawn-dock-to="styleDock" style="overflow: hidden; width: 100%;">
-            <iobroker-webui-monaco-editor language="typescript" id="javascriptEditor"></iobroker-webui-monaco-editor>
+            <iobroker-webui-monaco-editor language="javascript" id="javascriptEditor"></iobroker-webui-monaco-editor>
           </div>
 
           <div id="propertiesDock" title="control prop." style="overflow: hidden; width: 100%;" dock-spawn-dock-to="eventsDock">
@@ -326,7 +326,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     let id = "global_scriptEditor";
     if (!this.isDockOpenAndActivate(id)) {
       let scriptEditor = new IobrokerWebuiMonacoEditor();
-      scriptEditor.language = 'typescript';
+      scriptEditor.language = 'javascript';
       scriptEditor.id = id;
       scriptEditor.title = 'global typescript';
       const model = await scriptEditor.createModel(script);

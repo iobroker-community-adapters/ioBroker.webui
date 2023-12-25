@@ -24,8 +24,8 @@ export interface OpenScreen {
     /**
      * If signals in screen are defined relative (starting with a '.'), this will be prepended
      */
-    relativeSignalsPath: string;
-    noHistory: boolean;
+    relativeSignalsPath?: string;
+    noHistory?: boolean;
 }
 
 export interface OpenDialog {
@@ -35,13 +35,13 @@ export interface OpenDialog {
      * @TJS-format screen
      */
     screen: string;
+    title?: string;
     /**
      * If signals in screen are defined relative (starting with a '.'), this will be prepended
      */
-    relativeSignalsPath: string;
-    title: string;
-    moveable: boolean;
-    closeable: boolean;
+    relativeSignalsPath?: string;
+    moveable?: boolean;
+    closeable?: boolean;
 
     width?: string;
     height?: string;
@@ -82,7 +82,7 @@ export interface SetSignalValue {
      * @TJS-format signal
      */
     signal: string;
-    value: string;
+    value: any;
 }
 
 export interface ToggleSignalValue {

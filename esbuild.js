@@ -40,8 +40,9 @@ const cssConstructStylesheetPlugin = {
                     minify: build.initialOptions.minify,
                 })).code;
                 const contents = `
-        export default styles = new CSSStyleSheet();
-        styles.replaceSync(\`${fixedCss}\`);`;
+        let styles = new CSSStyleSheet();
+        styles.replaceSync(\`${fixedCss}\`);
+        export default styles`;
                 return { contents, loader: 'js' };
             }
         });
@@ -49,13 +50,13 @@ const cssConstructStylesheetPlugin = {
 }
   
 await esbuild.build({
-    entryPoints: ['config-ui.js'],
+    entryPoints: ['runtime.js'],
     bundle: true,
     format: 'esm',
     minify: true,
     //treeShaking: true,
     //external: ['*.css'],
-    outfile: 'config-ui-bundle.js',
+    outfile: 'runtime-bundle.js',
     plugins: [cssConstructStylesheetPlugin, onResolvePlugin],
     //loader: { '.png': 'binary' },
 });

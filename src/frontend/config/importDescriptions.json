@@ -1,7 +1,15 @@
 [
     {
-        "name": "/webui/dist/frontend/common/IobrokerHandler.d.ts",
+        "name": "/webui/dist/frontend/common/IobrokerHandler.js",
         "file": "/webui/dist/frontend/common/IobrokerHandler.d.ts"
+    },
+    {
+        "name": "/webui/dist/frontend/common/Helper.js",
+        "file": "/webui/dist/frontend/common/Helper.d.ts"
+    },
+    {
+        "name": "/webui/dist/frontend/common/Runtime.js",
+        "file": "/webui/dist/frontend/common/Runtime.d.ts"
     },
     {
         "name": "@iobroker/socket-client",

@@ -1,45 +1,48 @@
 import { BaseCustomWebComponentConstructorAppend, Disposable, DomHelper, css, html } from "@node-projects/base-custom-webcomponent"
-import { ContextMenu, IDesignItem, IEvent, InstanceServiceContainer, PropertiesHelper } from "@node-projects/web-component-designer";
+import { ContextMenu, IContextMenuItem, IDesignItem, IEvent, InstanceServiceContainer, PropertiesHelper } from "@node-projects/web-component-designer";
 import { IobrokerWebuiScriptEditor } from "./IobrokerWebuiScriptEditor.js";
 import { IobrokerWebuiScreenEditor } from "./IobrokerWebuiScreenEditor.js";
 import { findExportFunctionDeclarations } from "../helper/EsprimaHelper.js";
 import type { FunctionDeclaration } from "esprima-next";
-import { IobrokerWebuiMonacoEditor } from "./IobrokerWebuiMonacoEditor.js";
 import { IobrokerWebuiBlocklyScriptEditor } from "./blockly/IobrokerWebuiBlocklyScriptEditor.js";
 
 type eventType = 'jsdirect' | 'js' | 'script' | 'blockly' | 'none';
 export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstructorAppend {
 
     static override style = css`
-    :host {
-        display: grid;
-        grid-template-columns: 20px 1fr auto 30px;
-        overflow-y: auto;
-        align-content: start;
-        height: 100%;
-    }
-    .rect {
-        width: 7px;
-        height: 7px;
-        border: 1px solid black;
-        justify-self: center;
-    }
-    input.mth {
-        width: 100%;
-        box-sizing: border-box;
-    }
-    div {
-        width: 40px;
-        align-self: center;
-        white-space: nowrap;
-    }`
+        :host {
+            display: grid;
+            grid-template-columns: 20px 1fr auto 30px;
+            overflow-y: auto;
+            align-content: start;
+            height: 100%;
+        }
+        .rect {
+            width: 7px;
+            height: 7px;
+            border: 1px solid black;
+            justify-self: center;
+            cursor: pointer;
+        }
+        input.mth {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        div {
+            width: 40px;
+            align-self: center;
+            white-space: nowrap;
+        }
+        button {
+            cursor: pointer;
+        }`;
 
     static override template = html`
         <template repeat:item="[[this.events]]">
-            <div @contextmenu="[[this._ctxMenu(event, item)]]" class="rect" css:background-color="[[this._getEventColor(item)]]"></div>
+            <div @click="[[this._ctxMenu(event, item)]]" @contextmenu="[[this._ctxMenu(event, item)]]" class="rect" css:background-color="[[this._getEventColor(item)]]"></div>
             <div css:grid-column-end="[[this._getEventType(item) == 'js' ? 'span 1' : 'span 2']]" title="[[item.name]]">[[item.name]]</div>
             <input @input="[[this._inputMthName(event, item)]]" class="mth" value="[[this._getEventMethodname(item)]]" css:display="[[this._getEventType(item) == 'js' ? 'block' : 'none']]" type="text">
-            <button @click="[[this._contextMenuAddEvent(event, item)]]">...</button>
+            <button @contextmenu="[[this._contextMenuAddEvent(event, item, true)]]" @click="[[this._contextMenuAddEvent(event, item, false)]]">...</button>
         </template>
         <span style="grid-column: 1 / span 3; margin-top: 8px; margin-left: 3px;">add event:</span>
         <input id="addEventInput" style="grid-column: 1 / span 3; margin: 5px;" @keypress=[[this._addEvent(event)]] type="text">`;
@@ -110,7 +113,9 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
 
     public _ctxMenu(e: MouseEvent, eventItem: IEvent) {
         e.preventDefault();
-        ContextMenu.show([{ title: 'remove', action: () => { this.selectedItems[0].removeAttribute('@' + eventItem.name); this._bindingsRefresh(); } }], e)
+        const evtType = this._getEventType(eventItem);
+        if (evtType != 'none')
+            ContextMenu.show([{ title: 'remove', action: () => { this.selectedItems[0].removeAttribute('@' + eventItem.name); this._bindingsRefresh(); } }], e)
     }
 
     public async _addEvent(e: KeyboardEvent) {
@@ -123,12 +128,13 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
         }
     }
 
-    public async _contextMenuAddEvent(event, eventItem: IEvent) {
+    public async _contextMenuAddEvent(event: MouseEvent, eventItem: IEvent, isCtxMenu: boolean) {
+        event.preventDefault();
         const evtType = this._getEventType(eventItem);
-        if (evtType != 'none') {
+        if (evtType != 'none' && !isCtxMenu) {
             this._editEvent(evtType, event, eventItem);
         } else {
-            ContextMenu.show([
+            let ctxMenu: IContextMenuItem[] = [
                 {
                     title: 'Simple Script',
                     action: () => {
@@ -162,8 +168,20 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
                     action: () => {
                         this._editBlockly(null, eventItem);
                     }
-                },
-            ], event);
+                }
+            ];
+
+            const evtType = this._getEventType(eventItem);
+            if (evtType != 'none') {
+                ctxMenu.push({
+                    title: '-'
+                });
+                ctxMenu.push({
+                    title: 'remove',
+                    action: () => { this.selectedItems[0].removeAttribute('@' + eventItem.name); this._bindingsRefresh(); }
+                });
+            }
+            ContextMenu.show(ctxMenu, event);
         }
     }
 
@@ -185,24 +203,33 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
 
         if (evtType == 'js') {
             let screenEditor = DomHelper.findParentNodeOfType(this.selectedItems[0].instanceServiceContainer.designerCanvas, IobrokerWebuiScreenEditor);
-            let sc = await IobrokerWebuiMonacoEditor.getCompiledJavascriptCode(screenEditor.scriptModel);
+            let sc = screenEditor.scriptModel.getValue();
 
             let decl = await findExportFunctionDeclarations(sc);
             if (decl) {
                 let jsName = this.selectedItems[0].getAttribute('@' + eventItem.name);
                 let funcDecl = decl.find(x => (<FunctionDeclaration>x.declaration).id.name == jsName)
                 if (!funcDecl) {
-                    let templateScript = `export function ${jsName}(event: ${eventItem.eventObjectName ?? 'Event'}, eventRaisingElement: Element, shadowRoot: ShadowRoot, instance: HTMLElement) {
-
+                    let templateScript = `/**
+* ${jsName} - '${eventItem.name}' event of ${this.selectedItems[0].id ? '#' + this.selectedItems[0].id + ' (<' + this.selectedItems[0].name + '>)' : '<' + this.selectedItems[0].name + '>'}
+* @param {${eventItem.eventObjectName ?? 'Event'}} event
+* @param {Element} eventRaisingElement
+* @param {ShadowRoot} shadowRoot
+* @param {HTMLElement} instance
+*/
+export function ${jsName}(event, eventRaisingElement, shadowRoot, instance) {
+    
 }
 `;
                     if (!sc)
-                        sc = 'import { iobrokerHandler } from "/webui/dist/frontend/common/IobrokerHandler.js";\n\n';
+                        sc = `import { iobrokerHandler } from "/webui/dist/frontend/common/IobrokerHandler.js";
+import { Runtime } from "/webui/dist/frontend/common/Runtime.js";
+
+`;
                     screenEditor.scriptModel.setValue(sc + templateScript);
                 } else {
                     //@ts-ignore
-                    //window.appShell.javascriptEditor.setSelection(funcDecl.loc.start.line, funcDecl.loc.start.column, funcDecl.loc.end.line, funcDecl.loc.end.column + 1);
-                    //as we use typescript, the line does not match the resulting code, need to use ts compiler
+                    window.appShell.javascriptEditor.setSelection(funcDecl.loc.start.line, funcDecl.loc.start.column, funcDecl.loc.end.line, funcDecl.loc.end.column + 1);
                 }
             }
             window.appShell.activateDockById('javascriptDock');
