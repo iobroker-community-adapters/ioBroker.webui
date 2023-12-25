@@ -87,7 +87,7 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         };
         this._propertygrid.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(scriptCommandsTypeInfo, obj, type);
         this._propertygrid.getSpecialEditorForType = async (property, currentValue, propertyPath) => {
-            if (typeof currentValue === 'object') {
+            if (typeof currentValue === 'object' && currentValue !== null) {
                 let d = document.createElement('div');
                 d.style.display = 'flex';
                 let sp = document.createElement('span');

@@ -77,7 +77,7 @@ class IobrokerHandler {
         await this.connection.startSocket();
         await this.connection.waitForFirstConnection();
         let cfg = await this._getConfig();
-        this.config = cfg ?? { globalStyle: null, globalScript: null, globalTypeScript: null, globalConfig: null, fontDeclarations: null };
+        this.config = cfg ?? { globalStyle: null, globalScript: null, globalConfig: null, fontDeclarations: null };
         if (this.config.globalStyle)
             this.globalStylesheet = cssFromString(this.config.globalStyle);
         if (this.config.fontDeclarations) {

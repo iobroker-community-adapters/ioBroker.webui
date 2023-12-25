@@ -1,154 +1,157 @@
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
-import Long from 'long';
 import { sleep } from "../helper/Helper.js";
 import { IoBrokerWebuiDialog } from "../helper/DialogHelper.js";
 import { generateEventCodeFromBlockly } from "../config/blockly/IobrokerWebuiBlocklyJavascriptHelper.js";
+import Long from 'long';
 export class ScriptSystem {
     static async execute(scriptCommands, outerContext) {
         for (let c of scriptCommands) {
-            switch (c.type) {
-                case 'OpenScreen': {
-                    const screen = await ScriptSystem.getValue(c.screen, outerContext);
-                    if (c.noHistory) {
-                        document.getElementById('viewer').relativeSignalsPath = await ScriptSystem.getValue(c.relativeSignalsPath, outerContext);
-                        document.getElementById('viewer').screenName = screen;
+            ScriptSystem.runScriptCommand(c, outerContext);
+        }
+    }
+    static async runScriptCommand(command, context) {
+        switch (command.type) {
+            case 'OpenScreen': {
+                const screen = await ScriptSystem.getValue(command.screen, context);
+                if (command.noHistory) {
+                    document.getElementById('viewer').relativeSignalsPath = await ScriptSystem.getValue(command.relativeSignalsPath, context);
+                    document.getElementById('viewer').screenName = screen;
+                }
+                else {
+                    let hash = 'screenName=' + screen;
+                    window.location.hash = hash;
+                }
+                break;
+            }
+            case 'OpenDialog': {
+                const screen = await ScriptSystem.getValue(command.screen, context);
+                const title = await ScriptSystem.getValue(command.title, context);
+                const moveable = await ScriptSystem.getValue(command.moveable, context);
+                const closeable = await ScriptSystem.getValue(command.closeable, context);
+                let width = await ScriptSystem.getValue(command.width, context);
+                let height = await ScriptSystem.getValue(command.height, context);
+                const left = await ScriptSystem.getValue(command.left, context);
+                const top = await ScriptSystem.getValue(command.top, context);
+                let sv = new ScreenViewer();
+                sv.relativeSignalsPath = command.relativeSignalsPath;
+                sv.screenName = screen;
+                if (!width)
+                    width = await (await iobrokerHandler.getScreen(screen)).settings.width;
+                if (!height)
+                    height = await (await iobrokerHandler.getScreen(screen)).settings.height;
+                IoBrokerWebuiDialog.openDialog({ title, content: sv, moveable, closeable, width, height, top, left });
+                break;
+            }
+            case 'CloseDialog': {
+                //const dialogdId = await ScriptSystem.getValue(c.dialogId, outerContext);
+                IoBrokerWebuiDialog.closeDialog({ element: context.element });
+                break;
+            }
+            case 'OpenUrl': {
+                window.open(await ScriptSystem.getValue(command.url, context), command.target);
+                break;
+            }
+            case 'Delay': {
+                const value = await ScriptSystem.getValue(command.value, context);
+                await sleep(value);
+                break;
+            }
+            case 'SwitchLanguage': {
+                const language = await ScriptSystem.getValue(command.language, context);
+                iobrokerHandler.language = language;
+                break;
+            }
+            case 'ToggleSignalValue': {
+                const signal = await ScriptSystem.getValue(command.signal, context);
+                let state = await iobrokerHandler.connection.getState(signal);
+                await iobrokerHandler.connection.setState(signal, !state?.val);
+                break;
+            }
+            case 'SetSignalValue': {
+                const signal = await ScriptSystem.getValue(command.signal, context);
+                await iobrokerHandler.connection.setState(signal, await ScriptSystem.getValue(command.value, context));
+                break;
+            }
+            case 'IncrementSignalValue': {
+                const signal = await ScriptSystem.getValue(command.signal, context);
+                let state = await iobrokerHandler.connection.getState(signal);
+                await iobrokerHandler.connection.setState(signal, state.val + await ScriptSystem.getValue(command.value, context));
+                break;
+            }
+            case 'DecrementSignalValue': {
+                const signal = await ScriptSystem.getValue(command.signal, context);
+                let state = await iobrokerHandler.connection.getState(signal);
+                await iobrokerHandler.connection.setState(signal, state.val - await ScriptSystem.getValue(command.value, context));
+                break;
+            }
+            case 'SetBitInSignal': {
+                const signal = await ScriptSystem.getValue(command.signal, context);
+                let state = await iobrokerHandler.connection.getState(signal);
+                let mask = Long.fromNumber(1).shiftLeft(command.bitNumber);
+                const newVal = Long.fromNumber(state.val).or(mask).toNumber();
+                await iobrokerHandler.connection.setState(signal, newVal);
+                break;
+            }
+            case 'ClearBitInSignal': {
+                const signal = await ScriptSystem.getValue(command.signal, context);
+                let state = await iobrokerHandler.connection.getState(signal);
+                let mask = Long.fromNumber(1).shiftLeft(command.bitNumber);
+                mask.negate();
+                const newVal = Long.fromNumber(state.val).and(mask).toNumber();
+                await iobrokerHandler.connection.setState(signal, newVal);
+                break;
+            }
+            case 'ToggleBitInSignal': {
+                const signal = await ScriptSystem.getValue(command.signal, context);
+                let state = await iobrokerHandler.connection.getState(signal);
+                let mask = Long.fromNumber(1).shiftLeft(command.bitNumber);
+                const newVal = Long.fromNumber(state.val).xor(mask).toNumber();
+                await iobrokerHandler.connection.setState(signal, newVal);
+                break;
+            }
+            case 'Javascript': {
+                const script = await ScriptSystem.getValue(command.script, context);
+                let mycontext = context;
+                mycontext.shadowRoot = context.element.getRootNode();
+                mycontext.instance = context.shadowRoot.host;
+                if (!command.compiledScript)
+                    command.compiledScript = new Function('context', script);
+                command.compiledScript(mycontext);
+                break;
+            }
+            case 'SetElementProperty': {
+                const name = await ScriptSystem.getValue(command.name, context);
+                const value = await ScriptSystem.getValue(command.value, context);
+                let host = context.element.getRootNode().host;
+                if (command.targetSelectorTarget == 'currentElement')
+                    host = context.element;
+                else if (command.targetSelectorTarget == 'parentElement')
+                    host = context.element.parentElement;
+                else if (command.targetSelectorTarget == 'parentScreen')
+                    host = host.getRootNode().host;
+                let elements = [host];
+                if (command.targetSelector)
+                    elements = host.shadowRoot.querySelectorAll(command.targetSelector);
+                for (let e of elements) {
+                    if (command.target == 'attribute') {
+                        e.setAttribute(name, value);
                     }
-                    else {
-                        let hash = 'screenName=' + screen;
-                        window.location.hash = hash;
+                    else if (command.target == 'property') {
+                        e[name] = value;
                     }
-                    break;
-                }
-                case 'OpenDialog': {
-                    const screen = await ScriptSystem.getValue(c.screen, outerContext);
-                    const title = await ScriptSystem.getValue(c.title, outerContext);
-                    const moveable = await ScriptSystem.getValue(c.moveable, outerContext);
-                    const closeable = await ScriptSystem.getValue(c.closeable, outerContext);
-                    let width = await ScriptSystem.getValue(c.width, outerContext);
-                    let height = await ScriptSystem.getValue(c.height, outerContext);
-                    const left = await ScriptSystem.getValue(c.left, outerContext);
-                    const top = await ScriptSystem.getValue(c.top, outerContext);
-                    let sv = new ScreenViewer();
-                    sv.relativeSignalsPath = c.relativeSignalsPath;
-                    sv.screenName = screen;
-                    if (!width)
-                        width = await (await iobrokerHandler.getScreen(screen)).settings.width;
-                    if (!height)
-                        height = await (await iobrokerHandler.getScreen(screen)).settings.height;
-                    IoBrokerWebuiDialog.openDialog({ title, content: sv, moveable, closeable, width, height, top, left });
-                    break;
-                }
-                case 'CloseDialog': {
-                    //const dialogdId = await ScriptSystem.getValue(c.dialogId, outerContext);
-                    IoBrokerWebuiDialog.closeDialog({ element: outerContext.element });
-                    break;
-                }
-                case 'OpenUrl': {
-                    window.open(await ScriptSystem.getValue(c.url, outerContext), c.target);
-                    break;
-                }
-                case 'Delay': {
-                    const value = await ScriptSystem.getValue(c.value, outerContext);
-                    await sleep(value);
-                    break;
-                }
-                case 'SwitchLanguage': {
-                    const language = await ScriptSystem.getValue(c.language, outerContext);
-                    iobrokerHandler.language = language;
-                    break;
-                }
-                case 'ToggleSignalValue': {
-                    const signal = await ScriptSystem.getValue(c.signal, outerContext);
-                    let state = await iobrokerHandler.connection.getState(signal);
-                    await iobrokerHandler.connection.setState(signal, !state?.val);
-                    break;
-                }
-                case 'SetSignalValue': {
-                    const signal = await ScriptSystem.getValue(c.signal, outerContext);
-                    await iobrokerHandler.connection.setState(signal, await ScriptSystem.getValue(c.value, outerContext));
-                    break;
-                }
-                case 'IncrementSignalValue': {
-                    const signal = await ScriptSystem.getValue(c.signal, outerContext);
-                    let state = await iobrokerHandler.connection.getState(signal);
-                    await iobrokerHandler.connection.setState(signal, state.val + await ScriptSystem.getValue(c.value, outerContext));
-                    break;
-                }
-                case 'DecrementSignalValue': {
-                    const signal = await ScriptSystem.getValue(c.signal, outerContext);
-                    let state = await iobrokerHandler.connection.getState(signal);
-                    await iobrokerHandler.connection.setState(signal, state.val - await ScriptSystem.getValue(c.value, outerContext));
-                    break;
-                }
-                case 'SetBitInSignal': {
-                    const signal = await ScriptSystem.getValue(c.signal, outerContext);
-                    let state = await iobrokerHandler.connection.getState(signal);
-                    let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
-                    const newVal = Long.fromNumber(state.val).or(mask).toNumber();
-                    await iobrokerHandler.connection.setState(signal, newVal);
-                    break;
-                }
-                case 'ClearBitInSignal': {
-                    const signal = await ScriptSystem.getValue(c.signal, outerContext);
-                    let state = await iobrokerHandler.connection.getState(signal);
-                    let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
-                    mask.negate();
-                    const newVal = Long.fromNumber(state.val).and(mask).toNumber();
-                    await iobrokerHandler.connection.setState(signal, newVal);
-                    break;
-                }
-                case 'ToggleBitInSignal': {
-                    const signal = await ScriptSystem.getValue(c.signal, outerContext);
-                    let state = await iobrokerHandler.connection.getState(signal);
-                    let mask = Long.fromNumber(1).shiftLeft(c.bitNumber);
-                    const newVal = Long.fromNumber(state.val).xor(mask).toNumber();
-                    await iobrokerHandler.connection.setState(signal, newVal);
-                    break;
-                }
-                case 'Javascript': {
-                    const script = await ScriptSystem.getValue(c.script, outerContext);
-                    let context = outerContext; // make context accessible from script
-                    context.shadowRoot = context.element.getRootNode();
-                    context.instance = context.shadowRoot.host;
-                    if (!c.compiledScript)
-                        c.compiledScript = new Function('context', script);
-                    c.compiledScript();
-                    break;
-                }
-                case 'SetElementProperty': {
-                    const name = await ScriptSystem.getValue(c.name, outerContext);
-                    const value = await ScriptSystem.getValue(c.value, outerContext);
-                    let host = outerContext.element.getRootNode().host;
-                    if (c.targetSelectorTarget == 'currentElement')
-                        host = outerContext.element;
-                    else if (c.targetSelectorTarget == 'parentElement')
-                        host = outerContext.element.parentElement;
-                    else if (c.targetSelectorTarget == 'parentScreen')
-                        host = host.getRootNode().host;
-                    let elements = [host];
-                    if (c.targetSelector)
-                        elements = host.shadowRoot.querySelectorAll(c.targetSelector);
-                    for (let e of elements) {
-                        if (c.target == 'attribute') {
-                            e.setAttribute(name, value);
-                        }
-                        else if (c.target == 'property') {
-                            e[name] = value;
-                        }
-                        else if (c.target == 'css') {
-                            e.style[name] = value;
-                        }
+                    else if (command.target == 'css') {
+                        e.style[name] = value;
                     }
-                    break;
                 }
-                case 'IobrokerSendTo': {
-                    const instance = await ScriptSystem.getValue(c.instance, outerContext);
-                    const command = await ScriptSystem.getValue(c.command, outerContext);
-                    const data = await ScriptSystem.getValue(c.data, outerContext);
-                    await iobrokerHandler.connection.sendTo(instance, command, data);
-                    break;
-                }
+                break;
+            }
+            case 'IobrokerSendTo': {
+                const instance = await ScriptSystem.getValue(command.instance, context);
+                const mycommand = await ScriptSystem.getValue(command.command, context);
+                const data = await ScriptSystem.getValue(command.data, context);
+                await iobrokerHandler.connection.sendTo(instance, mycommand, data);
+                break;
             }
         }
     }

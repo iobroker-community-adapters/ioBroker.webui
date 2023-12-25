@@ -178,8 +178,8 @@
             "propertyOrder": [
                 "type",
                 "screen",
-                "relativeSignalsPath",
                 "title",
+                "relativeSignalsPath",
                 "moveable",
                 "closeable",
                 "width",
@@ -373,9 +373,7 @@
                     "const": "SetSignalValue",
                     "type": "string"
                 },
-                "value": {
-                    "type": "string"
-                }
+                "value": {}
             },
             "propertyOrder": [
                 "type",

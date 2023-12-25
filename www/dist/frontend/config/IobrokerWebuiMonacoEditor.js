@@ -113,14 +113,6 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
     delete() {
         this._editor.trigger('', 'editor.action.clipboardDeleteAction', null);
     }
-    static async getCompiledJavascriptCode(model) {
-        const uri = model.uri;
-        //@ts-ignore
-        const worker = await monaco.languages.typescript.getTypeScriptWorker();
-        const client = await worker(uri);
-        const result = await client.getEmitOutput(uri.toString());
-        return result.outputFiles[0].text;
-    }
     async executeCommand(command) {
         if (command.type == 'save') {
             if (this.language === 'css') {
@@ -129,9 +121,8 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
                 else if (this.editPart === 'fontDeclarations')
                     iobrokerHandler.config.fontDeclarations = this.model.getValue();
             }
-            else if (this.language == 'typescript') {
-                iobrokerHandler.config.globalTypeScript = this.model.getValue();
-                iobrokerHandler.config.globalScript = await IobrokerWebuiMonacoEditor.getCompiledJavascriptCode(this.model);
+            else if (this.language == 'javascript') {
+                iobrokerHandler.config.globalScript = this.model.getValue();
             }
             await iobrokerHandler.saveConfig();
         }

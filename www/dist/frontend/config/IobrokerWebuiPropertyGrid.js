@@ -479,12 +479,18 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                     stringEditor.style.display = 'none';
                     boolEditor.style.display = 'none';
                     numberEditor.style.display = 'none';
-                    if (sel.value == 'string')
+                    if (sel.value == 'string') {
                         stringEditor.style.display = 'block';
-                    else if (sel.value == 'boolean')
+                        this.setPropertyValue(propertyPath, stringEditor.value);
+                    }
+                    else if (sel.value == 'boolean') {
                         boolEditor.style.display = 'block';
-                    else if (sel.value == 'number')
+                        this.setPropertyValue(propertyPath, boolEditor.checked);
+                    }
+                    else if (sel.value == 'number') {
                         numberEditor.style.display = 'block';
+                        this.setPropertyValue(propertyPath, numberEditor.valueAsNumber);
+                    }
                 };
                 sel.onchange = () => {
                     if (sel.value == 'null')

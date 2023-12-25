@@ -133,7 +133,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             contextMenu: (event => screenNodeCtxMenu(event, x)),
             dblclick: (e, d) => {
                 iobrokerHandler.getScreen(d.data.name).then(s => {
-                    window.appShell.openScreenEditor(d.data.name, 'screen', s.html, s.style, s.typeScript ?? s.script, s.settings);
+                    window.appShell.openScreenEditor(d.data.name, 'screen', s.html, s.style, s.script, s.settings);
                 });
             },
             data: { type: 'screen', name: x }
@@ -231,7 +231,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             title: 'Typescript',
             folder: false,
             dblclick: (e, data) => {
-                window.appShell.openGlobalScriptEditor(iobrokerHandler.config.globalTypeScript ?? '');
+                window.appShell.openGlobalScriptEditor(iobrokerHandler.config.globalScript ?? '');
             }
         };
     }
@@ -668,7 +668,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             contextMenu: (event => controlNodeCtxMenu(event, x)),
             dblclick: (e, d) => {
                 iobrokerHandler.getCustomControl(d.data.name).then(s => {
-                    window.appShell.openScreenEditor(d.data.name, 'control', s.html, s.style, s.typeScript ?? s.script, s.settings, s.properties);
+                    window.appShell.openScreenEditor(d.data.name, 'control', s.html, s.style, s.script, s.settings, s.properties);
                 });
             },
             data: { type: 'customcontrol', name: x }

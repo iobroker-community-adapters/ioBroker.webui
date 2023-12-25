@@ -1,4 +1,6 @@
 import './components/components.js';
+//TODO: OpenScreen
+//setTimeout
 export default {
     kind: 'categoryToolbox',
     contents: [
@@ -18,6 +20,10 @@ export default {
             name: 'System',
             categorystyle: 'system_category',
             contents: [
+                {
+                    kind: 'block',
+                    type: 'console',
+                },
                 {
                     kind: 'block',
                     type: 'debugger',
@@ -41,6 +47,20 @@ export default {
                     type: 'get_state',
                     inputs: {
                         OID: {
+                            shadow: {
+                                type: 'text',
+                                fields: {
+                                    TEXT: '',
+                                },
+                            },
+                        },
+                    },
+                },
+                {
+                    kind: 'block',
+                    type: 'get_sub_property',
+                    inputs: {
+                        PROPERTYPATH: {
                             shadow: {
                                 type: 'text',
                                 fields: {

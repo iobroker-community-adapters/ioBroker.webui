@@ -2,7 +2,6 @@ import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projec
 import { DocumentContainer, } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
-import { IobrokerWebuiMonacoEditor } from "./IobrokerWebuiMonacoEditor.js";
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend {
     _name;
     get name() { return this._name; }
@@ -23,7 +22,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         this._settings = settings ?? {};
         this.scriptModel = await window.appShell.javascriptEditor.createModel(script ?? '');
         if (this._type == 'control') {
-            this._properties = { ...properties } ?? {};
+            this._properties = properties ? { ...properties } : {};
         }
         this.documentContainer = new DocumentContainer(serviceContainer);
         this.documentContainer.additionalStylesheets = [
@@ -93,14 +92,13 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         if (command.type == 'save') {
             let html = this.documentContainer.content;
             let style = this.documentContainer.additionalData.model.getValue();
-            let typeScript = this.scriptModel.getValue();
-            let script = await IobrokerWebuiMonacoEditor.getCompiledJavascriptCode(this.scriptModel);
+            let script = this.scriptModel.getValue();
             if (this._type == 'screen') {
-                let screen = { html, style, typeScript, script, settings: this._settings };
+                let screen = { html, style, script, settings: this._settings };
                 await iobrokerHandler.saveScreen(this._name, screen);
             }
             else {
-                let control = { html, style, typeScript, script, settings: this._settings, properties: this._properties };
+                let control = { html, style, script, settings: this._settings, properties: this._properties };
                 await iobrokerHandler.saveCustomControl(this._name, control);
             }
         }
