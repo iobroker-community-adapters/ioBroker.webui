@@ -198,7 +198,9 @@ export async function registerDesignerAddons(serviceContainer) {
                             return obj.module;
                         if (obj?.default)
                             return obj.default;
-                        return obj?.node;
+                        if (obj?.node)
+                            return obj?.node;
+                        return obj;
                     };
                     let getImportFlat = (obj) => {
                         let i = getImport(obj);
@@ -221,12 +223,10 @@ export async function registerDesignerAddons(serviceContainer) {
                         try {
                             if (exp === '.')
                                 continue;
-                            let nm = exp;
-                            if (nm.startsWith('.'))
-                                nm = nm.substring(1);
-                            if (nm.startsWith('/'))
-                                nm = nm.substring(1);
-                            this.importMap.imports[packageJsonObj.name + '/' + nm] = basePath + removeLeading(getImportFlat(packageJsonObj.exports[exp]), '/');
+                            if (exp.startsWith('./')) {
+                                let nm = exp.substring(2);
+                                this.importMap.imports[packageJsonObj.name + '/' + nm] = basePath + removeLeading(getImportFlat(packageJsonObj.exports[exp]), '/');
+                            }
                         }
                         catch (err) {
                             this._adapter.log.error("error creating importmap, " + exp + " in package: " + packageJsonObj.name + ", " + err);
