@@ -3,9 +3,7 @@
 Blockly.Blocks['open_screen'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField('open screen')
-            //@ts-ignore
-            .appendField(new Blockly.FieldDropdown([["property", "PROPERTY"], ["attribute", "ATTRIBUTE"], ["style", "STYLE"]]), "TARGET");
+            .appendField('open screen');
         this.appendValueInput('SCREEN')
             .setCheck('String')
             .appendField('screen');
