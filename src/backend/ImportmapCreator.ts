@@ -256,7 +256,7 @@ export async function registerDesignerAddons(serviceContainer) {
                                 continue;
                             if (exp.startsWith('./')) {
                                 let nm = exp.substring(2);
-                                this.importMap.imports[packageJsonObj.name + '/' + nm] = basePath + removeLeading(getImportFlat(packageJsonObj.exports[exp]), '/');
+                                this.importMap.imports[packageJsonObj.name + '/' + nm] = basePath + removeLeading(getImportFlat(packageJsonObj.exports[exp]), '.');
                             }
                         } catch (err) {
                             this._adapter.log.error("error creating importmap, " + exp + " in package: " + packageJsonObj.name + ", " + err);
