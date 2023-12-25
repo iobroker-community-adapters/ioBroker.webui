@@ -1,4 +1,4 @@
-import { ScriptSystem } from "../scripting/ScriptSystem";
+import { ScriptSystem } from "../scripting/ScriptSystem.js";
 export class Runtime {
     static openScreen(config) {
         return ScriptSystem.runScriptCommand({ type: 'OpenScreen', ...config }, null);
