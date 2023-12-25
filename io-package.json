@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.22.3",
+    "version": "0.22.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.22.4": {
+        "en": "work on export directive",
+        "de": "arbeit an der exportrichtlinie",
+        "ru": "работа над директивой экспорта",
+        "pt": "trabalho sobre a directiva de exportação",
+        "nl": "werk aan export-directeur",
+        "fr": "travaux sur la directive sur l ' exportation",
+        "it": "lavori di direttiva sull'esportazione",
+        "es": "trabajo sobre la directriz de exportación",
+        "pl": "prace nad dyrektywą eksportu",
+        "uk": "робота на експортному директиві",
+        "zh-cn": "出口指令的工作"
+      },
       "0.22.3": {
         "en": "fix missing .js extensions",
         "de": "fehlende .js erweiterungen beheben",
@@ -106,19 +119,6 @@
         "pl": "blokady",
         "uk": "більше команд в блоклі",
         "zh-cn": "b. 被阻挠的指挥"
-      },
-      "0.21.1": {
-        "en": "fixed paths",
-        "de": "feste wege",
-        "ru": "фиксированные пути",
-        "pt": "caminhos fixos",
-        "nl": "vertaling:",
-        "fr": "voies fixes",
-        "it": "percorsi fissi",
-        "es": "caminos fijos",
-        "pl": "ścieżka stała",
-        "uk": "фіксовані доріжки",
-        "zh-cn": "固定途径"
       }
     },
     "icon": "logo.png",

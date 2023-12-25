@@ -1,6 +1,6 @@
 {
   "name": "iobroker.webui",
-  "version": "0.22.3",
+  "version": "0.22.4",
   "description": "ioBroker webui",
   "type": "module",
   "main": "dist/backend/main.js",
