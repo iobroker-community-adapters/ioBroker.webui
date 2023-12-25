@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.22.5",
+    "version": "0.22.6",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.22.6": {
+        "en": "and one more fix on importmaps",
+        "de": "und eine weitere fixierung auf importmaps",
+        "ru": "и еще один фикс на импортных картах",
+        "pt": "e mais uma correção no importmaps",
+        "nl": "en nog een fix op importmaps",
+        "fr": "et une autre correction sur les cartes d'importation",
+        "it": "e un altro fix su importmaps",
+        "es": "y una fijación más en los mapas de importación",
+        "pl": "i jedna próba importowania",
+        "uk": "і ще одна фіксація на імпортні карти",
+        "zh-cn": "一、关于进口马普斯的附加条件"
+      },
       "0.22.5": {
         "en": "more fixes with import map",
         "de": "mehr fixierungen mit importkarte",
@@ -106,19 +119,6 @@
         "pl": "prace nad budową (ale nie są jeszcze gotowe, opóźnione do blokowania ESM)\ntrąbka z skryptami\nusunąć typescriptus, używa javascriptu bezpośrednio\nwartość typowa dla funkcji SetValue",
         "uk": "робота над створенням (але не готово, затриманий до блоклі ЄСМ)\nвиправлення помилок з скриптами\nвидалити ш┐щцца, використовуйте javascript безпосередньо\nтиповане значення на функції SetValue",
         "zh-cn": "布置工作(但尚未准备,拖延到底是ESM)\nb 写信\n摘录\na. 特有职能的类型价值"
-      },
-      "0.21.3": {
-        "en": "fix set style",
-        "de": "fixed style",
-        "ru": "fix стиль",
-        "pt": "corrigir o estilo do conjunto",
-        "nl": "stijl",
-        "fr": "fix style",
-        "it": "fisso set stile",
-        "es": "estilo set",
-        "pl": "styl",
-        "uk": "фіксований стиль",
-        "zh-cn": "f 固定风格"
       }
     },
     "icon": "logo.png",
