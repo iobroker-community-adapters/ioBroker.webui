@@ -52,7 +52,7 @@
     "@iobroker/testing": "^4.1.0",
     "@node-projects/base-custom-webcomponent": "0.21.3",
     "@node-projects/lean-he-esm": "^3.3.0",
-    "@node-projects/node-html-parser-esm": "^6.1.5",
+    "@node-projects/node-html-parser-esm": "^6.2.0",
     "@node-projects/web-component-designer": "^0.1.45",
     "@node-projects/web-component-designer-codeview-monaco": "^0.1.11",
     "@node-projects/web-component-designer-htmlparserservice-nodehtmlparser": "^0.1.4",
