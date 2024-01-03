@@ -336,6 +336,9 @@ export class IobrokerWebuiBindingsHelper {
                         cleanupCalls = [];
                     cleanupCalls.push(() => root.removeEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback));
                     IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i);
+                    if (binding[1].twoWay) {
+                        IobrokerWebuiBindingsHelper.addTwoWayBinding(binding, element, v => root[nm] = v);
+                    }
                 }
             } else {
                 if (s.includes('{')) {
@@ -344,35 +347,7 @@ export class IobrokerWebuiBindingsHelper {
                         cleanupCalls = [];
                     cleanupCalls.push(() => indirectSignal.dispose());
                     if (binding[1].twoWay) {
-                        for (let e of binding[1].events) {
-                            const evt = element[e];
-                            if (binding[1].expressionTwoWay) {
-                                if (!binding[1].compiledExpressionTwoWay) {
-                                    if (binding[1].expressionTwoWay.includes('return '))
-                                        binding[1].compiledExpressionTwoWay = new Function(<any>['value'], binding[1].expressionTwoWay);
-                                    else
-                                        binding[1].compiledExpressionTwoWay = new Function(<any>['value'], 'return ' + binding[1].expressionTwoWay);
-                                }
-                            }
-
-                            if (evt instanceof TypedEvent) {
-                                evt.on(() => {
-                                    let v = element[binding[0]];
-                                    if (binding[1].compiledExpressionTwoWay)
-                                        v = binding[1].compiledExpressionTwoWay(v);
-                                    if (binding[1].target == BindingTarget.property)
-                                        indirectSignal.setState(v);
-                                })
-                            } else {
-                                element.addEventListener(e, () => {
-                                    let v = element[binding[0]];
-                                    if (binding[1].compiledExpressionTwoWay)
-                                        v = binding[1].compiledExpressionTwoWay(v);
-                                    if (binding[1].target == BindingTarget.property)
-                                        indirectSignal.setState(v);
-                                });
-                            }
-                        }
+                        IobrokerWebuiBindingsHelper.addTwoWayBinding(binding, element, v => indirectSignal.setState(v));
                     }
                 } else {
                     if (binding[1].historic) {
@@ -400,35 +375,7 @@ export class IobrokerWebuiBindingsHelper {
                         iobrokerHandler.connection.subscribeState(s, cb);
                         iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i));
                         if (binding[1].twoWay) {
-                            if (binding[1].expressionTwoWay) {
-                                if (!binding[1].compiledExpressionTwoWay) {
-                                    if (binding[1].expressionTwoWay.includes('return '))
-                                        binding[1].compiledExpressionTwoWay = new Function(<any>['value'], binding[1].expressionTwoWay);
-                                    else
-                                        binding[1].compiledExpressionTwoWay = new Function(<any>['value'], 'return ' + binding[1].expressionTwoWay);
-                                }
-                            }
-
-                            for (let e of binding[1].events) {
-                                const evt = element[e];
-                                if (evt instanceof TypedEvent) {
-                                    evt.on(() => {
-                                        let v = element[binding[0]];
-                                        if (binding[1].compiledExpressionTwoWay)
-                                            v = binding[1].compiledExpressionTwoWay(v);
-                                        if (binding[1].target == BindingTarget.property)
-                                            iobrokerHandler.connection.setState(s, v);
-                                    })
-                                } else {
-                                    element.addEventListener(e, () => {
-                                        let v = element[binding[0]];
-                                        if (binding[1].compiledExpressionTwoWay)
-                                            v = binding[1].compiledExpressionTwoWay(v);
-                                        if (binding[1].target == BindingTarget.property)
-                                            iobrokerHandler.connection.setState(s, v);
-                                    });
-                                }
-                            }
+                            IobrokerWebuiBindingsHelper.addTwoWayBinding(binding, element, v => iobrokerHandler.connection.setState(s, v));
                         }
                     }
                 }
@@ -447,22 +394,56 @@ export class IobrokerWebuiBindingsHelper {
         }
     }
 
-    static handleValueChanged(element: Element, binding: namedBinding, value: any, valuesObject: any[], index: number) {
-        let v: (number | boolean | string) = value;
+    private static addTwoWayBinding(binding: namedBinding, element: Element, setter: (value) => void) {
+        if (binding[1].expressionTwoWay) {
+            if (!binding[1].compiledExpressionTwoWay) {
+                if (binding[1].expressionTwoWay.includes('return '))
+                    binding[1].compiledExpressionTwoWay = new Function(<any>['value'], binding[1].expressionTwoWay);
+                else
+                    binding[1].compiledExpressionTwoWay = new Function(<any>['value'], 'return ' + binding[1].expressionTwoWay);
+            }
+        }
 
+        for (let e of binding[1].events) {
+            const evt = element[e];
+            if (evt instanceof TypedEvent) {
+                evt.on(() => {
+                    let v = element[binding[0]];
+                    v = IobrokerWebuiBindingsHelper.parseValueWithType(v, binding);
+                    if (binding[1].compiledExpressionTwoWay)
+                        v = binding[1].compiledExpressionTwoWay(v);
+                    setter(v);
+                })
+            } else {
+                element.addEventListener(e, () => {
+                    let v = element[binding[0]];
+                    v = IobrokerWebuiBindingsHelper.parseValueWithType(v, binding);
+                    if (binding[1].compiledExpressionTwoWay)
+                        v = binding[1].compiledExpressionTwoWay(v);
+                    setter(v);
+                });
+            }
+        }
+    }
+
+    private static parseValueWithType(value, binding: namedBinding) {
         if (binding[1].type) {
             switch (binding[1].type) {
                 case 'number':
-                    v = parseFloat(<any>v);
-                    break;
+                    return parseFloat(<any>value);
                 case 'boolean':
-                    v = v === true || v === 'true' || !!parseInt(<any>v);
-                    break;
+                    return value === true || value === 'true' || !!parseInt(<any>value);
                 case 'string':
-                    v = v.toString();
-                    break;
+                    return value.toString();
             }
         }
+        return value;
+    }
+
+    static handleValueChanged(element: Element, binding: namedBinding, value: any, valuesObject: any[], index: number) {
+        let v: (number | boolean | string) = value;
+        //should this be done??
+        v = IobrokerWebuiBindingsHelper.parseValueWithType(v, binding);
         if (binding[1].expression) {
             valuesObject[index] = value;
             if (!binding[1].compiledExpression) {
