@@ -98,14 +98,12 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
                     serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'checked', binding);
                     di.setAttribute("type", "checkbox");
                 } else if (obj?.common?.role == 'date') {
-                    binding.expression = "new Date(__0).toISOString().split('.')[0]";
-                    binding.expressionTwoWay = "new Date(value).getTime()";
-                    binding.twoWay = false;
-                    serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value', binding);
-                    di.setAttribute("type", "datetime-local");
+                    binding.twoWay = twoWay;
+                    serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value-as-number', binding);
+                    di.setAttribute("type", "date");
                     di.setAttribute("readonly", "");
                 } else if (obj?.common?.role == 'value.time') {
-                    binding.twoWay = true;
+                    binding.twoWay = twoWay;
                     serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value-as-number', binding);
                     di.setAttribute("type", "datetime-local");
                     di.setAttribute("readonly", "");
