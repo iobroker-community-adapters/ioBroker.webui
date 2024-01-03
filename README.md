@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 0.23.2 (2024-01-03)
 - again fix runtime was not initialized
 
 ### 0.23.1 (2024-01-03)

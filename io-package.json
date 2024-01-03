@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.23.1",
+    "version": "0.23.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.23.2": {
+        "en": "again fix runtime was not initialized",
+        "de": "wieder fix laufzeit wurde nicht initialisiert",
+        "ru": "снова исправить runtime не было инициализировано",
+        "pt": "novamente corrigir o tempo de execução não foi inicializado",
+        "nl": "weer reparatie was niet gestart",
+        "fr": "réparer le temps de course n'a pas été initialisé",
+        "it": "di nuovo fix runtime non è stato inizializzato",
+        "es": "no fue inicializado",
+        "pl": "ponowny czas nie został zainicjowany",
+        "uk": "знову виправити runtime не ініціалізовано",
+        "zh-cn": "不再开始时间"
+      },
       "0.23.1": {
         "en": "fix runtime was not initialized",
         "de": "fixe laufzeit wurde nicht initialisiert",
@@ -106,19 +119,6 @@
         "pl": "prace nad dyrektywą eksportu",
         "uk": "робота на експортному директиві",
         "zh-cn": "出口指令的工作"
-      },
-      "0.22.3": {
-        "en": "fix missing .js extensions",
-        "de": "fehlende .js erweiterungen beheben",
-        "ru": "исправить отсутствует .js расширения",
-        "pt": "corrigir extensões .js ausentes",
-        "nl": "vertaling:",
-        "fr": "correction des extensions .js manquantes",
-        "it": "fissare le estensioni mancanti .js",
-        "es": "arreglar extensiones .js desaparecidos",
-        "pl": "naprawa braków.js extension",
-        "uk": "виправити відсутні розширення .js",
-        "zh-cn": "fix 遗漏。"
       }
     },
     "icon": "logo.png",
