@@ -40,7 +40,7 @@
   "dependencies": {
     "@blockly/zoom-to-fit": "^5.0.11",
     "@iobroker/adapter-core": "^3.0.4",
-    "@types/node": "^20.10.5",
+    "@types/node": "^20.10.6",
     "blockly": "^10.3.0"
   },
   "devDependencies": {
@@ -52,7 +52,7 @@
     "@iobroker/testing": "^4.1.0",
     "@node-projects/base-custom-webcomponent": "0.21.3",
     "@node-projects/lean-he-esm": "^3.3.0",
-    "@node-projects/node-html-parser-esm": "^6.1.5",
+    "@node-projects/node-html-parser-esm": "^6.2.0",
     "@node-projects/web-component-designer": "^0.1.45",
     "@node-projects/web-component-designer-codeview-monaco": "^0.1.11",
     "@node-projects/web-component-designer-htmlparserservice-nodehtmlparser": "^0.1.4",
@@ -60,7 +60,7 @@
     "@node-projects/web-component-designer-widgets-wunderbaum": "^0.1.10",
     "@types/json-schema": "^7.0.15",
     "@web/dev-server": "^0.4.1",
-    "esbuild": "^0.19.10",
+    "esbuild": "^0.19.11",
     "chai": "^4.3.10",
     "chai-as-promised": "^7.1.1",
     "construct-style-sheets-polyfill": "^3.1.0",
