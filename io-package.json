@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.23.0",
+    "version": "0.23.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.23.1": {
+        "en": "fix runtime was not initialized",
+        "de": "fixe laufzeit wurde nicht initialisiert",
+        "ru": "исправление runtime не было инициализировано",
+        "pt": "correção runtime não foi inicializado",
+        "nl": "de reparatie was niet gestart",
+        "fr": "temps de fonctionnement fixe n'a pas été initialisé",
+        "it": "fix runtime non è stato inizializzato",
+        "es": "tiempo de ejecución fijado no fue inicializado",
+        "pl": "czas naprawy nie został zainicjowany",
+        "uk": "виправлення часу виконання не було ініціалізовано",
+        "zh-cn": "固定经营时间没有初步化"
+      },
       "0.23.0": {
         "en": "todo, support 2way bindings too custom properties\ncode completition for iobrokerHandler and runtime\nsimple scripts, access value of event",
         "de": "todo, support 2way bindungen zu benutzerdefinierte eigenschaften\ncode completition für iobroker Handler und Laufzeit\neinfache skripte, zugriffswert der veranstaltung",
@@ -106,19 +119,6 @@
         "pl": "naprawa braków.js extension",
         "uk": "виправити відсутні розширення .js",
         "zh-cn": "fix 遗漏。"
-      },
-      "0.22.2": {
-        "en": "fix scripts",
-        "de": "skripte fixieren",
-        "ru": "исправить скрипты",
-        "pt": "corrigir scripts",
-        "nl": "vertaling:",
-        "fr": "corriger les scripts",
-        "it": "correggere gli script",
-        "es": "corregir scripts",
-        "pl": "scenariusz",
-        "uk": "фіксувати сценарії",
-        "zh-cn": "fix 说明"
       }
     },
     "icon": "logo.png",
