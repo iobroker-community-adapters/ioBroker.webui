@@ -1,6 +1,7 @@
 import './ScreenViewer.js';
 import './HabPanelLikeMenu.js';
 import './TranslateableText.js';
+import '../common/Runtime.js';
 
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
 import { generateCustomControl } from './CustomControls.js';

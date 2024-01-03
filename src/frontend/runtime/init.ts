@@ -1,5 +1,4 @@
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
-import '../common/Runtime.js';
 import { LazyLoader } from '@node-projects/base-custom-webcomponent';
 import type { ScreenViewer } from './ScreenViewer.js';
 
