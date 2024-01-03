@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix runtime was not initialized
+
 ### 0.23.0 (2024-01-03)
 - todo, support 2way bindings too custom properties
 - code completition for iobrokerHandler and runtime
