@@ -10,4 +10,4 @@ export class Runtime {
         return ScriptSystem.runScriptCommand({ type: 'OpenDialog', ...config }, null);
     }
 }
-window.runtime = Runtime;
+window.RUNTIME = Runtime;

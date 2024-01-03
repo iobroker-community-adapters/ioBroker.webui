@@ -22,13 +22,13 @@ interface State {
     user?: string;
 }
 
-var iobrokerHandler: {
+var IOB: {
     getState(id: string): Promise<State>;
     setState(id: string, val: State | StateValue, ack?: boolean): Promise<void>;
     sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected' | 'uiChangedView', data?: string): Promise<void>;
 };
 
-var runtime: {
+var RUNTIME: {
     openScreen(config: {
         /**
          * Name of the Screen

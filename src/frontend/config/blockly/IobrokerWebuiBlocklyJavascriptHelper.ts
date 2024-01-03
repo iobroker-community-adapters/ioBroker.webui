@@ -26,9 +26,9 @@ export async function generateEventCodeFromBlockly(data: any): Promise<(event: E
     //@ts-ignore
     Blockly.JavaScript.addReservedWords('extractPart');
     //@ts-ignore
-    Blockly.JavaScript.addReservedWords('iobrokerHandler');
+    Blockly.JavaScript.addReservedWords('IOB');
     //@ts-ignore
-    Blockly.JavaScript.addReservedWords('Runtime');
+    Blockly.JavaScript.addReservedWords('RUNTIME');
     //@ts-ignore
     let code = Blockly.JavaScript.workspaceToCode(workspace);
     const scriptUrl = URL.createObjectURL(new Blob([prefix + code + postfix], { type: 'application/javascript' }));

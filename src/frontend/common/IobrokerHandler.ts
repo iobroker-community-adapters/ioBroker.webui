@@ -458,4 +458,4 @@ export class IobrokerHandler {
 }
 
 export const iobrokerHandler = IobrokerHandler.instance;
-window.iobrokerHandler = iobrokerHandler;
+window.IOB = iobrokerHandler;
