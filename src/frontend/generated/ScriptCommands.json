@@ -35,6 +35,35 @@
             ],
             "type": "object"
         },
+        "Console": {
+            "properties": {
+                "message": {
+                    "description": "console message",
+                    "type": "string"
+                },
+                "target": {
+                    "description": "target where to log",
+                    "enum": [
+                        "debug",
+                        "error",
+                        "info",
+                        "log",
+                        "warn"
+                    ],
+                    "type": "string"
+                },
+                "type": {
+                    "const": "Console",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "target",
+                "message"
+            ],
+            "type": "object"
+        },
         "DecrementSignalValue": {
             "properties": {
                 "signal": {
@@ -275,6 +304,9 @@
                 },
                 {
                     "$ref": "#/definitions/ToggleBitInSignal"
+                },
+                {
+                    "$ref": "#/definitions/Console"
                 },
                 {
                     "$ref": "#/definitions/Javascript"

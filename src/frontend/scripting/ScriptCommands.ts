@@ -1,6 +1,6 @@
 export declare type ScriptCommands = OpenScreen | OpenUrl | OpenDialog | CloseDialog |
     ToggleSignalValue | SetSignalValue | IncrementSignalValue | DecrementSignalValue |
-    SetBitInSignal | ClearBitInSignal | ToggleBitInSignal |
+    SetBitInSignal | ClearBitInSignal | ToggleBitInSignal | Console |
     Javascript | SetElementProperty | Delay | IobrokerSendTo | SwitchLanguage;
 
 
@@ -182,6 +182,18 @@ export interface Delay {
      * miliseconds to delay
      */
     value: number;
+}
+
+export interface Console {
+    type: 'Console';
+     /**
+     * target where to log
+     */
+     target: 'log' | 'info' | 'debug' | 'warn' | 'error' ;
+    /**
+     * console message
+     */
+    message: string;
 }
 
 export interface SwitchLanguage {

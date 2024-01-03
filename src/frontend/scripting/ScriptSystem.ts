@@ -70,6 +70,13 @@ export class ScriptSystem {
                 break;
             }
 
+            case 'Console': {
+                const target = await ScriptSystem.getValue(command.target, context);
+                const message = await ScriptSystem.getValue(command.message, context);
+                console[target](message);
+                break;
+            }
+
             case 'SwitchLanguage': {
                 const language = await ScriptSystem.getValue(command.language, context);
                 iobrokerHandler.language = language;
@@ -183,9 +190,23 @@ export class ScriptSystem {
                     let sng = await iobrokerHandler.connection.getState((<IScriptMultiplexValue>value).name);
                     return sng.val;
                 }
+                case 'event': {
+                    let obj = outerContext.event;
+                    if ((<IScriptMultiplexValue>value).name)
+                        obj = ScriptSystem.extractPart(obj, (<IScriptMultiplexValue>value).name);
+                    return obj;
+                }
             }
         }
         return value;
+    }
+
+    static extractPart(obj: any, propertyPath: string) {
+        let retVal = obj;
+        for (let p of propertyPath.split('.')) {
+            retVal = retVal?.[p];
+        }
+        return retVal;
     }
 
     static async assignAllScripts(javascriptCode: string, shadowRoot: ShadowRoot, instance: HTMLElement): Promise<ICustomControlScript> {

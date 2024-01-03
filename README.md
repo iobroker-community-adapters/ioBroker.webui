@@ -129,6 +129,12 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+
+### __WORK IN PROGRESS__
+- todo, support 2way bindings too custom properties
+- code completition for iobrokerHandler and runtime
+- simple scripts, access value of event
+
 ### 0.22.7 (2023-12-25)
 - and one more...
 

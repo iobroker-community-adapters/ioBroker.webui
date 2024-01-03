@@ -213,6 +213,7 @@
                 },
                 "source": {
                     "enum": [
+                        "event",
                         "property",
                         "signal"
                     ],
