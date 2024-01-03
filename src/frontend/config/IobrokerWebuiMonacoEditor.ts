@@ -28,7 +28,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
     public async createModel(text: string) {
         await IobrokerWebuiMonacoEditor.initMonacoEditor();
         //@ts-ignore
-        return monaco.editor.createModel(text, this.language);
+        return monaco.editor.createModel(text, this.getLanguageName());
     }
     private _model: monaco.editor.ITextModel;
     public get model() {
@@ -42,6 +42,12 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
 
     language: 'css' | 'javascript' = 'css';
     editPart: 'local' | 'globalStyle' | 'fontDeclarations';
+
+    private getLanguageName() {
+        if (this.language == 'javascript')
+            return 'typescript';
+        return this.language;
+    }
 
     private _container: HTMLDivElement;
     private _editor: monaco.editor.IStandaloneCodeEditor;
@@ -101,7 +107,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
         //@ts-ignore
         this._editor = monaco.editor.create(this._container, {
             automaticLayout: true,
-            language: this.language,
+            language: this.getLanguageName(),
             minimap: {
                 size: 'fill'
             },

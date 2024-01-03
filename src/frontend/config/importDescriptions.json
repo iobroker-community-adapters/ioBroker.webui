@@ -1,22 +1,10 @@
 [
     {
-        "name": "/webui/dist/frontend/common/IobrokerHandler.js",
-        "file": "/webui/dist/frontend/common/IobrokerHandler.d.ts"
+        "name": "",
+        "file": "/webui/dist/frontend/common/Common.globals.d.ts"
     },
     {
-        "name": "/webui/dist/frontend/common/Helper.js",
-        "file": "/webui/dist/frontend/common/Helper.d.ts"
-    },
-    {
-        "name": "/webui/dist/frontend/common/Runtime.js",
-        "file": "/webui/dist/frontend/common/Runtime.d.ts"
-    },
-    {
-        "name": "@iobroker/socket-client",
-        "file": "/webui/node_modules/@iobroker/socket-client/dist/esm/Connection.d.ts"
-    },
-    {
-        "name": "@node-projects/base-custom-webcomponent",
+        "name": "inmemory://model/@node-projects/base-custom-webcomponent.d.ts",
         "file": "/webui/node_modules/@node-projects/base-custom-webcomponent/dist/BaseCustomWebComponent.d.ts"
     }
 ]

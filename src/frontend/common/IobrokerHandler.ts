@@ -6,37 +6,6 @@ import { IControl } from "../interfaces/IControl.js";
 import { sleep } from "../helper/Helper.js";
 import { IGlobalScript } from "../interfaces/IGlobalScript.js";
 
-//iob types as export so code completition in ui could be used
-export type StateValue = string | number | boolean | null;
-export interface State {
-    /** The value of the state. */
-    val: StateValue;
-
-    /** Direction flag: false for desired value and true for actual value. Default: false. */
-    ack: boolean;
-
-    /** Unix timestamp. Default: current time */
-    ts: number;
-
-    /** Unix timestamp of the last time the value changed */
-    lc: number;
-
-    /** Name of the adapter instance which set the value, e.g. "system.adapter.web.0" */
-    from: string;
-
-    /** The user who set this value */
-    user?: string;
-
-    /** Optional time in seconds after which the state is reset to null */
-    expire?: number;
-
-    /** Optional quality of the state value */
-    q?: number;
-
-    /** Optional comment */
-    c?: string;
-}
-
 declare global {
     interface Window {
         iobrokerHost: string;
@@ -49,7 +18,7 @@ declare global {
 const screenFileExtension = ".screen";
 const controlFileExtension = ".control";
 
-class IobrokerHandler {
+export class IobrokerHandler {
 
     static instance = new IobrokerHandler();
 
@@ -445,7 +414,7 @@ class IobrokerHandler {
         return this.connection.setState(id, val, ack);
     }
 
-    async sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected' | 'uiChangedView', data: string): Promise<void> {
+    async sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected' | 'uiChangedView', data?: string): Promise<void> {
         let p = [
             this.connection.setState(this.namespace + '.control.data', { val: data }),
             this.connection.setState(this.namespace + '.control.clientIds', { val: this.clientId })
@@ -489,3 +458,4 @@ class IobrokerHandler {
 }
 
 export const iobrokerHandler = IobrokerHandler.instance;
+window.iobrokerHandler = iobrokerHandler;

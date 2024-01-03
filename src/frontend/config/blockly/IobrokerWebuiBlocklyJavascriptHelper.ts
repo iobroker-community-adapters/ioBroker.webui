@@ -1,9 +1,14 @@
 //import Blockly from 'blockly';
 import './components/components.js';
 
-const prefix = `import { iobrokerHandler } from "${window.iobrokerWebuiRootUrl}dist/frontend/common/IobrokerHandler.js";
-import { extractPart } from "${window.iobrokerWebuiRootUrl}dist/frontend/common/Helper.js";
-import { Runtime } from "${window.iobrokerWebuiRootUrl}dist/frontend/common/Runtime.js";
+//TODO: remove imports, only leave Runtime
+const prefix = `function extractPart(obj: any, propertyPath: string) {
+    let retVal = obj;
+    for (let p of propertyPath.split('.')) {
+        retVal = retVal?.[p];
+    }
+    return retVal;
+}
 
 export async function run(eventData, shadowRoot) {
 `;

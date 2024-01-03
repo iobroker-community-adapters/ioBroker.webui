@@ -2,7 +2,7 @@
 Blockly.Blocks['set_element'] = {
     init: function () {
         this.appendDummyInput()
-            .appendField('set element')
+            .appendField('setElement')
             //@ts-ignore
             .appendField(new Blockly.FieldDropdown([["property", "PROPERTY"], ["attribute", "ATTRIBUTE"], ["style", "STYLE"]]), "TARGET");
 

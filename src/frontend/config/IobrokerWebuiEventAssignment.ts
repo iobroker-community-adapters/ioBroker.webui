@@ -222,11 +222,7 @@ export function ${jsName}(event, eventRaisingElement, shadowRoot, instance) {
 }
 `;
                     if (!sc)
-                        sc = `import { iobrokerHandler } from "/webui/dist/frontend/common/IobrokerHandler.js";
-import { Runtime } from "/webui/dist/frontend/common/Runtime.js";
-
-`;
-                    screenEditor.scriptModel.setValue(sc + templateScript);
+                        screenEditor.scriptModel.setValue(templateScript);
                 } else {
                     //@ts-ignore
                     window.appShell.javascriptEditor.setSelection(funcDecl.loc.start.line, funcDecl.loc.start.column, funcDecl.loc.end.line, funcDecl.loc.end.column + 1);
