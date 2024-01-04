@@ -69,7 +69,7 @@
     "dock-spawn-ts": "^2.523.2",
     "es-module-shims": "^1.8.2",
     "eslint": "^8.56.0",
-    "esprima-next": "^5.8.4",
+    "esprima-next": "^6.0.1",
     "gulp": "^4.0.2",
     "gulp-git": "^2.10.1",
     "gulp-replace": "^1.1.4",
