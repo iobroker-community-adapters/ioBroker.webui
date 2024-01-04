@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.23.2",
+    "version": "0.23.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "0.23.3": {
+        "en": "add local valueAsNumber property",
+        "de": "lokalen Wert AsNumber Immobilien",
+        "ru": "добавить местное значение AsNumber недвижимость",
+        "pt": "adicionar valor local Propriedade AsNumber",
+        "nl": "plaatselijke waarde Vertaling:",
+        "fr": "ajouter la valeur locale AsNumber property",
+        "it": "aggiungere valore locale AsNumber proprietà",
+        "es": "añadir valor local AsNumber property",
+        "pl": "wartość lokalna własność Numbera",
+        "uk": "додати місцеве значення AsКількість нерухомості",
+        "zh-cn": "增加当地价值 简称"
+      },
       "0.23.2": {
         "en": "again fix runtime was not initialized",
         "de": "wieder fix laufzeit wurde nicht initialisiert",
@@ -106,19 +119,6 @@
         "pl": "naprawy z mapą importu",
         "uk": "більше виправлень з імпортною картою",
         "zh-cn": "进口图的更固定"
-      },
-      "0.22.4": {
-        "en": "work on export directive",
-        "de": "arbeit an der exportrichtlinie",
-        "ru": "работа над директивой экспорта",
-        "pt": "trabalho sobre a directiva de exportação",
-        "nl": "werk aan export-directeur",
-        "fr": "travaux sur la directive sur l ' exportation",
-        "it": "lavori di direttiva sull'esportazione",
-        "es": "trabajo sobre la directriz de exportación",
-        "pl": "prace nad dyrektywą eksportu",
-        "uk": "робота на експортному директиві",
-        "zh-cn": "出口指令的工作"
       }
     },
     "icon": "logo.png",
