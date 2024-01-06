@@ -17,6 +17,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     static readonly style = css`:host { overflow: hidden }`;
     #scriptObject: ICustomControlScript;
     #bindings: (() => void)[];
+    #eventListeners: [name: string, callback: (...args) => void][];
 
     constructor() {
         super();
@@ -31,13 +32,32 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
         this.#bindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
         this.#scriptObject = await ScriptSystem.assignAllScripts((<IControl>(<CustomControlInfo>(<any>this.constructor)[webuiCustomControlSymbol]).control).script, this.shadowRoot, this);
         this.#scriptObject?.connectedCallback?.(this);
+        for (let e of this.#eventListeners) {
+            this.addEventListener(e[0], e[1]);
+        }
     }
 
     disconnectedCallback() {
+        for (let e of this.#eventListeners) {
+            this.removeEventListener(e[0], e[1]);
+        }
         this.#scriptObject?.disconnectedCallback?.(this);
         for (const b of this.#bindings)
             b();
         this.#bindings = null;
+    }
+
+    _assignEvent(event: string, callback: (...args) => void): { remove: () => void } {
+        const arrayEl: [name: string, callback: (...args) => void] = [event, callback];
+        this.#eventListeners.push(arrayEl);
+        this.addEventListener(event, callback);
+        return {
+            remove: () => {
+                const index = this.#eventListeners.indexOf(arrayEl);
+                this.#eventListeners.splice(index, 1);
+                this.removeEventListener(event, callback);
+            }
+        }
     }
 
     _getRelativeSignalsPath(): string {

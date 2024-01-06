@@ -60,3 +60,24 @@ var RUNTIME: {
         top?: string;
     }): Promise<void>
 }
+
+interface BaseScreenViewerAndControl extends HTMLElement {
+    'constructor': {
+        style: CSSStyleSheet;
+        template: HTMLTemplateElement;
+    } & Function;
+
+    shadowRoot: ShadowRoot;
+    _getDomElement<T extends Element>(id: string): T;
+    _getDomElements<T extends Element>(selector: string): T[];
+    _assignEvent(event: string, callback: (...args) => void): { remove: () => void };
+    _getRelativeSignalsPath(): string;
+}
+
+interface ScreenViewer extends BaseScreenViewerAndControl {
+    screenName: string;
+    relativeSignalsPath: string;
+}
+
+interface BaseCustomControl extends BaseScreenViewerAndControl {
+}

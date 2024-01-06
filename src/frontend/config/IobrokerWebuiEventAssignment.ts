@@ -215,7 +215,7 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
 * @param {${eventItem.eventObjectName ?? 'Event'}} event
 * @param {Element} eventRaisingElement
 * @param {ShadowRoot} shadowRoot
-* @param {HTMLElement} instance
+* @param {BaseScreenViewerAndControl} instance
 */
 export function ${jsName}(event, eventRaisingElement, shadowRoot, instance) {
     

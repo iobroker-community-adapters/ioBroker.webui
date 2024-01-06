@@ -27,6 +27,8 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     private _screensChangedSubscription: Disposable;
     private _scriptObject: ICustomControlScript;
 
+    #eventListeners: [name: string, callback: (...args) => void][]
+
     @property()
     get screenName() {
         return this._screenName;
@@ -112,11 +114,30 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
                 this._loadScreen();
         });
         this._scriptObject?.connectedCallback?.(this);
+        for (let e of this.#eventListeners) {
+            this.addEventListener(e[0], e[1]);
+        }
     }
 
     disconnectedCallback() {
+        for (let e of this.#eventListeners) {
+            this.removeEventListener(e[0], e[1]);
+        }
         this._refreshViewSubscription?.dispose();
         this._screensChangedSubscription?.dispose()
         this._scriptObject?.disconnectedCallback?.(this);
+    }
+
+    _assignEvent(event: string, callback: (...args) => void): { remove: () => void } {
+        const arrayEl: [name: string, callback: (...args) => void] = [event, callback];
+        this.#eventListeners.push(arrayEl);
+        this.addEventListener(event, callback);
+        return {
+            remove: () => {
+                const index = this.#eventListeners.indexOf(arrayEl);
+                this.#eventListeners.splice(index, 1);
+                this.removeEventListener(event, callback);
+            }
+        }
     }
 }
