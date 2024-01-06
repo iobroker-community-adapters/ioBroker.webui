@@ -164,8 +164,7 @@ export default {
                 },
                 {
                     type: 'logic_null',
-                    kind: 'block',
-                    enabled: false,
+                    kind: 'block'
                 },
                 {
                     type: 'logic_ternary',
