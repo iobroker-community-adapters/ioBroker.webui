@@ -6,7 +6,7 @@ import { Wunderbaum } from 'wunderbaum';
 //@ts-ignore
 import wunderbaumStyle from 'wunderbaum/dist/wunderbaum.css' assert { type: 'css' };
 import { WunderbaumNode } from "wb_node";
-import { WbNodeData } from "types";
+import { WbNodeData, WbRenderEventType } from "types";
 
 export interface ITypeInfo {
     properties?: IProperty[];
@@ -214,6 +214,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
     public noCategory: boolean;
     public hideProperties: string;
     public expanded: boolean;
+    public showHead: boolean;
 
     public propertyNodeContextMenu = new TypedEvent<{ event: MouseEvent, property: IProperty, propertyPath: string, value: any }>;
 
@@ -247,7 +248,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                         const pPath = <string>node.data.propertyPath;
                         const currentValue = deepValue(this._selectedObject, pPath);
                         const pInfo = <IProperty>node.data.property;
-                        const ctl = await this._getEditorForType(pInfo, currentValue, pPath);
+                        const ctl = await this.getEditorForType(pInfo, currentValue, pPath, e);
                         if (ctl) {
                             if (pInfo.defaultValue && (ctl as HTMLInputElement).value == '' && !pInfo.nullable) {
                                 (ctl as HTMLInputElement).placeholder = pInfo.defaultValue;
@@ -292,15 +293,15 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
     }
 
     private updateDescription(data: WunderbaumNode) {
-        if (data.data.folder) {
+        if (data?.data?.folder) {
             return;
         }
-        this._getDomElement<HTMLElement>('descTitel').innerText = data.title;
-        if (data.data?.property?.description && data.data.property.defaultValue) {
+        this._getDomElement<HTMLElement>('descTitel').innerText = data?.title ?? '';
+        if (data?.data?.property?.description && data?.data?.property?.defaultValue) {
             this._getDomElement<HTMLElement>('descText').innerHTML = data.data.property.description + '<br />Default Value: ' + data.data.property.defaultValue;
-        } else if (data.data?.property?.description) {
+        } else if (data?.data?.property?.description) {
             this._getDomElement<HTMLElement>('descText').innerText = data.data.property.description;
-        } else if (data.data.property.defaultValue) {
+        } else if (data?.data.property.defaultValue) {
             this._getDomElement<HTMLElement>('descText').innerText = 'Default Value: ' + data.data.property.defaultValue;
         } else {
             this._getDomElement<HTMLElement>('descText').innerText = '';
@@ -386,11 +387,11 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
         this.propertyChanged.emit({ property: propertyPath, newValue: value });
     }
 
-    public getSpecialEditorForType: (property: IProperty, currentValue, propertyPath: string) => Promise<HTMLElement | null>
+    public getSpecialEditorForType: (property: IProperty, currentValue, propertyPath: string, wbRender: WbRenderEventType, additionalInfo?: any) => Promise<HTMLElement | null>
 
-    private async _getEditorForType(property: IProperty, currentValue, propertyPath: string): Promise<HTMLElement> {
+    public async getEditorForType(property: IProperty, currentValue, propertyPath: string, wbRender: WbRenderEventType, additionalInfo?: any): Promise<HTMLElement> {
         if (this.getSpecialEditorForType) {
-            let edt = await this.getSpecialEditorForType(property, currentValue, propertyPath);
+            let edt = await this.getSpecialEditorForType(property, currentValue, propertyPath, wbRender, additionalInfo);
             if (edt)
                 return edt;
         }
@@ -398,7 +399,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             case 'screen': {
                 let editor = document.createElement('select');
                 editor.style.width = '100%';
-                for (let v of await iobrokerHandler.getScreenNames()) {
+                for (let v of await iobrokerHandler.getAllScreenNames()) {
                     const op = document.createElement('option');
                     op.value = v;
                     op.innerText = v;
@@ -638,6 +639,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 this._head.innerText = '';
                 this.clear();
             }
+            this._head.style.display = this.showHead ? 'block' : 'none';
         }
     }
 
