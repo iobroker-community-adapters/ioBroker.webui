@@ -1,6 +1,6 @@
 export declare type ScriptCommands = OpenScreen | OpenUrl | OpenDialog | CloseDialog |
     ToggleSignalValue | SetSignalValue | IncrementSignalValue | DecrementSignalValue |
-    SetBitInSignal | ClearBitInSignal | ToggleBitInSignal | Console |
+    SetBitInSignal | ClearBitInSignal | ToggleBitInSignal | Console | CalculateSignalValue |
     Javascript | SetElementProperty | Delay | IobrokerSendTo | SwitchLanguage;
 
 
@@ -104,6 +104,20 @@ export interface IncrementSignalValue {
     value: number;
 }
 
+export interface CalculateSignalValue {
+    type: 'CalculateSignalValue';
+    /**
+     * Name of the ioBroker object
+     * @TJS-format signal
+     */
+    targetSignal: string;
+    /**
+     * A formula to calculate the new signal value, can contain other signals in angle brackets: {}
+     * Example: {adapter.0.level} * 100 + 30
+     */
+    formula: string;
+}
+
 export interface DecrementSignalValue {
     type: 'DecrementSignalValue';
     /**
@@ -186,10 +200,10 @@ export interface Delay {
 
 export interface Console {
     type: 'Console';
-     /**
-     * target where to log
-     */
-     target: 'log' | 'info' | 'debug' | 'warn' | 'error' ;
+    /**
+    * target where to log
+    */
+    target: 'log' | 'info' | 'debug' | 'warn' | 'error';
     /**
      * console message
      */

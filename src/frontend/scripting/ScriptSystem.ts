@@ -8,6 +8,7 @@ import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
 import { IoBrokerWebuiDialog } from "../helper/DialogHelper.js";
 import { generateEventCodeFromBlockly } from "../config/blockly/IobrokerWebuiBlocklyJavascriptHelper.js";
 import Long from 'long'
+import { parseBindingString } from "../helper/IobrokerWebuiBindingsHelper.js";
 
 export class ScriptSystem {
 
@@ -104,6 +105,22 @@ export class ScriptSystem {
                 const signal = await ScriptSystem.getValue(command.signal, context);
                 let state = await iobrokerHandler.connection.getState(signal);
                 await iobrokerHandler.connection.setState(signal, <any>state.val - await ScriptSystem.getValue(command.value, context));
+                break;
+            }
+            case 'CalculateSignalValue': {
+                const formula = await ScriptSystem.getValue(command.formula, context);
+                const targetSignal = await ScriptSystem.getValue(command.targetSignal, context);
+                let parsed = parseBindingString(formula);
+                let results = await Promise.all(parsed.signals.map(x => iobrokerHandler.getState(x)));
+                let nm = '';
+                for (let i = 0; i < parsed.parts.length - 1; i++) {
+                    let v = results[i].val;
+                    if (v == null)
+                        return;
+                    nm += v + parsed.parts[i + 1];
+                }
+                let result = eval(nm);
+                await iobrokerHandler.connection.setState(targetSignal, result);
                 break;
             }
 

@@ -15,6 +15,25 @@ export const bindingPrefixContent = 'bind-content:';
 
 export type namedBinding = [name: string, binding: IIobrokerWebuiBinding];
 
+export function parseBindingString(id: string) {
+    let parts: string[] = [];
+    let signals: string[] = [];
+    let tx = '';
+    for (let n = 0; n < id.length; n++) {
+        if (id[n] == '{') {
+            parts.push(tx);
+            tx = '';
+        } else if (id[n] == '}') {
+            signals.push(tx);
+            tx = '';
+        } else {
+            tx += id[n];
+        }
+    }
+    parts.push(tx);
+    return { parts, signals };
+}
+
 export class IndirectSignal {
     private parts: string[];
     private signals: string[];
@@ -37,21 +56,7 @@ export class IndirectSignal {
     }
 
     private parseIndirectBinding(id: string) {
-        let parts: string[] = [];
-        let signals: string[] = [];
-        let tx = '';
-        for (let n = 0; n < id.length; n++) {
-            if (id[n] == '{') {
-                parts.push(tx);
-                tx = '';
-            } else if (id[n] == '}') {
-                signals.push(tx);
-                tx = '';
-            } else {
-                tx += id[n];
-            }
-        }
-        parts.push(tx);
+        let { parts, signals } = parseBindingString(id);
         this.parts = parts;
         this.signals = signals;
     }

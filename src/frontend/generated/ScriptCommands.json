@@ -1,6 +1,29 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
+        "CalculateSignalValue": {
+            "properties": {
+                "formula": {
+                    "description": "A formula to calculate the new signal value, can contain other signals in angle brackets: {}\nExample: {adapter.0.level} * 100 + 30",
+                    "type": "string"
+                },
+                "targetSignal": {
+                    "description": "Name of the ioBroker object",
+                    "format": "signal",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "CalculateSignalValue",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "targetSignal",
+                "formula"
+            ],
+            "type": "object"
+        },
         "ClearBitInSignal": {
             "properties": {
                 "bitNumber": {
@@ -307,6 +330,9 @@
                 },
                 {
                     "$ref": "#/definitions/Console"
+                },
+                {
+                    "$ref": "#/definitions/CalculateSignalValue"
                 },
                 {
                     "$ref": "#/definitions/Javascript"
