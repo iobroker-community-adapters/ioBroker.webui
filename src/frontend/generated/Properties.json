@@ -207,22 +207,24 @@
         "IScriptMultiplexValue": {
             "properties": {
                 "name": {
-                    "description": "Name of the ioBroker object or the property of the component",
+                    "description": "Name of the ioBroker object or the property of the component\nor for example in a event : srcElement.value to get the value of a input wich raises the event",
                     "format": "signal",
                     "type": "string"
                 },
                 "source": {
+                    "description": "signal - read the value from a IOB object\nproperty - read the value from a property of the customControl (not usable in screens)\nevent - read the value of a property of the event object",
                     "enum": [
                         "event",
                         "property",
                         "signal"
                     ],
+                    "format": "signal",
                     "type": "string"
                 }
             },
             "propertyOrder": [
-                "name",
-                "source"
+                "source",
+                "name"
             ],
             "type": "object"
         },
