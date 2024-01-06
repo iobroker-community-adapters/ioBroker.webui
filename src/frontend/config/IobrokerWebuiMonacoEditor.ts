@@ -44,8 +44,6 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
     editPart: 'local' | 'globalStyle' | 'fontDeclarations';
 
     private getLanguageName() {
-        if (this.language == 'javascript')
-            return 'typescript';
         return this.language;
     }
 
@@ -84,6 +82,8 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
                         }
                         //@ts-ignore
                         monaco.languages.typescript.typescriptDefaults.setExtraLibs(libs);
+                        //@ts-ignore
+                        monaco.languages.typescript.javascriptDefaults.setExtraLibs(libs)
                     });
                 });
             } else {
