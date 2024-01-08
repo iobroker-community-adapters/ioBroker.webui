@@ -223,6 +223,10 @@ export function ${jsName}(event, eventRaisingElement, shadowRoot, instance) {
 `;
                     if (!sc)
                         screenEditor.scriptModel.setValue(templateScript);
+                    else {
+                        sc += "\n" + templateScript;
+                        screenEditor.scriptModel.setValue(sc);
+                    }
                 } else {
                     //@ts-ignore
                     window.appShell.javascriptEditor.setSelection(funcDecl.loc.start.line, funcDecl.loc.start.column, funcDecl.loc.end.line, funcDecl.loc.end.column + 1);
