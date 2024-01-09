@@ -228,6 +228,10 @@ export class IobrokerWebuiBindingsHelper {
         }
         delete bindingCopy.target;
 
+        if (!binding.historic) {
+            delete bindingCopy.historic;
+        }
+
         if (binding.target == BindingTarget.content)
             return [bindingPrefixContent + 'html', JSON.stringify(bindingCopy)];
         if (binding.target == BindingTarget.attribute)
