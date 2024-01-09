@@ -22,7 +22,9 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
     `;
 
     static readonly properties = {
-        language: String
+        language: String,
+        singleRow: Boolean,
+        value: String
     }
 
     public async createModel(text: string) {
@@ -40,7 +42,20 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
             this._editor.setModel(value);
     }
 
+    #value: string = null;
+    get value() {
+        if (this._editor)
+            return this._editor.getModel().getValue();
+        return null;
+    }
+    set value(v) {
+        this.#value = v;
+        if (this._editor)
+            this._editor.getModel().setValue(v);
+    }
+
     language: 'css' | 'javascript' = 'css';
+    singleRow: boolean = false;
     editPart: 'local' | 'globalStyle' | 'fontDeclarations';
 
     private getLanguageName() {
@@ -104,17 +119,36 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
 
         await IobrokerWebuiMonacoEditor.initMonacoEditor();
 
-        //@ts-ignore
-        this._editor = monaco.editor.create(this._container, {
+        let options: monaco.editor.IStandaloneEditorConstructionOptions = {
             automaticLayout: true,
             language: this.getLanguageName(),
+            fixedOverflowWidgets: true,
             minimap: {
                 size: 'fill'
-            },
-            fixedOverflowWidgets: true
-        });
+            }
+        }
+
+        if (this.singleRow) {
+            options.minimap.enabled = false;
+            options.lineNumbers = 'off';
+            options.glyphMargin = false;
+            options.folding = false;
+            options.lineDecorationsWidth = 0;
+            options.lineNumbersMinChars = 0;
+        }
+
+        //@ts-ignore
+        this._editor = monaco.editor.create(this._container, options);
         if (this._model)
             this._editor.setModel(this._model);
+        if (this.#value)
+            this._editor.getModel().setValue(this.#value);
+
+        if (this.singleRow) {
+            this._editor.getModel().onDidChangeContent((e) => {
+                this.dispatchEvent(new CustomEvent('value-changed'))
+            });
+        }
     }
 
     undo() {

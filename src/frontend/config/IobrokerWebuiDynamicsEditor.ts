@@ -42,7 +42,7 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
                             <span style="cursor: pointer;" title="javascript expression. access objects with __0, __1, ...">formula</span>
                         </div>
                         <div class="row">
-                            <input type="text" value="{{?this.expression}}" style="width: 100%">
+                            <iobroker-webui-monaco-editor single-row language="javascript" style="width: 100%; height: 17px; position: relative; overflow: hidden; resize: vertical;" .value="{{?this.expression}}"></iobroker-webui-monaco-editor>
                         </div>
                         <div class="row">
                             <span style="cursor: pointer;" title="javascript expression. access property with 'value'">formula write back (two way)</span>
