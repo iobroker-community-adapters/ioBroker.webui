@@ -51,7 +51,7 @@ export class IndirectSignal {
         for (let i = 0; i < this.signals.length; i++) {
             let cb = (id: string, value: any) => this.handleValueChanged(value.val, i);
             this.unsubscribeList.push(cb);
-            iobrokerHandler.connection.subscribeState(this.signals[i], cb);
+            iobrokerHandler.subscribeState(this.signals[i], cb);
         }
     }
 
@@ -72,13 +72,13 @@ export class IndirectSignal {
         }
         if (this.combinedName != nm) {
             if (this.unsubscribeTargetValue) {
-                iobrokerHandler.connection.unsubscribeState(this.combinedName, this.unsubscribeTargetValue);
+                iobrokerHandler.unsubscribeState(this.combinedName, this.unsubscribeTargetValue);
             }
             if (!this.disposed) {
                 this.combinedName = nm;
                 let cb = (id: string, value: any) => this.valueChangedCb(value);
                 this.unsubscribeTargetValue = cb;
-                iobrokerHandler.connection.subscribeState(nm, cb);
+                iobrokerHandler.subscribeState(nm, cb);
             }
         }
     }
@@ -86,17 +86,17 @@ export class IndirectSignal {
     dispose() {
         this.disposed = true;
         if (this.unsubscribeTargetValue) {
-            iobrokerHandler.connection.unsubscribeState(this.combinedName, this.unsubscribeTargetValue);
+            iobrokerHandler.unsubscribeState(this.combinedName, this.unsubscribeTargetValue);
             this.unsubscribeTargetValue = null;
         }
         for (let i = 0; i < this.signals.length; i++) {
-            iobrokerHandler.connection.unsubscribeState(this.signals[i], this.unsubscribeList[i]);
+            iobrokerHandler.unsubscribeState(this.signals[i], this.unsubscribeList[i]);
         }
     }
 
     setState(value) {
         if (!this.disposed) {
-            iobrokerHandler.connection.setState(this.combinedName, value);
+            iobrokerHandler.setState(this.combinedName, value);
         }
     }
 }
@@ -390,10 +390,10 @@ export class IobrokerWebuiBindingsHelper {
                     } else {
                         const cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i, signalVars);
                         unsubscribeList.push([s, cb]);
-                        iobrokerHandler.connection.subscribeState(s, cb);
-                        iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i, signalVars));
+                        iobrokerHandler.subscribeState(s, cb);
+                        iobrokerHandler.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i, signalVars));
                         if (binding[1].twoWay) {
-                            IobrokerWebuiBindingsHelper.addTwoWayBinding(binding, element, v => iobrokerHandler.connection.setState(s, v));
+                            IobrokerWebuiBindingsHelper.addTwoWayBinding(binding, element, v => iobrokerHandler.setState(s, v));
                         }
                     }
                 }

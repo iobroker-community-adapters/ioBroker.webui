@@ -376,6 +376,62 @@ export class IobrokerHandler {
         this.additionalFilesChanged.emit();
     }
 
+    #localSubscriptions = new Map<string, ioBroker.StateChangeHandler[]>;
+    #localValues = new Map<string, any>;
+
+    async subscribeState(id: string, cb: ioBroker.StateChangeHandler): Promise<void> {
+        if (id.startsWith('local_')) {
+            let arr = this.#localSubscriptions.get(id);
+            if (!arr) {
+                arr = [];
+                this.#localSubscriptions.set(id, arr)
+            }
+            arr.push(cb);
+            const val = this.#localValues.get(id)
+            if (val) {
+                cb(id, val);
+            }
+        } else
+            return this.connection.subscribeState(id, cb);
+    }
+
+    unsubscribeState(id: string, cb: ioBroker.StateChangeHandler): void {
+        if (id.startsWith('local_')) {
+            let arr = this.#localSubscriptions.get(id);
+            if (arr) {
+                const idx = arr.indexOf(cb);
+                if (idx >= 0) {
+                    arr.splice(idx, 1);
+                }
+            }
+        } else
+            this.connection.unsubscribeState(id, cb);
+    }
+
+    public getState(id: string): Promise<State> {
+        if (id.startsWith('local_')) {
+            return Promise.resolve(this.#localValues.get(id));
+        } else
+            return this.connection.getState(id);
+    }
+
+    public setState(id: string, val: State | StateValue, ack?: boolean): Promise<void> {
+        if (id.startsWith('local_')) {
+            if (typeof val != 'object') {
+                //@ts-ignore
+                val = { val: val }
+            }
+            this.#localValues.set(id, val)
+            let arr = this.#localSubscriptions.get(id);
+            if (arr) {
+                for (let cb of arr)
+                    //@ts-ignores
+                    cb(id, val)
+            }
+        } else
+            return this.connection.setState(id, val, ack);
+    }
+
     private async _getConfig(): Promise<IWebUiConfig> {
         try {
             return await this._getObjectFromFile<IWebUiConfig>(this.configPath + "config.json");
@@ -427,14 +483,6 @@ export class IobrokerHandler {
 
     private async _saveBinaryToFile(binary: Blob, name: string) {
         await this.connection.writeFile64(this.namespaceFiles, name, await <any>binary.arrayBuffer());
-    }
-
-    public getState(id: string): Promise<State> {
-        return this.connection.getState(id);
-    }
-
-    public setState(id: string, val: State | StateValue, ack?: boolean): Promise<void> {
-        return this.connection.setState(id, val, ack);
     }
 
     async sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected' | 'uiChangedView', data?: string): Promise<void> {
