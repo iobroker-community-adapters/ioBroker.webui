@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix issue with npm
+ 
 ### 1.0.0 (2024-01-13)
 - new script command: CalculateSignalValue
 - javascript code completition

@@ -718,7 +718,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         title: e.name ?? e.tag,
                         folder: false,
                         data: {
-                            type: 'control',
+                            type: 'npm',
                             ref: e
                         }
                     });
@@ -919,7 +919,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             e.event.dataTransfer.setData(dragDropFormatNameBindingObject, JSON.stringify(e.node.data.data.bindable));
                             e.event.dataTransfer.dropEffect = "copy";
                             return true;
-                        } else if (e.node.data.data.type == 'control') {
+                        } else if (e.node.data.data.type == 'npm') {
                             e.event.dataTransfer.effectAllowed = "all";
                             e.event.dataTransfer.setData(dragDropFormatNameElementDefinition, JSON.stringify(e.node.data.data.ref));
                             e.event.dataTransfer.dropEffect = "copy";
