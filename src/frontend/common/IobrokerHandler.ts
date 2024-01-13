@@ -428,6 +428,7 @@ export class IobrokerHandler {
                     //@ts-ignores
                     cb(id, val)
             }
+            return Promise.resolve();
         } else
             return this.connection.setState(id, val, ack);
     }

@@ -1,4 +1,4 @@
-import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, Disposable, DomHelper, htmlFromString, property } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, Disposable, DomHelper, property } from "@node-projects/base-custom-webcomponent";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ScriptSystem } from "../scripting/ScriptSystem.js";
