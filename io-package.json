@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "0.23.3",
+    "version": "1.0.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.0": {
+        "en": "new script command: CalculateSignalValue\njavascript code completition\nbetter types in code completition\nfix writing of child nodes if content is bound at design time\nuse monaco editor in expressions\nuse custom var names in expressions\nScreens & Controls can have subfolders\ndecl. shadow dom support in screen viewer\nallow 'local_' as tag prefix for local vars",
+        "de": "neue Skript-Befehl: Berechnen von Signalen Wert\njavascript code completation\nbessere typen in code-kompletition\nfestlegen des schreibens von kinderknoten, wenn der inhalt zum designzeitpunkt gebunden ist\nmonaco editor in ausdrücken verwenden\nbenutzerdefinierte var-namen in ausdrücken verwenden\nScreens & Controls können Unterordner haben\ndecl. schatten-dom-unterstützung im bildschirm-viewer\nzulassen 'local_' als tag-prefix für lokale vars",
+        "ru": "новая команда скрипта: Рассчитано Стоимость\njavascript code complet\nлучшие типы в коде\nфиксация записи детских узлов, если контент связан во время проектирования\nиспользовать редактор monaco в выражениях\nиспользовать пользовательские имена var в выражениях\nЭкраны и управления могут иметь подпапки\ndecl. поддержка теневого купола в просмотре экрана\nразрешить «local_» как префикс тегов для местных vars",
+        "pt": "novo comando de script: CálculoSignal Valor\ncompilação de código javascript\nmelhores tipos em completition de código\ncorrigir a escrita de nós de criança se o conteúdo está vinculado no tempo de design\nusar monaco editor em expressões\nusar nomes de var personalizados em expressões\nTelas e controles podem ter subpastas\ndecl. suporte de cúpula sombra no visor de tela\npermitir 'local_' como prefixo de tag para vars locais",
+        "nl": "nieuw script commando: BerekenSignal Waarde\njavascript code completitie\nbetere types in code completitie\nvast te stellen het schrijven van kindknooppunten als inhoud is gebonden op ontwerptijd\nmonaco-editor gebruiken in expressies\ngebruik aangepaste var namen in expressies\nScreens & Controls kunnen submappen hebben\ndecl. schaduw dom ondersteuning in schermweergave\n'local_' toestaan als tagprefix voor lokale vars",
+        "fr": "nouvelle commande de script & #160;: CalculerSignal Valeur\ncompletation du code javascript\nmeilleurs types dans le code complet\nfixer l'écriture des nœuds enfant si le contenu est lié au moment de la conception\nutiliser monaco editor dans les expressions\nutiliser des noms var personnalisés dans les expressions\nÉcrans & Contrôles peuvent avoir des sous-dossiers\nd.c.e.c. support dom ombre dans le visionneur d'écran\nautoriser 'local_' comme préfixe de tag pour les vars locaux",
+        "it": "nuovo comando script: CalcolateSignal Valore\njavascript codice completo\nmigliori tipi di completamento del codice\ncorrezione della scrittura dei nodi di bambino se il contenuto è legato al tempo di progettazione\nutilizzare l'editor monaco in espressioni\nutilizzare nomi var personalizzati in espressioni\nSchermi e controlli possono avere sottocartelle\ndecl. supporto dom ombra nel visualizzatore schermo\nconsentire 'local_' come tag prefix per i vars locali",
+        "es": "nuevo comando script: CalcularSignal Valor\njavascript code completition\nmejores tipos en completition de código\nfijar escritura de los ganglios infantiles si el contenido está ligado al tiempo de diseño\nuse monaco editor en expresiones\nutilizar nombres de var personalizados en expresiones\nPantallas & Controles pueden tener subcarpetas\ndecl. soporte de dom sombra en pantalla\npermitir 'local_' como prefijo de etiquetas para vars locales",
+        "pl": "nowe polecenie skryptu: Kalkulacja Sygnał Wartość\nukończenie kodu javascript\nlepsze typy w uzupełnieniu kodu\nnaprawić pisanie węzłów dziecięcych, jeśli zawartość jest związana w czasie projektowania\nużywać edytora monaco w wyrażeniach\nużywać własnych nazw var w wyrażeniach\nScreens & Controls może mieć podfoldery\ndecl. obsługa cieni w przeglądarce ekranu\ndopuść 'local _' jako przedrostek znacznika dla lokalnych vars",
+        "uk": "нова команда скриптів: Кальвадос Ціна\njavascript licenses api веб-сайт\nкращі типи в комплетації коду\nфіксувати написання дочірніх вузлів, якщо вміст обмежений на час проектування\nвикористовуйте редактор monaco у виразах\nвикористовувати користувацькі вар імена у виразах\nЕкрани та керування можуть мати підпапки\nдек. підтримка shadow dom в екрані\nдозволити 'local_' як префікс тегу для місцевих варів",
+        "zh-cn": "新脚本命令 : 计算符号 数值\njavascript 代码\n代码补丁中更好的类型\n如果内容在设计时被绑定, 固定子节点的写入\n在表达式中使用monaco编辑器\n在表达式中使用自定义 var 名称\n屏幕控件可以有子文件夹( C)\n页:1 屏幕查看器中的阴影窗口支持\n允许“ local_” 作为本地 vars 的标记前缀"
+      },
       "0.23.3": {
         "en": "add local valueAsNumber property",
         "de": "lokalen Wert AsNumber Immobilien",
@@ -106,19 +119,6 @@
         "pl": "i jedna próba importowania",
         "uk": "і ще одна фіксація на імпортні карти",
         "zh-cn": "一、关于进口马普斯的附加条件"
-      },
-      "0.22.5": {
-        "en": "more fixes with import map",
-        "de": "mehr fixierungen mit importkarte",
-        "ru": "больше исправлений с картой импорта",
-        "pt": "mais correções com mapa de importação",
-        "nl": "meer reparaties met importkaart",
-        "fr": "plus de corrections avec carte d'importation",
-        "it": "più correzioni con mappa di importazione",
-        "es": "más correcciones con mapa de importación",
-        "pl": "naprawy z mapą importu",
-        "uk": "більше виправлень з імпортною картою",
-        "zh-cn": "进口图的更固定"
       }
     },
     "icon": "logo.png",

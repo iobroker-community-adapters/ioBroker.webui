@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.0 (2024-01-13)
 - new script command: CalculateSignalValue
 - javascript code completition
 - better types in code completition
@@ -138,7 +138,7 @@ runtime.html?screenName=screen2
 - use custom var names in expressions
 - Screens & Controls can have subfolders
 - decl. shadow dom support in screen viewer
-- allow 'local_' as tag prefix for local vars 
+- allow 'local_' as tag prefix for local vars
 
 ### 0.23.3 (2024-01-04)
 - add local valueAsNumber property
