@@ -42,13 +42,13 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
                             <span style="cursor: pointer;" title="javascript expression. access objects with __0, __1, ...">formula</span>
                         </div>
                         <div class="row">
-                            <iobroker-webui-monaco-editor single-row language="javascript" style="width: 100%; height: 17px; position: relative; overflow: hidden; resize: vertical;" .value="{{?this.expression}}"></iobroker-webui-monaco-editor>
+                            <iobroker-webui-monaco-editor single-row language="javascript" style="width: 100%; min-height: 17px; height: 17px; position: relative; overflow: hidden; resize: vertical;" .value="{{?this.expression}}"></iobroker-webui-monaco-editor>
                         </div>
                         <div class="row">
                             <span style="cursor: pointer;" title="javascript expression. access property with 'value'">formula write back (two way)</span>
                         </div>
                         <div class="row">
-                            <input type="text" disabled="[[!this.twoWay]]" value="{{?this.expressionTwoWay}}" style="width: 100%">
+                            <iobroker-webui-monaco-editor read-only="[[!this.twoWay]]" $readonly="[[!this.twoWay]]" single-row language="javascript" style="width: 100%; min-height: 17px; height: 17px; position: relative; overflow: hidden; resize: vertical;" .value="{{?this.expressionTwoWay}}"></iobroker-webui-monaco-editor>
                         </div>
                     </div>
                 </div>
@@ -151,6 +151,14 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
         #tagdata_type {
             height: 24px;
             font-size: inherit;
+        }
+        
+        iobroker-webui-monaco-editor:not([readonly]) {
+            border: 1px black solid;
+        }
+        
+        iobroker-webui-monaco-editor[readonly] {
+            border: 1px lightgray solid;
         }`;
 
     static readonly is = 'iobroker-webui-dynamics-editor';

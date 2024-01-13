@@ -47,9 +47,9 @@ export class ScriptSystem {
                 sv.relativeSignalsPath = command.relativeSignalsPath;
                 sv.screenName = screen;
                 if (!width)
-                    width = await (await iobrokerHandler.getScreen(screen)).settings.width;
+                    width = await (await iobrokerHandler.getObject('screen', screen)).settings.width;
                 if (!height)
-                    height = await (await iobrokerHandler.getScreen(screen)).settings.height
+                    height = await (await iobrokerHandler.getObject('screen', screen)).settings.height
                 IoBrokerWebuiDialog.openDialog({ title, content: sv, moveable, closeable, width, height, top, left });
                 break;
             }

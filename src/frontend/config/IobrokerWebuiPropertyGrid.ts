@@ -399,7 +399,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             case 'screen': {
                 let editor = document.createElement('select');
                 editor.style.width = '100%';
-                for (let v of await iobrokerHandler.getAllScreenNames()) {
+                for (let v of await iobrokerHandler.getAllNames('screen')) {
                     const op = document.createElement('option');
                     op.value = v;
                     op.innerText = v;

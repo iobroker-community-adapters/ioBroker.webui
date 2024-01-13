@@ -58,6 +58,16 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
     singleRow: boolean = false;
     editPart: 'local' | 'globalStyle' | 'fontDeclarations';
 
+    #readOnly = false;
+    get readOnly() {
+        return this.#readOnly;
+    }
+    set readOnly(v) {
+        this.#readOnly = v;
+        if (this._editor)
+            this._editor.updateOptions({ readOnly: v })
+    }
+
     private getLanguageName() {
         return this.language;
     }
@@ -125,7 +135,8 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
             fixedOverflowWidgets: true,
             minimap: {
                 size: 'fill'
-            }
+            },
+            readOnly: this.#readOnly
         }
 
         if (this.singleRow) {

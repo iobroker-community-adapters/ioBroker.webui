@@ -77,7 +77,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             this._loading = false;
             this.removeBindings();
             DomHelper.removeAllChildnodes(this.shadowRoot);
-            const screen = await iobrokerHandler.getScreen(this.screenName)
+            const screen = await iobrokerHandler.getObject('screen', this.screenName)
             if (screen) {
                 this.loadScreenData(screen.html, screen.style, screen.script);
             }
@@ -96,6 +96,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         else
             this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style];
 
+        //todo: use domparser to enable decl. shadow dom
         const template = htmlFromString(html);
         const documentFragment = template.content.cloneNode(true);
         this.shadowRoot.appendChild(documentFragment);
@@ -109,7 +110,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
     connectedCallback() {
         this._refreshViewSubscription = iobrokerHandler.refreshView.on(() => this._loadScreen());
-        this._screensChangedSubscription = iobrokerHandler.screensChanged.on(() => {
+        this._screensChangedSubscription = iobrokerHandler.objectsChanged.on(() => {
             if (this._screenName)
                 this._loadScreen();
         });

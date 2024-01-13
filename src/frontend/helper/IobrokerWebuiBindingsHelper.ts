@@ -315,10 +315,19 @@ export class IobrokerWebuiBindingsHelper {
 
     static applyBinding(element: Element, binding: namedBinding, relativeSignalPath: string, root: HTMLElement): () => void {
         const signals = binding[1].signal.split(';');
+        const signalVars: string[] = new Array(signals.length);
         for (let i = 0; i < signals.length; i++) {
-            if (signals[i][0] === '?') { //access object path in property in custom control, todo: bind direct to property value in local property
+            let sng = signals[i];
+            signalVars[i] = '__' + i;
+            if (sng.includes(':')) {
+                const spl = sng.split(':');
+                signalVars[i] = spl[0];
+                sng = spl[1];
+                signals[i] = sng;
+            }
+            if (sng[0] === '?') { //access object path in property in custom control, todo: bind direct to property value in local property
                 if (root) { //root is null when opened in designer, then do not apply property bindings
-                    let s = signals[i].substring(1);
+                    let s = sng.substring(1);
                     if (s[0] == '?') {
                         signals[i] = s;
                     } else {
@@ -326,8 +335,8 @@ export class IobrokerWebuiBindingsHelper {
                     }
                 }
             }
-            if (signals[i][0] === '.') {
-                signals[i] = relativeSignalPath + signals[i];
+            if (sng[0] === '.') {
+                signals[i] = relativeSignalPath + sng;
             }
         }
         let unsubscribeList: [id: string, ((id: string, value: any) => void)][] = [];
@@ -339,19 +348,19 @@ export class IobrokerWebuiBindingsHelper {
             if (s[0] == '?') {
                 if (root) {
                     const nm = s.substring(1);
-                    let evtCallback = () => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i);
+                    let evtCallback = () => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i, signalVars);
                     root.addEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback);
                     if (!cleanupCalls)
                         cleanupCalls = [];
                     cleanupCalls.push(() => root.removeEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback));
-                    IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i);
+                    IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i, signalVars);
                     if (binding[1].twoWay) {
                         IobrokerWebuiBindingsHelper.addTwoWayBinding(binding, element, v => root[nm] = v);
                     }
                 }
             } else {
                 if (s.includes('{')) {
-                    let indirectSignal = new IndirectSignal(s, (value) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i));
+                    let indirectSignal = new IndirectSignal(s, (value) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i, signalVars));
                     if (!cleanupCalls)
                         cleanupCalls = [];
                     cleanupCalls.push(() => indirectSignal.dispose());
@@ -364,7 +373,7 @@ export class IobrokerWebuiBindingsHelper {
                             let myTimer = { timerId: <any>-1 };
                             async function loadHistoric() {
                                 const res = await iobrokerHandler.connection.getHistoryEx(s, binding[1].historic);
-                                IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, res?.values, valuesObject, i);
+                                IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, res?.values, valuesObject, i, signalVars);
                                 if (myTimer.timerId !== null)
                                     myTimer.timerId = setTimeout(loadHistoric, binding[1].historic.reloadInterval);
                             }
@@ -377,12 +386,12 @@ export class IobrokerWebuiBindingsHelper {
                                 myTimer.timerId = null;
                             });
                         } else
-                            iobrokerHandler.connection.getHistoryEx(s, binding[1].historic).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.values, valuesObject, i))
+                            iobrokerHandler.connection.getHistoryEx(s, binding[1].historic).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.values, valuesObject, i, signalVars))
                     } else {
-                        const cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i);
+                        const cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i, signalVars);
                         unsubscribeList.push([s, cb]);
                         iobrokerHandler.connection.subscribeState(s, cb);
-                        iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i));
+                        iobrokerHandler.connection.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i, signalVars));
                         if (binding[1].twoWay) {
                             IobrokerWebuiBindingsHelper.addTwoWayBinding(binding, element, v => iobrokerHandler.connection.setState(s, v));
                         }
@@ -449,21 +458,17 @@ export class IobrokerWebuiBindingsHelper {
         return value;
     }
 
-    static handleValueChanged(element: Element, binding: namedBinding, value: any, valuesObject: any[], index: number) {
+    static handleValueChanged(element: Element, binding: namedBinding, value: any, valuesObject: any[], index: number, signalVarNames: string[]) {
         let v: (number | boolean | string) = value;
         //should this be done??
         v = IobrokerWebuiBindingsHelper.parseValueWithType(v, binding);
         if (binding[1].expression) {
             valuesObject[index] = value;
             if (!binding[1].compiledExpression) {
-                let names: string[] = new Array(valuesObject.length);
-                for (let i = 0; i < valuesObject.length; i++) {
-                    names[i] = '__' + i;
-                }
                 if (binding[1].expression.includes('return '))
-                    binding[1].compiledExpression = new Function(<any>names, binding[1].expression);
+                    binding[1].compiledExpression = new Function(<any>signalVarNames, binding[1].expression);
                 else
-                    binding[1].compiledExpression = new Function(<any>names, 'return ' + binding[1].expression);
+                    binding[1].compiledExpression = new Function(<any>signalVarNames, 'return ' + binding[1].expression);
             }
             v = binding[1].compiledExpression(...valuesObject);
         }

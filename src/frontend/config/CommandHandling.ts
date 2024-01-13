@@ -2,7 +2,7 @@ import { ContextMenu, IContextMenuItem, IUiCommandHandler, ServiceContainer } fr
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js'
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
 import { IobrokerWebuiAppShell } from './IobrokerWebuiAppShell.js';
-import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
+import { IobrokerWebuiScreenEditor, defaultNewStyle } from './IobrokerWebuiScreenEditor.js';
 
 export class CommandHandling {
   dockManager: DockManager;
@@ -30,15 +30,10 @@ export class CommandHandling {
 
     } else if (commandName === 'new') {
       let defaultName = '';
-      if (!(await iobrokerHandler.getScreenNames()).includes('start'))
+      if (!(await iobrokerHandler.getAllNames('screen')).includes('start'))
         defaultName = 'start';
       let screen = prompt("New Screen Name:", defaultName);
-      let style = `:host {
-}
-
-* {
-    box-sizing: border-box;
-}`;
+      let style = defaultNewStyle;
       if (screen) {
         let screentype: 'screen' | 'control' = 'screen';
         if (commandParameter == 'grid') {

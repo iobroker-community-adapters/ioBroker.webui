@@ -6,6 +6,13 @@ import { IControl } from "../interfaces/IControl.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import type { editor } from "monaco-editor";
 
+export const defaultNewStyle = `:host {
+}
+
+* {
+    box-sizing: border-box;
+}`;
+
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
 
     private _name: string;
@@ -30,6 +37,9 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     private _settingsChanged: Disposable;
 
     public async initialize(name: string, type: 'screen' | 'control', html: string, style: string, script: string, settings: { width?: string, height?: string }, properties: Record<string, { type: string, values?: string[], default?: any }>, serviceContainer: ServiceContainer) {
+        if (name[0] == '/')
+            name = name.substring(1);
+
         this.title = type + ' - ' + name;
 
         this._name = name;
@@ -120,10 +130,10 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
             let script = this.scriptModel.getValue();
             if (this._type == 'screen') {
                 let screen: IScreen = { html, style, script, settings: this._settings };
-                await iobrokerHandler.saveScreen(this._name, screen);
+                await iobrokerHandler.saveObject(this._type, this._name, screen);
             } else {
                 let control: IControl = { html, style, script, settings: this._settings, properties: this._properties };
-                await iobrokerHandler.saveCustomControl(this._name, control);
+                await iobrokerHandler.saveObject(this._type, this._name, control);
             }
         } else
             this.documentContainer.executeCommand(command);

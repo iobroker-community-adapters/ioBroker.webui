@@ -145,6 +145,6 @@ export function generateCustomControl(name: string, control: IControl) {
         window['IobrokerWebuiCustomControl' + name].properties = properties;
         window['IobrokerWebuiCustomControl' + name]._propertiesDictionary = null;
         window['IobrokerWebuiCustomControl' + name].prototype = Object.create(BaseCustomControl.prototype, { constructor: { value: window['IobrokerWebuiCustomControl' + name] } })
-        customElements.define(webuiCustomControlPrefix + nm, window['IobrokerWebuiCustomControl' + name]);
+        customElements.define(webuiCustomControlPrefix + nm.replaceAll('/', '-'), window['IobrokerWebuiCustomControl' + name]);
     }
 }

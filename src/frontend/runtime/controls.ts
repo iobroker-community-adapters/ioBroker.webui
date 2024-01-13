@@ -25,9 +25,10 @@ Object.defineProperty(HTMLInputElement.prototype, "valueAsNumberLocal", {
 
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
 import { generateCustomControl } from './CustomControls.js';
+import { IControl } from '../interfaces/IControl.js';
 
 iobrokerHandler.loadAllCustomControls().then(async () => {
     for (let name of await iobrokerHandler.getCustomControlNames()) {
-        iobrokerHandler.getCustomControl(name).then((ctl) => generateCustomControl(name, ctl));
+        iobrokerHandler.getObject('control', name).then(ctl => generateCustomControl(name, <IControl>ctl));
     }
 });

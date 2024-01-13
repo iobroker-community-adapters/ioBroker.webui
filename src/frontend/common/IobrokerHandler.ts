@@ -15,9 +15,6 @@ declare global {
     }
 }
 
-const screenFileExtension = ".screen";
-const controlFileExtension = ".control";
-
 export class IobrokerHandler {
 
     static instance = new IobrokerHandler();
@@ -38,8 +35,7 @@ export class IobrokerHandler {
     fontDeclarationsStylesheet: CSSStyleSheet;
     globalScriptInstance: IGlobalScript;
 
-    screensChanged = new TypedEvent<string>();
-    controlsChanged = new TypedEvent<string>();
+    objectsChanged = new TypedEvent<{ type: string, name: string }>();
     imagesChanged = new TypedEvent<void>();
     additionalFilesChanged = new TypedEvent<void>();
     configChanged = new TypedEvent<void>();
@@ -52,10 +48,15 @@ export class IobrokerHandler {
     language: string;
     languageChanged = new TypedEvent<string>();
 
+    #cache: Map<string, Map<string, IScreen | IControl>> = new Map();
+    _controlNames: string[] = null;
+
     readonly clientId;
 
     constructor() {
         this.clientId = Date.now().toString(16);
+        this.#cache.set('screen', new Map());
+        this.#cache.set('control', new Map());
     }
 
     waitForReady(): Promise<void> {
@@ -139,9 +140,6 @@ export class IobrokerHandler {
         this.sendCommand("uiConnected", "");
     }
 
-    private _screenNames: string[];
-    private _screens: Map<string, IScreen> = new Map();
-
     async getIconAdapterFoldernames() {
         const adapterInstances = await this.connection.getObjectViewSystem('adapter', '');
         let names: string[] = [];
@@ -153,73 +151,122 @@ export class IobrokerHandler {
         return names;
     }
 
-    async loadAllScreens() {
-        let names = await this.getScreenNames();
-        let p: Promise<any>[] = [];
-        for (let n of names) {
-            p.push(this.getScreen(n));
+    async getAllNames(type: 'screen' | 'control', dir?: string) {
+        if (this._readyPromises)
+            await this.waitForReady();
+        const p: Promise<string[]>[] = [];
+        p.push(this.getObjectNames(type, dir).then(x => x.map(y => (dir ? dir + '/' : '/').substring(1) + y)));
+        let folders = await this.getSubFolders(type, dir);
+        for (let f of folders) {
+            p.push(this.getAllNames(type, (dir ?? '') + '/' + f));
         }
-        await Promise.all(p);
+        const res = await Promise.all(p);
+        return res.flatMap(x => x);
     }
 
-    async getScreenNames() {
-        if (this._screenNames) return this._screenNames;
+    async getSubFolders(type: 'screen' | 'control', dir: string) {
         if (this._readyPromises)
             await this.waitForReady();
         try {
-            const files = await this.connection.readDir(this.namespaceFiles, this.configPath + "screens")
-            const screenNames = files
-                .filter(x => x.file.endsWith(screenFileExtension))
-                .map(x => x.file.substring(0, x.file.length - screenFileExtension.length));
-            this._screenNames = screenNames;
-            return screenNames;
+            const files = await this.connection.readDir(this.namespaceFiles, this.configPath + type + "s" + (dir ?? ""));
+            const dirNames = files
+                .filter(x => x.isDir)
+                .map(x => x.file);
+            return dirNames;
         } catch (err) {
-            console.warn('no screens loaded', err);
+            console.warn('error loading subfolders', err);
         }
-        return []
+        return [];
     }
 
-    async getScreen(name: string): Promise<IScreen> {
-        let screen = this._screens.get(name.toLocaleLowerCase());
+    async getObjectNames(type: 'screen' | 'control', dir: string) {
+        if (this._readyPromises)
+            await this.waitForReady();
+        try {
+            const files = await this.connection.readDir(this.namespaceFiles, this.configPath + type + "s" + (dir ?? ""));
+            const names = files
+                .filter(x => x.file.endsWith('.' + type))
+                .map(x => x.file.substring(0, x.file.length - type.length - 1));
+            return names;
+        } catch (err) {
+            console.warn('no ' + type + ' loaded', err);
+        }
+        return [];
+    }
+
+    async getObject<T extends IScreen | IControl>(type: 'screen' | 'control', name: string): Promise<T> {
+        if (type == 'screen')
+            return <T><any>this.getScreen(name);
+        else if (type == 'control')
+            return <T><any>this.getCustomControl(name);
+        return null;
+    }
+
+    private async getScreen(name: string): Promise<IScreen> {
+        if (name[0] == '/')
+            name = name.substring(1);
+        let screen = this.#cache.get('screen').get(name.toLocaleLowerCase());
         if (!screen) {
             if (this._readyPromises)
                 await this.waitForReady();
             try {
-                screen = await this._getObjectFromFile<IScreen>(this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
+                screen = await this._getObjectFromFile<IScreen>(this.configPath + "screens/" + name.toLocaleLowerCase() + '.screen');
             }
             catch (err) {
                 console.error("Error reading Screen", screen, err);
             }
-            this._screens.set(name.toLocaleLowerCase(), screen);
+            this.#cache.get('screen').set(name.toLocaleLowerCase(), screen);
         }
         return screen;
     }
 
-    async saveScreen(name: string, screen: IScreen) {
-        this._saveObjectToFile(screen, "/" + this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
-        this._screens.set(name.toLocaleLowerCase(), screen);
-        this._screenNames = null;
-        this.screensChanged.emit(name);
+    async saveObject(type: 'screen' | 'control', name: string, data: IScreen | IControl) {
+        this._saveObjectToFile(data, "/" + this.configPath + type + "s/" + name.toLocaleLowerCase() + '.' + type);
+        if (this.#cache.has(type))
+            this.#cache.get(type).set(name.toLocaleLowerCase(), data);
+        if (type == 'control')
+            this._controlNames = null;
+        this.objectsChanged.emit({ type, name });
     }
 
-    async removeScreen(name: string) {
-        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "screens/" + name.toLocaleLowerCase() + screenFileExtension);
-        this._screens.delete(name.toLocaleLowerCase());
-        this._screenNames = null;
-        this.screensChanged.emit(null);
+    async removeObject(type: 'screen' | 'control', name: string) {
+        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + type + "s/" + name.toLocaleLowerCase() + '.' + type);
+        if (this.#cache.has(type))
+            this.#cache.get(type).delete(name.toLocaleLowerCase());
+        if (type == 'control')
+            this._controlNames = null;
+        this.objectsChanged.emit({ type, name });
     }
 
-    async renameScreen(oldName: string, newName: string) {
-        await this.connection.renameFile(this.namespaceFiles, "/" + this.configPath + "screens/" + oldName.toLocaleLowerCase() + screenFileExtension, "/" + this.configPath + "screens/" + newName.toLocaleLowerCase() + screenFileExtension);
-        this._screens.delete(oldName);
-        this._screens.delete(newName);
-        this._screenNames = null;
-        this.getScreen(newName);
-        this.screensChanged.emit(null);
+    async renameObject(type: 'screen' | 'control', oldName: string, newName: string) {
+        if (oldName[0] == '/')
+            oldName = oldName.substring(1);
+        if (newName[0] == '/')
+            newName = newName.substring(1);
+        if (type == 'screen') {
+            oldName = oldName.toLocaleLowerCase();
+            newName = newName.toLocaleLowerCase();
+        }
+        await this.connection.renameFile(this.namespaceFiles, "/" + this.configPath + type + "s/" + oldName + '.' + type, "/" + this.configPath + type + "s/" + newName + '.' + type);
+        if (this.#cache.has(type)) {
+            this.#cache.get(type).delete(oldName);
+            this.#cache.get(type).delete(newName);
+        }
+        if (type == 'control')
+            this._controlNames = null;
+        this.getObject(type, newName);
+        this.objectsChanged.emit({ type, name: newName });
     }
 
-    private _controlNames: string[];
-    private _controls: Map<string, IControl> = new Map();
+    async createFolder(type: 'screen' | 'control', name: string) {
+        await this._saveObjectToFile<any>({}, "/" + this.configPath + type + "s/" + name + '/tmp.fld');
+        this.objectsChanged.emit({ type, name: null });
+    }
+
+    async removeFolder(type: 'screen' | 'control', name: string) {
+        await this.connection.deleteFolder(this.namespaceFiles, "/" + this.configPath + type + "s/" + name);
+        this.objectsChanged.emit({ type, name: null });
+    }
 
     async loadAllCustomControls() {
         await iobrokerHandler.waitForReady();
@@ -236,10 +283,7 @@ export class IobrokerHandler {
         if (this._readyPromises)
             await this.waitForReady();
         try {
-            const files = await this.connection.readDir(this.namespaceFiles, this.configPath + "controls")
-            const controlNames = files
-                .filter(x => x.file.endsWith(controlFileExtension))
-                .map(x => x.file.substring(0, x.file.length - controlFileExtension.length));
+            const controlNames = await this.getAllNames('control');
             this._controlNames = controlNames;
             return controlNames;
         } catch (err) {
@@ -248,13 +292,15 @@ export class IobrokerHandler {
         return []
     }
 
-    async getCustomControl(name: string): Promise<IControl> {
-        let control = this._controls.get(name);
+    private async getCustomControl(name: string): Promise<IControl> {
+        if (name[0] == '/')
+            name = name.substring(1);
+        let control = <IControl>this.#cache.get('control').get(name);
         if (!control) {
             if (this._readyPromises)
                 await this.waitForReady();
             try {
-                control = await this._getObjectFromFile<IControl>(this.configPath + "controls/" + name + controlFileExtension);
+                control = await this._getObjectFromFile<IControl>(this.configPath + "controls/" + name + '.control');
 
                 //TODO: remove in a later version, fixes old props
                 let k = Object.keys(control.properties);
@@ -273,32 +319,9 @@ export class IobrokerHandler {
             catch (err) {
                 console.error("Error reading Control", control, err);
             }
-            this._controls.set(name, control);
+            this.#cache.get('control').set(name, control);
         }
         return control;
-    }
-
-    async saveCustomControl(name: string, control: IControl) {
-        this._saveObjectToFile(control, "/" + this.configPath + "controls/" + name + controlFileExtension);
-        this._controls.set(name, control);
-        this._controlNames = null;
-        this.controlsChanged.emit(name);
-    }
-
-    async removeCustomControl(name: string) {
-        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + "controls/" + name + controlFileExtension);
-        this._controls.delete(name);
-        this._controlNames = null;
-        this.controlsChanged.emit(null);
-    }
-
-    async renameCustomControl(oldName: string, newName: string) {
-        await this.connection.renameFile(this.namespaceFiles, "/" + this.configPath + "controls/" + oldName + controlFileExtension, "/" + this.configPath + "controls/" + newName + controlFileExtension);
-        this._controls.delete(oldName);
-        this._controls.delete(newName);
-        this._controlNames = null;
-        this.getCustomControl(newName);
-        this.controlsChanged.emit(null);
     }
 
     async getImageNames() {
@@ -430,9 +453,8 @@ export class IobrokerHandler {
                     window.location.reload();
                     break;
                 case "uiRefresh":
-                    this._controls.clear();
-                    this._screens.clear();
-                    this._screenNames = null;
+                    this.#cache.get('screen').clear();
+                    this.#cache.get('control').clear();
                     this._controlNames = null;
                     this.refreshView.emit(data);
                     break;
