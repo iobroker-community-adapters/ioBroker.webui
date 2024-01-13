@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.1": {
+        "en": "fix issue with npm",
+        "de": "problem mit npm beheben",
+        "ru": "исправить проблему с npm",
+        "pt": "corrigir problema com npm",
+        "nl": "probleem oplossen met npm",
+        "fr": "correction du problème avec npm",
+        "it": "risolvere problema con npm",
+        "es": "solucionar el problema con npm",
+        "pl": "rozwiązać problem z npm",
+        "uk": "виправлено проблему з npm",
+        "zh-cn": "用 npm 修复问题"
+      },
       "1.0.0": {
         "en": "new script command: CalculateSignalValue\njavascript code completition\nbetter types in code completition\nfix writing of child nodes if content is bound at design time\nuse monaco editor in expressions\nuse custom var names in expressions\nScreens & Controls can have subfolders\ndecl. shadow dom support in screen viewer\nallow 'local_' as tag prefix for local vars",
         "de": "neue Skript-Befehl: Berechnen von Signalen Wert\njavascript code completation\nbessere typen in code-kompletition\nfestlegen des schreibens von kinderknoten, wenn der inhalt zum designzeitpunkt gebunden ist\nmonaco editor in ausdrücken verwenden\nbenutzerdefinierte var-namen in ausdrücken verwenden\nScreens & Controls können Unterordner haben\ndecl. schatten-dom-unterstützung im bildschirm-viewer\nzulassen 'local_' als tag-prefix für lokale vars",
@@ -106,19 +119,6 @@
         "pl": "i jeden.",
         "uk": "і ще один.",
         "zh-cn": "再一次。."
-      },
-      "0.22.6": {
-        "en": "and one more fix on importmaps",
-        "de": "und eine weitere fixierung auf importmaps",
-        "ru": "и еще один фикс на импортных картах",
-        "pt": "e mais uma correção no importmaps",
-        "nl": "en nog een fix op importmaps",
-        "fr": "et une autre correction sur les cartes d'importation",
-        "it": "e un altro fix su importmaps",
-        "es": "y una fijación más en los mapas de importación",
-        "pl": "i jedna próba importowania",
-        "uk": "і ще одна фіксація на імпортні карти",
-        "zh-cn": "一、关于进口马普斯的附加条件"
       }
     },
     "icon": "logo.png",
