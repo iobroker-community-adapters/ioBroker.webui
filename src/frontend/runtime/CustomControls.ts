@@ -17,7 +17,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     static readonly style = css`:host { overflow: hidden }`;
     #scriptObject: ICustomControlScript;
     #bindings: (() => void)[];
-    #eventListeners: [name: string, callback: (...args) => void][];
+    #eventListeners: [name: string, callback: (...args) => void][] = [];
 
     constructor() {
         super();

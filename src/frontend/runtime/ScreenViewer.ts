@@ -27,7 +27,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     private _screensChangedSubscription: Disposable;
     private _scriptObject: ICustomControlScript;
 
-    #eventListeners: [name: string, callback: (...args) => void][]
+    #eventListeners: [name: string, callback: (...args) => void][] = [];
 
     @property()
     get screenName() {
@@ -96,10 +96,12 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         else
             this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style];
 
-        //todo: use domparser to enable decl. shadow dom
-        const template = htmlFromString(html);
-        const documentFragment = template.content.cloneNode(true);
-        this.shadowRoot.appendChild(documentFragment);
+        //@ts-ignore
+        const myDocument = new DOMParser().parseFromString(html, 'text/html', { includeShadowRoots: true });
+        const fragment = document.createDocumentFragment();
+        for (const n of myDocument.body.childNodes)
+            fragment.appendChild(n);
+        this.shadowRoot.appendChild(fragment);
         this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
         this._scriptObject = await ScriptSystem.assignAllScripts(script, this.shadowRoot, this);
     }

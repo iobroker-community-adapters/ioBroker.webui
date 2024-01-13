@@ -219,8 +219,11 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             folder: false,
             contextMenu: (event => nodeCtxMenu(event, x)),
             dblclick: (e, d) => {
-                iobrokerHandler.getObject(type, (dir ?? '') + '/' + d.data.name).then(s => {
-                    window.appShell.openScreenEditor((dir ?? '') + '/' + d.data.name, type, s.html, s.style, s.script, s.settings);
+                let nm = (dir ?? '') + '/' + d.data.name;
+                if (nm[0] == '/')
+                    nm = nm.substring(1);
+                iobrokerHandler.getObject(type, nm).then(s => {
+                    window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings);
                 });
             },
             data: { type, name: (dir ?? '') + '/' + x }
