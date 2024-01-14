@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.6": {
+        "en": "draw widgets when selected in tree",
+        "de": "ziehen sie widgets, wenn in baum ausgewählt",
+        "ru": "рисовать виджеты при выборе в дереве",
+        "pt": "desenhar widgets quando selecionado na árvore",
+        "nl": "widgets tekenen wanneer geselecteerd in boom",
+        "fr": "dessiner des widgets lorsqu'ils sont sélectionnés dans l'arbre",
+        "it": "disegnare widget quando selezionato in albero",
+        "es": "dibujar widgets cuando se selecciona en el árbol",
+        "pl": "rysować widżety po wybraniu na drzewie",
+        "uk": "прибрати віджети при вибраному в дерево",
+        "zh-cn": "在树上选中时绘制部件"
+      },
       "1.0.5": {
         "en": "bind to iobroker objects (via $ prefix)",
         "de": "binden an iobroker objekte (über $ präfix)",
@@ -106,19 +119,6 @@
         "pl": "nowe polecenie skryptu: Kalkulacja Sygnał Wartość\nukończenie kodu javascript\nlepsze typy w uzupełnieniu kodu\nnaprawić pisanie węzłów dziecięcych, jeśli zawartość jest związana w czasie projektowania\nużywać edytora monaco w wyrażeniach\nużywać własnych nazw var w wyrażeniach\nScreens & Controls może mieć podfoldery\ndecl. obsługa cieni w przeglądarce ekranu\ndopuść 'local _' jako przedrostek znacznika dla lokalnych vars",
         "uk": "нова команда скриптів: Кальвадос Ціна\njavascript licenses api веб-сайт\nкращі типи в комплетації коду\nфіксувати написання дочірніх вузлів, якщо вміст обмежений на час проектування\nвикористовуйте редактор monaco у виразах\nвикористовувати користувацькі вар імена у виразах\nЕкрани та керування можуть мати підпапки\nдек. підтримка shadow dom в екрані\nдозволити 'local_' як префікс тегу для місцевих варів",
         "zh-cn": "新脚本命令 : 计算符号 数值\njavascript 代码\n代码补丁中更好的类型\n如果内容在设计时被绑定, 固定子节点的写入\n在表达式中使用monaco编辑器\n在表达式中使用自定义 var 名称\n屏幕控件可以有子文件夹( C)\n页:1 屏幕查看器中的阴影窗口支持\n允许“ local_” 作为本地 vars 的标记前缀"
-      },
-      "0.23.3": {
-        "en": "add local valueAsNumber property",
-        "de": "lokalen Wert AsNumber Immobilien",
-        "ru": "добавить местное значение AsNumber недвижимость",
-        "pt": "adicionar valor local Propriedade AsNumber",
-        "nl": "plaatselijke waarde Vertaling:",
-        "fr": "ajouter la valeur locale AsNumber property",
-        "it": "aggiungere valore locale AsNumber proprietà",
-        "es": "añadir valor local AsNumber property",
-        "pl": "wartość lokalna własność Numbera",
-        "uk": "додати місцеве значення AsКількість нерухомості",
-        "zh-cn": "增加当地价值 简称"
       }
     },
     "icon": "logo.png",
