@@ -21,13 +21,31 @@ interface State {
     /** The user who set this value */
     user?: string;
 }
+type iobObjectType =
+    | 'state'
+    | 'channel'
+    | 'device'
+    | 'folder'
+    | 'enum'
+    | 'adapter'
+    | 'config'
+    | 'group'
+    | 'host'
+    | 'instance'
+    | 'meta'
+    | 'script'
+    | 'user'
+    | 'chart'
+    | 'schedule'
+    | 'design';
 
 var IOB: {
     getState(id: string): Promise<State>;
     setState(id: string, val: State | StateValue, ack?: boolean): Promise<void>;
     subscribeState(id: string, cb: ioBroker.StateChangeHandler): Promise<void>;
     unsubscribeState(id: string, cb: ioBroker.StateChangeHandler): void;
-    getObject(id: string): ioBroker.GetObjectPromise<string>;
+    getObject(id: string): Promise<any>;
+    getObjectList(type: iobObjectType, id: string): Promise<Record<string, any>>
     sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected' | 'uiChangedView', data?: string): Promise<void>;
 };
 

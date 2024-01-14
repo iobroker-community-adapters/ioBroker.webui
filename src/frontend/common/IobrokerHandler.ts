@@ -423,6 +423,10 @@ export class IobrokerHandler {
             this.connection.unsubscribeState(id, cb);
     }
 
+    public getObjectList(type: ioBroker.ObjectType, id: string) {
+        return iobrokerHandler.connection.getObjectView<ioBroker.ObjectType>( id , null, type);
+    }
+
     public getObject(id: string): ioBroker.GetObjectPromise<string> {
         return this.connection.getObject(id);
     }

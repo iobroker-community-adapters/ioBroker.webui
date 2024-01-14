@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- API for reading object lists
+
 ### 1.0.10 (2024-01-14)
 - fix selected tool
 
