@@ -25,6 +25,9 @@ interface State {
 var IOB: {
     getState(id: string): Promise<State>;
     setState(id: string, val: State | StateValue, ack?: boolean): Promise<void>;
+    subscribeState(id: string, cb: ioBroker.StateChangeHandler): Promise<void>;
+    unsubscribeState(id: string, cb: ioBroker.StateChangeHandler): void;
+    getObject(id: string): ioBroker.GetObjectPromise<string>;
     sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected' | 'uiChangedView', data?: string): Promise<void>;
 };
 

@@ -359,7 +359,7 @@ export class IobrokerWebuiBindingsHelper {
                     }
                 }
             } else if (s[0] == '$') {
-                iobrokerHandler.connection.getObject(s.substring(1)).then(x => {
+                iobrokerHandler.getObject(s.substring(1)).then(x => {
                     IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x, valuesObject, i, signalVars);
                 });
             } else {

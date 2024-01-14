@@ -203,7 +203,7 @@ export class IobrokerHandler {
         return [];
     }
 
-    async getObject<T extends IScreen | IControl>(type: 'screen' | 'control', name: string): Promise<T> {
+    async getWebuiObject<T extends IScreen | IControl>(type: 'screen' | 'control', name: string): Promise<T> {
         if (type == 'screen')
             return <T><any>this.getScreen(name);
         else if (type == 'control')
@@ -263,7 +263,7 @@ export class IobrokerHandler {
         }
         if (type == 'control')
             this._controlNames = null;
-        this.getObject(type, newName);
+        this.getWebuiObject(type, newName);
         this.objectsChanged.emit({ type, name: newName });
     }
 
@@ -416,6 +416,10 @@ export class IobrokerHandler {
             }
         } else
             this.connection.unsubscribeState(id, cb);
+    }
+
+    public getObject(id: string): ioBroker.GetObjectPromise<string> {
+        return this.connection.getObject(id);
     }
 
     public getState(id: string): Promise<State> {

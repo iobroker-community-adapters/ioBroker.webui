@@ -29,6 +29,6 @@ import { IControl } from '../interfaces/IControl.js';
 
 iobrokerHandler.loadAllCustomControls().then(async () => {
     for (let name of await iobrokerHandler.getCustomControlNames()) {
-        iobrokerHandler.getObject('control', name).then(ctl => generateCustomControl(name, <IControl>ctl));
+        iobrokerHandler.getWebuiObject('control', name).then(ctl => generateCustomControl(name, <IControl>ctl));
     }
 });

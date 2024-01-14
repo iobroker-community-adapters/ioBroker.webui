@@ -61,7 +61,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         this.serviceContainer = serviceContainer;
         iobrokerHandler.objectsChanged.on(async (x) => {
             if (x.type == 'control' && x.name)
-                generateCustomControl(x.name, <IControl>await iobrokerHandler.getObject(x.type, x.name));
+                generateCustomControl(x.name, <IControl>await iobrokerHandler.getWebuiObject(x.type, x.name));
             this._refreshNode(x.type, x.type == 'screen')
         });
         iobrokerHandler.imagesChanged.on(() => this._refreshNode('images'));
@@ -185,7 +185,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         let nodeCtxMenu = (event, name) => {
             ContextMenu.show([{
                 title: 'Export ' + type, action: async () => {
-                    let data = await iobrokerHandler.getObject(type, (dir ?? '') + '/' + name);
+                    let data = await iobrokerHandler.getWebuiObject(type, (dir ?? '') + '/' + name);
                     await exportData(JSON.stringify(data), name + '.' + type)
                 }
             }, /*{
@@ -197,7 +197,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 title: 'Copy ' + type, action: async () => {
                     let newName = prompt("New Name", name);
                     if (newName && newName != name) {
-                        let data = await iobrokerHandler.getObject(type, (dir ?? '') + '/' + name);
+                        let data = await iobrokerHandler.getWebuiObject(type, (dir ?? '') + '/' + name);
                         let copy = JSON.parse(JSON.stringify(data));
                         iobrokerHandler.saveObject(type, newName, copy);
                     }
@@ -227,7 +227,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 let nm = d.data.name;
                 if (nm[0] == '/')
                     nm = nm.substring(1);
-                iobrokerHandler.getObject(type, nm).then(s => {
+                iobrokerHandler.getWebuiObject(type, nm).then(s => {
                     window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings);
                 });
             },
@@ -827,9 +827,9 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         }
                         span.onpointerdown = async (ev) => {
                             if (e.node.data.type == 'screen') {
-                                e.node.data.screen = await iobrokerHandler.getObject('screen', e.node.data.name)
+                                e.node.data.screen = await iobrokerHandler.getWebuiObject('screen', e.node.data.name)
                             } else if (e.node.data.type == 'control') {
-                                e.node.data.control = await iobrokerHandler.getObject('control', e.node.data.name)
+                                e.node.data.control = await iobrokerHandler.getWebuiObject('control', e.node.data.name)
                             }
                         }
                     }

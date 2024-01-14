@@ -77,7 +77,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             this._loading = false;
             this.removeBindings();
             DomHelper.removeAllChildnodes(this.shadowRoot);
-            const screen = await iobrokerHandler.getObject('screen', this.screenName)
+            const screen = await iobrokerHandler.getWebuiObject('screen', this.screenName)
             if (screen) {
                 this.loadScreenData(screen.html, screen.style, screen.script);
             }
