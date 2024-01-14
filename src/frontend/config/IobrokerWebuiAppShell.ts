@@ -316,7 +316,11 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       pg.id = id;
       pg.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
       pg.typeName = 'IGlobalConfig'
-      pg.selectedObject = iobrokerHandler.config ?? {};
+      pg.selectedObject = iobrokerHandler.config?.globalConfig ?? {};
+      pg.saveCallback = async (data) => {
+        iobrokerHandler.config.globalConfig = data;
+        await iobrokerHandler.saveConfig();
+      }
       pg.title = 'global config';
       this.openDock(pg);
     }

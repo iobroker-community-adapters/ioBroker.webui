@@ -37,7 +37,7 @@
                 "arguments",
                 "caller",
                 "name",
-                "__@hasInstance@5237"
+                "__@hasInstance@5249"
             ],
             "type": "object"
         },
@@ -97,7 +97,16 @@
             "type": "object"
         },
         "IGlobalConfig": {
-            "propertyOrder": [],
+            "properties": {
+                "headerTags": {
+                    "description": "html tags added to the head",
+                    "format": "html",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "headerTags"
+            ],
             "type": "object"
         },
         "IGlobalScript": {

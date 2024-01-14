@@ -7,6 +7,7 @@ import { Wunderbaum } from 'wunderbaum';
 import wunderbaumStyle from 'wunderbaum/dist/wunderbaum.css' assert { type: 'css' };
 import { WunderbaumNode } from "wb_node";
 import { WbNodeData, WbRenderEventType } from "types";
+import { IUiCommand } from "@node-projects/web-component-designer";
 
 export interface ITypeInfo {
     properties?: IProperty[];
@@ -446,6 +447,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 return cnt;
 
             }
+            case 'html':
             case 'script': {
                 let editor = document.createElement('div');
                 editor.style.boxSizing = 'border-box';
@@ -463,15 +465,19 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 btn.innerHTML = '...';
                 btn.style.boxSizing = 'border-box';
                 btn.onclick = async () => {
-                    let monacoInfo = {
-                        content: `declare global {
+                    let cvm = new CodeViewMonaco();
+                    if (property.format == 'html') {
+                        cvm.language = 'html';
+                    } else {
+                        let monacoInfo = {
+                            content: `declare global {
                             var context: { event: Event, element: Element };
                         }`, filePath: 'global.d.ts'
+                        }
+                        //@ts-ignore
+                        monaco.languages.typescript.typescriptDefaults.setExtraLibs([monacoInfo]);
+                        cvm.language = 'javascript';
                     }
-                    //@ts-ignore
-                    monaco.languages.typescript.typescriptDefaults.setExtraLibs([monacoInfo]);
-                    let cvm = new CodeViewMonaco();
-                    cvm.language = 'javascript';
                     cvm.code = inp.value;
                     cvm.style.position = 'relative';
                     let res = await window.appShell.openConfirmation(cvm, 200, 200, 600, 400, this);
@@ -656,6 +662,19 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
 
     public clear() {
         this._tree.root.removeChildren();
+    }
+
+    saveCallback: (data: any) => void;
+    async executeCommand(command: Omit<IUiCommand, 'type'> & { type: string }) {
+        if (command.type == 'save') {
+            this.saveCallback(this.selectedObject)
+        }
+    }
+
+    canExecuteCommand(command: Omit<IUiCommand, 'type'> & { type: string }): boolean {
+        if (command.type == 'save')
+            return this.saveCallback != null;
+        return false;
     }
 }
 customElements.define("iobroker-webui-property-grid", IobrokerWebuiPropertyGrid);

@@ -109,6 +109,15 @@ export class IobrokerHandler {
 
         let cfg = await this._getConfig();
         this.config = cfg ?? { globalStyle: null, globalScript: null, globalConfig: null, fontDeclarations: null };
+        if (this.config.globalConfig == null) {
+            this.config.globalConfig = {
+                headerTags: `<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">`
+            }
+        }
+        if (this.config.globalConfig.headerTags) {
+            document.head.insertAdjacentHTML('afterbegin', this.config.globalConfig.headerTags);
+        }
         if (this.config.globalStyle)
             this.globalStylesheet = cssFromString(this.config.globalStyle);
         if (this.config.fontDeclarations) {
