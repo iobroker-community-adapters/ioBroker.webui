@@ -135,8 +135,8 @@ export class IobrokerWebuiBindableObjectDragDropService implements IBindableObje
             binding.target = BindingTarget.css;
         binding.signal = bindableObject.fullName;
         binding.twoWay = property.propertyType == PropertyType.property || property.propertyType == PropertyType.propertyAndAttribute;
-        if (designItems[0].element instanceof BaseCustomControl)
-            binding.twoWay = false;
+        //if (designItems[0].element instanceof BaseCustomControl)
+        //    binding.twoWay = false;
         const group = designItems[0].openGroup('drop binding')
         for (let d of designItems) {
             const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(d.element, property.name, binding);

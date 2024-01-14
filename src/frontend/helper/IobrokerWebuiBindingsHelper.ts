@@ -15,6 +15,11 @@ export const bindingPrefixContent = 'bind-content:';
 
 export type namedBinding = [name: string, binding: IIobrokerWebuiBinding];
 
+export function isLit(element: Element) {
+    //@ts-ignore
+    return element.constructor?.elementProperties != null;
+}
+
 export function parseBindingString(id: string) {
     let parts: string[] = [];
     let signals: string[] = [];
@@ -120,8 +125,13 @@ export class IobrokerWebuiBindingsHelper {
                     binding.events = ['change'];
                 else if (element instanceof HTMLSelectElement)
                     binding.events = ['change'];
-                else
-                    binding.events = [propname + '-changed'];
+                else {
+                    if (isLit(element)) {
+                        binding.events = [propname];
+                    } else
+                        binding.events = [propname + '-changed'];
+                }
+
             }
 
             if (value.startsWith('!')) {
@@ -141,8 +151,12 @@ export class IobrokerWebuiBindingsHelper {
                 binding.events = ['change'];
             else if (element instanceof HTMLSelectElement)
                 binding.events = ['change'];
-            else
-                binding.events = [propname + '-changed'];
+            else {
+                if (isLit(element)) {
+                    binding.events = [propname];
+                } else
+                    binding.events = [propname + '-changed'];
+            }
         }
         if (bindingTarget === BindingTarget.cssvar || bindingTarget === BindingTarget.class)
             return [IobrokerWebuiBindingsHelper.dotToCamelCase(propname), binding];
@@ -208,7 +222,9 @@ export class IobrokerWebuiBindingsHelper {
                 delete bindingCopy.events;
             else if (element instanceof HTMLSelectElement && binding.events?.[0] == "change")
                 delete bindingCopy.events;
-            else if (binding.events?.[0] == targetName + '-changed')
+            else if (isLit(element) && binding.events?.[0] == targetName)
+                delete bindingCopy.events;
+            else if (!isLit(element) && binding.events?.[0] == targetName + '-changed')
                 delete bindingCopy.events;
         }
         if (binding.inverted === null || binding.inverted === false) {
