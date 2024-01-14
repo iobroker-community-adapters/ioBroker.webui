@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.7 (2024-01-14)
 - bigger formula editor when multiline
 
 ### 1.0.6 (2024-01-14)
