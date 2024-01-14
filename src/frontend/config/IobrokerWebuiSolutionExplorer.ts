@@ -854,6 +854,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     expandChildren(e.tree.root);
                 },
                 click: (e) => {
+                    this.serviceContainer.globalContext.tool = null;
                     if (e.event) { // only for clicked items, not when elements selected via code.
                         if (e.node.data?.data?.type == 'npm' || e.node.data?.data?.type == 'control') {
                             let elDef: IElementDefinition;
