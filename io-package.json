@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.12": {
+        "en": "upgrade baseCustomWebcomp for attribute binding",
+        "de": "upgrade baseCustomWebcomp für Attributbindung",
+        "ru": "обновление baseCustomWebcomp для привязки атрибутов",
+        "pt": "upgrade baseCustomWebcomp para vinculação de atributos",
+        "nl": "upgrade baseCustomWebcomp voor attribuutbinding",
+        "fr": "base de mise à niveauCustomWebcomp pour la liaison des attributs",
+        "it": "aggiornamento baseCustomWebcomp per binding attributo",
+        "es": "base de actualizaciónCustomWebcomp para atributo vinculante",
+        "pl": "upgrade baseCustomWebcomp dla powiązania atrybutów",
+        "uk": "оновлення базиCustomWebcomp для прив'язування атрибутів",
+        "zh-cn": "升级基础 CustomWebcomp 属性绑定"
+      },
       "1.0.11": {
         "en": "API for reading object lists",
         "de": "API zum Lesen von Objektlisten",
@@ -106,19 +119,6 @@
         "pl": "wiąże się z obiektami iobrokerskimi (poprzez $prefix)",
         "uk": "зв'язаний з об'єктами iobroker (через $ префікс)",
         "zh-cn": "绑定于 iobroject (通过$ 前缀)"
-      },
-      "1.0.4": {
-        "en": "fix open screens in folders",
-        "de": "öffnende bildschirme in ordnern fixieren",
-        "ru": "исправить открытые экраны в папках",
-        "pt": "corrigir telas abertas em pastas",
-        "nl": "open schermen in mappen herstellen",
-        "fr": "correction des écrans ouverts dans les dossiers",
-        "it": "fissare gli schermi aperti nelle cartelle",
-        "es": "fijar pantallas abiertas en carpetas",
-        "pl": "naprawić otwarte ekrany w folderach",
-        "uk": "виправити відкриті екрани в папках",
-        "zh-cn": "在文件夹中修正打开的屏幕"
       }
     },
     "icon": "logo.png",
