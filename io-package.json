@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.10": {
+        "en": "fix selected tool",
+        "de": "das ausgewählte werkzeug",
+        "ru": "исправить выбранный инструмент",
+        "pt": "corrigir ferramenta selecionada",
+        "nl": "het geselecteerde gereedschap herstellen",
+        "fr": "corriger l'outil sélectionné",
+        "it": "fix strumento selezionato",
+        "es": "herramienta seleccionada",
+        "pl": "naprawić wybrane narzędzie",
+        "uk": "виправити вибраний інструмент",
+        "zh-cn": "修补选中的工具"
+      },
       "1.0.8": {
         "en": "fix import/export",
         "de": "import/export",
@@ -106,19 +119,6 @@
         "pl": "tylko małe foldery",
         "uk": "лише папки нижньої колонтитули",
         "zh-cn": "只有小写文件夹"
-      },
-      "1.0.2": {
-        "en": "variablen in convertern\nconfigurable meta tags",
-        "de": "varin in umrichtern\nkonfigurierbare meta-tags",
-        "ru": "переменный в конвертереn\nнастраиваемые мета-теги",
-        "pt": "variável em conversor\nmeta tags configuráveis",
-        "nl": "variabelen in convertern\nconfigureerbare meta-tags",
-        "fr": "variablen en convertisseurn\nbalises méta configurables",
-        "it": "variabile in convertitore\nmeta tag configurabili",
-        "es": "variable en convertidor\nmeta tags configurables",
-        "pl": "variablen in convertern\nkonfigurowalne znaczniki meta",
-        "uk": "змінний в конвертері\nconfigurable мета теги",
-        "zh-cn": "转换器中的变量\n可配置元标记"
       }
     },
     "icon": "logo.png",
