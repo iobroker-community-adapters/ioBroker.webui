@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.4": {
+        "en": "fix open screens in folders",
+        "de": "öffnende bildschirme in ordnern fixieren",
+        "ru": "исправить открытые экраны в папках",
+        "pt": "corrigir telas abertas em pastas",
+        "nl": "open schermen in mappen herstellen",
+        "fr": "correction des écrans ouverts dans les dossiers",
+        "it": "fissare gli schermi aperti nelle cartelle",
+        "es": "fijar pantallas abiertas en carpetas",
+        "pl": "naprawić otwarte ekrany w folderach",
+        "uk": "виправити відкриті екрани в папках",
+        "zh-cn": "在文件夹中修正打开的屏幕"
+      },
       "1.0.3": {
         "en": "only lowercase folders",
         "de": "nur kleinbuchstaben",
@@ -106,19 +119,6 @@
         "pl": "ponowny czas nie został zainicjowany",
         "uk": "знову виправити runtime не ініціалізовано",
         "zh-cn": "不再开始时间"
-      },
-      "0.23.1": {
-        "en": "fix runtime was not initialized",
-        "de": "fixe laufzeit wurde nicht initialisiert",
-        "ru": "исправление runtime не было инициализировано",
-        "pt": "correção runtime não foi inicializado",
-        "nl": "de reparatie was niet gestart",
-        "fr": "temps de fonctionnement fixe n'a pas été initialisé",
-        "it": "fix runtime non è stato inizializzato",
-        "es": "tiempo de ejecución fijado no fue inicializado",
-        "pl": "czas naprawy nie został zainicjowany",
-        "uk": "виправлення часу виконання не було ініціалізовано",
-        "zh-cn": "固定经营时间没有初步化"
       }
     },
     "icon": "logo.png",
