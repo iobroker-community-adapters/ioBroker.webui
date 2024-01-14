@@ -66,7 +66,9 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
 }
 
 export function generateCustomControl(name: string, control: IControl) {
-    let nm = PropertiesHelper.camelToDashCase(name);
+    if (name[0] == '/')
+        name = name.substring(1);
+    let nm = PropertiesHelper.camelToDashCase(name.replaceAll('/', '-'));
     if (nm[0] === '-')
         nm = nm.substring(1);
 

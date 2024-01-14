@@ -230,18 +230,23 @@ export class IobrokerHandler {
     }
 
     async saveObject(type: 'screen' | 'control', name: string, data: IScreen | IControl) {
-        this._saveObjectToFile(data, "/" + this.configPath + type + "s/" + name.toLocaleLowerCase() + '.' + type);
+        name = name.replace(' ', '');
+        if (type == 'screen')
+            name = name.toLocaleLowerCase();
+        this._saveObjectToFile(data, "/" + this.configPath + type + "s/" + name + '.' + type);
         if (this.#cache.has(type))
-            this.#cache.get(type).set(name.toLocaleLowerCase(), data);
+            this.#cache.get(type).set(name, data);
         if (type == 'control')
             this._controlNames = null;
         this.objectsChanged.emit({ type, name });
     }
 
     async removeObject(type: 'screen' | 'control', name: string) {
-        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + type + "s/" + name.toLocaleLowerCase() + '.' + type);
+        if (type == 'screen')
+            name = name.toLocaleLowerCase();
+        await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + type + "s/" + name + '.' + type);
         if (this.#cache.has(type))
-            this.#cache.get(type).delete(name.toLocaleLowerCase());
+            this.#cache.get(type).delete(name);
         if (type == 'control')
             this._controlNames = null;
         this.objectsChanged.emit({ type, name });

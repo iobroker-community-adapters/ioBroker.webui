@@ -113,8 +113,8 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         let data = JSON.parse(<string>f.data);
                         let nm = f.name;
                         if (nm.endsWith('.' + type))
-                            nm = nm.substring(0, nm.length - 7);
-                        await iobrokerHandler.saveObject(type, nm, data);
+                            nm = nm.substring(0, nm.length - type.length - 1);
+                        await iobrokerHandler.saveObject(type, (dir ?? '') + '/' + nm, data);
                     }
                 }
                 catch (err) {
@@ -199,7 +199,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     if (newName && newName != name) {
                         let data = await iobrokerHandler.getWebuiObject(type, (dir ?? '') + '/' + name);
                         let copy = JSON.parse(JSON.stringify(data));
-                        iobrokerHandler.saveObject(type, newName, copy);
+                        iobrokerHandler.saveObject(type, (dir ?? '') + '/' + newName, copy);
                     }
                 }
             }, {
