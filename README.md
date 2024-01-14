@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### 1.0.14 (2024-01-14)
+### __WORK IN PROGRESS__
 - support upper/lowercase and spaces in screens & controls
 
 ### 1.0.13 (2024-01-14)
