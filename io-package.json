@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.14",
+    "version": "1.0.15",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.15": {
+        "en": "support upper/lowercase and spaces in screens & controls",
+        "de": "unterstützung von ober- und untergeschossen und räumen in bildschirmen & bedienelementen",
+        "ru": "поддержка верхних/нижний край и пространства в экранах и управлениях",
+        "pt": "suporte superior / minúscula e espaços em telas & controles",
+        "nl": "ondersteuning voor boven/onderkoffer en spaties in schermen en controles",
+        "fr": "prendre en charge la case supérieure et les espaces dans les écrans et les commandes",
+        "it": "supporto superiore/basso e spazi in schermi e controlli",
+        "es": "soporte superior/bajo y espacios en pantallas & controles",
+        "pl": "obsługa górnej / dolnej skrzyni i spacji w ekranach i sterownikach",
+        "uk": "підтримка верхніх/низових і пробілів в екранах & управліннях",
+        "zh-cn": "支持屏幕和控件中的大小写和空格"
+      },
       "1.0.14": {
         "en": "support upper/lowercase and spaces in screens & controls",
         "de": "unterstützung von ober- und untergeschossen und räumen in bildschirmen & bedienelementen",
@@ -106,19 +119,6 @@
         "pl": "ustalić przywóz / wywóz",
         "uk": "фіксувати імпорт/експорт",
         "zh-cn": "固定导入/导出"
-      },
-      "1.0.7": {
-        "en": "bigger formula editor when multiline",
-        "de": "größere formel editor, wenn multiline",
-        "ru": "больший редактор формул, когда мультилиней",
-        "pt": "editor de fórmula maior quando multiline",
-        "nl": "grotere formule-editor wanneer meerregelig",
-        "fr": "plus grand éditeur de formule lorsque multiline",
-        "it": "più grande editor formula quando multilinea",
-        "es": "editor de fórmulas más grande cuando multiline",
-        "pl": "większy edytor formuły podczas multiline",
-        "uk": "більший редактор формули при мультилайн",
-        "zh-cn": "多行时更大的公式编辑器"
       }
     },
     "icon": "logo.png",
