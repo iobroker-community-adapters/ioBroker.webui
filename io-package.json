@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.8": {
+        "en": "fix import/export",
+        "de": "import/export",
+        "ru": "импорт/экспорт",
+        "pt": "corrigir importação / exportação",
+        "nl": "vast te stellen invoer/uitvoer",
+        "fr": "fixer l'importation/exportation",
+        "it": "fix import/export",
+        "es": "importación fija/exportación",
+        "pl": "ustalić przywóz / wywóz",
+        "uk": "фіксувати імпорт/експорт",
+        "zh-cn": "固定导入/导出"
+      },
       "1.0.7": {
         "en": "bigger formula editor when multiline",
         "de": "größere formel editor, wenn multiline",
@@ -106,19 +119,6 @@
         "pl": "variablen in convertern\nkonfigurowalne znaczniki meta",
         "uk": "змінний в конвертері\nconfigurable мета теги",
         "zh-cn": "转换器中的变量\n可配置元标记"
-      },
-      "1.0.1": {
-        "en": "fix issue with npm",
-        "de": "problem mit npm beheben",
-        "ru": "исправить проблему с npm",
-        "pt": "corrigir problema com npm",
-        "nl": "probleem oplossen met npm",
-        "fr": "correction du problème avec npm",
-        "it": "risolvere problema con npm",
-        "es": "solucionar el problema con npm",
-        "pl": "rozwiązać problem z npm",
-        "uk": "виправлено проблему з npm",
-        "zh-cn": "用 npm 修复问题"
       }
     },
     "icon": "logo.png",
