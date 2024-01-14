@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.11": {
+        "en": "API for reading object lists",
+        "de": "API zum Lesen von Objektlisten",
+        "ru": "API для чтения списков объектов",
+        "pt": "API para leitura de listas de objetos",
+        "nl": "API voor het lezen van objectlijsten",
+        "fr": "API pour la lecture des listes d'objets",
+        "it": "API per la lettura degli elenchi degli oggetti",
+        "es": "API para leer listas de objetos",
+        "pl": "API do odczytu list obiektów",
+        "uk": "API для читання списку об'єктів",
+        "zh-cn": "用于读取对象列表的 API"
+      },
       "1.0.10": {
         "en": "fix selected tool",
         "de": "das ausgewählte werkzeug",
@@ -106,19 +119,6 @@
         "pl": "naprawić otwarte ekrany w folderach",
         "uk": "виправити відкриті екрани в папках",
         "zh-cn": "在文件夹中修正打开的屏幕"
-      },
-      "1.0.3": {
-        "en": "only lowercase folders",
-        "de": "nur kleinbuchstaben",
-        "ru": "только папки с нижним числом",
-        "pt": "apenas pastas minúsculas",
-        "nl": "alleen kleine mappen",
-        "fr": "seulement les dossiers minuscules",
-        "it": "solo cartelle minuscole",
-        "es": "sólo carpetas minúsculas",
-        "pl": "tylko małe foldery",
-        "uk": "лише папки нижньої колонтитули",
-        "zh-cn": "只有小写文件夹"
       }
     },
     "icon": "logo.png",
