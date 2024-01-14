@@ -214,25 +214,22 @@ export class IobrokerHandler {
     private async getScreen(name: string): Promise<IScreen> {
         if (name[0] == '/')
             name = name.substring(1);
-        let screen = this.#cache.get('screen').get(name.toLocaleLowerCase());
+        let screen = this.#cache.get('screen').get(name);
         if (!screen) {
             if (this._readyPromises)
                 await this.waitForReady();
             try {
-                screen = await this._getObjectFromFile<IScreen>(this.configPath + "screens/" + name.toLocaleLowerCase() + '.screen');
+                screen = await this._getObjectFromFile<IScreen>(this.configPath + "screens/" + name + '.screen');
             }
             catch (err) {
                 console.error("Error reading Screen", screen, err);
             }
-            this.#cache.get('screen').set(name.toLocaleLowerCase(), screen);
+            this.#cache.get('screen').set(name, screen);
         }
         return screen;
     }
 
     async saveObject(type: 'screen' | 'control', name: string, data: IScreen | IControl) {
-        name = name.replace(' ', '');
-        if (type == 'screen')
-            name = name.toLocaleLowerCase();
         this._saveObjectToFile(data, "/" + this.configPath + type + "s/" + name + '.' + type);
         if (this.#cache.has(type))
             this.#cache.get(type).set(name, data);
@@ -242,8 +239,6 @@ export class IobrokerHandler {
     }
 
     async removeObject(type: 'screen' | 'control', name: string) {
-        if (type == 'screen')
-            name = name.toLocaleLowerCase();
         await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + type + "s/" + name + '.' + type);
         if (this.#cache.has(type))
             this.#cache.get(type).delete(name);
@@ -257,10 +252,6 @@ export class IobrokerHandler {
             oldName = oldName.substring(1);
         if (newName[0] == '/')
             newName = newName.substring(1);
-        if (type == 'screen') {
-            oldName = oldName.toLocaleLowerCase();
-            newName = newName.toLocaleLowerCase();
-        }
         await this.connection.renameFile(this.namespaceFiles, "/" + this.configPath + type + "s/" + oldName + '.' + type, "/" + this.configPath + type + "s/" + newName + '.' + type);
         if (this.#cache.has(type)) {
             this.#cache.get(type).delete(oldName);
@@ -273,7 +264,6 @@ export class IobrokerHandler {
     }
 
     async createFolder(type: 'screen' | 'control', name: string) {
-        name = name.replaceAll(' ', '').toLowerCase();
         await this._saveObjectToFile<any>({}, "/" + this.configPath + type + "s/" + name + '/tmp.fld');
         this.objectsChanged.emit({ type, name: null });
     }

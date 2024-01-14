@@ -5,7 +5,7 @@ import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBi
 import { exportData, openFileDialog } from "../helper/Helper.js";
 import { IScreen } from "../interfaces/IScreen.js";
 import { IControl } from "../interfaces/IControl.js";
-import { generateCustomControl, webuiCustomControlPrefix } from "../runtime/CustomControls.js";
+import { generateCustomControl, getCustomControlName, webuiCustomControlPrefix } from "../runtime/CustomControls.js";
 import { defaultOptions, defaultStyle } from "@node-projects/web-component-designer-widgets-wunderbaum";
 import { Wunderbaum } from 'wunderbaum';
 //@ts-ignore
@@ -233,7 +233,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     } else if (type == 'control') {
                         window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings, (<IControl>s).properties);
                     }
-                    
+
                 });
             },
             data: { type, name: (dir ?? '') + '/' + x }
@@ -862,12 +862,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                                 elDef = e.node.data.data.ref;
                             else {
                                 const control = e.node.data.data.name;
-                                let nm = PropertiesHelper.camelToDashCase(control);
-                                if (nm[0] === '/')
-                                    nm = nm.substring(1);
-                                if (nm[0] === '-')
-                                    nm = nm.substring(1);
-                                let name = webuiCustomControlPrefix + nm.replaceAll('/', '-');
+                                let name = getCustomControlName(control);
                                 elDef = { tag: name }
                             }
                             if (elDef) {
