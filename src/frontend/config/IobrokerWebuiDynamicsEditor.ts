@@ -2,6 +2,7 @@ import { BaseCustomWebComponentConstructorAppend, html, css } from '@node-projec
 import { BindingMode, BindingTarget, IBinding, IProperty } from '@node-projects/web-component-designer';
 import { BindableObjectsBrowser } from "@node-projects/web-component-designer-widgets-wunderbaum";
 import { IobrokerWebuiDynamicsEditorHistoric } from './IobrokerWebuiDynamicsEditorHistoric.js';
+import { IobrokerWebuiMonacoEditor } from './IobrokerWebuiMonacoEditor.js';
 
 export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstructorAppend {
 
@@ -42,13 +43,13 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
                             <span style="cursor: pointer;" title="javascript expression. access objects with __0, __1, ...">formula</span>
                         </div>
                         <div class="row">
-                            <iobroker-webui-monaco-editor single-row language="javascript" style="width: 100%; min-height: 17px; height: 17px; position: relative; overflow: hidden; resize: vertical;" .value="{{?this.expression}}"></iobroker-webui-monaco-editor>
+                            <iobroker-webui-monaco-editor id="expression" single-row language="javascript" style="width: 100%; min-height: 17px; height: 17px; position: relative; overflow: hidden; resize: vertical;" .value="{{?this.expression}}"></iobroker-webui-monaco-editor>
                         </div>
                         <div class="row">
                             <span style="cursor: pointer;" title="javascript expression. access property with 'value'">formula write back (two way)</span>
                         </div>
                         <div class="row">
-                            <iobroker-webui-monaco-editor read-only="[[!this.twoWay]]" $readonly="[[!this.twoWay]]" single-row language="javascript" style="width: 100%; min-height: 17px; height: 17px; position: relative; overflow: hidden; resize: vertical;" .value="{{?this.expressionTwoWay}}"></iobroker-webui-monaco-editor>
+                            <iobroker-webui-monaco-editor id="expression2way" read-only="[[!this.twoWay]]" $readonly="[[!this.twoWay]]" single-row language="javascript" style="width: 100%; min-height: 17px; height: 17px; position: relative; overflow: hidden; resize: vertical;" .value="{{?this.expressionTwoWay}}"></iobroker-webui-monaco-editor>
                         </div>
                     </div>
                 </div>
@@ -224,6 +225,21 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
             if (this._binding.changedEvents && this._binding.changedEvents.length)
                 this.events = this._binding.changedEvents.join(';');
         }
+
+        if (this.expression) {
+            let edt = this._getDomElement<IobrokerWebuiMonacoEditor>('expression');
+            if (this.expression.indexOf('\n') >= 0) {
+                edt.style.height = (3 * 17) + 'px';
+            }
+        }
+
+        if (this.expressionTwoWay) {
+            let edt = this._getDomElement<IobrokerWebuiMonacoEditor>('expression2way');
+            if (this.expressionTwoWay.indexOf('\n') >= 0) {
+                edt.style.height = (3 * 17) + 'px';
+            }
+        }
+
 
         this._bindingsParse();
     }
