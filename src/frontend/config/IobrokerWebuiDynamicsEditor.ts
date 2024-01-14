@@ -11,7 +11,7 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
                 <div style="grid-column: 1/3">
                     <div style="display: flex; flex-direction: column;">
                         <div class="row">
-                            <span style="cursor: pointer;" title="to use multiple objects, seprate them with semicolon (;). access iobroker objects in properties via ?propertyName, access the propertyValue via ??propertyName">objects</span>
+                            <span style="cursor: pointer;" title="to use multiple objects, seprate them with semicolon (;). access iobroker objects in properties via ?propertyName, access the propertyValue via ??propertyName. Bind to ioBroker object via $objectId">objects</span>
                         </div>
                         <div style="display:flex;align-items: flex-end;">
                             <input class="row" value="{{?this.objectNames::change}}" style="flex-grow: 1;">

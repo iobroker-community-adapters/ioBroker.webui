@@ -358,6 +358,10 @@ export class IobrokerWebuiBindingsHelper {
                         IobrokerWebuiBindingsHelper.addTwoWayBinding(binding, element, v => root[nm] = v);
                     }
                 }
+            } else if (s[0] == '$') {
+                iobrokerHandler.connection.getObject(s.substring(1)).then(x => {
+                    IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x, valuesObject, i, signalVars);
+                });
             } else {
                 if (s.includes('{')) {
                     let indirectSignal = new IndirectSignal(s, (value) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i, signalVars));
