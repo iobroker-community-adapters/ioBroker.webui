@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.3": {
+        "en": "only lowercase folders",
+        "de": "nur kleinbuchstaben",
+        "ru": "только папки с нижним числом",
+        "pt": "apenas pastas minúsculas",
+        "nl": "alleen kleine mappen",
+        "fr": "seulement les dossiers minuscules",
+        "it": "solo cartelle minuscole",
+        "es": "sólo carpetas minúsculas",
+        "pl": "tylko małe foldery",
+        "uk": "лише папки нижньої колонтитули",
+        "zh-cn": "只有小写文件夹"
+      },
       "1.0.2": {
         "en": "variablen in convertern\nconfigurable meta tags",
         "de": "varin in umrichtern\nkonfigurierbare meta-tags",
@@ -106,19 +119,6 @@
         "pl": "czas naprawy nie został zainicjowany",
         "uk": "виправлення часу виконання не було ініціалізовано",
         "zh-cn": "固定经营时间没有初步化"
-      },
-      "0.23.0": {
-        "en": "todo, support 2way bindings too custom properties\ncode completition for iobrokerHandler and runtime\nsimple scripts, access value of event",
-        "de": "todo, support 2way bindungen zu benutzerdefinierte eigenschaften\ncode completition für iobroker Handler und Laufzeit\neinfache skripte, zugriffswert der veranstaltung",
-        "ru": "todo, поддержка 2way связывает слишком пользовательские свойства\nзавершение кода для iobroker Обработчик и runtime\nпростые скрипты, стоимость доступа к событию",
-        "pt": "todo, suporte 2way vinculações demasiado propriedades personalizadas\ncompilação de código para iobroker Manipulador e tempo de execução\nscripts simples, valor de acesso do evento",
-        "nl": "_\ncodecomletie voor iobroker Handler\nsimpele scripts, toegangswaarde van gebeurtenissen",
-        "fr": "todo, support 2way reliures trop des propriétés personnalisées\ncode completition pour iobroker Handler et runtime\nscripts simples, valeur d'accès de l'événement",
-        "it": "todo, support 2way bindings too custom properties\ncompletamento del codice per iobroker Handler e runtime\nsemplici script, valore di accesso dell'evento",
-        "es": "todo, soporte 2way vinculantes también propiedades personalizadas\ncompletition code para iobroker Handler y runtime\nscripts simples, valor de acceso del evento",
-        "pl": "todo obsługuje dwie autostrady wiążące zbyt popularne własności\nkod końcowy dla iobrokera Handler and runtime\nskryptystyki",
-        "uk": "todo, підтримка 2way прив'язки занадто індивідуальні властивості\nскладання коду для iobroker Рушник і робочий час\nпрості сценарії, значення доступу події",
-        "zh-cn": "至多,支助具有同样习俗的2条公路\na. 完成汽油业守则 办事员\n简单说明,活动的价值"
       }
     },
     "icon": "logo.png",

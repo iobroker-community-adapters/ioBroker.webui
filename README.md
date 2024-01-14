@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.3 (2024-01-14)
 - only lowercase folders
 
 ### 1.0.2 (2024-01-14)
