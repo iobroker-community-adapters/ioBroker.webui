@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- bugfix controls editor
+
 ### 1.0.8 (2024-01-14)
 - fix import/export
 

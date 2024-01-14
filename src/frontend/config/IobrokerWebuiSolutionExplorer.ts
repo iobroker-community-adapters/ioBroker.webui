@@ -228,7 +228,12 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 if (nm[0] == '/')
                     nm = nm.substring(1);
                 iobrokerHandler.getWebuiObject(type, nm).then(s => {
-                    window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings);
+                    if (type == 'screen') {
+                        window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings);
+                    } else if (type == 'control') {
+                        window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings, (<IControl>s).properties);
+                    }
+                    
                 });
             },
             data: { type, name: (dir ?? '') + '/' + x }
