@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.2": {
+        "en": "variablen in convertern\nconfigurable meta tags",
+        "de": "varin in umrichtern\nkonfigurierbare meta-tags",
+        "ru": "переменный в конвертереn\nнастраиваемые мета-теги",
+        "pt": "variável em conversor\nmeta tags configuráveis",
+        "nl": "variabelen in convertern\nconfigureerbare meta-tags",
+        "fr": "variablen en convertisseurn\nbalises méta configurables",
+        "it": "variabile in convertitore\nmeta tag configurabili",
+        "es": "variable en convertidor\nmeta tags configurables",
+        "pl": "variablen in convertern\nkonfigurowalne znaczniki meta",
+        "uk": "змінний в конвертері\nconfigurable мета теги",
+        "zh-cn": "转换器中的变量\n可配置元标记"
+      },
       "1.0.1": {
         "en": "fix issue with npm",
         "de": "problem mit npm beheben",
@@ -106,19 +119,6 @@
         "pl": "todo obsługuje dwie autostrady wiążące zbyt popularne własności\nkod końcowy dla iobrokera Handler and runtime\nskryptystyki",
         "uk": "todo, підтримка 2way прив'язки занадто індивідуальні властивості\nскладання коду для iobroker Рушник і робочий час\nпрості сценарії, значення доступу події",
         "zh-cn": "至多,支助具有同样习俗的2条公路\na. 完成汽油业守则 办事员\n简单说明,活动的价值"
-      },
-      "0.22.7": {
-        "en": "and one more...",
-        "de": "und noch eins.",
-        "ru": "и еще один.",
-        "pt": "e mais um.",
-        "nl": "en nog een.",
-        "fr": "et encore une.",
-        "it": "e un altro.",
-        "es": "y uno más.",
-        "pl": "i jeden.",
-        "uk": "і ще один.",
-        "zh-cn": "再一次。."
       }
     },
     "icon": "logo.png",
