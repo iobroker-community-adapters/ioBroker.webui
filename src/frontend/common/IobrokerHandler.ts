@@ -268,6 +268,7 @@ export class IobrokerHandler {
     }
 
     async createFolder(type: 'screen' | 'control', name: string) {
+        name = name.replaceAll(' ', '').toLowerCase();
         await this._saveObjectToFile<any>({}, "/" + this.configPath + type + "s/" + name + '/tmp.fld');
         this.objectsChanged.emit({ type, name: null });
     }
