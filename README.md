@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.5 (2024-01-14)
 - bind to iobroker objects (via $ prefix)
 
 ### 1.0.4 (2024-01-14)

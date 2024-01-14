@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.5": {
+        "en": "bind to iobroker objects (via $ prefix)",
+        "de": "binden an iobroker objekte (über $ präfix)",
+        "ru": "связываться с объектами iobroker (через префикс $)",
+        "pt": "ligar a objetos iobroker (por prefixo $)",
+        "nl": "binden aan iobroker objecten (via $ voorvoegsel)",
+        "fr": "se lier aux objets iobroker (via le préfixe $)",
+        "it": "legare a oggetti iobroker (via $ prefisso)",
+        "es": "atados a objetos de yobroker (a través de $ prefijo)",
+        "pl": "wiąże się z obiektami iobrokerskimi (poprzez $prefix)",
+        "uk": "зв'язаний з об'єктами iobroker (через $ префікс)",
+        "zh-cn": "绑定于 iobroject (通过$ 前缀)"
+      },
       "1.0.4": {
         "en": "fix open screens in folders",
         "de": "öffnende bildschirme in ordnern fixieren",
@@ -106,19 +119,6 @@
         "pl": "wartość lokalna własność Numbera",
         "uk": "додати місцеве значення AsКількість нерухомості",
         "zh-cn": "增加当地价值 简称"
-      },
-      "0.23.2": {
-        "en": "again fix runtime was not initialized",
-        "de": "wieder fix laufzeit wurde nicht initialisiert",
-        "ru": "снова исправить runtime не было инициализировано",
-        "pt": "novamente corrigir o tempo de execução não foi inicializado",
-        "nl": "weer reparatie was niet gestart",
-        "fr": "réparer le temps de course n'a pas été initialisé",
-        "it": "di nuovo fix runtime non è stato inizializzato",
-        "es": "no fue inicializado",
-        "pl": "ponowny czas nie został zainicjowany",
-        "uk": "знову виправити runtime не ініціалізовано",
-        "zh-cn": "不再开始时间"
       }
     },
     "icon": "logo.png",
