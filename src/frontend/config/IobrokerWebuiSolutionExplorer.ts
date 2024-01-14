@@ -1,5 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from "@node-projects/base-custom-webcomponent";
-import { dragDropFormatNameBindingObject, IBindableObject, IBindableObjectsService, IElementDefinition, ServiceContainer, dragDropFormatNameElementDefinition, ContextMenu, sleep, dragDropFormatNamePropertyGrid, PropertiesHelper, copyTextToClipboard } from "@node-projects/web-component-designer";
+import { dragDropFormatNameBindingObject, IBindableObject, IBindableObjectsService, IElementDefinition, ServiceContainer, dragDropFormatNameElementDefinition, ContextMenu, sleep, dragDropFormatNamePropertyGrid, PropertiesHelper, copyTextToClipboard, NamedTools } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
 import { exportData, openFileDialog } from "../helper/Helper.js";
@@ -848,7 +848,31 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     };
                     expandChildren(e.tree.root);
                 },
-
+                click: (e) => {
+                    if (e.event) { // only for clicked items, not when elements selected via code.
+                        if (e.node.data?.data?.type == 'npm' || e.node.data?.data?.type == 'control') {
+                            let elDef: IElementDefinition;
+                            if (e.node.data.data.type == 'npm')
+                                elDef = e.node.data.data.ref;
+                            else {
+                                const control = e.node.data.data.name;
+                                let nm = PropertiesHelper.camelToDashCase(control);
+                                if (nm[0] === '/')
+                                    nm = nm.substring(1);
+                                if (nm[0] === '-')
+                                    nm = nm.substring(1);
+                                let name = webuiCustomControlPrefix + nm.replaceAll('/', '-');
+                                elDef = { tag: name }
+                            }
+                            if (elDef) {
+                                let tool = this.serviceContainer.designerTools.get(elDef.tool ?? NamedTools.DrawElementTool);
+                                if (typeof tool == 'function')
+                                    tool = new tool(elDef)
+                                this.serviceContainer.globalContext.tool = tool;
+                            }
+                        }
+                    }
+                },
                 dnd: {
                     guessDropEffect: true,
                     preventRecursion: true, // Prevent dropping nodes on own descendants
