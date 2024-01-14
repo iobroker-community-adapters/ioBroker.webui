@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.13",
+    "version": "1.0.14",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.14": {
+        "en": "support upper/lowercase and spaces in screens & controls",
+        "de": "unterstützung von ober- und untergeschossen und räumen in bildschirmen & bedienelementen",
+        "ru": "поддержка верхних/нижний край и пространства в экранах и управлениях",
+        "pt": "suporte superior / minúscula e espaços em telas & controles",
+        "nl": "ondersteuning voor boven/onderkoffer en spaties in schermen en controles",
+        "fr": "prendre en charge la case supérieure et les espaces dans les écrans et les commandes",
+        "it": "supporto superiore/basso e spazi in schermi e controlli",
+        "es": "soporte superior/bajo y espacios en pantallas & controles",
+        "pl": "obsługa górnej / dolnej skrzyni i spacji w ekranach i sterownikach",
+        "uk": "підтримка верхніх/низових і пробілів в екранах & управліннях",
+        "zh-cn": "支持屏幕和控件中的大小写和空格"
+      },
       "1.0.13": {
         "en": "correct event name in lit bindings",
         "de": "korrekter ereignisname in beleuchteten bindungen",
@@ -106,19 +119,6 @@
         "pl": "większy edytor formuły podczas multiline",
         "uk": "більший редактор формули при мультилайн",
         "zh-cn": "多行时更大的公式编辑器"
-      },
-      "1.0.6": {
-        "en": "draw widgets when selected in tree",
-        "de": "ziehen sie widgets, wenn in baum ausgewählt",
-        "ru": "рисовать виджеты при выборе в дереве",
-        "pt": "desenhar widgets quando selecionado na árvore",
-        "nl": "widgets tekenen wanneer geselecteerd in boom",
-        "fr": "dessiner des widgets lorsqu'ils sont sélectionnés dans l'arbre",
-        "it": "disegnare widget quando selezionato in albero",
-        "es": "dibujar widgets cuando se selecciona en el árbol",
-        "pl": "rysować widżety po wybraniu na drzewie",
-        "uk": "прибрати віджети при вибраному в дерево",
-        "zh-cn": "在树上选中时绘制部件"
       }
     },
     "icon": "logo.png",
