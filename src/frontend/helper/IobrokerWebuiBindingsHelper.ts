@@ -164,12 +164,27 @@ export class IobrokerWebuiBindingsHelper {
     }
 
     static serializeBinding(element: Element, targetName: string, binding: IIobrokerWebuiBinding): [name: string, value: string] {
+        let bindingCopy = { ...binding };
+        if (!binding.twoWay) {
+            delete bindingCopy.events;
+            delete bindingCopy.expressionTwoWay;
+        } else if ((binding.events != null && binding.events.length == 1)) {
+            if (element instanceof HTMLInputElement && binding.events?.[0] == "change")
+                delete bindingCopy.events;
+            else if (element instanceof HTMLSelectElement && binding.events?.[0] == "change")
+                delete bindingCopy.events;
+            else if (isLit(element) && binding.events?.[0] == targetName)
+                delete bindingCopy.events;
+            else if (!isLit(element) && binding.events?.[0] == targetName + '-changed')
+                delete bindingCopy.events;
+        }
+
         if (binding.target == BindingTarget.property &&
             !binding.expression && !binding.expressionTwoWay &&
             binding.converter == null &&
             !binding.type &&
             !binding.historic &&
-            (binding.events == null || binding.events.length == 0)) {
+            (bindingCopy.events == null || bindingCopy.events.length == 0)) {
             if (targetName == 'textContent')
                 return [bindingPrefixContent + 'text', (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
             if (targetName == 'innerHTML')
@@ -213,20 +228,6 @@ export class IobrokerWebuiBindingsHelper {
             return [bindingPrefixCssVar + IobrokerWebuiBindingsHelper.camelToDotCase(targetName.substring(2)), (binding.inverted ? '!' : '') + binding.signal];
         }
 
-        let bindingCopy = { ...binding };
-        if (!binding.twoWay) {
-            delete bindingCopy.events;
-            delete bindingCopy.expressionTwoWay;
-        } else if ((binding.events != null && binding.events.length == 1)) {
-            if (element instanceof HTMLInputElement && binding.events?.[0] == "change")
-                delete bindingCopy.events;
-            else if (element instanceof HTMLSelectElement && binding.events?.[0] == "change")
-                delete bindingCopy.events;
-            else if (isLit(element) && binding.events?.[0] == targetName)
-                delete bindingCopy.events;
-            else if (!isLit(element) && binding.events?.[0] == targetName + '-changed')
-                delete bindingCopy.events;
-        }
         if (binding.inverted === null || binding.inverted === false) {
             delete bindingCopy.inverted;
         }
