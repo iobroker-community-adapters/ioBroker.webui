@@ -2,7 +2,6 @@ import { OverlayLayer, DesignItem, IBindableObject, IBindableObjectDragDropServi
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
-import { BaseCustomControl } from "../runtime/CustomControls.js";
 
 export class IobrokerWebuiBindableObjectDragDropService implements IBindableObjectDragDropService {
     rectMap = new Map<Element, SVGRectElement>();
