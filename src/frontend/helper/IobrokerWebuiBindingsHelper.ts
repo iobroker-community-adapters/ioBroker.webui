@@ -462,51 +462,61 @@ export class IobrokerWebuiBindingsHelper {
         let v: (number | boolean | string) = value;
         //should this be done??
         v = IobrokerWebuiBindingsHelper.parseValueWithType(v, binding);
+        valuesObject[index] = v;
         if (binding[1].expression) {
-            valuesObject[index] = value;
             if (!binding[1].compiledExpression) {
+                signalVarNames.push('__res')
                 if (binding[1].expression.includes('return '))
                     binding[1].compiledExpression = new Function(<any>signalVarNames, binding[1].expression);
                 else
                     binding[1].compiledExpression = new Function(<any>signalVarNames, 'return ' + binding[1].expression);
             }
             v = binding[1].compiledExpression(...valuesObject);
+            valuesObject[signalVarNames.length - 1] = v;
         }
         if (binding[1].converter) {
             const stringValue = <string>(v != null ? v.toString() : v);
             if (stringValue in binding[1].converter) {
-                v = binding[1].converter[stringValue];
+                v = new Function(<any>signalVarNames, 'return `' + binding[1].converter[stringValue] + '`')(...valuesObject);
+                //v = binding[1].converter[stringValue];
             } else {
+                //@ts-ignore
+                const nr = parseFloat(v);
                 for (let c in binding[1].converter) {
                     if (c.length > 2 && c[0] === '>' && c[1] === '=') {
-                        const wr = c.substring(2);
-                        if (v >= wr) {
-                            v = binding[1].converter[c];
+                        const wr = parseFloat(c.substring(2));
+                        if (nr >= wr) {
+                            v = new Function(<any>signalVarNames, 'return `' + binding[1].converter[c] + '`')(...valuesObject);
+                            //v = binding[1].converter[c];
                             break;
                         }
                     } else if (c.length > 2 && c[0] === '<' && c[1] === '=') {
-                        const wr = c.substring(2);
-                        if (v <= wr) {
-                            v = binding[1].converter[c];
+                        const wr = parseFloat(c.substring(2));
+                        if (nr <= wr) {
+                            v = new Function(<any>signalVarNames, 'return `' + binding[1].converter[c] + '`')(...valuesObject);
+                            //v = binding[1].converter[c];
                             break;
                         }
                     } else if (c.length > 1 && c[0] === '>') {
-                        const wr = c.substring(1);
-                        if (v > wr) {
-                            v = binding[1].converter[c];
+                        const wr = parseFloat(c.substring(1));
+                        if (nr > wr) {
+                            v = new Function(<any>signalVarNames, 'return `' + binding[1].converter[c] + '`')(...valuesObject);
+                            //v = binding[1].converter[c];
                             break;
                         }
                     } else if (c.length > 1 && c[0] === '<') {
-                        const wr = c.substring(1);
-                        if (v < wr) {
-                            v = binding[1].converter[c];
+                        const wr = parseFloat(c.substring(1));
+                        if (nr < wr) {
+                            v = new Function(<any>signalVarNames, 'return `' + binding[1].converter[c] + '`')(...valuesObject);
+                            //v = binding[1].converter[c];
                             break;
                         }
                     } else {
                         const sp = c.split('-');
                         if (sp.length > 1) {
-                            if ((sp[0] === '' || v >= sp[0]) && (sp[1] === '' || sp[1] >= v)) {
-                                v = binding[1].converter[c];
+                            if ((sp[0] === '' || nr >= parseFloat(sp[0])) && (sp[1] === '' || parseFloat(sp[1]) >= nr)) {
+                                v = new Function(<any>signalVarNames, 'return `' + binding[1].converter[c] + '`')(...valuesObject);
+                                //v = binding[1].converter[c];
                                 break;
                             }
                         }
