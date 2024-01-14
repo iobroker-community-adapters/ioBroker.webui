@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.13 (2024-01-14)
 - correct event name in lit bindings
 
 ### 1.0.12 (2024-01-14)

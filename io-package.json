@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.13": {
+        "en": "correct event name in lit bindings",
+        "de": "korrekter ereignisname in beleuchteten bindungen",
+        "ru": "правильное название события в литовых связках",
+        "pt": "nome do evento correto em encadernações",
+        "nl": "correcte gebeurtenisnaam in verlichte bindingen",
+        "fr": "le nom correct de l'événement dans les liaisons allumées",
+        "it": "corretto nome dell'evento in legature illuminate",
+        "es": "correcto nombre de evento en unión iluminada",
+        "pl": "poprawna nazwa zdarzenia w podświetlonych wiązaniach",
+        "uk": "правильне ім'я події в лівих зв'язках",
+        "zh-cn": "点燃绑定中正确的事件名称"
+      },
       "1.0.12": {
         "en": "upgrade baseCustomWebcomp for attribute binding",
         "de": "upgrade baseCustomWebcomp für Attributbindung",
@@ -106,19 +119,6 @@
         "pl": "rysować widżety po wybraniu na drzewie",
         "uk": "прибрати віджети при вибраному в дерево",
         "zh-cn": "在树上选中时绘制部件"
-      },
-      "1.0.5": {
-        "en": "bind to iobroker objects (via $ prefix)",
-        "de": "binden an iobroker objekte (über $ präfix)",
-        "ru": "связываться с объектами iobroker (через префикс $)",
-        "pt": "ligar a objetos iobroker (por prefixo $)",
-        "nl": "binden aan iobroker objecten (via $ voorvoegsel)",
-        "fr": "se lier aux objets iobroker (via le préfixe $)",
-        "it": "legare a oggetti iobroker (via $ prefisso)",
-        "es": "atados a objetos de yobroker (a través de $ prefijo)",
-        "pl": "wiąże się z obiektami iobrokerskimi (poprzez $prefix)",
-        "uk": "зв'язаний з об'єктами iobroker (через $ префікс)",
-        "zh-cn": "绑定于 iobroject (通过$ 前缀)"
       }
     },
     "icon": "logo.png",
