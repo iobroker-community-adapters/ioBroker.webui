@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.15",
+    "version": "1.0.16",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.16": {
+        "en": "fix drag drop of tree nodes",
+        "de": "fix drag drop von baumknoten",
+        "ru": "фиксация капли деревьев",
+        "pt": "corrigir gota de arrasto de nós de árvore",
+        "nl": "fix drag drop of tree nodes",
+        "fr": "réparer la chute de traînée des nœuds d'arbre",
+        "it": "fix drag drop dei nodi albero",
+        "es": "fijar arrastrar gota de nodos de árbol",
+        "pl": "naprawić kroplę drag węzłów drzew",
+        "uk": "зафіксувати перетягування вузлів дерева",
+        "zh-cn": "固定树节点的拖放"
+      },
       "1.0.15": {
         "en": "support upper/lowercase and spaces in screens & controls",
         "de": "unterstützung von ober- und untergeschossen und räumen in bildschirmen & bedienelementen",
@@ -106,19 +119,6 @@
         "pl": "naprawić wybrane narzędzie",
         "uk": "виправити вибраний інструмент",
         "zh-cn": "修补选中的工具"
-      },
-      "1.0.8": {
-        "en": "fix import/export",
-        "de": "import/export",
-        "ru": "импорт/экспорт",
-        "pt": "corrigir importação / exportação",
-        "nl": "vast te stellen invoer/uitvoer",
-        "fr": "fixer l'importation/exportation",
-        "it": "fix import/export",
-        "es": "importación fija/exportación",
-        "pl": "ustalić przywóz / wywóz",
-        "uk": "фіксувати імпорт/експорт",
-        "zh-cn": "固定导入/导出"
       }
     },
     "icon": "logo.png",
