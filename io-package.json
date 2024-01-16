@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.16",
+    "version": "1.0.17",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.17": {
+        "en": "fix opacity of D&D node",
+        "de": "korrektur der Opazität von D&D-Knoten",
+        "ru": "фиксация непрозрачности D&D узла",
+        "pt": "corrigir opacidade do nó D&D",
+        "nl": "fix opaciteit van D&D-knooppunt",
+        "fr": "fixer l'opacité du nœud D&D",
+        "it": "fissare l'opacità del nodo D&D",
+        "es": "fijación opacidad del nodo D",
+        "pl": "fix nieprzezroczystość węzła D & D",
+        "uk": "виправити opacity вузла D&D",
+        "zh-cn": "修复 D&D 节点的不透明性"
+      },
       "1.0.16": {
         "en": "fix drag drop of tree nodes",
         "de": "fix drag drop von baumknoten",
@@ -106,19 +119,6 @@
         "pl": "API do odczytu list obiektów",
         "uk": "API для читання списку об'єктів",
         "zh-cn": "用于读取对象列表的 API"
-      },
-      "1.0.10": {
-        "en": "fix selected tool",
-        "de": "das ausgewählte werkzeug",
-        "ru": "исправить выбранный инструмент",
-        "pt": "corrigir ferramenta selecionada",
-        "nl": "het geselecteerde gereedschap herstellen",
-        "fr": "corriger l'outil sélectionné",
-        "it": "fix strumento selezionato",
-        "es": "herramienta seleccionada",
-        "pl": "naprawić wybrane narzędzie",
-        "uk": "виправити вибраний інструмент",
-        "zh-cn": "修补选中的工具"
       }
     },
     "icon": "logo.png",
