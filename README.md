@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix drag drop of tree nodes
+
 ### 1.0.15 (2024-01-14)
 - support upper/lowercase and spaces in screens & controls
 

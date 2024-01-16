@@ -875,6 +875,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     }
                 },
                 dnd: {
+                    preventLazyParents: false,
                     guessDropEffect: true,
                     preventRecursion: true, // Prevent dropping nodes on own descendants
                     preventVoidMoves: false,
