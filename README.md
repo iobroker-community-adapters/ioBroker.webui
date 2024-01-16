@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix opacity of D&D node
+
 ### 1.0.16 (2024-01-16)
 - fix drag drop of tree nodes
 

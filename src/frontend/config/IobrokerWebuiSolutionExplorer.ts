@@ -983,10 +983,16 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         return false;
                     },
                     drop: (e) => {
+                        //@ts-ignore
+                        dndSourceNode._rowElem.firstElementChild.style.opacity = '';
                         if (dndSourceNode?.data?.data?.type && e.node?.key && e.node.key.startsWith(dndSourceNode.data.data.type + '_')) {
                             iobrokerHandler.renameObject(dndSourceNode?.data?.data?.type, dndSourceNode?.data?.data?.name, e.node.data.data.name + '/' + dndSourceNode?.title);
                         }
-                    }
+                    }, 
+                    dragEnd: (e) => {
+                        //@ts-ignore
+                        dndSourceNode._rowElem.firstElementChild.style.opacity = '';
+                    }, 
                 }
             });
         } else {
