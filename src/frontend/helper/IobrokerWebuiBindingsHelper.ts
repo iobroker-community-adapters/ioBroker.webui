@@ -13,6 +13,8 @@ export const bindingPrefixCss = 'bind-css:';
 export const bindingPrefixCssVar = 'bind-cssvar:';
 export const bindingPrefixContent = 'bind-content:';
 
+export const bindingsInCssRegex = /{{(.*)}}/;
+
 export type namedBinding = [name: string, binding: IIobrokerWebuiBinding];
 
 export function isLit(element: Element) {
@@ -107,7 +109,14 @@ export class IndirectSignal {
 }
 
 export class IobrokerWebuiBindingsHelper {
+    //Not allowed chars in Var Names: |{}(),;:[]
+
     static parseBinding(element: Element, name: string, value: string, bindingTarget: BindingTarget, prefix: string): namedBinding {
+        //Loooks like:
+        //a:var1;b:var2;expression
+        //=varname => two way
+        //!varname => inverted
+        //{...} => json
         let propname = name.substring(prefix.length);
         if (bindingTarget === BindingTarget.cssvar)
             propname = '--' + propname;
@@ -117,7 +126,7 @@ export class IobrokerWebuiBindingsHelper {
                 target: bindingTarget
             }
 
-            if (value.startsWith('=')) {
+            if (value[0] === '=') {
                 value = value.substring(1);
                 binding.signal = value;
                 binding.twoWay = true;
@@ -134,10 +143,17 @@ export class IobrokerWebuiBindingsHelper {
 
             }
 
-            if (value.startsWith('!')) {
+            if (value[0] === '!') {
                 binding.signal = value.substring(1);
                 binding.inverted = true;
             }
+
+            if (binding.signal.includes(';')) {
+                const parts = binding.signal.split(';');
+                binding.expression = parts.pop();
+                binding.signal = parts.join(';');
+            }
+
             if (bindingTarget === BindingTarget.cssvar || bindingTarget === BindingTarget.class)
                 return [IobrokerWebuiBindingsHelper.dotToCamelCase(propname), binding];
             return [PropertiesHelper.dashToCamelCase(propname), binding];
@@ -186,10 +202,25 @@ export class IobrokerWebuiBindingsHelper {
             !binding.historic &&
             (bindingCopy.events == null || bindingCopy.events.length == 0)) {
             if (targetName == 'textContent')
-                return [bindingPrefixContent + 'text', (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
+                return [bindingPrefixContent + 'text', (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal + (!binding.twoWay && binding.signal.includes(';') ? ';' : '')];
             if (targetName == 'innerHTML')
-                return [bindingPrefixContent + 'html', (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
-            return [bindingPrefixProperty + PropertiesHelper.camelToDashCase(targetName), (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
+                return [bindingPrefixContent + 'html', (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal + (!binding.twoWay && binding.signal.includes(';') ? ';' : '')];
+            return [bindingPrefixProperty + PropertiesHelper.camelToDashCase(targetName), (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal + (!binding.twoWay && binding.signal.includes(';') ? ';' : '')];
+        }
+
+        //Multi Var Expressions
+        if (binding.target == BindingTarget.property &&
+            binding.expression && !binding.expression.includes("\n") && !binding.expression.includes(";") &&
+            !binding.expressionTwoWay &&
+            binding.converter == null &&
+            !binding.type &&
+            !binding.historic &&
+            (bindingCopy.events == null || bindingCopy.events.length == 0)) {
+            if (targetName == 'textContent')
+                return [bindingPrefixContent + 'text', (binding.inverted ? '!' : '') + binding.signal + ';' + binding.expression];
+            if (targetName == 'innerHTML')
+                return [bindingPrefixContent + 'html', (binding.inverted ? '!' : '') + binding.signal + ';' + binding.expression];
+            return [bindingPrefixProperty + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal + ';' + binding.expression];
         }
 
         if (binding.target == BindingTarget.attribute &&
@@ -198,7 +229,18 @@ export class IobrokerWebuiBindingsHelper {
             !binding.type &&
             !binding.historic &&
             (binding.events == null || binding.events.length == 0)) {
-            return [bindingPrefixAttribute + PropertiesHelper.camelToDashCase(targetName), (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal];
+            return [bindingPrefixAttribute + PropertiesHelper.camelToDashCase(targetName), (binding.twoWay ? '=' : '') + (binding.inverted ? '!' : '') + binding.signal + (!binding.twoWay && binding.signal.includes(';') ? ';' : '')];
+        }
+
+        //Multi Var Expressions
+        if (binding.target == BindingTarget.attribute &&
+            binding.expression && !binding.expression.includes("\n") && !binding.expression.includes(";") &&
+            !binding.expressionTwoWay &&
+            binding.converter == null &&
+            !binding.type &&
+            !binding.historic &&
+            (binding.events == null || binding.events.length == 0)) {
+            return [bindingPrefixAttribute + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal + ';' + binding.expression];
         }
 
         if (binding.target == BindingTarget.class &&
@@ -207,7 +249,18 @@ export class IobrokerWebuiBindingsHelper {
             !binding.type &&
             !binding.historic &&
             (binding.events == null || binding.events.length == 0)) {
-            return [bindingPrefixClass + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal];
+            return [bindingPrefixClass + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal + (!binding.twoWay && binding.signal.includes(';') ? ';' : '')];
+        }
+
+        //Multi Var Expressions
+        if (binding.target == BindingTarget.class &&
+            binding.expression && !binding.expression.includes("\n") && !binding.expression.includes(";") &&
+            !binding.expressionTwoWay &&
+            binding.converter == null &&
+            !binding.type &&
+            !binding.historic &&
+            (binding.events == null || binding.events.length == 0)) {
+            return [bindingPrefixClass + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal + ';' + binding.expression];
         }
 
         if (binding.target == BindingTarget.css &&
@@ -216,7 +269,19 @@ export class IobrokerWebuiBindingsHelper {
             !binding.type &&
             !binding.historic &&
             (binding.events == null || binding.events.length == 0)) {
-            return [bindingPrefixCss + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal];
+            return [bindingPrefixCss + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal + (!binding.twoWay && binding.signal.includes(';') ? ';' : '')];
+        }
+
+
+        //Multi Var Expressions
+        if (binding.target == BindingTarget.css &&
+            binding.expression && !binding.expression.includes("\n") && !binding.expression.includes(";") &&
+            !binding.expressionTwoWay &&
+            binding.converter == null &&
+            !binding.type &&
+            !binding.historic &&
+            (binding.events == null || binding.events.length == 0)) {
+            return [bindingPrefixCss + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal + ';' + binding.expression];
         }
 
         if (binding.target == BindingTarget.cssvar &&
@@ -225,7 +290,18 @@ export class IobrokerWebuiBindingsHelper {
             !binding.type &&
             !binding.historic &&
             (binding.events == null || binding.events.length == 0)) {
-            return [bindingPrefixCssVar + IobrokerWebuiBindingsHelper.camelToDotCase(targetName.substring(2)), (binding.inverted ? '!' : '') + binding.signal];
+            return [bindingPrefixCssVar + IobrokerWebuiBindingsHelper.camelToDotCase(targetName.substring(2)), (binding.inverted ? '!' : '') + binding.signal + (!binding.twoWay && binding.signal.includes(';') ? ';' : '')];
+        }
+
+        //Multi Var Expressions
+        if (binding.target == BindingTarget.cssvar &&
+            binding.expression && !binding.expression.includes("\n") && !binding.expression.includes(";") &&
+            !binding.expressionTwoWay &&
+            binding.converter == null &&
+            !binding.type &&
+            !binding.historic &&
+            (binding.events == null || binding.events.length == 0)) {
+            return [bindingPrefixCssVar + PropertiesHelper.camelToDashCase(targetName), (binding.inverted ? '!' : '') + binding.signal + ';' + binding.expression];
         }
 
         if (binding.inverted === null || binding.inverted === false) {
