@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.18",
+    "version": "1.0.19",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.19": {
+        "en": "simpler one way bindings with expressions",
+        "de": "einfacher ein weg bindungen mit ausdrücken",
+        "ru": "простой один способ связывания с выражениями",
+        "pt": "mais simples ligação de uma maneira com expressões",
+        "nl": "eenvoudiger enkele manier bindingen met expressies",
+        "fr": "plus simple les liaisons à sens unique avec les expressions",
+        "it": "più semplice un modo leganti con espressioni",
+        "es": "más simple una forma de unión con expresiones",
+        "pl": "prostsze jednokierunkowe wiązania z wyrażeniami",
+        "uk": "простий спосіб зв'язування з виразами",
+        "zh-cn": "用表达式绑定的简单方式"
+      },
       "1.0.18": {
         "en": "text selection selects in designer",
         "de": "textauswahl wählt in designer",
@@ -106,19 +119,6 @@
         "pl": "poprawna nazwa zdarzenia w podświetlonych wiązaniach",
         "uk": "правильне ім'я події в лівих зв'язках",
         "zh-cn": "点燃绑定中正确的事件名称"
-      },
-      "1.0.12": {
-        "en": "upgrade baseCustomWebcomp for attribute binding",
-        "de": "upgrade baseCustomWebcomp für Attributbindung",
-        "ru": "обновление baseCustomWebcomp для привязки атрибутов",
-        "pt": "upgrade baseCustomWebcomp para vinculação de atributos",
-        "nl": "upgrade baseCustomWebcomp voor attribuutbinding",
-        "fr": "base de mise à niveauCustomWebcomp pour la liaison des attributs",
-        "it": "aggiornamento baseCustomWebcomp per binding attributo",
-        "es": "base de actualizaciónCustomWebcomp para atributo vinculante",
-        "pl": "upgrade baseCustomWebcomp dla powiązania atrybutów",
-        "uk": "оновлення базиCustomWebcomp для прив'язування атрибутів",
-        "zh-cn": "升级基础 CustomWebcomp 属性绑定"
       }
     },
     "icon": "logo.png",

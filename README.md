@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.19 (2024-01-17)
 - simpler one way bindings with expressions
 
 ### 1.0.18 (2024-01-17)
