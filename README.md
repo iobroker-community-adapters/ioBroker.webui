@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- text selection selects in designer
+
 ### 1.0.17 (2024-01-16)
 - fix opacity of D&D node
 
