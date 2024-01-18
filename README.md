@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix broken split view
+
 ### 1.0.19 (2024-01-17)
 - simpler one way bindings with expressions
 
