@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.19",
+    "version": "1.0.20",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.20": {
+        "en": "fix broken split view",
+        "de": "defekte geteilte ansicht",
+        "ru": "исправить сломанный разделенный вид",
+        "pt": "corrigir visão dividida quebrada",
+        "nl": "fix gebroken split view",
+        "fr": "fixer la vue fractionnée cassée",
+        "it": "correzione della vista spaccata",
+        "es": "fijar vista dividida rota",
+        "pl": "naprawić uszkodzony widok podzielony",
+        "uk": "фіксувати розірваний вигляд",
+        "zh-cn": "修复断开的分割视图"
+      },
       "1.0.19": {
         "en": "simpler one way bindings with expressions",
         "de": "einfacher ein weg bindungen mit ausdrücken",
@@ -106,19 +119,6 @@
         "pl": "obsługa górnej / dolnej skrzyni i spacji w ekranach i sterownikach",
         "uk": "підтримка верхніх/низових і пробілів в екранах & управліннях",
         "zh-cn": "支持屏幕和控件中的大小写和空格"
-      },
-      "1.0.13": {
-        "en": "correct event name in lit bindings",
-        "de": "korrekter ereignisname in beleuchteten bindungen",
-        "ru": "правильное название события в литовых связках",
-        "pt": "nome do evento correto em encadernações",
-        "nl": "correcte gebeurtenisnaam in verlichte bindingen",
-        "fr": "le nom correct de l'événement dans les liaisons allumées",
-        "it": "corretto nome dell'evento in legature illuminate",
-        "es": "correcto nombre de evento en unión iluminada",
-        "pl": "poprawna nazwa zdarzenia w podświetlonych wiązaniach",
-        "uk": "правильне ім'я події в лівих зв'язках",
-        "zh-cn": "点燃绑定中正确的事件名称"
       }
     },
     "icon": "logo.png",
