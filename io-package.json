@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.20",
+    "version": "1.0.21",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.21": {
+        "en": "fix designer grid overlay\nstecil ackage hacks",
+        "de": "design-grid-überlagerung\nstecil ackage hacks",
+        "ru": "фиксации дизайнера сетки\nstecil ackage hackes",
+        "pt": "corrigir overlay grade designer\nstecil ackage hacks",
+        "nl": "fix ontwerper raster overlay\nstecil ackage hacks",
+        "fr": "réparer la superposition de grille designer\nstecil ackage hacks",
+        "it": "fix designer griglia overlay\nstecil ackage hacks",
+        "es": "rejilla de diseño fijo\nstecil ackage hacks",
+        "pl": "naprawić nakładanie siatki projektanta\nstecyl hacki",
+        "uk": "кріплення дизайнерської сітки\nstecil ackage хакі",
+        "zh-cn": "固定设计器网格覆盖\n恶棍黑客"
+      },
       "1.0.20": {
         "en": "fix broken split view",
         "de": "defekte geteilte ansicht",
@@ -95,19 +108,6 @@
         "zh-cn": "固定树节点的拖放"
       },
       "1.0.15": {
-        "en": "support upper/lowercase and spaces in screens & controls",
-        "de": "unterstützung von ober- und untergeschossen und räumen in bildschirmen & bedienelementen",
-        "ru": "поддержка верхних/нижний край и пространства в экранах и управлениях",
-        "pt": "suporte superior / minúscula e espaços em telas & controles",
-        "nl": "ondersteuning voor boven/onderkoffer en spaties in schermen en controles",
-        "fr": "prendre en charge la case supérieure et les espaces dans les écrans et les commandes",
-        "it": "supporto superiore/basso e spazi in schermi e controlli",
-        "es": "soporte superior/bajo y espacios en pantallas & controles",
-        "pl": "obsługa górnej / dolnej skrzyni i spacji w ekranach i sterownikach",
-        "uk": "підтримка верхніх/низових і пробілів в екранах & управліннях",
-        "zh-cn": "支持屏幕和控件中的大小写和空格"
-      },
-      "1.0.14": {
         "en": "support upper/lowercase and spaces in screens & controls",
         "de": "unterstützung von ober- und untergeschossen und räumen in bildschirmen & bedienelementen",
         "ru": "поддержка верхних/нижний край и пространства в экранах и управлениях",
