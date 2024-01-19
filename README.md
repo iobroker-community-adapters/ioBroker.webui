@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix designer grid overlay
+- stecil ackage hacks
+
 ### 1.0.20 (2024-01-18)
 - fix broken split view
 
