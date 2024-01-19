@@ -24,5 +24,7 @@
     "@material/web",
     "@zooplus/zoo-web-components",
     "dial-gauge",
-    "@zachleat/snow-fall"
+    "@zachleat/snow-fall",
+    "@montoyland/radial-menu",
+    "@maksu/side-menu"
 ]

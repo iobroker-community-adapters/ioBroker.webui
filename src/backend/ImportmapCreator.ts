@@ -277,6 +277,14 @@ export async function registerDesignerAddons(serviceContainer) {
                 }
 
                 this.importMap.imports[packageJsonObj.name + '/'] = basePath + '/';
+
+                if (packageHacks[packageJsonObj.name]?.map) {
+                    for (let h in packageHacks[packageJsonObj.name]?.map) {
+                        if (!this.importMap.imports[h])
+                            this.importMap.imports[h] = basePath + '/' + packageHacks[packageJsonObj.name].map[h];
+                    }
+                }
+
             }
         } catch (err) {
             this._adapter.log.error("error creating importmap in package: " + packageJsonObj.name + ", " + err);

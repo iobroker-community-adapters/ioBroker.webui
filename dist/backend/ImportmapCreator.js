@@ -246,6 +246,12 @@ export async function registerDesignerAddons(serviceContainer) {
                     this._adapter.log.warn('main is undefined for "' + packageJsonObj.name + '"');
                 }
                 this.importMap.imports[packageJsonObj.name + '/'] = basePath + '/';
+                if (packageHacks[packageJsonObj.name]?.map) {
+                    for (let h in packageHacks[packageJsonObj.name]?.map) {
+                        if (!this.importMap.imports[h])
+                            this.importMap.imports[h] = basePath + '/' + packageHacks[packageJsonObj.name].map[h];
+                    }
+                }
             }
         }
         catch (err) {
