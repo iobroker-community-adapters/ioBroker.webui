@@ -59,6 +59,11 @@ export class IobrokerWebuiScriptRefactorService implements IRefactorService {
                                         if (c.screen)
                                             refactorings.push({ name: c.screen, itemType: 'screenName', target: BindingTarget.event, targetName: a[0], display: c.type + '/screen', service: this, designItem: d, type: 'script', sourceObject: script, refactor: newValue => (<any>c).screen = newValue });
                                         break;
+                                    case 'CalculateSignalValue':
+                                        if (c.targetSignal)
+                                            refactorings.push({ name: c.targetSignal, itemType: 'bindableObject', target: BindingTarget.event, targetName: a[0], display: c.type + '/signal', service: this, designItem: d, type: 'script', sourceObject: script, refactor: newValue => (<any>c).targetSignal = newValue });
+                                        break;
+
                                 }
                             }
                         } else if ('blocks' in script) {
