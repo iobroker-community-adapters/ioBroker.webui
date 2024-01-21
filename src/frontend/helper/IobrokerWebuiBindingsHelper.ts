@@ -447,7 +447,7 @@ export class IobrokerWebuiBindingsHelper {
                         cleanupCalls = [];
                     cleanupCalls.push(() => root.removeEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback));
                     IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i, signalVars, true);
-                    if (binding[1].twoWay) {
+                    if (binding[1].twoWay && i == 0) {
                         IobrokerWebuiBindingsHelper.addTwoWayBinding(binding, element, v => root[nm] = v);
                     }
                 }
@@ -461,7 +461,7 @@ export class IobrokerWebuiBindingsHelper {
                     if (!cleanupCalls)
                         cleanupCalls = [];
                     cleanupCalls.push(() => indirectSignal.dispose());
-                    if (binding[1].twoWay) {
+                    if (binding[1].twoWay && i == 0) {
                         IobrokerWebuiBindingsHelper.addTwoWayBinding(binding, element, v => indirectSignal.setState(v));
                     }
                 } else {
@@ -489,7 +489,7 @@ export class IobrokerWebuiBindingsHelper {
                         unsubscribeList.push([s, cb]);
                         iobrokerHandler.subscribeState(s, cb);
                         iobrokerHandler.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i, signalVars, true));
-                        if (binding[1].twoWay) {
+                        if (binding[1].twoWay && i == 0) {
                             IobrokerWebuiBindingsHelper.addTwoWayBinding(binding, element, v => iobrokerHandler.setState(s, v));
                         }
                     }
@@ -576,7 +576,6 @@ export class IobrokerWebuiBindingsHelper {
             const stringValue = <string>(v != null ? v.toString() : v);
             if (stringValue in binding[1].converter) {
                 v = new Function(<any>signalVarNames, 'return `' + binding[1].converter[stringValue] + '`')(...valuesObject);
-                //v = binding[1].converter[stringValue];
             } else {
                 //@ts-ignore
                 const nr = parseFloat(v);
@@ -585,28 +584,24 @@ export class IobrokerWebuiBindingsHelper {
                         const wr = parseFloat(c.substring(2));
                         if (nr >= wr) {
                             v = new Function(<any>signalVarNames, 'return `' + binding[1].converter[c] + '`')(...valuesObject);
-                            //v = binding[1].converter[c];
                             break;
                         }
                     } else if (c.length > 2 && c[0] === '<' && c[1] === '=') {
                         const wr = parseFloat(c.substring(2));
                         if (nr <= wr) {
                             v = new Function(<any>signalVarNames, 'return `' + binding[1].converter[c] + '`')(...valuesObject);
-                            //v = binding[1].converter[c];
                             break;
                         }
                     } else if (c.length > 1 && c[0] === '>') {
                         const wr = parseFloat(c.substring(1));
                         if (nr > wr) {
                             v = new Function(<any>signalVarNames, 'return `' + binding[1].converter[c] + '`')(...valuesObject);
-                            //v = binding[1].converter[c];
                             break;
                         }
                     } else if (c.length > 1 && c[0] === '<') {
                         const wr = parseFloat(c.substring(1));
                         if (nr < wr) {
                             v = new Function(<any>signalVarNames, 'return `' + binding[1].converter[c] + '`')(...valuesObject);
-                            //v = binding[1].converter[c];
                             break;
                         }
                     } else {
@@ -614,7 +609,6 @@ export class IobrokerWebuiBindingsHelper {
                         if (sp.length > 1) {
                             if ((sp[0] === '' || nr >= parseFloat(sp[0])) && (sp[1] === '' || parseFloat(sp[1]) >= nr)) {
                                 v = new Function(<any>signalVarNames, 'return `' + binding[1].converter[c] + '`')(...valuesObject);
-                                //v = binding[1].converter[c];
                                 break;
                             }
                         }
