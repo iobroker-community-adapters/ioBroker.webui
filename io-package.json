@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.24",
+    "version": "1.0.25",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.25": {
+        "en": "use appendChild",
+        "de": "verwendung anhängig",
+        "ru": "приложениеChild",
+        "pt": "usar o appendChild",
+        "nl": "appendChild gebruiken",
+        "fr": "utiliser l'annexe Child",
+        "it": "uso appendI bambini",
+        "es": "appendChild",
+        "pl": "użyj apendChild",
+        "uk": "використання appendChild",
+        "zh-cn": "使用附件键"
+      },
       "1.0.24": {
         "en": "fix later loaded scripts",
         "de": "später geladene skripte beheben",
@@ -106,19 +119,6 @@
         "pl": "prostsze jednokierunkowe wiązania z wyrażeniami",
         "uk": "простий спосіб зв'язування з виразами",
         "zh-cn": "用表达式绑定的简单方式"
-      },
-      "1.0.18": {
-        "en": "text selection selects in designer",
-        "de": "textauswahl wählt in designer",
-        "ru": "выбор текста в дизайнере",
-        "pt": "seleção de texto seleciona no designer",
-        "nl": "tekstselectie selecteert in ontwerper",
-        "fr": "sélection de texte sélectionne dans le concepteur",
-        "it": "selezione di testo seleziona in designer",
-        "es": "selección de texto selecciona en diseñador",
-        "pl": "wybór tekstu w projektancie",
-        "uk": "вибір тексту в дизайнеру",
-        "zh-cn": "在设计器中选择文本选择"
       }
     },
     "icon": "logo.png",
