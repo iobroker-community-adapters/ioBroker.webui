@@ -117,7 +117,7 @@ export class IobrokerHandler {
         }
         if (this.config.globalConfig.headerTags) {
             const fragment = document.createRange().createContextualFragment(this.config.globalConfig.headerTags);
-            document.head.append(fragment);
+            document.head.appendChild(fragment);
         }
         if (this.config.globalStyle)
             this.globalStylesheet = cssFromString(this.config.globalStyle);
