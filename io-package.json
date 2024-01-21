@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.23",
+    "version": "1.0.24",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.24": {
+        "en": "fix later loaded scripts",
+        "de": "später geladene skripte beheben",
+        "ru": "исправить позднее загруженные скрипты",
+        "pt": "corrigir scripts carregados mais tarde",
+        "nl": "later geladen scripts herstellen",
+        "fr": "corriger les scripts chargés plus tard",
+        "it": "correggere gli script successivi caricati",
+        "es": "arreglar scripts cargados más tarde",
+        "pl": "naprawić później załadowane skrypty",
+        "uk": "фіксувати пізніше завантажені сценарії",
+        "zh-cn": "修正后装入的脚本"
+      },
       "1.0.23": {
         "en": "twoway should only set first value\nfix error with noParse",
         "de": "zweiwege sollten nur den ersten wert festlegen\nfehler beheben mit noParse",
@@ -106,19 +119,6 @@
         "pl": "wybór tekstu w projektancie",
         "uk": "вибір тексту в дизайнеру",
         "zh-cn": "在设计器中选择文本选择"
-      },
-      "1.0.17": {
-        "en": "fix opacity of D&D node",
-        "de": "korrektur der Opazität von D&D-Knoten",
-        "ru": "фиксация непрозрачности D&D узла",
-        "pt": "corrigir opacidade do nó D&D",
-        "nl": "fix opaciteit van D&D-knooppunt",
-        "fr": "fixer l'opacité du nœud D&D",
-        "it": "fissare l'opacità del nodo D&D",
-        "es": "fijación opacidad del nodo D",
-        "pl": "fix nieprzezroczystość węzła D & D",
-        "uk": "виправити opacity вузла D&D",
-        "zh-cn": "修复 D&D 节点的不透明性"
       }
     },
     "icon": "logo.png",
