@@ -132,6 +132,7 @@ runtime.html?screenName=screen2
 
 ### __WORK IN PROGRESS__
 - twoway should only set first value
+- fix error with noParse
 
 ### 1.0.22 (2024-01-20)
 - fix binding with unit
