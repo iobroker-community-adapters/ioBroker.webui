@@ -116,7 +116,8 @@ export class IobrokerHandler {
             }
         }
         if (this.config.globalConfig.headerTags) {
-            document.head.insertAdjacentHTML('afterbegin', this.config.globalConfig.headerTags);
+            const fragment = document.createRange().createContextualFragment(this.config.globalConfig.headerTags);
+            document.head.append(fragment);
         }
         if (this.config.globalStyle)
             this.globalStylesheet = cssFromString(this.config.globalStyle);
