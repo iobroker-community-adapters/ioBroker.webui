@@ -441,23 +441,23 @@ export class IobrokerWebuiBindingsHelper {
             if (s[0] == '?') {
                 if (root) {
                     const nm = s.substring(1);
-                    let evtCallback = () => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i, signalVars, true);
+                    let evtCallback = () => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i, signalVars, false);
                     root.addEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback);
                     if (!cleanupCalls)
                         cleanupCalls = [];
                     cleanupCalls.push(() => root.removeEventListener(PropertiesHelper.camelToDashCase(nm) + '-changed', evtCallback));
-                    IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i, signalVars, true);
+                    IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, root[nm], valuesObject, i, signalVars, false);
                     if (binding[1].twoWay && i == 0) {
                         IobrokerWebuiBindingsHelper.addTwoWayBinding(binding, element, v => root[nm] = v);
                     }
                 }
             } else if (s[0] == '$') {
                 iobrokerHandler.getObject(s.substring(1)).then(x => {
-                    IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x, valuesObject, i, signalVars, false);
+                    IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x, valuesObject, i, signalVars, true);
                 });
             } else {
                 if (s.includes('{')) {
-                    let indirectSignal = new IndirectSignal(s, (value) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i, signalVars, true));
+                    let indirectSignal = new IndirectSignal(s, (value) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i, signalVars, false));
                     if (!cleanupCalls)
                         cleanupCalls = [];
                     cleanupCalls.push(() => indirectSignal.dispose());
@@ -470,7 +470,7 @@ export class IobrokerWebuiBindingsHelper {
                             let myTimer = { timerId: <any>-1 };
                             async function loadHistoric() {
                                 const res = await iobrokerHandler.connection.getHistoryEx(s, binding[1].historic);
-                                IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, res?.values, valuesObject, i, signalVars, false);
+                                IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, res?.values, valuesObject, i, signalVars, true);
                                 if (myTimer.timerId !== null)
                                     myTimer.timerId = setTimeout(loadHistoric, binding[1].historic.reloadInterval);
                             }
@@ -483,12 +483,12 @@ export class IobrokerWebuiBindingsHelper {
                                 myTimer.timerId = null;
                             });
                         } else
-                            iobrokerHandler.connection.getHistoryEx(s, binding[1].historic).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.values, valuesObject, i, signalVars, false))
+                            iobrokerHandler.connection.getHistoryEx(s, binding[1].historic).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.values, valuesObject, i, signalVars, true))
                     } else {
-                        const cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i, signalVars, true);
+                        const cb = (id: string, value: any) => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, value.val, valuesObject, i, signalVars, false);
                         unsubscribeList.push([s, cb]);
                         iobrokerHandler.subscribeState(s, cb);
-                        iobrokerHandler.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i, signalVars, true));
+                        iobrokerHandler.getState(s).then(x => IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x?.val, valuesObject, i, signalVars, false));
                         if (binding[1].twoWay && i == 0) {
                             IobrokerWebuiBindingsHelper.addTwoWayBinding(binding, element, v => iobrokerHandler.setState(s, v));
                         }
@@ -530,7 +530,7 @@ export class IobrokerWebuiBindingsHelper {
                     setter(v);
                 })
             } else {
-                element.addEventListener(e, () => {
+                element.addEventListener(e, (evt) => {
                     let v = element[binding[0]];
                     v = IobrokerWebuiBindingsHelper.parseValueWithType(v, binding);
                     if (binding[1].compiledExpressionTwoWay)
