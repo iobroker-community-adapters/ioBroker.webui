@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.26",
+    "version": "1.0.27",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.27": {
+        "en": "toast message on errors",
+        "de": "toast message auf fehler",
+        "ru": "тост сообщение об ошибках",
+        "pt": "mensagem de brinde em erros",
+        "nl": "toastbericht bij fouten",
+        "fr": "toast message sur les erreurs",
+        "it": "messaggio di brindisi sugli errori",
+        "es": "mensaje tostado sobre errores",
+        "pl": "wiadomość na toast o błędach",
+        "uk": "написати повідомлення про помилки",
+        "zh-cn": "关于错误的祝酒词"
+      },
       "1.0.26": {
         "en": "npm package upgrades",
         "de": "npm paket upgrades",
@@ -106,19 +119,6 @@
         "pl": "naprawić nakładanie siatki projektanta\nstecyl hacki",
         "uk": "кріплення дизайнерської сітки\nstecil ackage хакі",
         "zh-cn": "固定设计器网格覆盖\n恶棍黑客"
-      },
-      "1.0.20": {
-        "en": "fix broken split view",
-        "de": "defekte geteilte ansicht",
-        "ru": "исправить сломанный разделенный вид",
-        "pt": "corrigir visão dividida quebrada",
-        "nl": "fix gebroken split view",
-        "fr": "fixer la vue fractionnée cassée",
-        "it": "correzione della vista spaccata",
-        "es": "fijar vista dividida rota",
-        "pl": "naprawić uszkodzony widok podzielony",
-        "uk": "фіксувати розірваний вигляд",
-        "zh-cn": "修复断开的分割视图"
       }
     },
     "icon": "logo.png",

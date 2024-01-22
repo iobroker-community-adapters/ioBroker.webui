@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.27 (2024-01-22)
 - toast message on errors
 
 ### 1.0.26 (2024-01-22)
