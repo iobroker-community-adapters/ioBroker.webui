@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.28 (2024-01-22)
 - npm upgrade for error of undoservice
 
 ### 1.0.27 (2024-01-22)
