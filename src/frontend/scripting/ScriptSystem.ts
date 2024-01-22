@@ -226,7 +226,7 @@ export class ScriptSystem {
         return retVal;
     }
 
-    static async assignAllScripts(javascriptCode: string, shadowRoot: ShadowRoot, instance: HTMLElement): Promise<ICustomControlScript> {
+    static async assignAllScripts(source: string, javascriptCode: string, shadowRoot: ShadowRoot, instance: HTMLElement): Promise<ICustomControlScript> {
         const allElements = shadowRoot.querySelectorAll('*');
         let jsObject: ICustomControlScript = null;
         if (javascriptCode) {
@@ -237,7 +237,7 @@ export class ScriptSystem {
                     jsObject.init(instance);
                 }
             } catch (err) {
-                console.error('error parsing javascript', err)
+                console.error('error parsing javascript - ' + source, err)
             }
         }
         for (let e of allElements) {

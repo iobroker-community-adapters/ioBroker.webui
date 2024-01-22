@@ -103,7 +103,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             fragment.appendChild(n);
         this.shadowRoot.appendChild(fragment);
         this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
-        this._scriptObject = await ScriptSystem.assignAllScripts(script, this.shadowRoot, this);
+        this._scriptObject = await ScriptSystem.assignAllScripts('screenviewer - ' + this.screenName, script, this.shadowRoot, this);
     }
 
     _getRelativeSignalsPath(): string {
