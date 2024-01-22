@@ -24,7 +24,8 @@ const importMapConfig = {
         "tslib": "./node_modules/tslib/tslib.es6.mjs",
         "long": "./node_modules/long/index.js",
         "wunderbaum": "./node_modules/wunderbaum/dist/wunderbaum.esm.min.js",
-        "wunderbaum/": "./node_modules/wunderbaum/"
+        "wunderbaum/": "./node_modules/wunderbaum/",
+        "toastify-js": "./node_modules/toastify-js/src/toastify-es.js"
     }
 };
 //@ts-ignore

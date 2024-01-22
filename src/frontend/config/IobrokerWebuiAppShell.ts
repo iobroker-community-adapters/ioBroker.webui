@@ -1,4 +1,5 @@
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
+import Toastify from 'toastify-js'
 //@ts-ignore
 await LazyLoader.LoadJavascript(window.iobrokerSocketScriptUrl);
 iobrokerHandler.init();
@@ -349,3 +350,22 @@ declare global {
   }
 }
 
+const err = console.error;
+console.error = (...args) => {
+  err(...args);
+  try {
+    Toastify({
+      text: "Error occured, check console \n" + args[0],
+      duration: 4000,
+      close: true,
+      gravity: "top",
+      position: "right",
+      stopOnFocus: true,
+      style: {
+        color: "black",
+        background: "linear-gradient(to right, #ff5f6d, #ffc371)",
+      }
+    }).showToast();
+  }
+  catch { }
+}

@@ -41,7 +41,8 @@
     "@blockly/zoom-to-fit": "^5.0.11",
     "@iobroker/adapter-core": "^3.0.4",
     "@types/node": "^20.11.5",
-    "blockly": "^10.3.1"
+    "blockly": "^10.3.1",
+    "toastify-js": "^1.12.0"
   },
   "devDependencies": {
     "@adobe/css-tools": "4.3.2",
@@ -60,7 +61,6 @@
     "@node-projects/web-component-designer-widgets-wunderbaum": "^0.1.12",
     "@types/json-schema": "^7.0.15",
     "@web/dev-server": "^0.4.1",
-    "esbuild": "^0.19.11",
     "chai": "^4.3.10",
     "chai-as-promised": "^7.1.1",
     "construct-style-sheets-polyfill": "^3.1.0",
@@ -68,6 +68,7 @@
     "del": "^7.1.0",
     "dock-spawn-ts": "^2.524.0",
     "es-module-shims": "^1.8.2",
+    "esbuild": "^0.19.11",
     "eslint": "^8.56.0",
     "esprima-next": "^6.0.2",
     "gulp": "^4.0.2",

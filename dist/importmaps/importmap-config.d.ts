@@ -24,5 +24,6 @@ declare const importMapConfig: {
         long: string;
         wunderbaum: string;
         "wunderbaum/": string;
+        "toastify-js": string;
     };
 };
