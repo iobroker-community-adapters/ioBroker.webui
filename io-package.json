@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.28",
+    "version": "1.0.29",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.29": {
+        "en": "remove a few errors",
+        "de": "einige fehler entfernen",
+        "ru": "удалить несколько ошибок",
+        "pt": "remover alguns erros",
+        "nl": "enkele fouten verwijderen",
+        "fr": "supprimer quelques erreurs",
+        "it": "rimuovere alcuni errori",
+        "es": "eliminar algunos errores",
+        "pl": "usunąć kilka błędów",
+        "uk": "видалити кілька помилок",
+        "zh-cn": "删除一些错误"
+      },
       "1.0.28": {
         "en": "npm upgrade for error of undoservice",
         "de": "npm upgrade für fehler von undoservice",
@@ -106,19 +119,6 @@
         "pl": "two will only set first value\nnaprawić błąd z noParse",
         "uk": "двостороння повинна бути тільки встановлена перша вартість\nвиправлено помилку без",
         "zh-cn": "双向只应设置第一个值\n用 noParse 修复错误"
-      },
-      "1.0.22": {
-        "en": "fix binding with unit\nfix refactor service missing command",
-        "de": "fixe bindung mit einheit\nrefactor service fehlender befehl",
-        "ru": "фиксация с блоком\nисправление рефактора",
-        "pt": "ligação de fixação com unidade\ncorrigir o comando ausente do serviço de refator",
-        "nl": "fix binding met unit\nfix refactor service ontbrekende opdracht",
-        "fr": "fixer la fixation avec l'unité\ncorriger le service de refactor manquant commande",
-        "it": "fissaggio con unità\nfix refactor servizio mancante comando",
-        "es": "fijación de unión con unidad\nfijar el servicio de refactor perdido comando",
-        "pl": "mocowanie z jednostką\nnaprawić brakujące polecenie usługi refactor",
-        "uk": "фіксувати зв'язок з блоком\nвиправлення рефакторного сервісу відсутня команда",
-        "zh-cn": "用单位绑定的固定\n修补重构服务缺失命令"
       }
     },
     "icon": "logo.png",
