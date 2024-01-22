@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.25",
+    "version": "1.0.26",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.26": {
+        "en": "npm package upgrades",
+        "de": "npm paket upgrades",
+        "ru": "обновления пакета npm",
+        "pt": "npm upgrades de pacotes",
+        "nl": "npm pakket upgrades",
+        "fr": "mises à jour des paquets npm",
+        "it": "npm pacchetti aggiornamenti",
+        "es": "actualizaciones de paquetes npm",
+        "pl": "aktualizacje pakietów npm",
+        "uk": "оновлення пакета npm",
+        "zh-cn": "npm 软件包升级"
+      },
       "1.0.25": {
         "en": "use appendChild",
         "de": "verwendung anhängig",
@@ -106,19 +119,6 @@
         "pl": "naprawić uszkodzony widok podzielony",
         "uk": "фіксувати розірваний вигляд",
         "zh-cn": "修复断开的分割视图"
-      },
-      "1.0.19": {
-        "en": "simpler one way bindings with expressions",
-        "de": "einfacher ein weg bindungen mit ausdrücken",
-        "ru": "простой один способ связывания с выражениями",
-        "pt": "mais simples ligação de uma maneira com expressões",
-        "nl": "eenvoudiger enkele manier bindingen met expressies",
-        "fr": "plus simple les liaisons à sens unique avec les expressions",
-        "it": "più semplice un modo leganti con espressioni",
-        "es": "más simple una forma de unión con expresiones",
-        "pl": "prostsze jednokierunkowe wiązania z wyrażeniami",
-        "uk": "простий спосіб зв'язування з виразами",
-        "zh-cn": "用表达式绑定的简单方式"
       }
     },
     "icon": "logo.png",
