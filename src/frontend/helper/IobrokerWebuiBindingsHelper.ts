@@ -399,7 +399,7 @@ export class IobrokerWebuiBindingsHelper {
                 try {
                     retVal.push(this.applyBinding(e, b, relativeSignalPath, root));
                 } catch (err) {
-                    console.error("error applying binding", e, b, err)
+                    console.warn("error applying binding", e, b, err)
                 }
             }
         }
