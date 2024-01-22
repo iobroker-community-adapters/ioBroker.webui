@@ -816,7 +816,6 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 dblclick: (e) => {
                     if (e.node.data.dblclick)
                         e.node.data.dblclick(e, e.node.data);
-                    return true;
                 },
                 render: (e) => {
                     if (e.isNew) {

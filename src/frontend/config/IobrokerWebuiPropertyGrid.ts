@@ -278,7 +278,6 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             ],
             click: (e) => {
                 this.updateDescription(e.node);
-                return true;
             },
             init: (e) => {
                 if (this.expanded)

@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- npm package upgrades
+
 ### 1.0.25 (2024-01-21)
 - use appendChild
 
