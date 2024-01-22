@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.29",
+    "version": "1.0.30",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.30": {
+        "en": "better script errors",
+        "de": "bessere skriptfehler",
+        "ru": "лучшие ошибки скрипта",
+        "pt": "melhores erros de script",
+        "nl": "betere scriptfouten",
+        "fr": "meilleures erreurs de script",
+        "it": "errori di script migliori",
+        "es": "mejores errores de script",
+        "pl": "lepsze błędy skryptu",
+        "uk": "краще помилки скрипта",
+        "zh-cn": "更好的脚本错误"
+      },
       "1.0.29": {
         "en": "remove a few errors",
         "de": "einige fehler entfernen",
@@ -106,19 +119,6 @@
         "pl": "naprawić później załadowane skrypty",
         "uk": "фіксувати пізніше завантажені сценарії",
         "zh-cn": "修正后装入的脚本"
-      },
-      "1.0.23": {
-        "en": "twoway should only set first value\nfix error with noParse",
-        "de": "zweiwege sollten nur den ersten wert festlegen\nfehler beheben mit noParse",
-        "ru": "два пути должны только установить первое значение\nисправить ошибку noParse",
-        "pt": "dois sentidos só deve definir o primeiro valor\ncorrigir erro com noParse",
-        "nl": "tweeweg moet alleen eerste waarde instellen\nfout herstellen met noParse",
-        "fr": "deux voies ne devraient définir que la première valeur\ncorriger l'erreur avec noParse",
-        "it": "due vie dovrebbe solo impostare il primo valore\nerrore di correzione con noParse",
-        "es": "2way sólo debe establecer el primer valor\nerror de fijación con noParse",
-        "pl": "two will only set first value\nnaprawić błąd z noParse",
-        "uk": "двостороння повинна бути тільки встановлена перша вартість\nвиправлено помилку без",
-        "zh-cn": "双向只应设置第一个值\n用 noParse 修复错误"
       }
     },
     "icon": "logo.png",
