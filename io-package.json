@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.30",
+    "version": "1.0.31",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.31": {
+        "en": "string could be null",
+        "de": "string könnte null sein",
+        "ru": "строка может быть нулевой",
+        "pt": "string pode ser null",
+        "nl": "tekenreeks kan nul zijn",
+        "fr": "chaîne peut être nulle",
+        "it": "stringa potrebbe essere null",
+        "es": "la cuerda podría ser nula",
+        "pl": "ciąg może być zerowy",
+        "uk": "рядок може бути null",
+        "zh-cn": "字符串可能无效"
+      },
       "1.0.30": {
         "en": "better script errors",
         "de": "bessere skriptfehler",
@@ -106,19 +119,6 @@
         "pl": "użyj apendChild",
         "uk": "використання appendChild",
         "zh-cn": "使用附件键"
-      },
-      "1.0.24": {
-        "en": "fix later loaded scripts",
-        "de": "später geladene skripte beheben",
-        "ru": "исправить позднее загруженные скрипты",
-        "pt": "corrigir scripts carregados mais tarde",
-        "nl": "later geladen scripts herstellen",
-        "fr": "corriger les scripts chargés plus tard",
-        "it": "correggere gli script successivi caricati",
-        "es": "arreglar scripts cargados más tarde",
-        "pl": "naprawić później załadowane skrypty",
-        "uk": "фіксувати пізніше завантажені сценарії",
-        "zh-cn": "修正后装入的脚本"
       }
     },
     "icon": "logo.png",
