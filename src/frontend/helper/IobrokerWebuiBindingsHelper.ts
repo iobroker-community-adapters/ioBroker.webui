@@ -549,7 +549,7 @@ export class IobrokerWebuiBindingsHelper {
                 case 'boolean':
                     return value === true || value === 'true' || !!parseInt(<any>value);
                 case 'string':
-                    return value.toString();
+                    return value?.toString();
             }
         }
         return value;
