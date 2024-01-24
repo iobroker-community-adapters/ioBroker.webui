@@ -15,6 +15,7 @@
     "@node-projects/wired-elements",
     "@node-projects/sweethome3d-webcomponent",
     "@node-projects/imask-webcomponent",
+    "@node-projects/automatic-slidershow-webcomponent",
     "@christianliebel/paint",
     "vanilla-colorful",
     "@shoelace-style/shoelace",
