@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.32 (2024-01-24)
 - fix for nested stylesheets
 
 ### 1.0.31 (2024-01-23)

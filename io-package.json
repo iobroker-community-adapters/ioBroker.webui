@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.31",
+    "version": "1.0.32",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.32": {
+        "en": "fix for nested stylesheets",
+        "de": "fix für geschachtelte stylesheets",
+        "ru": "фиксация для вложенных таблиц стилей",
+        "pt": "corrigir para folhas de estilo aninhadas",
+        "nl": "fix voor geneste stylesheets",
+        "fr": "correctif pour les feuilles de style imbriquées",
+        "it": "fissa per fogli di stile nidificati",
+        "es": "fijado para hojas de estilo anidadas",
+        "pl": "fix dla zagnieżdżonych arkuszy stylów",
+        "uk": "фіксація для вкладених таблиць стилів",
+        "zh-cn": "嵌入样式表的固定"
+      },
       "1.0.31": {
         "en": "string could be null",
         "de": "string könnte null sein",
@@ -106,19 +119,6 @@
         "pl": "aktualizacje pakietów npm",
         "uk": "оновлення пакета npm",
         "zh-cn": "npm 软件包升级"
-      },
-      "1.0.25": {
-        "en": "use appendChild",
-        "de": "verwendung anhängig",
-        "ru": "приложениеChild",
-        "pt": "usar o appendChild",
-        "nl": "appendChild gebruiken",
-        "fr": "utiliser l'annexe Child",
-        "it": "uso appendI bambini",
-        "es": "appendChild",
-        "pl": "użyj apendChild",
-        "uk": "використання appendChild",
-        "zh-cn": "使用附件键"
       }
     },
     "icon": "logo.png",
