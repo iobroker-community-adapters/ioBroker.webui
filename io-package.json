@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.32",
+    "version": "1.0.33",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.33": {
+        "en": "one more designer update",
+        "de": "ein weiteres designer-update",
+        "ru": "еще одно дизайнерское обновление",
+        "pt": "mais uma atualização de designer",
+        "nl": "nog een ontwerper update",
+        "fr": "une autre mise à jour de concepteur",
+        "it": "un altro aggiornamento designer",
+        "es": "una actualización de diseño más",
+        "pl": "jeszcze jedna aktualizacja projektanta",
+        "uk": "ще одне оновлення дизайнера",
+        "zh-cn": "再更新一个设计师"
+      },
       "1.0.32": {
         "en": "fix for nested stylesheets",
         "de": "fix für geschachtelte stylesheets",
@@ -106,19 +119,6 @@
         "pl": "wiadomość na toast o błędach",
         "uk": "написати повідомлення про помилки",
         "zh-cn": "关于错误的祝酒词"
-      },
-      "1.0.26": {
-        "en": "npm package upgrades",
-        "de": "npm paket upgrades",
-        "ru": "обновления пакета npm",
-        "pt": "npm upgrades de pacotes",
-        "nl": "npm pakket upgrades",
-        "fr": "mises à jour des paquets npm",
-        "it": "npm pacchetti aggiornamenti",
-        "es": "actualizaciones de paquetes npm",
-        "pl": "aktualizacje pakietów npm",
-        "uk": "оновлення пакета npm",
-        "zh-cn": "npm 软件包升级"
       }
     },
     "icon": "logo.png",
