@@ -452,7 +452,11 @@ export class IobrokerWebuiBindingsHelper {
                     }
                 }
             } else if (s[0] == '$') {
-                iobrokerHandler.getObject(s.substring(1)).then(x => {
+                let mS = s.substring(1);
+                if (mS[0] === '.') {
+                    mS = relativeSignalPath + mS;
+                }
+                iobrokerHandler.getObject(mS).then(x => {
                     IobrokerWebuiBindingsHelper.handleValueChanged(element, binding, x, valuesObject, i, signalVars, true);
                 });
             } else {

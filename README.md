@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- indirect signal for $ access
+
 ### 1.0.33 (2024-01-24)
 - one more designer update
 
