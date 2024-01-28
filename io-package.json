@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.33",
+    "version": "1.0.34",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.34": {
+        "en": "indirect signal for $ access",
+        "de": "indirektes signal für $-zugriff",
+        "ru": "косвенный сигнал для доступа $",
+        "pt": "sinal indireto para $ acesso",
+        "nl": "indirect signaal voor $ toegang",
+        "fr": "signal indirect pour l'accès $",
+        "it": "segnale indiretto per accesso $",
+        "es": "señal indirecta para acceso $",
+        "pl": "pośredni sygnał dla $access",
+        "uk": "непрямий сигнал для доступу $",
+        "zh-cn": "$访问的间接信号"
+      },
       "1.0.33": {
         "en": "one more designer update",
         "de": "ein weiteres designer-update",
@@ -106,19 +119,6 @@
         "pl": "upgrade npm dla błędu undoservice",
         "uk": "npm оновлення для помилки undoservice",
         "zh-cn": "取消服务错误的 npm 升级"
-      },
-      "1.0.27": {
-        "en": "toast message on errors",
-        "de": "toast message auf fehler",
-        "ru": "тост сообщение об ошибках",
-        "pt": "mensagem de brinde em erros",
-        "nl": "toastbericht bij fouten",
-        "fr": "toast message sur les erreurs",
-        "it": "messaggio di brindisi sugli errori",
-        "es": "mensaje tostado sobre errores",
-        "pl": "wiadomość na toast o błędach",
-        "uk": "написати повідомлення про помилки",
-        "zh-cn": "关于错误的祝酒词"
       }
     },
     "icon": "logo.png",
