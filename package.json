@@ -68,7 +68,7 @@
     "del": "^7.1.0",
     "dock-spawn-ts": "^2.524.0",
     "es-module-shims": "^1.8.2",
-    "esbuild": "^0.19.12",
+    "esbuild": "^0.20.0",
     "eslint": "^8.56.0",
     "esprima-next": "^6.0.2",
     "gulp": "^4.0.2",
