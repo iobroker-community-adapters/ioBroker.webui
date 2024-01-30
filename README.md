@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- package upgrades (fix in designer for css patching)
+- typos
+
 ### 1.0.34 (2024-01-28)
 - indirect signal for $ access
 

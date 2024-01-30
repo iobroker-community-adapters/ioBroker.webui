@@ -261,7 +261,7 @@ export class ScriptSystem {
                         } else {
                             e.addEventListener(evtName, (evt) => {
                                 if (!jsObject[script])
-                                    console.warn('javascritp function named: ' + script + ' not found, maybe missing a "export" ?');
+                                    console.warn('javascript function named: ' + script + ' not found, maybe missing a "export" ?');
                                 else
                                     jsObject[script](evt, e, shadowRoot, instance);
                             });
