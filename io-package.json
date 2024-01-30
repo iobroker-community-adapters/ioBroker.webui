@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.34",
+    "version": "1.0.35",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.35": {
+        "en": "package upgrades (fix in designer for css patching)\ntypos",
+        "de": "paket-upgrades (fix im designer für css patching)\ntypos",
+        "ru": "обновления пакета (фикс в дизайнере для скребка)\ntypos",
+        "pt": "upgrades de pacotes (fixo no designer para correção de css)\ntipo:",
+        "nl": "pakketupgrades (fix in ontwerper voor css patching)\ntypefouten",
+        "fr": "mises à jour du paquet (fixer dans le concepteur pour le patching css)\ntypos",
+        "it": "aggiornamenti pacchetto (fisso in progettista per patching css)\ntipologia",
+        "es": "actualizaciones de paquetes (fix en diseñador para parche de css)\ntypos",
+        "pl": "aktualizacje pakietów (fix in designer for css patching)\ntypos",
+        "uk": "оновлення пакета (фікс в дизайнеру для патчінгу css)\nтипи",
+        "zh-cn": "软件包升级( css 补丁在设计器中的固定)\n类型"
+      },
       "1.0.34": {
         "en": "indirect signal for $ access",
         "de": "indirektes signal für $-zugriff",
@@ -106,19 +119,6 @@
         "pl": "usunąć kilka błędów",
         "uk": "видалити кілька помилок",
         "zh-cn": "删除一些错误"
-      },
-      "1.0.28": {
-        "en": "npm upgrade for error of undoservice",
-        "de": "npm upgrade für fehler von undoservice",
-        "ru": "npm обновление для ошибки undoservice",
-        "pt": "npm upgrade para o erro do undoservice",
-        "nl": "npm upgrade voor foutmelding van undoservice",
-        "fr": "npm mise à jour pour erreur de non-service",
-        "it": "aggiornamento npm per errore di undoservice",
-        "es": "npm actualización para error de undoservice",
-        "pl": "upgrade npm dla błędu undoservice",
-        "uk": "npm оновлення для помилки undoservice",
-        "zh-cn": "取消服务错误的 npm 升级"
       }
     },
     "icon": "logo.png",
