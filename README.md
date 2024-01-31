@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- upgade to new designer for better style encapsulation
+
 ### 1.0.35 (2024-01-30)
 - package upgrades (fix in designer for css patching)
 - typos
