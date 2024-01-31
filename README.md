@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.37 (2024-01-31)
 - designer fix for background
 
 ### 1.0.36 (2024-01-31)

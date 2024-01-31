@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.36",
+    "version": "1.0.37",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.37": {
+        "en": "designer fix for background",
+        "de": "designer-fix für hintergrund",
+        "ru": "дизайнерские решения для фона",
+        "pt": "correção de designer para fundo",
+        "nl": "ontwerper fix voor achtergrond",
+        "fr": "correction du concepteur pour le fond",
+        "it": "designer fix per sfondo",
+        "es": "diseño fijado para fondo",
+        "pl": "designer fix dla tła",
+        "uk": "дизайнерська фіксація для фону",
+        "zh-cn": "背景设计器修正"
+      },
       "1.0.36": {
         "en": "upgade to new designer for better style encapsulation",
         "de": "upgade zu neuen designer für bessere stilverkapselung",
@@ -106,19 +119,6 @@
         "pl": "ciąg może być zerowy",
         "uk": "рядок може бути null",
         "zh-cn": "字符串可能无效"
-      },
-      "1.0.30": {
-        "en": "better script errors",
-        "de": "bessere skriptfehler",
-        "ru": "лучшие ошибки скрипта",
-        "pt": "melhores erros de script",
-        "nl": "betere scriptfouten",
-        "fr": "meilleures erreurs de script",
-        "it": "errori di script migliori",
-        "es": "mejores errores de script",
-        "pl": "lepsze błędy skryptu",
-        "uk": "краще помилки скрипта",
-        "zh-cn": "更好的脚本错误"
       }
     },
     "icon": "logo.png",
