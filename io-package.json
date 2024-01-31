@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.35",
+    "version": "1.0.36",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.36": {
+        "en": "upgade to new designer for better style encapsulation",
+        "de": "upgade zu neuen designer für bessere stilverkapselung",
+        "ru": "upgade для нового дизайнера для лучшей инкапсуляции стиля",
+        "pt": "upgade ao novo designer para melhor encapsulação de estilo",
+        "nl": "upgade naar nieuwe ontwerper voor betere stijl inkapseling",
+        "fr": "upgade to new designer for better style encapsulation",
+        "it": "upgade a nuovo designer per una migliore incapsulatura di stile",
+        "es": "upgade a nuevo diseñador para una mejor encapsulación de estilo",
+        "pl": "upgade do nowego projektanta dla lepszego stylu obudowy",
+        "uk": "upgade до нового дизайнера для кращої стилівки",
+        "zh-cn": "升格为新设计师, 以更好的样式封装"
+      },
       "1.0.35": {
         "en": "package upgrades (fix in designer for css patching)\ntypos",
         "de": "paket-upgrades (fix im designer für css patching)\ntypos",
@@ -106,19 +119,6 @@
         "pl": "lepsze błędy skryptu",
         "uk": "краще помилки скрипта",
         "zh-cn": "更好的脚本错误"
-      },
-      "1.0.29": {
-        "en": "remove a few errors",
-        "de": "einige fehler entfernen",
-        "ru": "удалить несколько ошибок",
-        "pt": "remover alguns erros",
-        "nl": "enkele fouten verwijderen",
-        "fr": "supprimer quelques erreurs",
-        "it": "rimuovere alcuni errori",
-        "es": "eliminar algunos errores",
-        "pl": "usunąć kilka błędów",
-        "uk": "видалити кілька помилок",
-        "zh-cn": "删除一些错误"
       }
     },
     "icon": "logo.png",
