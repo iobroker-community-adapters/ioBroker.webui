@@ -66,7 +66,7 @@
     "construct-style-sheets-polyfill": "^3.1.0",
     "cross-env": "^7.0.3",
     "del": "^7.1.0",
-    "dock-spawn-ts": "^2.525.0",
+    "dock-spawn-ts": "^2.526.0",
     "es-module-shims": "^1.8.2",
     "esbuild": "^0.20.0",
     "eslint": "^8.56.0",
