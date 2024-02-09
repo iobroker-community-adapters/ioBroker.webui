@@ -132,6 +132,7 @@ runtime.html?screenName=screen2
 ### __WORK IN PROGRESS__
 - fix blockly
 - add blockly templated string
+- work on adopted styles
 
 ### 1.0.37 (2024-01-31)
 - designer fix for background
