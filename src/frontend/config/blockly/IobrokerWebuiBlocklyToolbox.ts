@@ -478,6 +478,10 @@ export default {
             categorystyle: 'text_category',
             contents: [
                 {
+                    kind: 'block',
+                    type: 'template_string'
+                },
+                {
                     type: 'text',
                     kind: 'block',
                     fields: {

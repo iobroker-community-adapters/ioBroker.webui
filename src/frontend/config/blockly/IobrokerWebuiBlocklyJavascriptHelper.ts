@@ -2,7 +2,7 @@
 import './components/components.js';
 
 //TODO: remove imports, only leave Runtime
-const prefix = `function extractPart(obj: any, propertyPath: string) {
+const prefix = `function extractPart(obj, propertyPath) {
     let retVal = obj;
     for (let p of propertyPath.split('.')) {
         retVal = retVal?.[p];
