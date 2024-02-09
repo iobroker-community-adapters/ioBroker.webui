@@ -9,3 +9,4 @@ import './QuerySelectorAll.js';
 import './SetElement.js';
 import './SetState.js';
 import './StartEvent.js';
+import './TemplateString.js';
