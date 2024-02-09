@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.38",
+    "version": "1.0.39",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.39": {
+        "en": "upgrade designer package once more to fix some issues",
+        "de": "upgrade-designer-paket noch einmal einige probleme zu beheben",
+        "ru": "обновить пакет дизайнера еще раз, чтобы исправить некоторые проблемы",
+        "pt": "atualizar o pacote de designer mais uma vez para corrigir alguns problemas",
+        "nl": "upgrade ontwerper pakket opnieuw om een aantal problemen op te lossen",
+        "fr": "mettre à niveau le package de concepteur une fois de plus pour résoudre certains problèmes",
+        "it": "aggiornamento pacchetto designer ancora una volta per risolvere alcuni problemi",
+        "es": "actualización paquete de diseño una vez más para solucionar algunos problemas",
+        "pl": "upgrade designerski pakiet jeszcze raz, aby naprawić niektóre problemy",
+        "uk": "оновлений дизайнерський пакет ще раз для виправлення деяких питань",
+        "zh-cn": "升级设计器软件包再次解决一些问题"
+      },
       "1.0.38": {
         "en": "fix blockly\nadd blockly templated string\nwork on adopted styles\nupdate designer to fix snaplines",
         "de": "blockieren\nfügen sie blockweise vorschablonierte zeichenkette hinzu\narbeiten an angenommenen stilen\nupdate designer to fix snaplines",
@@ -106,19 +119,6 @@
         "pl": "jeszcze jedna aktualizacja projektanta",
         "uk": "ще одне оновлення дизайнера",
         "zh-cn": "再更新一个设计师"
-      },
-      "1.0.32": {
-        "en": "fix for nested stylesheets",
-        "de": "fix für geschachtelte stylesheets",
-        "ru": "фиксация для вложенных таблиц стилей",
-        "pt": "corrigir para folhas de estilo aninhadas",
-        "nl": "fix voor geneste stylesheets",
-        "fr": "correctif pour les feuilles de style imbriquées",
-        "it": "fissa per fogli di stile nidificati",
-        "es": "fijado para hojas de estilo anidadas",
-        "pl": "fix dla zagnieżdżonych arkuszy stylów",
-        "uk": "фіксація для вкладених таблиць стилів",
-        "zh-cn": "嵌入样式表的固定"
       }
     },
     "icon": "logo.png",
