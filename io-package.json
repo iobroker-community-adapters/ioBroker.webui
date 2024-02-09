@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.37",
+    "version": "1.0.38",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.38": {
+        "en": "fix blockly\nadd blockly templated string\nwork on adopted styles\nupdate designer to fix snaplines",
+        "de": "blockieren\nfügen sie blockweise vorschablonierte zeichenkette hinzu\narbeiten an angenommenen stilen\nupdate designer to fix snaplines",
+        "ru": "исправить блокно\nдобавить строку с блокированным шаблоном\nработа над принятыми стилями\nобновление дизайнера для фиксации",
+        "pt": "corrigir bloqueio\nadd blockly templateed string\ntrabalho em estilos adotados\ndesigner de atualização para corrigir snaplines",
+        "nl": "bloksgewijs oplossen\nblockly sjabloon tekenreeks toevoegen\nwerk aan goedgekeurde stijlen\nupdate ontwerper om snaplines te repareren",
+        "fr": "réparer en bloc\najouter une chaîne de caractères modélisée par blocs\ntravail sur les styles adoptés\nmettre à jour le concepteur pour corriger les snaplines",
+        "it": "fissare bloccati\naggiungere stringa modellata a blocchi\nlavoro sugli stili adottati\naggiornamento designer per correggere gli snaplines",
+        "es": "arregla el bloqueo\nañadir cadena de plantilla bloqueada\ntrabajo sobre estilos adoptados\ndiseñador de actualización para fijar snaplines",
+        "pl": "fix blockly\ndodaj strunę warstwową\nprace nad przyjętymi stylami\nupdate designer to fix snaplines",
+        "uk": "фіксувати блоклі\nдодати шаблонний рядок\nробота над прийнятими стилями\nоновлення дизайнера для фіксації snaplines",
+        "zh-cn": "以块状固定\n添加块状模板字符串\n采用样式的工作\n更新设计器以修正快线"
+      },
       "1.0.37": {
         "en": "designer fix for background",
         "de": "designer-fix für hintergrund",
@@ -106,19 +119,6 @@
         "pl": "fix dla zagnieżdżonych arkuszy stylów",
         "uk": "фіксація для вкладених таблиць стилів",
         "zh-cn": "嵌入样式表的固定"
-      },
-      "1.0.31": {
-        "en": "string could be null",
-        "de": "string könnte null sein",
-        "ru": "строка может быть нулевой",
-        "pt": "string pode ser null",
-        "nl": "tekenreeks kan nul zijn",
-        "fr": "chaîne peut être nulle",
-        "it": "stringa potrebbe essere null",
-        "es": "la cuerda podría ser nula",
-        "pl": "ciąg może być zerowy",
-        "uk": "рядок може бути null",
-        "zh-cn": "字符串可能无效"
       }
     },
     "icon": "logo.png",
