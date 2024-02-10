@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.40 (2024-02-10)
 - dblclick in solution should not change tool
 - designer update for performance fixes
 

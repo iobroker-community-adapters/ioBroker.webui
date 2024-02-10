@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.39",
+    "version": "1.0.40",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.40": {
+        "en": "dblclick in solution should not change tool\ndesigner update for performance fixes",
+        "de": "dblclick in lösung sollte kein werkzeug ändern\ndesigner-update für performance fixes",
+        "ru": "dbl click в решении не должен изменять инструмент\nобновление дизайнера для фиксации производительности",
+        "pt": "dblclick na solução não deve mudar a ferramenta\natualização do designer para correções de desempenho",
+        "nl": "dblick in oplossing mag het gereedschap niet veranderen\nontwerper-update voor prestatieherstel",
+        "fr": "dblclick en solution ne doit pas changer d'outil\nmise à jour du concepteur pour les corrections de performance",
+        "it": "dblclick in soluzione non dovrebbe cambiare strumento\naggiornamento del designer per le correzioni di performance",
+        "es": "dblclick en la solución no debe cambiar la herramienta\nactualización de diseño para correcciones de rendimiento",
+        "pl": "dblclick w roztworze nie powinien zmieniać narzędzia\ndesignerska aktualizacja poprawek wydajności",
+        "uk": "dblclick в розчині не повинен змінити інструмент\nоновлення дизайнера для фіксації продуктивності",
+        "zh-cn": "dbl 点击解析器不应更改工具\n性能修正的更新设计师"
+      },
       "1.0.39": {
         "en": "upgrade designer package once more to fix some issues",
         "de": "upgrade-designer-paket noch einmal einige probleme zu beheben",
@@ -106,19 +119,6 @@
         "pl": "pośredni sygnał dla $access",
         "uk": "непрямий сигнал для доступу $",
         "zh-cn": "$访问的间接信号"
-      },
-      "1.0.33": {
-        "en": "one more designer update",
-        "de": "ein weiteres designer-update",
-        "ru": "еще одно дизайнерское обновление",
-        "pt": "mais uma atualização de designer",
-        "nl": "nog een ontwerper update",
-        "fr": "une autre mise à jour de concepteur",
-        "it": "un altro aggiornamento designer",
-        "es": "una actualización de diseño más",
-        "pl": "jeszcze jedna aktualizacja projektanta",
-        "uk": "ще одне оновлення дизайнера",
-        "zh-cn": "再更新一个设计师"
       }
     },
     "icon": "logo.png",
