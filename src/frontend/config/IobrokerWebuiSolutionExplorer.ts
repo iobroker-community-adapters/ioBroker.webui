@@ -814,6 +814,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     return [];
                 },
                 dblclick: (e) => {
+                    this.serviceContainer.globalContext.tool = null;
                     if (e.node.data.dblclick)
                         e.node.data.dblclick(e, e.node.data);
                 },

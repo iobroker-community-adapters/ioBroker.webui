@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- dblclick in solution should not change tool
+
 ### 1.0.39 (2024-02-09)
 - upgrade designer package once more to fix some issues
 
