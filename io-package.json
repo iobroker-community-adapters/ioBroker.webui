@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.41",
+    "version": "1.0.42",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.42": {
+        "en": "fix grid resize\nfix grid extension display",
+        "de": "fix grid reize\nanzeige der rastererweiterung",
+        "ru": "фиксированная сетка размер\nдисплей расширения сети",
+        "pt": "corrigir o redimensionamento da grade\nexibição de extensão da grade de correção",
+        "nl": "rastergrootte wijzigen\nfix grid extensie display",
+        "fr": "redimensionner la grille\nfixer l'affichage de l'extension de grille",
+        "it": "ridimensionamento della griglia\ncorrezione dell'estensione della griglia",
+        "es": "reparación de la red\npantalla de extensión de la red",
+        "pl": "zmiana rozmiaru sieci\nwyświetlacz rozszerzenia siatki",
+        "uk": "фіксувати розмір сітки\nдисплей розширення сітки",
+        "zh-cn": "固定网格调整大小\n固定网格扩展显示"
+      },
       "1.0.41": {
         "en": "better element drawing (with undo)\nbetter title extension",
         "de": "bessere elementzeichnung (mit undo)\nbessere titelverlängerung",
@@ -106,19 +119,6 @@
         "pl": "upgade do nowego projektanta dla lepszego stylu obudowy",
         "uk": "upgade до нового дизайнера для кращої стилівки",
         "zh-cn": "升格为新设计师, 以更好的样式封装"
-      },
-      "1.0.35": {
-        "en": "package upgrades (fix in designer for css patching)\ntypos",
-        "de": "paket-upgrades (fix im designer für css patching)\ntypos",
-        "ru": "обновления пакета (фикс в дизайнере для скребка)\ntypos",
-        "pt": "upgrades de pacotes (fixo no designer para correção de css)\ntipo:",
-        "nl": "pakketupgrades (fix in ontwerper voor css patching)\ntypefouten",
-        "fr": "mises à jour du paquet (fixer dans le concepteur pour le patching css)\ntypos",
-        "it": "aggiornamenti pacchetto (fisso in progettista per patching css)\ntipologia",
-        "es": "actualizaciones de paquetes (fix en diseñador para parche de css)\ntypos",
-        "pl": "aktualizacje pakietów (fix in designer for css patching)\ntypos",
-        "uk": "оновлення пакета (фікс в дизайнеру для патчінгу css)\nтипи",
-        "zh-cn": "软件包升级( css 补丁在设计器中的固定)\n类型"
       }
     },
     "icon": "logo.png",
