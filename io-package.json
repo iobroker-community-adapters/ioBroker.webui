@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.43",
+    "version": "1.0.44",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.44": {
+        "en": "fix bindings in designer",
+        "de": "fixe bindungen im designer",
+        "ru": "фиксации в дизайнере",
+        "pt": "corrigir encadernações no designer",
+        "nl": "fix bindingen in ontwerper",
+        "fr": "fixer les fixations dans le concepteur",
+        "it": "fix bindings in designer",
+        "es": "fijaciones de fijación en diseñador",
+        "pl": "naprawić wiązania w projektancie",
+        "uk": "фіксувати прив'язки в дизайнера",
+        "zh-cn": "设计器中的固定绑定"
+      },
       "1.0.43": {
         "en": "refresh tree when controls deleted",
         "de": "baum aktualisieren, wenn die kontrollen gelöscht",
@@ -106,19 +119,6 @@
         "pl": "fix blockly\ndodaj strunę warstwową\nprace nad przyjętymi stylami\nupdate designer to fix snaplines",
         "uk": "фіксувати блоклі\nдодати шаблонний рядок\nробота над прийнятими стилями\nоновлення дизайнера для фіксації snaplines",
         "zh-cn": "以块状固定\n添加块状模板字符串\n采用样式的工作\n更新设计器以修正快线"
-      },
-      "1.0.37": {
-        "en": "designer fix for background",
-        "de": "designer-fix für hintergrund",
-        "ru": "дизайнерские решения для фона",
-        "pt": "correção de designer para fundo",
-        "nl": "ontwerper fix voor achtergrond",
-        "fr": "correction du concepteur pour le fond",
-        "it": "designer fix per sfondo",
-        "es": "diseño fijado para fondo",
-        "pl": "designer fix dla tła",
-        "uk": "дизайнерська фіксація для фону",
-        "zh-cn": "背景设计器修正"
       }
     },
     "icon": "logo.png",
