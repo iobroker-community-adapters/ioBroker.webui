@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix bindings in designer
+
 ### 1.0.43 (2024-02-11)
 - refresh tree when controls deleted
 
