@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- refresh tree when controls deleted
+
 ### 1.0.42 (2024-02-11)
 - fix grid resize
 - fix grid extension display

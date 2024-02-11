@@ -62,7 +62,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         iobrokerHandler.objectsChanged.on(async (x) => {
             if (x.type == 'control' && x.name)
                 generateCustomControl(x.name, <IControl>await iobrokerHandler.getWebuiObject(x.type, x.name));
-            this._refreshNode(x.type, x.type == 'screen')
+            this._refreshNode(x.type, true)
         });
         iobrokerHandler.imagesChanged.on(() => this._refreshNode('images'));
         iobrokerHandler.additionalFilesChanged.on(() => this._refreshAdditionalFilesNode());
