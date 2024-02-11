@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix grid resize
+- fix grid extension display
+
 ### 1.0.41 (2024-02-10)
 - better element drawing (with undo)
 - better title extension
