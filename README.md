@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- update designer with bugfixes
+
 ### 1.0.44 (2024-02-11)
 - fix bindings in designer
 
