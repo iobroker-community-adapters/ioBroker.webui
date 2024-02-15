@@ -26,6 +26,6 @@ Blockly.JavaScript['open_screen'] = function (block) {
     const relativeSignalsPath = Blockly.JavaScript.valueToCode(block, 'RELATIVESIGNALSPATH', Blockly.JavaScript.ORDER_ATOMIC);
     //@ts-ignore
     const noHistory = Blockly.JavaScript.valueToCode(block, 'NOHISTORY', Blockly.JavaScript.ORDER_ATOMIC);
-    let code = `Runtime.openScreen({screen: ${screen}, relativeSignalsPath: ${relativeSignalsPath}, noHistory: ${noHistory}})`;
+    let code = `RUNTIME.openScreen({screen: ${screen}, relativeSignalsPath: ${relativeSignalsPath}, noHistory: ${noHistory}})`;
     return code;
 };

@@ -74,7 +74,9 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
         let editComplex = async (data) => {
             let pg = new IobrokerWebuiPropertyGrid();
             pg.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
+            pg.showHead = false;
             pg.typeName = 'IScriptMultiplexValue';
+            pg.title = 'Complex for "' + data.propertyPath + '"';
             if (typeof data.value === 'object')
                 pg.selectedObject = data.value ?? {};
             else
@@ -86,8 +88,21 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
             }
         };
         this._propertygrid.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(scriptCommandsTypeInfo, obj, type);
-        this._propertygrid.getSpecialEditorForType = async (property, currentValue, propertyPath) => {
+        this._propertygrid.getSpecialEditorForType = async (property, currentValue, propertyPath, wbRender, additionalInfo) => {
             if (typeof currentValue === 'object' && currentValue !== null) {
+                let rB = document.createElement('button');
+                rB.style.height = 'calc(100% - 6px)';
+                rB.style.position = 'relative';
+                rB.style.display = 'flex';
+                rB.style.justifyContent = 'center';
+                rB.style.width = '20px';
+                rB.style.boxSizing = 'content-box';
+                rB.innerText = 'del';
+                rB.onclick = () => {
+                    this._propertygrid.setPropertyValue(propertyPath, undefined);
+                    this._propertygrid.refresh();
+                };
+                wbRender.nodeElem.insertAdjacentElement('afterbegin', rB);
                 let d = document.createElement('div');
                 d.style.display = 'flex';
                 let sp = document.createElement('span');
@@ -104,7 +119,25 @@ export class IobrokerWebuiScriptEditor extends BaseCustomWebComponentConstructor
                     editComplex({ value: currentValue, propertyPath });
                 };
                 d.appendChild(b);
+                wbRender.nodeElem.style.display = 'flex';
                 return d;
+            }
+            else {
+                let b = document.createElement('button');
+                b.style.height = 'calc(100% - 6px)';
+                b.style.position = 'relative';
+                b.style.display = 'flex';
+                b.style.justifyContent = 'center';
+                b.style.width = '20px';
+                b.style.boxSizing = 'content-box';
+                b.title = 'complex';
+                b.style.opacity = '0.2';
+                b.innerText = '...';
+                b.onclick = () => {
+                    editComplex({ value: currentValue, propertyPath });
+                };
+                wbRender.nodeElem.insertAdjacentElement('afterbegin', b);
+                wbRender.nodeElem.style.display = 'flex';
             }
             return null;
         };

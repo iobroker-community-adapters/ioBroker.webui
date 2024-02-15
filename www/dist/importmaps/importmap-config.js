@@ -6,7 +6,7 @@ const importMapConfig = {
         "@node-projects/web-component-designer/": "./node_modules/@node-projects/web-component-designer/",
         "@adobe/css-tools": "./node_modules/@adobe/css-tools/dist/index.mjs",
         "dock-spawn-ts/": "./node_modules/dock-spawn-ts/",
-        "esprima-next": "./node_modules/esprima-next/dist/esm/esprima.js",
+        "esprima-next": "./node_modules/esprima-next/dist/esprima.js",
         "@node-projects/base-custom-webcomponent/": "./node_modules/@node-projects/base-custom-webcomponent/",
         "@node-projects/base-custom-webcomponent": "./node_modules/@node-projects/base-custom-webcomponent/dist/index.js",
         "@node-projects/node-html-parser-esm": "./node_modules/@node-projects/node-html-parser-esm/dist/index.js",
@@ -24,7 +24,8 @@ const importMapConfig = {
         "tslib": "./node_modules/tslib/tslib.es6.mjs",
         "long": "./node_modules/long/index.js",
         "wunderbaum": "./node_modules/wunderbaum/dist/wunderbaum.esm.min.js",
-        "wunderbaum/": "./node_modules/wunderbaum/"
+        "wunderbaum/": "./node_modules/wunderbaum/",
+        "toastify-js": "./node_modules/toastify-js/src/toastify-es.js"
     }
 };
 //@ts-ignore

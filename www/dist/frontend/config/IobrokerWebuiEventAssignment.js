@@ -195,18 +195,18 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
 * @param {${eventItem.eventObjectName ?? 'Event'}} event
 * @param {Element} eventRaisingElement
 * @param {ShadowRoot} shadowRoot
-* @param {HTMLElement} instance
+* @param {BaseScreenViewerAndControl} instance
 */
 export function ${jsName}(event, eventRaisingElement, shadowRoot, instance) {
     
 }
 `;
                     if (!sc)
-                        sc = `import { iobrokerHandler } from "/webui/dist/frontend/common/IobrokerHandler.js";
-import { Runtime } from "/webui/dist/frontend/common/Runtime.js";
-
-`;
-                    screenEditor.scriptModel.setValue(sc + templateScript);
+                        screenEditor.scriptModel.setValue(templateScript);
+                    else {
+                        sc += "\n" + templateScript;
+                        screenEditor.scriptModel.setValue(sc);
+                    }
                 }
                 else {
                     //@ts-ignore

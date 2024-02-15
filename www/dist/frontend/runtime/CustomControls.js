@@ -9,6 +9,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     static style = css `:host { overflow: hidden }`;
     #scriptObject;
     #bindings;
+    #eventListeners = [];
     constructor() {
         super();
         this._bindingsParse(null, true);
@@ -19,23 +20,47 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
         this._parseAttributesToProperties();
         this._bindingsRefresh();
         this.#bindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
-        this.#scriptObject = await ScriptSystem.assignAllScripts(this.constructor[webuiCustomControlSymbol].control.script, this.shadowRoot, this);
+        this.#scriptObject = await ScriptSystem.assignAllScripts('customControl ' + this.constructor[webuiCustomControlSymbol].name, this.constructor[webuiCustomControlSymbol].control.script, this.shadowRoot, this);
         this.#scriptObject?.connectedCallback?.(this);
+        for (let e of this.#eventListeners) {
+            this.addEventListener(e[0], e[1]);
+        }
     }
     disconnectedCallback() {
+        for (let e of this.#eventListeners) {
+            this.removeEventListener(e[0], e[1]);
+        }
         this.#scriptObject?.disconnectedCallback?.(this);
         for (const b of this.#bindings)
             b();
         this.#bindings = null;
     }
+    _assignEvent(event, callback) {
+        const arrayEl = [event, callback];
+        this.#eventListeners.push(arrayEl);
+        this.addEventListener(event, callback);
+        return {
+            remove: () => {
+                const index = this.#eventListeners.indexOf(arrayEl);
+                this.#eventListeners.splice(index, 1);
+                this.removeEventListener(event, callback);
+            }
+        };
+    }
     _getRelativeSignalsPath() {
         return this.getRootNode()?.host?._getRelativeSignalsPath?.() ?? '';
     }
 }
-export function generateCustomControl(name, control) {
-    let nm = PropertiesHelper.camelToDashCase(name);
+export function getCustomControlName(name) {
+    if (name[0] == '/')
+        name = name.substring(1);
+    let nm = PropertiesHelper.camelToDashCase(name.replaceAll('/', '-').replaceAll(' ', '-').replaceAll('--', '-'));
     if (nm[0] === '-')
         nm = nm.substring(1);
+    return webuiCustomControlPrefix + nm;
+}
+export function generateCustomControl(name, control) {
+    const nm = getCustomControlName(name);
     let template = document.createElement('template');
     template.innerHTML = control.html;
     let style = cssFromString(control.style);
@@ -106,6 +131,7 @@ export function generateCustomControl(name, control) {
         window['IobrokerWebuiCustomControl' + name].properties = properties;
         window['IobrokerWebuiCustomControl' + name]._propertiesDictionary = null;
         window['IobrokerWebuiCustomControl' + name].prototype = Object.create(BaseCustomControl.prototype, { constructor: { value: window['IobrokerWebuiCustomControl' + name] } });
-        customElements.define(webuiCustomControlPrefix + nm, window['IobrokerWebuiCustomControl' + name]);
+        if (!customElements.get(nm))
+            customElements.define(nm, window['IobrokerWebuiCustomControl' + name]);
     }
 }

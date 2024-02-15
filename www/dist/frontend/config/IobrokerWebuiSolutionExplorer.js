@@ -1,12 +1,13 @@
 import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from "@node-projects/base-custom-webcomponent";
-import { dragDropFormatNameBindingObject, dragDropFormatNameElementDefinition, ContextMenu, sleep, dragDropFormatNamePropertyGrid, PropertiesHelper, copyTextToClipboard } from "@node-projects/web-component-designer";
+import { dragDropFormatNameBindingObject, dragDropFormatNameElementDefinition, ContextMenu, sleep, dragDropFormatNamePropertyGrid, PropertiesHelper, copyTextToClipboard, NamedTools } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { exportData, openFileDialog } from "../helper/Helper.js";
-import { generateCustomControl, webuiCustomControlPrefix } from "../runtime/CustomControls.js";
+import { generateCustomControl, getCustomControlName, webuiCustomControlPrefix } from "../runtime/CustomControls.js";
 import { defaultOptions, defaultStyle } from "@node-projects/web-component-designer-widgets-wunderbaum";
 import { Wunderbaum } from 'wunderbaum';
 //@ts-ignore
 import wunderbaumStyle from 'wunderbaum/dist/wunderbaum.css' assert { type: 'css' };
+import { defaultNewStyle } from "./IobrokerWebuiScreenEditor.js";
 export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
     static template = html `
         <div id="treeDiv" class="" style="overflow: auto; width:100%; height: 100%;">
@@ -16,11 +17,19 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             user-select: none;
             -webkit-user-select: none;
             cursor: pointer;
+        }
+        
+        div.wunderbaum span.wb-node i.wb-indent::before {
+            content: "";
+        }
+        
+        i.wb-icon > span.wb-badge {
+            opacity: 0.4;
+            font-size: 50%;
         }`;
     serviceContainer;
     _treeDiv;
     _tree;
-    _screensNodeData;
     constructor() {
         super();
         this._treeDiv = this._getDomElement('treeDiv');
@@ -30,13 +39,12 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
     async initialize(serviceContainer) {
         this.serviceContainer = serviceContainer;
-        iobrokerHandler.screensChanged.on(() => this._refreshScreensNode());
-        iobrokerHandler.controlsChanged.on(async (name) => {
-            if (name)
-                generateCustomControl(name, await iobrokerHandler.getCustomControl(name));
-            this._refreshControlsNode();
+        iobrokerHandler.objectsChanged.on(async (x) => {
+            if (x.type == 'control' && x.name)
+                generateCustomControl(x.name, await iobrokerHandler.getWebuiObject(x.type, x.name));
+            this._refreshNode(x.type, true);
         });
-        iobrokerHandler.imagesChanged.on(() => this._refreshImagesNode());
+        iobrokerHandler.imagesChanged.on(() => this._refreshNode('images'));
         iobrokerHandler.additionalFilesChanged.on(() => this._refreshAdditionalFilesNode());
         await sleep(100);
         this._loadTree();
@@ -47,7 +55,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
     async createTreeNodes() {
         const result = await Promise.allSettled([
-            this._createScreensNode(),
+            this._createFolderNode('screen'),
             this._createControlsNode(),
             this._createGlobalNode(),
             this._createNpmsNode(),
@@ -59,43 +67,96 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         ]);
         return result.map(x => x.status == 'fulfilled' ? x.value : null);
     }
-    async _createScreensNode() {
-        let screenNodeCtxMenu = (event) => {
-            ContextMenu.show([{
-                    title: 'Import Screen', action: async () => {
-                        try {
-                            let files = await openFileDialog('.screen', true, 'text');
-                            for (let f of files) {
-                                let screen = JSON.parse(f.data);
-                                let nm = f.name;
-                                if (nm.endsWith('.screen'))
-                                    nm = nm.substring(0, nm.length - 7);
-                                await iobrokerHandler.saveScreen(nm, screen);
-                            }
-                        }
-                        catch (err) {
-                            alert("error importing files: " + err);
+    _createFolderNode(type, dir) {
+        const ctxMenuItems = [{
+                title: 'New ' + type, action: async () => {
+                    try {
+                        let screenName = prompt("New " + type + " Name:");
+                        if (screenName) {
+                            window.appShell.openScreenEditor((dir ?? '') + '/' + screenName, type, '', defaultNewStyle, null, {});
                         }
                     }
-                }], event);
+                    catch (err) {
+                        alert("error adding: " + err);
+                    }
+                }
+            }, {
+                title: 'Import ' + type, action: async () => {
+                    try {
+                        let files = await openFileDialog('.' + type, true, 'text');
+                        for (let f of files) {
+                            let data = JSON.parse(f.data);
+                            let nm = f.name;
+                            if (nm.endsWith('.' + type))
+                                nm = nm.substring(0, nm.length - type.length - 1);
+                            await iobrokerHandler.saveObject(type, (dir ?? '') + '/' + nm, data);
+                        }
+                    }
+                    catch (err) {
+                        alert("error importing: " + err);
+                    }
+                }
+            }, {
+                title: '-'
+            }, {
+                title: 'Create Folder', action: async () => {
+                    try {
+                        const folder = prompt('Foldername');
+                        if (folder) {
+                            iobrokerHandler.createFolder(type, (dir ?? '') + '/' + folder);
+                        }
+                    }
+                    catch (err) {
+                        alert("error creating folder: " + err);
+                    }
+                }
+            }];
+        if (dir)
+            ctxMenuItems.push({
+                title: 'Remove Folder', action: async () => {
+                    try {
+                        const del = confirm('Do you want to delete folder: ' + type + 's' + dir);
+                        if (del) {
+                            iobrokerHandler.removeFolder(type, dir);
+                        }
+                    }
+                    catch (err) {
+                        alert("error removing folder: " + err);
+                    }
+                }
+            });
+        const nodeCtxMenu = (event) => {
+            ContextMenu.show(ctxMenuItems, event);
         };
-        this._screensNodeData = {
-            contextMenu: (event => screenNodeCtxMenu(event)),
-            title: 'Screens',
+        let name = type + 's';
+        switch (type) {
+            case 'control':
+                name = "CustomControls";
+                break;
+            case 'screen':
+                name = "Screens";
+                break;
+            //case '':
+            //    name='Additional Files';
+            //    break;
+        }
+        return {
+            contextMenu: (event => nodeCtxMenu(event)),
+            title: dir ? dir.split('/').pop() : name,
             folder: true,
             autoExpand: true,
-            key: 'screens',
+            key: type + '_' + (dir ?? ''),
             lazy: true,
-            lazyload: (event, node) => this._lazyLoadScreensNodes(event, node)
+            lazyload: (event, node) => this._lazyLoadFolderNodes(type, dir, event, node),
+            data: { name: (dir ?? '') }
         };
-        return this._screensNodeData;
     }
-    async _lazyLoadScreensNodes(event, data) {
-        let screenNodeCtxMenu = (event, name) => {
+    async _lazyLoadFolderNodes(type, dir, event, data) {
+        let nodeCtxMenu = (event, name) => {
             ContextMenu.show([{
-                    title: 'Export Screen', action: async () => {
-                        let data = await iobrokerHandler.getScreen(name);
-                        await exportData(JSON.stringify(data), name + '.screen');
+                    title: 'Export ' + type, action: async () => {
+                        let data = await iobrokerHandler.getWebuiObject(type, (dir ?? '') + '/' + name);
+                        await exportData(JSON.stringify(data), name + '.' + type);
                     }
                 }, /*{
                     title: 'Export Screen as XML', action: async () => {
@@ -104,61 +165,63 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     }
                 },*/
                 {
-                    title: 'Copy Screen', action: async () => {
+                    title: 'Copy ' + type, action: async () => {
                         let newName = prompt("New Name", name);
                         if (newName && newName != name) {
-                            let data = await iobrokerHandler.getScreen(name);
+                            let data = await iobrokerHandler.getWebuiObject(type, (dir ?? '') + '/' + name);
                             let copy = JSON.parse(JSON.stringify(data));
-                            iobrokerHandler.saveScreen(newName, copy);
+                            iobrokerHandler.saveObject(type, (dir ?? '') + '/' + newName, copy);
                         }
                     }
                 }, {
-                    title: 'Rename Screen', action: async () => {
+                    title: 'Rename ' + type, action: async () => {
                         let newName = prompt("Rename Screen: " + name, name);
                         if (newName && name != newName) {
-                            iobrokerHandler.renameScreen(name, newName);
+                            iobrokerHandler.renameObject(type, (dir ?? '') + '/' + name, (dir ?? '') + '/' + newName);
                         }
                     }
                 }, {
-                    title: 'Remove Screen', action: () => {
+                    title: 'Remove ' + type, action: () => {
                         if (confirm("are you sure?"))
-                            iobrokerHandler.removeScreen(name);
+                            iobrokerHandler.removeObject(type, (dir ?? '') + '/' + name);
                     }
                 }], event);
         };
-        let screens = await iobrokerHandler.getScreenNames();
-        return screens.map(x => ({
+        let subFolders = await iobrokerHandler.getSubFolders(type, dir);
+        let menuItems = subFolders.map(x => this._createFolderNode(type, (dir ?? '') + '/' + x));
+        let objects = await iobrokerHandler.getObjectNames(type, dir);
+        menuItems.push(...objects.map(x => ({
             title: x,
             folder: false,
-            contextMenu: (event => screenNodeCtxMenu(event, x)),
+            contextMenu: (event => nodeCtxMenu(event, x)),
             dblclick: (e, d) => {
-                iobrokerHandler.getScreen(d.data.name).then(s => {
-                    window.appShell.openScreenEditor(d.data.name, 'screen', s.html, s.style, s.script, s.settings);
+                let nm = d.data.name;
+                if (nm[0] == '/')
+                    nm = nm.substring(1);
+                iobrokerHandler.getWebuiObject(type, nm).then(s => {
+                    if (type == 'screen') {
+                        window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings);
+                    }
+                    else if (type == 'control') {
+                        window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings, s.properties);
+                    }
                 });
             },
-            data: { type: 'screen', name: x }
-        }));
+            data: { type, name: (dir ?? '') + '/' + x }
+        })));
+        return menuItems;
     }
-    async _refreshScreensNode() {
-        const screensNode = this._tree.findKey('screens');
-        if (screensNode) {
-            screensNode.resetLazy();
-            await sleep(50);
-            screensNode.setExpanded(true);
-        }
-    }
-    async _refreshControlsNode() {
-        const controlsNode = this._tree.findKey('controls');
-        if (controlsNode) {
-            controlsNode.resetLazy();
-            await sleep(50);
-            controlsNode.setExpanded(true);
-        }
-    }
-    async _refreshImagesNode() {
-        const imagesNode = this._tree.findKey('images');
-        if (imagesNode) {
-            imagesNode.resetLazy();
+    async _refreshNode(key, expand = false) {
+        let node = this._tree.findKey(key);
+        if (!node)
+            node = this._tree.findKey(key + '_');
+        if (node) {
+            await node.setActive(true);
+            node.resetLazy();
+            if (expand) {
+                await sleep(50);
+                node.setExpanded(true);
+            }
         }
     }
     async _refreshAdditionalFilesNode() {
@@ -589,90 +652,11 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             title: 'Controls',
             folder: true,
             children: [
-                await this._createSelfDefinedControlsNode(),
+                await this._createFolderNode('control'),
                 await this._createWebcomponentsNode()
             ]
         };
         return controlsNode;
-    }
-    async _createSelfDefinedControlsNode() {
-        let controlsNodeCtxMenu = (event) => {
-            ContextMenu.show([{
-                    title: 'Import Control', action: async () => {
-                        try {
-                            let files = await openFileDialog('.control', true, 'text');
-                            for (let f of files) {
-                                let control = JSON.parse(f.data);
-                                let nm = f.name;
-                                if (nm.endsWith('.control'))
-                                    nm = nm.substring(0, nm.length - 8);
-                                await iobrokerHandler.saveCustomControl(nm, control);
-                            }
-                        }
-                        catch (err) {
-                            alert("error importing files: " + err);
-                        }
-                    }
-                }], event);
-        };
-        let controlsNode = {
-            contextMenu: (event => controlsNodeCtxMenu(event)),
-            title: 'CustomControls',
-            folder: true,
-            key: 'controls',
-            lazy: true,
-            lazyload: (event, node) => this._lazyLoadControlsNodes(event, node)
-        };
-        return controlsNode;
-    }
-    async _lazyLoadControlsNodes(event, data) {
-        let controlNodeCtxMenu = (event, name) => {
-            ContextMenu.show([{
-                    title: 'Export Control', action: async () => {
-                        let data = await iobrokerHandler.getCustomControl(name);
-                        await exportData(JSON.stringify(data), name + '.control');
-                    }
-                }, /*{
-                    title: 'Export Control as XML', action: async () => {
-                        let data = await iobrokerHandler.getCustomControl(name);
-                        await exportData(controlToXml(data), name + '.control')
-                    }
-                },*/
-                {
-                    title: 'Copy Control', action: async () => {
-                        let newName = prompt("New Name", name);
-                        if (newName && newName != name) {
-                            let data = await iobrokerHandler.getCustomControl(name);
-                            let copy = JSON.parse(JSON.stringify(data));
-                            iobrokerHandler.saveCustomControl(newName, copy);
-                        }
-                    }
-                }, {
-                    title: 'Rename Control', action: async () => {
-                        let newName = prompt("Rename Control: " + name, name);
-                        if (newName && name != newName) {
-                            iobrokerHandler.renameCustomControl(name, newName);
-                        }
-                    }
-                }, {
-                    title: 'Remove Control', action: () => {
-                        if (confirm("are you sure?"))
-                            iobrokerHandler.removeCustomControl(name);
-                    }
-                }], event);
-        };
-        let controls = await iobrokerHandler.getCustomControlNames();
-        return controls.map(x => ({
-            title: x,
-            folder: false,
-            contextMenu: (event => controlNodeCtxMenu(event, x)),
-            dblclick: (e, d) => {
-                iobrokerHandler.getCustomControl(d.data.name).then(s => {
-                    window.appShell.openScreenEditor(d.data.name, 'control', s.html, s.style, s.script, s.settings, s.properties);
-                });
-            },
-            data: { type: 'customcontrol', name: x }
-        }));
     }
     async _createWebcomponentsNode() {
         let controlsNode = {
@@ -692,7 +676,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         title: e.name ?? e.tag,
                         folder: false,
                         data: {
-                            type: 'control',
+                            type: 'npm',
                             ref: e
                         }
                     });
@@ -756,18 +740,27 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             lazyload: (event, data) => this._lazyLoadObjectNodes(event, data)
         }));
     }
+    #activeLazyLoads = new Set();
     async _loadTree() {
+        let dndSourceNode = null;
         if (!this._tree) {
             this._tree = new Wunderbaum({
                 ...defaultOptions,
                 element: this._treeDiv,
-                icon: false,
                 source: await this.createTreeNodes(),
-                lazyLoad: (e) => e.node.data.lazyload(e, e.node.data),
+                lazyLoad: async (e) => {
+                    if (!this.#activeLazyLoads.has(e.node)) {
+                        this.#activeLazyLoads.add(e.node);
+                        const lazydata = await e.node.data.lazyload(e, e.node.data);
+                        this.#activeLazyLoads.delete(e.node);
+                        return lazydata;
+                    }
+                    return [];
+                },
                 dblclick: (e) => {
+                    this.serviceContainer.globalContext.tool = null;
                     if (e.node.data.dblclick)
                         e.node.data.dblclick(e, e.node.data);
-                    return true;
                 },
                 render: (e) => {
                     if (e.isNew) {
@@ -783,10 +776,10 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         };
                         span.onpointerdown = async (ev) => {
                             if (e.node.data.type == 'screen') {
-                                e.node.data.screen = await iobrokerHandler.getScreen(e.node.data.name);
+                                e.node.data.screen = await iobrokerHandler.getWebuiObject('screen', e.node.data.name);
                             }
-                            else if (e.node.data.type == 'customcontrol') {
-                                e.node.data.control = await iobrokerHandler.getCustomControl(e.node.data.name);
+                            else if (e.node.data.type == 'control') {
+                                e.node.data.control = await iobrokerHandler.getWebuiObject('control', e.node.data.name);
                             }
                         };
                     }
@@ -806,11 +799,36 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     };
                     expandChildren(e.tree.root);
                 },
+                click: (e) => {
+                    this.serviceContainer.globalContext.tool = null;
+                    if (e.event) { // only for clicked items, not when elements selected via code.
+                        if (e.node.data?.data?.type == 'npm' || e.node.data?.data?.type == 'control') {
+                            let elDef;
+                            if (e.node.data.data.type == 'npm')
+                                elDef = e.node.data.data.ref;
+                            else {
+                                const control = e.node.data.data.name;
+                                let name = getCustomControlName(control);
+                                elDef = { tag: name };
+                            }
+                            if (elDef) {
+                                let tool = this.serviceContainer.designerTools.get(elDef.tool ?? NamedTools.DrawElementTool);
+                                if (typeof tool == 'function')
+                                    tool = new tool(elDef);
+                                this.serviceContainer.globalContext.tool = tool;
+                            }
+                        }
+                    }
+                },
                 dnd: {
+                    preventLazyParents: false,
                     guessDropEffect: true,
                     preventRecursion: true, // Prevent dropping nodes on own descendants
                     preventVoidMoves: false,
                     dragStart: (e) => {
+                        dndSourceNode = e.node;
+                        //@ts-ignore
+                        e.event.target.style.opacity = '0.4';
                         if (e.node.data.data.type == 'screen') {
                             const screen = e.node.data.data.name;
                             const elementDef = { tag: "iobroker-webui-screen-viewer", defaultAttributes: { 'screen-name': screen }, defaultWidth: '300px', defaultHeight: '200px' };
@@ -824,12 +842,14 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             e.event.dataTransfer.dropEffect = "copy";
                             return true;
                         }
-                        else if (e.node.data.data.type == 'customcontrol') {
+                        else if (e.node.data.data.type == 'control') {
                             const control = e.node.data.data.name;
                             let nm = PropertiesHelper.camelToDashCase(control);
+                            if (nm[0] === '/')
+                                nm = nm.substring(1);
                             if (nm[0] === '-')
                                 nm = nm.substring(1);
-                            let name = webuiCustomControlPrefix + nm;
+                            let name = webuiCustomControlPrefix + nm.replaceAll('/', '-');
                             const elementDef = { tag: name };
                             const controlDef = e.node.data.data.control;
                             if (controlDef?.settings.width)
@@ -883,7 +903,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                             e.event.dataTransfer.dropEffect = "copy";
                             return true;
                         }
-                        else if (e.node.data.data.type == 'control') {
+                        else if (e.node.data.data.type == 'npm') {
                             e.event.dataTransfer.effectAllowed = "all";
                             e.event.dataTransfer.setData(dragDropFormatNameElementDefinition, JSON.stringify(e.node.data.data.ref));
                             e.event.dataTransfer.dropEffect = "copy";
@@ -900,9 +920,32 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         }
                         return false;
                     },
+                    //@ts-ignore
                     dragEnter: (e) => {
+                        if (dndSourceNode?.data?.data?.type && e.node?.key && e.node.key.startsWith(dndSourceNode.data.data.type + '_')) {
+                            e.event.dataTransfer.dropEffect = 'move';
+                            return 'over';
+                        }
                         return false;
-                    }
+                    },
+                    dragOver: (e) => {
+                        if (dndSourceNode?.data?.data?.type && e.node?.key && e.node.key.startsWith(dndSourceNode.data.data.type + '_')) {
+                            e.event.dataTransfer.dropEffect = 'move';
+                            return true;
+                        }
+                        return false;
+                    },
+                    drop: (e) => {
+                        //@ts-ignore
+                        dndSourceNode._rowElem.firstElementChild.style.opacity = '';
+                        if (dndSourceNode?.data?.data?.type && e.node?.key && e.node.key.startsWith(dndSourceNode.data.data.type + '_')) {
+                            iobrokerHandler.renameObject(dndSourceNode?.data?.data?.type, dndSourceNode?.data?.data?.name, e.node.data.data.name + '/' + dndSourceNode?.title);
+                        }
+                    },
+                    dragEnd: (e) => {
+                        //@ts-ignore
+                        dndSourceNode._rowElem.firstElementChild.style.opacity = '';
+                    },
                 }
             });
         }

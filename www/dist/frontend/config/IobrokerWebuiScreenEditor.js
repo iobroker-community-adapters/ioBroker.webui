@@ -2,6 +2,12 @@ import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projec
 import { DocumentContainer, } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
+export const defaultNewStyle = `:host {
+}
+
+* {
+    box-sizing: border-box;
+}`;
 export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructorAppend {
     _name;
     get name() { return this._name; }
@@ -16,6 +22,8 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     _webuiBindings;
     _settingsChanged;
     async initialize(name, type, html, style, script, settings, properties, serviceContainer) {
+        if (name[0] == '/')
+            name = name.substring(1);
         this.title = type + ' - ' + name;
         this._name = name;
         this._type = type;
@@ -82,7 +90,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     applyBindings() {
         this.removeBindings();
         if (this.bindingsEnabled)
-            this._webuiBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element, this.relativeBindingsPrefix, null);
+            this._webuiBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot, this.relativeBindingsPrefix, null);
     }
     removeBindings() {
         this._webuiBindings?.forEach(x => x());
@@ -95,11 +103,11 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
             let script = this.scriptModel.getValue();
             if (this._type == 'screen') {
                 let screen = { html, style, script, settings: this._settings };
-                await iobrokerHandler.saveScreen(this._name, screen);
+                await iobrokerHandler.saveObject(this._type, this._name, screen);
             }
             else {
                 let control = { html, style, script, settings: this._settings, properties: this._properties };
-                await iobrokerHandler.saveCustomControl(this._name, control);
+                await iobrokerHandler.saveObject(this._type, this._name, control);
             }
         }
         else

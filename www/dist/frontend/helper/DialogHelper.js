@@ -124,10 +124,12 @@ export class IoBrokerWebuiDialog extends BaseCustomWebComponentConstructorAppend
     static openDialog(options) {
         const uniqueId = 'id' + new Date().getTime();
         const dlg = new IoBrokerWebuiDialog();
-        if (typeof options.title === 'string')
-            dlg.#dialogTitle.innerHTML = options.title;
-        else
-            dlg.#dialogTitle.appendChild(options.title);
+        if (options.title) {
+            if (typeof options.title === 'string')
+                dlg.#dialogTitle.innerHTML = options.title;
+            else
+                dlg.#dialogTitle.appendChild(options.title);
+        }
         if (typeof options.content === 'string')
             dlg.#dialogContent.innerHTML = options.content;
         else

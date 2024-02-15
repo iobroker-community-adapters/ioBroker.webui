@@ -4,6 +4,7 @@ import { sleep } from "../helper/Helper.js";
 import { IoBrokerWebuiDialog } from "../helper/DialogHelper.js";
 import { generateEventCodeFromBlockly } from "../config/blockly/IobrokerWebuiBlocklyJavascriptHelper.js";
 import Long from 'long';
+import { parseBindingString } from "../helper/IobrokerWebuiBindingsHelper.js";
 export class ScriptSystem {
     static async execute(scriptCommands, outerContext) {
         for (let c of scriptCommands) {
@@ -37,9 +38,9 @@ export class ScriptSystem {
                 sv.relativeSignalsPath = command.relativeSignalsPath;
                 sv.screenName = screen;
                 if (!width)
-                    width = await (await iobrokerHandler.getScreen(screen)).settings.width;
+                    width = await (await iobrokerHandler.getWebuiObject('screen', screen)).settings.width;
                 if (!height)
-                    height = await (await iobrokerHandler.getScreen(screen)).settings.height;
+                    height = await (await iobrokerHandler.getWebuiObject('screen', screen)).settings.height;
                 IoBrokerWebuiDialog.openDialog({ title, content: sv, moveable, closeable, width, height, top, left });
                 break;
             }
@@ -55,6 +56,12 @@ export class ScriptSystem {
             case 'Delay': {
                 const value = await ScriptSystem.getValue(command.value, context);
                 await sleep(value);
+                break;
+            }
+            case 'Console': {
+                const target = await ScriptSystem.getValue(command.target, context);
+                const message = await ScriptSystem.getValue(command.message, context);
+                console[target](message);
                 break;
             }
             case 'SwitchLanguage': {
@@ -83,6 +90,22 @@ export class ScriptSystem {
                 const signal = await ScriptSystem.getValue(command.signal, context);
                 let state = await iobrokerHandler.connection.getState(signal);
                 await iobrokerHandler.connection.setState(signal, state.val - await ScriptSystem.getValue(command.value, context));
+                break;
+            }
+            case 'CalculateSignalValue': {
+                const formula = await ScriptSystem.getValue(command.formula, context);
+                const targetSignal = await ScriptSystem.getValue(command.targetSignal, context);
+                let parsed = parseBindingString(formula);
+                let results = await Promise.all(parsed.signals.map(x => iobrokerHandler.getState(x)));
+                let nm = '';
+                for (let i = 0; i < parsed.parts.length - 1; i++) {
+                    let v = results[i].val;
+                    if (v == null)
+                        return;
+                    nm += v + parsed.parts[i + 1];
+                }
+                let result = eval(nm);
+                await iobrokerHandler.connection.setState(targetSignal, result);
                 break;
             }
             case 'SetBitInSignal': {
@@ -165,11 +188,24 @@ export class ScriptSystem {
                     let sng = await iobrokerHandler.connection.getState(value.name);
                     return sng.val;
                 }
+                case 'event': {
+                    let obj = outerContext.event;
+                    if (value.name)
+                        obj = ScriptSystem.extractPart(obj, value.name);
+                    return obj;
+                }
             }
         }
         return value;
     }
-    static async assignAllScripts(javascriptCode, shadowRoot, instance) {
+    static extractPart(obj, propertyPath) {
+        let retVal = obj;
+        for (let p of propertyPath.split('.')) {
+            retVal = retVal?.[p];
+        }
+        return retVal;
+    }
+    static async assignAllScripts(source, javascriptCode, shadowRoot, instance) {
         const allElements = shadowRoot.querySelectorAll('*');
         let jsObject = null;
         if (javascriptCode) {
@@ -181,7 +217,7 @@ export class ScriptSystem {
                 }
             }
             catch (err) {
-                console.error('error parsing javascript', err);
+                console.error('error parsing javascript - ' + source, err);
             }
         }
         for (let e of allElements) {
@@ -207,7 +243,7 @@ export class ScriptSystem {
                         else {
                             e.addEventListener(evtName, (evt) => {
                                 if (!jsObject[script])
-                                    console.warn('javascritp function named: ' + script + ' not found, maybe missing a "export" ?');
+                                    console.warn('javascript function named: ' + script + ' not found, maybe missing a "export" ?');
                                 else
                                     jsObject[script](evt, e, shadowRoot, instance);
                             });

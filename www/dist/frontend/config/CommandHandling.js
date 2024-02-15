@@ -1,6 +1,6 @@
 import { ContextMenu } from '@node-projects/web-component-designer';
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
-import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
+import { IobrokerWebuiScreenEditor, defaultNewStyle } from './IobrokerWebuiScreenEditor.js';
 export class CommandHandling {
     dockManager;
     iobrokerWebuiAppShell;
@@ -24,15 +24,10 @@ export class CommandHandling {
         }
         else if (commandName === 'new') {
             let defaultName = '';
-            if (!(await iobrokerHandler.getScreenNames()).includes('start'))
+            if (!(await iobrokerHandler.getAllNames('screen')).includes('start'))
                 defaultName = 'start';
             let screen = prompt("New Screen Name:", defaultName);
-            let style = `:host {
-}
-
-* {
-    box-sizing: border-box;
-}`;
+            let style = defaultNewStyle;
             if (screen) {
                 let screentype = 'screen';
                 if (commandParameter == 'grid') {

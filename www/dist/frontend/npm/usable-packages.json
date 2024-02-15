@@ -15,6 +15,7 @@
     "@node-projects/wired-elements",
     "@node-projects/sweethome3d-webcomponent",
     "@node-projects/imask-webcomponent",
+    "@node-projects/automatic-slidershow-webcomponent",
     "@christianliebel/paint",
     "vanilla-colorful",
     "@shoelace-style/shoelace",
@@ -24,5 +25,7 @@
     "@material/web",
     "@zooplus/zoo-web-components",
     "dial-gauge",
-    "@zachleat/snow-fall"
+    "@zachleat/snow-fall",
+    "@montoyland/radial-menu",
+    "@maksu/side-menu"
 ]

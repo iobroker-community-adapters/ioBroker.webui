@@ -1,4 +1,5 @@
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
+import Toastify from 'toastify-js';
 //@ts-ignore
 await LazyLoader.LoadJavascript(window.iobrokerSocketScriptUrl);
 iobrokerHandler.init();
@@ -276,7 +277,11 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             pg.id = id;
             pg.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
             pg.typeName = 'IGlobalConfig';
-            pg.selectedObject = iobrokerHandler.config ?? {};
+            pg.selectedObject = iobrokerHandler.config?.globalConfig ?? {};
+            pg.saveCallback = async (data) => {
+                iobrokerHandler.config.globalConfig = data;
+                await iobrokerHandler.saveConfig();
+            };
             pg.title = 'global config';
             this.openDock(pg);
         }
@@ -295,3 +300,27 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     }
 }
 window.customElements.define('iobroker-webui-app-shell', IobrokerWebuiAppShell);
+const err = console.error;
+console.error = (...args) => {
+    if (args[0].startsWith('Cannot getState ')) {
+        console.warn(...args);
+    }
+    else {
+        err(...args);
+        try {
+            Toastify({
+                text: "Error occured, check console \n" + args[0],
+                duration: 4000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                stopOnFocus: true,
+                style: {
+                    color: "black",
+                    background: "linear-gradient(to right, #ff5f6d, #ffc371)",
+                }
+            }).showToast();
+        }
+        catch { }
+    }
+};

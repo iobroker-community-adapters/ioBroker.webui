@@ -182,6 +182,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
     noCategory;
     hideProperties;
     expanded;
+    showHead;
     propertyNodeContextMenu = new TypedEvent;
     getTypeInfo;
     _table;
@@ -208,7 +209,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                         const pPath = node.data.propertyPath;
                         const currentValue = deepValue(this._selectedObject, pPath);
                         const pInfo = node.data.property;
-                        const ctl = await this._getEditorForType(pInfo, currentValue, pPath);
+                        const ctl = await this.getEditorForType(pInfo, currentValue, pPath, e);
                         if (ctl) {
                             if (pInfo.defaultValue && ctl.value == '' && !pInfo.nullable) {
                                 ctl.placeholder = pInfo.defaultValue;
@@ -236,7 +237,6 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             ],
             click: (e) => {
                 this.updateDescription(e.node);
-                return true;
             },
             init: (e) => {
                 if (this.expanded)
@@ -249,17 +249,17 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
         this.shadowRoot.adoptedStyleSheets = [wunderbaumStyle, IobrokerWebuiPropertyGrid.style];
     }
     updateDescription(data) {
-        if (data.data.folder) {
+        if (data?.data?.folder) {
             return;
         }
-        this._getDomElement('descTitel').innerText = data.title;
-        if (data.data?.property?.description && data.data.property.defaultValue) {
+        this._getDomElement('descTitel').innerText = data?.title ?? '';
+        if (data?.data?.property?.description && data?.data?.property?.defaultValue) {
             this._getDomElement('descText').innerHTML = data.data.property.description + '<br />Default Value: ' + data.data.property.defaultValue;
         }
-        else if (data.data?.property?.description) {
+        else if (data?.data?.property?.description) {
             this._getDomElement('descText').innerText = data.data.property.description;
         }
-        else if (data.data.property.defaultValue) {
+        else if (data?.data.property.defaultValue) {
             this._getDomElement('descText').innerText = 'Default Value: ' + data.data.property.defaultValue;
         }
         else {
@@ -340,9 +340,9 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
         this.propertyChanged.emit({ property: propertyPath, newValue: value });
     }
     getSpecialEditorForType;
-    async _getEditorForType(property, currentValue, propertyPath) {
+    async getEditorForType(property, currentValue, propertyPath, wbRender, additionalInfo) {
         if (this.getSpecialEditorForType) {
-            let edt = await this.getSpecialEditorForType(property, currentValue, propertyPath);
+            let edt = await this.getSpecialEditorForType(property, currentValue, propertyPath, wbRender, additionalInfo);
             if (edt)
                 return edt;
         }
@@ -350,7 +350,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
             case 'screen': {
                 let editor = document.createElement('select');
                 editor.style.width = '100%';
-                for (let v of await iobrokerHandler.getScreenNames()) {
+                for (let v of await iobrokerHandler.getAllNames('screen')) {
                     const op = document.createElement('option');
                     op.value = v;
                     op.innerText = v;
@@ -396,6 +396,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 cnt.appendChild(btn);
                 return cnt;
             }
+            case 'html':
             case 'script': {
                 let editor = document.createElement('div');
                 editor.style.boxSizing = 'border-box';
@@ -411,15 +412,20 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 btn.innerHTML = '...';
                 btn.style.boxSizing = 'border-box';
                 btn.onclick = async () => {
-                    let monacoInfo = {
-                        content: `declare global {
+                    let cvm = new CodeViewMonaco();
+                    if (property.format == 'html') {
+                        cvm.language = 'html';
+                    }
+                    else {
+                        let monacoInfo = {
+                            content: `declare global {
                             var context: { event: Event, element: Element };
                         }`, filePath: 'global.d.ts'
-                    };
-                    //@ts-ignore
-                    monaco.languages.typescript.typescriptDefaults.setExtraLibs([monacoInfo]);
-                    let cvm = new CodeViewMonaco();
-                    cvm.language = 'javascript';
+                        };
+                        //@ts-ignore
+                        monaco.languages.typescript.typescriptDefaults.setExtraLibs([monacoInfo]);
+                        cvm.language = 'javascript';
+                    }
                     cvm.code = inp.value;
                     cvm.style.position = 'relative';
                     let res = await window.appShell.openConfirmation(cvm, 200, 200, 600, 400, this);
@@ -579,6 +585,7 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
                 this._head.innerText = '';
                 this.clear();
             }
+            this._head.style.display = this.showHead ? 'block' : 'none';
         }
     }
     _renderTree() {
@@ -591,6 +598,17 @@ export class IobrokerWebuiPropertyGrid extends BaseCustomWebComponentConstructor
     }
     clear() {
         this._tree.root.removeChildren();
+    }
+    saveCallback;
+    async executeCommand(command) {
+        if (command.type == 'save') {
+            this.saveCallback(this.selectedObject);
+        }
+    }
+    canExecuteCommand(command) {
+        if (command.type == 'save')
+            return this.saveCallback != null;
+        return false;
     }
 }
 customElements.define("iobroker-webui-property-grid", IobrokerWebuiPropertyGrid);

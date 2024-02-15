@@ -1,7 +1,6 @@
 import { OverlayLayer, DesignItem, InsertAction, BindingTarget, PropertyType } from "@node-projects/web-component-designer";
 import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
-import { BaseCustomControl } from "../runtime/CustomControls.js";
 export class IobrokerWebuiBindableObjectDragDropService {
     rectMap = new Map();
     rect;
@@ -93,15 +92,13 @@ export class IobrokerWebuiBindableObjectDragDropService {
                     di.setAttribute("type", "checkbox");
                 }
                 else if (obj?.common?.role == 'date') {
-                    binding.expression = "new Date(__0).toISOString().split('.')[0]";
-                    binding.expressionTwoWay = "new Date(value).getTime()";
-                    binding.twoWay = false;
-                    serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value', binding);
-                    di.setAttribute("type", "datetime-local");
+                    binding.twoWay = twoWay;
+                    serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value-as-number', binding);
+                    di.setAttribute("type", "date");
                     di.setAttribute("readonly", "");
                 }
                 else if (obj?.common?.role == 'value.time') {
-                    binding.twoWay = true;
+                    binding.twoWay = twoWay;
                     serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(input, 'value-as-number', binding);
                     di.setAttribute("type", "datetime-local");
                     di.setAttribute("readonly", "");
@@ -131,8 +128,8 @@ export class IobrokerWebuiBindableObjectDragDropService {
             binding.target = BindingTarget.css;
         binding.signal = bindableObject.fullName;
         binding.twoWay = property.propertyType == PropertyType.property || property.propertyType == PropertyType.propertyAndAttribute;
-        if (designItems[0].element instanceof BaseCustomControl)
-            binding.twoWay = false;
+        //if (designItems[0].element instanceof BaseCustomControl)
+        //    binding.twoWay = false;
         const group = designItems[0].openGroup('drop binding');
         for (let d of designItems) {
             const serializedBinding = IobrokerWebuiBindingsHelper.serializeBinding(d.element, property.name, binding);

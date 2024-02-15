@@ -19,6 +19,7 @@ import { IobrokerWebuiConfigButtonProvider } from "../services/IobrokerWebuiConf
 import { IobrokerWebuiCustomElementContextMenu } from "../services/IobrokerWebuiCustomElementContextMenu.js";
 import { IobrokerWebuiScriptRefactorService } from "../services/IobrokerWebuiScriptRefactorService.js";
 import { IobrokerWebuiRefactorService } from "../services/IobrokerWebuiRefactorService.js";
+import { IobrokerWebuiSpecialPropertiesService } from "../services/IobrokerWebuiSpecialPropertiesService.js";
 const serviceContainer = createDefaultServiceContainer();
 serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
 serviceContainer.register("htmlParserService", new NodeHtmlParserService());
@@ -39,6 +40,7 @@ serviceContainer.config.codeViewWidget = CodeViewMonaco;
 serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/frontend/elements-webui.json'));
 serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
 serviceContainer.register('propertyService', new IobrokerWebuiPropertiesService());
+serviceContainer.register('propertyService', new IobrokerWebuiSpecialPropertiesService());
 serviceContainer.designViewConfigButtons.push(new IobrokerWebuiConfigButtonProvider());
 serviceContainer.designerContextMenuExtensions.push(new SeperatorContextMenu());
 serviceContainer.designerContextMenuExtensions.push(new IobrokerWebuiCustomElementContextMenu());

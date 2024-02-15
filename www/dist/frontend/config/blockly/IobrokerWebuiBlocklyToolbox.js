@@ -163,8 +163,7 @@ export default {
                 },
                 {
                     type: 'logic_null',
-                    kind: 'block',
-                    enabled: false,
+                    kind: 'block'
                 },
                 {
                     type: 'logic_ternary',
@@ -477,6 +476,10 @@ export default {
             name: 'Text',
             categorystyle: 'text_category',
             contents: [
+                {
+                    kind: 'block',
+                    type: 'template_string'
+                },
                 {
                     type: 'text',
                     kind: 'block',

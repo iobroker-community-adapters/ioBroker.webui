@@ -9,7 +9,7 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
                 <div style="grid-column: 1/3">
                     <div style="display: flex; flex-direction: column;">
                         <div class="row">
-                            <span style="cursor: pointer;" title="to use multiple objects, seprate them with semicolon (;). access iobroker objects in properties via ?propertyName, access the propertyValue via ??propertyName">objects</span>
+                            <span style="cursor: pointer;" title="to use multiple objects, seprate them with semicolon (;). access iobroker objects in properties via ?propertyName, access the propertyValue via ??propertyName. Bind to ioBroker object via $objectId. You could also use ioBroker signals inside of a Signal Name via {name}">objects</span>
                         </div>
                         <div style="display:flex;align-items: flex-end;">
                             <input class="row" value="{{?this.objectNames::change}}" style="flex-grow: 1;">
@@ -40,13 +40,13 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
                             <span style="cursor: pointer;" title="javascript expression. access objects with __0, __1, ...">formula</span>
                         </div>
                         <div class="row">
-                            <input type="text" value="{{?this.expression}}" style="width: 100%">
+                            <iobroker-webui-monaco-editor id="expression" single-row language="javascript" style="width: 100%; min-height: 17px; height: 17px; position: relative; overflow: hidden; resize: vertical;" .value="{{?this.expression}}"></iobroker-webui-monaco-editor>
                         </div>
                         <div class="row">
                             <span style="cursor: pointer;" title="javascript expression. access property with 'value'">formula write back (two way)</span>
                         </div>
                         <div class="row">
-                            <input type="text" disabled="[[!this.twoWay]]" value="{{?this.expressionTwoWay}}" style="width: 100%">
+                            <iobroker-webui-monaco-editor id="expression2way" read-only="[[!this.twoWay]]" $readonly="[[!this.twoWay]]" single-row language="javascript" style="width: 100%; min-height: 17px; height: 17px; position: relative; overflow: hidden; resize: vertical;" .value="{{?this.expressionTwoWay}}"></iobroker-webui-monaco-editor>
                         </div>
                     </div>
                 </div>
@@ -148,6 +148,14 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
         #tagdata_type {
             height: 24px;
             font-size: inherit;
+        }
+        
+        iobroker-webui-monaco-editor:not([readonly]) {
+            border: 1px black solid;
+        }
+        
+        iobroker-webui-monaco-editor[readonly] {
+            border: 1px lightgray solid;
         }`;
     static is = 'iobroker-webui-dynamics-editor';
     static properties = {
@@ -203,6 +211,18 @@ export class IobrokerWebuiDynamicsEditor extends BaseCustomWebComponentConstruct
             }
             if (this._binding.changedEvents && this._binding.changedEvents.length)
                 this.events = this._binding.changedEvents.join(';');
+        }
+        if (this.expression) {
+            let edt = this._getDomElement('expression');
+            if (this.expression.indexOf('\n') >= 0) {
+                edt.style.height = (3 * 17) + 'px';
+            }
+        }
+        if (this.expressionTwoWay) {
+            let edt = this._getDomElement('expression2way');
+            if (this.expressionTwoWay.indexOf('\n') >= 0) {
+                edt.style.height = (3 * 17) + 'px';
+            }
         }
         this._bindingsParse();
     }
