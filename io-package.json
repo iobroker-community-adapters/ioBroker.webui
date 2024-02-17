@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.47",
+    "version": "1.0.48",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.48": {
+        "en": "fix wunderbaum error",
+        "de": "wunderbaum fehler",
+        "ru": "исправить ошибку wunderbaum",
+        "pt": "corrigir erro wunderbaum",
+        "nl": "fout in wunderbaum herstellen",
+        "fr": "corriger erreur wunderbaum",
+        "it": "correzione errore wunderbaum",
+        "es": "error wunderbaum",
+        "pl": "naprawić błąd wunderbaum",
+        "uk": "виправити помилку wunderbaum",
+        "zh-cn": "修复 wunderbaum 错误"
+      },
       "1.0.47": {
         "en": "designer fixes with property grid",
         "de": "designer-reparaturen mit immobiliengitter",
@@ -106,19 +119,6 @@
         "pl": "zmiana rozmiaru sieci\nwyświetlacz rozszerzenia siatki",
         "uk": "фіксувати розмір сітки\nдисплей розширення сітки",
         "zh-cn": "固定网格调整大小\n固定网格扩展显示"
-      },
-      "1.0.41": {
-        "en": "better element drawing (with undo)\nbetter title extension",
-        "de": "bessere elementzeichnung (mit undo)\nbessere titelverlängerung",
-        "ru": "лучший чертеж элемента (с undo)\nлучшее расширение заголовка",
-        "pt": "melhor desenho do elemento (com desfazer)\nmelhor extensão de título",
-        "nl": "betere elementtekening (met ongedaan maken)\nbetere titelextensie",
-        "fr": "meilleur dessin d'élément (avec annuler)\nmeilleure extension du titre",
-        "it": "disegno elemento migliore (con disfare)\nmigliore estensione del titolo",
-        "es": "mejor elemento dibujo (con deshacer)\nmejor extensión de título",
-        "pl": "lepsze rysowanie elementów (z cofnięciem)\nlepsze rozszerzenie tytułu",
-        "uk": "краще креслення елемента (з недо)\nрозширення назв",
-        "zh-cn": "更好的元素绘图( 有撤销)\n更好的标题扩展名"
       }
     },
     "icon": "logo.png",
