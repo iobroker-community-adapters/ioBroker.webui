@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.49",
+    "version": "1.0.50",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.50": {
+        "en": "again fix in class binding",
+        "de": "wieder in klassenbindung fixieren",
+        "ru": "снова фиксация класса",
+        "pt": "novamente corrigir em ligação de classe",
+        "nl": "opnieuw vast te stellen in klasse binding",
+        "fr": "fixer à nouveau dans la fixation de classe",
+        "it": "ancora correzione in legatura di classe",
+        "es": "de nuevo fijar en la unión de clases",
+        "pl": "ponownie naprawić w wiązaniu klasowym",
+        "uk": "знову зафіксувати в обов'язкові класі",
+        "zh-cn": "再次在类装订中修复"
+      },
       "1.0.49": {
         "en": "class is attribute in bindings\nfix error logging",
         "de": "class ist attribut in bindungen\nfehlersuche beheben",
@@ -106,19 +119,6 @@
         "pl": "naprawić wiązania w projektancie",
         "uk": "фіксувати прив'язки в дизайнера",
         "zh-cn": "设计器中的固定绑定"
-      },
-      "1.0.43": {
-        "en": "refresh tree when controls deleted",
-        "de": "baum aktualisieren, wenn die kontrollen gelöscht",
-        "ru": "обновление дерева при удалении управления",
-        "pt": "refrescar árvore quando os controles excluídos",
-        "nl": "boom verversen wanneer controles verwijderd zijn",
-        "fr": "rafraîchir l'arbre lorsque les contrôles sont supprimés",
-        "it": "rinfrescare l'albero quando i controlli cancellati",
-        "es": "árbol de refresco cuando se eliminan los controles",
-        "pl": "odśwież drzewo po usunięciu kontroli",
-        "uk": "освіження дерева при видаленні",
-        "zh-cn": "删除控件时刷新树"
       }
     },
     "icon": "logo.png",
