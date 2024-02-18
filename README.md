@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- again fix in class binding
+
 ### 1.0.49 (2024-02-18)
 - class is attribute in bindings
 - fix error logging
