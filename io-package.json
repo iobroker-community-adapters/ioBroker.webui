@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.48",
+    "version": "1.0.49",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.49": {
+        "en": "class is attribute in bindings\nfix error logging",
+        "de": "class ist attribut in bindungen\nfehlersuche beheben",
+        "ru": "класс является атрибутом в связываниях\nфиксация ошибок",
+        "pt": "classe é atributo em vinculações\ncorrigir registro de erro",
+        "nl": "klasse is eigenschap in bindingen\nfout loggen herstellen",
+        "fr": "class est l'attribut dans les liaisons\ncorrection de l'enregistrement des erreurs",
+        "it": "classe è attributo in binding\ncorrezione di errore di registrazione",
+        "es": "la clase es atributo en las ligaduras\ncorrección de errores",
+        "pl": "klasa jest atrybutem w wiązaniach\nnaprawić logowanie błędów",
+        "uk": "клас - атрибут у прив'язках\nвиправлено помилку",
+        "zh-cn": "类是绑定物中的属性\n修正错误记录"
+      },
       "1.0.48": {
         "en": "fix wunderbaum error",
         "de": "wunderbaum fehler",
@@ -106,19 +119,6 @@
         "pl": "odśwież drzewo po usunięciu kontroli",
         "uk": "освіження дерева при видаленні",
         "zh-cn": "删除控件时刷新树"
-      },
-      "1.0.42": {
-        "en": "fix grid resize\nfix grid extension display",
-        "de": "fix grid reize\nanzeige der rastererweiterung",
-        "ru": "фиксированная сетка размер\nдисплей расширения сети",
-        "pt": "corrigir o redimensionamento da grade\nexibição de extensão da grade de correção",
-        "nl": "rastergrootte wijzigen\nfix grid extensie display",
-        "fr": "redimensionner la grille\nfixer l'affichage de l'extension de grille",
-        "it": "ridimensionamento della griglia\ncorrezione dell'estensione della griglia",
-        "es": "reparación de la red\npantalla de extensión de la red",
-        "pl": "zmiana rozmiaru sieci\nwyświetlacz rozszerzenia siatki",
-        "uk": "фіксувати розмір сітки\nдисплей розширення сітки",
-        "zh-cn": "固定网格调整大小\n固定网格扩展显示"
       }
     },
     "icon": "logo.png",
