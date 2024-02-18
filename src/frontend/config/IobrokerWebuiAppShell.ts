@@ -352,7 +352,7 @@ declare global {
 
 const err = console.error;
 console.error = (...args) => {
-  if (args[0].startsWith('Cannot getState ')) {
+  if (args.length > 0 && typeof args[0] === 'string' && args[0].startsWith('Cannot getState ')) {
     console.warn(...args);
   } else {
     err(...args);

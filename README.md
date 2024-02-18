@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- class is attribute in bindings
+- fix error logging
+
 ### 1.0.48 (2024-02-17)
 - fix wunderbaum error
 
