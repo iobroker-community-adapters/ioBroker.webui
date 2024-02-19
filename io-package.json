@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.50",
+    "version": "1.0.51",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.51": {
+        "en": "fix lazy loaded lit elments\nfix script url",
+        "de": "fix faul beladene beleuchtete elle\nskript url",
+        "ru": "фиксация ленивых заряженных локтей\nисправить сценарий url",
+        "pt": "corrigir preguiçoso carregados elments iluminados\ncorrigir url do script",
+        "nl": "fix luie geladen elments\nscript url repareren",
+        "fr": "fixer les éléments paresseux chargés\ncorrection de l'url du script",
+        "it": "correzione di elementi illuminati pigri carichi\ncorrezione dello script url",
+        "es": "fijar perezosos cargados de elmentos encendidos\nfijar script url",
+        "pl": "fix leniwe załadowane elementy oświetlone\nnaprawić skrypt url",
+        "uk": "фіксувати застібки, що навантажуються літі\nвиправити скрипт url",
+        "zh-cn": "修补懒惰的点燃精灵\n修正脚本 url"
+      },
       "1.0.50": {
         "en": "again fix in class binding",
         "de": "wieder in klassenbindung fixieren",
@@ -106,19 +119,6 @@
         "pl": "aktualizacji projektant z poprawek",
         "uk": "оновлення дизайнера з виправленнями",
         "zh-cn": "带有错误修正的更新设计器"
-      },
-      "1.0.44": {
-        "en": "fix bindings in designer",
-        "de": "fixe bindungen im designer",
-        "ru": "фиксации в дизайнере",
-        "pt": "corrigir encadernações no designer",
-        "nl": "fix bindingen in ontwerper",
-        "fr": "fixer les fixations dans le concepteur",
-        "it": "fix bindings in designer",
-        "es": "fijaciones de fijación en diseñador",
-        "pl": "naprawić wiązania w projektancie",
-        "uk": "фіксувати прив'язки в дизайнера",
-        "zh-cn": "设计器中的固定绑定"
       }
     },
     "icon": "logo.png",
