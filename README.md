@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix lazy loaded lit elments
+- fix script url
+
 ### 1.0.50 (2024-02-18)
 - again fix in class binding
 
