@@ -1,4 +1,4 @@
-import { TypedEvent } from "@node-projects/base-custom-webcomponent";
+import { TypedEvent, customElement } from "@node-projects/base-custom-webcomponent";
 import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { PropertiesHelper } from "@node-projects/web-component-designer/dist/elements/services/propertiesService/services/PropertiesHelper.js";
@@ -15,7 +15,7 @@ export const bindingPrefixContent = 'bind-content:';
 
 export const bindingsInCssRegex = /{{(.*)}}/;
 
-export type namedBinding = [name: string, binding: IIobrokerWebuiBinding];
+export type namedBinding = [name: string, binding: IIobrokerWebuiBindingMaybeLit];
 
 export function isLit(element: Element) {
     //@ts-ignore
@@ -108,6 +108,8 @@ export class IndirectSignal {
     }
 }
 
+type IIobrokerWebuiBindingMaybeLit = IIobrokerWebuiBinding & { maybeLitElement?: boolean }
+
 export class IobrokerWebuiBindingsHelper {
     //Not allowed chars in Var Names: |{}(),;:[]
 
@@ -121,7 +123,7 @@ export class IobrokerWebuiBindingsHelper {
         if (bindingTarget === BindingTarget.cssvar)
             propname = '--' + propname;
         if (!value.startsWith('{')) {
-            let binding: IIobrokerWebuiBinding = {
+            let binding: IIobrokerWebuiBindingMaybeLit = {
                 signal: value,
                 target: bindingTarget
             }
@@ -137,8 +139,11 @@ export class IobrokerWebuiBindingsHelper {
                 else {
                     if (isLit(element)) {
                         binding.events = [propname];
-                    } else
+                    } else {
                         binding.events = [propname + '-changed'];
+                        //Binding could be a lit elemnt but not yet loaded
+                        binding.maybeLitElement = true;
+                    }
                 }
 
             }
@@ -170,8 +175,9 @@ export class IobrokerWebuiBindingsHelper {
             else {
                 if (isLit(element)) {
                     binding.events = [propname];
-                } else
+                } else {
                     binding.events = [propname + '-changed'];
+                }
             }
         }
         if (bindingTarget === BindingTarget.cssvar || bindingTarget === BindingTarget.class)
@@ -397,12 +403,23 @@ export class IobrokerWebuiBindingsHelper {
             const bindings = this.getBindings(e);
             for (let b of bindings) {
                 try {
-                    retVal.push(this.applyBinding(e, b, relativeSignalPath, root));
+                    let applied = this.applyBinding(e, b, relativeSignalPath, root);
+                    retVal.push(applied);
+
+                    if (b[1].maybeLitElement && e.localName.includes('-') && !customElements.get(e.localName)) {
+                        customElements.whenDefined(e.localName).then(() => {
+                            if (isLit(e)) {
+                                applied();
+                                retVal.push(this.applyBinding(e, b, relativeSignalPath, root));
+                            }
+                        })
+                    }
                 } catch (err) {
                     console.warn("error applying binding", e, b, err)
                 }
             }
         }
+
         return retVal;
     }
 
