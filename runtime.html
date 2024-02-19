@@ -67,7 +67,7 @@
         screen = 'start';
       }
       viewer.screenName = screen;
-      let imp = await importShim("/dist/frontend/common/IobrokerHandler.js");
+      let imp = await importShim(iobrokerWebuiRootUrl + "/dist/frontend/common/IobrokerHandler.js");
       imp.iobrokerHandler.sendCommand("uiChangedView", screen);
     }
     checkHash();
