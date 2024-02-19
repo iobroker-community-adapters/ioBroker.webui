@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.51",
+    "version": "1.0.52",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.52": {
+        "en": "fix captured local",
+        "de": "lokal festhalten",
+        "ru": "локальный",
+        "pt": "correção local capturada",
+        "nl": "fix gevangen lokaal",
+        "fr": "correctif capturé local",
+        "it": "correzione catturata locale",
+        "es": "reparación capturado local",
+        "pl": "fix przechwytywane lokalne",
+        "uk": "виправити захоплений локальний",
+        "zh-cn": "本地捕获的固定"
+      },
       "1.0.51": {
         "en": "fix lazy loaded lit elments\nfix script url",
         "de": "fix faul beladene beleuchtete elle\nskript url",
@@ -106,19 +119,6 @@
         "pl": "aktualizacje projektantów",
         "uk": "оновлення дизайнера",
         "zh-cn": "设计者更新"
-      },
-      "1.0.45": {
-        "en": "update designer with bugfixes",
-        "de": "update-designer mit bugfixes",
-        "ru": "обновление дизайнера с исправлениями",
-        "pt": "atualização designer com bugfixes",
-        "nl": "update ontwerper met bugfixes",
-        "fr": "update designer avec bugfixes",
-        "it": "aggiornamento designer con bugfixes",
-        "es": "diseñador de actualización con bugfixes",
-        "pl": "aktualizacji projektant z poprawek",
-        "uk": "оновлення дизайнера з виправленнями",
-        "zh-cn": "带有错误修正的更新设计器"
       }
     },
     "icon": "logo.png",

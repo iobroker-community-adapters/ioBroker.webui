@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.0.52 (2024-02-19)
 - fix captured local
 
 ### 1.0.51 (2024-02-19)
