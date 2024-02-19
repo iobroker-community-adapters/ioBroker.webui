@@ -108,7 +108,7 @@ export class IndirectSignal {
     }
 }
 
-type IIobrokerWebuiBindingMaybeLit = IIobrokerWebuiBinding & { maybeLitElement?: boolean }
+type IIobrokerWebuiBindingMaybeLit = IIobrokerWebuiBinding & { maybeLitElement?: boolean, litEventNames?: string[] }
 
 export class IobrokerWebuiBindingsHelper {
     //Not allowed chars in Var Names: |{}(),;:[]
@@ -143,6 +143,7 @@ export class IobrokerWebuiBindingsHelper {
                         binding.events = [propname + '-changed'];
                         //Binding could be a lit elemnt but not yet loaded
                         binding.maybeLitElement = true;
+                        binding.litEventNames = [propname];
                     }
                 }
 
@@ -412,6 +413,7 @@ export class IobrokerWebuiBindingsHelper {
                         customElements.whenDefined(e.localName).then(() => {
                             if (isLit(el)) {
                                 applied();
+                                bnd[1].events = bnd[1].litEventNames;
                                 retVal.push(this.applyBinding(el, bnd, relativeSignalPath, root));
                             }
                         })
