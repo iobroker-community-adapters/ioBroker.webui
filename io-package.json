@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.52",
+    "version": "1.0.53",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.53": {
+        "en": "fix lazy bound lit event name",
+        "de": "lazy gebunden beleuchteter ereignisname",
+        "ru": "фиксация ленивый связанный световое имя",
+        "pt": "corrigir preguiçoso nome de evento iluminado",
+        "nl": "fix luie gebonden verlichte gebeurtenisnaam",
+        "fr": "fixer le nom de l'événement paresseux lié allumé",
+        "it": "corretto lazy bound nome evento illuminato",
+        "es": "fijar perezoso nombre de evento encendido",
+        "pl": "fix leniwy związany oświetlona nazwa zdarzenia",
+        "uk": "fix lazy межа lit назва події",
+        "zh-cn": "固定懒惰绑定事件名称"
+      },
       "1.0.52": {
         "en": "fix captured local",
         "de": "lokal festhalten",
@@ -106,19 +119,6 @@
         "pl": "projektant poprawki z siatką nieruchomości",
         "uk": "дизайнерські кріплення з майновою сіллю",
         "zh-cn": "使用属性网格设计器修正"
-      },
-      "1.0.46": {
-        "en": "designer updates",
-        "de": "designer-updates",
-        "ru": "обновления",
-        "pt": "atualizações do designer",
-        "nl": "ontwerper updates",
-        "fr": "mises à jour du concepteur",
-        "it": "aggiornamenti designer",
-        "es": "actualizaciones de diseño",
-        "pl": "aktualizacje projektantów",
-        "uk": "оновлення дизайнера",
-        "zh-cn": "设计者更新"
       }
     },
     "icon": "logo.png",
