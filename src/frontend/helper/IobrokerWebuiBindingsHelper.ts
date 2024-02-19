@@ -407,10 +407,12 @@ export class IobrokerWebuiBindingsHelper {
                     retVal.push(applied);
 
                     if (b[1].maybeLitElement && e.localName.includes('-') && !customElements.get(e.localName)) {
+                        const el = e;
+                        const bnd = b;
                         customElements.whenDefined(e.localName).then(() => {
-                            if (isLit(e)) {
+                            if (isLit(el)) {
                                 applied();
-                                retVal.push(this.applyBinding(e, b, relativeSignalPath, root));
+                                retVal.push(this.applyBinding(el, bnd, relativeSignalPath, root));
                             }
                         })
                     }
