@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- multiple designer fixes
+
 ### 1.0.53 (2024-02-19)
 - fix lazy bound lit event name
 
