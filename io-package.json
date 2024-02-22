@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.53",
+    "version": "1.0.54",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.54": {
+        "en": "multiple designer fixes",
+        "de": "mehrere designer-fixes",
+        "ru": "несколько дизайнерских исправлений",
+        "pt": "múltiplas correções de designer",
+        "nl": "meerdere ontwerpers reparaties",
+        "fr": "plusieurs corrections designer",
+        "it": "correzioni di design multipli",
+        "es": "múltiples correcciones de diseño",
+        "pl": "wiele poprawek projektanta",
+        "uk": "багаторазові дизайнерські кріплення",
+        "zh-cn": "多个设计器修正"
+      },
       "1.0.53": {
         "en": "fix lazy bound lit event name",
         "de": "lazy gebunden beleuchteter ereignisname",
@@ -106,19 +119,6 @@
         "pl": "naprawić błąd wunderbaum",
         "uk": "виправити помилку wunderbaum",
         "zh-cn": "修复 wunderbaum 错误"
-      },
-      "1.0.47": {
-        "en": "designer fixes with property grid",
-        "de": "designer-reparaturen mit immobiliengitter",
-        "ru": "дизайнерские решения с сеткой недвижимости",
-        "pt": "correções de designer com grade de propriedade",
-        "nl": "ontwerper fixes met property grid",
-        "fr": "correctifs designer avec grille de propriété",
-        "it": "progettista correzioni con griglia di proprietà",
-        "es": "diseño fijados con rejilla de propiedad",
-        "pl": "projektant poprawki z siatką nieruchomości",
-        "uk": "дизайнерські кріплення з майновою сіллю",
-        "zh-cn": "使用属性网格设计器修正"
       }
     },
     "icon": "logo.png",
