@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.54",
+    "version": "1.0.55",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.0.55": {
+        "en": "more designer fixes",
+        "de": "mehr designer-fixes",
+        "ru": "более дизайнерские решения",
+        "pt": "mais correções de designer",
+        "nl": "meer designerfixes",
+        "fr": "plus de corrections designer",
+        "it": "più design correzioni",
+        "es": "más correcciones de diseñador",
+        "pl": "więcej poprawek projektantów",
+        "uk": "більше дизайнерських фіксаторів",
+        "zh-cn": "更多设计者修正"
+      },
       "1.0.54": {
         "en": "multiple designer fixes",
         "de": "mehrere designer-fixes",
@@ -106,19 +119,6 @@
         "pl": "klasa jest atrybutem w wiązaniach\nnaprawić logowanie błędów",
         "uk": "клас - атрибут у прив'язках\nвиправлено помилку",
         "zh-cn": "类是绑定物中的属性\n修正错误记录"
-      },
-      "1.0.48": {
-        "en": "fix wunderbaum error",
-        "de": "wunderbaum fehler",
-        "ru": "исправить ошибку wunderbaum",
-        "pt": "corrigir erro wunderbaum",
-        "nl": "fout in wunderbaum herstellen",
-        "fr": "corriger erreur wunderbaum",
-        "it": "correzione errore wunderbaum",
-        "es": "error wunderbaum",
-        "pl": "naprawić błąd wunderbaum",
-        "uk": "виправити помилку wunderbaum",
-        "zh-cn": "修复 wunderbaum 错误"
       }
     },
     "icon": "logo.png",
