@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- screenviewer - add also nodes from domparser head
+
 ### 1.0.55 (2024-02-22)
 - more designer fixes
 

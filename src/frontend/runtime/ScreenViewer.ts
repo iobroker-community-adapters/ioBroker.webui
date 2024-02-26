@@ -99,6 +99,8 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         //@ts-ignore
         const myDocument = new DOMParser().parseFromString(html, 'text/html', { includeShadowRoots: true });
         const fragment = document.createDocumentFragment();
+        for (const n of myDocument.head.childNodes)
+            fragment.appendChild(n);
         for (const n of myDocument.body.childNodes)
             fragment.appendChild(n);
         this.shadowRoot.appendChild(fragment);
