@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.0.56",
+    "version": "1.1.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.1.0": {
+        "en": "support undock to new browser window\npreview fixes for position: static in styles",
+        "de": "support undock zu neuem browser-fenster\nvorschau-fixes für position: statische in stilen",
+        "ru": "поддержка undock в новое окно браузера\nпредварительные решения для положения: статические в стилях",
+        "pt": "suporte undock para nova janela do navegador\ncorreções de visualização para posição: estática em estilos",
+        "nl": "ondersteuning voor loskoppelen naar nieuw browservenster\npreview fixes voor positie: statische in stijlen",
+        "fr": "prise en charge d'un dock vers une nouvelle fenêtre de navigateur\ncorrectifs d'aperçu pour la position: statique dans les styles",
+        "it": "supporto disordinato alla nuova finestra del browser\ncorrezioni di anteprima per posizione: statico in stili",
+        "es": "soporte deshacerck a nueva ventana del navegador\nprevisualización fija para posición: estática en estilos",
+        "pl": "obsługa oddokowania do nowego okna przeglądarki\npoprawki podglądu dla pozycji: statyczny w stylach",
+        "uk": "підтримка ундок для нового вікна браузера\nпопередній перегляд фіксує положення: статична в стилі",
+        "zh-cn": "支持向新浏览器窗口撤销\n位置的预览修正: 样式不变"
+      },
       "1.0.56": {
         "en": "screenviewer - add also nodes from domparser head",
         "de": "screenviewer - auch knoten aus domparser head hinzufügen",
@@ -106,19 +119,6 @@
         "pl": "fix leniwe załadowane elementy oświetlone\nnaprawić skrypt url",
         "uk": "фіксувати застібки, що навантажуються літі\nвиправити скрипт url",
         "zh-cn": "修补懒惰的点燃精灵\n修正脚本 url"
-      },
-      "1.0.50": {
-        "en": "again fix in class binding",
-        "de": "wieder in klassenbindung fixieren",
-        "ru": "снова фиксация класса",
-        "pt": "novamente corrigir em ligação de classe",
-        "nl": "opnieuw vast te stellen in klasse binding",
-        "fr": "fixer à nouveau dans la fixation de classe",
-        "it": "ancora correzione in legatura di classe",
-        "es": "de nuevo fijar en la unión de clases",
-        "pl": "ponownie naprawić w wiązaniu klasowym",
-        "uk": "знову зафіксувати в обов'язкові класі",
-        "zh-cn": "再次在类装订中修复"
       }
     },
     "icon": "logo.png",
