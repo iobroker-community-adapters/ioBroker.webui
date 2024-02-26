@@ -20,7 +20,7 @@ export class CommandHandling {
     let commandParameter = button.dataset['commandParameter'];
 
     if (commandName === 'runtime') {
-      let target: any = (<HTMLSlotElement><any>this.dockManager?.activeDocument?.elementContent)?.assignedElements()[0];
+      let target: any = this.dockManager?.activeDocument?.resolvedElementContent;
       if (target instanceof IobrokerWebuiScreenEditor) {
         window.open("runtime.html#screenName=" + target.name);
       }
@@ -54,11 +54,11 @@ export class CommandHandling {
       }
     }
     else if (commandName === 'save') {
-      let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
+      let target: any = this.dockManager.activeDocument.resolvedElementContent;
       target.executeCommand({ type: <any>commandName, parameter: commandParameter })
     }
     else if (this.dockManager.activeDocument) {
-      let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
+      let target: any = this.dockManager.activeDocument.resolvedElementContent;
       if (target.executeCommand) {
         target.executeCommand({ type: commandName, parameter: commandParameter })
       }
@@ -71,7 +71,7 @@ export class CommandHandling {
     let commandParameter = input.value;
 
     if (this.dockManager.activeDocument) {
-      let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
+      let target: any = this.dockManager.activeDocument.resolvedElementContent;
       if (target.executeCommand) {
         target.executeCommand({ type: commandName, parameter: commandParameter })
       }
@@ -97,7 +97,7 @@ export class CommandHandling {
     let mouseDownTimer = null;
     undoButton.onmousedown = (e) => {
       mouseDownTimer = setTimeout(() => {
-        let target: IobrokerWebuiScreenEditor = <any>(<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
+        let target = <IobrokerWebuiScreenEditor>this.dockManager.activeDocument.resolvedElementContent;
         let entries = target.documentContainer.instanceServiceContainer.undoService.getUndoEntries(20);
         let mnu: IContextMenuItem[] = Array.from(entries).map((x, idx) => ({ title: 'undo: ' + x, action: () => { for (let i = 0; i <= idx; i++) target.documentContainer.instanceServiceContainer.undoService.undo() } }));
         ContextMenu.show(mnu, e, { mode: 'undo' });
@@ -113,7 +113,7 @@ export class CommandHandling {
     let redoButton = <HTMLButtonElement>document.querySelector('[data-command="redo"]')
     redoButton.onmousedown = (e) => {
       mouseDownTimer = setTimeout(() => {
-        let target: IobrokerWebuiScreenEditor = <any>(<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
+        let target = <IobrokerWebuiScreenEditor>this.dockManager.activeDocument.resolvedElementContent;
         let entries = target.documentContainer.instanceServiceContainer.undoService.getRedoEntries(20);
         let mnu: IContextMenuItem[] = Array.from(entries).map((x, idx) => ({ title: 'redo: ' + x, action: () => { for (let i = 0; i <= idx; i++) target.documentContainer.instanceServiceContainer.undoService.redo() } }));
         ContextMenu.show(mnu, e, { mode: 'undo' })
@@ -128,7 +128,7 @@ export class CommandHandling {
 
     setInterval(() => {
       if (this.dockManager.activeDocument) {
-        let target: any = (<HTMLSlotElement><any>this.dockManager.activeDocument.elementContent).assignedElements()[0];
+        let target: any = this.dockManager.activeDocument.resolvedElementContent;
         if (target.canExecuteCommand) {
           this.canExecuteCommand(buttons, target);
         } else {
