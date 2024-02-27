@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.1.2": {
+        "en": "fix broken designer package",
+        "de": "defektes designerpaket",
+        "ru": "исправить сломанный дизайнер пакет",
+        "pt": "corrigir pacote de designer quebrado",
+        "nl": "fix gebroken ontwerper pakket",
+        "fr": "réparer le paquet de concepteur cassé",
+        "it": "fix pacchetto designer rotto",
+        "es": "paquete de diseño roto",
+        "pl": "naprawić uszkodzony pakiet projektantów",
+        "uk": "фіксувати розбитий дизайнерський пакет",
+        "zh-cn": "修复损坏的设计器包"
+      },
       "1.1.1": {
         "en": "designer and docking fixes",
         "de": "designer- und andockfixes",
@@ -106,19 +119,6 @@
         "pl": "fix leniwy związany oświetlona nazwa zdarzenia",
         "uk": "fix lazy межа lit назва події",
         "zh-cn": "固定懒惰绑定事件名称"
-      },
-      "1.0.52": {
-        "en": "fix captured local",
-        "de": "lokal festhalten",
-        "ru": "локальный",
-        "pt": "correção local capturada",
-        "nl": "fix gevangen lokaal",
-        "fr": "correctif capturé local",
-        "it": "correzione catturata locale",
-        "es": "reparación capturado local",
-        "pl": "fix przechwytywane lokalne",
-        "uk": "виправити захоплений локальний",
-        "zh-cn": "本地捕获的固定"
       }
     },
     "icon": "logo.png",
