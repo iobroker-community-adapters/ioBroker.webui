@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix broken designer package
+
 ### 1.1.1 (2024-02-27)
 - designer and docking fixes
 
