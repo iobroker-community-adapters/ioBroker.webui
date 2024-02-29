@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- text edit now workin
+- package updates
+
 ### 1.1.2 (2024-02-27)
 - fix broken designer package
 
