@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.1.3",
+    "version": "1.1.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.1.4": {
+        "en": "designer-update: mathML support, svg foreignObject support\nbetter text edit support",
+        "de": "designer-update: mathML-Unterstützung, svg fremd Unterstützung der Öffentlichkeit\nunterstützung bei der textbearbeitung",
+        "ru": "дизайнер-обновление: математическая поддержка, svg иностранный Поддержка объекта\nподдержка редактирования текста",
+        "pt": "designer-update: suporte MathML, svg estrangeiro Suporte ao objeto\nmelhor suporte de edição de texto",
+        "nl": "ontwerper-update: mathML ondersteuning, svg buitenland Objectondersteuning\nbetere ondersteuning voor tekstbewerking",
+        "fr": "designer-mise à jour: support mathML, svg étranger Prise en charge des objets\nmeilleur support de modification de texte",
+        "it": "designer-update: supporto mathML, svg straniero Supporto oggetti\nmigliore testo modifica supporto",
+        "es": "diseñador-fecha: soporte de matemáticas, svg extranjero Apoyo a objetos\nmejor soporte de edición de texto",
+        "pl": "designer- update: mathML support, svg obcokrajowiec Obsługa obiektu\nlepsze wsparcie edycji tekstu",
+        "uk": "дизайн-апdate: підтримка математикиML, Електронний Підтримка об'єктів\nпідтримка редагування тексту",
+        "zh-cn": "设计者更新: 数学ML 支持, svg 外国 对象支持\n更好的文本编辑支持"
+      },
       "1.1.3": {
         "en": "text edit now workin\npackage updates",
         "de": "text bearbeiten jetzt workin\npaket-updates",
@@ -106,19 +119,6 @@
         "pl": "więcej poprawek projektantów",
         "uk": "більше дизайнерських фіксаторів",
         "zh-cn": "更多设计者修正"
-      },
-      "1.0.54": {
-        "en": "multiple designer fixes",
-        "de": "mehrere designer-fixes",
-        "ru": "несколько дизайнерских исправлений",
-        "pt": "múltiplas correções de designer",
-        "nl": "meerdere ontwerpers reparaties",
-        "fr": "plusieurs corrections designer",
-        "it": "correzioni di design multipli",
-        "es": "múltiples correcciones de diseño",
-        "pl": "wiele poprawek projektanta",
-        "uk": "багаторазові дизайнерські кріплення",
-        "zh-cn": "多个设计器修正"
       }
     },
     "icon": "logo.png",

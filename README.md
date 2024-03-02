@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.1.4 (2024-03-02)
 - designer-update: mathML support, svg foreignObject support
 - better text edit support
 
