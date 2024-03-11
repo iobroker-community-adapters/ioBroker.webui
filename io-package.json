@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.2.2": {
+        "en": "fix broken signals selector in scripts",
+        "de": "defekte signalauswahl in skripten fixieren",
+        "ru": "исправить сломанный селектор сигналов в скриптах",
+        "pt": "corrigir seletor de sinais quebrado em scripts",
+        "nl": "foute signaalselectie in scripts herstellen",
+        "fr": "correction du sélecteur de signaux cassés dans les scripts",
+        "it": "correggere il selettore dei segnali rotti negli script",
+        "es": "fijar el selector de señales rotas en scripts",
+        "pl": "w skryptach naprawiać zepsuty sygnał",
+        "uk": "зафіксувати розбиті сигнали selector в скриптах",
+        "zh-cn": "在脚本中修正断裂信号选择器"
+      },
       "1.2.1": {
         "en": "build broken after refactoring",
         "de": "nach refactor gebrochen",
@@ -106,19 +119,6 @@
         "pl": "poprawki projektanta i dokowania",
         "uk": "дизайнерські та докувальні кріплення",
         "zh-cn": "设计师和对接修正"
-      },
-      "1.1.0": {
-        "en": "support undock to new browser window\npreview fixes for position: static in styles",
-        "de": "support undock zu neuem browser-fenster\nvorschau-fixes für position: statische in stilen",
-        "ru": "поддержка undock в новое окно браузера\nпредварительные решения для положения: статические в стилях",
-        "pt": "suporte undock para nova janela do navegador\ncorreções de visualização para posição: estática em estilos",
-        "nl": "ondersteuning voor loskoppelen naar nieuw browservenster\npreview fixes voor positie: statische in stijlen",
-        "fr": "prise en charge d'un dock vers une nouvelle fenêtre de navigateur\ncorrectifs d'aperçu pour la position: statique dans les styles",
-        "it": "supporto disordinato alla nuova finestra del browser\ncorrezioni di anteprima per posizione: statico in stili",
-        "es": "soporte deshacerck a nueva ventana del navegador\nprevisualización fija para posición: estática en estilos",
-        "pl": "obsługa oddokowania do nowego okna przeglądarki\npoprawki podglądu dla pozycji: statyczny w stylach",
-        "uk": "підтримка ундок для нового вікна браузера\nпопередній перегляд фіксує положення: статична в стилі",
-        "zh-cn": "支持向新浏览器窗口撤销\n位置的预览修正: 样式不变"
       }
     },
     "icon": "logo.png",

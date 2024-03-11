@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.2.2 (2024-03-11)
 - fix broken signals selector in scripts
 
 ### 1.2.1 (2024-03-11)
