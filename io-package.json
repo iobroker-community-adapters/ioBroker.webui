@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.2.1": {
+        "en": "build broken after refactoring",
+        "de": "nach refactor gebrochen",
+        "ru": "сборка сломана после рефакторинга",
+        "pt": "construir quebrado após refactoring",
+        "nl": "bouw afgebroken na refactoring",
+        "fr": "construction cassée après refacturation",
+        "it": "costruire rotto dopo refactoring",
+        "es": "construir roto después de la refactorización",
+        "pl": "budowa uszkodzona po przebudowie",
+        "uk": "зламати після рефакторингу",
+        "zh-cn": "重建后损坏的构造"
+      },
       "1.2.0": {
         "en": "extracted some code for usability\nbetter text edit\nbetter split view (selection matches now)\nround pixel values",
         "de": "einige code für usability extrahiert\nbessere textbearbeitung\nbessere split-ansicht (auswahl spiele jetzt)\nrunde pixelwerte",
@@ -106,19 +119,6 @@
         "pl": "obsługa oddokowania do nowego okna przeglądarki\npoprawki podglądu dla pozycji: statyczny w stylach",
         "uk": "підтримка ундок для нового вікна браузера\nпопередній перегляд фіксує положення: статична в стилі",
         "zh-cn": "支持向新浏览器窗口撤销\n位置的预览修正: 样式不变"
-      },
-      "1.0.56": {
-        "en": "screenviewer - add also nodes from domparser head",
-        "de": "screenviewer - auch knoten aus domparser head hinzufügen",
-        "ru": "screenviewer - добавить также узлы из головы domparser",
-        "pt": "screenviewer - adicionar também nós da cabeça do domparser",
-        "nl": "screenviewer - voeg ook knooppunten van domparser hoofd",
-        "fr": "screenviewer - ajouter aussi des nœuds de la tête domparser",
-        "it": "screenviewer - aggiungere anche nodi dalla testa del domparser",
-        "es": "screenviewer - añadir también nodos de la cabeza del domparser",
-        "pl": "przeglądarka ekranu - dodać również węzły z głowy domparser",
-        "uk": "screenviewer - додати також вузли з глави domparser",
-        "zh-cn": "屏幕查看器 - 同时从 domparser 头添加节点"
       }
     },
     "icon": "logo.png",

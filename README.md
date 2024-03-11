@@ -129,8 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-
-### __WORK IN PROGRESS__
+### 1.2.1 (2024-03-11)
 - build broken after refactoring
 
 ### 1.2.0 (2024-03-11)
