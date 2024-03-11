@@ -246,6 +246,7 @@ export function ${jsName}(event, eventRaisingElement, shadowRoot, instance) {
                     script = JSON.parse(scriptString);
                 
                 let sc = new SimpleScriptEditor();
+                sc.serviceContainer = this.selectedItems[0].serviceContainer;
                 sc.scriptCommandsTypeInfo = scriptCommandsTypeInfo; 
                 sc.propertiesTypeInfo = propertiesTypeInfo;
                 sc.visualizationShell = window.appShell;
