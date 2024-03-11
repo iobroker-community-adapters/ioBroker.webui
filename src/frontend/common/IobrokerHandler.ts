@@ -5,6 +5,7 @@ import { IWebUiConfig } from "../interfaces/IWebUiConfig.js";
 import { IControl } from "../interfaces/IControl.js";
 import { sleep } from "../helper/Helper.js";
 import { IGlobalScript } from "../interfaces/IGlobalScript.js";
+import { SignalInformation, VisualizationHandler } from "@node-projects/web-component-designer-visualization-addons";
 
 declare global {
     interface Window {
@@ -15,7 +16,7 @@ declare global {
     }
 }
 
-export class IobrokerHandler {
+export class IobrokerHandler implements VisualizationHandler {
 
     static instance = new IobrokerHandler();
 
@@ -415,11 +416,11 @@ export class IobrokerHandler {
     }
 
     public getObjectList(type: ioBroker.ObjectType, id: string) {
-        return iobrokerHandler.connection.getObjectView<ioBroker.ObjectType>( id , null, type);
+        return iobrokerHandler.connection.getObjectView<ioBroker.ObjectType>(id, null, type);
     }
 
-    public getObject(id: string): ioBroker.GetObjectPromise<string> {
-        return this.connection.getObject(id);
+    public getObject(id: string): ioBroker.GetObjectPromise<string> & Promise<{ "$type": 'Signal' }> {
+        return <any>this.connection.getObject(id);
     }
 
     public getState(id: string): Promise<State> {
@@ -540,6 +541,21 @@ export class IobrokerHandler {
             }
         }
     }
+
+    getSignalInformation(signal: any): SignalInformation {
+        const ret = { role: signal?.common?.role, type: signal?.common?.type, writeable: signal?.common?.write };
+        if (signal?.common?.role == 'url' || signal?.common?.role === 'text.url' || signal?.common?.role.includes('icon') || signal?.common?.role.includes('image'))
+            ret.role = 'url'
+        if (signal?.common?.role == 'value.time')
+            ret.role = 'datetime'
+        return ret;
+    }
+
+    getHistoricData(id: string, config: any) {
+        return this.connection.getHistoryEx(id, config);
+    }
+
+
 }
 
 export const iobrokerHandler = IobrokerHandler.instance;

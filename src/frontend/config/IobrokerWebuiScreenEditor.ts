@@ -3,7 +3,6 @@ import { DocumentContainer, IUiCommand, IUiCommandHandler, ServiceContainer, } f
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IScreen } from "../interfaces/IScreen.js";
 import { IControl } from "../interfaces/IControl.js";
-import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import type { editor } from "monaco-editor";
 
 export const defaultNewStyle = `:host {
@@ -115,7 +114,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     applyBindings() {
         this.removeBindings();
         if (this.bindingsEnabled)
-            this._webuiBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot, this.relativeBindingsPrefix, null);
+            this._webuiBindings = window.appShell.bindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot, this.relativeBindingsPrefix, null);
     }
 
     removeBindings() {

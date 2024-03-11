@@ -17,6 +17,12 @@ declare const importMapConfig: {
         "@node-projects/web-component-designer-stylesheetservice-css-tools/": string;
         "@node-projects/web-component-designer-widgets-wunderbaum": string;
         "@node-projects/web-component-designer-widgets-wunderbaum/": string;
+        "@node-projects/web-component-designer-visualization-addons": string;
+        "@node-projects/web-component-designer-visualization-addons/": string;
+        "@node-projects/propertygrid.webcomponent": string;
+        "@node-projects/propertygrid.webcomponent/": string;
+        "@node-projects/splitview.webcomponent": string;
+        "@node-projects/splitview.webcomponent/": string;
         "@node-projects/lean-he-esm/": string;
         "@iobroker/socket-client/": string;
         "@iobroker/socket-client": string;

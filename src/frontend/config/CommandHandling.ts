@@ -83,13 +83,6 @@ export class CommandHandling {
     buttons.forEach(b => {
       if (b instanceof HTMLButtonElement) {
         b.onclick = (e) => this.handleCommandButtonClick(e);
-      } else {
-        b.onchange = (e) => this.handleInputValueChanged(e);
-        let commandName = b.dataset['command'];
-        if (commandName == 'setStrokeColor')
-          serviceContainer.globalContext.onStrokeColorChanged.on(e => b.value = e.newValue);
-        if (commandName == 'setFillBrush')
-          serviceContainer.globalContext.onFillBrushChanged.on(e => b.value = e.newValue);
       }
     });
 

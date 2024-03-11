@@ -1,7 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, Disposable, DomHelper, property } from "@node-projects/base-custom-webcomponent";
-import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
-import { ScriptSystem } from "../scripting/ScriptSystem.js";
 import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
 
 @customElement("iobroker-webui-screen-viewer")
@@ -104,8 +102,8 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         for (const n of myDocument.body.childNodes)
             fragment.appendChild(n);
         this.shadowRoot.appendChild(fragment);
-        this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
-        this._scriptObject = await ScriptSystem.assignAllScripts('screenviewer - ' + this.screenName, script, this.shadowRoot, this);
+        this._iobBindings = window.appShell.bindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
+        this._scriptObject = await window.appShell.scriptSystem.assignAllScripts('screenviewer - ' + this.screenName, script, this.shadowRoot, this);
     }
 
     _getRelativeSignalsPath(): string {

@@ -3,6 +3,9 @@ import Toastify from 'toastify-js'
 //@ts-ignore
 await LazyLoader.LoadJavascript(window.iobrokerSocketScriptUrl);
 iobrokerHandler.init();
+const scriptSystem = new IobrokerWebuiScriptSystem(iobrokerHandler);
+const bindingsHelper = new BindingsHelper(iobrokerHandler);
+
 LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
 
 import '@node-projects/web-component-designer'
@@ -12,7 +15,8 @@ import { TreeViewExtended } from '@node-projects/web-component-designer-widgets-
 import type { IDisposable } from 'monaco-editor';
 import { PanelContainer } from 'dock-spawn-ts/lib/js/PanelContainer.js';
 import { PanelType } from 'dock-spawn-ts/lib/js/enums/PanelType.js';
-import serviceContainer from './ConfigureWebcomponentDesigner.js';
+import { configureDesigner } from './ConfigureWebcomponentDesigner.js';
+const serviceContainer = configureDesigner(bindingsHelper);
 
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent.js';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js';
@@ -26,7 +30,6 @@ import "../runtime/controls.js";
 import "./IobrokerWebuiSolutionExplorer.js";
 import "./IobrokerWebuiMonacoEditor.js";
 import "./IobrokerWebuiEventAssignment.js";
-import "./IobrokerWebuiSplitView.js";
 import "./IobrokerWebuiPropertyGrid.js";
 import "./IobrokerWebuiControlPropertiesEditor.js";
 
@@ -37,7 +40,11 @@ import { IobrokerWebuiEventAssignment } from './IobrokerWebuiEventAssignment.js'
 import { IobrokerWebuiConfirmationWrapper } from './IobrokerWebuiConfirmationWrapper.js';
 import { getPanelContainerForElement } from './DockHelper.js';
 import { IobrokerWebuiControlPropertiesEditor } from './IobrokerWebuiControlPropertiesEditor.js';
-import { IobrokerWebuiPropertyGrid, typeInfoFromJsonSchema } from './IobrokerWebuiPropertyGrid.js';
+import { IobrokerWebuiPropertyGrid } from './IobrokerWebuiPropertyGrid.js';
+import { typeInfoFromJsonSchema } from '@node-projects/propertygrid.webcomponent';
+import { IobrokerWebuiScriptSystem } from '../scripting/IobrokerWebuiScriptSystem.js';
+import { BindingsHelper } from '@node-projects/web-component-designer-visualization-addons';
+
 
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
   activeElement: HTMLElement;
@@ -59,6 +66,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   public settingsEditor: IobrokerWebuiPropertyGrid;
   public refactorView: RefactorView;
   public npmState: string;
+
+  public scriptSystem: IobrokerWebuiScriptSystem;
+  public bindingsHelper: BindingsHelper;
 
   static readonly style = css`
     :host {
@@ -104,7 +114,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
           </div>
       
           <div id="attributeDock" title="Properties" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.2">
-            <node-projects-property-grid-with-header id="propertyGrid"></node-projects-property-grid-with-header>
+            <node-projects-web-component-designer-property-grid-with-header id="propertyGrid"></node-projects-web-component-designer-property-grid-with-header>
           </div>
 
           <div id="settingsDock" title="Settings" style="overflow: hidden; width: 100%;" dock-spawn-dock-to="attributeDock">
@@ -133,6 +143,15 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         </dock-spawn-ts>
       </div>
     `;
+
+
+
+  constructor() {
+    super();
+
+    this.scriptSystem = scriptSystem;
+    this.bindingsHelper = bindingsHelper;
+  }
 
   async ready() {
     this._dock = this._getDomElement('dock');
@@ -250,31 +269,31 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     setTimeout(() => element.title = '', 100);
   }
 
-  openDialog(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement, disableResize?: boolean): { close: () => void } {
+  openDialog(element: HTMLElement, options: { x: number, y: number, width: number, height: number, parent?: HTMLElement, disableResize?: boolean }): { close: () => void } {
     element.setAttribute('dock-spawn-panel-type', 'document');
     //todo: why are this 2 styles needed? needs a fix in dock-spawn
     element.style.zIndex = '1';
     element.style.position = 'relative';
     let container = new PanelContainer(element as HTMLElement, this._dock.dockManager, element.title, PanelType.panel);
     element.title = '';
-    let d = this._dock.dockManager.floatDialog(container, x, y, getPanelContainerForElement(parent), disableResize ?? false);
-    d.resize(width, height);
+    let d = this._dock.dockManager.floatDialog(container, options.x, options.y, getPanelContainerForElement(options.parent), options.disableResize ?? false);
+    d.resize(options.width, options.height);
     d.noDocking = true;
     return { close: () => container.close() };
   }
 
-  openConfirmation(element: HTMLElement, x: number, y: number, width: number, height: number, parent?: HTMLElement, signal?: AbortSignal, disableResize?: boolean, additional?: { okText?: string, cancelText?: string }): Promise<boolean> {
+  openConfirmation(element: HTMLElement, options: { x: number, y: number, width: number, height: number, parent?: HTMLElement, abortSignal?: AbortSignal, disableResize?: boolean, additional?: { okText?: string, cancelText?: string } }): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
-      let cw = new IobrokerWebuiConfirmationWrapper(additional);
+      let cw = new IobrokerWebuiConfirmationWrapper(options.additional);
       cw.title = element.title;
       cw.appendChild(element);
-      if (signal) {
-        signal.onabort = () => {
+      if (options.abortSignal) {
+        options.abortSignal.onabort = () => {
           dlg.close();
           resolve(false);
         }
       }
-      let dlg = window.appShell.openDialog(cw, x, y, width, height, parent, disableResize);
+      let dlg = window.appShell.openDialog(cw, options);
       cw.okClicked.on(() => {
         dlg.close();
         resolve(true);

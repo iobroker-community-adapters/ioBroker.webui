@@ -1,10 +1,10 @@
 import { BaseCustomWebComponentConstructorAppend, Disposable, DomHelper, css, html } from "@node-projects/base-custom-webcomponent"
 import { ContextMenu, IContextMenuItem, IDesignItem, IEvent, InstanceServiceContainer, PropertiesHelper } from "@node-projects/web-component-designer";
-import { IobrokerWebuiScriptEditor } from "./IobrokerWebuiScriptEditor.js";
 import { IobrokerWebuiScreenEditor } from "./IobrokerWebuiScreenEditor.js";
 import { findExportFunctionDeclarations } from "../helper/EsprimaHelper.js";
 import type { FunctionDeclaration } from "esprima-next";
 import { IobrokerWebuiBlocklyScriptEditor } from "./blockly/IobrokerWebuiBlocklyScriptEditor.js";
+import { SimpleScriptEditor } from '@node-projects/web-component-designer-visualization-addons'
 
 type eventType = 'jsdirect' | 'js' | 'script' | 'blockly' | 'none';
 export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstructorAppend {
@@ -192,7 +192,7 @@ export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstruc
         if (data) {
             edt.load(JSON.parse(data));
         }
-        const result = await window.appShell.openConfirmation(edt, 100, 100, 700, 500);
+        const result = await window.appShell.openConfirmation(edt, { x: 100, y: 100, width: 700, height: 500 });
         if (result) {
             const blockObj = edt.save();
             this._selectedItems[0].setAttribute('@' + eventItem.name, JSON.stringify(blockObj));
@@ -241,11 +241,11 @@ export function ${jsName}(event, eventRaisingElement, shadowRoot, instance) {
                 let script = { commands: [] };
                 if (scriptString)
                     script = JSON.parse(scriptString);
-                let sc = new IobrokerWebuiScriptEditor();
+                let sc = new SimpleScriptEditor();
                 sc.loadScript(script);
                 sc.title = "Script '" + eventItem.name + "' on " + this.selectedItems[0].name;
 
-                let res = await window.appShell.openConfirmation(sc, 100, 100, 600, 500);
+                let res = await window.appShell.openConfirmation(sc, { x: 100, y: 100, width: 600, height: 500 });
                 if (res) {
                     let scriptCommands = sc.getScriptCommands();
                     if (scriptCommands && scriptCommands.length) {

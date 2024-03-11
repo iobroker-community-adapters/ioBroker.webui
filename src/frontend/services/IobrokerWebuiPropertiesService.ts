@@ -1,8 +1,8 @@
 import { BaseCustomWebComponentPropertiesService, IDesignItem, IProperty, PropertyType } from "@node-projects/web-component-designer";
 import { BaseCustomControl, CustomControlInfo, webuiCustomControlSymbol } from "../runtime/CustomControls.js";
 import { IControl } from "../interfaces/IControl.js";
-import { IobrokerSignalPropertyEditor } from "./IobrokerSignalPropertyEditor.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
+import { SignalPropertyEditor } from "@node-projects/web-component-designer-visualization-addons";
 
 export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentPropertiesService {
     override isHandledElement(designItem: IDesignItem): boolean {
@@ -39,7 +39,7 @@ export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentProper
                 let property: IProperty = { name: name, type: "list", values: prp.values, service: this, propertyType: PropertyType.propertyAndAttribute };
                 properties.push(property);
             } else if (prp.type == 'signal') {
-                let property: IProperty = { name: name, type: "signal", service: this, propertyType: PropertyType.propertyAndAttribute, createEditor: p => new IobrokerSignalPropertyEditor(p) };
+                let property: IProperty = { name: name, type: "signal", service: this, propertyType: PropertyType.propertyAndAttribute, createEditor: p => new SignalPropertyEditor(p, window.appShell) };
                 properties.push(property);
             } else if (prp.type == 'screen') {
                 //TODO: hack, getProperties should be async in designer
