@@ -129,6 +129,12 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- extracted some code for usability
+- better text edit
+- better split view (selection matches now)
+- round pixel values
+
 ### 1.1.4 (2024-03-02)
 - designer-update: mathML support, svg foreignObject support
 - better text edit support
