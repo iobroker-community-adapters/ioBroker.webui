@@ -8,7 +8,7 @@
                     "type": "string"
                 },
                 "targetSignal": {
-                    "description": "Name of the ioBroker object",
+                    "description": "Name of the signal",
                     "format": "signal",
                     "type": "string"
                 },
@@ -30,7 +30,7 @@
                     "type": "number"
                 },
                 "signal": {
-                    "description": "Name of the ioBroker object",
+                    "description": "Name of the signal",
                     "format": "signal",
                     "type": "string"
                 },
@@ -90,7 +90,7 @@
         "DecrementSignalValue": {
             "properties": {
                 "signal": {
-                    "description": "Name of the ioBroker object",
+                    "description": "Name of the signal",
                     "format": "signal",
                     "type": "string"
                 },
@@ -129,7 +129,7 @@
         "IncrementSignalValue": {
             "properties": {
                 "signal": {
-                    "description": "Name of the ioBroker object",
+                    "description": "Name of the signal",
                     "format": "signal",
                     "type": "string"
                 },
@@ -148,34 +148,10 @@
             ],
             "type": "object"
         },
-        "IobrokerSendTo": {
-            "properties": {
-                "command": {
-                    "type": "string"
-                },
-                "data": {
-                    "type": "string"
-                },
-                "instance": {
-                    "type": "string"
-                },
-                "type": {
-                    "const": "IobrokerSendTo",
-                    "type": "string"
-                }
-            },
-            "propertyOrder": [
-                "type",
-                "instance",
-                "command",
-                "data"
-            ],
-            "type": "object"
-        },
         "Javascript": {
             "properties": {
                 "script": {
-                    "description": "Usable objects in Script: \ncontext : {event : Event, element: Element, shadowRoot: ShadowRoot, instance: Element }",
+                    "description": "Usable objects in Script:\ncontext : {event : Event, element: Element, shadowRoot: ShadowRoot, instance: Element }",
                     "format": "script",
                     "type": "string"
                 },
@@ -187,6 +163,41 @@
             "propertyOrder": [
                 "type",
                 "script"
+            ],
+            "type": "object"
+        },
+        "Login": {
+            "properties": {
+                "password": {
+                    "description": "password",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "Login",
+                    "type": "string"
+                },
+                "username": {
+                    "const": "string",
+                    "description": "username",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "username",
+                "password"
+            ],
+            "type": "object"
+        },
+        "Logout": {
+            "properties": {
+                "type": {
+                    "const": "Logout",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type"
             ],
             "type": "object"
         },
@@ -344,10 +355,13 @@
                     "$ref": "#/definitions/Delay"
                 },
                 {
-                    "$ref": "#/definitions/IobrokerSendTo"
+                    "$ref": "#/definitions/SwitchLanguage"
                 },
                 {
-                    "$ref": "#/definitions/SwitchLanguage"
+                    "$ref": "#/definitions/Login"
+                },
+                {
+                    "$ref": "#/definitions/Logout"
                 }
             ]
         },
@@ -357,7 +371,7 @@
                     "type": "number"
                 },
                 "signal": {
-                    "description": "Name of the ioBroker object",
+                    "description": "Name of the signal",
                     "format": "signal",
                     "type": "string"
                 },
@@ -375,6 +389,15 @@
         },
         "SetElementProperty": {
             "properties": {
+                "mode": {
+                    "description": "only for class",
+                    "enum": [
+                        "add",
+                        "remove",
+                        "toggle"
+                    ],
+                    "type": "string"
+                },
                 "name": {
                     "description": "name of property/attribute or css value you want to set",
                     "type": "string"
@@ -383,6 +406,7 @@
                     "description": "what of the elements do you want to set",
                     "enum": [
                         "attribute",
+                        "class",
                         "css",
                         "property"
                     ],
@@ -416,6 +440,7 @@
                 "targetSelectorTarget",
                 "targetSelector",
                 "name",
+                "mode",
                 "value"
             ],
             "type": "object"
@@ -423,7 +448,7 @@
         "SetSignalValue": {
             "properties": {
                 "signal": {
-                    "description": "Name of the ioBroker object",
+                    "description": "Name of the signal",
                     "format": "signal",
                     "type": "string"
                 },
@@ -462,7 +487,7 @@
                     "type": "number"
                 },
                 "signal": {
-                    "description": "Name of the ioBroker object",
+                    "description": "Name of the signal",
                     "format": "signal",
                     "type": "string"
                 },
@@ -481,7 +506,7 @@
         "ToggleSignalValue": {
             "properties": {
                 "signal": {
-                    "description": "Name of the ioBroker object",
+                    "description": "Name of the signal",
                     "format": "signal",
                     "type": "string"
                 },

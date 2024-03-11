@@ -5,6 +5,9 @@ import { findExportFunctionDeclarations } from "../helper/EsprimaHelper.js";
 import type { FunctionDeclaration } from "esprima-next";
 import { IobrokerWebuiBlocklyScriptEditor } from "./blockly/IobrokerWebuiBlocklyScriptEditor.js";
 import { SimpleScriptEditor } from '@node-projects/web-component-designer-visualization-addons'
+import scriptCommandsTypeInfo from "../generated/ScriptCommands.json" assert { type: 'json' };
+import propertiesTypeInfo from "../generated/Properties.json" assert {type: 'json'};
+import { iobrokerHandler } from "../common/IobrokerHandler.js";
 
 type eventType = 'jsdirect' | 'js' | 'script' | 'blockly' | 'none';
 export class IobrokerWebuiEventAssignment extends BaseCustomWebComponentConstructorAppend {
@@ -241,7 +244,13 @@ export function ${jsName}(event, eventRaisingElement, shadowRoot, instance) {
                 let script = { commands: [] };
                 if (scriptString)
                     script = JSON.parse(scriptString);
+                
                 let sc = new SimpleScriptEditor();
+                sc.scriptCommandsTypeInfo = scriptCommandsTypeInfo; 
+                sc.propertiesTypeInfo = propertiesTypeInfo;
+                sc.visualizationShell = window.appShell;
+                sc.visualizationHandler = iobrokerHandler;
+
                 sc.loadScript(script);
                 sc.title = "Script '" + eventItem.name + "' on " + this.selectedItems[0].name;
 

@@ -37,7 +37,7 @@
                 "arguments",
                 "caller",
                 "name",
-                "__@hasInstance@5261"
+                "__@hasInstance@5321"
             ],
             "type": "object"
         },
@@ -241,7 +241,6 @@
                         "property",
                         "signal"
                     ],
-                    "format": "signal",
                     "type": "string"
                 }
             },
