@@ -4,6 +4,7 @@ import { IScreen } from "../interfaces/IScreen.js";
 import { IWebUiConfig } from "../interfaces/IWebUiConfig.js";
 import { IControl } from "../interfaces/IControl.js";
 import { IGlobalScript } from "../interfaces/IGlobalScript.js";
+import { SignalInformation, VisualizationHandler } from "@node-projects/web-component-designer-visualization-addons";
 declare global {
     interface Window {
         iobrokerHost: string;
@@ -12,7 +13,7 @@ declare global {
         iobrokerWebuiRootUrl: string;
     }
 }
-export declare class IobrokerHandler {
+export declare class IobrokerHandler implements VisualizationHandler {
     #private;
     static instance: IobrokerHandler;
     host: ioBroker.HostObject;
@@ -78,7 +79,9 @@ export declare class IobrokerHandler {
     getObjectList(type: ioBroker.ObjectType, id: string): Promise<Record<string, ioBroker.AnyObject & {
         type: ioBroker.ObjectType;
     }>>;
-    getObject(id: string): ioBroker.GetObjectPromise<string>;
+    getObject(id: string): ioBroker.GetObjectPromise<string> & Promise<{
+        "$type": 'Signal';
+    }>;
     getState(id: string): Promise<State>;
     setState(id: string, val: State | StateValue, ack?: boolean): Promise<void>;
     private _getConfig;
@@ -88,5 +91,11 @@ export declare class IobrokerHandler {
     private _saveBinaryToFile;
     sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected' | 'uiChangedView', data?: string): Promise<void>;
     handleCommand(command: "uiReloadPackages" | "uiReload" | "uiRefresh" | "uiChangeView" | "uiChangedView" | "uiOpenDialog" | "uiOpenedDialog" | "uiPlaySound" | "uiRunScript" | "uiAlert", data: string, clientId?: string): Promise<void>;
+    getSignalInformation(signal: any): SignalInformation;
+    getHistoricData(id: string, config: any): Promise<{
+        values: ioBroker.GetHistoryResult;
+        sessionId: string;
+        stepIgnore: number;
+    }>;
 }
 export declare const iobrokerHandler: IobrokerHandler;

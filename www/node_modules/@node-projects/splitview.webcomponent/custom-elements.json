@@ -1,0 +1,73 @@
+{
+    "schemaVersion": "1.0.0",
+    "readme": "README.md",
+    "modules": [
+        {
+            "kind": "javascript-module",
+            "path": "dist/SplitView.js",
+            "declarations": [
+                {
+                    "kind": "class",
+                    "name": "SplitView",
+                    "members": [
+                        {
+                            "kind": "field",
+                            "name": "orientation",
+                            "type":  {
+                                "text": "'horizontal'|'vertical'"
+                            }
+                        },
+                        {
+                            "kind": "field",
+                            "name": "observe",
+                            "type":  {
+                                "text": "boolean"
+                            }
+                        }
+                    ],
+                    "attributes": [
+                        {
+                            "name": "orientation",
+                            "fieldName": "orientation"
+                        },
+                        {
+                            "name": "observe",
+                            "fieldName": "observe"
+                        },
+                        {
+                            "name": "expanded",
+                            "fieldName": "expanded"
+                        },
+                        {
+                            "name": "selected-object",
+                            "fieldName": "selectedObject"
+                        },
+                        {
+                            "name": "type-name",
+                            "fieldName": "typeName"
+                        },
+                        {
+                            "name": "type-definitions",
+                            "fieldName": "typeDefinitions"
+                        }
+                    ],
+                    "superclass": {
+                        "name": "BaseCustomWebComponentConstructorAppend"
+                    },
+                    "tagName": "node-projects-split-view",
+                    "customElement": true
+                }
+            ],
+            "exports": [
+                {
+                    "kind": "custom-element-definition",
+                    "name": "node-projects-split-view",
+                    "declaration": {
+                        "name": "SplitView",
+                        "module": "dist/SplitView.js"
+                    }
+                }
+            ]
+        }
+    ]
+}

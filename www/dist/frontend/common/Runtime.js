@@ -1,10 +1,9 @@
-import { ScriptSystem } from "../scripting/ScriptSystem.js";
 export class Runtime {
     static openScreen(config) {
-        return ScriptSystem.runScriptCommand({ type: 'OpenScreen', ...config }, null);
+        return window.appShell.scriptSystem.runScriptCommand({ type: 'OpenScreen', ...config }, null);
     }
     static openDialog(config) {
-        return ScriptSystem.runScriptCommand({ type: 'OpenDialog', ...config }, null);
+        return window.appShell.scriptSystem.runScriptCommand({ type: 'OpenDialog', ...config }, null);
     }
 }
 window.RUNTIME = Runtime;

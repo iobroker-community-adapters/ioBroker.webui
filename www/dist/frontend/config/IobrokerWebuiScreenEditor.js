@@ -1,7 +1,6 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
 import { DocumentContainer, } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
-import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 export const defaultNewStyle = `:host {
 }
 
@@ -90,7 +89,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     applyBindings() {
         this.removeBindings();
         if (this.bindingsEnabled)
-            this._webuiBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot, this.relativeBindingsPrefix, null);
+            this._webuiBindings = window.appShell.bindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot, this.relativeBindingsPrefix, null);
     }
     removeBindings() {
         this._webuiBindings?.forEach(x => x());

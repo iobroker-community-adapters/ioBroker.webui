@@ -14,7 +14,7 @@ export class CommandHandling {
         let commandName = button.dataset['command'];
         let commandParameter = button.dataset['commandParameter'];
         if (commandName === 'runtime') {
-            let target = this.dockManager?.activeDocument?.elementContent?.assignedElements()[0];
+            let target = this.dockManager?.activeDocument?.resolvedElementContent;
             if (target instanceof IobrokerWebuiScreenEditor) {
                 window.open("runtime.html#screenName=" + target.name);
             }
@@ -48,11 +48,11 @@ export class CommandHandling {
             }
         }
         else if (commandName === 'save') {
-            let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
+            let target = this.dockManager.activeDocument.resolvedElementContent;
             target.executeCommand({ type: commandName, parameter: commandParameter });
         }
         else if (this.dockManager.activeDocument) {
-            let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
+            let target = this.dockManager.activeDocument.resolvedElementContent;
             if (target.executeCommand) {
                 target.executeCommand({ type: commandName, parameter: commandParameter });
             }
@@ -63,7 +63,7 @@ export class CommandHandling {
         let commandName = input.dataset['command'];
         let commandParameter = input.value;
         if (this.dockManager.activeDocument) {
-            let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
+            let target = this.dockManager.activeDocument.resolvedElementContent;
             if (target.executeCommand) {
                 target.executeCommand({ type: commandName, parameter: commandParameter });
             }
@@ -75,20 +75,12 @@ export class CommandHandling {
             if (b instanceof HTMLButtonElement) {
                 b.onclick = (e) => this.handleCommandButtonClick(e);
             }
-            else {
-                b.onchange = (e) => this.handleInputValueChanged(e);
-                let commandName = b.dataset['command'];
-                if (commandName == 'setStrokeColor')
-                    serviceContainer.globalContext.onStrokeColorChanged.on(e => b.value = e.newValue);
-                if (commandName == 'setFillBrush')
-                    serviceContainer.globalContext.onFillBrushChanged.on(e => b.value = e.newValue);
-            }
         });
         let undoButton = document.querySelector('[data-command="undo"]');
         let mouseDownTimer = null;
         undoButton.onmousedown = (e) => {
             mouseDownTimer = setTimeout(() => {
-                let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
+                let target = this.dockManager.activeDocument.resolvedElementContent;
                 let entries = target.documentContainer.instanceServiceContainer.undoService.getUndoEntries(20);
                 let mnu = Array.from(entries).map((x, idx) => ({ title: 'undo: ' + x, action: () => { for (let i = 0; i <= idx; i++)
                         target.documentContainer.instanceServiceContainer.undoService.undo(); } }));
@@ -104,7 +96,7 @@ export class CommandHandling {
         let redoButton = document.querySelector('[data-command="redo"]');
         redoButton.onmousedown = (e) => {
             mouseDownTimer = setTimeout(() => {
-                let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
+                let target = this.dockManager.activeDocument.resolvedElementContent;
                 let entries = target.documentContainer.instanceServiceContainer.undoService.getRedoEntries(20);
                 let mnu = Array.from(entries).map((x, idx) => ({ title: 'redo: ' + x, action: () => { for (let i = 0; i <= idx; i++)
                         target.documentContainer.instanceServiceContainer.undoService.redo(); } }));
@@ -119,7 +111,7 @@ export class CommandHandling {
         };
         setInterval(() => {
             if (this.dockManager.activeDocument) {
-                let target = this.dockManager.activeDocument.elementContent.assignedElements()[0];
+                let target = this.dockManager.activeDocument.resolvedElementContent;
                 if (target.canExecuteCommand) {
                     this.canExecuteCommand(buttons, target);
                 }

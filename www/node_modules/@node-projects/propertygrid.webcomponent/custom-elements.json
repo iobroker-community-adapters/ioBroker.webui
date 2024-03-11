@@ -1,0 +1,114 @@
+{
+    "schemaVersion": "1.0.0",
+    "readme": "README.md",
+    "modules": [
+        {
+            "kind": "javascript-module",
+            "path": "dist/PropertyGrid.js",
+            "declarations": [
+                {
+                    "kind": "class",
+                    "name": "PropertyGrid",
+                    "members": [
+                        {
+                            "kind": "field",
+                            "name": "noCategory",
+                            "type":  {
+                                "text": "boolean"
+                            }
+                        },
+                        {
+                            "kind": "field",
+                            "name": "hideProperties",
+                            "type":  {
+                                "text": "string"
+                            }
+                        },
+                        {
+                            "kind": "field",
+                            "name": "expanded",
+                            "type":  {
+                                "text": "boolean"
+                            }
+                        },
+                        {
+                            "kind": "field",
+                            "name": "selectedObject",
+                            "type":  {
+                                "text": "object"
+                            }
+                        },
+                        {
+                            "kind": "field",
+                            "name": "typeName",
+                            "type":  {
+                                "text": "string"
+                            }
+                        },
+                        {
+                            "kind": "field",
+                            "name": "getTypeInfo",
+                            "type":  {
+                                "text": "object"
+                            }
+                        },
+                        {
+                            "kind": "field",
+                            "name": "typeDefinitions",
+                            "type":  {
+                                "text": "object"
+                            }
+                        }
+                    ],
+                    "attributes": [
+                        {
+                            "name": "no-category",
+                            "fieldName": "noCategory"
+                        },
+                        {
+                            "name": "hide-properties",
+                            "fieldName": "hideProperties"
+                        },
+                        {
+                            "name": "expanded",
+                            "fieldName": "expanded"
+                        },
+                        {
+                            "name": "selected-object",
+                            "fieldName": "selectedObject"
+                        },
+                        {
+                            "name": "type-name",
+                            "fieldName": "typeName"
+                        },
+                        {
+                            "name": "type-definitions",
+                            "fieldName": "typeDefinitions"
+                        }
+                    ],
+                    "events": [
+                        {
+                            "name": "property-changed",
+                            "description": "Is raised when a properties value changed"
+                        }
+                    ],
+                    "superclass": {
+                        "name": "BaseCustomWebComponentConstructorAppend"
+                    },
+                    "tagName": "node-projects-property-grid",
+                    "customElement": true
+                }
+            ],
+            "exports": [
+                {
+                    "kind": "custom-element-definition",
+                    "name": "node-projects-property-grid",
+                    "declaration": {
+                        "name": "PropertyGrid",
+                        "module": "dist/PropertyGrid.js"
+                    }
+                }
+            ]
+        }
+    ]
+}

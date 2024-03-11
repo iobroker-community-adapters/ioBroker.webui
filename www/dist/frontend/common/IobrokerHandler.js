@@ -481,6 +481,17 @@ export class IobrokerHandler {
             }
         }
     }
+    getSignalInformation(signal) {
+        const ret = { role: signal?.common?.role, type: signal?.common?.type, writeable: signal?.common?.write };
+        if (signal?.common?.role == 'url' || signal?.common?.role === 'text.url' || signal?.common?.role.includes('icon') || signal?.common?.role.includes('image'))
+            ret.role = 'url';
+        if (signal?.common?.role == 'value.time')
+            ret.role = 'datetime';
+        return ret;
+    }
+    getHistoricData(id, config) {
+        return this.connection.getHistoryEx(id, config);
+    }
 }
 export const iobrokerHandler = IobrokerHandler.instance;
 window.IOB = iobrokerHandler;

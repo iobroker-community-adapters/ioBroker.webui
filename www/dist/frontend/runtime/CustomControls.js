@@ -1,6 +1,4 @@
 import { BaseCustomWebComponentConstructorAppend, css, cssFromString } from "@node-projects/base-custom-webcomponent";
-import { ScriptSystem } from "../scripting/ScriptSystem.js";
-import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { PropertiesHelper } from "@node-projects/web-component-designer/dist/elements/services/propertiesService/services/PropertiesHelper.js";
 export const webuiCustomControlPrefix = 'webui-';
@@ -19,8 +17,8 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     async connectedCallback() {
         this._parseAttributesToProperties();
         this._bindingsRefresh();
-        this.#bindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
-        this.#scriptObject = await ScriptSystem.assignAllScripts('customControl ' + this.constructor[webuiCustomControlSymbol].name, this.constructor[webuiCustomControlSymbol].control.script, this.shadowRoot, this);
+        this.#bindings = window.appShell.bindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
+        this.#scriptObject = await window.appShell.scriptSystem.assignAllScripts('customControl ' + this.constructor[webuiCustomControlSymbol].name, this.constructor[webuiCustomControlSymbol].control.script, this.shadowRoot, this);
         this.#scriptObject?.connectedCallback?.(this);
         for (let e of this.#eventListeners) {
             this.addEventListener(e[0], e[1]);

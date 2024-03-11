@@ -1,9 +1,7 @@
 var ScreenViewer_1;
 import { __decorate } from "tslib";
 import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, DomHelper, property } from "@node-projects/base-custom-webcomponent";
-import { IobrokerWebuiBindingsHelper } from "../helper/IobrokerWebuiBindingsHelper.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
-import { ScriptSystem } from "../scripting/ScriptSystem.js";
 let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     static { ScreenViewer_1 = this; }
     static style = css `
@@ -83,11 +81,13 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
         //@ts-ignore
         const myDocument = new DOMParser().parseFromString(html, 'text/html', { includeShadowRoots: true });
         const fragment = document.createDocumentFragment();
+        for (const n of myDocument.head.childNodes)
+            fragment.appendChild(n);
         for (const n of myDocument.body.childNodes)
             fragment.appendChild(n);
         this.shadowRoot.appendChild(fragment);
-        this._iobBindings = IobrokerWebuiBindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
-        this._scriptObject = await ScriptSystem.assignAllScripts('screenviewer - ' + this.screenName, script, this.shadowRoot, this);
+        this._iobBindings = window.appShell.bindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
+        this._scriptObject = await window.appShell.scriptSystem.assignAllScripts('screenviewer - ' + this.screenName, script, this.shadowRoot, this);
     }
     _getRelativeSignalsPath() {
         return this._relativeSignalsPath;

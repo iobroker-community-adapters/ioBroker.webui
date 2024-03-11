@@ -1,7 +1,7 @@
 import { BaseCustomWebComponentPropertiesService, PropertyType } from "@node-projects/web-component-designer";
 import { BaseCustomControl, webuiCustomControlSymbol } from "../runtime/CustomControls.js";
-import { IobrokerSignalPropertyEditor } from "./IobrokerSignalPropertyEditor.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
+import { SignalPropertyEditor } from "@node-projects/web-component-designer-visualization-addons";
 export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentPropertiesService {
     isHandledElement(designItem) {
         return designItem.element instanceof BaseCustomControl;
@@ -42,7 +42,7 @@ export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentProper
                 properties.push(property);
             }
             else if (prp.type == 'signal') {
-                let property = { name: name, type: "signal", service: this, propertyType: PropertyType.propertyAndAttribute, createEditor: p => new IobrokerSignalPropertyEditor(p) };
+                let property = { name: name, type: "signal", service: this, propertyType: PropertyType.propertyAndAttribute, createEditor: p => new SignalPropertyEditor(p, window.appShell) };
                 properties.push(property);
             }
             else if (prp.type == 'screen') {
