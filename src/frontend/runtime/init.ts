@@ -1,7 +1,8 @@
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
 import { LazyLoader } from '@node-projects/base-custom-webcomponent';
 import type { ScreenViewer } from './ScreenViewer.js';
-import { BindingsHelper, ScriptSystem } from '@node-projects/web-component-designer-visualization-addons';
+import { BindingsHelper } from '@node-projects/web-component-designer-visualization-addons/dist/helpers/BindingsHelper.js';
+import { ScriptSystem } from '@node-projects/web-component-designer-visualization-addons/dist/scripting/ScriptSystem.js';
 
 //@ts-ignore
 await LazyLoader.LoadJavascript(window.iobrokerSocketScriptUrl);
