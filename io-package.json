@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.2.5",
+    "version": "1.2.6",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.2.6": {
+        "en": "one more small runtime fix",
+        "de": "eine weitere kleine laufzeitfixierung",
+        "ru": "еще одно небольшое время работы",
+        "pt": "mais pequena correção de tempo de execução",
+        "nl": "nog een kleine runtime fix",
+        "fr": "un autre petit fixage d'exécution",
+        "it": "ancora una piccola correzione",
+        "es": "uno más pequeño plazo de ejecución",
+        "pl": "jeszcze jedno małe rozwiązanie",
+        "uk": "ще один невеликий фіксатор робочого часу",
+        "zh-cn": "再来一个小的运行时间"
+      },
       "1.2.5": {
         "en": "fix runtime once more",
         "de": "runtime erneut beheben",
@@ -106,19 +119,6 @@
         "pl": "ekstrahowane jakiś kod dla użyteczności\nlepsza edycja tekstu\nlepszy widok podzielony (wybór meczów teraz)\nokrągłe wartości pikseli",
         "uk": "видобуток певного коду\nкраще редагування тексту\nкраще розбити вигляд (вибір матчів зараз)\nкруглі значення пікселів",
         "zh-cn": "提取一些可用性代码\n更好的文本编辑\n更好的分割视图( 现在选中匹配)\n圆像素值"
-      },
-      "1.1.4": {
-        "en": "designer-update: mathML support, svg foreignObject support\nbetter text edit support",
-        "de": "designer-update: mathML-Unterstützung, svg fremd Unterstützung der Öffentlichkeit\nunterstützung bei der textbearbeitung",
-        "ru": "дизайнер-обновление: математическая поддержка, svg иностранный Поддержка объекта\nподдержка редактирования текста",
-        "pt": "designer-update: suporte MathML, svg estrangeiro Suporte ao objeto\nmelhor suporte de edição de texto",
-        "nl": "ontwerper-update: mathML ondersteuning, svg buitenland Objectondersteuning\nbetere ondersteuning voor tekstbewerking",
-        "fr": "designer-mise à jour: support mathML, svg étranger Prise en charge des objets\nmeilleur support de modification de texte",
-        "it": "designer-update: supporto mathML, svg straniero Supporto oggetti\nmigliore testo modifica supporto",
-        "es": "diseñador-fecha: soporte de matemáticas, svg extranjero Apoyo a objetos\nmejor soporte de edición de texto",
-        "pl": "designer- update: mathML support, svg obcokrajowiec Obsługa obiektu\nlepsze wsparcie edycji tekstu",
-        "uk": "дизайн-апdate: підтримка математикиML, Електронний Підтримка об'єктів\nпідтримка редагування тексту",
-        "zh-cn": "设计者更新: 数学ML 支持, svg 外国 对象支持\n更好的文本编辑支持"
       }
     },
     "icon": "logo.png",
