@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.2.4": {
+        "en": "fix runtime",
+        "de": "die laufzeit",
+        "ru": "время работы",
+        "pt": "corrigir o tempo de execução",
+        "nl": "fix runtime",
+        "fr": "fixer l'exécution",
+        "it": "correzione di runtime",
+        "es": "corrección",
+        "pl": "fix runtime",
+        "uk": "фіксувати runtime",
+        "zh-cn": "固定运行时间"
+      },
       "1.2.3": {
         "en": "designer upgrade for new features",
         "de": "designer-upgrade für neue features",
@@ -106,19 +119,6 @@
         "pl": "edycja tekstu teraz działa\naktualizacje pakietów",
         "uk": "редагування тексту\nоновлення пакета",
         "zh-cn": "文本编辑工作\n软件包更新"
-      },
-      "1.1.2": {
-        "en": "fix broken designer package",
-        "de": "defektes designerpaket",
-        "ru": "исправить сломанный дизайнер пакет",
-        "pt": "corrigir pacote de designer quebrado",
-        "nl": "fix gebroken ontwerper pakket",
-        "fr": "réparer le paquet de concepteur cassé",
-        "it": "fix pacchetto designer rotto",
-        "es": "paquete de diseño roto",
-        "pl": "naprawić uszkodzony pakiet projektantów",
-        "uk": "фіксувати розбитий дизайнерський пакет",
-        "zh-cn": "修复损坏的设计器包"
       }
     },
     "icon": "logo.png",
