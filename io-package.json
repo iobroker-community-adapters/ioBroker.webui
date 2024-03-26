@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.2.6",
+    "version": "1.2.7",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.2.7": {
+        "en": "fix used wrong script system",
+        "de": "verwendetes falsches skript-system",
+        "ru": "исправить используемую неправильную систему сценариев",
+        "pt": "corrigir o sistema de script errado usado",
+        "nl": "fix gebruikte verkeerde script systeem",
+        "fr": "correction du mauvais système de script utilisé",
+        "it": "correzione del sistema di script sbagliato usato",
+        "es": "arreglar el sistema de script incorrecto usado",
+        "pl": "fix używany zły system skryptu",
+        "uk": "виправлення використаної неправильної системи скрипта",
+        "zh-cn": "修补错误的脚本系统"
+      },
       "1.2.6": {
         "en": "one more small runtime fix",
         "de": "eine weitere kleine laufzeitfixierung",
@@ -106,19 +119,6 @@
         "pl": "budowa uszkodzona po przebudowie",
         "uk": "зламати після рефакторингу",
         "zh-cn": "重建后损坏的构造"
-      },
-      "1.2.0": {
-        "en": "extracted some code for usability\nbetter text edit\nbetter split view (selection matches now)\nround pixel values",
-        "de": "einige code für usability extrahiert\nbessere textbearbeitung\nbessere split-ansicht (auswahl spiele jetzt)\nrunde pixelwerte",
-        "ru": "извлекают код для удобства использования\nлучший текст\nлучший просмотр (выборные матчи сейчас)\nкруглых пикселей",
-        "pt": "extraído algum código para usabilidade\nmelhor edição de texto\nmelhor visão dividida (seleção combina agora)\nvalores de pixel redondos",
-        "nl": "wat code voor bruikbaarheid uitgepakt\nbetere tekstbewerking\nbeter split view (selectie komt nu overeen)\nronde beeldpuntwaarden",
-        "fr": "extrait un certain code pour la facilité d'utilisation\nmieux modifier le texte\nmeilleure vue partagée (sélection correspond maintenant)\npixel rond",
-        "it": "estratto qualche codice per l'usabilità\nmigliore testo modificare\nmigliore vista divisa (selezione partite ora)\nvalori di pixel tondo",
-        "es": "extrajo un código para la usabilidad\nmejor edición de texto\nmejor vista de división (selección coincide ahora)\nvalores redondos de pixel",
-        "pl": "ekstrahowane jakiś kod dla użyteczności\nlepsza edycja tekstu\nlepszy widok podzielony (wybór meczów teraz)\nokrągłe wartości pikseli",
-        "uk": "видобуток певного коду\nкраще редагування тексту\nкраще розбити вигляд (вибір матчів зараз)\nкруглі значення пікселів",
-        "zh-cn": "提取一些可用性代码\n更好的文本编辑\n更好的分割视图( 现在选中匹配)\n圆像素值"
       }
     },
     "icon": "logo.png",

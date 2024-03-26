@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.2.7 (2024-03-26)
 - fix used wrong script system
 
 ### 1.2.6 (2024-03-25)
