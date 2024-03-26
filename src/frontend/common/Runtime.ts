@@ -1,4 +1,4 @@
-import { OpenDialog, OpenScreen } from "@node-projects/web-component-designer-visualization-addons";
+import type { OpenDialog, OpenScreen } from "@node-projects/web-component-designer-visualization-addons";
 
 export class Runtime {
     public static openScreen(config: Omit<OpenScreen, 'type'>): Promise<void> {

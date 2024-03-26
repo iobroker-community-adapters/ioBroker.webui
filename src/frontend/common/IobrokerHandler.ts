@@ -5,7 +5,7 @@ import { IWebUiConfig } from "../interfaces/IWebUiConfig.js";
 import { IControl } from "../interfaces/IControl.js";
 import { sleep } from "../helper/Helper.js";
 import { IGlobalScript } from "../interfaces/IGlobalScript.js";
-import { SignalInformation, VisualizationHandler } from "@node-projects/web-component-designer-visualization-addons";
+import type { SignalInformation, VisualizationHandler } from "@node-projects/web-component-designer-visualization-addons";
 
 declare global {
     interface Window {
