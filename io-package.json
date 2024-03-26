@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.2.8",
+    "version": "1.2.9",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.2.9": {
+        "en": "try fix runtime once more",
+        "de": "versuchen, die laufzeit erneut zu beheben",
+        "ru": "попробовать исправить время бега еще раз",
+        "pt": "tente corrigir o tempo de execução mais uma vez",
+        "nl": "probeer runtime nog eens op te lossen",
+        "fr": "essayez de corriger l'exécution une fois de plus",
+        "it": "prova a correggere runtime ancora una volta",
+        "es": "prueba el tiempo de ejecución una vez más",
+        "pl": "spróbuj naprawić runtime jeszcze raz",
+        "uk": "спробуйте виправити runtime раз більше",
+        "zh-cn": "尝试再次修复运行时间"
+      },
       "1.2.8": {
         "en": "runtime should not load designer",
         "de": "laufzeit sollte nicht geladen werden",
@@ -106,19 +119,6 @@
         "pl": "designer upgrade dla nowych funkcji",
         "uk": "оновлення дизайнера для нових функцій",
         "zh-cn": "新特性的设计器升级"
-      },
-      "1.2.2": {
-        "en": "fix broken signals selector in scripts",
-        "de": "defekte signalauswahl in skripten fixieren",
-        "ru": "исправить сломанный селектор сигналов в скриптах",
-        "pt": "corrigir seletor de sinais quebrado em scripts",
-        "nl": "foute signaalselectie in scripts herstellen",
-        "fr": "correction du sélecteur de signaux cassés dans les scripts",
-        "it": "correggere il selettore dei segnali rotti negli script",
-        "es": "fijar el selector de señales rotas en scripts",
-        "pl": "w skryptach naprawiać zepsuty sygnał",
-        "uk": "зафіксувати розбиті сигнали selector в скриптах",
-        "zh-cn": "在脚本中修正断裂信号选择器"
       }
     },
     "icon": "logo.png",
