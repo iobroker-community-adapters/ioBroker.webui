@@ -32,16 +32,6 @@
   <script src="./dist/importmaps/importmap-runtime.js"></script>
 
   <script src="config.js"></script>
-
-  <script type="module">
-    const scp = document.createElement('script');
-    scp.src = iobrokerWebRootUrl + "webui.0.widgets/importmap.js";
-    document.head.appendChild(scp);
-
-    await importShim('./dist/frontend/runtime/init.js');
-    importShim('./dist/frontend/runtime/controls.js');
-    importShim(iobrokerWebRootUrl + 'webui.0.widgets/importWidgetFilesRuntime.js');
-  </script>
 </head>
 
 <style>
@@ -57,22 +47,32 @@
 
 <body>
   <iobroker-webui-screen-viewer id="viewer"></iobroker-webui-screen-viewer>
-  <script type="module">
-    async function checkHash() {
-      let screen = (new URLSearchParams(location.hash.substring(1))).get('screenName');
-      if (screen) {
-        const viewer = document.getElementById('viewer');
-        await customElements.whenDefined(viewer.localName);
-      } else {
-        screen = 'start';
-      }
-      viewer.screenName = screen;
-      let imp = await importShim(iobrokerWebuiRootUrl + "dist/frontend/common/IobrokerHandler.js");
-      imp.iobrokerHandler.sendCommand("uiChangedView", screen);
-    }
-    checkHash();
-    window.onhashchange = checkHash;
-  </script>
   <div id="overlayLayer"></div>
 </body>
+
+<script type="module">
+  const scp = document.createElement('script');
+  scp.src = iobrokerWebRootUrl + "webui.0.widgets/importmap.js";
+  document.head.appendChild(scp);
+
+  await importShim('./dist/frontend/runtime/init.js');
+  importShim('./dist/frontend/runtime/controls.js');
+  importShim(iobrokerWebRootUrl + 'webui.0.widgets/importWidgetFilesRuntime.js');
+
+  async function checkHash() {
+    let screen = (new URLSearchParams(location.hash.substring(1))).get('screenName');
+    if (screen) {
+      const viewer = document.getElementById('viewer');
+      await customElements.whenDefined(viewer.localName);
+    } else {
+      screen = 'start';
+    }
+    viewer.screenName = screen;
+    let imp = await importShim(iobrokerWebuiRootUrl + "dist/frontend/common/IobrokerHandler.js");
+    imp.iobrokerHandler.sendCommand("uiChangedView", screen);
+  }
+  checkHash();
+  window.onhashchange = checkHash;
+</script>
+
 </html>
