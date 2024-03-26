@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.2.7",
+    "version": "1.2.8",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.2.8": {
+        "en": "runtime should not load designer",
+        "de": "laufzeit sollte nicht geladen werden",
+        "ru": "время работы не должно загружать дизайнера",
+        "pt": "runtime não deve carregar designer",
+        "nl": "runtime mag ontwerper niet laden",
+        "fr": "runtime ne doit pas charger concepteur",
+        "it": "runtime non dovrebbe caricare designer",
+        "es": "runtime no debe cargar diseñador",
+        "pl": "runtime nie powinien ładować projektanta",
+        "uk": "робочий час не повинен завантажувати конструктора",
+        "zh-cn": "运行时间不应装入设计器"
+      },
       "1.2.7": {
         "en": "fix used wrong script system",
         "de": "verwendetes falsches skript-system",
@@ -106,19 +119,6 @@
         "pl": "w skryptach naprawiać zepsuty sygnał",
         "uk": "зафіксувати розбиті сигнали selector в скриптах",
         "zh-cn": "在脚本中修正断裂信号选择器"
-      },
-      "1.2.1": {
-        "en": "build broken after refactoring",
-        "de": "nach refactor gebrochen",
-        "ru": "сборка сломана после рефакторинга",
-        "pt": "construir quebrado após refactoring",
-        "nl": "bouw afgebroken na refactoring",
-        "fr": "construction cassée après refacturation",
-        "it": "costruire rotto dopo refactoring",
-        "es": "construir roto después de la refactorización",
-        "pl": "budowa uszkodzona po przebudowie",
-        "uk": "зламати після рефакторингу",
-        "zh-cn": "重建后损坏的构造"
       }
     },
     "icon": "logo.png",
