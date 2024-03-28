@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.2.12",
+    "version": "1.2.13",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.2.13": {
+        "en": "disabled control fix",
+        "de": "fehlerbehebung",
+        "ru": "для инвалидов",
+        "pt": "correção de controle de defeito",
+        "nl": "fix voor uitgeschakelde besturing",
+        "fr": "correction de commande désactivée",
+        "it": "correzione di controllo per disabili",
+        "es": "solución de control deshabilitado",
+        "pl": "wyłączona regulacja",
+        "uk": "функція автоматичного керування вимкненням",
+        "zh-cn": "禁用控件修复"
+      },
       "1.2.12": {
         "en": "add dayjs for date formating",
         "de": "tagjs für datumsformatierung hinzufügen",
@@ -106,19 +119,6 @@
         "pl": "fix używany zły system skryptu",
         "uk": "виправлення використаної неправильної системи скрипта",
         "zh-cn": "修补错误的脚本系统"
-      },
-      "1.2.6": {
-        "en": "one more small runtime fix",
-        "de": "eine weitere kleine laufzeitfixierung",
-        "ru": "еще одно небольшое время работы",
-        "pt": "mais pequena correção de tempo de execução",
-        "nl": "nog een kleine runtime fix",
-        "fr": "un autre petit fixage d'exécution",
-        "it": "ancora una piccola correzione",
-        "es": "uno más pequeño plazo de ejecución",
-        "pl": "jeszcze jedno małe rozwiązanie",
-        "uk": "ще один невеликий фіксатор робочого часу",
-        "zh-cn": "再来一个小的运行时间"
       }
     },
     "icon": "logo.png",
