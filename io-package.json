@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.2.11",
+    "version": "1.2.12",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.2.12": {
+        "en": "add dayjs for date formating",
+        "de": "tagjs für datumsformatierung hinzufügen",
+        "ru": "добавить dayjs для форматирования даты",
+        "pt": "add dayjs para formatação de data",
+        "nl": "dayjs toevoegen voor datumopmaak",
+        "fr": "ajouter dayjs pour le formatage de la date",
+        "it": "aggiungere dayjs per la formattazione della data",
+        "es": "añadir dayjs para la fecha formando",
+        "pl": "dodaj dayjs do formatowania daty",
+        "uk": "add dayjs для форматування дати",
+        "zh-cn": "添加日期格式化的dayjs"
+      },
       "1.2.11": {
         "en": "add a indirection level in complex signal binding",
         "de": "einen indirektionspegel in komplexe signalbindung hinzufügen",
@@ -106,19 +119,6 @@
         "pl": "jeszcze jedno małe rozwiązanie",
         "uk": "ще один невеликий фіксатор робочого часу",
         "zh-cn": "再来一个小的运行时间"
-      },
-      "1.2.5": {
-        "en": "fix runtime once more",
-        "de": "runtime erneut beheben",
-        "ru": "исправить время работы еще раз",
-        "pt": "corrigir o tempo de execução mais uma vez",
-        "nl": "fix runtime nogmaals",
-        "fr": "fixer l'exécution une fois de plus",
-        "it": "correzione runtime ancora una volta",
-        "es": "fijar tiempo de ejecución una vez más",
-        "pl": "ponownie naprawić runtime",
-        "uk": "фіксувати runtime ще раз",
-        "zh-cn": "恢复运行时间"
       }
     },
     "icon": "logo.png",
