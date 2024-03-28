@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- disabled control fix
+
 ### 1.2.12 (2024-03-28)
 - add dayjs for date formating
 
