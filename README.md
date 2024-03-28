@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- add a indirection level in complex signal binding
+
 ### 1.2.10 (2024-03-28)
 - package upgrades
 

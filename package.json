@@ -58,7 +58,7 @@
     "@node-projects/web-component-designer-widgets-wunderbaum": "^0.1.13",
     "@node-projects/propertygrid.webcomponent": "^1.0.4",
     "@node-projects/splitview.webcomponent": "^1.0.1",
-    "@node-projects/web-component-designer-visualization-addons": "^0.1.9",
+    "@node-projects/web-component-designer-visualization-addons": "^0.1.10",
     "@blockly/zoom-to-fit": "^5.0.13",
     "blockly": "^10.4.3",
     "@types/json-schema": "^7.0.15",
