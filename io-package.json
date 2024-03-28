@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.2.10",
+    "version": "1.2.11",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.2.11": {
+        "en": "add a indirection level in complex signal binding",
+        "de": "einen indirektionspegel in komplexe signalbindung hinzufügen",
+        "ru": "добавить уровень опосредованности в сложном связывании сигнала",
+        "pt": "adicionar um nível de indireção na ligação de sinal complexa",
+        "nl": "voeg een indirectieniveau toe in complexe signaalbinding",
+        "fr": "ajouter un niveau d'indirection dans la liaison de signal complexe",
+        "it": "aggiungere un livello di indirezione nel binding del segnale complesso",
+        "es": "añadir un nivel de indirectidad en la unión de señal compleja",
+        "pl": "dodać poziom inwercji w skomplikowanym wiązaniu sygnału",
+        "uk": "додати рівень непрямості в складних сигналах",
+        "zh-cn": "在复杂的信号绑定中添加间接关卡"
+      },
       "1.2.10": {
         "en": "package upgrades",
         "de": "paket upgrades",
@@ -106,19 +119,6 @@
         "pl": "ponownie naprawić runtime",
         "uk": "фіксувати runtime ще раз",
         "zh-cn": "恢复运行时间"
-      },
-      "1.2.4": {
-        "en": "fix runtime",
-        "de": "die laufzeit",
-        "ru": "время работы",
-        "pt": "corrigir o tempo de execução",
-        "nl": "fix runtime",
-        "fr": "fixer l'exécution",
-        "it": "correzione di runtime",
-        "es": "corrección",
-        "pl": "fix runtime",
-        "uk": "фіксувати runtime",
-        "zh-cn": "固定运行时间"
       }
     },
     "icon": "logo.png",
