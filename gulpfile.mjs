@@ -77,7 +77,8 @@ function copyNodeFiles() {
         "blockly/msg/en.js",
         "@blockly/zoom-to-fit/dist/index.js",
         "toastify-js/src/toastify-es.js",
-        "toastify-js/src/toastify.css"
+        "toastify-js/src/toastify.css",
+        "dayjs/dayjs.min.js"
     ]
 
     runtimeModules = runtimeModules.map(x => './node_modules/' + x)

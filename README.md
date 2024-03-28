@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- add dayjs for date formating
+
 ### 1.2.11 (2024-03-28)
 - add a indirection level in complex signal binding
 
