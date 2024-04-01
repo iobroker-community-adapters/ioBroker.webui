@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.3.1": {
+        "en": "designer updates for toolbars",
+        "de": "designer-updates für toolbars",
+        "ru": "обновления для панели инструментов",
+        "pt": "atualizações de designer para barras de ferramentas",
+        "nl": "ontwerper-updates voor werkbalken",
+        "fr": "mise à jour du concepteur pour les barres d'outils",
+        "it": "aggiornamenti di designer per barre degli strumenti",
+        "es": "actualizaciones de diseño para barras de herramientas",
+        "pl": "aktualizacje projektanta pasków narzędzi",
+        "uk": "дизайнерські оновлення для панелі інструментів",
+        "zh-cn": "工具栏的设计器更新"
+      },
       "1.3.0": {
         "en": "designer update",
         "de": "designer-update",
@@ -106,19 +119,6 @@
         "pl": "spróbuj naprawić runtime jeszcze raz",
         "uk": "спробуйте виправити runtime раз більше",
         "zh-cn": "尝试再次修复运行时间"
-      },
-      "1.2.8": {
-        "en": "runtime should not load designer",
-        "de": "laufzeit sollte nicht geladen werden",
-        "ru": "время работы не должно загружать дизайнера",
-        "pt": "runtime não deve carregar designer",
-        "nl": "runtime mag ontwerper niet laden",
-        "fr": "runtime ne doit pas charger concepteur",
-        "it": "runtime non dovrebbe caricare designer",
-        "es": "runtime no debe cargar diseñador",
-        "pl": "runtime nie powinien ładować projektanta",
-        "uk": "робочий час не повинен завантажувати конструктора",
-        "zh-cn": "运行时间不应装入设计器"
       }
     },
     "icon": "logo.png",
