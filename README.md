@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- designer updates for toolbars
+
 ### 1.3.0 (2024-04-01)
 - designer update
 
