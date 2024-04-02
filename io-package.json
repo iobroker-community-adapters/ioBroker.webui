@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.3.1",
+    "version": "1.3.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.3.2": {
+        "en": "designer upd",
+        "de": "designer upd",
+        "ru": "дизайнер",
+        "pt": "designer upd",
+        "nl": "ontwerper upd",
+        "fr": "designer mis à jour",
+        "it": "designer upd",
+        "es": "diseñador upd",
+        "pl": "designer upd",
+        "uk": "конструктор",
+        "zh-cn": "设计员升职"
+      },
       "1.3.1": {
         "en": "designer updates for toolbars",
         "de": "designer-updates für toolbars",
@@ -106,19 +119,6 @@
         "pl": "aktualizacje pakietów",
         "uk": "оновлення пакета",
         "zh-cn": "软件包升级"
-      },
-      "1.2.9": {
-        "en": "try fix runtime once more",
-        "de": "versuchen, die laufzeit erneut zu beheben",
-        "ru": "попробовать исправить время бега еще раз",
-        "pt": "tente corrigir o tempo de execução mais uma vez",
-        "nl": "probeer runtime nog eens op te lossen",
-        "fr": "essayez de corriger l'exécution une fois de plus",
-        "it": "prova a correggere runtime ancora una volta",
-        "es": "prueba el tiempo de ejecución una vez más",
-        "pl": "spróbuj naprawić runtime jeszcze raz",
-        "uk": "спробуйте виправити runtime раз більше",
-        "zh-cn": "尝试再次修复运行时间"
       }
     },
     "icon": "logo.png",
