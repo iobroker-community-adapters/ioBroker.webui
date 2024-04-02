@@ -128,7 +128,7 @@
     "platform": "Javascript/Node.js",
     "loglevel": "info",
     "enabled": true,
-    "compact": true,
+    "compact": false,
     "keywords": [
       "GUI",
       "graphical",
