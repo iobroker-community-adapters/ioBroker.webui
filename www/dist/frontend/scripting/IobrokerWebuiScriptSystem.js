@@ -1,7 +1,7 @@
-import { ScriptSystem } from "@node-projects/web-component-designer-visualization-addons";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IoBrokerWebuiDialog } from "../helper/DialogHelper.js";
+import { ScriptSystem } from "@node-projects/web-component-designer-visualization-addons/dist/scripting/ScriptSystem.js";
 export class IobrokerWebuiScriptSystem extends ScriptSystem {
     async runScriptCommand(command, context) {
         switch (command.type) {

@@ -4,7 +4,7 @@ import { IScreen } from "../interfaces/IScreen.js";
 import { IWebUiConfig } from "../interfaces/IWebUiConfig.js";
 import { IControl } from "../interfaces/IControl.js";
 import { IGlobalScript } from "../interfaces/IGlobalScript.js";
-import { SignalInformation, VisualizationHandler } from "@node-projects/web-component-designer-visualization-addons";
+import type { SignalInformation, VisualizationHandler } from "@node-projects/web-component-designer-visualization-addons";
 declare global {
     interface Window {
         iobrokerHost: string;
