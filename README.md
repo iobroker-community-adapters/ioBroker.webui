@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- parameter support for scripts
+
 ### 1.3.2 (2024-04-02)
 - designer upd
 
