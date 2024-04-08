@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.3.2",
+    "version": "1.4.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.4.0": {
+        "en": "parameter support for scripts",
+        "de": "parameterunterstützung für skripte",
+        "ru": "поддержка параметров скриптов",
+        "pt": "suporte do parâmetro para scripts",
+        "nl": "parameter ondersteuning voor scripts",
+        "fr": "support des paramètres pour les scripts",
+        "it": "supporto dei parametri per gli script",
+        "es": "soporte de parámetro para scripts",
+        "pl": "obsługa parametrów skryptów",
+        "uk": "параметр підтримки скриптів",
+        "zh-cn": "脚本的参数支持"
+      },
       "1.3.2": {
         "en": "designer upd",
         "de": "designer upd",
@@ -106,19 +119,6 @@
         "pl": "dodać poziom inwercji w skomplikowanym wiązaniu sygnału",
         "uk": "додати рівень непрямості в складних сигналах",
         "zh-cn": "在复杂的信号绑定中添加间接关卡"
-      },
-      "1.2.10": {
-        "en": "package upgrades",
-        "de": "paket upgrades",
-        "ru": "обновления пакета",
-        "pt": "atualizações de pacotes",
-        "nl": "pakketupgrades",
-        "fr": "mises à jour des paquets",
-        "it": "aggiornamenti pacchetto",
-        "es": "actualizaciones de paquetes",
-        "pl": "aktualizacje pakietów",
-        "uk": "оновлення пакета",
-        "zh-cn": "软件包升级"
       }
     },
     "icon": "logo.png",
