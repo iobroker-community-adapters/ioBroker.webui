@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.4.1": {
+        "en": "support relative signal paths in scripts",
+        "de": "unterstützen relative signalpfade in skripten",
+        "ru": "поддерживать относительные пути сигналов в сценариях",
+        "pt": "suportar caminhos de sinal relativos em scripts",
+        "nl": "ondersteuning voor relatieve signaalpaden in scripts",
+        "fr": "supporte les chemins de signal relatifs dans les scripts",
+        "it": "supporta i percorsi relativi di segnale negli script",
+        "es": "soporte rutas de señal relativas en scripts",
+        "pl": "obsługa względnych ścieżek sygnałów w skryptach",
+        "uk": "підтримка відносних сигналів в скриптах",
+        "zh-cn": "支持脚本中的相对信号路径"
+      },
       "1.4.0": {
         "en": "parameter support for scripts",
         "de": "parameterunterstützung für skripte",
@@ -106,19 +119,6 @@
         "pl": "dodaj dayjs do formatowania daty",
         "uk": "add dayjs для форматування дати",
         "zh-cn": "添加日期格式化的dayjs"
-      },
-      "1.2.11": {
-        "en": "add a indirection level in complex signal binding",
-        "de": "einen indirektionspegel in komplexe signalbindung hinzufügen",
-        "ru": "добавить уровень опосредованности в сложном связывании сигнала",
-        "pt": "adicionar um nível de indireção na ligação de sinal complexa",
-        "nl": "voeg een indirectieniveau toe in complexe signaalbinding",
-        "fr": "ajouter un niveau d'indirection dans la liaison de signal complexe",
-        "it": "aggiungere un livello di indirezione nel binding del segnale complesso",
-        "es": "añadir un nivel de indirectidad en la unión de señal compleja",
-        "pl": "dodać poziom inwercji w skomplikowanym wiązaniu sygnału",
-        "uk": "додати рівень непрямості в складних сигналах",
-        "zh-cn": "在复杂的信号绑定中添加间接关卡"
       }
     },
     "icon": "logo.png",

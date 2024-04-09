@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.4.1 (2024-04-09)
 - support relative signal paths in scripts
 
 ### 1.4.0 (2024-04-08)
