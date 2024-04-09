@@ -5,8 +5,8 @@ import { IobrokerWebuiScreenEditor } from "./IobrokerWebuiScreenEditor.js";
 import { findExportFunctionDeclarations } from "../helper/EsprimaHelper.js";
 import type { FunctionDeclaration } from "esprima-next";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
-import scriptCommandsTypeInfo from "../generated/ScriptCommands.json" assert { type: 'json' };
-import propertiesTypeInfo from "../generated/Properties.json" assert {type: 'json'};
+import scriptCommandsTypeInfo from "../generated/ScriptCommands.json" with { type: 'json' };
+import propertiesTypeInfo from "../generated/Properties.json" with {type: 'json'};
 
 export class IobrokerWebuiEventAssignment extends EventAssignment {
     constructor() {
@@ -28,17 +28,17 @@ export class IobrokerWebuiEventAssignment extends EventAssignment {
             let funcDecl = decl.find(x => (<FunctionDeclaration>x.declaration).id.name == jsName)
             if (!funcDecl) {
                 let templateScript = `/**
-           * ${jsName} - '${eventItem.name}' event of ${this.selectedItems[0].id ? '#' + this.selectedItems[0].id + ' (<' + this.selectedItems[0].name + '>)' : '<' + this.selectedItems[0].name + '>'}
-           * @param {${eventItem.eventObjectName ?? 'Event'}} event
-           * @param {Element} eventRaisingElement
-           * @param {ShadowRoot} shadowRoot
-           * @param {BaseScreenViewerAndControl} instance
-           * @param {Object.<string, *>} parameters
-           */
-           export function ${jsName}(event, eventRaisingElement, shadowRoot, instance, parameters) {
-               
-           }
-           `;
+* ${jsName} - '${eventItem.name}' event of ${this.selectedItems[0].id ? '#' + this.selectedItems[0].id + ' (<' + this.selectedItems[0].name + '>)' : '<' + this.selectedItems[0].name + '>'}
+* @param {${eventItem.eventObjectName ?? 'Event'}} event
+* @param {Element} eventRaisingElement
+* @param {ShadowRoot} shadowRoot
+* @param {BaseScreenViewerAndControl} instance
+* @param {Object.<string, *>} parameters
+*/
+export function ${jsName}(event, eventRaisingElement, shadowRoot, instance, parameters) {
+    
+}
+`;
                 if (!sc)
                     screenEditor.scriptModel.setValue(templateScript);
                 else {

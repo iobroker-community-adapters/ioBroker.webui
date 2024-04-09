@@ -9,7 +9,7 @@ import { generateCustomControl, getCustomControlName, webuiCustomControlPrefix }
 import { defaultOptions, defaultStyle } from "@node-projects/web-component-designer-widgets-wunderbaum";
 import { Wunderbaum } from 'wunderbaum';
 //@ts-ignore
-import wunderbaumStyle from 'wunderbaum/dist/wunderbaum.css' assert { type: 'css' };
+import wunderbaumStyle from 'wunderbaum/dist/wunderbaum.css' with { type: 'css' };
 import { WunderbaumNode } from "wb_node";
 import { WbClickEventType, WbNodeData, WbNodeEventType } from "types";
 import { defaultNewStyle } from "./IobrokerWebuiScreenEditor.js";
@@ -425,7 +425,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             lazy: true,
             lazyload: async (e, data) => {
                 try {
-                    let packages = (await import('../npm/usable-packages.json', { assert: { type: 'json' } })).default;
+                    let packages = (await import('../npm/usable-packages.json', { with: { type: 'json' } })).default;
                     packages.sort();
                     let groups = [...new Set(packages.map(x => x.split('/')[0]))];
                     let children: TreeNodeData[] = [];
