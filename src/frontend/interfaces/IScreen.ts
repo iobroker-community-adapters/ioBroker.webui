@@ -9,5 +9,5 @@ export interface IScreenSettings {
     width?: string;
     height?: string;
     addoptedStyles?: string[];
-    //scale?: 'none' | 'noneNoScroll' | 'fit';
+    stretch?: 'none' | 'fill' | 'uniform' | 'uniformToFill';
 }
