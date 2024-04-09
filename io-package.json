@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.4.2": {
+        "en": "stretch support in screens",
+        "de": "stretch-unterstützung in bildschirmen",
+        "ru": "поддержка растяжки на экранах",
+        "pt": "suporte elástico em telas",
+        "nl": "reksteun in schermen",
+        "fr": "support extensible dans les écrans",
+        "it": "supporto elastico negli schermi",
+        "es": "soporte de estiramiento en pantallas",
+        "pl": "wsparcie napinania w ekranach",
+        "uk": "розтягувати підтримку в екранах",
+        "zh-cn": "屏幕中的拉伸支持"
+      },
       "1.4.1": {
         "en": "support relative signal paths in scripts",
         "de": "unterstützen relative signalpfade in skripten",
@@ -106,19 +119,6 @@
         "pl": "wyłączona regulacja",
         "uk": "функція автоматичного керування вимкненням",
         "zh-cn": "禁用控件修复"
-      },
-      "1.2.12": {
-        "en": "add dayjs for date formating",
-        "de": "tagjs für datumsformatierung hinzufügen",
-        "ru": "добавить dayjs для форматирования даты",
-        "pt": "add dayjs para formatação de data",
-        "nl": "dayjs toevoegen voor datumopmaak",
-        "fr": "ajouter dayjs pour le formatage de la date",
-        "it": "aggiungere dayjs per la formattazione della data",
-        "es": "añadir dayjs para la fecha formando",
-        "pl": "dodaj dayjs do formatowania daty",
-        "uk": "add dayjs для форматування дати",
-        "zh-cn": "添加日期格式化的dayjs"
       }
     },
     "icon": "logo.png",
