@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.4.5 (2024-04-10)
 - fix gulp5 copy breaks fonts
 
 ### 1.4.4 (2024-04-10)
