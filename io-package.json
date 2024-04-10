@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.4.2",
+    "version": "1.4.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.4.3": {
+        "en": "fix copy of font",
+        "de": "fixieren kopie der schrift",
+        "ru": "исправить копию шрифта",
+        "pt": "corrigir cópia da fonte",
+        "nl": "kopie van lettertype herstellen",
+        "fr": "corriger la copie de la police",
+        "it": "copia di correzione del carattere",
+        "es": "fijar copia de fuente",
+        "pl": "fix kopia czcionki",
+        "uk": "фіксувати копію шрифту",
+        "zh-cn": "字体的固定副本"
+      },
       "1.4.2": {
         "en": "stretch support in screens",
         "de": "stretch-unterstützung in bildschirmen",
@@ -106,19 +119,6 @@
         "pl": "aktualizacja projektanta",
         "uk": "оновлення дизайнера",
         "zh-cn": "设计者更新"
-      },
-      "1.2.13": {
-        "en": "disabled control fix",
-        "de": "fehlerbehebung",
-        "ru": "для инвалидов",
-        "pt": "correção de controle de defeito",
-        "nl": "fix voor uitgeschakelde besturing",
-        "fr": "correction de commande désactivée",
-        "it": "correzione di controllo per disabili",
-        "es": "solución de control deshabilitado",
-        "pl": "wyłączona regulacja",
-        "uk": "функція автоматичного керування вимкненням",
-        "zh-cn": "禁用控件修复"
       }
     },
     "icon": "logo.png",
