@@ -14,7 +14,7 @@ const serviceContainer = configureDesigner(bindingsHelper);
 import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent.js';
 import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from '@node-projects/base-custom-webcomponent';
 import { CommandHandling } from './CommandHandling.js';
-import propertiesTypeInfo from "../generated/Properties.json" assert { type: 'json' };
+import propertiesTypeInfo from "../generated/Properties.json" with { type: 'json' };
 DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
 import "../runtime/controls.js";
 import "./IobrokerWebuiSolutionExplorer.js";

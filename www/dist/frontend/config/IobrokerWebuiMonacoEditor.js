@@ -77,7 +77,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
                 require(['vs/editor/editor.main'], () => {
                     resolve(undefined);
                     IobrokerWebuiMonacoEditor._initalized = true;
-                    import('./importDescriptions.json', { assert: { type: 'json' } }).then(async (json) => {
+                    import('./importDescriptions.json', { with: { type: 'json' } }).then(async (json) => {
                         let files = json.default;
                         const chunkSize = 500;
                         let libs = [];
@@ -106,7 +106,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
     async ready() {
         this._parseAttributesToProperties();
         //@ts-ignore
-        const style = await import("monaco-editor/min/vs/editor/editor.main.css", { assert: { type: 'css' } });
+        const style = await import("monaco-editor/min/vs/editor/editor.main.css", { with: { type: 'css' } });
         //@ts-ignore
         this.shadowRoot.adoptedStyleSheets = [style.default, this.constructor.style];
         this._container = this._getDomElement('container');

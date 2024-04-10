@@ -15,7 +15,7 @@ export class IobrokerWebuiDemoProviderService {
         DomHelper.removeAllChildnodes(container);
         container.appendChild(screenViewer);
         let designer = instanceServiceContainer.designer;
-        screenViewer.loadScreenData(code, designer.documentContainer.additionalData.model.getValue(), designer.scriptModel.getValue());
+        screenViewer.loadScreenData(code, designer.documentContainer.additionalData.model.getValue(), designer.scriptModel.getValue(), null);
         screenViewer.style.display = '';
         screenViewer.shadowRoot.querySelectorAll('a').forEach(x => x.onclick = () => false); // disable links in preview view...
     }

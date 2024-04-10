@@ -216,6 +216,15 @@
                 "height": {
                     "type": "string"
                 },
+                "stretch": {
+                    "enum": [
+                        "fill",
+                        "none",
+                        "uniform",
+                        "uniformToFill"
+                    ],
+                    "type": "string"
+                },
                 "width": {
                     "type": "string"
                 }
@@ -223,7 +232,8 @@
             "propertyOrder": [
                 "width",
                 "height",
-                "addoptedStyles"
+                "addoptedStyles",
+                "stretch"
             ],
             "type": "object"
         },
