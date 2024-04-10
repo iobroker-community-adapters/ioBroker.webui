@@ -83,7 +83,7 @@ function copyNodeFiles() {
 
     runtimeModules = runtimeModules.map(x => './node_modules/' + x)
 
-    return src(runtimeModules, { base: './' })
+    return src(runtimeModules, { base: './', encoding: false })
         .pipe(dest('./www'));
 }
 
