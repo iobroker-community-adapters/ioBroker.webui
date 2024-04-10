@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.4.4 (2024-04-10)
 - fix compile error
 
 ### 1.4.3 (2024-04-10)

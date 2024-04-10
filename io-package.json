@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.4.3",
+    "version": "1.4.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.4.4": {
+        "en": "fix compile error",
+        "de": "compile fehler beheben",
+        "ru": "ошибка компиляции",
+        "pt": "corrigir erro de compilação",
+        "nl": "compileerfout herstellen",
+        "fr": "correction de l'erreur de compilation",
+        "it": "correzione errore di compilazione",
+        "es": "error compilar",
+        "pl": "błąd kompilacji",
+        "uk": "виправлено помилку компіляції",
+        "zh-cn": "固定编译错误"
+      },
       "1.4.3": {
         "en": "fix copy of font",
         "de": "fixieren kopie der schrift",
@@ -106,19 +119,6 @@
         "pl": "aktualizacje projektanta pasków narzędzi",
         "uk": "дизайнерські оновлення для панелі інструментів",
         "zh-cn": "工具栏的设计器更新"
-      },
-      "1.3.0": {
-        "en": "designer update",
-        "de": "designer-update",
-        "ru": "обновление",
-        "pt": "atualização do designer",
-        "nl": "ontwerper-update",
-        "fr": "mise à jour du concepteur",
-        "it": "aggiornamento designer",
-        "es": "actualización del diseñador",
-        "pl": "aktualizacja projektanta",
-        "uk": "оновлення дизайнера",
-        "zh-cn": "设计者更新"
       }
     },
     "icon": "logo.png",
