@@ -1,10 +1,11 @@
-import utils from '@iobroker/adapter-core';
+import * as utils from '@iobroker/adapter-core';
 import { spawn } from 'child_process';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { Uploadhelper } from './UploadHelper.js';
 import { ImportmapCreator } from './ImportmapCreator.js';
+import url from "node:url";
 
 const __dirname = path.normalize(path.join(path.dirname(fileURLToPath(import.meta.url)), "../.."));
 const pkg = JSON.parse(fs.readFileSync(new URL('../../package.json', import.meta.url)).toString());
@@ -230,4 +231,12 @@ class WebUi extends utils.Adapter {
     }
 }
 
-new WebUi();
+
+const modulePath = url.fileURLToPath(import.meta.url);
+if (process.argv[1] === modulePath) {
+    new WebUi();
+}
+
+export default function startAdapter(options: Partial<utils.AdapterOptions> | undefined) {
+    return new WebUi(options);
+}
