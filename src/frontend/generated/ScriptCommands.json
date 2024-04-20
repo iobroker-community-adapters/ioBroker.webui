@@ -58,46 +58,6 @@
             ],
             "type": "object"
         },
-        "Condition": {
-            "properties": {
-                "comparisonType": {
-                    "enum": [
-                        "!=",
-                        "!=null",
-                        "<",
-                        "<=",
-                        "==",
-                        "==false",
-                        "==null",
-                        "==true",
-                        ">",
-                        ">="
-                    ],
-                    "type": "string"
-                },
-                "labelFalse": {
-                    "type": "string"
-                },
-                "labelTrue": {
-                    "type": "string"
-                },
-                "type": {
-                    "const": "Condition",
-                    "type": "string"
-                },
-                "value1": {},
-                "value2": {}
-            },
-            "propertyOrder": [
-                "type",
-                "value1",
-                "value2",
-                "comparisonType",
-                "labelTrue",
-                "labelFalse"
-            ],
-            "type": "object"
-        },
         "Console": {
             "properties": {
                 "message": {
@@ -166,22 +126,6 @@
             ],
             "type": "object"
         },
-        "Description": {
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "type": {
-                    "const": "Description",
-                    "type": "string"
-                }
-            },
-            "propertyOrder": [
-                "type",
-                "description"
-            ],
-            "type": "object"
-        },
         "IncrementSignalValue": {
             "properties": {
                 "signal": {
@@ -219,22 +163,6 @@
             "propertyOrder": [
                 "type",
                 "script"
-            ],
-            "type": "object"
-        },
-        "Label": {
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "type": {
-                    "const": "Label",
-                    "type": "string"
-                }
-            },
-            "propertyOrder": [
-                "type",
-                "name"
             ],
             "type": "object"
         },
