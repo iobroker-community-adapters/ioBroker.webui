@@ -37,7 +37,7 @@
                 "arguments",
                 "caller",
                 "name",
-                "__@hasInstance@5367"
+                "__@hasInstance@5364"
             ],
             "type": "object"
         },
@@ -247,6 +247,8 @@
                 "source": {
                     "description": "signal - read the value from a IOB object\nproperty - read the value from a property of the customControl (not usable in screens)\nevent - read the value of a property of the event object",
                     "enum": [
+                        "complexSignal",
+                        "complexString",
                         "event",
                         "parameter",
                         "property",
