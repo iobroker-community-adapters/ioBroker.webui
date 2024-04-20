@@ -41,7 +41,15 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         i.wb-icon > span.wb-badge {
             opacity: 0.4;
             font-size: 50%;
-        }`
+        }
+        
+        div.wunderbaum span.wb-node span.wb-title {
+            overflow-x: visible;
+        }
+        
+        div.wunderbaum span.wb-col {
+            overflow: visible;
+        } `
 
     serviceContainer: ServiceContainer;
 
