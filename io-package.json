@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.4.6",
+    "version": "1.4.7",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.4.7": {
+        "en": "compact mode on controler 6 support",
+        "de": "kompakter modus auf der steuerung 6 unterstützung",
+        "ru": "компактный режим на контроллере 6 поддержки",
+        "pt": "modo compacto no controler 6 suporte",
+        "nl": "compacte modus op controller 6 ondersteuning",
+        "fr": "mode compact sur le contrôleur 6 support",
+        "it": "modalità compatta sul controllore 6 supporto",
+        "es": "modo compacto en el controlador 6 soporte",
+        "pl": "tryb kompaktowy na kontrolerze 6",
+        "uk": "компактний режим на контролері 6",
+        "zh-cn": "控制器 6 支持的紧凑模式"
+      },
       "1.4.6": {
         "en": "fix encoding for all files",
         "de": "kodieren für alle dateien",
@@ -106,19 +119,6 @@
         "pl": "obsługa względnych ścieżek sygnałów w skryptach",
         "uk": "підтримка відносних сигналів в скриптах",
         "zh-cn": "支持脚本中的相对信号路径"
-      },
-      "1.4.0": {
-        "en": "parameter support for scripts",
-        "de": "parameterunterstützung für skripte",
-        "ru": "поддержка параметров скриптов",
-        "pt": "suporte do parâmetro para scripts",
-        "nl": "parameter ondersteuning voor scripts",
-        "fr": "support des paramètres pour les scripts",
-        "it": "supporto dei parametri per gli script",
-        "es": "soporte de parámetro para scripts",
-        "pl": "obsługa parametrów skryptów",
-        "uk": "параметр підтримки скриптів",
-        "zh-cn": "脚本的参数支持"
       }
     },
     "icon": "logo.png",
