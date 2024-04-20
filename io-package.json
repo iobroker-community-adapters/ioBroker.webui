@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.4.7",
+    "version": "1.4.8",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.4.8": {
+        "en": "fix for controller v6",
+        "de": "fix für controller v6",
+        "ru": "для контроллера v6",
+        "pt": "correção para controlador v6",
+        "nl": "fix voor controller v6",
+        "fr": "correction pour contrôleur v6",
+        "it": "correzione per controller v6",
+        "es": "fijado para el controlador v6",
+        "pl": "fix dla sterownika v6",
+        "uk": "кріплення для контролера v6",
+        "zh-cn": "用于控制器 v6 的固定"
+      },
       "1.4.7": {
         "en": "compact mode on controler 6 support",
         "de": "kompakter modus auf der steuerung 6 unterstützung",
@@ -106,19 +119,6 @@
         "pl": "wsparcie napinania w ekranach",
         "uk": "розтягувати підтримку в екранах",
         "zh-cn": "屏幕中的拉伸支持"
-      },
-      "1.4.1": {
-        "en": "support relative signal paths in scripts",
-        "de": "unterstützen relative signalpfade in skripten",
-        "ru": "поддерживать относительные пути сигналов в сценариях",
-        "pt": "suportar caminhos de sinal relativos em scripts",
-        "nl": "ondersteuning voor relatieve signaalpaden in scripts",
-        "fr": "supporte les chemins de signal relatifs dans les scripts",
-        "it": "supporta i percorsi relativi di segnale negli script",
-        "es": "soporte rutas de señal relativas en scripts",
-        "pl": "obsługa względnych ścieżek sygnałów w skryptach",
-        "uk": "підтримка відносних сигналів в скриптах",
-        "zh-cn": "支持脚本中的相对信号路径"
       }
     },
     "icon": "logo.png",

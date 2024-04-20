@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.4.8 (2024-04-20)
 - fix for controller v6
 
 ### 1.4.7 (2024-04-20)
