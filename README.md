@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix for controller v6
+
 ### 1.4.7 (2024-04-20)
 - compact mode on controler 6 support
 

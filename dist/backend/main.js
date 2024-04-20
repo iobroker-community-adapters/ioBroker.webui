@@ -1,4 +1,4 @@
-import utils from '@iobroker/adapter-core';
+import * as utils from '@iobroker/adapter-core';
 import { spawn } from 'child_process';
 import path from 'path';
 import fs from 'fs';

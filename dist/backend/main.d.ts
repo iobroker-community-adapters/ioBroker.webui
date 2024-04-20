@@ -1,4 +1,4 @@
-import utils from '@iobroker/adapter-core';
+import * as utils from '@iobroker/adapter-core';
 declare class WebUi extends utils.Adapter {
     _unloaded: boolean;
     _instanceName: string;
