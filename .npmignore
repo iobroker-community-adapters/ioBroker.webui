@@ -6,7 +6,7 @@
 /assets
 /dist/frontend
 /node_modules
-src/
+/src
 .gitignore
 .gulp.json
 /index.html
