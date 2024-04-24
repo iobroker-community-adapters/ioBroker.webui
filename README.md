@@ -129,8 +129,8 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
-- fix toastify 
+### 1.4.9 (2024-04-24)
+- fix toastify
 
 ### 1.4.8 (2024-04-20)
 - fix for controller v6

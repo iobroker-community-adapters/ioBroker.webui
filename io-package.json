@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.4.8",
+    "version": "1.4.9",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.4.9": {
+        "en": "fix toastify",
+        "de": "toastify",
+        "ru": "исправить тостер",
+        "pt": "corrigir torradas",
+        "nl": "fix toastify",
+        "fr": "correction toastify",
+        "it": "fissare il brindisi",
+        "es": "fijar tostadas",
+        "pl": "fix tostify",
+        "uk": "закріпити тостифік",
+        "zh-cn": "修补土司"
+      },
       "1.4.8": {
         "en": "fix for controller v6",
         "de": "fix für controller v6",
@@ -106,19 +119,6 @@
         "pl": "fix kopia czcionki",
         "uk": "фіксувати копію шрифту",
         "zh-cn": "字体的固定副本"
-      },
-      "1.4.2": {
-        "en": "stretch support in screens",
-        "de": "stretch-unterstützung in bildschirmen",
-        "ru": "поддержка растяжки на экранах",
-        "pt": "suporte elástico em telas",
-        "nl": "reksteun in schermen",
-        "fr": "support extensible dans les écrans",
-        "it": "supporto elastico negli schermi",
-        "es": "soporte de estiramiento en pantallas",
-        "pl": "wsparcie napinania w ekranach",
-        "uk": "розтягувати підтримку в екранах",
-        "zh-cn": "屏幕中的拉伸支持"
       }
     },
     "icon": "logo.png",
