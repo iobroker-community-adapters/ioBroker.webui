@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.4.9",
+    "version": "1.5.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.5.0": {
+        "en": "nicer two way bindings",
+        "de": "netter zwei wege bindungen",
+        "ru": "более милые два пути связывания",
+        "pt": "ligações de duas vias mais agradáveis",
+        "nl": "mooiere twee-weg bindingen",
+        "fr": "plus belles fixations à deux voies",
+        "it": "più bello leganti a due vie",
+        "es": "más bonitas dos formas de unión",
+        "pl": "milsze dwukierunkowe wiązania",
+        "uk": "красиві двосторонні зв'язки",
+        "zh-cn": "更好的两条线"
+      },
       "1.4.9": {
         "en": "fix toastify",
         "de": "toastify",
@@ -106,19 +119,6 @@
         "pl": "błąd kompilacji",
         "uk": "виправлено помилку компіляції",
         "zh-cn": "固定编译错误"
-      },
-      "1.4.3": {
-        "en": "fix copy of font",
-        "de": "fixieren kopie der schrift",
-        "ru": "исправить копию шрифта",
-        "pt": "corrigir cópia da fonte",
-        "nl": "kopie van lettertype herstellen",
-        "fr": "corriger la copie de la police",
-        "it": "copia di correzione del carattere",
-        "es": "fijar copia de fuente",
-        "pl": "fix kopia czcionki",
-        "uk": "фіксувати копію шрифту",
-        "zh-cn": "字体的固定副本"
       }
     },
     "icon": "logo.png",
