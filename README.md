@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- nicer two way bindings
+
 ### 1.4.9 (2024-04-24)
 - fix toastify
 
