@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.5.2",
+    "version": "1.5.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.5.3": {
+        "en": "fixes after package updates",
+        "de": "änderungen nach paketaktualisierungen",
+        "ru": "исправления после обновления пакета",
+        "pt": "correções após atualizações de pacotes",
+        "nl": "herstelt na pakketupdates",
+        "fr": "corrige après les mises à jour du paquet",
+        "it": "correzioni dopo gli aggiornamenti del pacchetto",
+        "es": "se fija después de las actualizaciones del paquete",
+        "pl": "poprawki po aktualizacjach pakietów",
+        "uk": "виправлення після оновлення пакета",
+        "zh-cn": "软件包更新后修正"
+      },
       "1.5.2": {
         "en": "removed missing prop",
         "de": "entfernte fehlende prop",
@@ -106,19 +119,6 @@
         "pl": "tryb kompaktowy na kontrolerze 6",
         "uk": "компактний режим на контролері 6",
         "zh-cn": "控制器 6 支持的紧凑模式"
-      },
-      "1.4.6": {
-        "en": "fix encoding for all files",
-        "de": "kodieren für alle dateien",
-        "ru": "фиксация кодирования для всех файлов",
-        "pt": "corrigir codificação para todos os arquivos",
-        "nl": "fix codering voor alle bestanden",
-        "fr": "correction de l'encodage pour tous les fichiers",
-        "it": "correzione della codifica per tutti i file",
-        "es": "fijar codificación para todos los archivos",
-        "pl": "naprawić kodowanie dla wszystkich plików",
-        "uk": "виправити кодування для всіх файлів",
-        "zh-cn": "为所有文件设置编码"
       }
     },
     "icon": "logo.png",
