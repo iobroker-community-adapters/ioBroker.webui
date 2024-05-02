@@ -24,8 +24,6 @@ import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from '
 import { CommandHandling } from './CommandHandling.js'
 import propertiesTypeInfo from "../generated/Properties.json" with { type: 'json' };
 
-DockSpawnTsWebcomponent.cssRootDirectory = "./node_modules/dock-spawn-ts/lib/css/";
-
 import "../runtime/controls.js";
 import "./IobrokerWebuiSolutionExplorer.js";
 import "./IobrokerWebuiMonacoEditor.js";
