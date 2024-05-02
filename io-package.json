@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.5.3",
+    "version": "1.5.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.5.4": {
+        "en": "fix delay command",
+        "de": "verzögerungsbefehl aktivieren",
+        "ru": "исправление задержки",
+        "pt": "corrigir o comando delay",
+        "nl": "fix delay commando",
+        "fr": "correction de la commande de retard",
+        "it": "correzione del comando di ritardo",
+        "es": "corrección de demora",
+        "pl": "naprawić polecenie opóźnienia",
+        "uk": "фіксувати команду затримки",
+        "zh-cn": "固定延迟命令"
+      },
       "1.5.3": {
         "en": "fixes after package updates",
         "de": "änderungen nach paketaktualisierungen",
@@ -106,19 +119,6 @@
         "pl": "fix dla sterownika v6",
         "uk": "кріплення для контролера v6",
         "zh-cn": "用于控制器 v6 的固定"
-      },
-      "1.4.7": {
-        "en": "compact mode on controler 6 support",
-        "de": "kompakter modus auf der steuerung 6 unterstützung",
-        "ru": "компактный режим на контроллере 6 поддержки",
-        "pt": "modo compacto no controler 6 suporte",
-        "nl": "compacte modus op controller 6 ondersteuning",
-        "fr": "mode compact sur le contrôleur 6 support",
-        "it": "modalità compatta sul controllore 6 supporto",
-        "es": "modo compacto en el controlador 6 soporte",
-        "pl": "tryb kompaktowy na kontrolerze 6",
-        "uk": "компактний режим на контролері 6",
-        "zh-cn": "控制器 6 支持的紧凑模式"
       }
     },
     "icon": "logo.png",

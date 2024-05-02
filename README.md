@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.5.4 (2024-05-02)
 - fix delay command
 
 ### 1.5.3 (2024-05-02)
