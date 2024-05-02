@@ -43,7 +43,6 @@ function copyNodeModules() {
         "dock-spawn-ts",
         "esprima-next",
         "long",
-        //"metro4-dist",
         "mobile-drag-drop",
         "monaco-editor",
         //"tslib"
@@ -64,9 +63,6 @@ function copyNodeModules() {
 
 function copyNodeFiles() {
     let runtimeModules = [
-        "metro4-dist/css/metro-all.min.css",
-        "metro4-dist/js/metro.min.js",
-        "metro4-dist/mif/metro.woff",
         "tslib/tslib.es6.mjs",
         "es-module-shims/dist/es-module-shims.js",
         "wunderbaum/dist/wunderbaum.css",
