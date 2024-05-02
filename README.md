@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.5.1 (2024-05-02)
 - add delay in blockly & npm updates
 
 ### 1.5.0 (2024-04-28)

@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.5.0",
+    "version": "1.5.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.5.1": {
+        "en": "add delay in blockly & npm updates",
+        "de": "verzögerung bei block- & npm-updates hinzufügen",
+        "ru": "добавьте задержку в обновлениях с блокировкой & npm",
+        "pt": "adicionar delay em atualizações blockly & npm",
+        "nl": "vertraging toevoegen in bloksgewijze & npm-updates",
+        "fr": "ajouter le retard dans les mises à jour bloc & npm",
+        "it": "aggiungere ritardo negli aggiornamenti di blocco & npm",
+        "es": "añadir retraso en actualizaciones de npm",
+        "pl": "dodaj opóźnienie w aktualizacjach blokujących & npm",
+        "uk": "додати затримку в блочно & npm оновлення",
+        "zh-cn": "在块式更新中添加延迟( n)"
+      },
       "1.5.0": {
         "en": "nicer two way bindings",
         "de": "netter zwei wege bindungen",
@@ -106,19 +119,6 @@
         "pl": "fix gulp5 copy breaks fonts",
         "uk": "виправити gulp5 копіювання перерву шрифтів",
         "zh-cn": "修复 gulp5 复制分页字体"
-      },
-      "1.4.4": {
-        "en": "fix compile error",
-        "de": "compile fehler beheben",
-        "ru": "ошибка компиляции",
-        "pt": "corrigir erro de compilação",
-        "nl": "compileerfout herstellen",
-        "fr": "correction de l'erreur de compilation",
-        "it": "correzione errore di compilazione",
-        "es": "error compilar",
-        "pl": "błąd kompilacji",
-        "uk": "виправлено помилку компіляції",
-        "zh-cn": "固定编译错误"
       }
     },
     "icon": "logo.png",
