@@ -175,6 +175,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       }
     })
 
+    await customElements.whenDefined('dock-spawn-ts');
     const linkElement = document.createElement("link");
     linkElement.rel = "stylesheet";
     linkElement.href = "./assets/dockspawn.css";

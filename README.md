@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fixes after package updates
+
 ### 1.5.2 (2024-05-02)
 - removed missing prop
 

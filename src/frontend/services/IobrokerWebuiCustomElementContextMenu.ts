@@ -6,7 +6,7 @@ import { IControl } from '../interfaces/IControl.js';
 export class IobrokerWebuiCustomElementContextMenu implements IContextMenuExtension {
 
     public shouldProvideContextmenu(event: MouseEvent, designerView: IDesignerCanvas, designItem: IDesignItem, initiator: ContextmenuInitiator) {
-        return !designItem.isRootItem && designItem.element instanceof BaseCustomControl;
+        return designItem && !designItem.isRootItem && designItem.element instanceof BaseCustomControl;
     }
 
     public provideContextMenuItems(event: MouseEvent, designerView: IDesignerCanvas, designItem: IDesignItem): IContextMenuItem[] {
