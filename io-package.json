@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.5.2": {
+        "en": "removed missing prop",
+        "de": "entfernte fehlende prop",
+        "ru": "удалить недостающее пропочтение",
+        "pt": "removeu o suporte ausente",
+        "nl": "ontbrekende prop verwijderd",
+        "fr": "pièce manquante enlevée",
+        "it": "smontabile",
+        "es": "desaparecido",
+        "pl": "usunięto brakujący podkład",
+        "uk": "видалити відсутній проп",
+        "zh-cn": "删除缺失的道具"
+      },
       "1.5.1": {
         "en": "add delay in blockly & npm updates",
         "de": "verzögerung bei block- & npm-updates hinzufügen",
@@ -106,19 +119,6 @@
         "pl": "naprawić kodowanie dla wszystkich plików",
         "uk": "виправити кодування для всіх файлів",
         "zh-cn": "为所有文件设置编码"
-      },
-      "1.4.5": {
-        "en": "fix gulp5 copy breaks fonts",
-        "de": "fix gulp5 copy breaks schriftarten",
-        "ru": "фиксация gulp5 копия разбивает шрифты",
-        "pt": "corrigir gulp5 copy breaks fontes",
-        "nl": "fix gulp5 kopie breekt lettertypen",
-        "fr": "correction des polices gulp5 copy breaks",
-        "it": "correzione gulp5 copia interruzioni caratteri",
-        "es": "fix gulp5 copy breaks fonts",
-        "pl": "fix gulp5 copy breaks fonts",
-        "uk": "виправити gulp5 копіювання перерву шрифтів",
-        "zh-cn": "修复 gulp5 复制分页字体"
       }
     },
     "icon": "logo.png",
