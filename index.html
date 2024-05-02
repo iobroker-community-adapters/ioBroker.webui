@@ -176,6 +176,7 @@
     nav button {
       border: none;
       background: transparent;
+      position: relative;
     }
 
     /* https://codepen.io/sosuke/pen/Pjoqqp - css filter generator */
@@ -202,8 +203,14 @@
 <body style="height: 100%;">
   <nav>
     <button data-command="new" title="new"><img src="./node_modules/@node-projects/web-component-designer/assets/icons/file.svg"></button>
-    <button data-command="new" data-command-parameter="grid" title="new grid"><img src="./node_modules/@node-projects/web-component-designer/assets/icons/file.svg"></button>
-    <button data-command="new" data-command-parameter="control" title="new control"><img src="./node_modules/@node-projects/web-component-designer/assets/icons/file.svg"></button>
+    <button data-command="new" data-command-parameter="grid" title="new grid">
+      <img src="./node_modules/@node-projects/web-component-designer/assets/icons/file.svg">
+      <img style="height: 16px; position: absolute; right: 6px; bottom: 2px;" src="./assets/icons/grid.svg">
+    </button>
+    <button data-command="new" data-command-parameter="control" title="new control">
+      <img src="./node_modules/@node-projects/web-component-designer/assets/icons/file.svg">
+      <img style="height: 16px; position: absolute; right: 6px; bottom: 2px;" src="./assets/icons/control.svg">
+    </button>
     <button data-command="save" title="save" disabled><img src="./node_modules/@node-projects/web-component-designer/assets/icons/save.svg"></button>
     <div style="margin-left: 30px;">
       webui - {{VERSION}} - {{COMMIT_HASH}}
