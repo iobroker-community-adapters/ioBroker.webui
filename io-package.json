@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.6.0",
+    "version": "1.6.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.6.1": {
+        "en": "better icons",
+        "de": "bessere icons",
+        "ru": "лучшие иконки",
+        "pt": "melhores ícones",
+        "nl": "betere pictogrammen",
+        "fr": "meilleures icônes",
+        "it": "icone migliori",
+        "es": "mejores iconos",
+        "pl": "lepsze ikony",
+        "uk": "кращі іконки",
+        "zh-cn": "更好的图标"
+      },
       "1.6.0": {
         "en": "remove metro ui",
         "de": "entfernen sie die u-bahn",
@@ -106,19 +119,6 @@
         "pl": "milsze dwukierunkowe wiązania",
         "uk": "красиві двосторонні зв'язки",
         "zh-cn": "更好的两条线"
-      },
-      "1.4.9": {
-        "en": "fix toastify",
-        "de": "toastify",
-        "ru": "исправить тостер",
-        "pt": "corrigir torradas",
-        "nl": "fix toastify",
-        "fr": "correction toastify",
-        "it": "fissare il brindisi",
-        "es": "fijar tostadas",
-        "pl": "fix tostify",
-        "uk": "закріпити тостифік",
-        "zh-cn": "修补土司"
       }
     },
     "icon": "logo.png",
