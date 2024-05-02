@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- removed missing prop
+
 ### 1.5.1 (2024-05-02)
 - add delay in blockly & npm updates
 
