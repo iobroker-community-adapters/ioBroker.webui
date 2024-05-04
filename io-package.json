@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.6.1",
+    "version": "1.6.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.6.2": {
+        "en": "jump to styles",
+        "de": "zu den stilen springen",
+        "ru": "прыгать в стили",
+        "pt": "saltar para estilos",
+        "nl": "naar stijlen springen",
+        "fr": "sauter aux styles",
+        "it": "salto a stili",
+        "es": "saltar a los estilos",
+        "pl": "przejść do stylów",
+        "uk": "стрибати в стилі",
+        "zh-cn": "跳转到样式"
+      },
       "1.6.1": {
         "en": "better icons",
         "de": "bessere icons",
@@ -106,19 +119,6 @@
         "pl": "dodaj opóźnienie w aktualizacjach blokujących & npm",
         "uk": "додати затримку в блочно & npm оновлення",
         "zh-cn": "在块式更新中添加延迟( n)"
-      },
-      "1.5.0": {
-        "en": "nicer two way bindings",
-        "de": "netter zwei wege bindungen",
-        "ru": "более милые два пути связывания",
-        "pt": "ligações de duas vias mais agradáveis",
-        "nl": "mooiere twee-weg bindingen",
-        "fr": "plus belles fixations à deux voies",
-        "it": "più bello leganti a due vie",
-        "es": "más bonitas dos formas de unión",
-        "pl": "milsze dwukierunkowe wiązania",
-        "uk": "красиві двосторонні зв'язки",
-        "zh-cn": "更好的两条线"
       }
     },
     "icon": "logo.png",
