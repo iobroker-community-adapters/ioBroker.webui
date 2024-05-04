@@ -9,7 +9,7 @@ const bindingsHelper = new BindingsHelper(iobrokerHandler);
 LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
 
 import '@node-projects/web-component-designer'
-import { PropertyGrid, RefactorView, ServiceContainer } from '@node-projects/web-component-designer';
+import { PropertyGridWithHeader, RefactorView, ServiceContainer } from '@node-projects/web-component-designer';
 import { TreeViewExtended } from '@node-projects/web-component-designer-widgets-wunderbaum';
 
 import type { IDisposable } from 'monaco-editor';
@@ -58,7 +58,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   public styleEditor: IobrokerWebuiMonacoEditor;
   public javascriptEditor: IobrokerWebuiMonacoEditor;
   public controlpropertiesEditor: IobrokerWebuiControlPropertiesEditor;
-  public propertyGrid: PropertyGrid;
+  public propertyGrid: PropertyGridWithHeader;
   public treeViewExtended: TreeViewExtended;
   public eventsAssignment: IobrokerWebuiEventAssignment;
   public settingsEditor: IobrokerWebuiPropertyGrid;
@@ -156,7 +156,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     this._solutionExplorer = this._getDomElement<IobrokerWebuiSolutionExplorer>('solutionExplorer');
 
     this.treeViewExtended = this._getDomElement<TreeViewExtended>('treeViewExtended');
-    this.propertyGrid = this._getDomElement<PropertyGrid>('propertyGrid');
+    this.propertyGrid = this._getDomElement<PropertyGridWithHeader>('propertyGrid');
     this.styleEditor = this._getDomElement<IobrokerWebuiMonacoEditor>('styleEditor');
     this.javascriptEditor = this._getDomElement<IobrokerWebuiMonacoEditor>('javascriptEditor');
     this.controlpropertiesEditor = this._getDomElement<IobrokerWebuiControlPropertiesEditor>('propertiesEditor');
@@ -219,6 +219,23 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       this.npmState = <any>state.val;
       stateElement.innerText = <any>state.val;
     });
+
+    //@ts-ignore
+    this.propertyGrid.propertyGrid.propertyGroupHover = (group) => group.properties?.[0]?.styleDeclaration;
+    this.propertyGrid.propertyGrid.propertyGroupClick = (group, mode) => {
+      //@ts-ignore
+      if (group.properties?.[0]?.styleDeclaration) {
+        //@ts-ignore
+        const line = group.properties?.[0]?.styleDeclaration?.ast?.parent?.position?.start?.line;
+        //@ts-ignore
+        const column = group.properties?.[0]?.styleDeclaration?.ast?.parent?.position?.start?.column;
+        //@ts-ignore
+        const lineEnd = group.properties?.[0]?.styleDeclaration?.ast?.parent?.position?.end?.line;
+        //@ts-ignore
+        const columnEnd = group.properties?.[0]?.styleDeclaration?.ast?.parent?.position?.end?.column;
+        this.styleEditor.showLine(line, column, lineEnd, columnEnd);
+      }
+    };
 
     setTimeout(() => {
       this.activateDockById('attributeDock');
