@@ -9,7 +9,7 @@ const bindingsHelper = new BindingsHelper(iobrokerHandler);
 LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
 
 import '@node-projects/web-component-designer'
-import { PropertyGridWithHeader, RefactorView, ServiceContainer } from '@node-projects/web-component-designer';
+import { PropertyGridWithHeader, RefactorView, ServiceContainer, ValueType } from '@node-projects/web-component-designer';
 import { TreeViewExtended } from '@node-projects/web-component-designer-widgets-wunderbaum';
 
 import type { IDisposable } from 'monaco-editor';
@@ -222,19 +222,32 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
 
     //@ts-ignore
     this.propertyGrid.propertyGrid.propertyGroupHover = (group) => group.properties?.[0]?.styleDeclaration;
+    this.propertyGrid.propertyGrid.propertyContextMenuProvider = (designItems, property) => {
+      const ctxMenuItems = property.service.getContextMenu(designItems, property);
+      if (property.service.isSet(designItems, property) == ValueType.fromStylesheet) {
+        ctxMenuItems.push(...[
+          { title: '-' },
+          {
+            title: 'jump to declaration', action: () => {
+              //@ts-ignore
+              let styleDeclaration = property.styleDeclaration;
+              if (!styleDeclaration)
+                styleDeclaration = designItems[0].getAllStyles().filter(x => x.selector != null).flatMap(x => x.declarations).find(x => x.name == property.name);
+              if (styleDeclaration)
+                //@ts-ignore
+                this.jumpToCss(styleDeclaration.ast, styleDeclaration.stylesheet);
+            }
+          }
+        ]);
+      };
+      return ctxMenuItems;
+    }
     this.propertyGrid.propertyGrid.propertyGroupClick = (group, mode) => {
       //@ts-ignore
-      if (group.properties?.[0]?.styleDeclaration) {
+      if (group.properties?.[0]?.styleDeclaration?.ast?.parent)
         //@ts-ignore
-        const line = group.properties?.[0]?.styleDeclaration?.ast?.parent?.position?.start?.line;
-        //@ts-ignore
-        const column = group.properties?.[0]?.styleDeclaration?.ast?.parent?.position?.start?.column;
-        //@ts-ignore
-        const lineEnd = group.properties?.[0]?.styleDeclaration?.ast?.parent?.position?.end?.line;
-        //@ts-ignore
-        const columnEnd = group.properties?.[0]?.styleDeclaration?.ast?.parent?.position?.end?.column;
-        this.styleEditor.showLine(line, column, lineEnd, columnEnd);
-      }
+        this.jumpToCss(group.properties?.[0]?.styleDeclaration?.ast?.parent, group.properties?.[0]?.styleDeclaration?.stylesheet);
+      //}
     };
 
     setTimeout(() => {
@@ -244,6 +257,47 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       this._getDomElement<HTMLElement>('javascriptDock').title = '';
       this._getDomElement<HTMLElement>('styleDock').title = '';
     }, 150);
+  }
+
+  private jumpToCss(styleDeclaration, stylesheet) {
+    //@ts-ignore
+    const line = styleDeclaration.position?.start?.line;
+    //@ts-ignore
+    const column = styleDeclaration.position?.start?.column;
+    //@ts-ignore
+    const lineEnd = styleDeclaration.position?.end?.line;
+    //@ts-ignore
+    const columnEnd = styleDeclaration.position?.end?.column;
+    //@ts-ignore
+    if (stylesheet?.designItem) {
+      //@ts-ignore
+      const di: DesignItem = stylesheet?.designItem;
+      let switched = false;
+      if (di.instanceServiceContainer.documentContainer.currentView != 'code' &&
+        di.instanceServiceContainer.documentContainer.currentView != 'split') {
+        switched = true;
+        di.instanceServiceContainer.documentContainer.currentView = 'split';
+      }
+
+      setTimeout(() => {
+        let startPos = column;
+        let endPos = columnEnd;
+        //@ts-ignore
+        const cssCode: string = stylesheet?.content;
+        const lines = cssCode.split('\n')
+        for (let n = 0; n < lineEnd - 1; n++) {
+          if (n < line - 1)
+            startPos += lines[n].length + 1;
+          endPos += lines[n].length + 1;
+        }
+        const selectionPosition = di.instanceServiceContainer.designItemDocumentPositionService.getPosition(di);
+        //TODO: style tag could contain attributes
+        const styleLength = '<style>'.length
+        di.instanceServiceContainer.documentContainer.codeView.setSelection({ start: startPos + styleLength + selectionPosition.start - 1, length: endPos - startPos });
+      }, switched ? 250 : 0);
+    } else {
+      this.styleEditor.showLine(line, column, lineEnd, columnEnd);
+    }
   }
 
   private async _setupServiceContainer() {
