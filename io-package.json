@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.6.2",
+    "version": "1.6.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.6.3": {
+        "en": "jump to all css declarations",
+        "de": "auf alle css erklärungen springen",
+        "ru": "прыжки ко всем заявлениям",
+        "pt": "saltar para todas as declarações css",
+        "nl": "naar alle css-declaraties springen",
+        "fr": "sauter à toutes les déclarations de css",
+        "it": "saltare a tutte le dichiarazioni css",
+        "es": "saltar a todas las declaraciones de css",
+        "pl": "przejść do wszystkich deklaracji css",
+        "uk": "стрибати на всі cs декларацій",
+        "zh-cn": "跳转到所有 css 声明"
+      },
       "1.6.2": {
         "en": "jump to styles",
         "de": "zu den stilen springen",
@@ -106,19 +119,6 @@
         "pl": "usunięto brakujący podkład",
         "uk": "видалити відсутній проп",
         "zh-cn": "删除缺失的道具"
-      },
-      "1.5.1": {
-        "en": "add delay in blockly & npm updates",
-        "de": "verzögerung bei block- & npm-updates hinzufügen",
-        "ru": "добавьте задержку в обновлениях с блокировкой & npm",
-        "pt": "adicionar delay em atualizações blockly & npm",
-        "nl": "vertraging toevoegen in bloksgewijze & npm-updates",
-        "fr": "ajouter le retard dans les mises à jour bloc & npm",
-        "it": "aggiungere ritardo negli aggiornamenti di blocco & npm",
-        "es": "añadir retraso en actualizaciones de npm",
-        "pl": "dodaj opóźnienie w aktualizacjach blokujących & npm",
-        "uk": "додати затримку в блочно & npm оновлення",
-        "zh-cn": "在块式更新中添加延迟( n)"
       }
     },
     "icon": "logo.png",
