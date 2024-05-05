@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.6.4 (2024-05-05)
 - expand/collapse of child nodes in tree
 - undock all windows
 
