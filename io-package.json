@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.6.4",
+    "version": "1.6.5",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.6.5": {
+        "en": "designer update",
+        "de": "designer-update",
+        "ru": "обновление",
+        "pt": "atualização do designer",
+        "nl": "ontwerper-update",
+        "fr": "mise à jour du concepteur",
+        "it": "aggiornamento designer",
+        "es": "actualización del diseñador",
+        "pl": "aktualizacja projektanta",
+        "uk": "оновлення дизайнера",
+        "zh-cn": "设计者更新"
+      },
       "1.6.4": {
         "en": "expand/collapse of child nodes in tree\nundock all windows",
         "de": "erweitern/verstreichen von kinderknoten im baum\nundock alle fenster",
@@ -106,19 +119,6 @@
         "pl": "naprawić polecenie opóźnienia",
         "uk": "фіксувати команду затримки",
         "zh-cn": "固定延迟命令"
-      },
-      "1.5.3": {
-        "en": "fixes after package updates",
-        "de": "änderungen nach paketaktualisierungen",
-        "ru": "исправления после обновления пакета",
-        "pt": "correções após atualizações de pacotes",
-        "nl": "herstelt na pakketupdates",
-        "fr": "corrige après les mises à jour du paquet",
-        "it": "correzioni dopo gli aggiornamenti del pacchetto",
-        "es": "se fija después de las actualizaciones del paquete",
-        "pl": "poprawki po aktualizacjach pakietów",
-        "uk": "виправлення після оновлення пакета",
-        "zh-cn": "软件包更新后修正"
       }
     },
     "icon": "logo.png",
