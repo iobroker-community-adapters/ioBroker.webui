@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.1.4",
-    "@types/node": "^20.12.8"
+    "@types/node": "^20.12.10"
   },
   "devDependencies": {
     "@adobe/css-tools": "4.3.3",
@@ -54,12 +54,12 @@
     "@node-projects/node-html-parser-esm": "^6.2.0",
     "@node-projects/propertygrid.webcomponent": "^1.0.5",
     "@node-projects/splitview.webcomponent": "^1.0.1",
-    "@node-projects/web-component-designer": "^0.1.151",
+    "@node-projects/web-component-designer": "^0.1.154",
     "@node-projects/web-component-designer-codeview-monaco": "^0.1.26",
     "@node-projects/web-component-designer-htmlparserservice-nodehtmlparser": "^0.1.10",
     "@node-projects/web-component-designer-stylesheetservice-css-tools": "^0.1.4",
     "@node-projects/web-component-designer-visualization-addons": "^0.1.27",
-    "@node-projects/web-component-designer-widgets-wunderbaum": "^0.1.17",
+    "@node-projects/web-component-designer-widgets-wunderbaum": "^0.1.18",
     "@types/json-schema": "^7.0.15",
     "@web/dev-server": "^0.4.4",
     "blockly": "^10.4.3",
@@ -87,6 +87,6 @@
     "tslib": "^2.6.2",
     "typescript": "^5.4.5",
     "typescript-json-schema": "^0.63.0",
-    "wunderbaum": "0.8.4"
+    "wunderbaum": "0.9.0"
   }
 }
