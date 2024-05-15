@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.7.0",
+    "version": "1.7.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.7.1": {
+        "en": "fix in designer",
+        "de": "fix in designer",
+        "ru": "фиксация в дизайнере",
+        "pt": "corrigir no designer",
+        "nl": "fix in ontwerper",
+        "fr": "correction dans le concepteur",
+        "it": "fix in designer",
+        "es": "fijado en diseñador",
+        "pl": "fix in designer",
+        "uk": "фіксація в дизайнеру",
+        "zh-cn": "在设计器中的固定"
+      },
       "1.7.0": {
         "en": "Add screen contextmenu\nsupport editing of repeat in grid colum/row templates\ndesigner updates\nforce styles",
         "de": "Bildschirmkontext hinzufügenmenu\nunterstützung der bearbeitung von wiederholungen in rasterkolum/kreuzvorlagen\ndesigner-updates\nkraft-stile",
@@ -106,19 +119,6 @@
         "pl": "lepsze ikony",
         "uk": "кращі іконки",
         "zh-cn": "更好的图标"
-      },
-      "1.6.0": {
-        "en": "remove metro ui",
-        "de": "entfernen sie die u-bahn",
-        "ru": "удалить метро ui",
-        "pt": "remover metro ui",
-        "nl": "verwijder metro ui",
-        "fr": "enlever le métro ui",
-        "it": "rimuovere metro ui",
-        "es": "quitar metro ui",
-        "pl": "usunąć metro ui",
-        "uk": "прибрати метро ui",
-        "zh-cn": "移除地铁ui"
       }
     },
     "icon": "logo.png",
