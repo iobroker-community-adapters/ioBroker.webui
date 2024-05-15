@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.6.5",
+    "version": "1.7.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.7.0": {
+        "en": "Add screen contextmenu\nsupport editing of repeat in grid colum/row templates\ndesigner updates\nforce styles",
+        "de": "Bildschirmkontext hinzufügenmenu\nunterstützung der bearbeitung von wiederholungen in rasterkolum/kreuzvorlagen\ndesigner-updates\nkraft-stile",
+        "ru": "Добавить контекстное меню экрана\nподдержка редактирования повторных в шаблонах сетки\nобновления\nсиловые стили",
+        "pt": "Adicionar contextmenu de tela\nedição de suporte de repetição em modelos de coluna/linha de grade\natualizações do designer\nestilos de força",
+        "nl": "Contextmenu scherm toevoegen\nondersteuning voor het bewerken van herhalingen in raster-colum/rijsjablonen\nontwerper updates\nkrachtstijlen",
+        "fr": "Ajouter le menu contextuel de l'écran\nsoutenir l'édition des répétitions dans les modèles de colum/ligne de grille\nmises à jour du concepteur\nstyles de force",
+        "it": "Aggiungi contestmenu schermo\nmontaggio di supporto di ripetizione nei modelli di colum/row della griglia\naggiornamenti designer\nstili di forza",
+        "es": "Añadir contextmenu pantalla\nsoporte de edición de repetición en plantillas de cuadrícula de colum/row\nactualizaciones de diseño\nestilos de fuerza",
+        "pl": "Dodaj menu konfiguracji ekranu\nobsługa edycji powtarzania w szablonach siatki colum / row\naktualizacje projektantów\nstyle siły",
+        "uk": "Додавання контексту екрану\nпідтримка редагування повтору в сітчастих шаблонах\nоновлення дизайнера\nстилі",
+        "zh-cn": "添加屏幕上下文菜单\n支持编辑网格粘合/行模板中的重复\n设计者更新\n力量样式"
+      },
       "1.6.5": {
         "en": "designer update",
         "de": "designer-update",
@@ -106,19 +119,6 @@
         "pl": "usunąć metro ui",
         "uk": "прибрати метро ui",
         "zh-cn": "移除地铁ui"
-      },
-      "1.5.4": {
-        "en": "fix delay command",
-        "de": "verzögerungsbefehl aktivieren",
-        "ru": "исправление задержки",
-        "pt": "corrigir o comando delay",
-        "nl": "fix delay commando",
-        "fr": "correction de la commande de retard",
-        "it": "correzione del comando di ritardo",
-        "es": "corrección de demora",
-        "pl": "naprawić polecenie opóźnienia",
-        "uk": "фіксувати команду затримки",
-        "zh-cn": "固定延迟命令"
       }
     },
     "icon": "logo.png",
