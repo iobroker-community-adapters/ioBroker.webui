@@ -19,6 +19,7 @@ import { IobrokerWebuiRefactorService } from "../services/IobrokerWebuiRefactorS
 import { IobrokerWebuiSpecialPropertiesService } from "../services/IobrokerWebuiSpecialPropertiesService.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ExpandCollapseContextMenu } from "@node-projects/web-component-designer-widgets-wunderbaum";
+import { IobrokerWebuiScreenContextMenu } from "../services/IobrokerWebuiScreenContextMenu.js";
 
 export function configureDesigner(bindingsHelper: BindingsHelper) {
     const serviceContainer = createDefaultServiceContainer();
@@ -48,6 +49,7 @@ export function configureDesigner(bindingsHelper: BindingsHelper) {
 
     serviceContainer.designerContextMenuExtensions.push(new SeperatorContextMenu());
     serviceContainer.designerContextMenuExtensions.push(new IobrokerWebuiCustomElementContextMenu());
+    serviceContainer.designerContextMenuExtensions.push(new IobrokerWebuiScreenContextMenu());
 
     serviceContainer.designerContextMenuExtensions.push(new ExpandCollapseContextMenu());
 

@@ -42,8 +42,8 @@ export class CommandHandling {
           style += `\n\n:host {
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: ${'1fr '.repeat(columns).trim()};
-    grid-template-rows: ${'1fr '.repeat(rows).trim()};
+    grid-template-columns: repeat(${columns}, 1fr);
+    grid-template-rows: repeat(${rows}, 1fr);
     gap: 10px;
     padding: 10px;
 }`
@@ -109,7 +109,7 @@ export class CommandHandling {
         let target = <IobrokerWebuiScreenEditor>this.dockManager.activeDocument.resolvedElementContent;
         let entries = target.documentContainer.instanceServiceContainer.undoService.getRedoEntries(20);
         let mnu: IContextMenuItem[] = Array.from(entries).map((x, idx) => ({ title: 'redo: ' + x, action: () => { for (let i = 0; i <= idx; i++) target.documentContainer.instanceServiceContainer.undoService.redo() } }));
-        ContextMenu.show(mnu, e, { mode: 'undo' })
+        ContextMenu.show(mnu, e, { mode: 'undo' });
       }, 300)
     }
     redoButton.onmouseup = (e) => {
