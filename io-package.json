@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.7.2",
+    "version": "1.7.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.7.3": {
+        "en": "fix transform combinations in designer\nfix treeview jump to",
+        "de": "fix transform kombinationen in designer\nbaumansicht springen zu beheben",
+        "ru": "фиксация трансформаторных комбинаций в дизайнере\nпочинить дерево вид прыгать",
+        "pt": "corrigir combinações de transforma em designer\ncorrigir o salto de exibição de árvore",
+        "nl": "fix transform combinaties in ontwerper\nfix treeview springen naar",
+        "fr": "fixer les combinaisons de transformation dans le concepteur\nfixer arboreview sauter à",
+        "it": "corretti le combinazioni di trasformazioni in designer\nfissare vista albero salto a",
+        "es": "fijar combinaciones de transformación en diseñador\nfijar salto de vista del árbol",
+        "pl": "naprawić kombinacje transformacji w projektancie\nnaprawić skok drzewa do",
+        "uk": "фіксувати комбінації перетворення в дизайнера\nзакріпити перегляд дерева стрибати",
+        "zh-cn": "在设计器中固定变换组合\n固定树视图跳转到"
+      },
       "1.7.2": {
         "en": "few more small designer fixes",
         "de": "weniger kleine designer-fixes",
@@ -106,19 +119,6 @@
         "pl": "przejść do wszystkich deklaracji css",
         "uk": "стрибати на всі cs декларацій",
         "zh-cn": "跳转到所有 css 声明"
-      },
-      "1.6.2": {
-        "en": "jump to styles",
-        "de": "zu den stilen springen",
-        "ru": "прыгать в стили",
-        "pt": "saltar para estilos",
-        "nl": "naar stijlen springen",
-        "fr": "sauter aux styles",
-        "it": "salto a stili",
-        "es": "saltar a los estilos",
-        "pl": "przejść do stylów",
-        "uk": "стрибати в стилі",
-        "zh-cn": "跳转到样式"
       }
     },
     "icon": "logo.png",
