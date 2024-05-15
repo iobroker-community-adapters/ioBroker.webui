@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix transform combinations in designer
+- fix treeview jump to
+
 ### 1.7.2 (2024-05-15)
 - few more small designer fixes
 
