@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix in designer
+
 ### 1.7.0 (2024-05-15)
 - Add screen contextmenu
 - support editing of repeat in grid colum/row templates
