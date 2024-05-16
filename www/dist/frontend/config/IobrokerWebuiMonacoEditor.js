@@ -184,5 +184,10 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
             this._editor.revealRangeInCenterIfOutsideViewport(new monaco.Range(lineStart, columnStart, lineEnd, columnEnd), 1);
         }, 50);
     }
+    showLine(line, column, lineEnd, columnEnd) {
+        this._editor.setSelection({ startLineNumber: line, startColumn: column, endLineNumber: lineEnd, endColumn: columnEnd });
+        //@ts-ignore
+        this._editor.revealRangeAtTop(new monaco.Range(line, column, lineEnd, columnEnd), 1);
+    }
 }
 customElements.define('iobroker-webui-monaco-editor', IobrokerWebuiMonacoEditor);

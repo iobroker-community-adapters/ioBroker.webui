@@ -3,6 +3,7 @@
     "definitions": {
         "BindingTarget": {
             "enum": [
+                "explicitProperty",
                 "property",
                 "attribute",
                 "class",
@@ -37,7 +38,7 @@
                 "arguments",
                 "caller",
                 "name",
-                "__@hasInstance@5377"
+                "__@hasInstance@5421"
             ],
             "type": "object"
         },

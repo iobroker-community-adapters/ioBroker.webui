@@ -12,8 +12,6 @@
   <script src="./node_modules/@blockly/zoom-to-fit/dist/index.js"></script>
   <script src="./node_modules/dayjs/dayjs.min.js"></script>
 
-  <link rel="stylesheet" href="./node_modules/metro4-dist/css/metro-all.min.css">
-
   <!-- Drag/Drop support on touch devices -->
   <link rel="stylesheet" href="./node_modules/mobile-drag-drop/default.css">
   <link rel="stylesheet" href="./node_modules/dock-spawn-ts/lib/css/dock-manager.css">
@@ -56,6 +54,7 @@
     } catch (err) {
       console.warn(err);
     }
+    importShim('dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent.js');
     importShim('./dist/frontend/config/IobrokerWebuiAppShell.js');
   </script>
 
@@ -119,7 +118,7 @@
     }
 
     html {
-      --heightTop: 121px;
+      --heightTop: 38px;
       --heightStatus: 20px;
     }
 
@@ -155,152 +154,77 @@
       z-index: 99999;
     }
   </style>
+   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    nav {
+      background: rgb(44, 46, 53);
+      display: flex;
+      height: var(--heightTop);
+      padding: 5px;
+      gap: 0;
+      color: #98a1a8;
+    }
+    nav div {
+      display: flex;
+      align-items: center;
+      font-family: monospace;
+    }
+
+    nav button {
+      border: none;
+      background: transparent;
+      position: relative;
+    }
+
+    /* https://codepen.io/sosuke/pen/Pjoqqp - css filter generator */
+    nav button img {
+      height: 24px;
+      filter: invert(68%) sepia(15%) saturate(133%) hue-rotate(169deg) brightness(91%) contrast(91%);
+      user-select: none;
+    }
+
+    nav button[disabled] img {
+      filter: invert(38%) sepia(1%) saturate(0%) hue-rotate(211deg) brightness(94%) contrast(85%);
+    }
+
+    nav button:not([disabled]) img:hover {
+      filter: invert(100%) sepia(2%) saturate(7432%) hue-rotate(100deg) brightness(112%) contrast(94%);
+    }
+
+    nav button:not([disabled]) img:active {
+      filter: invert(41%) sepia(92%) saturate(1090%) hue-rotate(335deg) brightness(99%) contrast(93%);
+    }
+  </style>
 </head>
 
 <body style="height: 100%;">
-  <nav id="configRibbonHeader" data-role="ribbonmenu" class="ribbon-menu" data-role-ribbonmenu="true"
-    style="width: 100%; background: rgb(245, 246, 247); border-bottom:solid 1px rgb(218, 219, 220);">
-    <div class="content-holder">
-      <div class="section active" style="height: 120px; overflow-x: auto;">
-        <div class="group">
-          <button class="ribbon-button" data-command="new" disabled>
-            <span class="icon">
-              <span class="mif-file-empty fg-cyan"></span>
-            </span>
-            <span class="caption">new screen</span>
-          </button>
-          <button class="ribbon-button" data-command="new" data-command-parameter="grid" disabled>
-            <span class="icon">
-              <span class="mif-file-empty fg-cyan"></span>
-            </span>
-            <span class="caption" style="font-size: 8px">new screen<br>(grid)</span>
-          </button>
-          <button class="ribbon-button" data-command="new" data-command-parameter="control" disabled>
-            <span class="icon">
-              <span class="mif-file-empty fg-cyan"></span>
-            </span>
-            <span class="caption" style="font-size: 8px">new control</span>
-          </button>
-          <button class="ribbon-button" data-command="save" disabled>
-            <span class="icon">
-              <span class="mif-floppy-disk fg-cyan"></span>
-            </span>
-            <span class="caption">save</span>
-          </button>
-          <span class="title">file</span>
-        </div>
-        <div class="group">
-          <button class="ribbon-button" data-command="paste" disabled>
-            <span class="icon">
-              <span class="mif-paste fg-cyan"></span>
-            </span>
-            <span class="caption">paste</span>
-          </button>
-          <div class="group flex-column">
-            <button class="ribbon-icon-button" data-command="cut" disabled>
-              <span class="icon">
-                <span class="mif-cut fg-cyan"></span>
-              </span>
-              <span class="caption">cut</span>
-            </button>
-            <button class="ribbon-icon-button" data-command="copy" disabled>
-              <span class="icon">
-                <span class="mif-copy fg-cyan"></span>
-              </span>
-              <span class="caption">copy</span>
-            </button>
-          </div>
-          <span class="title">clipboard</span>
-        </div>
-        <div class="group flex-column">
-          <button class="ribbon-icon-button" data-command="undo" disabled>
-            <span class="icon">
-              <span class="mif-undo fg-cyan"></span>
-            </span>
-            <span class="caption">undo</span>
-          </button>
-          <button class="ribbon-icon-button" data-command="redo" disabled>
-            <span class="icon">
-              <span class="mif-redo fg-cyan"></span>
-            </span>
-            <span class="caption">redo</span>
-          </button>
-          <span class="title">edit</span>
-        </div>
-        <div class="group flex-column">
-          <div class="group" style="display: grid; grid-template-columns: auto auto auto auto auto auto auto;">
-            <button class="tool-button" data-command="arrangeLeft" title="align left"
-              style="background-image: url('./assets/images/layout/AlignLeft.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
-              disabled></button>
-            <button class="tool-button" data-command="arrangeCenter" title="align center vertically"
-              style="background-image: url('./assets/images/layout/AlignCenter.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
-              disabled></button>
-            <button class="tool-button" data-command="arrangeRight" title="align right"
-              style="background-image: url('./assets/images/layout/AlignRight.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
-              disabled></button>
-            <button class="tool-button" data-command="arrangeTop" title="align top"
-              style="background-image: url('./assets/images/layout/AlignTop.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
-              disabled></button>
-            <button class="tool-button" data-command="arrangeMiddle" title="align center horizontally"
-              style="background-image: url('./assets/images/layout/AlignCenterHorizontal.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
-              disabled></button>
-            <button class="tool-button" data-command="arrangeBottom" title="align bottom"
-              style="background-image: url('./assets/images/layout/AlignBot.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
-              disabled></button>
-            <button class="tool-button" data-command="rotateClockwise" title="rotate clockwise"
-              style="background-image: url('./assets/images/layout/RotatClockwise.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
-              disabled></button>
-
-            <button class="tool-button" data-command="mirrorHorizontal" title="mirror horizontal"
-              style="background-image: url('./assets/images/layout/MirrowHorizontal.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
-              disabled></button>
-            <button class="tool-button" data-command="mirrorVertical" title="mirror vertical"
-              style="background-image: url('./assets/images/layout/MirrowVertical.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
-              disabled></button>
-            <button class="tool-button" data-command="moveToBack" title="bring to back"
-              style="background-image: url('./assets/images/layout/BringToBack.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
-              disabled></button>
-            <button class="tool-button" data-command="moveToFront" title="bring to front"
-              style="background-image: url('./assets/images/layout/BringToFront.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
-              disabled></button>
-            <button class="tool-button" data-command="moveBackward" title="bring one to back"
-              style="background-image: url('./assets/images/layout/BringOneToBack.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
-              disabled></button>
-            <button class="tool-button" data-command="moveForward" title="bring one to front"
-              style="background-image: url('./assets/images/layout/BringOneToFront.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
-              disabled></button>
-            <button class="tool-button" data-command="rotateCounterClockwise" title="rotate counter clockwise"
-              style="background-image: url('./assets/images/layout/RotatCounterClockwise.svg'); background-size: cover; background-size: 80%;background-repeat: no-repeat;background-position: center;"
-              disabled></button>
-          </div>
-          <span class="title">layout</span>
-        </div>
-        <div class="group flex-column" style="display: flex; align-items: center;">
-          <div>
-            webui
-          </div>
-          <div style="font-size: 10px;">
-            version: 1.4.6
-          </div>
-          <div style="font-size: 10px;">
-            hash: 4e36aff6
-          </div>
-          <span class="title">Version</span>
-        </div>
-        <div style="flex-grow: 1;"></div>
-        <div>
-          <div class="group" style="height: 111px; border-left: 1px solid #dadbdc; inline-size: fit-content;">
-            <button class="ribbon-button" data-command="runtime">
-              <span class="icon">
-                <span class="mif-play fg-cyan"></span>
-              </span>
-              <span class="caption">runtime</span>
-            </button>
-            <span class="title">runtime</span>
-          </div>
-        </div>
-      </div>
+  <nav>
+    <button data-command="new" title="new"><img src="./node_modules/@node-projects/web-component-designer/assets/icons/file.svg"></button>
+    <button data-command="new" data-command-parameter="grid" title="new grid">
+      <img src="./node_modules/@node-projects/web-component-designer/assets/icons/file.svg">
+      <img style="height: 16px; position: absolute; right: 6px; bottom: 2px;" src="./assets/icons/grid.svg">
+    </button>
+    <button data-command="new" data-command-parameter="control" title="new control">
+      <img src="./node_modules/@node-projects/web-component-designer/assets/icons/file.svg">
+      <img style="height: 16px; position: absolute; right: 6px; bottom: 2px;" src="./assets/icons/control.svg">
+    </button>
+    <button data-command="save" title="save" disabled><img src="./node_modules/@node-projects/web-component-designer/assets/icons/save.svg"></button>
+    <div style="margin-left: 30px;">
+      webui - 1.7.3 - 5997ad17
     </div>
+    <button style="margin-left: 30px;" data-command="paste" title="paste" disabled><img
+        src="./node_modules/@node-projects/web-component-designer/assets/icons/paste.svg"></button>
+    <button data-command="cut" title="cut" disabled><img src="./node_modules/@node-projects/web-component-designer/assets/icons/cut.svg"></button>
+    <button data-command="copy" title="copy" disabled><img src="./node_modules/@node-projects/web-component-designer/assets/icons/copy.svg"></button>
+    <button data-command="delete" title="delete" disabled><img src="./node_modules/@node-projects/web-component-designer/assets/icons/delete.svg"></button>
+    <button ondragstart="return false;" style="margin-left: 10px;" data-command="undo" disabled title="click and hold to see the undo list"><img
+        src="./node_modules/@node-projects/web-component-designer/assets/icons/undo.svg"></button>
+    <button ondragstart="return false;" data-command="redo" disabled title="click and hold to see the redo list"><img
+        src="./node_modules/@node-projects/web-component-designer/assets/icons/redo.svg"></button>
+    <button style="margin-left: 10px;" data-command="runtime" title="runtime"><img src="./assets/icons/play.svg"></button>
   </nav>
   <iobroker-webui-app-shell id="shell">
   </iobroker-webui-app-shell>

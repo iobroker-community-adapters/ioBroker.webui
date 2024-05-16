@@ -2,7 +2,7 @@ import { BaseCustomControl, webuiCustomControlSymbol } from '../runtime/CustomCo
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
 export class IobrokerWebuiCustomElementContextMenu {
     shouldProvideContextmenu(event, designerView, designItem, initiator) {
-        return !designItem.isRootItem && designItem.element instanceof BaseCustomControl;
+        return designItem && !designItem.isRootItem && designItem.element instanceof BaseCustomControl;
     }
     provideContextMenuItems(event, designerView, designItem) {
         return [

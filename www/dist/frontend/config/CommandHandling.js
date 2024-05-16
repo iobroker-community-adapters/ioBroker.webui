@@ -36,8 +36,8 @@ export class CommandHandling {
                     style += `\n\n:host {
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: ${'1fr '.repeat(columns).trim()};
-    grid-template-rows: ${'1fr '.repeat(rows).trim()};
+    grid-template-columns: repeat(${columns}, 1fr);
+    grid-template-rows: repeat(${rows}, 1fr);
     gap: 10px;
     padding: 10px;
 }`;
