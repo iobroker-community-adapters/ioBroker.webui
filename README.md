@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.7.4 (2024-05-16)
 - designer transformation fixes
 
 ### 1.7.3 (2024-05-15)

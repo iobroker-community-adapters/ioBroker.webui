@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.7.3",
+    "version": "1.7.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.7.4": {
+        "en": "designer transformation fixes",
+        "de": "designer-transformation fixes",
+        "ru": "дизайнерские решения трансформации",
+        "pt": "correções de transformação do designer",
+        "nl": "ontwerper transformatie fixes",
+        "fr": "correctifs de transformation du concepteur",
+        "it": "soluzioni di trasformazione di design",
+        "es": "diseño transformación fija",
+        "pl": "poprawki do transformacji projektanta",
+        "uk": "дизайнерські виправлення трансформації",
+        "zh-cn": "设计器变换修正"
+      },
       "1.7.3": {
         "en": "fix transform combinations in designer\nfix treeview jump to",
         "de": "fix transform kombinationen in designer\nbaumansicht springen zu beheben",
@@ -106,19 +119,6 @@
         "pl": "rozszerzenie / zapaść węzłów dziecięcych w drzewie\nrozpakuj wszystkie okna",
         "uk": "розширення/збірка вузлів дитини в дереві\nвсі вікна",
         "zh-cn": "树上儿童节点的扩展/缩放\n撤销所有窗口"
-      },
-      "1.6.3": {
-        "en": "jump to all css declarations",
-        "de": "auf alle css erklärungen springen",
-        "ru": "прыжки ко всем заявлениям",
-        "pt": "saltar para todas as declarações css",
-        "nl": "naar alle css-declaraties springen",
-        "fr": "sauter à toutes les déclarations de css",
-        "it": "saltare a tutte le dichiarazioni css",
-        "es": "saltar a todas las declaraciones de css",
-        "pl": "przejść do wszystkich deklaracji css",
-        "uk": "стрибати на всі cs декларацій",
-        "zh-cn": "跳转到所有 css 声明"
       }
     },
     "icon": "logo.png",
