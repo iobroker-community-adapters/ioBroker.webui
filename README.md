@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- more fixes with transformed elements
+
 ### 1.7.4 (2024-05-16)
 - designer transformation fixes
 
