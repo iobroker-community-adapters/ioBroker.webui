@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.7.5",
+    "version": "1.7.6",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.7.6": {
+        "en": "fix edit text in transformed surface",
+        "de": "text in transformierter oberfläche fixieren",
+        "ru": "исправить текст в преобразованной поверхности",
+        "pt": "corrigir texto de edição na superfície transformada",
+        "nl": "fix tekst bewerken in getransformeerd oppervlak",
+        "fr": "correction du texte d'édition dans la surface transformée",
+        "it": "correzione testo di modifica in superficie trasformata",
+        "es": "editar texto en superficie transformada",
+        "pl": "poprawianie tekstu edycji na przekształconej powierzchni",
+        "uk": "виправлено редагування тексту в трансформаторній поверхні",
+        "zh-cn": "将文本固定在转换的表面"
+      },
       "1.7.5": {
         "en": "more fixes with transformed elements",
         "de": "mehr fixierungen mit transformierten elementen",
@@ -106,19 +119,6 @@
         "pl": "Dodaj menu konfiguracji ekranu\nobsługa edycji powtarzania w szablonach siatki colum / row\naktualizacje projektantów\nstyle siły",
         "uk": "Додавання контексту екрану\nпідтримка редагування повтору в сітчастих шаблонах\nоновлення дизайнера\nстилі",
         "zh-cn": "添加屏幕上下文菜单\n支持编辑网格粘合/行模板中的重复\n设计者更新\n力量样式"
-      },
-      "1.6.5": {
-        "en": "designer update",
-        "de": "designer-update",
-        "ru": "обновление",
-        "pt": "atualização do designer",
-        "nl": "ontwerper-update",
-        "fr": "mise à jour du concepteur",
-        "it": "aggiornamento designer",
-        "es": "actualización del diseñador",
-        "pl": "aktualizacja projektanta",
-        "uk": "оновлення дизайнера",
-        "zh-cn": "设计者更新"
       }
     },
     "icon": "logo.png",
