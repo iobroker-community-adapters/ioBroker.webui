@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.7.7 (2024-05-17)
 - fix stylesheet matching
 
 ### 1.7.6 (2024-05-17)
