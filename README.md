@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix edit text in transformed surface
+
 ### 1.7.5 (2024-05-17)
 - more fixes with transformed elements
 
