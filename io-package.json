@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.7.4",
+    "version": "1.7.5",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.7.5": {
+        "en": "more fixes with transformed elements",
+        "de": "mehr fixierungen mit transformierten elementen",
+        "ru": "больше исправлений с преобразованными элементами",
+        "pt": "mais correções com elementos transformados",
+        "nl": "meer oplossingen met getransformeerde elementen",
+        "fr": "plus de corrections avec des éléments transformés",
+        "it": "più correzioni con elementi trasformati",
+        "es": "más correcciones con elementos transformados",
+        "pl": "więcej poprawek z przekształconymi elementami",
+        "uk": "більше фіксаторів з трансформованими елементами",
+        "zh-cn": "更多带有变换元素的修正"
+      },
       "1.7.4": {
         "en": "designer transformation fixes",
         "de": "designer-transformation fixes",
@@ -106,19 +119,6 @@
         "pl": "aktualizacja projektanta",
         "uk": "оновлення дизайнера",
         "zh-cn": "设计者更新"
-      },
-      "1.6.4": {
-        "en": "expand/collapse of child nodes in tree\nundock all windows",
-        "de": "erweitern/verstreichen von kinderknoten im baum\nundock alle fenster",
-        "ru": "расширение/срыв детских узлов на дереве\nразблокировать все окна",
-        "pt": "expandir / colar de nós de criança na árvore\ndesfazer todas as janelas",
-        "nl": "uitvouwen/inklappen van dochterknooppunten in de boom\nalle vensters openen",
-        "fr": "expansion/effondrement des nœuds enfants dans l'arbre\ndéverrouiller toutes les fenêtres",
-        "it": "espandere/collarsi di nodi di bambino nell'albero\nannullare tutte le finestre",
-        "es": "en el árbol\ndeshacer todas las ventanas",
-        "pl": "rozszerzenie / zapaść węzłów dziecięcych w drzewie\nrozpakuj wszystkie okna",
-        "uk": "розширення/збірка вузлів дитини в дереві\nвсі вікна",
-        "zh-cn": "树上儿童节点的扩展/缩放\n撤销所有窗口"
       }
     },
     "icon": "logo.png",
