@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix stylesheet matching
+
 ### 1.7.6 (2024-05-17)
 - fix edit text in transformed surface
 
