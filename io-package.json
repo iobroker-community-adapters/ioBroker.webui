@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.8.1",
+    "version": "1.8.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.8.2": {
+        "en": "fix in manifest parser of designer",
+        "de": "in manifestem parser der designer",
+        "ru": "фиксация в манифесте конструктора",
+        "pt": "corrigir em parser manifesto de designer",
+        "nl": "fix in manifeste parser van ontwerper",
+        "fr": "fixer dans l'analyseur manifeste du concepteur",
+        "it": "fix in manifesto parser di designer",
+        "es": "fijado en el parser manifiesto de diseñador",
+        "pl": "fix w manifest parser projektanta",
+        "uk": "фіксувати в проявному парсері дизайнера",
+        "zh-cn": "在显示设计者解析器中固定"
+      },
       "1.8.1": {
         "en": "fix manifest parsing",
         "de": "fix manifest parsing",
@@ -106,19 +119,6 @@
         "pl": "więcej poprawek z przekształconymi elementami",
         "uk": "більше фіксаторів з трансформованими елементами",
         "zh-cn": "更多带有变换元素的修正"
-      },
-      "1.7.4": {
-        "en": "designer transformation fixes",
-        "de": "designer-transformation fixes",
-        "ru": "дизайнерские решения трансформации",
-        "pt": "correções de transformação do designer",
-        "nl": "ontwerper transformatie fixes",
-        "fr": "correctifs de transformation du concepteur",
-        "it": "soluzioni di trasformazione di design",
-        "es": "diseño transformación fija",
-        "pl": "poprawki do transformacji projektanta",
-        "uk": "дизайнерські виправлення трансформації",
-        "zh-cn": "设计器变换修正"
       }
     },
     "icon": "logo.png",
