@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.8.0",
+    "version": "1.8.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.8.1": {
+        "en": "fix manifest parsing",
+        "de": "fix manifest parsing",
+        "ru": "фиксация манифеста",
+        "pt": "corrigir a análise manifesta",
+        "nl": "fix manifest parsing",
+        "fr": "corriger l'analyse manifeste",
+        "it": "corretto la parata manifesta",
+        "es": "fijar pares de manifiesto",
+        "pl": "fix manifest parsing",
+        "uk": "фіксувати проявляється парсинг",
+        "zh-cn": "固定显示解析"
+      },
       "1.8.0": {
         "en": "bindings inside of css",
         "de": "bindungen innerhalb von css",
@@ -106,19 +119,6 @@
         "pl": "poprawki do transformacji projektanta",
         "uk": "дизайнерські виправлення трансформації",
         "zh-cn": "设计器变换修正"
-      },
-      "1.7.3": {
-        "en": "fix transform combinations in designer\nfix treeview jump to",
-        "de": "fix transform kombinationen in designer\nbaumansicht springen zu beheben",
-        "ru": "фиксация трансформаторных комбинаций в дизайнере\nпочинить дерево вид прыгать",
-        "pt": "corrigir combinações de transforma em designer\ncorrigir o salto de exibição de árvore",
-        "nl": "fix transform combinaties in ontwerper\nfix treeview springen naar",
-        "fr": "fixer les combinaisons de transformation dans le concepteur\nfixer arboreview sauter à",
-        "it": "corretti le combinazioni di trasformazioni in designer\nfissare vista albero salto a",
-        "es": "fijar combinaciones de transformación en diseñador\nfijar salto de vista del árbol",
-        "pl": "naprawić kombinacje transformacji w projektancie\nnaprawić skok drzewa do",
-        "uk": "фіксувати комбінації перетворення в дизайнера\nзакріпити перегляд дерева стрибати",
-        "zh-cn": "在设计器中固定变换组合\n固定树视图跳转到"
       }
     },
     "icon": "logo.png",
