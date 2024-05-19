@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.7.7",
+    "version": "1.7.8",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.7.8": {
+        "en": "fix remove of ctx menu",
+        "de": "ctx menü entfernen",
+        "ru": "исправить удаление ctx меню",
+        "pt": "corrigir remover do menu ctx",
+        "nl": "verwijderen van ctx-menu herstellen",
+        "fr": "correction de supprimer le menu ctx",
+        "it": "correzione di rimozione del menu ctx",
+        "es": "retirar el menú de ctx",
+        "pl": "naprawić usunięcie menu ctx",
+        "uk": "видалити меню ctx",
+        "zh-cn": "固定 ctx 菜单的删除"
+      },
       "1.7.7": {
         "en": "fix stylesheet matching",
         "de": "stylesheet anpassen",
@@ -106,19 +119,6 @@
         "pl": "kilka małych poprawek projektanta",
         "uk": "кілька маленьких дизайнерських фіксаторів",
         "zh-cn": "很少小设计师修正"
-      },
-      "1.7.1": {
-        "en": "fix in designer",
-        "de": "fix in designer",
-        "ru": "фиксация в дизайнере",
-        "pt": "corrigir no designer",
-        "nl": "fix in ontwerper",
-        "fr": "correction dans le concepteur",
-        "it": "fix in designer",
-        "es": "fijado en diseñador",
-        "pl": "fix in designer",
-        "uk": "фіксація в дизайнеру",
-        "zh-cn": "在设计器中的固定"
       }
     },
     "icon": "logo.png",

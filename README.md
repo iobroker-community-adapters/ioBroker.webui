@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.7.8 (2024-05-19)
 - fix remove of ctx menu
 
 ### 1.7.7 (2024-05-17)
