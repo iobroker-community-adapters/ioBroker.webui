@@ -9,7 +9,8 @@ const importMapRuntime = {
         "@iobroker/socket-client/": "./node_modules/@iobroker/socket-client/",
         "@iobroker/socket-client": "./node_modules/@iobroker/socket-client/dist/esm/index.js",
         "tslib": "./node_modules/tslib/tslib.es6.mjs",
-        "long": "./node_modules/long/index.js"
+        "long": "./node_modules/long/index.js",
+        "@adobe/css-tools": "./node_modules/@adobe/css-tools/dist/index.mjs"
     }
 }
 //@ts-ignore

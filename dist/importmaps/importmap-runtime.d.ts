@@ -10,5 +10,6 @@ declare const importMapRuntime: {
         "@iobroker/socket-client": string;
         tslib: string;
         long: string;
+        "@adobe/css-tools": string;
     };
 };

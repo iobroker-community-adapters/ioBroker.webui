@@ -1,4 +1,4 @@
-import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, Disposable, DomHelper, property } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, css, customElement, Disposable, DomHelper, property } from "@node-projects/base-custom-webcomponent";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
 import type { IScreenSettings } from "../interfaces/IScreen.js";
@@ -88,12 +88,19 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     public async loadScreenData(html: string, style: string, script: string, settings: IScreenSettings) {
         let globalStyle = iobrokerHandler.config?.globalStyle ?? '';
 
+        let parsedStyle: CSSStyleSheet = null;
+        if (style) {
+            const boundCss = await window.appShell.bindingsHelper.parseCssBindings(style, this, this);
+            parsedStyle = boundCss[0];
+            this._iobBindings = boundCss[1];
+        } else { this._iobBindings = null; }
+
         if (globalStyle && style)
-            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, iobrokerHandler.globalStylesheet, cssFromString(style)];
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, iobrokerHandler.globalStylesheet, parsedStyle];
         else if (globalStyle)
             this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, iobrokerHandler.globalStylesheet];
         else if (style)
-            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, cssFromString(style)];
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, parsedStyle];
         else
             this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style];
 
@@ -105,7 +112,11 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         for (const n of myDocument.body.childNodes)
             fragment.appendChild(n);
         this.shadowRoot.appendChild(fragment);
-        this._iobBindings = window.appShell.bindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
+        const res = window.appShell.bindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
+        if (this._iobBindings)
+            this._iobBindings.push(...res);
+        else
+            this._iobBindings = res;
         this._scriptObject = await window.appShell.scriptSystem.assignAllScripts('screenviewer - ' + this.screenName, script, this.shadowRoot, this);
 
         if (settings?.stretch && settings?.stretch !== 'none') {
