@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.8.0 (2024-05-19)
 - bindings inside of css
 
 ### 1.7.8 (2024-05-19)

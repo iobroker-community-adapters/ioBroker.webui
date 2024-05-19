@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.7.8",
+    "version": "1.8.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.8.0": {
+        "en": "bindings inside of css",
+        "de": "bindungen innerhalb von css",
+        "ru": "связывания внутри css",
+        "pt": "ligações dentro de css",
+        "nl": "bindingen binnen css",
+        "fr": "fixations à l'intérieur de css",
+        "it": "leganti all'interno di css",
+        "es": "fijaciones dentro de css",
+        "pl": "wiązania wewnątrz css",
+        "uk": "зв'язки всередині css",
+        "zh-cn": "css 内部绑定"
+      },
       "1.7.8": {
         "en": "fix remove of ctx menu",
         "de": "ctx menü entfernen",
@@ -106,19 +119,6 @@
         "pl": "naprawić kombinacje transformacji w projektancie\nnaprawić skok drzewa do",
         "uk": "фіксувати комбінації перетворення в дизайнера\nзакріпити перегляд дерева стрибати",
         "zh-cn": "在设计器中固定变换组合\n固定树视图跳转到"
-      },
-      "1.7.2": {
-        "en": "few more small designer fixes",
-        "de": "weniger kleine designer-fixes",
-        "ru": "еще несколько небольших дизайнерских решений",
-        "pt": "poucas mais pequenas correções de designer",
-        "nl": "nog een paar kleine designer fixes",
-        "fr": "quelques petites corrections designer plus",
-        "it": "poche più piccole correzioni di designer",
-        "es": "pocos más pequeños diseños",
-        "pl": "kilka małych poprawek projektanta",
-        "uk": "кілька маленьких дизайнерських фіксаторів",
-        "zh-cn": "很少小设计师修正"
       }
     },
     "icon": "logo.png",
