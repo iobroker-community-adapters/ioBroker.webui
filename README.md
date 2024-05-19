@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix manifest parsing
+
 ### 1.8.0 (2024-05-19)
 - bindings inside of css
 
