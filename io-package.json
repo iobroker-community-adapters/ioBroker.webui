@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.8.2",
+    "version": "1.8.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.8.3": {
+        "en": "fix style parsing and style bindings at runtime",
+        "de": "fix stil parsing und stil bindungen zu laufzeit",
+        "ru": "фиксации стиля и стилей привязки на время выполнения",
+        "pt": "corrigir a parsing estilo e as ligações de estilo no tempo de execução",
+        "nl": "stijlontleden en stijlbindingen oplossen op runtime",
+        "fr": "fixer l'analyse de style et les fixations de style à l'exécution",
+        "it": "corretto stile parsing e stile binding a runtime",
+        "es": "fijar estilo persing y estilo de unión en tiempo de ejecución",
+        "pl": "fix style parsing i style wiązania w runtime",
+        "uk": "фіксувати стилі парсинг і стилі зв'язки в режимі runtime",
+        "zh-cn": "运行时固定样式解析和样式绑定"
+      },
       "1.8.2": {
         "en": "fix in manifest parser of designer",
         "de": "in manifestem parser der designer",
@@ -106,19 +119,6 @@
         "pl": "poprawianie tekstu edycji na przekształconej powierzchni",
         "uk": "виправлено редагування тексту в трансформаторній поверхні",
         "zh-cn": "将文本固定在转换的表面"
-      },
-      "1.7.5": {
-        "en": "more fixes with transformed elements",
-        "de": "mehr fixierungen mit transformierten elementen",
-        "ru": "больше исправлений с преобразованными элементами",
-        "pt": "mais correções com elementos transformados",
-        "nl": "meer oplossingen met getransformeerde elementen",
-        "fr": "plus de corrections avec des éléments transformés",
-        "it": "più correzioni con elementi trasformati",
-        "es": "más correcciones con elementos transformados",
-        "pl": "więcej poprawek z przekształconymi elementami",
-        "uk": "більше фіксаторів з трансформованими елементами",
-        "zh-cn": "更多带有变换元素的修正"
       }
     },
     "icon": "logo.png",
