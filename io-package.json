@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.8.3",
+    "version": "1.8.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.8.4": {
+        "en": "fix typo in bindingshelper",
+        "de": "typo in bindenshelper beheben",
+        "ru": "фиксация тифа в связывающем помощнике",
+        "pt": "corrigir typo em ligaçãoshelper",
+        "nl": "fix typo in bindingshelper",
+        "fr": "correction du typo dans l'assistant de fixation",
+        "it": "correzione del tipo in bindingshelper",
+        "es": "fijar typo en bindingshelper",
+        "pl": "fix literówka w schronie",
+        "uk": "фіксувати типо в обов'язкахhelper",
+        "zh-cn": "在绑定帮助中修复类型"
+      },
       "1.8.3": {
         "en": "fix style parsing and style bindings at runtime",
         "de": "fix stil parsing und stil bindungen zu laufzeit",
@@ -106,19 +119,6 @@
         "pl": "naprawić dopasowanie arkusza stylów",
         "uk": "фіксувати стилістики відповідності",
         "zh-cn": "修正样式表匹配"
-      },
-      "1.7.6": {
-        "en": "fix edit text in transformed surface",
-        "de": "text in transformierter oberfläche fixieren",
-        "ru": "исправить текст в преобразованной поверхности",
-        "pt": "corrigir texto de edição na superfície transformada",
-        "nl": "fix tekst bewerken in getransformeerd oppervlak",
-        "fr": "correction du texte d'édition dans la surface transformée",
-        "it": "correzione testo di modifica in superficie trasformata",
-        "es": "editar texto en superficie transformada",
-        "pl": "poprawianie tekstu edycji na przekształconej powierzchni",
-        "uk": "виправлено редагування тексту в трансформаторній поверхні",
-        "zh-cn": "将文本固定在转换的表面"
       }
     },
     "icon": "logo.png",
