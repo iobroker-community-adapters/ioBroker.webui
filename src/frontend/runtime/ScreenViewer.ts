@@ -1,4 +1,4 @@
-import { BaseCustomWebComponentConstructorAppend, css, customElement, Disposable, DomHelper, property } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, Disposable, DomHelper, property } from "@node-projects/base-custom-webcomponent";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
 import type { IScreenSettings } from "../interfaces/IScreen.js";
@@ -90,9 +90,15 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
         let parsedStyle: CSSStyleSheet = null;
         if (style) {
-            const boundCss = await window.appShell.bindingsHelper.parseCssBindings(style, this, this);
-            parsedStyle = boundCss[0];
-            this._iobBindings = boundCss[1];
+            try {
+                const boundCss = await window.appShell.bindingsHelper.parseCssBindings(style, this, this.relativeSignalsPath, this);
+                parsedStyle = boundCss[0];
+                this._iobBindings = boundCss[1];
+            }
+            catch (err) {
+                console.warn(err);
+                parsedStyle = cssFromString(style);
+            }
         } else { this._iobBindings = null; }
 
         if (globalStyle && style)

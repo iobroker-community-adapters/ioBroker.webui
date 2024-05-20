@@ -33,6 +33,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     public static override style = css``;
 
     private _webuiBindings: (() => void)[];
+    private _styleBindings: (() => void)[];
     private _settingsChanged: Disposable;
 
     public async initialize(name: string, type: 'screen' | 'control', html: string, style: string, script: string, settings: { width?: string, height?: string }, properties: Record<string, { type: string, values?: string[], default?: any }>, serviceContainer: ServiceContainer) {
@@ -58,6 +59,21 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
             }
         ];
         this.documentContainer.instanceServiceContainer.designer = this;
+
+        this.documentContainer.instanceServiceContainer.stylesheetService.stylesheetChanged.on((ss) => {
+            if (ss.changeSource == 'undo') {
+                if (this.bindingsEnabled) {
+                    try {
+                        const ret = window.appShell.bindingsHelper.parseCssBindings(model.getValue(), this.documentContainer.designerView.designerCanvas.rootDesignItem.element, this.relativeBindingsPrefix, <HTMLElement>this.documentContainer.designerView.designerCanvas.rootDesignItem.element);
+                        this._styleBindings = ret[1];
+                        const sr = this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot;
+                        sr.adoptedStyleSheets = [...sr.adoptedStyleSheets, ret[0]];
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }
+            }
+        });
 
         const model = await window.appShell.styleEditor.createModel(this.documentContainer.additionalStylesheets[0].content);
         this.documentContainer.additionalData = { model: model };
@@ -109,7 +125,22 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     }
 
     //TODO: maybe reload designer, when bindings are disabled???
-    bindingsEnabled = true;
+    #bindingsEnabled = true;
+    get bindingsEnabled() {
+        return this.#bindingsEnabled;
+    }
+    set bindingsEnabled(value) {
+        if (this.#bindingsEnabled != value) {
+            this.#bindingsEnabled == value;
+            if (value) {
+                this._webuiBindings = window.appShell.bindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot, this.relativeBindingsPrefix, null);
+            } else {
+                this._webuiBindings?.forEach(x => x());
+                this._styleBindings?.forEach(x => x());
+            }
+        }
+    }
+
     relativeBindingsPrefix = '';
     applyBindings() {
         this.removeBindings();
@@ -120,6 +151,8 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     removeBindings() {
         this._webuiBindings?.forEach(x => x());
         this._webuiBindings = null;
+        this._styleBindings?.forEach(x => x());
+        this._styleBindings = null;
     }
 
     async executeCommand(command: IUiCommand) {
