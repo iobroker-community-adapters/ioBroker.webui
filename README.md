@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix in designer property grid
+
 ### 1.8.5 (2024-05-21)
 - stretch property for screenviewer
 - screennames in property list (property services now async)
