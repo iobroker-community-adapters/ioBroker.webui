@@ -5,11 +5,11 @@ export class IobrokerWebuiSpecialPropertiesService extends NativeElementsPropert
         return designItem.element instanceof HTMLInputElement;
     }
 
-    public override getProperties(designItem: IDesignItem): IProperty[] {
+    public override async getProperties(designItem: IDesignItem): Promise<IProperty[]> {
         if (!this.isHandledElement(designItem))
             return null;
 
-        let props = <IProperty[]>super.getProperties(designItem);
+        let props = <IProperty[]>await super.getProperties(designItem);
 
         let idx = props.findIndex(p => p.name === 'valueAsNumber');
         

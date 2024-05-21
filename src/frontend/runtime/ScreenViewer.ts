@@ -23,20 +23,20 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     private _loading: boolean;
     private _refreshViewSubscription: Disposable;
 
-    private _screenName: string;
     private _screensChangedSubscription: Disposable;
     private _scriptObject: ICustomControlScript;
     private _resizeObserver: ResizeObserver;
 
     #eventListeners: [name: string, callback: (...args) => void][] = [];
 
+    private _stretch?: IScreenSettings["stretch"];
     @property()
-    get screenName() {
-        return this._screenName;
+    get stretch(): IScreenSettings["stretch"] {
+        return this._stretch;
     }
-    set screenName(value: string) {
-        if (this._screenName != value) {
-            this._screenName = value;
+    set stretch(value: IScreenSettings["stretch"]) {
+        if (this._stretch != value) {
+            this._stretch = value;
             this._loadScreen();
         }
     }
@@ -49,6 +49,18 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     set relativeSignalsPath(value: string) {
         if (this._relativeSignalsPath != value) {
             this._relativeSignalsPath = value;
+        }
+    }
+
+    private _screenName: string;
+    @property()
+    get screenName() {
+        return this._screenName;
+    }
+    set screenName(value: string) {
+        if (this._screenName != value) {
+            this._screenName = value;
+            this._loadScreen();
         }
     }
 
@@ -127,11 +139,11 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
         if (settings?.stretch && settings?.stretch !== 'none') {
             this._stretchView(settings);
-
         }
     }
 
     _stretchView(settings: IScreenSettings) {
+        const stretch = this.stretch ?? settings.stretch;
         const width = convertCssUnitToPixel(settings.width, this, 'width');
         const height = convertCssUnitToPixel(settings.height, this, 'height');
 
@@ -140,7 +152,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         let translateX = 0;
         let translateY = 0;
 
-        if (settings.stretch == 'uniform') {
+        if (stretch == 'uniform') {
             if (scaleX > scaleY) {
                 scaleX = scaleY;
                 translateX = (this.offsetWidth - width) / (2 * scaleX);
@@ -148,7 +160,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
                 scaleY = scaleX;
                 translateY = (this.offsetHeight - height) / (2 * scaleY);
             }
-        } else if (settings.stretch == 'uniformToFill') {
+        } else if (stretch == 'uniformToFill') {
             if (scaleX > scaleY) {
                 scaleY = scaleX;
                 translateY = (this.offsetHeight - height) / (2 * scaleY);

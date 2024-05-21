@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- stretch property for screenviewer
+- screennames in property list (property services now async)
+
 ### 1.8.4 (2024-05-20)
 - fix typo in bindingshelper
 
