@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.8.4",
+    "version": "1.8.5",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.8.5": {
+        "en": "stretch property for screenviewer\nscreennames in property list (property services now async)",
+        "de": "stretch-eigenschaft für screenviewer\nscreennames in der immobilienliste (property services now async)",
+        "ru": "участок для просмотра экрана\nимя экрана в списке собственности (услуги недвижимости теперь async)",
+        "pt": "esticar propriedade para screenviewer\nscreennames na lista de propriedades (serviços de propriedade agora async)",
+        "nl": "stretch eigenschap voor screenviewer\nschermnamen in eigenschaplijst (eigenschappendiensten nu async)",
+        "fr": "propriété stretch pour screenviewer\nscreennames dans la liste de propriétés (les services de propriété maintenant async)",
+        "it": "proprietà stretch per screenviewer\nnome utente nella lista di proprietà (servizi di proprietà ora asincroni)",
+        "es": "propiedad de estiramiento para screenviewer\nnombre de pantalla en la lista de propiedades (servicios de propiedad ahora async)",
+        "pl": "właściwość stretch dla przeglądarki\nscenariusze na liście właściwości (usługi nieruchomości teraz async)",
+        "uk": "розтягувати майно для перегляду екрана\nсписок об'єктів нерухомості (пропетровські послуги тепер асинхронні)",
+        "zh-cn": "屏幕查看器的扩展属性\n属性列表中的屏幕名称( 财产服务现为 async)"
+      },
       "1.8.4": {
         "en": "fix typo in bindingshelper",
         "de": "typo in bindenshelper beheben",
@@ -106,19 +119,6 @@
         "pl": "naprawić usunięcie menu ctx",
         "uk": "видалити меню ctx",
         "zh-cn": "固定 ctx 菜单的删除"
-      },
-      "1.7.7": {
-        "en": "fix stylesheet matching",
-        "de": "stylesheet anpassen",
-        "ru": "соответствие стиля таблицы",
-        "pt": "correção de estilo",
-        "nl": "stylesheet aanpassen",
-        "fr": "fixer la correspondance de feuille de style",
-        "it": "correzione dello stile corrispondente",
-        "es": "fijar hoja de estilo que coincide",
-        "pl": "naprawić dopasowanie arkusza stylów",
-        "uk": "фіксувати стилістики відповідності",
-        "zh-cn": "修正样式表匹配"
       }
     },
     "icon": "logo.png",
