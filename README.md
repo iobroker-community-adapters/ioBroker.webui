@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.8.6 (2024-05-21)
 - fix in designer property grid
 
 ### 1.8.5 (2024-05-21)

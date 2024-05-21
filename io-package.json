@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.8.5",
+    "version": "1.8.6",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.8.6": {
+        "en": "fix in designer property grid",
+        "de": "fix in designer-eigenschaftsgitter",
+        "ru": "фиксация в дизайнерской сетке недвижимости",
+        "pt": "corrigir na grade de propriedade de designer",
+        "nl": "fix in designer property grid",
+        "fr": "correction dans la grille de la propriété designer",
+        "it": "fix in griglia di proprietà progettista",
+        "es": "fijado en la red de propiedades de diseño",
+        "pl": "fix w sieci nieruchomości projektant",
+        "uk": "фіксація в дизайнерській об'єднанні",
+        "zh-cn": "设计器属性网格中的固定"
+      },
       "1.8.5": {
         "en": "stretch property for screenviewer\nscreennames in property list (property services now async)",
         "de": "stretch-eigenschaft für screenviewer\nscreennames in der immobilienliste (property services now async)",
@@ -106,19 +119,6 @@
         "pl": "wiązania wewnątrz css",
         "uk": "зв'язки всередині css",
         "zh-cn": "css 内部绑定"
-      },
-      "1.7.8": {
-        "en": "fix remove of ctx menu",
-        "de": "ctx menü entfernen",
-        "ru": "исправить удаление ctx меню",
-        "pt": "corrigir remover do menu ctx",
-        "nl": "verwijderen van ctx-menu herstellen",
-        "fr": "correction de supprimer le menu ctx",
-        "it": "correzione di rimozione del menu ctx",
-        "es": "retirar el menú de ctx",
-        "pl": "naprawić usunięcie menu ctx",
-        "uk": "видалити меню ctx",
-        "zh-cn": "固定 ctx 菜单的删除"
       }
     },
     "icon": "logo.png",
