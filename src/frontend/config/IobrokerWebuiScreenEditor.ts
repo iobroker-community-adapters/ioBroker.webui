@@ -60,11 +60,11 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         ];
         this.documentContainer.instanceServiceContainer.designer = this;
 
-        this.documentContainer.instanceServiceContainer.stylesheetService.stylesheetChanged.on((ss) => {
+        this.documentContainer.instanceServiceContainer.stylesheetService.stylesheetChanged.on(async (ss) => {
             if (ss.changeSource == 'undo') {
                 if (this.bindingsEnabled) {
                     try {
-                        const ret = window.appShell.bindingsHelper.parseCssBindings(model.getValue(), this.documentContainer.designerView.designerCanvas.rootDesignItem.element, this.relativeBindingsPrefix, <HTMLElement>this.documentContainer.designerView.designerCanvas.rootDesignItem.element);
+                        const ret = await window.appShell.bindingsHelper.parseCssBindings(model.getValue(), this.documentContainer.designerView.designerCanvas.rootDesignItem.element, this.relativeBindingsPrefix, <HTMLElement>this.documentContainer.designerView.designerCanvas.rootDesignItem.element);
                         this._styleBindings = ret[1];
                         const sr = this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot;
                         sr.adoptedStyleSheets = [...sr.adoptedStyleSheets, ret[0]];
