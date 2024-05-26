@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.8.8",
+    "version": "1.8.9",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.8.9": {
+        "en": "one more spec. calculation fix",
+        "de": "noch ein spektakel. berechnungskorrektur",
+        "ru": "еще один вид. расчет",
+        "pt": "mais uma especificação. correção de cálculo",
+        "nl": "nog één spec. berekeningsfix",
+        "fr": "encore un détail. fixe de calcul",
+        "it": "un'altra spec. correzione",
+        "es": "una especie más. cálculo",
+        "pl": "jeszcze jeden spec. fikcja obliczeniowa",
+        "uk": "більше специфікацій. фіксація розрахунку",
+        "zh-cn": "再来一次 计算固定"
+      },
       "1.8.8": {
         "en": "need to await stylesheet parse",
         "de": "muss auf stylesheet parse warten",
@@ -106,19 +119,6 @@
         "pl": "fix style parsing i style wiązania w runtime",
         "uk": "фіксувати стилі парсинг і стилі зв'язки в режимі runtime",
         "zh-cn": "运行时固定样式解析和样式绑定"
-      },
-      "1.8.2": {
-        "en": "fix in manifest parser of designer",
-        "de": "in manifestem parser der designer",
-        "ru": "фиксация в манифесте конструктора",
-        "pt": "corrigir em parser manifesto de designer",
-        "nl": "fix in manifeste parser van ontwerper",
-        "fr": "fixer dans l'analyseur manifeste du concepteur",
-        "it": "fix in manifesto parser di designer",
-        "es": "fijado en el parser manifiesto de diseñador",
-        "pl": "fix w manifest parser projektanta",
-        "uk": "фіксувати в проявному парсері дизайнера",
-        "zh-cn": "在显示设计者解析器中固定"
       }
     },
     "icon": "logo.png",

@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.8.9 (2024-05-26)
 - one more spec. calculation fix
 
 ### 1.8.8 (2024-05-26)
