@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.8.7",
+    "version": "1.8.8",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.8.8": {
+        "en": "need to await stylesheet parse",
+        "de": "muss auf stylesheet parse warten",
+        "ru": "нужно дождаться стилю-листа",
+        "pt": "necessidade de esperar a folha de estilo parse",
+        "nl": "moet wachten op stylesheet parse",
+        "fr": "besoin d'attendre l'analyse de feuille de style",
+        "it": "bisogno di attendere la parsa del foglio di stile",
+        "es": "necesidad de esperar hoja de estilo parse",
+        "pl": "trzeba czekać na arkusz stylów parse",
+        "uk": "потрібні написати стильний лист",
+        "zh-cn": "需要等待样式表解析"
+      },
       "1.8.7": {
         "en": "fix specificity calculation",
         "de": "berechnung der spezifität",
@@ -106,19 +119,6 @@
         "pl": "fix w manifest parser projektanta",
         "uk": "фіксувати в проявному парсері дизайнера",
         "zh-cn": "在显示设计者解析器中固定"
-      },
-      "1.8.1": {
-        "en": "fix manifest parsing",
-        "de": "fix manifest parsing",
-        "ru": "фиксация манифеста",
-        "pt": "corrigir a análise manifesta",
-        "nl": "fix manifest parsing",
-        "fr": "corriger l'analyse manifeste",
-        "it": "corretto la parata manifesta",
-        "es": "fijar pares de manifiesto",
-        "pl": "fix manifest parsing",
-        "uk": "фіксувати проявляється парсинг",
-        "zh-cn": "固定显示解析"
       }
     },
     "icon": "logo.png",
