@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.9.7",
+    "version": "1.9.8",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.9.8": {
+        "en": "try faster loading",
+        "de": "schnelleres laden",
+        "ru": "попытаться быстрее загрузить",
+        "pt": "tente carregar mais rápido",
+        "nl": "sneller laden",
+        "fr": "essayer de charger plus rapidement",
+        "it": "prova il caricamento più veloce",
+        "es": "tratar de cargar más rápido",
+        "pl": "spróbuj szybszego ładowania",
+        "uk": "швидше завантаження",
+        "zh-cn": "尝试更快的加载"
+      },
       "1.9.7": {
         "en": "fix change root style",
         "de": "fix ändern root style",
@@ -106,19 +119,6 @@
         "pl": "naprawić style przeglądarki",
         "uk": "виправити стилі перегляду екрана",
         "zh-cn": "固定屏幕查看器样式"
-      },
-      "1.9.1": {
-        "en": "fix first div styled from designer when zoom",
-        "de": "fix erste div stil von designer, wenn zoom",
-        "ru": "исправить сначала div от дизайнера, когда масштаб",
-        "pt": "corrigir primeiro div estilo de designer quando zoom",
-        "nl": "fix eerste div gestyled van ontwerper bij zoom",
-        "fr": "fixer le premier div style du concepteur lors du zoom",
-        "it": "fix first div styled dal designer quando zoom",
-        "es": "arreglar primero div estilo de diseñador cuando zoom",
-        "pl": "naprawić pierwszy div stylizowany od projektanta, gdy zoom",
-        "uk": "фіксуйте перший дизайн-проектувальника під час масштабування",
-        "zh-cn": "缩放时从设计者处修补第一个 div 样式"
       }
     },
     "icon": "logo.png",
