@@ -18,7 +18,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         display: none !important;
     }`
 
-    static template = html`<div id="root"></div>`
+    static template = html`<div id="root" style="all: revert; background: transparent !important;"></div>`
 
     private _iobBindings: (() => void)[];
     private _loading: boolean;
@@ -151,6 +151,8 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         else
             this._rootShadow.adoptedStyleSheets = [ScreenViewer.style];
 
+        this.shadowRoot.adoptedStyleSheets = this._rootShadow.adoptedStyleSheets;
+
         //@ts-ignore
         const myDocument = new DOMParser().parseFromString(html, 'text/html', { includeShadowRoots: true });
         const fragment = document.createDocumentFragment();
@@ -205,7 +207,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         this._root.style.transformOrigin = '0 0';
         this._root.style.scale = scaleX + ' ' + scaleY;
         this._root.style.translate = translateX + 'px ' + translateY + 'px';
-        //this._root.style.transform = 'scale(' + scaleX + ', ' + scaleY + ') translate(' + translateX + 'px, ' + translateY + 'px' + ')';
+
         if (!this._resizeObserver) {
             this._resizeObserver = new ResizeObserver(() => { this._stretchView(settings); })
             this._resizeObserver.observe(this);

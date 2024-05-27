@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix first div styled from designer when zoom
+
 ### 1.9.0 (2024-05-27)
 - fix zooming of child screens
 
