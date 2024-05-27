@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.9.2 (2024-05-27)
 - fix screenviewer styles
 
 ### 1.9.1 (2024-05-27)

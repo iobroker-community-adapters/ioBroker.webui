@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.9.1",
+    "version": "1.9.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.9.2": {
+        "en": "fix screenviewer styles",
+        "de": "bildschirmansicht-stile reparieren",
+        "ru": "исправления стилей экрана",
+        "pt": "corrigir estilos de visualização de tela",
+        "nl": "screenviewerstijlen herstellen",
+        "fr": "correction des styles d'affichage",
+        "it": "fissare stili screenviewer",
+        "es": "arreglar estilos de pantalla",
+        "pl": "naprawić style przeglądarki",
+        "uk": "виправити стилі перегляду екрана",
+        "zh-cn": "固定屏幕查看器样式"
+      },
       "1.9.1": {
         "en": "fix first div styled from designer when zoom",
         "de": "fix erste div stil von designer, wenn zoom",
@@ -106,19 +119,6 @@
         "pl": "fix w sieci nieruchomości projektant",
         "uk": "фіксація в дизайнерській об'єднанні",
         "zh-cn": "设计器属性网格中的固定"
-      },
-      "1.8.5": {
-        "en": "stretch property for screenviewer\nscreennames in property list (property services now async)",
-        "de": "stretch-eigenschaft für screenviewer\nscreennames in der immobilienliste (property services now async)",
-        "ru": "участок для просмотра экрана\nимя экрана в списке собственности (услуги недвижимости теперь async)",
-        "pt": "esticar propriedade para screenviewer\nscreennames na lista de propriedades (serviços de propriedade agora async)",
-        "nl": "stretch eigenschap voor screenviewer\nschermnamen in eigenschaplijst (eigenschappendiensten nu async)",
-        "fr": "propriété stretch pour screenviewer\nscreennames dans la liste de propriétés (les services de propriété maintenant async)",
-        "it": "proprietà stretch per screenviewer\nnome utente nella lista di proprietà (servizi di proprietà ora asincroni)",
-        "es": "propiedad de estiramiento para screenviewer\nnombre de pantalla en la lista de propiedades (servicios de propiedad ahora async)",
-        "pl": "właściwość stretch dla przeglądarki\nscenariusze na liście właściwości (usługi nieruchomości teraz async)",
-        "uk": "розтягувати майно для перегляду екрана\nсписок об'єктів нерухомості (пропетровські послуги тепер асинхронні)",
-        "zh-cn": "屏幕查看器的扩展属性\n属性列表中的屏幕名称( 财产服务现为 async)"
       }
     },
     "icon": "logo.png",
