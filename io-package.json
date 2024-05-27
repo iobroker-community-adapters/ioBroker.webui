@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.9.2",
+    "version": "1.9.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.9.3": {
+        "en": "update packages",
+        "de": "update-pakete",
+        "ru": "обновления пакетов",
+        "pt": "pacotes de atualização",
+        "nl": "pakketten bijwerken",
+        "fr": "mettre à jour les paquets",
+        "it": "pacchetti di aggiornamento",
+        "es": "actualizar paquetes",
+        "pl": "aktualizacja pakietów",
+        "uk": "оновлення пакетів",
+        "zh-cn": "更新软件包"
+      },
       "1.9.2": {
         "en": "fix screenviewer styles",
         "de": "bildschirmansicht-stile reparieren",
@@ -106,19 +119,6 @@
         "pl": "obliczenie specyfiki fix",
         "uk": "розрахунок специфічності",
         "zh-cn": "固定特异性计算"
-      },
-      "1.8.6": {
-        "en": "fix in designer property grid",
-        "de": "fix in designer-eigenschaftsgitter",
-        "ru": "фиксация в дизайнерской сетке недвижимости",
-        "pt": "corrigir na grade de propriedade de designer",
-        "nl": "fix in designer property grid",
-        "fr": "correction dans la grille de la propriété designer",
-        "it": "fix in griglia di proprietà progettista",
-        "es": "fijado en la red de propiedades de diseño",
-        "pl": "fix w sieci nieruchomości projektant",
-        "uk": "фіксація в дизайнерській об'єднанні",
-        "zh-cn": "设计器属性网格中的固定"
       }
     },
     "icon": "logo.png",
