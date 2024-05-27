@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.9.4",
+    "version": "1.9.5",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.9.5": {
+        "en": "few small changes",
+        "de": "kleine veränderungen",
+        "ru": "несколько небольших изменений",
+        "pt": "poucas pequenas mudanças",
+        "nl": "enkele kleine veranderingen",
+        "fr": "quelques petits changements",
+        "it": "pochi piccoli cambiamenti",
+        "es": "pocos pequeños cambios",
+        "pl": "kilka małych zmian",
+        "uk": "кілька невеликих змін",
+        "zh-cn": "少许小改动"
+      },
       "1.9.4": {
         "en": "fix scripts not workin",
         "de": "scripte nicht funktionieren",
@@ -106,19 +119,6 @@
         "pl": "jeszcze jeden spec. fikcja obliczeniowa",
         "uk": "більше специфікацій. фіксація розрахунку",
         "zh-cn": "再来一次 计算固定"
-      },
-      "1.8.8": {
-        "en": "need to await stylesheet parse",
-        "de": "muss auf stylesheet parse warten",
-        "ru": "нужно дождаться стилю-листа",
-        "pt": "necessidade de esperar a folha de estilo parse",
-        "nl": "moet wachten op stylesheet parse",
-        "fr": "besoin d'attendre l'analyse de feuille de style",
-        "it": "bisogno di attendere la parsa del foglio di stile",
-        "es": "necesidad de esperar hoja de estilo parse",
-        "pl": "trzeba czekać na arkusz stylów parse",
-        "uk": "потрібні написати стильний лист",
-        "zh-cn": "需要等待样式表解析"
       }
     },
     "icon": "logo.png",
