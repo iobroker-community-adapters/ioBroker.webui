@@ -18,7 +18,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         display: none !important;
     }`
 
-    static template = html`<div id="root" style="all: revert; background: transparent !important;"></div>`
+    static template = html`<div id="root"></div>`
 
     private _iobBindings: (() => void)[];
     private _loading: boolean;
@@ -93,6 +93,18 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
     public objects: any;
 
+    private _useStyleFromScreenForViewer: boolean;
+    @property(Boolean)
+    get useStyleFromScreenForViewer() {
+        return this._useStyleFromScreenForViewer;
+    }
+    set useStyleFromScreenForViewer(value: boolean) {
+        if (this._useStyleFromScreenForViewer != value) {
+            this._useStyleFromScreenForViewer = value;
+            this._loadScreen();
+        }
+    }
+
     constructor() {
         super();
         this._root = this._getDomElement<HTMLDivElement>('root');
@@ -151,7 +163,23 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         else
             this._rootShadow.adoptedStyleSheets = [ScreenViewer.style];
 
-        this.shadowRoot.adoptedStyleSheets = this._rootShadow.adoptedStyleSheets;
+        if (this._useStyleFromScreenForViewer) {
+            this.shadowRoot.adoptedStyleSheets = this._rootShadow.adoptedStyleSheets;
+            this._root.style.setProperty('background', 'transparent', 'important');
+            this._root.style.setProperty('border', 'none', 'important');
+            this._root.style.setProperty('transform', 'none', 'important');
+            this._root.style.setProperty('padding', '0', 'important');
+            this._root.style.setProperty('margin', '0', 'important');
+            this.style.setProperty('display', 'block', 'important');
+        } else {
+            this.shadowRoot.adoptedStyleSheets = [];
+            this._root.style.removeProperty('background');
+            this._root.style.removeProperty('border');
+            this._root.style.removeProperty('transform');
+            this._root.style.removeProperty('padding');
+            this._root.style.removeProperty('margin');
+            this.style.removeProperty('display');
+        }
 
         //@ts-ignore
         const myDocument = new DOMParser().parseFromString(html, 'text/html', { includeShadowRoots: true });
