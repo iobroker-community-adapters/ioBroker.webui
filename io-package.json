@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.9.3",
+    "version": "1.9.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.9.4": {
+        "en": "fix scripts not workin",
+        "de": "scripte nicht funktionieren",
+        "ru": "исправить скрипты не работает",
+        "pt": "corrigir scripts não workin",
+        "nl": "fix scripts die niet werken",
+        "fr": "correction des scripts qui ne fonctionnent pas",
+        "it": "correggere gli script non funziona",
+        "es": "corregir scripts no funcionan",
+        "pl": "naprawić skrypty nie pracujące",
+        "uk": "виправлення скриптів не працює",
+        "zh-cn": "修补脚本不工作"
+      },
       "1.9.3": {
         "en": "update packages",
         "de": "update-pakete",
@@ -106,19 +119,6 @@
         "pl": "trzeba czekać na arkusz stylów parse",
         "uk": "потрібні написати стильний лист",
         "zh-cn": "需要等待样式表解析"
-      },
-      "1.8.7": {
-        "en": "fix specificity calculation",
-        "de": "berechnung der spezifität",
-        "ru": "расчет специфичности фиксации",
-        "pt": "cálculo de especificação de correção",
-        "nl": "fix specificiteitsberekening",
-        "fr": "fixer le calcul de la spécificité",
-        "it": "correzione del calcolo specificità",
-        "es": "cálculo de especificación",
-        "pl": "obliczenie specyfiki fix",
-        "uk": "розрахунок специфічності",
-        "zh-cn": "固定特异性计算"
       }
     },
     "icon": "logo.png",
