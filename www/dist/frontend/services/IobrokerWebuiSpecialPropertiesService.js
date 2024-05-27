@@ -3,10 +3,10 @@ export class IobrokerWebuiSpecialPropertiesService extends NativeElementsPropert
     isHandledElement(designItem) {
         return designItem.element instanceof HTMLInputElement;
     }
-    getProperties(designItem) {
+    async getProperties(designItem) {
         if (!this.isHandledElement(designItem))
             return null;
-        let props = super.getProperties(designItem);
+        let props = await super.getProperties(designItem);
         let idx = props.findIndex(p => p.name === 'valueAsNumber');
         props.splice(idx + 1, 0, {
             name: 'valueAsNumberLocal',

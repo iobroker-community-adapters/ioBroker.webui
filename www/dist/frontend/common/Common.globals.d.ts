@@ -59,6 +59,7 @@ interface BaseScreenViewerAndControl extends HTMLElement {
         template: HTMLTemplateElement;
     } & Function;
     shadowRoot: ShadowRoot;
+    _waitForChildrenReady(): any;
     _getDomElement<T extends Element>(id: string): T;
     _getDomElements<T extends Element>(selector: string): T[];
     _assignEvent(event: string, callback: (...args: any[]) => void): {

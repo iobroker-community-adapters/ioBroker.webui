@@ -19,6 +19,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     static template = html ``;
     static style = css ``;
     _webuiBindings;
+    _styleBindings;
     _settingsChanged;
     async initialize(name, type, html, style, script, settings, properties, serviceContainer) {
         if (name[0] == '/')
@@ -39,6 +40,21 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
             }
         ];
         this.documentContainer.instanceServiceContainer.designer = this;
+        this.documentContainer.instanceServiceContainer.stylesheetService.stylesheetChanged.on(async (ss) => {
+            if (ss.changeSource == 'undo') {
+                if (this.bindingsEnabled) {
+                    try {
+                        const ret = await window.appShell.bindingsHelper.parseCssBindings(model.getValue(), this.documentContainer.designerView.designerCanvas.rootDesignItem.element, this.relativeBindingsPrefix, this.documentContainer.designerView.designerCanvas.rootDesignItem.element);
+                        this._styleBindings = ret[1];
+                        const sr = this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot;
+                        sr.adoptedStyleSheets = [...sr.adoptedStyleSheets, ret[0]];
+                    }
+                    catch (err) {
+                        console.error(err);
+                    }
+                }
+            }
+        });
         const model = await window.appShell.styleEditor.createModel(this.documentContainer.additionalStylesheets[0].content);
         this.documentContainer.additionalData = { model: model };
         let timer;
@@ -84,7 +100,22 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         }, 50);
     }
     //TODO: maybe reload designer, when bindings are disabled???
-    bindingsEnabled = true;
+    #bindingsEnabled = true;
+    get bindingsEnabled() {
+        return this.#bindingsEnabled;
+    }
+    set bindingsEnabled(value) {
+        if (this.#bindingsEnabled != value) {
+            this.#bindingsEnabled == value;
+            if (value) {
+                this._webuiBindings = window.appShell.bindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot, this.relativeBindingsPrefix, null);
+            }
+            else {
+                this._webuiBindings?.forEach(x => x());
+                this._styleBindings?.forEach(x => x());
+            }
+        }
+    }
     relativeBindingsPrefix = '';
     applyBindings() {
         this.removeBindings();
@@ -94,6 +125,8 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     removeBindings() {
         this._webuiBindings?.forEach(x => x());
         this._webuiBindings = null;
+        this._styleBindings?.forEach(x => x());
+        this._styleBindings = null;
     }
     async executeCommand(command) {
         if (command.type == 'save') {

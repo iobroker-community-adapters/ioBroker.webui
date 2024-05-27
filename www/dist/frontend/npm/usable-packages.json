@@ -16,6 +16,7 @@
     "@node-projects/sweethome3d-webcomponent",
     "@node-projects/imask-webcomponent",
     "@node-projects/automatic-slidershow-webcomponent",
+    "@node-projects/color-wheel.webcomponent",
     "@christianliebel/paint",
     "vanilla-colorful",
     "@shoelace-style/shoelace",
