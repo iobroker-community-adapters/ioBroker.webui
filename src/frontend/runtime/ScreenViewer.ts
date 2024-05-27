@@ -181,8 +181,15 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             this.style.removeProperty('display');
         }
 
+        let myDocument: Document
         //@ts-ignore
-        const myDocument = new DOMParser().parseFromString(html, 'text/html', { includeShadowRoots: true });
+        if (Document.parseHTMLUnsafe) {
+            //@ts-ignore
+            myDocument = Document.parseHTMLUnsafe(html)
+        } else {
+            //@ts-ignore
+            myDocument = new DOMParser().parseFromString(html, 'text/html', { includeShadowRoots: true });
+        }
         const fragment = document.createDocumentFragment();
         for (const n of myDocument.head.childNodes)
             fragment.appendChild(n);
@@ -194,7 +201,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             this._iobBindings.push(...res);
         else
             this._iobBindings = res;
-        this._scriptObject = await window.appShell.scriptSystem.assignAllScripts('screenviewer - ' + this.screenName, script, this.shadowRoot, this);
+        this._scriptObject = await window.appShell.scriptSystem.assignAllScripts('screenviewer - ' + this.screenName, script, this._rootShadow, this);
 
         this._stretchView(settings);
     }
