@@ -141,6 +141,8 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     public async loadScreenData(html: string, style: string, script: string, settings: IScreenSettings) {
         let globalStyle = iobrokerHandler.config?.globalStyle ?? '';
 
+        this._stretchView(settings);
+
         let parsedStyle: CSSStyleSheet = null;
         if (style) {
             try {
@@ -202,13 +204,11 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         else
             this._iobBindings = res;
         this._scriptObject = await window.appShell.scriptSystem.assignAllScripts('screenviewer - ' + this.screenName, script, this._rootShadow, this);
-
-        this._stretchView(settings);
     }
 
     _stretchView(settings: IScreenSettings) {
         const stretch = this.stretch ?? settings?.stretch;
-        if (stretch === 'none')
+        if (!stretch || stretch === 'none')
             return;
 
         const width = this._stretchWidth ?? convertCssUnitToPixel(settings.width, this, 'width');
