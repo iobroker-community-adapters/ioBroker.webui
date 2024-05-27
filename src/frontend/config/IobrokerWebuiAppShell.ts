@@ -403,6 +403,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     let id = "global_ConfigEditor";
     if (!this.isDockOpenAndActivate(id)) {
       let pg = new IobrokerWebuiPropertyGrid();
+      pg.visualizationShell = this;
       pg.id = id;
       pg.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
       pg.typeName = 'IGlobalConfig'
