@@ -58,6 +58,8 @@ export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentProper
             properties.push({ name: 'screenName', type: "list", values: screens, service: this, propertyType: PropertyType.propertyAndAttribute });
             properties.push({ name: 'relativeSignalsPath', type: "string", service: this, propertyType: PropertyType.propertyAndAttribute });
             properties.push({ name: 'stretch', type: "list", values: ['none', 'fill', 'uniform', 'uniformToFill'], service: this, propertyType: PropertyType.propertyAndAttribute });
+            properties.push({ name: 'stretchWidth', type: "number", service: this, propertyType: PropertyType.propertyAndAttribute });
+            properties.push({ name: 'stretchHeight', type: "number", service: this, propertyType: PropertyType.propertyAndAttribute });
             return properties;
         }
     }

@@ -1,4 +1,4 @@
-import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, Disposable, DomHelper, property } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, Disposable, DomHelper, html, property } from "@node-projects/base-custom-webcomponent";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
 import type { IScreenSettings } from "../interfaces/IScreen.js";
@@ -16,8 +16,9 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
     *[node-projects-hide-at-run-time] {
         display: none !important;
-    }
-    `
+    }`
+
+    static template = html`<div id="root"></div>`
 
     private _iobBindings: (() => void)[];
     private _loading: boolean;
@@ -26,6 +27,8 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     private _screensChangedSubscription: Disposable;
     private _scriptObject: ICustomControlScript;
     private _resizeObserver: ResizeObserver;
+    private _root: HTMLDivElement;
+    private _rootShadow: ShadowRoot;
 
     #eventListeners: [name: string, callback: (...args) => void][] = [];
 
@@ -37,6 +40,30 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     set stretch(value: IScreenSettings["stretch"]) {
         if (this._stretch != value) {
             this._stretch = value;
+            this._loadScreen();
+        }
+    }
+
+    private _stretchWidth?: number;
+    @property()
+    get stretchWidth(): number {
+        return this._stretchWidth;
+    }
+    set stretchWidth(value: number) {
+        if (this._stretchWidth != value) {
+            this._stretchWidth = value;
+            this._loadScreen();
+        }
+    }
+
+    private _stretchHeight?: number;
+    @property()
+    get stretchHeight(): number {
+        return this._stretchHeight;
+    }
+    set stretchHeight(value: number) {
+        if (this._stretchHeight != value) {
+            this._stretchHeight = value;
             this._loadScreen();
         }
     }
@@ -68,6 +95,8 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
     constructor() {
         super();
+        this._root = this._getDomElement<HTMLDivElement>('root');
+        this._rootShadow = this._root.attachShadow({ mode: 'open' });
         this._restoreCachedInititalValues();
     }
 
@@ -89,7 +118,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             await iobrokerHandler.waitForReady();
             this._loading = false;
             this.removeBindings();
-            DomHelper.removeAllChildnodes(this.shadowRoot);
+            DomHelper.removeAllChildnodes(this._rootShadow);
             const screen = await iobrokerHandler.getWebuiObject('screen', this.screenName)
             if (screen) {
                 this.loadScreenData(screen.html, screen.style, screen.script, screen.settings);
@@ -114,13 +143,13 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         } else { this._iobBindings = null; }
 
         if (globalStyle && style)
-            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, iobrokerHandler.globalStylesheet, parsedStyle];
+            this._rootShadow.adoptedStyleSheets = [ScreenViewer.style, iobrokerHandler.globalStylesheet, parsedStyle];
         else if (globalStyle)
-            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, iobrokerHandler.globalStylesheet];
+            this._rootShadow.adoptedStyleSheets = [ScreenViewer.style, iobrokerHandler.globalStylesheet];
         else if (style)
-            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style, parsedStyle];
+            this._rootShadow.adoptedStyleSheets = [ScreenViewer.style, parsedStyle];
         else
-            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.style];
+            this._rootShadow.adoptedStyleSheets = [ScreenViewer.style];
 
         //@ts-ignore
         const myDocument = new DOMParser().parseFromString(html, 'text/html', { includeShadowRoots: true });
@@ -129,23 +158,26 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             fragment.appendChild(n);
         for (const n of myDocument.body.childNodes)
             fragment.appendChild(n);
-        this.shadowRoot.appendChild(fragment);
-        const res = window.appShell.bindingsHelper.applyAllBindings(this.shadowRoot, this.relativeSignalsPath, this);
+        this._rootShadow.appendChild(fragment);
+        const res = window.appShell.bindingsHelper.applyAllBindings(this._rootShadow, this.relativeSignalsPath, this);
         if (this._iobBindings)
             this._iobBindings.push(...res);
         else
             this._iobBindings = res;
         this._scriptObject = await window.appShell.scriptSystem.assignAllScripts('screenviewer - ' + this.screenName, script, this.shadowRoot, this);
 
-        if (settings?.stretch && settings?.stretch !== 'none') {
-            this._stretchView(settings);
-        }
+        this._stretchView(settings);
     }
 
     _stretchView(settings: IScreenSettings) {
         const stretch = this.stretch ?? settings.stretch;
-        const width = convertCssUnitToPixel(settings.width, this, 'width');
-        const height = convertCssUnitToPixel(settings.height, this, 'height');
+        if (stretch === 'none')
+            return;
+
+        const width = this._stretchWidth ?? convertCssUnitToPixel(settings.width, this, 'width');
+        const height = this._stretchHeight ?? convertCssUnitToPixel(settings.height, this, 'height');
+        this._root.style.width = width + 'px';
+        this._root.style.height = height + 'px';
 
         let scaleX = this.offsetWidth / width;
         let scaleY = this.offsetHeight / height;
@@ -155,24 +187,25 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         if (stretch == 'uniform') {
             if (scaleX > scaleY) {
                 scaleX = scaleY;
-                translateX = (this.offsetWidth - width) / (2 * scaleX);
+                translateX = (this.offsetWidth - (width * scaleX)) / 2;
             } else {
                 scaleY = scaleX;
-                translateY = (this.offsetHeight - height) / (2 * scaleY);
+                translateY = (this.offsetHeight - (height * scaleY)) / 2;
             }
         } else if (stretch == 'uniformToFill') {
             if (scaleX > scaleY) {
                 scaleY = scaleX;
-                translateY = (this.offsetHeight - height) / (2 * scaleY);
+                translateY = (this.offsetHeight - (height * scaleY)) / 2;
             } else {
                 scaleX = scaleY;
-                translateX = (this.offsetWidth - width) / (2 * scaleX);
+                translateX = (this.offsetWidth - (width * scaleX)) / 2;
             }
         }
 
-        this.style.transformOrigin = '0 0';
-        this.style.scale = scaleX + ' ' + scaleY;
-        this.style.translate = translateX + 'px ' + translateY + 'px';
+        this._root.style.transformOrigin = '0 0';
+        this._root.style.scale = scaleX + ' ' + scaleY;
+        this._root.style.translate = translateX + 'px ' + translateY + 'px';
+        //this._root.style.transform = 'scale(' + scaleX + ', ' + scaleY + ') translate(' + translateX + 'px, ' + translateY + 'px' + ')';
         if (!this._resizeObserver) {
             this._resizeObserver = new ResizeObserver(() => { this._stretchView(settings); })
             this._resizeObserver.observe(this);
