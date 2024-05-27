@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.9.0",
+    "version": "1.9.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.9.1": {
+        "en": "fix first div styled from designer when zoom",
+        "de": "fix erste div stil von designer, wenn zoom",
+        "ru": "исправить сначала div от дизайнера, когда масштаб",
+        "pt": "corrigir primeiro div estilo de designer quando zoom",
+        "nl": "fix eerste div gestyled van ontwerper bij zoom",
+        "fr": "fixer le premier div style du concepteur lors du zoom",
+        "it": "fix first div styled dal designer quando zoom",
+        "es": "arreglar primero div estilo de diseñador cuando zoom",
+        "pl": "naprawić pierwszy div stylizowany od projektanta, gdy zoom",
+        "uk": "фіксуйте перший дизайн-проектувальника під час масштабування",
+        "zh-cn": "缩放时从设计者处修补第一个 div 样式"
+      },
       "1.9.0": {
         "en": "fix zooming of child screens",
         "de": "fixes zoomen von kinderbildschirmen",
@@ -106,19 +119,6 @@
         "pl": "właściwość stretch dla przeglądarki\nscenariusze na liście właściwości (usługi nieruchomości teraz async)",
         "uk": "розтягувати майно для перегляду екрана\nсписок об'єктів нерухомості (пропетровські послуги тепер асинхронні)",
         "zh-cn": "屏幕查看器的扩展属性\n属性列表中的屏幕名称( 财产服务现为 async)"
-      },
-      "1.8.4": {
-        "en": "fix typo in bindingshelper",
-        "de": "typo in bindenshelper beheben",
-        "ru": "фиксация тифа в связывающем помощнике",
-        "pt": "corrigir typo em ligaçãoshelper",
-        "nl": "fix typo in bindingshelper",
-        "fr": "correction du typo dans l'assistant de fixation",
-        "it": "correzione del tipo in bindingshelper",
-        "es": "fijar typo en bindingshelper",
-        "pl": "fix literówka w schronie",
-        "uk": "фіксувати типо в обов'язкахhelper",
-        "zh-cn": "在绑定帮助中修复类型"
       }
     },
     "icon": "logo.png",
