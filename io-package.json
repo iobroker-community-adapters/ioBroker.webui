@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.9.6",
+    "version": "1.9.7",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.9.7": {
+        "en": "fix change root style",
+        "de": "fix ändern root style",
+        "ru": "исправить изменения корневого стиля",
+        "pt": "corrigir mudança estilo raiz",
+        "nl": "wijzigen van rootstijl",
+        "fr": "corriger le style racine de changement",
+        "it": "correzione dello stile root",
+        "es": "cambiar estilo raíz",
+        "pl": "fix change root style",
+        "uk": "фіксувати зміни кореневого стилю",
+        "zh-cn": "固定更改根样式"
+      },
       "1.9.6": {
         "en": "fix null ref",
         "de": "null ref",
@@ -106,19 +119,6 @@
         "pl": "naprawić pierwszy div stylizowany od projektanta, gdy zoom",
         "uk": "фіксуйте перший дизайн-проектувальника під час масштабування",
         "zh-cn": "缩放时从设计者处修补第一个 div 样式"
-      },
-      "1.9.0": {
-        "en": "fix zooming of child screens",
-        "de": "fixes zoomen von kinderbildschirmen",
-        "ru": "исправить масштабирование детских экранов",
-        "pt": "corrigir zoom de telas de criança",
-        "nl": "fix zoomen van kinderschermen",
-        "fr": "correction du zoom des écrans enfants",
-        "it": "correzione dello zoom degli schermi dei bambini",
-        "es": "fijar el zoom de las pantallas infantiles",
-        "pl": "powiększenie ekranów dla dzieci",
-        "uk": "фіксація масштабування дитячих екранів",
-        "zh-cn": "修正儿童屏幕的缩放"
       }
     },
     "icon": "logo.png",

@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.9.7 (2024-05-27)
 - fix change root style
 
 ### 1.9.6 (2024-05-27)
