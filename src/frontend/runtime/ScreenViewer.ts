@@ -207,7 +207,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     }
 
     _stretchView(settings: IScreenSettings) {
-        const stretch = this.stretch ?? settings.stretch;
+        const stretch = this.stretch ?? settings?.stretch;
         if (stretch === 'none')
             return;
 
