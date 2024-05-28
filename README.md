@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fixes for blockly
+
 ### 1.9.9 (2024-05-28)
 - fix firefox
 
