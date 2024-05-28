@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- support classlist in setElementProperty  
+
 ### 1.10.0 (2024-05-28)
 - fix screen & parent screen access
 
