@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.9.10",
+    "version": "1.10.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.10.0": {
+        "en": "fix screen & parent screen access",
+        "de": "bildschirm und elternbildschirm",
+        "ru": "исправить экран и доступ к родительскому экрану",
+        "pt": "corrigir tela e acesso de tela pai",
+        "nl": "schermtoegang herstellen",
+        "fr": "correction de l'accès à l'écran & parent",
+        "it": "schermata di correzione e accesso alla schermata madre",
+        "es": "fijar la pantalla del padre",
+        "pl": "naprawić ekran i macierzysty dostęp ekranu",
+        "uk": "фіксувати доступ до екрану та батьків",
+        "zh-cn": "修正父屏幕访问( p)"
+      },
       "1.9.10": {
         "en": "fixes for blockly",
         "de": "befestigungen für block",
@@ -106,19 +119,6 @@
         "pl": "kilka małych zmian",
         "uk": "кілька невеликих змін",
         "zh-cn": "少许小改动"
-      },
-      "1.9.4": {
-        "en": "fix scripts not workin",
-        "de": "scripte nicht funktionieren",
-        "ru": "исправить скрипты не работает",
-        "pt": "corrigir scripts não workin",
-        "nl": "fix scripts die niet werken",
-        "fr": "correction des scripts qui ne fonctionnent pas",
-        "it": "correggere gli script non funziona",
-        "es": "corregir scripts no funcionan",
-        "pl": "naprawić skrypty nie pracujące",
-        "uk": "виправлення скриптів не працює",
-        "zh-cn": "修补脚本不工作"
       }
     },
     "icon": "logo.png",
