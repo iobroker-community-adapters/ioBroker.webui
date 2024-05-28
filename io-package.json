@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.10.1",
+    "version": "1.10.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.10.2": {
+        "en": "fix getDomelement",
+        "de": "details zum Artikel",
+        "ru": "исправить",
+        "pt": "corrigir getDomelement",
+        "nl": "fix getDomelement",
+        "fr": "corriger getDomelement",
+        "it": "fix getDomelement",
+        "es": "arreglar getDomelement",
+        "pl": "fix getDomelement",
+        "uk": "виправити getDomelement",
+        "zh-cn": "修补获得穹顶"
+      },
       "1.10.1": {
         "en": "support classlist in setElementProperty",
         "de": "support-Klassiker im Set Element Eigentum",
@@ -106,19 +119,6 @@
         "pl": "fix change root style",
         "uk": "фіксувати зміни кореневого стилю",
         "zh-cn": "固定更改根样式"
-      },
-      "1.9.6": {
-        "en": "fix null ref",
-        "de": "null ref",
-        "ru": "исправить null ref",
-        "pt": "corrigir ref null",
-        "nl": "fix null ref",
-        "fr": "fixer null ref",
-        "it": "correzione null ref",
-        "es": "fija null ref",
-        "pl": "fix null ref",
-        "uk": "виправити null реф",
-        "zh-cn": "修补无效"
       }
     },
     "icon": "logo.png",
