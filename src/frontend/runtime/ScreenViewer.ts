@@ -3,6 +3,7 @@ import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
 import type { IScreenSettings } from "../interfaces/IScreen.js";
 import { convertCssUnitToPixel } from "@node-projects/web-component-designer/dist/elements/helper/CssUnitConverter.js";
+import { isFirefox } from "@node-projects/web-component-designer/dist/elements/helper/Browser.js";
 
 @customElement("iobroker-webui-screen-viewer")
 export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
@@ -183,9 +184,9 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             this.style.removeProperty('display');
         }
 
-        let myDocument: Document
+        let myDocument: Document;
         //@ts-ignore
-        if (Document.parseHTMLUnsafe) {
+        if (Document.parseHTMLUnsafe && !isFirefox) {
             //@ts-ignore
             myDocument = Document.parseHTMLUnsafe(html)
         } else {
