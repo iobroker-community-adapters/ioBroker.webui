@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix screen & parent screen access
+
 ### 1.9.10 (2024-05-28)
 - fixes for blockly
 

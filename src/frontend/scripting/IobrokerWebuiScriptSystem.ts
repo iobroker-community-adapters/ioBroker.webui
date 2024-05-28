@@ -1,4 +1,4 @@
-import type { ScriptCommands } from "@node-projects/web-component-designer-visualization-addons";
+import type { ScriptCommands, contextType } from "@node-projects/web-component-designer-visualization-addons";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IoBrokerWebuiDialog } from "../helper/DialogHelper.js";
@@ -50,6 +50,30 @@ export class IobrokerWebuiScriptSystem extends ScriptSystem {
                 super.runScriptCommand(command, context);
             }
         }
+    }
 
+    override getTargetFromTargetSelector(context: contextType, targetSelectorTarget: "currentScreen" | "parentScreen" | "currentElement" | "parentElement", targetSelector: string): Iterable<Element> {
+        if (targetSelectorTarget === 'currentScreen') {
+            if (targetSelector) {
+                let sr = (<ShadowRoot>context.element.getRootNode());
+                return sr.querySelectorAll(targetSelector);
+            } else {
+                let rootDiv = (<ShadowRoot>context.element.getRootNode()).host;
+                let sr = (<ShadowRoot>rootDiv.getRootNode());
+                return [sr.host];
+            }
+        } else if (targetSelectorTarget === 'parentScreen') {
+            if (targetSelector) {
+                //@ts-ignore
+                let sr = (<ShadowRoot>context.element.getRootNode()).host.getRootNode().host.getRootNode();
+                return sr.querySelectorAll(targetSelector);
+            } else {
+                //@ts-ignore
+                let sr = (<ShadowRoot>context.element.getRootNode()).host.getRootNode().host.getRootNode().host.getRootNode().host;
+                return [sr];
+            }
+        }
+        else
+            return super.getTargetFromTargetSelector(context, targetSelectorTarget, targetSelector);
     }
 }
