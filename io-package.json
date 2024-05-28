@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.9.9",
+    "version": "1.9.10",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.9.10": {
+        "en": "fixes for blockly",
+        "de": "befestigungen für block",
+        "ru": "фиксации для блокирования",
+        "pt": "correções para blockly",
+        "nl": "fixes for blockly",
+        "fr": "correctifs pour bloc",
+        "it": "correzioni per blocchi",
+        "es": "fijaciones para bloqueo",
+        "pl": "poprawki dla blockly",
+        "uk": "фіксації для блокнотів",
+        "zh-cn": "块状修正"
+      },
       "1.9.9": {
         "en": "fix firefox",
         "de": "feuerfuchs",
@@ -106,19 +119,6 @@
         "pl": "naprawić skrypty nie pracujące",
         "uk": "виправлення скриптів не працює",
         "zh-cn": "修补脚本不工作"
-      },
-      "1.9.3": {
-        "en": "update packages",
-        "de": "update-pakete",
-        "ru": "обновления пакетов",
-        "pt": "pacotes de atualização",
-        "nl": "pakketten bijwerken",
-        "fr": "mettre à jour les paquets",
-        "it": "pacchetti di aggiornamento",
-        "es": "actualizar paquetes",
-        "pl": "aktualizacja pakietów",
-        "uk": "оновлення пакетів",
-        "zh-cn": "更新软件包"
       }
     },
     "icon": "logo.png",
