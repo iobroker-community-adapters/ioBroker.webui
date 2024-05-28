@@ -108,9 +108,13 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
     constructor() {
         super();
-        this._root = this._getDomElement<HTMLDivElement>('root');
+        this._root = super._getDomElement<HTMLDivElement>('root');
         this._rootShadow = this._root.attachShadow({ mode: 'open' });
         this._restoreCachedInititalValues();
+    }
+
+    override _getDomElement<T extends Element>(id: string): T {
+        return <T><unknown>this._rootShadow.getElementById(id);
     }
 
     ready() {

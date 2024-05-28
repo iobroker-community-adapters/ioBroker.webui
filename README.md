@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix getDomelement
+
 ### 1.10.1 (2024-05-28)
 - support classlist in setElementProperty
 
