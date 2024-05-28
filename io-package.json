@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.9.8",
+    "version": "1.9.9",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.9.9": {
+        "en": "fix firefox",
+        "de": "feuerfuchs",
+        "ru": "фиксация firefox",
+        "pt": "corrigir firefox",
+        "nl": "firefox herstellen",
+        "fr": "fixer le firefox",
+        "it": "fix firefox",
+        "es": "arregla fuegofox",
+        "pl": "firefox firefox",
+        "uk": "фіксація феєрофокса",
+        "zh-cn": "修复火狐"
+      },
       "1.9.8": {
         "en": "try faster loading",
         "de": "schnelleres laden",
@@ -106,19 +119,6 @@
         "pl": "aktualizacja pakietów",
         "uk": "оновлення пакетів",
         "zh-cn": "更新软件包"
-      },
-      "1.9.2": {
-        "en": "fix screenviewer styles",
-        "de": "bildschirmansicht-stile reparieren",
-        "ru": "исправления стилей экрана",
-        "pt": "corrigir estilos de visualização de tela",
-        "nl": "screenviewerstijlen herstellen",
-        "fr": "correction des styles d'affichage",
-        "it": "fissare stili screenviewer",
-        "es": "arreglar estilos de pantalla",
-        "pl": "naprawić style przeglądarki",
-        "uk": "виправити стилі перегляду екрана",
-        "zh-cn": "固定屏幕查看器样式"
       }
     },
     "icon": "logo.png",
