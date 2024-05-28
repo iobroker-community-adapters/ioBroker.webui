@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.10.0",
+    "version": "1.10.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.10.1": {
+        "en": "support classlist in setElementProperty",
+        "de": "support-Klassiker im Set Element Eigentum",
+        "ru": "поддержка классификатора в наборе Элемент Имущество",
+        "pt": "lista de classes de suporte em conjunto Elemento Propriedade",
+        "nl": "ondersteuningsklasselijst in set Element Eigenschap",
+        "fr": "prise en charge de classlist dans set Élément Biens",
+        "it": "supporto classlist in set Elemento Proprietà",
+        "es": "lista de apoyo en conjunto Elemento Propiedad",
+        "pl": "obsługa listy klas w zestawie Element Własność",
+        "uk": "супровід класу в комплекті Головна Проживання",
+        "zh-cn": "组合中的支持类列表 元素 财产"
+      },
       "1.10.0": {
         "en": "fix screen & parent screen access",
         "de": "bildschirm und elternbildschirm",
@@ -106,19 +119,6 @@
         "pl": "fix null ref",
         "uk": "виправити null реф",
         "zh-cn": "修补无效"
-      },
-      "1.9.5": {
-        "en": "few small changes",
-        "de": "kleine veränderungen",
-        "ru": "несколько небольших изменений",
-        "pt": "poucas pequenas mudanças",
-        "nl": "enkele kleine veranderingen",
-        "fr": "quelques petits changements",
-        "it": "pochi piccoli cambiamenti",
-        "es": "pocos pequeños cambios",
-        "pl": "kilka małych zmian",
-        "uk": "кілька невеликих змін",
-        "zh-cn": "少许小改动"
       }
     },
     "icon": "logo.png",
