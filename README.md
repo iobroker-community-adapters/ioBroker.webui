@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- better evt editor for new events
+
 ### 1.10.5 (2024-05-29)
 - show events on webui controls
 
