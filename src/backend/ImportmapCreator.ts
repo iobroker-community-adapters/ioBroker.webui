@@ -62,7 +62,7 @@ export class ImportmapCreator {
 
         /* Imports Code for Designer ... */
 
-        let fileConfigWidgets = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
+        let fileConfigWidgets = `import { ServiceContainer, WebcomponentManifestEventsService, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
 
 export function registerNpmWidgets(serviceContainer) {
 `
@@ -70,7 +70,7 @@ export function registerNpmWidgets(serviceContainer) {
         fileConfigWidgets += '\n}';
         await fs.writeFile(path.join(this._packageBaseDirectory, 'configWidgets.js'), fileConfigWidgets);
 
-        let fileDesignerAddons = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
+        let fileDesignerAddons = `import { ServiceContainer, WebcomponentManifestEventsService, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
 
 export async function registerDesignerAddons(serviceContainer) {
     let classDefinition;
@@ -155,6 +155,7 @@ export async function registerDesignerAddons(serviceContainer) {
             let nm = (<string>packageJsonObj.name).replaceAll(' ', '_').replaceAll('@', '_').replaceAll('-', '_').replaceAll('/', '_').replaceAll('.', '_');
             this.designerServicesCode += `let ${nm} = ${customElementsJson};
     serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPathWeb}', ${nm}));
+    serviceContainer.register('eventsService', new WebcomponentManifestEventsService('${packageJsonObj.name}', ${nm}));
     serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm}));`
 
             let manifest = JSON.parse(customElementsJson);
