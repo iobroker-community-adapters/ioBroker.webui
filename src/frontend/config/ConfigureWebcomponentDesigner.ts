@@ -1,9 +1,8 @@
-import { BaseCustomWebcomponentBindingsService, BindingsRefactorService, IElementsJson, JsonFileElementsService, PreDefinedElementsService, SeperatorContextMenu, TextRefactorService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
+import { BaseCustomWebcomponentBindingsService, BindingsRefactorService, EventsService, IElementsJson, JsonFileElementsService, PreDefinedElementsService, SeperatorContextMenu, TextRefactorService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
 import { NodeHtmlParserService } from '@node-projects/web-component-designer-htmlparserservice-nodehtmlparser';
 import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
 import { CssToolsStylesheetService } from '@node-projects/web-component-designer-stylesheetservice-css-tools';
 import { BindableObjectDragDropService, BindingsEditor, VisualizationBindingsService, PropertyGridDragDropService, ScriptRefactorService, BindingsHelper } from "@node-projects/web-component-designer-visualization-addons";
-
 import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
 import { IobrokerWebuiDemoProviderService } from "../services/IobrokerWebuiDemoProviderService.js";
 import { IobrokerWebuiConfirmationWrapper } from "./IobrokerWebuiConfirmationWrapper.js";
@@ -11,7 +10,6 @@ import { IIobrokerWebuiBinding } from "../interfaces/IIobrokerWebuiBinding.js";
 import customElementsObserver from "../widgets/customElementsObserver.js";
 import { IobrokerWebuiExternalDragDropService } from "../services/IobrokerWebuiExternalDragDropService.js";
 import { IobrokerWebuiCopyPasteService } from "../services/IobrokerWebuiCopyPasteService.js";
-import { IobrokerWebuiEventsService } from "../services/IobrokerWebuiEventsService.js";
 import { IobrokerWebuiPropertiesService } from "../services/IobrokerWebuiPropertiesService.js";
 import { IobrokerWebuiConfigButtonProvider } from "../services/IobrokerWebuiConfigButtonProvider.js";
 import { IobrokerWebuiCustomElementContextMenu } from "../services/IobrokerWebuiCustomElementContextMenu.js";
@@ -20,6 +18,7 @@ import { IobrokerWebuiSpecialPropertiesService } from "../services/IobrokerWebui
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ExpandCollapseContextMenu } from "@node-projects/web-component-designer-widgets-wunderbaum";
 import { IobrokerWebuiScreenContextMenu } from "../services/IobrokerWebuiScreenContextMenu.js";
+import { IobrokerWebuiEventsService } from "../services/IobrokerWebuiEventsService.js";
 
 export function configureDesigner(bindingsHelper: BindingsHelper) {
     const serviceContainer = createDefaultServiceContainer();
@@ -31,7 +30,7 @@ export function configureDesigner(bindingsHelper: BindingsHelper) {
     serviceContainer.register("demoProviderService", new IobrokerWebuiDemoProviderService());
     serviceContainer.register("externalDragDropService", new IobrokerWebuiExternalDragDropService());
     serviceContainer.register("copyPasteService", new IobrokerWebuiCopyPasteService());
-    serviceContainer.register("eventsService", new IobrokerWebuiEventsService());
+    serviceContainer.register("eventsService", new EventsService());
     serviceContainer.register("propertyGridDragDropService", new PropertyGridDragDropService());
     serviceContainer.register("refactorService", new BindingsRefactorService());
     serviceContainer.register("refactorService", new TextRefactorService());
@@ -110,6 +109,7 @@ export function configureDesigner(bindingsHelper: BindingsHelper) {
     }).catch(err => {
         //console.warn('error loading widgets designer addons', err);
     });
+    serviceContainer.register("eventsService", new IobrokerWebuiEventsService());
 
     return serviceContainer;
 }

@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- work on events
+
 ### 1.10.3 (2024-05-29)
 - add events service for manifest
 
