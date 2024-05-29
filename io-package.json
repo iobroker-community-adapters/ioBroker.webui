@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.10.6",
+    "version": "1.10.7",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.10.7": {
+        "en": "fix iframe d&d",
+        "de": "iframe d&d",
+        "ru": "iframe d&d",
+        "pt": "corrigir iframe d&d",
+        "nl": "iframe d&d repareren",
+        "fr": "fixer iframe d&d",
+        "it": "fix iframe d&d",
+        "es": "arreglar iframe d",
+        "pl": "fix iframe d & d",
+        "uk": "фіксація iframe d&d",
+        "zh-cn": "修补 iframed( d)"
+      },
       "1.10.6": {
         "en": "better evt editor for new events",
         "de": "besser evt editor für neue veranstaltungen",
@@ -106,19 +119,6 @@
         "pl": "obsługa listy klas w zestawie Element Własność",
         "uk": "супровід класу в комплекті Головна Проживання",
         "zh-cn": "组合中的支持类列表 元素 财产"
-      },
-      "1.10.0": {
-        "en": "fix screen & parent screen access",
-        "de": "bildschirm und elternbildschirm",
-        "ru": "исправить экран и доступ к родительскому экрану",
-        "pt": "corrigir tela e acesso de tela pai",
-        "nl": "schermtoegang herstellen",
-        "fr": "correction de l'accès à l'écran & parent",
-        "it": "schermata di correzione e accesso alla schermata madre",
-        "es": "fijar la pantalla del padre",
-        "pl": "naprawić ekran i macierzysty dostęp ekranu",
-        "uk": "фіксувати доступ до екрану та батьків",
-        "zh-cn": "修正父屏幕访问( p)"
       }
     },
     "icon": "logo.png",
