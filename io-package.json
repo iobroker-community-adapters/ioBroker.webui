@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.10.2",
+    "version": "1.10.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.10.3": {
+        "en": "add events service for manifest",
+        "de": "veranstaltungsservice für manifest hinzufügen",
+        "ru": "добавить службу событий для манифеста",
+        "pt": "adicionar serviço de eventos para manifesto",
+        "nl": "eventsservice voor manifest toevoegen",
+        "fr": "ajouter un service d'événements pour le manifeste",
+        "it": "aggiungere il servizio eventi per manifesto",
+        "es": "añadir eventos servicio para manifiesto",
+        "pl": "dodaj usługę eventów dla manifestu",
+        "uk": "додати послуги заходів для проявляється",
+        "zh-cn": "添加要显示的事件服务"
+      },
       "1.10.2": {
         "en": "fix getDomelement",
         "de": "details zum Artikel",
@@ -106,19 +119,6 @@
         "pl": "spróbuj szybszego ładowania",
         "uk": "швидше завантаження",
         "zh-cn": "尝试更快的加载"
-      },
-      "1.9.7": {
-        "en": "fix change root style",
-        "de": "fix ändern root style",
-        "ru": "исправить изменения корневого стиля",
-        "pt": "corrigir mudança estilo raiz",
-        "nl": "wijzigen van rootstijl",
-        "fr": "corriger le style racine de changement",
-        "it": "correzione dello stile root",
-        "es": "cambiar estilo raíz",
-        "pl": "fix change root style",
-        "uk": "фіксувати зміни кореневого стилю",
-        "zh-cn": "固定更改根样式"
       }
     },
     "icon": "logo.png",
