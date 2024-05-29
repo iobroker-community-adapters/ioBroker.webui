@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.10.3",
+    "version": "1.10.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.10.4": {
+        "en": "work on events",
+        "de": "arbeit an veranstaltungen",
+        "ru": "работа над событиями",
+        "pt": "trabalhar em eventos",
+        "nl": "werkzaamheden aan evenementen",
+        "fr": "travaux sur les événements",
+        "it": "lavoro sugli eventi",
+        "es": "trabajo en eventos",
+        "pl": "prace nad wydarzeniami",
+        "uk": "робота над подіями",
+        "zh-cn": "活动工作"
+      },
       "1.10.3": {
         "en": "add events service for manifest",
         "de": "veranstaltungsservice für manifest hinzufügen",
@@ -106,19 +119,6 @@
         "pl": "firefox firefox",
         "uk": "фіксація феєрофокса",
         "zh-cn": "修复火狐"
-      },
-      "1.9.8": {
-        "en": "try faster loading",
-        "de": "schnelleres laden",
-        "ru": "попытаться быстрее загрузить",
-        "pt": "tente carregar mais rápido",
-        "nl": "sneller laden",
-        "fr": "essayer de charger plus rapidement",
-        "it": "prova il caricamento più veloce",
-        "es": "tratar de cargar más rápido",
-        "pl": "spróbuj szybszego ładowania",
-        "uk": "швидше завантаження",
-        "zh-cn": "尝试更快的加载"
       }
     },
     "icon": "logo.png",
