@@ -49,14 +49,14 @@ export class ImportmapCreator {
         let importMapScript = `const importMapWidgets = ` + JSON.stringify(this.importMap, null, 4) + ';\nimportShim.addImportMap(importMapWidgets);';
         await fs.writeFile(path.join(this._packageBaseDirectory, 'importmap.js'), importMapScript);
         /* Imports Code for Designer ... */
-        let fileConfigWidgets = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
+        let fileConfigWidgets = `import { ServiceContainer, WebcomponentManifestEventsService, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
 
 export function registerNpmWidgets(serviceContainer) {
 `;
         fileConfigWidgets += this.designerServicesCode;
         fileConfigWidgets += '\n}';
         await fs.writeFile(path.join(this._packageBaseDirectory, 'configWidgets.js'), fileConfigWidgets);
-        let fileDesignerAddons = `import { ServiceContainer, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
+        let fileDesignerAddons = `import { ServiceContainer, WebcomponentManifestEventsService, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
 
 export async function registerDesignerAddons(serviceContainer) {
     let classDefinition;
@@ -131,6 +131,7 @@ export async function registerDesignerAddons(serviceContainer) {
             let nm = packageJsonObj.name.replaceAll(' ', '_').replaceAll('@', '_').replaceAll('-', '_').replaceAll('/', '_').replaceAll('.', '_');
             this.designerServicesCode += `let ${nm} = ${customElementsJson};
     serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPathWeb}', ${nm}));
+    serviceContainer.register('eventsService', new WebcomponentManifestEventsService('${packageJsonObj.name}', ${nm}));
     serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm}));`;
             let manifest = JSON.parse(customElementsJson);
             for (let m of manifest.modules) {
