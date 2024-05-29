@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.10.4",
+    "version": "1.10.5",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.10.5": {
+        "en": "show events on webui controls",
+        "de": "veranstaltungen auf webui control anzeigen",
+        "ru": "показать события на вебуи",
+        "pt": "mostrar eventos em controles webui",
+        "nl": "gebeurtenissen op webui-besturingen tonen",
+        "fr": "afficher les événements sur les contrôles webui",
+        "it": "mostra eventi su webui controlli",
+        "es": "mostrar eventos en controles webui",
+        "pl": "pokaż wydarzenia na kontrolach webui",
+        "uk": "показати події на вебі",
+        "zh-cn": "在 webui 控件上显示事件"
+      },
       "1.10.4": {
         "en": "work on events",
         "de": "arbeit an veranstaltungen",
@@ -106,19 +119,6 @@
         "pl": "poprawki dla blockly",
         "uk": "фіксації для блокнотів",
         "zh-cn": "块状修正"
-      },
-      "1.9.9": {
-        "en": "fix firefox",
-        "de": "feuerfuchs",
-        "ru": "фиксация firefox",
-        "pt": "corrigir firefox",
-        "nl": "firefox herstellen",
-        "fr": "fixer le firefox",
-        "it": "fix firefox",
-        "es": "arregla fuegofox",
-        "pl": "firefox firefox",
-        "uk": "фіксація феєрофокса",
-        "zh-cn": "修复火狐"
       }
     },
     "icon": "logo.png",
