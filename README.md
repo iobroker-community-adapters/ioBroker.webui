@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- add events service for manifest
+
 ### 1.10.2 (2024-05-28)
 - fix getDomelement
 
