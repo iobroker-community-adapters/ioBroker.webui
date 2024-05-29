@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.10.5",
+    "version": "1.10.6",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.10.6": {
+        "en": "better evt editor for new events",
+        "de": "besser evt editor für neue veranstaltungen",
+        "ru": "лучший редактор для новых событий",
+        "pt": "melhor editor evt para novos eventos",
+        "nl": "betere evt-editor voor nieuwe evenementen",
+        "fr": "meilleur éditeur evt pour les nouveaux événements",
+        "it": "migliore editor evt per nuovi eventi",
+        "es": "mejor editor de nuevos eventos",
+        "pl": "lepszy edytor evt dla nowych wydarzeń",
+        "uk": "кращий редактор для нових подій",
+        "zh-cn": "更好的 evt 新事件编辑器"
+      },
       "1.10.5": {
         "en": "show events on webui controls",
         "de": "veranstaltungen auf webui control anzeigen",
@@ -106,19 +119,6 @@
         "pl": "naprawić ekran i macierzysty dostęp ekranu",
         "uk": "фіксувати доступ до екрану та батьків",
         "zh-cn": "修正父屏幕访问( p)"
-      },
-      "1.9.10": {
-        "en": "fixes for blockly",
-        "de": "befestigungen für block",
-        "ru": "фиксации для блокирования",
-        "pt": "correções para blockly",
-        "nl": "fixes for blockly",
-        "fr": "correctifs pour bloc",
-        "it": "correzioni per blocchi",
-        "es": "fijaciones para bloqueo",
-        "pl": "poprawki dla blockly",
-        "uk": "фіксації для блокнотів",
-        "zh-cn": "块状修正"
       }
     },
     "icon": "logo.png",
