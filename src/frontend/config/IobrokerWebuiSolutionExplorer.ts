@@ -278,8 +278,8 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 this._createGlobalSettingsNode(),
                 this._createGlobalStyleNode(),
                 this._createFontDeclarationsNode(),
-                this._createGlobalScriptsNode(),
-                this._createGlobalJavascriptsNode()
+                //this._createGlobalScriptsNode(),
+                //this._createGlobalJavascriptsNode()
             ]
         }
     }
@@ -328,14 +328,14 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     }
 
 
-    private _createGlobalScriptsNode(): TreeNodeData {
+    /*private _createGlobalScriptsNode(): TreeNodeData {
         return {
             title: 'Script',
             folder: false,
         }
-    }
+    }*/
 
-    private _createGlobalJavascriptsNode(): TreeNodeData {
+    /*private _createGlobalJavascriptsNode(): TreeNodeData {
         return {
             title: 'Typescript',
             folder: false,
@@ -343,7 +343,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 window.appShell.openGlobalScriptEditor(iobrokerHandler.config.globalScript ?? '');
             }
         }
-    }
+    }*/
 
     private async _createNpmsNode() {
         let npmsNode: TreeNodeData = {
