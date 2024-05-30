@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.10.7",
+    "version": "1.10.8",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.10.8": {
+        "en": "better tooltip for multiplex\nremove unused solution entries",
+        "de": "besserer tooltip für multiplex\nungenutzte lösungseinträge entfernen",
+        "ru": "лучше переплавка для мультиплекса\nудалить неиспользуемые элементы решения",
+        "pt": "melhor ponta de ferramenta para multiplex\nremover entradas de solução não utilizadas",
+        "nl": "betere tooltip voor multiplex\nverwijder ongebruikte oplossingsitems",
+        "fr": "meilleur outil pour multiplex\nsupprimer les entrées de solutions inutilisées",
+        "it": "migliore tooltip per multiplex\nrimuovere le voci di soluzione non utilizzate",
+        "es": "mejor herramienta para multiplex\neliminar las entradas de solución no utilizadas",
+        "pl": "lepszy podpowiedź dla multiplex\nusunąć niewykorzystane wpisy roztworu",
+        "uk": "кращий інструмент для декількохx\nвидалити невикористані записи розчину",
+        "zh-cn": "更好的多功能工具提示\n删除未使用的解析项"
+      },
       "1.10.7": {
         "en": "fix iframe d&d",
         "de": "iframe d&d",
@@ -106,19 +119,6 @@
         "pl": "fix getDomelement",
         "uk": "виправити getDomelement",
         "zh-cn": "修补获得穹顶"
-      },
-      "1.10.1": {
-        "en": "support classlist in setElementProperty",
-        "de": "support-Klassiker im Set Element Eigentum",
-        "ru": "поддержка классификатора в наборе Элемент Имущество",
-        "pt": "lista de classes de suporte em conjunto Elemento Propriedade",
-        "nl": "ondersteuningsklasselijst in set Element Eigenschap",
-        "fr": "prise en charge de classlist dans set Élément Biens",
-        "it": "supporto classlist in set Elemento Proprietà",
-        "es": "lista de apoyo en conjunto Elemento Propiedad",
-        "pl": "obsługa listy klas w zestawie Element Własność",
-        "uk": "супровід класу в комплекті Головна Проживання",
-        "zh-cn": "组合中的支持类列表 元素 财产"
       }
     },
     "icon": "logo.png",
