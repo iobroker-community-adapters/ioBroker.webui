@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.10.8",
+    "version": "1.10.9",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.10.9": {
+        "en": "show undo count",
+        "de": "und das ist nicht..",
+        "ru": "показать undo",
+        "pt": "show undo count",
+        "nl": "aantal ongedaan gemaakte zaken tonen",
+        "fr": "afficher le nombre d'annulations",
+        "it": "mostra il conto",
+        "es": "show undo contar",
+        "pl": "pokaż liczbę cofnięć",
+        "uk": "показати кількість",
+        "zh-cn": "显示倒数"
+      },
       "1.10.8": {
         "en": "better tooltip for multiplex\nremove unused solution entries",
         "de": "besserer tooltip für multiplex\nungenutzte lösungseinträge entfernen",
@@ -106,19 +119,6 @@
         "pl": "dodaj usługę eventów dla manifestu",
         "uk": "додати послуги заходів для проявляється",
         "zh-cn": "添加要显示的事件服务"
-      },
-      "1.10.2": {
-        "en": "fix getDomelement",
-        "de": "details zum Artikel",
-        "ru": "исправить",
-        "pt": "corrigir getDomelement",
-        "nl": "fix getDomelement",
-        "fr": "corriger getDomelement",
-        "it": "fix getDomelement",
-        "es": "arreglar getDomelement",
-        "pl": "fix getDomelement",
-        "uk": "виправити getDomelement",
-        "zh-cn": "修补获得穹顶"
       }
     },
     "icon": "logo.png",

@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.10.9 (2024-05-30)
 - show undo count
 
 ### 1.10.8 (2024-05-30)
