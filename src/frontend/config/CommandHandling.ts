@@ -1,4 +1,4 @@
-import { ContextMenu, IContextMenuItem, IUiCommandHandler, ServiceContainer } from '@node-projects/web-component-designer';
+import { IUiCommandHandler, ServiceContainer } from '@node-projects/web-component-designer';
 import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js'
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
 import { IobrokerWebuiAppShell } from './IobrokerWebuiAppShell.js';
@@ -65,6 +65,13 @@ export class CommandHandling {
     }
   }
 
+  handleCommandButtonMouseHold(button, e) {
+    let commandName = <string>button.dataset['command'];
+    let commandParameter = button.dataset['commandParameter'];
+    let target: any = this.dockManager.activeDocument.resolvedElementContent;
+    target.executeCommand({ type: <any>('hold' + commandName[0].toUpperCase() + commandName.substring(1)), parameter: commandParameter, event: e });
+  }
+
   handleInputValueChanged(e) {
     let input = e.currentTarget as HTMLInputElement;
     let commandName = input.dataset['command'];
@@ -81,47 +88,28 @@ export class CommandHandling {
   init(serviceContainer: ServiceContainer) {
     let buttons = Array.from<(HTMLButtonElement | HTMLInputElement)>(document.querySelectorAll('[data-command]'));
     buttons.forEach(b => {
-      if (b instanceof HTMLButtonElement) {
-        b.onclick = (e) => this.handleCommandButtonClick(e);
-      }
+      let mouseDownTimer = null;
+      b.addEventListener('mousedown', (e) => {
+        mouseDownTimer = setTimeout(() => {
+          this.handleCommandButtonMouseHold(b, e);
+          mouseDownTimer = false;
+        }, 300);
+      });
+      b.addEventListener('click', (e) => {
+        if (mouseDownTimer !== false)
+          this.handleCommandButtonClick(e);
+      });
+      b.addEventListener('mouseup', (e) => {
+        if (mouseDownTimer) {
+          clearTimeout(mouseDownTimer);
+          mouseDownTimer = null;
+        }
+      });
     });
-
-    let undoButton = <HTMLButtonElement>document.querySelector('[data-command="undo"]')
-    let mouseDownTimer = null;
-    undoButton.onmousedown = (e) => {
-      mouseDownTimer = setTimeout(() => {
-        let target = <IobrokerWebuiScreenEditor>this.dockManager.activeDocument.resolvedElementContent;
-        let entries = target.documentContainer.instanceServiceContainer.undoService.getUndoEntries(20);
-        let mnu: IContextMenuItem[] = Array.from(entries).map((x, idx) => ({ title: 'undo: ' + x, action: () => { for (let i = 0; i <= idx; i++) target.documentContainer.instanceServiceContainer.undoService.undo() } }));
-        ContextMenu.show(mnu, e, { mode: 'undo' });
-      }, 300)
-    }
-    undoButton.onmouseup = (e) => {
-      if (mouseDownTimer) {
-        clearTimeout(mouseDownTimer);
-        mouseDownTimer = null;
-      }
-    }
-
-    let redoButton = <HTMLButtonElement>document.querySelector('[data-command="redo"]')
-    redoButton.onmousedown = (e) => {
-      mouseDownTimer = setTimeout(() => {
-        let target = <IobrokerWebuiScreenEditor>this.dockManager.activeDocument.resolvedElementContent;
-        let entries = target.documentContainer.instanceServiceContainer.undoService.getRedoEntries(20);
-        let mnu: IContextMenuItem[] = Array.from(entries).map((x, idx) => ({ title: 'redo: ' + x, action: () => { for (let i = 0; i <= idx; i++) target.documentContainer.instanceServiceContainer.undoService.redo() } }));
-        ContextMenu.show(mnu, e, { mode: 'undo' });
-      }, 300)
-    }
-    redoButton.onmouseup = (e) => {
-      if (mouseDownTimer) {
-        clearTimeout(mouseDownTimer);
-        mouseDownTimer = null;
-      }
-    }
 
     setInterval(() => {
       if (this.dockManager.activeDocument) {
-        let target: any = this.dockManager.activeDocument.resolvedElementContent;
+        let target: any = this.dockManager.activeDocument?.resolvedElementContent;
         if (target.canExecuteCommand) {
           this.canExecuteCommand(buttons, target);
         } else {
@@ -129,6 +117,13 @@ export class CommandHandling {
         }
       } else {
         this.canExecuteCommand(buttons, null);
+      }
+      const target: IobrokerWebuiScreenEditor = <IobrokerWebuiScreenEditor>this.dockManager.activeDocument?.resolvedElementContent;
+      if (target) {
+        const undoCount = target.documentContainer.instanceServiceContainer.undoService.undoCount;
+        const redoCount = target.documentContainer.instanceServiceContainer.undoService.redoCount;
+        document.getElementById('undoCount').innerText = '(' + undoCount + '/' + (undoCount + redoCount) + ')';
+        document.getElementById('redoCount').innerText = '(' + redoCount + '/' + (undoCount + redoCount) + ')';
       }
     }, 100);
   }

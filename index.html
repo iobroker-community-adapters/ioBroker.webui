@@ -220,10 +220,18 @@
     <button data-command="cut" title="cut" disabled><img src="./node_modules/@node-projects/web-component-designer/assets/icons/cut.svg"></button>
     <button data-command="copy" title="copy" disabled><img src="./node_modules/@node-projects/web-component-designer/assets/icons/copy.svg"></button>
     <button data-command="delete" title="delete" disabled><img src="./node_modules/@node-projects/web-component-designer/assets/icons/delete.svg"></button>
-    <button ondragstart="return false;" style="margin-left: 10px;" data-command="undo" disabled title="click and hold to see the undo list"><img
-        src="./node_modules/@node-projects/web-component-designer/assets/icons/undo.svg"></button>
-    <button ondragstart="return false;" data-command="redo" disabled title="click and hold to see the redo list"><img
-        src="./node_modules/@node-projects/web-component-designer/assets/icons/redo.svg"></button>
+    <div style="margin-left: 10px; flex-direction: column;">
+      <button ondragstart="return false;" data-command="undo" disabled title="click and hold to see the undo list"><img
+          src="./node_modules/@node-projects/web-component-designer/assets/icons/undo.svg"></button>
+      <span id="undoCount" data-command="undo" disabled
+        style="font-family: monospace; font-size: 8px; position: relative; top: -8px; cursor: pointer;">(0/0)</span>
+    </div>
+    <div style="margin-left: 10px; flex-direction: column;">
+      <button ondragstart="return false;" data-command="redo" disabled title="click and hold to see the redo list"><img
+          src="./node_modules/@node-projects/web-component-designer/assets/icons/redo.svg"></button>
+      <span id="redoCount" data-command="redo" disabled
+        style="font-family: monospace; font-size: 8px; position: relative; top: -8px; cursor: pointer;">(0/0)</span>
+    </div>
     <button style="margin-left: 10px;" data-command="runtime" title="runtime"><img src="./assets/icons/play.svg"></button>
   </nav>
   <iobroker-webui-app-shell id="shell">
