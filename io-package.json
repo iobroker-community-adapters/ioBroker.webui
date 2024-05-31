@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.11.0",
+    "version": "1.11.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.11.1": {
+        "en": "fix icons view path",
+        "de": "icons sehen pfad",
+        "ru": "исправить значки взгляд путь",
+        "pt": "corrigir ícones ver caminho",
+        "nl": "pictogramweergave pad repareren",
+        "fr": "correction du chemin d'affichage des icônes",
+        "it": "correzione icone view path",
+        "es": "fijar iconos ver ruta",
+        "pl": "naprawić ścieżkę widoku ikon",
+        "uk": "виправити іконки переглянути шлях",
+        "zh-cn": "修正图标查看路径"
+      },
       "1.11.0": {
         "en": "add a icons view",
         "de": "eine symbolansicht hinzufügen",
@@ -106,19 +119,6 @@
         "pl": "pokaż wydarzenia na kontrolach webui",
         "uk": "показати події на вебі",
         "zh-cn": "在 webui 控件上显示事件"
-      },
-      "1.10.4": {
-        "en": "work on events",
-        "de": "arbeit an veranstaltungen",
-        "ru": "работа над событиями",
-        "pt": "trabalhar em eventos",
-        "nl": "werkzaamheden aan evenementen",
-        "fr": "travaux sur les événements",
-        "it": "lavoro sugli eventi",
-        "es": "trabajo en eventos",
-        "pl": "prace nad wydarzeniami",
-        "uk": "робота над подіями",
-        "zh-cn": "活动工作"
       }
     },
     "icon": "logo.png",
