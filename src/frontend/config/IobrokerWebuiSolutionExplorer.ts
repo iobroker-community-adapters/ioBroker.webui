@@ -13,6 +13,7 @@ import wunderbaumStyle from 'wunderbaum/dist/wunderbaum.css' with { type: 'css' 
 import { WunderbaumNode } from "wb_node";
 import { WbClickEventType, WbNodeData, WbNodeEventType } from "types";
 import { defaultNewStyle } from "./IobrokerWebuiScreenEditor.js";
+import { IobrokerWebuiIconsView } from "./IobrokerWebuiIconsView.js";
 
 type TreeNodeData = WbNodeData & {
     lazyload?: (event: WbNodeEventType, data: any) => Promise<TreeNodeData[]>,
@@ -327,7 +328,6 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         }
     }
 
-
     /*private _createGlobalScriptsNode(): TreeNodeData {
         return {
             title: 'Script',
@@ -505,7 +505,16 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     });
                 }
                 return iconDirNodes;
-            }
+            },
+            contextMenu: (event) => {
+                ContextMenu.show([{
+                    title: 'icons view', action: async () => {
+                        let iv = new IobrokerWebuiIconsView();
+                        iv.title = 'icons';
+                        window.appShell.openDialog(iv, { x: 50, y: 50, width: 800, height: 600 });
+                    }
+                }], event);
+            },
         }
 
         return iconsNode;
@@ -996,11 +1005,11 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         if (dndSourceNode?.data?.data?.type && e.node?.key && e.node.key.startsWith(dndSourceNode.data.data.type + '_')) {
                             iobrokerHandler.renameObject(dndSourceNode?.data?.data?.type, dndSourceNode?.data?.data?.name, e.node.data.data.name + '/' + dndSourceNode?.title);
                         }
-                    }, 
+                    },
                     dragEnd: (e) => {
                         //@ts-ignore
                         dndSourceNode._rowElem.firstElementChild.style.opacity = '';
-                    }, 
+                    },
                 }
             });
         } else {

@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- add a icons view
+
 ### 1.10.9 (2024-05-30)
 - show undo count
 
