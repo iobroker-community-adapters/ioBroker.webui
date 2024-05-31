@@ -63,7 +63,7 @@ export class IobrokerWebuiIconsView extends BaseCustomWebComponentConstructorApp
         this._assignEvents();
 
         for await (const f of this.iconNames()) {
-            let src = "http://192.168.1.2:8082/" + f.path;;
+            let src = /* "http://192.168.1.2:8082/" + */ f.path;;
             const div = document.createElement('div');
             const img = document.createElement('img');
             img.src = src;
