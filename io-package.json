@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.10.9",
+    "version": "1.11.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.11.0": {
+        "en": "add a icons view",
+        "de": "eine symbolansicht hinzufügen",
+        "ru": "добавить вид иконки",
+        "pt": "adicionar uma exibição de ícones",
+        "nl": "een pictogrammenweergave toevoegen",
+        "fr": "ajouter une vue des icônes",
+        "it": "aggiungere una vista icone",
+        "es": "añadir una vista de iconos",
+        "pl": "dodaj widok ikon",
+        "uk": "додати іконки",
+        "zh-cn": "添加图标视图"
+      },
       "1.10.9": {
         "en": "show undo count",
         "de": "und das ist nicht..",
@@ -106,19 +119,6 @@
         "pl": "prace nad wydarzeniami",
         "uk": "робота над подіями",
         "zh-cn": "活动工作"
-      },
-      "1.10.3": {
-        "en": "add events service for manifest",
-        "de": "veranstaltungsservice für manifest hinzufügen",
-        "ru": "добавить службу событий для манифеста",
-        "pt": "adicionar serviço de eventos para manifesto",
-        "nl": "eventsservice voor manifest toevoegen",
-        "fr": "ajouter un service d'événements pour le manifeste",
-        "it": "aggiungere il servizio eventi per manifesto",
-        "es": "añadir eventos servicio para manifiesto",
-        "pl": "dodaj usługę eventów dla manifestu",
-        "uk": "додати послуги заходів для проявляється",
-        "zh-cn": "添加要显示的事件服务"
       }
     },
     "icon": "logo.png",

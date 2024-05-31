@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.11.0 (2024-05-31)
 - add a icons view
 
 ### 1.10.9 (2024-05-30)
