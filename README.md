@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- screens grid view
+
 ### 1.11.1 (2024-05-31)
 - fix icons view path
 

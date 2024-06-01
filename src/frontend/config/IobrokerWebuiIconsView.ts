@@ -50,6 +50,7 @@ export class IobrokerWebuiIconsView extends BaseCustomWebComponentConstructorApp
     }
 
     private _root: HTMLDivElement;
+    private _filter: RegExp;
 
     constructor() {
         super();
@@ -100,6 +101,10 @@ export class IobrokerWebuiIconsView extends BaseCustomWebComponentConstructorApp
                 yield* this._readFolder(adapter, subFolder + '/' + f.file);
             } else {
                 if (!f.file.endsWith('.html')) {
+                    if (this._filter) {
+                        if (!f.file.match(this._filter))
+                            continue;
+                    }
                     const posDot = f.file.lastIndexOf('.');
                     const name = f.file.substring(0, posDot);
                     yield {

@@ -14,6 +14,7 @@ import { WunderbaumNode } from "wb_node";
 import { WbClickEventType, WbNodeData, WbNodeEventType } from "types";
 import { defaultNewStyle } from "./IobrokerWebuiScreenEditor.js";
 import { IobrokerWebuiIconsView } from "./IobrokerWebuiIconsView.js";
+import { IobrokerWebuiScreensView } from "./IobrokerWebuiScreensView.js";
 
 type TreeNodeData = WbNodeData & {
     lazyload?: (event: WbNodeEventType, data: any) => Promise<TreeNodeData[]>,
@@ -145,6 +146,16 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 }
             }
         }];
+
+        if (type == 'screen' && !dir) {
+            ctxMenuItems.push({
+                title: 'Grid view', action: async () => {
+                    let iv = new IobrokerWebuiScreensView();
+                    iv.title = 'screens - grid view';
+                    window.appShell.openDialog(iv, { x: 50, y: 50, width: 800, height: 600 });
+                }
+            });
+        }
 
         if (dir)
             ctxMenuItems.push({
@@ -508,9 +519,9 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             },
             contextMenu: (event) => {
                 ContextMenu.show([{
-                    title: 'icons view', action: async () => {
+                    title: 'Grid view', action: async () => {
                         let iv = new IobrokerWebuiIconsView();
-                        iv.title = 'icons';
+                        iv.title = 'icons - grid view';
                         window.appShell.openDialog(iv, { x: 50, y: 50, width: 800, height: 600 });
                     }
                 }], event);
