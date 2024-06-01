@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.11.2 (2024-06-01)
 - screens grid view
 
 ### 1.11.1 (2024-05-31)

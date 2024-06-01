@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.11.1",
+    "version": "1.11.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.11.2": {
+        "en": "screens grid view",
+        "de": "bildschirme",
+        "ru": "вид сетки",
+        "pt": "telas exibição de grade",
+        "nl": "schermrasterweergave",
+        "fr": "affichage de grille d'écrans",
+        "it": "schermi visualizzazione griglia",
+        "es": "pantallas vista de la red",
+        "pl": "widok siatki ekranów",
+        "uk": "екрани сітки вигляд",
+        "zh-cn": "屏幕网格视图"
+      },
       "1.11.1": {
         "en": "fix icons view path",
         "de": "icons sehen pfad",
@@ -106,19 +119,6 @@
         "pl": "lepszy edytor evt dla nowych wydarzeń",
         "uk": "кращий редактор для нових подій",
         "zh-cn": "更好的 evt 新事件编辑器"
-      },
-      "1.10.5": {
-        "en": "show events on webui controls",
-        "de": "veranstaltungen auf webui control anzeigen",
-        "ru": "показать события на вебуи",
-        "pt": "mostrar eventos em controles webui",
-        "nl": "gebeurtenissen op webui-besturingen tonen",
-        "fr": "afficher les événements sur les contrôles webui",
-        "it": "mostra eventi su webui controlli",
-        "es": "mostrar eventos en controles webui",
-        "pl": "pokaż wydarzenia na kontrolach webui",
-        "uk": "показати події на вебі",
-        "zh-cn": "在 webui 控件上显示事件"
       }
     },
     "icon": "logo.png",
