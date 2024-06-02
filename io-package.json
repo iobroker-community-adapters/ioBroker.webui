@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.11.2",
+    "version": "1.11.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.11.3": {
+        "en": "fix load subfolders",
+        "de": "lastunterordner fixieren",
+        "ru": "погрузочно-разгрузочные подкладки",
+        "pt": "corrigir subpastas de carga",
+        "nl": "fix load submappen",
+        "fr": "fixer les sous-dossiers de charge",
+        "it": "correggere le sottocartelle di carico",
+        "es": "fijar subcarpetas de carga",
+        "pl": "naprawić podfoldery obciążenia",
+        "uk": "фіксувати навантажувачі",
+        "zh-cn": "固定负载子文件夹"
+      },
       "1.11.2": {
         "en": "screens grid view",
         "de": "bildschirme",
@@ -106,19 +119,6 @@
         "pl": "fix iframe d & d",
         "uk": "фіксація iframe d&d",
         "zh-cn": "修补 iframed( d)"
-      },
-      "1.10.6": {
-        "en": "better evt editor for new events",
-        "de": "besser evt editor für neue veranstaltungen",
-        "ru": "лучший редактор для новых событий",
-        "pt": "melhor editor evt para novos eventos",
-        "nl": "betere evt-editor voor nieuwe evenementen",
-        "fr": "meilleur éditeur evt pour les nouveaux événements",
-        "it": "migliore editor evt per nuovi eventi",
-        "es": "mejor editor de nuevos eventos",
-        "pl": "lepszy edytor evt dla nowych wydarzeń",
-        "uk": "кращий редактор для нових подій",
-        "zh-cn": "更好的 evt 新事件编辑器"
       }
     },
     "icon": "logo.png",
