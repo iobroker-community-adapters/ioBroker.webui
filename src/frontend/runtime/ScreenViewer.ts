@@ -130,15 +130,17 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     }
 
     private async _loadScreen() {
-        if (!this._loading) {
-            this._loading = true;
-            await iobrokerHandler.waitForReady();
-            this._loading = false;
-            this.removeBindings();
-            DomHelper.removeAllChildnodes(this._rootShadow);
-            const screen = await iobrokerHandler.getWebuiObject('screen', this.screenName)
-            if (screen) {
-                this.loadScreenData(screen.html, screen.style, screen.script, screen.settings);
+        if (this.screenName) {
+            if (!this._loading) {
+                this._loading = true;
+                await iobrokerHandler.waitForReady();
+                this._loading = false;
+                this.removeBindings();
+                DomHelper.removeAllChildnodes(this._rootShadow);
+                const screen = await iobrokerHandler.getWebuiObject('screen', this.screenName)
+                if (screen) {
+                    this.loadScreenData(screen.html, screen.style, screen.script, screen.settings);
+                }
             }
         }
     }

@@ -110,7 +110,7 @@ export class IobrokerWebuiScreensView extends BaseCustomWebComponentConstructorA
                     continue;
             }
             yield {
-                name: subFolder + f,
+                name: (subFolder ? subFolder + '/' : '') + f,
             };
         }
 

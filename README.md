@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix load subfolders
+
 ### 1.11.2 (2024-06-01)
 - screens grid view
 
