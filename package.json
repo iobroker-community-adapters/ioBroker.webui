@@ -80,7 +80,7 @@
     "mobile-drag-drop": "^3.0.0-rc.0",
     "mocha": "^10.4.0",
     "monaco-editor": "^0.49.0",
-    "nyc": "^15.1.0",
+    "nyc": "^17.0.0",
     "sinon-chai": "^3.7.0",
     "toastify-js": "^1.12.0",
     "ts-node": "^10.9.2",
