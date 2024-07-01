@@ -61,7 +61,7 @@
     "@node-projects/web-component-designer-visualization-addons": "^0.1.39",
     "@node-projects/web-component-designer-widgets-wunderbaum": "^0.1.24",
     "@types/json-schema": "^7.0.15",
-    "@web/dev-server": "^0.4.5",
+    "@web/dev-server": "^0.4.6",
     "blockly": "^11.0.0",
     "chai": "^4.3.10",
     "chai-as-promised": "^7.1.2",
