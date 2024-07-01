@@ -62,7 +62,7 @@
     "@node-projects/web-component-designer-widgets-wunderbaum": "^0.1.24",
     "@types/json-schema": "^7.0.15",
     "@web/dev-server": "^0.4.5",
-    "blockly": "^11.0.0",
+    "blockly": "^11.1.1",
     "chai": "^4.3.10",
     "chai-as-promised": "^7.1.2",
     "construct-style-sheets-polyfill": "^3.1.0",
