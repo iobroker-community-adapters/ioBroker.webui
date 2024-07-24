@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix offset finding in box drawing
+
 ### 1.12.1 (2024-07-24)
 - update edit text in designer
 
