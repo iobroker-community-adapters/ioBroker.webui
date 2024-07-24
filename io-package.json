@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.12.0",
+    "version": "1.12.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.12.1": {
+        "en": "update edit text in designer",
+        "de": "text im designer aktualisieren",
+        "ru": "обновление текста редактирования в дизайнере",
+        "pt": "atualizar texto de edição no designer",
+        "nl": "bewerken van tekst in ontwerper bijwerken",
+        "fr": "mettre à jour le texte de modification dans le concepteur",
+        "it": "aggiornamento modificare il testo in designer",
+        "es": "texto de edición de actualización en diseñador",
+        "pl": "aktualizacja tekstu edycji w projektancie",
+        "uk": "оновлення редагування тексту в дизайнеру",
+        "zh-cn": "更新设计器中的文本"
+      },
       "1.12.0": {
         "en": "update designer",
         "de": "update-designer",
@@ -106,19 +119,6 @@
         "pl": "pokaż liczbę cofnięć",
         "uk": "показати кількість",
         "zh-cn": "显示倒数"
-      },
-      "1.10.8": {
-        "en": "better tooltip for multiplex\nremove unused solution entries",
-        "de": "besserer tooltip für multiplex\nungenutzte lösungseinträge entfernen",
-        "ru": "лучше переплавка для мультиплекса\nудалить неиспользуемые элементы решения",
-        "pt": "melhor ponta de ferramenta para multiplex\nremover entradas de solução não utilizadas",
-        "nl": "betere tooltip voor multiplex\nverwijder ongebruikte oplossingsitems",
-        "fr": "meilleur outil pour multiplex\nsupprimer les entrées de solutions inutilisées",
-        "it": "migliore tooltip per multiplex\nrimuovere le voci di soluzione non utilizzate",
-        "es": "mejor herramienta para multiplex\neliminar las entradas de solución no utilizadas",
-        "pl": "lepszy podpowiedź dla multiplex\nusunąć niewykorzystane wpisy roztworu",
-        "uk": "кращий інструмент для декількохx\nвидалити невикористані записи розчину",
-        "zh-cn": "更好的多功能工具提示\n删除未使用的解析项"
       }
     },
     "icon": "logo.png",
