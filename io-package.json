@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.11.3",
+    "version": "1.12.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.12.0": {
+        "en": "update designer",
+        "de": "update-designer",
+        "ru": "обновление дизайнера",
+        "pt": "atualização designer",
+        "nl": "update ontwerper",
+        "fr": "concepteur de mise à jour",
+        "it": "aggiornamento designer",
+        "es": "actualización diseñador",
+        "pl": "designer aktualizacji",
+        "uk": "оновлення дизайнера",
+        "zh-cn": "更新设计器"
+      },
       "1.11.3": {
         "en": "fix load subfolders",
         "de": "lastunterordner fixieren",
@@ -106,19 +119,6 @@
         "pl": "lepszy podpowiedź dla multiplex\nusunąć niewykorzystane wpisy roztworu",
         "uk": "кращий інструмент для декількохx\nвидалити невикористані записи розчину",
         "zh-cn": "更好的多功能工具提示\n删除未使用的解析项"
-      },
-      "1.10.7": {
-        "en": "fix iframe d&d",
-        "de": "iframe d&d",
-        "ru": "iframe d&d",
-        "pt": "corrigir iframe d&d",
-        "nl": "iframe d&d repareren",
-        "fr": "fixer iframe d&d",
-        "it": "fix iframe d&d",
-        "es": "arreglar iframe d",
-        "pl": "fix iframe d & d",
-        "uk": "фіксація iframe d&d",
-        "zh-cn": "修补 iframed( d)"
       }
     },
     "icon": "logo.png",
