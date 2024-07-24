@@ -60,6 +60,10 @@ export class IobrokerHandler implements VisualizationHandler {
         this.#cache.set('control', new Map());
     }
 
+    getNormalizedSignalName(id: string, relativeSignalPath?: string, element?: Element): string {
+        return (relativeSignalPath ?? '') + id;
+    }
+
     waitForReady(): Promise<void> {
         if (!this._readyPromises)
             return Promise.resolve();
