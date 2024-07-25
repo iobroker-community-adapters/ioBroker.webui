@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.12.3",
+    "version": "1.12.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.12.4": {
+        "en": "one more designer update",
+        "de": "ein weiteres designer-update",
+        "ru": "еще одно дизайнерское обновление",
+        "pt": "mais uma atualização de designer",
+        "nl": "nog een ontwerper update",
+        "fr": "une autre mise à jour de concepteur",
+        "it": "un altro aggiornamento designer",
+        "es": "una actualización de diseño más",
+        "pl": "jeszcze jedna aktualizacja projektanta",
+        "uk": "ще одне оновлення дизайнера",
+        "zh-cn": "再更新一个设计师"
+      },
       "1.12.3": {
         "en": "update designer",
         "de": "update-designer",
@@ -106,19 +119,6 @@
         "pl": "widok siatki ekranów",
         "uk": "екрани сітки вигляд",
         "zh-cn": "屏幕网格视图"
-      },
-      "1.11.1": {
-        "en": "fix icons view path",
-        "de": "icons sehen pfad",
-        "ru": "исправить значки взгляд путь",
-        "pt": "corrigir ícones ver caminho",
-        "nl": "pictogramweergave pad repareren",
-        "fr": "correction du chemin d'affichage des icônes",
-        "it": "correzione icone view path",
-        "es": "fijar iconos ver ruta",
-        "pl": "naprawić ścieżkę widoku ikon",
-        "uk": "виправити іконки переглянути шлях",
-        "zh-cn": "修正图标查看路径"
       }
     },
     "icon": "logo.png",
