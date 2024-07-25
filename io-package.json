@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.12.2",
+    "version": "1.12.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.12.3": {
+        "en": "update designer",
+        "de": "update-designer",
+        "ru": "обновление дизайнера",
+        "pt": "atualização designer",
+        "nl": "update ontwerper",
+        "fr": "concepteur de mise à jour",
+        "it": "aggiornamento designer",
+        "es": "actualización diseñador",
+        "pl": "designer aktualizacji",
+        "uk": "оновлення дизайнера",
+        "zh-cn": "更新设计器"
+      },
       "1.12.2": {
         "en": "fix offset finding in box drawing",
         "de": "fixoffsetsuche in boxzeichnung",
@@ -106,19 +119,6 @@
         "pl": "naprawić ścieżkę widoku ikon",
         "uk": "виправити іконки переглянути шлях",
         "zh-cn": "修正图标查看路径"
-      },
-      "1.11.0": {
-        "en": "add a icons view",
-        "de": "eine symbolansicht hinzufügen",
-        "ru": "добавить вид иконки",
-        "pt": "adicionar uma exibição de ícones",
-        "nl": "een pictogrammenweergave toevoegen",
-        "fr": "ajouter une vue des icônes",
-        "it": "aggiungere una vista icone",
-        "es": "añadir una vista de iconos",
-        "pl": "dodaj widok ikon",
-        "uk": "додати іконки",
-        "zh-cn": "添加图标视图"
       }
     },
     "icon": "logo.png",
