@@ -46,7 +46,7 @@
     "@alcalzone/release-script": "^3.8.0",
     "@alcalzone/release-script-plugin-iobroker": "^3.7.2",
     "@alcalzone/release-script-plugin-license": "^3.7.0",
-    "@blockly/zoom-to-fit": "^6.0.4",
+    "@blockly/zoom-to-fit": "^6.0.5",
     "@iobroker/socket-client": "^2.4.18",
     "@iobroker/testing": "^4.1.3",
     "@node-projects/base-custom-webcomponent": "0.27.6",
