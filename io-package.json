@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.12.4",
+    "version": "1.13.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.13.0": {
+        "en": "update designer",
+        "de": "update-designer",
+        "ru": "обновление дизайнера",
+        "pt": "atualização designer",
+        "nl": "update ontwerper",
+        "fr": "concepteur de mise à jour",
+        "it": "aggiornamento designer",
+        "es": "actualización diseñador",
+        "pl": "designer aktualizacji",
+        "uk": "оновлення дизайнера",
+        "zh-cn": "更新设计器"
+      },
       "1.12.4": {
         "en": "one more designer update",
         "de": "ein weiteres designer-update",
@@ -106,19 +119,6 @@
         "pl": "naprawić podfoldery obciążenia",
         "uk": "фіксувати навантажувачі",
         "zh-cn": "固定负载子文件夹"
-      },
-      "1.11.2": {
-        "en": "screens grid view",
-        "de": "bildschirme",
-        "ru": "вид сетки",
-        "pt": "telas exibição de grade",
-        "nl": "schermrasterweergave",
-        "fr": "affichage de grille d'écrans",
-        "it": "schermi visualizzazione griglia",
-        "es": "pantallas vista de la red",
-        "pl": "widok siatki ekranów",
-        "uk": "екрани сітки вигляд",
-        "zh-cn": "屏幕网格视图"
       }
     },
     "icon": "logo.png",
