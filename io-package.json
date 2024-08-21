@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.13.1",
+    "version": "1.13.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.13.2": {
+        "en": "designer updates\nadd find methods",
+        "de": "designer-updates\nfinden methoden",
+        "ru": "обновления\nдобавить методы поиска",
+        "pt": "atualizações do designer\nadicionar métodos de encontrar",
+        "nl": "ontwerper updates\nzoekmethoden toevoegen",
+        "fr": "mises à jour du concepteur\najouter des méthodes de recherche",
+        "it": "aggiornamenti designer\naggiungere metodi di ricerca",
+        "es": "actualizaciones de diseño\nañadir métodos",
+        "pl": "aktualizacje projektantów\ndodaj metody wyszukiwania",
+        "uk": "оновлення дизайнера\nдодати методи пошуку",
+        "zh-cn": "设计者更新\n添加查找方法"
+      },
       "1.13.1": {
         "en": "small designer tweaks",
         "de": "kleine designer tweaks",
@@ -106,19 +119,6 @@
         "pl": "aktualizacja tekstu edycji w projektancie",
         "uk": "оновлення редагування тексту в дизайнеру",
         "zh-cn": "更新设计器中的文本"
-      },
-      "1.12.0": {
-        "en": "update designer",
-        "de": "update-designer",
-        "ru": "обновление дизайнера",
-        "pt": "atualização designer",
-        "nl": "update ontwerper",
-        "fr": "concepteur de mise à jour",
-        "it": "aggiornamento designer",
-        "es": "actualización diseñador",
-        "pl": "designer aktualizacji",
-        "uk": "оновлення дизайнера",
-        "zh-cn": "更新设计器"
       }
     },
     "icon": "logo.png",
