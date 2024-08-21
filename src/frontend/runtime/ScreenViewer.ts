@@ -300,3 +300,5 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         }
     }
 }
+
+window.ScreenViewer = ScreenViewer;

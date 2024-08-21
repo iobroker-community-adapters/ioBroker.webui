@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- designer updates
+- add find methods
+
 ### 1.13.1 (2024-08-18)
 - small designer tweaks
 

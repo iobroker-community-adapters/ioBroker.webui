@@ -63,6 +63,8 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     }
 }
 
+window.BaseCustomControl = BaseCustomControl;
+
 export function getCustomControlName(name: string) {
     if (name[0] == '/')
         name = name.substring(1);
@@ -148,7 +150,7 @@ export function generateCustomControl(name: string, control: IControl) {
         window['IobrokerWebuiCustomControl' + name].style = style;
         window['IobrokerWebuiCustomControl' + name].properties = properties;
         window['IobrokerWebuiCustomControl' + name]._propertiesDictionary = null;
-        window['IobrokerWebuiCustomControl' + name].prototype = Object.create(BaseCustomControl.prototype, { constructor: { value: window['IobrokerWebuiCustomControl' + name] } })
+        window['IobrokerWebuiCustomControl' + name].prototype = Object.create(BaseCustomControl.prototype, { constructor: { value: window['IobrokerWebuiCustomControl' + name] } });
         if (!customElements.get(nm))
             customElements.define(nm, window['IobrokerWebuiCustomControl' + name]);
     }
