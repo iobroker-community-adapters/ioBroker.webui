@@ -39,7 +39,7 @@
                 "arguments",
                 "caller",
                 "name",
-                "__@hasInstance@2290"
+                "__@hasInstance@2369"
             ],
             "type": "object"
         },
@@ -247,7 +247,7 @@
                     "type": "string"
                 },
                 "source": {
-                    "description": "signal - read the value from a Signal\nproperty - read the value from a property of the customControl (not usable in screens)\nevent - read the value of a property of the event object\nparameter - a parameter you hand over\ncomplexString - a string with signals (contained in {})\ncomplexSignal - read the value from a signal wich name is build here (it can contain other signals in {})\nnot yet implemented: expression - js expression, member access needs to be defined {event, parameter, component/this, signals??? - async? }",
+                    "description": "signal - read the value from a Signal\nproperty - read the value from a property of the customControl (not usable in screens)\nevent - read the value of a property of the event object\nparameter - a parameter you hand over\ncomplexString - a string with signals (contained in {})\ncomplexSignal - read the value from a signal wich name is build here (it can contain other signals in {})\nexpression - js expression, 'ctx' is context object",
                     "enum": [
                         "complexSignal",
                         "complexString",

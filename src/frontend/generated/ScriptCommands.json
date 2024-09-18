@@ -46,6 +46,23 @@
             ],
             "type": "object"
         },
+        "ClearSiganlsInGroup": {
+            "properties": {
+                "group": {
+                    "description": "Name of the Group",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "ClearSiganlsInGroup",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "group"
+            ],
+            "type": "object"
+        },
         "CloseDialog": {
             "properties": {
                 "type": {
@@ -55,6 +72,78 @@
             },
             "propertyOrder": [
                 "type"
+            ],
+            "type": "object"
+        },
+        "Comment": {
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "Comment",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "comment"
+            ],
+            "type": "object"
+        },
+        "Condition": {
+            "properties": {
+                "comparisonType": {
+                    "enum": [
+                        "!=",
+                        "!=null",
+                        "<",
+                        "<=",
+                        "==",
+                        "==false",
+                        "==null",
+                        "==true",
+                        ">",
+                        ">="
+                    ],
+                    "type": "string"
+                },
+                "falseGotoLabel": {
+                    "type": "string"
+                },
+                "falseScriptName": {
+                    "type": "string"
+                },
+                "falseScriptType": {
+                    "type": "string"
+                },
+                "trueGotoLabel": {
+                    "type": "string"
+                },
+                "trueScriptName": {
+                    "type": "string"
+                },
+                "trueScriptType": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "Condition",
+                    "type": "string"
+                },
+                "value1": {},
+                "value2": {}
+            },
+            "propertyOrder": [
+                "type",
+                "value1",
+                "value2",
+                "comparisonType",
+                "trueGotoLabel",
+                "trueScriptName",
+                "trueScriptType",
+                "falseGotoLabel",
+                "falseScriptName",
+                "falseScriptType"
             ],
             "type": "object"
         },
@@ -126,6 +215,34 @@
             ],
             "type": "object"
         },
+        "Exit": {
+            "properties": {
+                "type": {
+                    "const": "Exit",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type"
+            ],
+            "type": "object"
+        },
+        "Goto": {
+            "properties": {
+                "label": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "Goto",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "label"
+            ],
+            "type": "object"
+        },
         "IncrementSignalValue": {
             "properties": {
                 "signal": {
@@ -163,6 +280,22 @@
             "propertyOrder": [
                 "type",
                 "script"
+            ],
+            "type": "object"
+        },
+        "Label": {
+            "properties": {
+                "label": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "Label",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "label"
             ],
             "type": "object"
         },
@@ -304,8 +437,35 @@
             ],
             "type": "object"
         },
+        "RunScript": {
+            "properties": {
+                "name": {
+                    "const": "string",
+                    "description": "Name of the Script",
+                    "type": "string"
+                },
+                "scriptType": {
+                    "const": "string",
+                    "description": "Type of the Script",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "RunScript",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "name",
+                "scriptType"
+            ],
+            "type": "object"
+        },
         "ScriptCommands": {
             "anyOf": [
+                {
+                    "$ref": "#/definitions/Comment"
+                },
                 {
                     "$ref": "#/definitions/OpenScreen"
                 },
@@ -362,6 +522,33 @@
                 },
                 {
                     "$ref": "#/definitions/Logout"
+                },
+                {
+                    "$ref": "#/definitions/SubscribeSignal"
+                },
+                {
+                    "$ref": "#/definitions/UnsubscribeSignal"
+                },
+                {
+                    "$ref": "#/definitions/WriteSignalsInGroup"
+                },
+                {
+                    "$ref": "#/definitions/ClearSiganlsInGroup"
+                },
+                {
+                    "$ref": "#/definitions/Condition"
+                },
+                {
+                    "$ref": "#/definitions/Exit"
+                },
+                {
+                    "$ref": "#/definitions/Label"
+                },
+                {
+                    "$ref": "#/definitions/RunScript"
+                },
+                {
+                    "$ref": "#/definitions/Goto"
                 }
             ]
         },
@@ -465,6 +652,28 @@
             ],
             "type": "object"
         },
+        "SubscribeSignal": {
+            "properties": {
+                "oneTime": {
+                    "type": "boolean"
+                },
+                "signal": {
+                    "description": "Name of the signal",
+                    "format": "signal",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "SubscribeSignal",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "signal",
+                "oneTime"
+            ],
+            "type": "object"
+        },
         "SwitchLanguage": {
             "properties": {
                 "language": {
@@ -518,6 +727,41 @@
             "propertyOrder": [
                 "type",
                 "signal"
+            ],
+            "type": "object"
+        },
+        "UnsubscribeSignal": {
+            "properties": {
+                "signal": {
+                    "description": "Name of the signal",
+                    "format": "signal",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "UnsubscribeSignal",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "signal"
+            ],
+            "type": "object"
+        },
+        "WriteSignalsInGroup": {
+            "properties": {
+                "group": {
+                    "description": "Name of the Group",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "WriteSignalsInGroup",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "group"
             ],
             "type": "object"
         }
