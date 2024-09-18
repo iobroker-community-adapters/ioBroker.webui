@@ -28,7 +28,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
         this._parseAttributesToProperties();
         this._bindingsRefresh();
         this.#bindings = window.appShell.bindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
-        this.#scriptObject = await window.appShell.scriptSystem.assignAllScripts('customControl ' + (<CustomControlInfo>(<any>this.constructor)[webuiCustomControlSymbol]).name, (<IControl>(<CustomControlInfo>(<any>this.constructor)[webuiCustomControlSymbol]).control).script, this.shadowRoot, this);
+        this.#scriptObject = await window.appShell.scriptSystem.assignAllScripts('customControl ' + (<CustomControlInfo>(<any>this.constructor)[webuiCustomControlSymbol]).name, (<IControl>(<CustomControlInfo>(<any>this.constructor)[webuiCustomControlSymbol]).control).script, this.shadowRoot, this, iobrokerHandler);
         this.#scriptObject?.connectedCallback?.(this);
         for (let e of this.#eventListeners) {
             this.addEventListener(e[0], e[1]);

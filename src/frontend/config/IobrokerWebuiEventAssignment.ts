@@ -7,11 +7,12 @@ import type { FunctionDeclaration } from "esprima-next";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import scriptCommandsTypeInfo from "../generated/ScriptCommands.json" with { type: 'json' };
 import propertiesTypeInfo from "../generated/Properties.json" with {type: 'json'};
+import webuiBlocklyToolbox from "../scripting/blockly/webuiBlocklyToolbox.js"
 
 export class IobrokerWebuiEventAssignment extends EventAssignment {
     constructor() {
         super();
-        this.initialize(iobrokerHandler, window.appShell, scriptCommandsTypeInfo, propertiesTypeInfo);
+        this.initialize(iobrokerHandler, window.appShell, scriptCommandsTypeInfo, propertiesTypeInfo, webuiBlocklyToolbox);
     }
 
     protected async _editJavascript(e: MouseEvent, eventItem: IEvent) {

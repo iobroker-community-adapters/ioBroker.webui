@@ -210,7 +210,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             this._iobBindings.push(...res);
         else
             this._iobBindings = res;
-        this._scriptObject = await window.appShell.scriptSystem.assignAllScripts('screenviewer - ' + this.screenName, script, this._rootShadow, this);
+        this._scriptObject = await window.appShell.scriptSystem.assignAllScripts('screenviewer - ' + this.screenName, script, this._rootShadow, this, iobrokerHandler);
     }
 
     _stretchView(settings: IScreenSettings) {
