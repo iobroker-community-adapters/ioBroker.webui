@@ -33,6 +33,9 @@ export class IobrokerHandler {
         this.#cache.set('screen', new Map());
         this.#cache.set('control', new Map());
     }
+    getNormalizedSignalName(id, relativeSignalPath, element) {
+        return (relativeSignalPath ?? '') + id;
+    }
     waitForReady() {
         if (!this._readyPromises)
             return Promise.resolve();

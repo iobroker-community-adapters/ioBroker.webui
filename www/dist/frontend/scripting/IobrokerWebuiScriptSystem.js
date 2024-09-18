@@ -45,4 +45,31 @@ export class IobrokerWebuiScriptSystem extends ScriptSystem {
             }
         }
     }
+    getTargetFromTargetSelector(context, targetSelectorTarget, targetSelector) {
+        if (targetSelectorTarget === 'currentScreen') {
+            if (targetSelector) {
+                let sr = context.element.getRootNode();
+                return sr.querySelectorAll(targetSelector);
+            }
+            else {
+                let rootDiv = context.element.getRootNode().host;
+                let sr = rootDiv.getRootNode();
+                return [sr.host];
+            }
+        }
+        else if (targetSelectorTarget === 'parentScreen') {
+            if (targetSelector) {
+                //@ts-ignore
+                let sr = context.element.getRootNode().host.getRootNode().host.getRootNode();
+                return sr.querySelectorAll(targetSelector);
+            }
+            else {
+                //@ts-ignore
+                let sr = context.element.getRootNode().host.getRootNode().host.getRootNode().host.getRootNode().host;
+                return [sr];
+            }
+        }
+        else
+            return super.getTargetFromTargetSelector(context, targetSelectorTarget, targetSelector);
+    }
 }

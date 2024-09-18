@@ -8,6 +8,8 @@ import { Wunderbaum } from 'wunderbaum';
 //@ts-ignore
 import wunderbaumStyle from 'wunderbaum/dist/wunderbaum.css' with { type: 'css' };
 import { defaultNewStyle } from "./IobrokerWebuiScreenEditor.js";
+import { IobrokerWebuiIconsView } from "./IobrokerWebuiIconsView.js";
+import { IobrokerWebuiScreensView } from "./IobrokerWebuiScreensView.js";
 export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
     static template = html `
         <div id="treeDiv" class="" style="overflow: auto; width:100%; height: 100%;">
@@ -119,6 +121,15 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     }
                 }
             }];
+        if (type == 'screen' && !dir) {
+            ctxMenuItems.push({
+                title: 'Grid view', action: async () => {
+                    let iv = new IobrokerWebuiScreensView();
+                    iv.title = 'screens - grid view';
+                    window.appShell.openDialog(iv, { x: 50, y: 50, width: 800, height: 600 });
+                }
+            });
+        }
         if (dir)
             ctxMenuItems.push({
                 title: 'Remove Folder', action: async () => {
@@ -246,8 +257,8 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 this._createGlobalSettingsNode(),
                 this._createGlobalStyleNode(),
                 this._createFontDeclarationsNode(),
-                this._createGlobalScriptsNode(),
-                this._createGlobalJavascriptsNode()
+                //this._createGlobalScriptsNode(),
+                //this._createGlobalJavascriptsNode()
             ]
         };
     }
@@ -291,21 +302,21 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             }
         };
     }
-    _createGlobalScriptsNode() {
+    /*private _createGlobalScriptsNode(): TreeNodeData {
         return {
             title: 'Script',
             folder: false,
-        };
-    }
-    _createGlobalJavascriptsNode() {
+        }
+    }*/
+    /*private _createGlobalJavascriptsNode(): TreeNodeData {
         return {
             title: 'Typescript',
             folder: false,
             dblclick: (e, data) => {
                 window.appShell.openGlobalScriptEditor(iobrokerHandler.config.globalScript ?? '');
             }
-        };
-    }
+        }
+    }*/
     async _createNpmsNode() {
         let npmsNode = {
             title: 'Packages',
@@ -467,7 +478,16 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     });
                 }
                 return iconDirNodes;
-            }
+            },
+            contextMenu: (event) => {
+                ContextMenu.show([{
+                        title: 'Grid view', action: async () => {
+                            let iv = new IobrokerWebuiIconsView();
+                            iv.title = 'icons - grid view';
+                            window.appShell.openDialog(iv, { x: 50, y: 50, width: 800, height: 600 });
+                        }
+                    }], event);
+            },
         };
         return iconsNode;
     }

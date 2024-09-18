@@ -44,6 +44,7 @@ export declare class IobrokerHandler implements VisualizationHandler {
     _controlNames: string[];
     readonly clientId: any;
     constructor();
+    getNormalizedSignalName(id: string, relativeSignalPath?: string, element?: Element): string;
     waitForReady(): Promise<void>;
     init(): Promise<void>;
     getIconAdapterFoldernames(): Promise<string[]>;

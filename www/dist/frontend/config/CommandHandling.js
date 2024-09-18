@@ -1,4 +1,3 @@
-import { ContextMenu } from '@node-projects/web-component-designer';
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
 import { IobrokerWebuiScreenEditor, defaultNewStyle } from './IobrokerWebuiScreenEditor.js';
 export class CommandHandling {
@@ -58,6 +57,12 @@ export class CommandHandling {
             }
         }
     }
+    handleCommandButtonMouseHold(button, e) {
+        let commandName = button.dataset['command'];
+        let commandParameter = button.dataset['commandParameter'];
+        let target = this.dockManager.activeDocument.resolvedElementContent;
+        target.executeCommand({ type: ('hold' + commandName[0].toUpperCase() + commandName.substring(1)), parameter: commandParameter, event: e });
+    }
     handleInputValueChanged(e) {
         let input = e.currentTarget;
         let commandName = input.dataset['command'];
@@ -72,46 +77,27 @@ export class CommandHandling {
     init(serviceContainer) {
         let buttons = Array.from(document.querySelectorAll('[data-command]'));
         buttons.forEach(b => {
-            if (b instanceof HTMLButtonElement) {
-                b.onclick = (e) => this.handleCommandButtonClick(e);
-            }
+            let mouseDownTimer = null;
+            b.addEventListener('mousedown', (e) => {
+                mouseDownTimer = setTimeout(() => {
+                    this.handleCommandButtonMouseHold(b, e);
+                    mouseDownTimer = false;
+                }, 300);
+            });
+            b.addEventListener('click', (e) => {
+                if (mouseDownTimer !== false)
+                    this.handleCommandButtonClick(e);
+            });
+            b.addEventListener('mouseup', (e) => {
+                if (mouseDownTimer) {
+                    clearTimeout(mouseDownTimer);
+                    mouseDownTimer = null;
+                }
+            });
         });
-        let undoButton = document.querySelector('[data-command="undo"]');
-        let mouseDownTimer = null;
-        undoButton.onmousedown = (e) => {
-            mouseDownTimer = setTimeout(() => {
-                let target = this.dockManager.activeDocument.resolvedElementContent;
-                let entries = target.documentContainer.instanceServiceContainer.undoService.getUndoEntries(20);
-                let mnu = Array.from(entries).map((x, idx) => ({ title: 'undo: ' + x, action: () => { for (let i = 0; i <= idx; i++)
-                        target.documentContainer.instanceServiceContainer.undoService.undo(); } }));
-                ContextMenu.show(mnu, e, { mode: 'undo' });
-            }, 300);
-        };
-        undoButton.onmouseup = (e) => {
-            if (mouseDownTimer) {
-                clearTimeout(mouseDownTimer);
-                mouseDownTimer = null;
-            }
-        };
-        let redoButton = document.querySelector('[data-command="redo"]');
-        redoButton.onmousedown = (e) => {
-            mouseDownTimer = setTimeout(() => {
-                let target = this.dockManager.activeDocument.resolvedElementContent;
-                let entries = target.documentContainer.instanceServiceContainer.undoService.getRedoEntries(20);
-                let mnu = Array.from(entries).map((x, idx) => ({ title: 'redo: ' + x, action: () => { for (let i = 0; i <= idx; i++)
-                        target.documentContainer.instanceServiceContainer.undoService.redo(); } }));
-                ContextMenu.show(mnu, e, { mode: 'undo' });
-            }, 300);
-        };
-        redoButton.onmouseup = (e) => {
-            if (mouseDownTimer) {
-                clearTimeout(mouseDownTimer);
-                mouseDownTimer = null;
-            }
-        };
         setInterval(() => {
             if (this.dockManager.activeDocument) {
-                let target = this.dockManager.activeDocument.resolvedElementContent;
+                let target = this.dockManager.activeDocument?.resolvedElementContent;
                 if (target.canExecuteCommand) {
                     this.canExecuteCommand(buttons, target);
                 }
@@ -121,6 +107,13 @@ export class CommandHandling {
             }
             else {
                 this.canExecuteCommand(buttons, null);
+            }
+            const target = this.dockManager.activeDocument?.resolvedElementContent;
+            if (target) {
+                const undoCount = target.documentContainer.instanceServiceContainer.undoService.undoCount;
+                const redoCount = target.documentContainer.instanceServiceContainer.undoService.redoCount;
+                document.getElementById('undoCount').innerText = '(' + undoCount + '/' + (undoCount + redoCount) + ')';
+                document.getElementById('redoCount').innerText = '(' + redoCount + '/' + (undoCount + redoCount) + ')';
             }
         }, 100);
     }

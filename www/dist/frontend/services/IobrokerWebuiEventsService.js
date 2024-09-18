@@ -1,7 +1,10 @@
-import { EventsService } from "@node-projects/web-component-designer";
-export class IobrokerWebuiEventsService extends EventsService {
+export class IobrokerWebuiEventsService {
+    isHandledElementFromEventsService(designItem) {
+        return true;
+    }
     getPossibleEvents(designItem) {
-        let events = super.getPossibleEvents(designItem);
+        let srv = designItem.serviceContainer.getLastServiceWhere('eventsService', x => !(x instanceof IobrokerWebuiEventsService) && x.isHandledElementFromEventsService(designItem));
+        let events = srv.getPossibleEvents(designItem);
         let setEvents = [];
         for (let a of designItem.attributes()) {
             if (a[0][0] == '@') {
@@ -17,5 +20,9 @@ export class IobrokerWebuiEventsService extends EventsService {
             }
         }
         return [...setEvents, ...events];
+    }
+    getEvent(designItem, name) {
+        let evt = this.getPossibleEvents(designItem).find(x => x.name == name);
+        return evt ?? { name, propertyName: 'on' + name, eventObjectName: 'Event' };
     }
 }

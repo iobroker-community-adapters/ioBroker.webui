@@ -3,6 +3,7 @@ import { __decorate } from "tslib";
 import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, DomHelper, html, property } from "@node-projects/base-custom-webcomponent";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { convertCssUnitToPixel } from "@node-projects/web-component-designer/dist/elements/helper/CssUnitConverter.js";
+import { isFirefox } from "@node-projects/web-component-designer/dist/elements/helper/Browser.js";
 let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     static { ScreenViewer_1 = this; }
     static style = css `
@@ -87,9 +88,12 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
     }
     constructor() {
         super();
-        this._root = this._getDomElement('root');
+        this._root = super._getDomElement('root');
         this._rootShadow = this._root.attachShadow({ mode: 'open' });
         this._restoreCachedInititalValues();
+    }
+    _getDomElement(id) {
+        return this._rootShadow.getElementById(id);
     }
     ready() {
         this._parseAttributesToProperties();
@@ -102,20 +106,23 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
         this._iobBindings = null;
     }
     async _loadScreen() {
-        if (!this._loading) {
-            this._loading = true;
-            await iobrokerHandler.waitForReady();
-            this._loading = false;
-            this.removeBindings();
-            DomHelper.removeAllChildnodes(this._rootShadow);
-            const screen = await iobrokerHandler.getWebuiObject('screen', this.screenName);
-            if (screen) {
-                this.loadScreenData(screen.html, screen.style, screen.script, screen.settings);
+        if (this.screenName) {
+            if (!this._loading) {
+                this._loading = true;
+                await iobrokerHandler.waitForReady();
+                this._loading = false;
+                this.removeBindings();
+                DomHelper.removeAllChildnodes(this._rootShadow);
+                const screen = await iobrokerHandler.getWebuiObject('screen', this.screenName);
+                if (screen) {
+                    this.loadScreenData(screen.html, screen.style, screen.script, screen.settings);
+                }
             }
         }
     }
     async loadScreenData(html, style, script, settings) {
         let globalStyle = iobrokerHandler.config?.globalStyle ?? '';
+        this._stretchView(settings);
         let parsedStyle = null;
         if (style) {
             try {
@@ -157,8 +164,16 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
             this._root.style.removeProperty('margin');
             this.style.removeProperty('display');
         }
+        let myDocument;
         //@ts-ignore
-        const myDocument = new DOMParser().parseFromString(html, 'text/html', { includeShadowRoots: true });
+        if (Document.parseHTMLUnsafe && !isFirefox) {
+            //@ts-ignore
+            myDocument = Document.parseHTMLUnsafe(html);
+        }
+        else {
+            //@ts-ignore
+            myDocument = new DOMParser().parseFromString(html, 'text/html', { includeShadowRoots: true });
+        }
         const fragment = document.createDocumentFragment();
         for (const n of myDocument.head.childNodes)
             fragment.appendChild(n);
@@ -170,12 +185,11 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
             this._iobBindings.push(...res);
         else
             this._iobBindings = res;
-        this._scriptObject = await window.appShell.scriptSystem.assignAllScripts('screenviewer - ' + this.screenName, script, this.shadowRoot, this);
-        this._stretchView(settings);
+        this._scriptObject = await window.appShell.scriptSystem.assignAllScripts('screenviewer - ' + this.screenName, script, this._rootShadow, this, iobrokerHandler);
     }
     _stretchView(settings) {
-        const stretch = this.stretch ?? settings.stretch;
-        if (stretch === 'none')
+        const stretch = this.stretch ?? settings?.stretch;
+        if (!stretch || stretch === 'none')
             return;
         const width = this._stretchWidth ?? convertCssUnitToPixel(settings.width, this, 'width');
         const height = this._stretchHeight ?? convertCssUnitToPixel(settings.height, this, 'height');
@@ -274,3 +288,4 @@ ScreenViewer = ScreenViewer_1 = __decorate([
     customElement("iobroker-webui-screen-viewer")
 ], ScreenViewer);
 export { ScreenViewer };
+window.ScreenViewer = ScreenViewer;

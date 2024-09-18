@@ -5,10 +5,11 @@ import { findExportFunctionDeclarations } from "../helper/EsprimaHelper.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import scriptCommandsTypeInfo from "../generated/ScriptCommands.json" with { type: 'json' };
 import propertiesTypeInfo from "../generated/Properties.json" with { type: 'json' };
+import webuiBlocklyToolbox from "../scripting/blockly/webuiBlocklyToolbox.js";
 export class IobrokerWebuiEventAssignment extends EventAssignment {
     constructor() {
         super();
-        this.initialize(iobrokerHandler, window.appShell, scriptCommandsTypeInfo, propertiesTypeInfo);
+        this.initialize(iobrokerHandler, window.appShell, scriptCommandsTypeInfo, propertiesTypeInfo, webuiBlocklyToolbox);
     }
     async _editJavascript(e, eventItem) {
         let screenEditor = DomHelper.findParentNodeOfType(this.selectedItems[0].instanceServiceContainer.designerCanvas, IobrokerWebuiScreenEditor);

@@ -52,6 +52,8 @@ declare var RUNTIME: {
         left?: string;
         top?: string;
     }): Promise<void>;
+    getParentScreen(screen: BaseScreenViewerAndControl): BaseScreenViewerAndControl;
+    findParent<T>(element: Element, type: new (...args: any[]) => T, predicate?: (element: Element) => boolean): T;
 };
 interface BaseScreenViewerAndControl extends HTMLElement {
     'constructor': {
@@ -73,3 +75,5 @@ interface ScreenViewer extends BaseScreenViewerAndControl {
 }
 interface BaseCustomControl extends BaseScreenViewerAndControl {
 }
+declare var BaseCustomControl: any;
+declare var ScreenViewer: any;
