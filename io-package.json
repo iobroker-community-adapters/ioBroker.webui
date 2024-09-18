@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.13.2",
+    "version": "1.14.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.14.0": {
+        "en": "update npm packages",
+        "de": "npm-pakete aktualisieren",
+        "ru": "обновления пакетов npm",
+        "pt": "atualizar pacotes npm",
+        "nl": "npm pakketten bijwerken",
+        "fr": "mettre à jour les paquets npm",
+        "it": "aggiornamento npm pacchetti",
+        "es": "actualizar paquetes npm",
+        "pl": "aktualizacja pakietów npm",
+        "uk": "оновлення пакетів npm",
+        "zh-cn": "更新 npm 软件包"
+      },
       "1.13.2": {
         "en": "designer updates\nadd find methods",
         "de": "designer-updates\nfinden methoden",
@@ -106,19 +119,6 @@
         "pl": "fix offset finding in box drawing",
         "uk": "зафіксувати пошук офсету в ящику",
         "zh-cn": "在框图中查找"
-      },
-      "1.12.1": {
-        "en": "update edit text in designer",
-        "de": "text im designer aktualisieren",
-        "ru": "обновление текста редактирования в дизайнере",
-        "pt": "atualizar texto de edição no designer",
-        "nl": "bewerken van tekst in ontwerper bijwerken",
-        "fr": "mettre à jour le texte de modification dans le concepteur",
-        "it": "aggiornamento modificare il testo in designer",
-        "es": "texto de edición de actualización en diseñador",
-        "pl": "aktualizacja tekstu edycji w projektancie",
-        "uk": "оновлення редагування тексту в дизайнеру",
-        "zh-cn": "更新设计器中的文本"
       }
     },
     "icon": "logo.png",

@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.14.0 (2024-09-18)
 - update npm packages
 
 ### 1.13.2 (2024-08-21)
