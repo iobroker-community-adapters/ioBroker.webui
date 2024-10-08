@@ -117,6 +117,10 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         return <T><unknown>this._rootShadow.getElementById(id);
     }
 
+    override _getDomElements<T extends Element>(selectors: string): T {
+        return <T><unknown>this._rootShadow.querySelectorAll(selectors);
+    }  
+  
     ready() {
         this._parseAttributesToProperties();
         if (this._screenName)
