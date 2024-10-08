@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix typo in screenviewer
+
 ### 1.15.0 (2024-10-08)
 - fixes in margin & padding
 - work on simpleScripts, add conditions
