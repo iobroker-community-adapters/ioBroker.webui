@@ -118,6 +118,7 @@
                     "type": "string"
                 },
                 "trueGotoLabel": {
+                    "description": "Name of the label to jumpe to when condition is true",
                     "type": "string"
                 },
                 "trueScriptName": {
@@ -130,7 +131,10 @@
                     "const": "Condition",
                     "type": "string"
                 },
-                "value1": {},
+                "value1": {
+                    "description": "Name of the value1",
+                    "format": "complex"
+                },
                 "value2": {}
             },
             "propertyOrder": [

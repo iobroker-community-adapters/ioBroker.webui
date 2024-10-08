@@ -129,6 +129,11 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fixes in margin & padding
+- work on simpleScripts, add conditions
+- fix _getDomElements in screen viewer
+
 ### 1.14.0 (2024-09-18)
 - update npm packages
 
