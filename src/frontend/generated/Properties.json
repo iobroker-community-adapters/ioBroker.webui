@@ -247,10 +247,11 @@
                     "type": "string"
                 },
                 "source": {
-                    "description": "signal - read the value from a Signal\nproperty - read the value from a property of the customControl (not usable in screens)\nevent - read the value of a property of the event object\nparameter - a parameter you hand over\ncomplexString - a string with signals (contained in {})\ncomplexSignal - read the value from a signal wich name is build here (it can contain other signals in {})\nexpression - js expression, 'ctx' is context object",
+                    "description": "signal - read the value from a Signal\nproperty - read the value from a property of the customControl (not usable in screens)\nevent - read the value of a property of the event object\nparameter - a parameter you hand over\ncontext - a value of the context\ncomplexString - a string with signals (contained in {})\ncomplexSignal - read the value from a signal wich name is build here (it can contain other signals in {})\nexpression - js expression, 'ctx' is context object",
                     "enum": [
                         "complexSignal",
                         "complexString",
+                        "context",
                         "event",
                         "expression",
                         "parameter",

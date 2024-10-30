@@ -52,28 +52,18 @@ export class IobrokerWebuiScriptSystem extends ScriptSystem {
         }
     }
 
-    override getTargetFromTargetSelector(context: contextType, targetSelectorTarget: "currentScreen" | "parentScreen" | "currentElement" | "parentElement", targetSelector: string): Iterable<Element> {
-        if (targetSelectorTarget === 'currentScreen') {
-            if (targetSelector) {
-                let sr = (<ShadowRoot>context.element.getRootNode());
-                return sr.querySelectorAll(targetSelector);
-            } else {
-                let rootDiv = (<ShadowRoot>context.element.getRootNode()).host;
-                let sr = (<ShadowRoot>rootDiv.getRootNode());
-                return [sr.host];
+    override getTarget(context: contextType, targetSelectorTarget: 'element' | 'container', parentLevel: number) {
+        if (targetSelectorTarget == "container") {
+            let el = context.element
+            for (let i = 0; i <= (parentLevel ?? 0); i++) {
+                let rootDiv = (<ShadowRoot>el.getRootNode()).host;
+                if (rootDiv instanceof BaseCustomControl)
+                    el = rootDiv;
+                else
+                    el = (<ShadowRoot>rootDiv.getRootNode()).host;
             }
-        } else if (targetSelectorTarget === 'parentScreen') {
-            if (targetSelector) {
-                //@ts-ignore
-                let sr = (<ShadowRoot>context.element.getRootNode()).host.getRootNode().host.getRootNode();
-                return sr.querySelectorAll(targetSelector);
-            } else {
-                //@ts-ignore
-                let sr = (<ShadowRoot>context.element.getRootNode()).host.getRootNode().host.getRootNode().host.getRootNode().host;
-                return [sr];
-            }
+            return el;
         }
-        else
-            return super.getTargetFromTargetSelector(context, targetSelectorTarget, targetSelector);
+        return super.getTarget(context, targetSelectorTarget, parentLevel);
     }
 }
