@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.15.1",
+    "version": "1.16.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.16.0": {
+        "en": "fix errors with script system, wrong parent used",
+        "de": "fehler mit skriptsystem beheben, falsche eltern verwendet",
+        "ru": "исправить ошибки с системой скрипта, не тот родитель использовал",
+        "pt": "corrigir erros com sistema de script, pai errado usado",
+        "nl": "fix fouten met script systeem, verkeerde ouder gebruikt",
+        "fr": "corriger les erreurs avec le système de script, mauvais parent utilisé",
+        "it": "correggere gli errori con il sistema di script, il genitore sbagliato usato",
+        "es": "corregir errores con el sistema script, padre incorrecto usado",
+        "pl": "naprawić błędy w systemie skryptowym, niewłaściwy rodzic używany",
+        "uk": "виправлення помилок з системою скриптів, неправильного використання батьків",
+        "zh-cn": "使用脚本系统修正错误, 使用错误的父程序"
+      },
       "1.15.1": {
         "en": "fix typo in screenviewer",
         "de": "fix typo im screenviewer",
@@ -106,19 +119,6 @@
         "pl": "designer aktualizacji",
         "uk": "оновлення дизайнера",
         "zh-cn": "更新设计器"
-      },
-      "1.12.4": {
-        "en": "one more designer update",
-        "de": "ein weiteres designer-update",
-        "ru": "еще одно дизайнерское обновление",
-        "pt": "mais uma atualização de designer",
-        "nl": "nog een ontwerper update",
-        "fr": "une autre mise à jour de concepteur",
-        "it": "un altro aggiornamento designer",
-        "es": "una actualización de diseño más",
-        "pl": "jeszcze jedna aktualizacja projektanta",
-        "uk": "ще одне оновлення дизайнера",
-        "zh-cn": "再更新一个设计师"
       }
     },
     "icon": "logo.png",
