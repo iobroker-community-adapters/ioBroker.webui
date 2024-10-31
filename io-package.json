@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.16.2",
+    "version": "1.16.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.16.3": {
+        "en": "raise errors on unimplemented commands\nwrong script upgrade",
+        "de": "fehler auf unimplementierten befehlen erhöhen\nfehlerbehebung",
+        "ru": "собрать ошибки по невыполненным командам\nнеправильное обновление",
+        "pt": "levantar erros em comandos não implementados\natualização de script errado",
+        "nl": "verhoog fouten bij niet geïmplementeerde commando's\nverkeerde script upgrade",
+        "fr": "soulever des erreurs sur des commandes non mises en œuvre\nmauvaise mise à jour du script",
+        "it": "sollevare errori su comandi non implementati\naggiornamento script sbagliato",
+        "es": "levantar errores en comandos unimplemented\nactualización incorrecta del script",
+        "pl": "podnoszenie błędów w niewdrożonych poleceniach\nbłędne uaktualnienie skryptu",
+        "uk": "підняти помилки на непристойних команд\nнеправильне оновлення сценарію",
+        "zh-cn": "在未执行的命令上提出错误\n错误的脚本升级"
+      },
       "1.16.2": {
         "en": "wrong default in script",
         "de": "falscher standard in skript",
@@ -106,19 +119,6 @@
         "pl": "aktualizacja pakietów npm",
         "uk": "оновлення пакетів npm",
         "zh-cn": "更新 npm 软件包"
-      },
-      "1.13.2": {
-        "en": "designer updates\nadd find methods",
-        "de": "designer-updates\nfinden methoden",
-        "ru": "обновления\nдобавить методы поиска",
-        "pt": "atualizações do designer\nadicionar métodos de encontrar",
-        "nl": "ontwerper updates\nzoekmethoden toevoegen",
-        "fr": "mises à jour du concepteur\najouter des méthodes de recherche",
-        "it": "aggiornamenti designer\naggiungere metodi di ricerca",
-        "es": "actualizaciones de diseño\nañadir métodos",
-        "pl": "aktualizacje projektantów\ndodaj metody wyszukiwania",
-        "uk": "оновлення дизайнера\nдодати методи пошуку",
-        "zh-cn": "设计者更新\n添加查找方法"
       }
     },
     "icon": "logo.png",
