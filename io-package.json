@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.16.1",
+    "version": "1.16.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.16.2": {
+        "en": "wrong default in script",
+        "de": "falscher standard in skript",
+        "ru": "неправильный по умолчанию",
+        "pt": "padrão errado no script",
+        "nl": "verkeerde standaard in script",
+        "fr": "mauvais par défaut dans le script",
+        "it": "default sbagliato nello script",
+        "es": "default en script",
+        "pl": "błędne domyślne w skrypcie",
+        "uk": "неправильний типовий скрипт",
+        "zh-cn": "脚本默认错误"
+      },
       "1.16.1": {
         "en": "fix base custom webcomp bindings",
         "de": "fix base benutzerdefinierte webcomp bindungen",
@@ -106,19 +119,6 @@
         "pl": "aktualizacje projektantów\ndodaj metody wyszukiwania",
         "uk": "оновлення дизайнера\nдодати методи пошуку",
         "zh-cn": "设计者更新\n添加查找方法"
-      },
-      "1.13.1": {
-        "en": "small designer tweaks",
-        "de": "kleine designer tweaks",
-        "ru": "маленькие дизайнерские штучки",
-        "pt": "pequeno designer tweaks",
-        "nl": "kleine ontwerper tweaks",
-        "fr": "petits tweaks designer",
-        "it": "piccolo designer tweaks",
-        "es": "pequeño diseñador tweaks",
-        "pl": "małe poprawki projektanta",
-        "uk": "маленькі дизайнерські коктейлі",
-        "zh-cn": "小设计师的微调"
       }
     },
     "icon": "logo.png",
