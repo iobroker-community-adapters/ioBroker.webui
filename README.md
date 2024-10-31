@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- raise errors on unimplemented commands
+- wrong script upgrade
+
 ### 1.16.2 (2024-10-31)
 - wrong default in script
 
