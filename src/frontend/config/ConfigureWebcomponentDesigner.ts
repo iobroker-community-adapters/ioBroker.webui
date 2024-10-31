@@ -65,38 +65,42 @@ export function configureDesigner(bindingsHelper: BindingsHelper) {
     }
 
     serviceContainer.config.openBindingsEditor = async (property, designItems, binding, target) => {
-        let dynEdt = new BindingsEditor(property, <any>binding, target, serviceContainer, window.appShell);
-        let cw = new IobrokerWebuiConfirmationWrapper();
-        cw.title = "Edit Binding of '" + property.name + "' - " + property.propertyType;
-        cw.appendChild(dynEdt);
-        let dlg = window.appShell.openDialog(cw, { x: 200, y: 200, width: 700, height: 460 });
-        cw.cancelClicked.on((e) => {
-            dlg.close();
-        });
-        cw.okClicked.on((e) => {
-            dlg.close();
-            let bnd: IIobrokerWebuiBinding = { signal: dynEdt.objectNames, target };
-            bnd.inverted = dynEdt.invert;
-            bnd.twoWay = dynEdt.twoWay;
-            bnd.expression = dynEdt.expression;
-            bnd.expressionTwoWay = dynEdt.expressionTwoWay;
-            bnd.historic = dynEdt.historic;
-            if (dynEdt.objectValueType)
-                bnd.type = dynEdt.objectValueType;
-            if (dynEdt.converters.length > 0) {
-                let cObj = {};
-                for (let c of dynEdt.converters) {
-                    cObj[c.key] = c.value;
+        if (!binding || binding.service instanceof VisualizationBindingsService) {
+            let dynEdt = new BindingsEditor(property, <any>binding, target, serviceContainer, window.appShell);
+            let cw = new IobrokerWebuiConfirmationWrapper();
+            cw.title = "Edit Binding of '" + property.name + "' - " + property.propertyType;
+            cw.appendChild(dynEdt);
+            let dlg = window.appShell.openDialog(cw, { x: 200, y: 200, width: 700, height: 460 });
+            cw.cancelClicked.on((e) => {
+                dlg.close();
+            });
+            cw.okClicked.on((e) => {
+                dlg.close();
+                let bnd: IIobrokerWebuiBinding = { signal: dynEdt.objectNames, target };
+                bnd.inverted = dynEdt.invert;
+                bnd.twoWay = dynEdt.twoWay;
+                bnd.expression = dynEdt.expression;
+                bnd.expressionTwoWay = dynEdt.expressionTwoWay;
+                bnd.historic = dynEdt.historic;
+                if (dynEdt.objectValueType)
+                    bnd.type = dynEdt.objectValueType;
+                if (dynEdt.converters.length > 0) {
+                    let cObj = {};
+                    for (let c of dynEdt.converters) {
+                        cObj[c.key] = c.value;
+                    }
+                    bnd.converter = cObj;
                 }
-                bnd.converter = cObj;
-            }
-            if (dynEdt.events)
-                bnd.events = dynEdt.events.split(';');
-            let serializedBnd = bindingsHelper.serializeBinding(designItems[0].element, property.name, bnd);
-            let group = designItems[0].openGroup('edit_binding');
-            designItems[0].setAttribute(serializedBnd[0], serializedBnd[1]);
-            group.commit();
-        });
+                if (dynEdt.events)
+                    bnd.events = dynEdt.events.split(';');
+                let serializedBnd = bindingsHelper.serializeBinding(designItems[0].element, property.name, bnd);
+                let group = designItems[0].openGroup('edit_binding');
+                designItems[0].setAttribute(serializedBnd[0], serializedBnd[1]);
+                group.commit();
+            });
+        } else {
+            alert('no bindings editor for base custom webcomponent bindings');
+        }
     }
 
     //LazyLoader.LoadJavascript(window.iobrokerWebRootUrl + 'webui.0.widgets/importmap.js');
