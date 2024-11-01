@@ -20,12 +20,14 @@ import { ExpandCollapseContextMenu } from "@node-projects/web-component-designer
 import { IobrokerWebuiScreenContextMenu } from "../services/IobrokerWebuiScreenContextMenu.js";
 import { IobrokerWebuiEventsService } from "../services/IobrokerWebuiEventsService.js";
 import { IobrokerWebuiCustomControlEventsService } from "../services/IobrokerWebuiCustomControlEventsService.js";
+import { IobrokerWebuiBindableObjectsForPropertiesService } from "../services/IobrokerWebuiBindableObjectsForPropertiesService.js";
 
 export function configureDesigner(bindingsHelper: BindingsHelper) {
     const serviceContainer = createDefaultServiceContainer();
     serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
     serviceContainer.register("htmlParserService", new NodeHtmlParserService());
     serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableObjectsService());
+    serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableObjectsForPropertiesService());
     serviceContainer.register("bindableObjectDragDropService", new BindableObjectDragDropService(bindingsHelper, iobrokerHandler));
     serviceContainer.register("bindingService", new VisualizationBindingsService(bindingsHelper));
     serviceContainer.register("demoProviderService", new IobrokerWebuiDemoProviderService());
@@ -66,7 +68,7 @@ export function configureDesigner(bindingsHelper: BindingsHelper) {
 
     serviceContainer.config.openBindingsEditor = async (property, designItems, binding, target) => {
         if (!binding || binding.service instanceof VisualizationBindingsService) {
-            let dynEdt = new BindingsEditor(property, <any>binding, target, serviceContainer, window.appShell);
+            let dynEdt = new BindingsEditor(property, <any>binding, target, serviceContainer, designItems[0].instanceServiceContainer, window.appShell);
             let cw = new IobrokerWebuiConfirmationWrapper();
             cw.title = "Edit Binding of '" + property.name + "' - " + property.propertyType;
             cw.appendChild(dynEdt);

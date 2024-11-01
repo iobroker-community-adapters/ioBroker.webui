@@ -1,9 +1,13 @@
-import { IBindableObjectsService, IBindableObject, BindableObjectType } from "@node-projects/web-component-designer";
+import { IBindableObjectsService, IBindableObject, BindableObjectType, InstanceServiceContainer } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 
 export class IobrokerWebuiBindableObjectsService implements IBindableObjectsService {
-
   name: string = 'iobroker';
+  
+  hasObjectsForInstanceServiceContainer(instanceServiceContainer: InstanceServiceContainer) {
+    debugger;
+    return true;
+  }
 
   _states: Record<string, ioBroker.Object>;
 
@@ -42,12 +46,12 @@ export class IobrokerWebuiBindableObjectsService implements IBindableObjectsServ
 
         if (splits.length > 1 && !set.has(fldName)) {
           set.add(fldName);
-          folder = { name: fldName, fullName: parent ? parent.fullName + '.' + fldName : fldName, type: BindableObjectType.folder }
+          folder = { bindabletype: 'signal', name: fldName, fullName: parent ? parent.fullName + '.' + fldName : fldName, type: BindableObjectType.folder }
           retVal.push(folder);
         }
 
         if (splits.length === 1 && splits[0] && (this._states[k].type != 'channel' && this._states[k].type != 'device')) {
-          const signal: IBindableObject<ioBroker.Object> = { name: splits[0], fullName: k, type: BindableObjectType.undefined, originalObject: this._states[k], children: false };
+          const signal: IBindableObject<ioBroker.Object> = { bindabletype: 'signal', name: splits[0], fullName: k, type: BindableObjectType.undefined, originalObject: this._states[k], children: false };
           retVal.push(signal);
         }
       }
