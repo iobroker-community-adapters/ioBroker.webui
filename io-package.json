@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.18.0",
+    "version": "1.18.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.18.1": {
+        "en": "fix screen settings",
+        "de": "einstellungen für den bildschirm",
+        "ru": "настройки экрана",
+        "pt": "corrigir configurações de tela",
+        "nl": "scherminstellingen herstellen",
+        "fr": "correction des paramètres de l'écran",
+        "it": "impostazioni della schermata di correzione",
+        "es": "ajuste de la pantalla",
+        "pl": "ustaw ustawienia ekranu",
+        "uk": "фіксувати налаштування екрану",
+        "zh-cn": "固定屏幕设置"
+      },
       "1.18.0": {
         "en": "screens are now ex- & imported as xml",
         "de": "bildschirme werden jetzt ex- & importiert als xml",
@@ -106,19 +119,6 @@
         "pl": "podnoszenie błędów w niewdrożonych poleceniach\nbłędne uaktualnienie skryptu",
         "uk": "підняти помилки на непристойних команд\nнеправильне оновлення сценарію",
         "zh-cn": "在未执行的命令上提出错误\n错误的脚本升级"
-      },
-      "1.16.2": {
-        "en": "wrong default in script",
-        "de": "falscher standard in skript",
-        "ru": "неправильный по умолчанию",
-        "pt": "padrão errado no script",
-        "nl": "verkeerde standaard in script",
-        "fr": "mauvais par défaut dans le script",
-        "it": "default sbagliato nello script",
-        "es": "default en script",
-        "pl": "błędne domyślne w skrypcie",
-        "uk": "неправильний типовий скрипт",
-        "zh-cn": "脚本默认错误"
       }
     },
     "icon": "logo.png",
