@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.17.0",
+    "version": "1.17.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.17.1": {
+        "en": "selector for properties",
+        "de": "selektor für eigenschaften",
+        "ru": "селектор для свойств",
+        "pt": "seletor para propriedades",
+        "nl": "selector voor eigenschappen",
+        "fr": "sélecteur de propriétés",
+        "it": "selettore per proprietà",
+        "es": "selector para propiedades",
+        "pl": "selektor właściwości",
+        "uk": "вибірник для властивостей",
+        "zh-cn": "属性选择器"
+      },
       "1.17.0": {
         "en": "internal control properties\ninternal screen properties",
         "de": "interne steuereigenschaften\ninterne bildschirmeigenschaften",
@@ -106,19 +119,6 @@
         "pl": "fix typo w przeglądarce ekranu",
         "uk": "фіксувати типо на екрані",
         "zh-cn": "在屏幕查看器中修正类型"
-      },
-      "1.15.0": {
-        "en": "fixes in margin & padding\nwork on simpleScripts, add conditions\nfix _getDomElements in screen viewer",
-        "de": "fixierungen in margin & padding\narbeiten an simpleScripts, Bedingungen hinzufügen\nberichtigen _get DomElements in Bildschirmansicht",
-        "ru": "фиксации в маржине и падинге\nработа над простыми сценариями, добавить условия\nисправить _get Элементы в просмотре экрана",
-        "pt": "correções na margem & padding\ntrabalhar em simpleScripts, adicionar condições\ncorrigir _get DomElements no visor de tela",
-        "nl": "correcties in marge & opvulling\nwerken op eenvoudigeScripts, voorwaarden toevoegen\n_Get herstellen DomElements in schermviewer",
-        "fr": "correctifs en marge et rembourrage\ntravail sur des scripts simples, ajouter des conditions\n_Régler DomElements dans le visionneur d'écran",
-        "it": "correzioni in margine e imbottitura\nlavorare su simpleScripts, aggiungere condizioni\ncorrezione _get DomElements nel visualizzatore dello schermo",
-        "es": "fijaciones en márgen & padding\ntrabajar en scripts simples, añadir condiciones\narreglar _get DomElements in screen viewer",
-        "pl": "poprawki w marży i wyściełaniu\npracy na proste skrypty, dodać warunki\nfix _ get Domene Elements w przeglądarce ekranu",
-        "uk": "фіксатори в маржі та начинці\nробота над простими скриптами, додати умови\nфіксувати _get DomElements в екрані",
-        "zh-cn": "在边距中修正( d)\n简单脚本的工作, 添加条件\n修复(_G) 屏幕查看器中的多姆元素"
       }
     },
     "icon": "logo.png",
