@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.16.3",
+    "version": "1.17.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.17.0": {
+        "en": "internal control properties\ninternal screen properties",
+        "de": "interne steuereigenschaften\ninterne bildschirmeigenschaften",
+        "ru": "свойства внутреннего контроля\nвнутренние свойства экрана",
+        "pt": "propriedades de controle interno\npropriedades de tela interna",
+        "nl": "interne controle-eigenschappen\neigenschappen van intern scherm",
+        "fr": "propriétés de contrôle interne\npropriétés de l'écran interne",
+        "it": "proprietà di controllo interno\nproprietà dello schermo interno",
+        "es": "propiedades de control interno\npropiedades de pantalla interna",
+        "pl": "właściwości kontroli wewnętrznej\nwewnętrzne właściwości ekranu",
+        "uk": "внутрішні елементи управління\nвнутрішні параметри екрана",
+        "zh-cn": "内部控制属性\n内部屏幕属性"
+      },
       "1.16.3": {
         "en": "raise errors on unimplemented commands\nwrong script upgrade",
         "de": "fehler auf unimplementierten befehlen erhöhen\nfehlerbehebung",
@@ -106,19 +119,6 @@
         "pl": "poprawki w marży i wyściełaniu\npracy na proste skrypty, dodać warunki\nfix _ get Domene Elements w przeglądarce ekranu",
         "uk": "фіксатори в маржі та начинці\nробота над простими скриптами, додати умови\nфіксувати _get DomElements в екрані",
         "zh-cn": "在边距中修正( d)\n简单脚本的工作, 添加条件\n修复(_G) 屏幕查看器中的多姆元素"
-      },
-      "1.14.0": {
-        "en": "update npm packages",
-        "de": "npm-pakete aktualisieren",
-        "ru": "обновления пакетов npm",
-        "pt": "atualizar pacotes npm",
-        "nl": "npm pakketten bijwerken",
-        "fr": "mettre à jour les paquets npm",
-        "it": "aggiornamento npm pacchetti",
-        "es": "actualizar paquetes npm",
-        "pl": "aktualizacja pakietów npm",
-        "uk": "оновлення пакетів npm",
-        "zh-cn": "更新 npm 软件包"
       }
     },
     "icon": "logo.png",
