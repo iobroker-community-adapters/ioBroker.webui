@@ -1,8 +1,8 @@
-import { BaseCustomWebcomponentBindingsService, BindingsRefactorService, EventsService, IElementsJson, JsonFileElementsService, PreDefinedElementsService, SeperatorContextMenu, TextRefactorService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
+import { BaseCustomWebcomponentBindingsService, EventsService, IElementsJson, JsonFileElementsService, PreDefinedElementsService, SeperatorContextMenu, TextRefactorService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
 import { NodeHtmlParserService } from '@node-projects/web-component-designer-htmlparserservice-nodehtmlparser';
 import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
 import { CssToolsStylesheetService } from '@node-projects/web-component-designer-stylesheetservice-css-tools';
-import { BindableObjectDragDropService, BindingsEditor, VisualizationBindingsService, PropertyGridDragDropService, ScriptRefactorService, BindingsHelper } from "@node-projects/web-component-designer-visualization-addons";
+import { BindableObjectDragDropService, BindingsEditor, VisualizationBindingsService, PropertyGridDragDropService, ScriptRefactorService, BindingsHelper, VisualizationBindingsRefactorService } from "@node-projects/web-component-designer-visualization-addons";
 import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
 import { IobrokerWebuiDemoProviderService } from "../services/IobrokerWebuiDemoProviderService.js";
 import { IobrokerWebuiConfirmationWrapper } from "./IobrokerWebuiConfirmationWrapper.js";
@@ -36,7 +36,7 @@ export function configureDesigner(bindingsHelper: BindingsHelper) {
     serviceContainer.register("eventsService", new EventsService());
     serviceContainer.register("eventsService", new IobrokerWebuiCustomControlEventsService());
     serviceContainer.register("propertyGridDragDropService", new PropertyGridDragDropService());
-    serviceContainer.register("refactorService", new BindingsRefactorService());
+    serviceContainer.register("refactorService", new VisualizationBindingsRefactorService());
     serviceContainer.register("refactorService", new TextRefactorService());
     serviceContainer.register("refactorService", new ScriptRefactorService());
     serviceContainer.register("refactorService", new IobrokerWebuiRefactorService());

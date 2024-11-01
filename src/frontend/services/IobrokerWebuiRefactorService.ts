@@ -13,7 +13,7 @@ export class IobrokerWebuiRefactorService implements IRefactorService {
                         if (pdef.type == 'signal') {
                             if (d.element[p]) {
                                 refactorings.push({
-                                    name: d.element[p], itemType: 'bindableObject', target: BindingTarget.property, targetName: p, service: this, designItem: d, type: 'binding', sourceObject: pdef, display: 'property' + '/' + p, refactor: newValue => {
+                                    name: d.element[p], itemType: 'signal', target: BindingTarget.property, targetName: p, service: this, designItem: d, type: 'binding', sourceObject: pdef, display: 'property' + '/' + p, refactor: newValue => {
                                         d.element[p] = newValue; //TODO: set of property is not yet undoable, maybe we need this in designitem. Or designitem should set reste it?
                                         d.setAttribute(PropertiesHelper.camelToDashCase(p), newValue);
                                     }
@@ -22,7 +22,7 @@ export class IobrokerWebuiRefactorService implements IRefactorService {
                         } else if (pdef.type == 'screen') {
                             if (d.element[p]) {
                                 refactorings.push({
-                                    name: d.element[p], itemType: 'screenName', target: BindingTarget.property, targetName: p, service: this, designItem: d, type: 'binding', sourceObject: pdef, display: 'property' + '/' + p, refactor: newValue => {
+                                    name: d.element[p], itemType: 'screen', target: BindingTarget.property, targetName: p, service: this, designItem: d, type: 'binding', sourceObject: pdef, display: 'property' + '/' + p, refactor: newValue => {
                                         d.element[p] = newValue; //TODO: set of property is not yet undoable, maybe we need this in designitem. Or designitem should set reste it?
                                         d.setAttribute(PropertiesHelper.camelToDashCase(p), newValue);
                                     }
