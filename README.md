@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.18.2 (2024-11-01)
 - better refcatoring
 
 ### 1.18.1 (2024-11-01)

@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.18.1",
+    "version": "1.18.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.18.2": {
+        "en": "better refcatoring",
+        "de": "besser refcatoring",
+        "ru": "лучший хладагент",
+        "pt": "melhor refcatoring",
+        "nl": "betere refcatoring",
+        "fr": "mieux réfcatorer",
+        "it": "migliore refcatoring",
+        "es": "mejor refcatoring",
+        "pl": "lepsza rekatalizacja",
+        "uk": "кращий рефторинг",
+        "zh-cn": "更好的还原"
+      },
       "1.18.1": {
         "en": "fix screen settings",
         "de": "einstellungen für den bildschirm",
@@ -106,19 +119,6 @@
         "pl": "właściwości kontroli wewnętrznej\nwewnętrzne właściwości ekranu",
         "uk": "внутрішні елементи управління\nвнутрішні параметри екрана",
         "zh-cn": "内部控制属性\n内部屏幕属性"
-      },
-      "1.16.3": {
-        "en": "raise errors on unimplemented commands\nwrong script upgrade",
-        "de": "fehler auf unimplementierten befehlen erhöhen\nfehlerbehebung",
-        "ru": "собрать ошибки по невыполненным командам\nнеправильное обновление",
-        "pt": "levantar erros em comandos não implementados\natualização de script errado",
-        "nl": "verhoog fouten bij niet geïmplementeerde commando's\nverkeerde script upgrade",
-        "fr": "soulever des erreurs sur des commandes non mises en œuvre\nmauvaise mise à jour du script",
-        "it": "sollevare errori su comandi non implementati\naggiornamento script sbagliato",
-        "es": "levantar errores en comandos unimplemented\nactualización incorrecta del script",
-        "pl": "podnoszenie błędów w niewdrożonych poleceniach\nbłędne uaktualnienie skryptu",
-        "uk": "підняти помилки на непристойних команд\nнеправильне оновлення сценарію",
-        "zh-cn": "在未执行的命令上提出错误\n错误的脚本升级"
       }
     },
     "icon": "logo.png",
