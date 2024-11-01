@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.17.1",
+    "version": "1.17.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.17.2": {
+        "en": "switch combo in complex prop editor",
+        "de": "schaltkombination in komplexem prope editor",
+        "ru": "выключатель комбо в сложном редакторе реквизитов",
+        "pt": "combo interruptor no editor de adereço complexo",
+        "nl": "switch combo in complexe propeditor",
+        "fr": "switch combo dans l'éditeur de prop complexe",
+        "it": "commutare combo in un editor di prop complesso",
+        "es": "conmutar combo en el editor de prop complejo",
+        "pl": "przełącz combo w edytorze złożonych rekwizytów",
+        "uk": "вимикач combo в складних редакторах",
+        "zh-cn": "在复杂的道具编辑器中切换组合"
+      },
       "1.17.1": {
         "en": "selector for properties",
         "de": "selektor für eigenschaften",
@@ -106,19 +119,6 @@
         "pl": "naprawić błędy w systemie skryptowym, niewłaściwy rodzic używany",
         "uk": "виправлення помилок з системою скриптів, неправильного використання батьків",
         "zh-cn": "使用脚本系统修正错误, 使用错误的父程序"
-      },
-      "1.15.1": {
-        "en": "fix typo in screenviewer",
-        "de": "fix typo im screenviewer",
-        "ru": "фиксация тифа в экране",
-        "pt": "corrigir typo no visor de tela",
-        "nl": "fix typefout in screenviewer",
-        "fr": "correction du typo dans l'écran",
-        "it": "fix typo in screenviewer",
-        "es": "fijar tipopo en screenviewer",
-        "pl": "fix typo w przeglądarce ekranu",
-        "uk": "фіксувати типо на екрані",
-        "zh-cn": "在屏幕查看器中修正类型"
       }
     },
     "icon": "logo.png",
