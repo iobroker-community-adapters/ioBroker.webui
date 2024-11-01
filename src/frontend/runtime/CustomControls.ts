@@ -83,6 +83,8 @@ export function generateCustomControl(name: string, control: IControl) {
     let properties = {};
     for (let p in control.properties) {
         const prp = control.properties[p];
+        if (prp.internal)
+            continue;
         if (prp.type == 'string')
             properties[p] = String;
         else if (prp.type == 'color')

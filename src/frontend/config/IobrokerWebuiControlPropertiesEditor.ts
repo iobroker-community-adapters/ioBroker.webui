@@ -7,7 +7,7 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
     static override style = css`
     :host {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 30px 10px 10px;
+        grid-template-columns: 1fr 1fr 1fr 15px 30px 10px 10px;
         overflow-y: auto;
         align-content: start;
         height: 100%;
@@ -29,7 +29,8 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
     static override template = html`
         <div>name</div>
         <div>type</div>
-        <div>def.</div>
+        <div title="default">def.</div>
+        <div title="internal">int</div>
         <div></div>
         <div></div>
         <div></div>
@@ -46,7 +47,8 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
                 <option value="object">object</option>
             </select>
             <input css:display="[[item.type == 'enum' ? '' : 'none']]" value="{{?item.values}}" @input="[[this.changed()]]">
-            <input type="text" value="{{?item.def}}" @input="[[this.changed()]]">
+            <input title="default" type="text" value="{{?item.def}}" @input="[[this.changed()]]">
+            <input style="margin:0" title="internal" type="checkbox" checked="{{?item.internal::change}}" @change="[[this.changed()]]">
             <button @click="[[this.removeProp(index)]]">del</button>
             <button @click="[[this.up(index)]]">↑</button>
             <button @click="[[this.down(index)]]">↓</button>
@@ -64,16 +66,17 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
         this._assignEvents();
     }
 
-    public properties: { name: string, type: string, def?: string, values?: string }[];
-    public propertiesObj: Record<string, { type: string, values?: string[], default?: any }>
+    public properties: { name: string, type: string, def?: string, values?: string, internal?: boolean }[];
+    public propertiesObj: Record<string, { type: string, values?: string[], default?: any, internal?: boolean }>
+    public defaultInternal: boolean;
 
-    public setProperties(properties: Record<string, { type: string, values?: string[], default?: any }>) {
+    public setProperties(properties: Record<string, { type: string, values?: string[], default?: any, internal?: boolean }>) {
         this.propertiesObj = properties;
         if (properties) {
             this.properties = [];
             for (let p in properties) {
                 let t = properties[p];
-                this.properties.push({ name: p, type: t.type, values: JSON.stringify(t.values), def: t.default });
+                this.properties.push({ name: p, type: t.type, values: JSON.stringify(t.values), def: t.default, internal: t.internal });
             }
         } else {
             this.properties = null;
@@ -86,7 +89,10 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
     }
 
     public addProp() {
-        this.properties.push({ name: '', type: 'string' });
+        let p: { name: string, type: string, internal?: boolean } = { name: '', type: 'string' };
+        if (this.defaultInternal)
+            p.internal = true;
+        this.properties.push(p);
         this._bindingsRefresh();
     }
 
@@ -133,7 +139,7 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
                     p.name = p.name.replaceAll(c, "");
                 p.name = p.name[0].toLowerCase() + p.name.substring(1);
 
-                let obj: { type: string, values?: string[], default?: any } = { type: p.type };
+                let obj: { type: string, values?: string[], default?: any, internal?: boolean } = { type: p.type };
                 if (p.def) {
                     if (p.type == 'number')
                         obj.default = parseFloat(p.def);
@@ -142,6 +148,8 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
                     else
                         obj.default = p.def;
                 }
+                if (p.internal)
+                    obj.internal = true;
                 if (p.type == 'enum') {
                     obj.values = JSON.parse(p.values);
                 }

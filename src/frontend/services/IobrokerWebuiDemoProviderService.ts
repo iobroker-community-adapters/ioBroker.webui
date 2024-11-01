@@ -22,7 +22,7 @@ export class IobrokerWebuiDemoProviderService implements IDemoProviderService {
     container.appendChild(screenViewer);
 
     let designer: IobrokerWebuiScreenEditor = instanceServiceContainer.designer;
-    screenViewer.loadScreenData(code, designer.documentContainer.additionalData.model.getValue(), designer.scriptModel.getValue(), null);
+    screenViewer.loadScreenData(code, designer.documentContainer.additionalData.model.getValue(), designer.scriptModel.getValue(), null, designer.properties);
     screenViewer.style.display = '';
     screenViewer.shadowRoot.querySelectorAll('a').forEach(x => x.onclick = () => false); // disable links in preview view...
   }

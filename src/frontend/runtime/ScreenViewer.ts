@@ -1,9 +1,10 @@
 import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, Disposable, DomHelper, html, property } from "@node-projects/base-custom-webcomponent";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
-import type { IScreenSettings } from "../interfaces/IScreen.js";
+import type { IScreenSettings, propertiesRecord } from "../interfaces/IScreen.js";
 import { convertCssUnitToPixel } from "@node-projects/web-component-designer/dist/elements/helper/CssUnitConverter.js";
 import { isFirefox } from "@node-projects/web-component-designer/dist/elements/helper/Browser.js";
+import { PropertiesHelper } from "@node-projects/web-component-designer/dist/elements/services/propertiesService/services/PropertiesHelper.js";
 
 @customElement("iobroker-webui-screen-viewer")
 export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
@@ -143,13 +144,36 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
                 DomHelper.removeAllChildnodes(this._rootShadow);
                 const screen = await iobrokerHandler.getWebuiObject('screen', this.screenName)
                 if (screen) {
-                    this.loadScreenData(screen.html, screen.style, screen.script, screen.settings);
+                    this.loadScreenData(screen.html, screen.style, screen.script, screen.settings, screen.properties);
                 }
             }
         }
     }
 
-    public async loadScreenData(html: string, style: string, script: string, settings: IScreenSettings) {
+    public async loadScreenData(html: string, style: string, script: string, settings: IScreenSettings, properties: propertiesRecord) {
+        if (properties) {
+            for (const p in properties) {
+                const prp = properties[p];
+                Object.defineProperty(this, p, {
+                    get() {
+                        return this['_' + p];
+                    },
+                    set(newValue) {
+                        if (this['_' + p] !== newValue) {
+                            this['_' + p] = newValue;
+                            //this._bindingsRefresh(p);
+                            this.dispatchEvent(new CustomEvent(PropertiesHelper.camelToDashCase(p) + '-changed', { detail: { newValue } }));
+                        }
+                    },
+                    enumerable: true,
+                    configurable: true,
+                });
+                if (prp.default) {
+                    this['_' + p] = prp.default;
+                }
+            }
+        }
+
         let globalStyle = iobrokerHandler.config?.globalStyle ?? '';
 
         this._stretchView(settings);

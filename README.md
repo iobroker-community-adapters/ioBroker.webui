@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- internal control properties
+- internal screen properties
+
 ### 1.16.3 (2024-10-31)
 - raise errors on unimplemented commands
 - wrong script upgrade

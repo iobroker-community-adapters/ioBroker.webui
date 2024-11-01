@@ -249,9 +249,9 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     nm = nm.substring(1);
                 iobrokerHandler.getWebuiObject(type, nm).then(s => {
                     if (type == 'screen') {
-                        window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings);
+                        window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings, s.properties);
                     } else if (type == 'control') {
-                        window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings, (<IControl>s).properties);
+                        window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings, s.properties);
                     }
 
                 });

@@ -19,6 +19,8 @@ export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentProper
             let control: IControl = (<CustomControlInfo>(<any>designItem.element.constructor)[webuiCustomControlSymbol]).control;
             for (const name in control.properties) {
                 let prp = control.properties[name];
+                if (prp.internal)
+                    continue;
                 if (prp.type === 'string') {
                     let property: IProperty = { name: name, type: "string", service: this, propertyType: PropertyType.propertyAndAttribute };
                     properties.push(property);

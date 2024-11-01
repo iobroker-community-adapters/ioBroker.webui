@@ -15,7 +15,7 @@ export class IobrokerWebuiScreenContextMenu implements IContextMenuExtension {
                 title: 'edit screen', action: () => {
                     let nm = (<ScreenViewer>designItem.element).screenName;
                     iobrokerHandler.getWebuiObject<IScreen>('screen', nm).then(s => {
-                        window.appShell.openScreenEditor(nm, 'screen', s.html, s.style, s.script, s.settings, null);
+                        window.appShell.openScreenEditor(nm, 'screen', s.html, s.style, s.script, s.settings, s.properties);
                     });
                 }, shortCut: 'Ctrl + E'
             },
