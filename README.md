@@ -129,6 +129,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+
+### __WORK IN PROGRESS__
+- fix compilation
+
 ### 1.17.2 (2024-11-01)
 - switch combo in complex prop editor
 
