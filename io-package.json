@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.17.2",
+    "version": "1.17.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.17.3": {
+        "en": "fix compilation",
+        "de": "fix compilation",
+        "ru": "исправление сборник",
+        "pt": "compilação de correção",
+        "nl": "fix compilatie",
+        "fr": "correction de la compilation",
+        "it": "fix compilazione",
+        "es": "compilación arreglada",
+        "pl": "fix kompilacja",
+        "uk": "фіксувати збірник",
+        "zh-cn": "固定编译"
+      },
       "1.17.2": {
         "en": "switch combo in complex prop editor",
         "de": "schaltkombination in komplexem prope editor",
@@ -106,19 +119,6 @@
         "pl": "fix bazowe niestandardowe wiązania webcomp",
         "uk": "фіксувати базові користувацькі прив'язки вебкомп'ютера",
         "zh-cn": "固定自定义网络comp 绑定"
-      },
-      "1.16.0": {
-        "en": "fix errors with script system, wrong parent used",
-        "de": "fehler mit skriptsystem beheben, falsche eltern verwendet",
-        "ru": "исправить ошибки с системой скрипта, не тот родитель использовал",
-        "pt": "corrigir erros com sistema de script, pai errado usado",
-        "nl": "fix fouten met script systeem, verkeerde ouder gebruikt",
-        "fr": "corriger les erreurs avec le système de script, mauvais parent utilisé",
-        "it": "correggere gli errori con il sistema di script, il genitore sbagliato usato",
-        "es": "corregir errores con el sistema script, padre incorrecto usado",
-        "pl": "naprawić błędy w systemie skryptowym, niewłaściwy rodzic używany",
-        "uk": "виправлення помилок з системою скриптів, неправильного використання батьків",
-        "zh-cn": "使用脚本系统修正错误, 使用错误的父程序"
       }
     },
     "icon": "logo.png",
