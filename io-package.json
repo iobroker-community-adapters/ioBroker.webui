@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.18.2",
+    "version": "1.18.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.18.3": {
+        "en": "small typo fix",
+        "de": "kleine typo fix",
+        "ru": "маленький тайфун",
+        "pt": "pequena correção de tipo",
+        "nl": "kleine typfout",
+        "fr": "petite correction typographique",
+        "it": "piccolo typo fix",
+        "es": "pequeño neumático",
+        "pl": "mała literówka fix",
+        "uk": "маленький типофікс",
+        "zh-cn": "小类型修复"
+      },
       "1.18.2": {
         "en": "better refcatoring",
         "de": "besser refcatoring",
@@ -106,19 +119,6 @@
         "pl": "selektor właściwości",
         "uk": "вибірник для властивостей",
         "zh-cn": "属性选择器"
-      },
-      "1.17.0": {
-        "en": "internal control properties\ninternal screen properties",
-        "de": "interne steuereigenschaften\ninterne bildschirmeigenschaften",
-        "ru": "свойства внутреннего контроля\nвнутренние свойства экрана",
-        "pt": "propriedades de controle interno\npropriedades de tela interna",
-        "nl": "interne controle-eigenschappen\neigenschappen van intern scherm",
-        "fr": "propriétés de contrôle interne\npropriétés de l'écran interne",
-        "it": "proprietà di controllo interno\nproprietà dello schermo interno",
-        "es": "propiedades de control interno\npropiedades de pantalla interna",
-        "pl": "właściwości kontroli wewnętrznej\nwewnętrzne właściwości ekranu",
-        "uk": "внутрішні елементи управління\nвнутрішні параметри екрана",
-        "zh-cn": "内部控制属性\n内部屏幕属性"
       }
     },
     "icon": "logo.png",
