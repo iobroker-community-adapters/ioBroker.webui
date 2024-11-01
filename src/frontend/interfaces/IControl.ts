@@ -1,10 +1,8 @@
-import { propertiesRecord } from "./IScreen.js";
-
 export interface IControl {
     html: string;
     style: string;
     script: string;
-    properties: propertiesRecord;
+    properties: Record<string, { type: string, values?: string[], default?: any, internal?: boolean }>;
     settings: IControlSettings;
 
     //neededpackages??

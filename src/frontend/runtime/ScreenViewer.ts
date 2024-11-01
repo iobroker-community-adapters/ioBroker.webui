@@ -1,7 +1,7 @@
 import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElement, Disposable, DomHelper, html, property } from "@node-projects/base-custom-webcomponent";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
-import type { IScreenSettings, propertiesRecord } from "../interfaces/IScreen.js";
+import type { IScreenSettings } from "../interfaces/IScreen.js";
 import { convertCssUnitToPixel } from "@node-projects/web-component-designer/dist/elements/helper/CssUnitConverter.js";
 import { isFirefox } from "@node-projects/web-component-designer/dist/elements/helper/Browser.js";
 import { PropertiesHelper } from "@node-projects/web-component-designer/dist/elements/services/propertiesService/services/PropertiesHelper.js";
@@ -150,7 +150,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         }
     }
 
-    public async loadScreenData(html: string, style: string, script: string, settings: IScreenSettings, properties: propertiesRecord) {
+    public async loadScreenData(html: string, style: string, script: string, settings: IScreenSettings, properties: Record<string, { type: string, values?: string[], default?: any, internal?: boolean }>) {
         if (properties) {
             for (const p in properties) {
                 const prp = properties[p];
