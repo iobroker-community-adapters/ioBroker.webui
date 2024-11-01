@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.17.3",
+    "version": "1.18.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.18.0": {
+        "en": "screens are now ex- & imported as xml",
+        "de": "bildschirme werden jetzt ex- & importiert als xml",
+        "ru": "экраны теперь экс-и импортированы как xml",
+        "pt": "telas são agora ex- & importadas como xml",
+        "nl": "schermen worden nu ex- & geïmporteerd als xml",
+        "fr": "les écrans sont maintenant ex- & importés comme xml",
+        "it": "schermi sono ora ex- & importati come xml",
+        "es": "pantallas ahora son ex- \" importadas como xml",
+        "pl": "ekrany są teraz ex- & importowane jako xml",
+        "uk": "екрани тепер екс- та імпортовані як xml",
+        "zh-cn": "屏幕现在以 xml 导入( i)"
+      },
       "1.17.3": {
         "en": "fix compilation",
         "de": "fix compilation",
@@ -106,19 +119,6 @@
         "pl": "błędne domyślne w skrypcie",
         "uk": "неправильний типовий скрипт",
         "zh-cn": "脚本默认错误"
-      },
-      "1.16.1": {
-        "en": "fix base custom webcomp bindings",
-        "de": "fix base benutzerdefinierte webcomp bindungen",
-        "ru": "исправление базовых пользовательских веб-композиций",
-        "pt": "corrigir ligações de webcomp de base personalizada",
-        "nl": "fix basis aangepaste webcomp bindingen",
-        "fr": "fixer les fixations webcomp personnalisées de base",
-        "it": "fissaggio di base personalizzati webcomp binding",
-        "es": "fijar bases de unión personalizadas webcomp",
-        "pl": "fix bazowe niestandardowe wiązania webcomp",
-        "uk": "фіксувати базові користувацькі прив'язки вебкомп'ютера",
-        "zh-cn": "固定自定义网络comp 绑定"
       }
     },
     "icon": "logo.png",
