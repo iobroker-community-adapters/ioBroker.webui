@@ -97,7 +97,10 @@ export class IobrokerWebuiControlPropertiesEditor extends BaseCustomWebComponent
     }
 
     public addEnumProp() {
-        this.properties.push({ name: '', type: 'enum', values: '["a", "b"]' });
+        let p: { name: string, type: string, values?: string, internal?: boolean } = { name: '', type: 'enum', values: '["a", "b"]' };
+        if (this.defaultInternal)
+            p.internal = true;
+        this.properties.push(p);
         this._bindingsRefresh();
     }
 

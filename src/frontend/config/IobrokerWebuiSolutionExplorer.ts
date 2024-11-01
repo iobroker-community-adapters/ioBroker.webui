@@ -15,6 +15,7 @@ import { WbClickEventType, WbNodeData, WbNodeEventType } from "types";
 import { defaultNewStyle } from "./IobrokerWebuiScreenEditor.js";
 import { IobrokerWebuiIconsView } from "./IobrokerWebuiIconsView.js";
 import { IobrokerWebuiScreensView } from "./IobrokerWebuiScreensView.js";
+import { convertToXml, parseXml } from "../helper/XmlHelper.js";
 
 type TreeNodeData = WbNodeData & {
     lazyload?: (event: WbNodeEventType, data: any) => Promise<TreeNodeData[]>,
@@ -120,11 +121,20 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 try {
                     let files = await openFileDialog('.' + type, true, 'text');
                     for (let f of files) {
-                        let data = JSON.parse(<string>f.data);
+                        let data = null;
+                        if (f.data[0] === '<') {
+                            data = parseXml(<string>f.data);
+                        } else {
+                            data = JSON.parse(<string>f.data);
+                        }
                         let nm = f.name;
-                        if (nm.endsWith('.' + type))
+                        if (nm.endsWith('.' + type)) {
                             nm = nm.substring(0, nm.length - type.length - 1);
-                        await iobrokerHandler.saveObject(type, (dir ?? '') + '/' + nm, data);
+                        }
+                        nm = prompt('Import as:', nm);
+                        if (nm) {
+                            await iobrokerHandler.saveObject(type, (dir ?? '') + '/' + nm, data);
+                        }
                     }
                 }
                 catch (err) {
@@ -206,14 +216,10 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             ContextMenu.show([{
                 title: 'Export ' + type, action: async () => {
                     let data = await iobrokerHandler.getWebuiObject(type, (dir ?? '') + '/' + name);
-                    await exportData(JSON.stringify(data), name + '.' + type)
+                    let xml = convertToXml(type, data);
+                    await exportData(xml, name + '.' + type)
                 }
-            }, /*{
-                title: 'Export Screen as XML', action: async () => {
-                    let data = await iobrokerHandler.getScreen(name);
-                    await exportData(screenToXml(data), name + '.screen')
-                }
-            },*/ {
+            }, {
                 title: 'Copy ' + type, action: async () => {
                     let newName = prompt("New Name", name);
                     if (newName && newName != name) {
