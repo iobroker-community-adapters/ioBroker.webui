@@ -5,7 +5,6 @@ export class IobrokerWebuiBindableObjectsService implements IBindableObjectsServ
   name: string = 'iobroker';
   
   hasObjectsForInstanceServiceContainer(instanceServiceContainer: InstanceServiceContainer) {
-    debugger;
     return true;
   }
 

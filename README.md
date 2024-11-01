@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- switch combo in complex prop editor
+
 ### 1.17.1 (2024-11-01)
 - selector for properties
 
