@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.18.3",
+    "version": "1.18.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.18.4": {
+        "en": "fix wrong shadow root used",
+        "de": "falsche schattenwurzel verwendet",
+        "ru": "исправить не тот теневой корень",
+        "pt": "corrigir a raiz de sombra errada usada",
+        "nl": "gebruikte foute schaduwwortel herstellen",
+        "fr": "réparer la mauvaise racine d'ombre utilisée",
+        "it": "correggere la radice dell'ombra sbagliata usata",
+        "es": "arreglar la raíz de sombra equivocada",
+        "pl": "naprawić nieprawidłowy korzeń cieni używany",
+        "uk": "виправити неправильний корінь тіні",
+        "zh-cn": "修正所使用的阴影根"
+      },
       "1.18.3": {
         "en": "small typo fix",
         "de": "kleine typo fix",
@@ -106,19 +119,6 @@
         "pl": "przełącz combo w edytorze złożonych rekwizytów",
         "uk": "вимикач combo в складних редакторах",
         "zh-cn": "在复杂的道具编辑器中切换组合"
-      },
-      "1.17.1": {
-        "en": "selector for properties",
-        "de": "selektor für eigenschaften",
-        "ru": "селектор для свойств",
-        "pt": "seletor para propriedades",
-        "nl": "selector voor eigenschappen",
-        "fr": "sélecteur de propriétés",
-        "it": "selettore per proprietà",
-        "es": "selector para propiedades",
-        "pl": "selektor właściwości",
-        "uk": "вибірник для властивостей",
-        "zh-cn": "属性选择器"
       }
     },
     "icon": "logo.png",
