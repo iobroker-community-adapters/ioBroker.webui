@@ -3,6 +3,7 @@ import { ScreenViewer } from "../runtime/ScreenViewer.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IoBrokerWebuiDialog } from "../helper/DialogHelper.js";
 import { ScriptSystem } from "@node-projects/web-component-designer-visualization-addons/dist/scripting/ScriptSystem.js";
+import { instanceOf } from "@node-projects/web-component-designer";
 
 export class IobrokerWebuiScriptSystem extends ScriptSystem {
     override async runScriptCommand<T extends ScriptCommands>(command: T, context) {
@@ -47,7 +48,7 @@ export class IobrokerWebuiScriptSystem extends ScriptSystem {
             }
 
             default: {
-                super.runScriptCommand(command, context);
+                await super.runScriptCommand(command, context);
             }
         }
     }
@@ -65,5 +66,21 @@ export class IobrokerWebuiScriptSystem extends ScriptSystem {
             return el;
         }
         return super.getTarget(context, targetSelectorTarget, parentLevel);
+    }
+
+    override getTargetFromTargetSelector(context: contextType, targetSelectorTarget: 'element' | 'container', parentLevel: number, targetSelector: string): Iterable<Element> {
+        const target = this.getTarget(context, targetSelectorTarget, parentLevel);
+        let elements: Iterable<Element> = [target];
+        if (targetSelector) {
+            if (targetSelectorTarget === 'container') {
+                if (target instanceof ScreenViewer)
+                    elements = target._getDomElements(targetSelector);
+                else
+                    elements = target.shadowRoot.querySelectorAll(targetSelector);
+            }
+            else
+                elements = target.querySelectorAll(targetSelector);
+        }
+        return elements;
     }
 }
