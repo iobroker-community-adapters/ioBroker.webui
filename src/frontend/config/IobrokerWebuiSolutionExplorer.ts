@@ -240,6 +240,10 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     if (confirm("are you sure?"))
                         iobrokerHandler.removeObject(type, (dir ?? '') + '/' + name);
                 }
+            }, {
+                title: 'copy path to clipboard', action: async () => {
+                    copyTextToClipboard((dir ?? '') + '/' + name);
+                }
             }], event);
         }
         let subFolders = await iobrokerHandler.getSubFolders(type, dir);
