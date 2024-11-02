@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.19.0",
+    "version": "1.19.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.19.1": {
+        "en": "copy path for screens/controls",
+        "de": "kopierpfad für bildschirme/steuerungen",
+        "ru": "путь копирования для экранов/контролей",
+        "pt": "caminho de cópia para telas / controles",
+        "nl": "pad voor schermen/besturing kopiëren",
+        "fr": "chemin de copie pour les écrans/contrôles",
+        "it": "copiare il percorso per schermi/controlli",
+        "es": "copy path para pantallas/controles",
+        "pl": "ścieżka kopiowania ekranów / urządzeń sterujących",
+        "uk": "копіювання шляху до екранів/контролів",
+        "zh-cn": "屏幕/控件复制路径"
+      },
       "1.19.0": {
         "en": "fix error in script system",
         "de": "fehler im skriptsystem beheben",
@@ -106,19 +119,6 @@
         "pl": "ustaw ustawienia ekranu",
         "uk": "фіксувати налаштування екрану",
         "zh-cn": "固定屏幕设置"
-      },
-      "1.18.0": {
-        "en": "screens are now ex- & imported as xml",
-        "de": "bildschirme werden jetzt ex- & importiert als xml",
-        "ru": "экраны теперь экс-и импортированы как xml",
-        "pt": "telas são agora ex- & importadas como xml",
-        "nl": "schermen worden nu ex- & geïmporteerd als xml",
-        "fr": "les écrans sont maintenant ex- & importés comme xml",
-        "it": "schermi sono ora ex- & importati come xml",
-        "es": "pantallas ahora son ex- \" importadas como xml",
-        "pl": "ekrany są teraz ex- & importowane jako xml",
-        "uk": "екрани тепер екс- та імпортовані як xml",
-        "zh-cn": "屏幕现在以 xml 导入( i)"
       }
     },
     "icon": "logo.png",

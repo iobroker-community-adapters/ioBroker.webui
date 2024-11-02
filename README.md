@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.19.1 (2024-11-02)
 - copy path for screens/controls
 
 ### 1.19.0 (2024-11-02)
