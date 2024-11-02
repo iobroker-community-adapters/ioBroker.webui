@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.18.5",
+    "version": "1.19.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.19.0": {
+        "en": "fix error in script system",
+        "de": "fehler im skriptsystem beheben",
+        "ru": "исправление ошибки в системе сценариев",
+        "pt": "corrigir erro no sistema de script",
+        "nl": "fix error in script systeem",
+        "fr": "correction d'erreur dans le système de script",
+        "it": "errore di correzione nel sistema di script",
+        "es": "corregir error en el sistema script",
+        "pl": "naprawić błąd w systemie skryptu",
+        "uk": "виправлено помилку в системі скриптів",
+        "zh-cn": "修补脚本系统错误"
+      },
       "1.18.5": {
         "en": "compile fix",
         "de": "kompilator fix",
@@ -106,19 +119,6 @@
         "pl": "ekrany są teraz ex- & importowane jako xml",
         "uk": "екрани тепер екс- та імпортовані як xml",
         "zh-cn": "屏幕现在以 xml 导入( i)"
-      },
-      "1.17.3": {
-        "en": "fix compilation",
-        "de": "fix compilation",
-        "ru": "исправление сборник",
-        "pt": "compilação de correção",
-        "nl": "fix compilatie",
-        "fr": "correction de la compilation",
-        "it": "fix compilazione",
-        "es": "compilación arreglada",
-        "pl": "fix kompilacja",
-        "uk": "фіксувати збірник",
-        "zh-cn": "固定编译"
       }
     },
     "icon": "logo.png",
