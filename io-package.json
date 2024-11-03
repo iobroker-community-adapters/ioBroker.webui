@@ -146,6 +146,9 @@
     "license": "MIT",
     "dependencies": [
       {
+        "js-controller": ">=5.0.19"
+      },
+      {
         "web": ">=3.4.16"
       }
     ],
