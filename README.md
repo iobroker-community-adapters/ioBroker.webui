@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- support null value
+
 ### 1.19.2 (2024-11-03)
 - use name in classlist
 
