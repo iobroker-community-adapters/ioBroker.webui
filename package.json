@@ -30,6 +30,11 @@
   },
   "author": "jochen.kuehner@gmx.de",
   "license": "MIT",
+  "keywords": [
+    "ioBroker",
+    "visualization",
+    "web-components"
+  ],
   "bugs": {
     "url": "https://github.com/iobroker-community-adapters/ioBroker.webui/issues"
   },
