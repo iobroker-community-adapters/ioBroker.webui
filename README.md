@@ -129,6 +129,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- copy & paste events
+
 ### 1.19.3 (2024-11-03)
 - support null value
 
