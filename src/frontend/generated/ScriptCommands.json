@@ -768,6 +768,7 @@
                     "type": "string"
                 },
                 "mode": {
+                    "default": "toggle",
                     "description": "only for target: class",
                     "enum": [
                         "add",
@@ -782,7 +783,7 @@
                 },
                 "parentIndex": {
                     "default": 0,
-                    "description": "wich parent, 0 = current, 1 = first parent, 2 = ...",
+                    "description": "wich parent, 0 = current, 1 = first parent, 2 = ...\nof the targetSelectorTarget",
                     "type": "number"
                 },
                 "target": {
@@ -797,12 +798,12 @@
                     "type": "string"
                 },
                 "targetSelector": {
-                    "description": "css selector to find elements, if empty the targetSelectorTarget is used",
+                    "description": "css selector to find elements on targetSelectorTarget, if empty the targetSelectorTarget directly is used",
                     "type": "string"
                 },
                 "targetSelectorTarget": {
                     "default": "container",
-                    "description": "where to search for the elements.\nelement\ncontainer = screen or customControl",
+                    "description": "where to search for the elements (used as a start)\nelement = currentElement\ncontainer = screen or customControl",
                     "enum": [
                         "container",
                         "element"
@@ -891,7 +892,7 @@
                     "type": "string"
                 },
                 "resultSignal": {
-                    "description": "number of the clicked button",
+                    "description": "number of the clicked button, starting with 1",
                     "format": "signal",
                     "type": "string"
                 },
