@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.19.2",
+    "version": "1.19.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.19.3": {
+        "en": "support null value",
+        "de": "unterstützungswert",
+        "ru": "нулевое значение",
+        "pt": "suporte valor nulo",
+        "nl": "steun nulwaarde",
+        "fr": "support valeur null",
+        "it": "supporto valore null",
+        "es": "valor nulo",
+        "pl": "wartość null wsparcia",
+        "uk": "підтримка значення null",
+        "zh-cn": "支持无效值"
+      },
       "1.19.2": {
         "en": "use name in classlist",
         "de": "name in der klassenliste verwenden",
@@ -106,19 +119,6 @@
         "pl": "mała literówka fix",
         "uk": "маленький типофікс",
         "zh-cn": "小类型修复"
-      },
-      "1.18.2": {
-        "en": "better refcatoring",
-        "de": "besser refcatoring",
-        "ru": "лучший хладагент",
-        "pt": "melhor refcatoring",
-        "nl": "betere refcatoring",
-        "fr": "mieux réfcatorer",
-        "it": "migliore refcatoring",
-        "es": "mejor refcatoring",
-        "pl": "lepsza rekatalizacja",
-        "uk": "кращий рефторинг",
-        "zh-cn": "更好的还原"
       }
     },
     "icon": "logo.png",
