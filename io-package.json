@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.19.1",
+    "version": "1.19.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.19.2": {
+        "en": "use name in classlist",
+        "de": "name in der klassenliste verwenden",
+        "ru": "имя в класслисте",
+        "pt": "use o nome na lista de classes",
+        "nl": "naam gebruiken in klasselijst",
+        "fr": "utiliser le nom dans la liste des classes",
+        "it": "usare il nome in classifica",
+        "es": "nombre de uso en la lista de clases",
+        "pl": "użyj nazwy na liście klas",
+        "uk": "ім'я користувача в класі",
+        "zh-cn": "使用分类列表中的名称"
+      },
       "1.19.1": {
         "en": "copy path for screens/controls",
         "de": "kopierpfad für bildschirme/steuerungen",
@@ -106,19 +119,6 @@
         "pl": "lepsza rekatalizacja",
         "uk": "кращий рефторинг",
         "zh-cn": "更好的还原"
-      },
-      "1.18.1": {
-        "en": "fix screen settings",
-        "de": "einstellungen für den bildschirm",
-        "ru": "настройки экрана",
-        "pt": "corrigir configurações de tela",
-        "nl": "scherminstellingen herstellen",
-        "fr": "correction des paramètres de l'écran",
-        "it": "impostazioni della schermata di correzione",
-        "es": "ajuste de la pantalla",
-        "pl": "ustaw ustawienia ekranu",
-        "uk": "фіксувати налаштування екрану",
-        "zh-cn": "固定屏幕设置"
       }
     },
     "icon": "logo.png",
