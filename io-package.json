@@ -106,19 +106,6 @@
         "pl": "fix kompilacji",
         "uk": "фіксатор",
         "zh-cn": "编译修正"
-      },
-      "1.18.4": {
-        "en": "fix wrong shadow root used",
-        "de": "falsche schattenwurzel verwendet",
-        "ru": "исправить не тот теневой корень",
-        "pt": "corrigir a raiz de sombra errada usada",
-        "nl": "gebruikte foute schaduwwortel herstellen",
-        "fr": "réparer la mauvaise racine d'ombre utilisée",
-        "it": "correggere la radice dell'ombra sbagliata usata",
-        "es": "arreglar la raíz de sombra equivocada",
-        "pl": "naprawić nieprawidłowy korzeń cieni używany",
-        "uk": "виправити неправильний корінь тіні",
-        "zh-cn": "修正所使用的阴影根"
       }
     },
     "icon": "logo.png",
