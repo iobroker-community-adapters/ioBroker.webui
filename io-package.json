@@ -114,6 +114,7 @@
     "dataSource": "push",
     "platform": "Javascript/Node.js",
     "loglevel": "info",
+    "tier": 3,
     "enabled": true,
     "compact": false,
     "keywords": [
@@ -130,7 +131,10 @@
     "localLinks": {
       "_default": "%web_protocol%://%ip%:%web_port%/webui/runtime.html"
     },
-    "license": "MIT",
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    },
     "dependencies": [
       {
         "js-controller": ">=5.0.19"
