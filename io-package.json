@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.20.0",
+    "version": "1.20.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.20.1": {
+        "en": "fix in designer with svgs",
+        "de": "fix in designer mit svgs",
+        "ru": "исправить в дизайнере с svgs",
+        "pt": "corrigir no designer com svgs",
+        "nl": "fix in ontwerper met svgs",
+        "fr": "fixer en concepteur avec svgs",
+        "it": "fix in designer con svgs",
+        "es": "fijado en diseñador con svgs",
+        "pl": "fix in designer with svgs",
+        "uk": "фіксація в дизайнеру з кс",
+        "zh-cn": "使用 svgs 在设计器中固定"
+      },
       "1.20.0": {
         "en": "add a few packages\nrun simple script cmd and update get parent screen\nupdate packages, downgrade monaco\nfix backup",
         "de": "ein paar pakete hinzufügen\neinfaches skript cmd und aktualisieren erhalten elternbildschirm\nupdate pakete, downgrade monaco\nwiederherstellen",
@@ -106,19 +119,6 @@
         "pl": "naprawić błąd w systemie skryptu",
         "uk": "виправлено помилку в системі скриптів",
         "zh-cn": "修补脚本系统错误"
-      },
-      "1.18.5": {
-        "en": "compile fix",
-        "de": "kompilator fix",
-        "ru": "исправление",
-        "pt": "conserto de compilação",
-        "nl": "compileer fix",
-        "fr": "compiler la correction",
-        "it": "compilazione correzione",
-        "es": "compilado",
-        "pl": "fix kompilacji",
-        "uk": "фіксатор",
-        "zh-cn": "编译修正"
       }
     },
     "icon": "logo.png",

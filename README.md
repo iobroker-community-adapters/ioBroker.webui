@@ -129,7 +129,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.20.1 (2024-12-03)
 - fix in designer with svgs
 
 ### 1.20.0 (2024-12-03)
