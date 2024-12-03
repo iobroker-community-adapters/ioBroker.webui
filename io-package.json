@@ -261,7 +261,7 @@
       "type": "meta",
       "common": {
         "name": "Files for webui",
-        "role": "meta.user"
+        "type": "meta.user"
       },
       "native": {}
     }
