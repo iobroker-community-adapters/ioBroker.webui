@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.19.4",
+    "version": "1.20.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.20.0": {
+        "en": "add a few packages\nrun simple script cmd and update get parent screen\nupdate packages, downgrade monaco\nfix backup",
+        "de": "ein paar pakete hinzufügen\neinfaches skript cmd und aktualisieren erhalten elternbildschirm\nupdate pakete, downgrade monaco\nwiederherstellen",
+        "ru": "добавить несколько пакетов\nзапустить простой сценарий смd и обновить получить родительский экран\nобновления пакетов, нисходительная monaco\nисправление",
+        "pt": "adicionar alguns pacotes\nexecutar script simples cmd e atualizar obter tela pai\npacotes de atualização, downgrade monaco\ncorrigir backup",
+        "nl": "enkele pakketten toevoegen\nuitvoeren van eenvoudige script cmd en update krijgen ouder scherm\npakketten bijwerken, downgrade monaco\nreservekopie herstellen",
+        "fr": "ajouter quelques paquets\nexécuter le script simple cmd et mettre à jour obtenir l'écran parent\nmettre à jour les paquets, dévaloriser monaco\nréparer la sauvegarde",
+        "it": "aggiungere alcuni pacchetti\neseguire lo script semplice cmd e aggiornare ottenere la schermata madre\npacchetti di aggiornamento, downgrade monaco\ncorrezione di backup",
+        "es": "añadir algunos paquetes\nejecutar script simple cmd y actualizar obtener la pantalla padre\npaquetes de actualización, monaco degradado\nreparación de respaldo",
+        "pl": "dodaj kilka pakietów\nuruchom prosty skrypt cmd i uaktualnij wyświetlacz macierzysty\naktualizacja pakietów, downgrade monaco\nnaprawić kopię zapasową",
+        "uk": "додати кілька пакетів\nзапустити простий скрипт cmd і оновлення отримати батьківський екран\nоновлення пакетів, град монако\nрезервне копіювання",
+        "zh-cn": "添加几个软件包\n运行简单的脚本 cmd 并更新父屏幕\n更新软件包, 降级\n修复备份"
+      },
       "1.19.4": {
         "en": "copy & paste events",
         "de": "kopieren und einfügen von ereignissen",
