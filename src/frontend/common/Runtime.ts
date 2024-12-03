@@ -1,4 +1,4 @@
-import type { OpenDialog, OpenScreen } from "@node-projects/web-component-designer-visualization-addons";
+import type { OpenDialog, OpenScreen, ScriptCommands } from "@node-projects/web-component-designer-visualization-addons";
 
 export class Runtime {
     public static openScreen(config: Omit<OpenScreen, 'type'>): Promise<void> {
@@ -9,8 +9,20 @@ export class Runtime {
         return window.appShell.scriptSystem.runScriptCommand({ type: 'OpenDialog', ...config }, null);
     }
 
-    public static getParentScreen(screen: BaseScreenViewerAndControl): BaseScreenViewerAndControl {
-        return <BaseScreenViewerAndControl>(<ShadowRoot>(<ShadowRoot>screen.getRootNode()).host.getRootNode()).host;
+    public static async runSimpleScriptCommand<T extends ScriptCommands>(scriptCommand: T): Promise<void> {
+        await window.appShell.scriptSystem.runScriptCommand(scriptCommand, null); //TODO context
+    }
+
+    public static getParentScreen(screen: BaseScreenViewerAndControl, parentLevel = 1): BaseScreenViewerAndControl {
+        let el: Element = screen;
+        for (let i = 0; i < parentLevel; i++) {
+            let rootDiv = (<ShadowRoot>el.getRootNode()).host;
+            if (rootDiv instanceof BaseCustomControl)
+                el = rootDiv;
+            else
+                el = (<ShadowRoot>rootDiv.getRootNode()).host;
+        }
+        return <BaseScreenViewerAndControl>el;
     }
 
     public static findParent<T>(element: Element, type: new (...args: any[]) => T, predicate?: (element: Element) => boolean): T {

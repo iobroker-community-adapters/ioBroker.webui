@@ -81,7 +81,10 @@ var RUNTIME: {
         top?: string;
     }): Promise<void>
 
-    getParentScreen(screen: BaseScreenViewerAndControl): BaseScreenViewerAndControl;
+    
+    runSimpleScriptCommand<T extends import('@node-projects/web-component-designer-visualization-addons').ScriptCommands>(scriptCommand: T): Promise<void>;
+
+    getParentScreen(screen: BaseScreenViewerAndControl, parentlevel?: number): BaseScreenViewerAndControl;
 
     findParent<T>(element: Element, type: new (...args: any[]) => T, predicate?: (element: Element) => boolean): T;
 }
