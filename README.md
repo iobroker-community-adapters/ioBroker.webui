@@ -129,6 +129,12 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- add a few packages
+- run simple script cmd and update get parent screen
+- update packages, downgrade monaco
+- fix backup
+
 ### 1.19.4 (2024-11-03)
 - copy & paste events
 
