@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.20.1",
+    "version": "1.21.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.21.0": {
+        "en": "fix scripts with empty names on css\ncss props with only bindings are not shown\nremove of css prop should remove binding?\nOpen Screen in sub screen command",
+        "de": "skripte mit leeren namen auf css fixieren\ncss props mit nur bindungen sind nicht dargestellt\nentfernen css prop sollte bindung entfernen?\nBildschirm im Sub-Bildschirm-Befehl öffnen",
+        "ru": "исправить сценарии с пустыми именами на css\ncss реквизиты только связывания не показаны\nудаление css prop должно удалить связывания?\nОткрытый экран в командном пункте",
+        "pt": "corrigir scripts com nomes vazios no css\ncss adereços com apenas ligações não são mostrados\nremover de css prop deve remover a ligação?\nAbra a tela no comando sub screen",
+        "nl": "scripts herstellen met lege namen op css\ncss rekwisieten met alleen bindingen worden niet getoond\nverwijderen van css prop moet binden verwijderen?\nScherm openen in subschermcommando",
+        "fr": "corriger des scripts avec des noms vides sur css\nles accessoires css avec uniquement des fixations ne sont pas montrés\nenlever de css prop devrait supprimer la liaison?\nOuvre l'écran dans la commande sous-écran",
+        "it": "correggere gli script con nomi vuoti su css\ncss props con solo binding non sono mostrati\nrimuovere di css prop dovrebbe rimuovere il legame?\nSchermo aperto nel comando sotto schermata",
+        "es": "fijar scripts con nombres vacíos en css\ncss props with only bindings are not shown\nremover el css prop debe eliminar la unión?\nPantalla abierta en el comando sub pantalla",
+        "pl": "naprawić skrypty z pustymi nazwami na css\npropy css z tylko wiązaniami nie są wyświetlane\nusunięcie rekwizytu css powinno usunąć wiązanie?\nOtwórz ekran w komendzie podekranu",
+        "uk": "виправлено сценарії з порожніми іменами на css\ncss пропси з тільки зв'язками не показані\nприбрати css проп слід видалити зв'язок?\nВідкритий екран в командному режимі",
+        "zh-cn": "css 上的空名脚本\n未显示只装订的 cs 道具\n删除 css 道具应删除绑定吗 ?\n在子屏幕命令中打开屏幕"
+      },
       "1.20.1": {
         "en": "fix in designer with svgs",
         "de": "fix in designer mit svgs",
@@ -106,19 +119,6 @@
         "pl": "ścieżka kopiowania ekranów / urządzeń sterujących",
         "uk": "копіювання шляху до екранів/контролів",
         "zh-cn": "屏幕/控件复制路径"
-      },
-      "1.19.0": {
-        "en": "fix error in script system",
-        "de": "fehler im skriptsystem beheben",
-        "ru": "исправление ошибки в системе сценариев",
-        "pt": "corrigir erro no sistema de script",
-        "nl": "fix error in script systeem",
-        "fr": "correction d'erreur dans le système de script",
-        "it": "errore di correzione nel sistema di script",
-        "es": "corregir error en el sistema script",
-        "pl": "naprawić błąd w systemie skryptu",
-        "uk": "виправлено помилку в системі скриптів",
-        "zh-cn": "修补脚本系统错误"
       }
     },
     "icon": "logo.png",
