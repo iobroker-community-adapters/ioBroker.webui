@@ -133,6 +133,12 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix scripts with empty names on css
+- css props with only bindings are not shown
+- remove of css prop should remove binding?
+- Open Screen in sub screen command
+
 ### 1.20.1 (2024-12-03)
 - fix in designer with svgs
 

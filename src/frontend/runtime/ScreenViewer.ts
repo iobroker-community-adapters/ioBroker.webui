@@ -93,6 +93,13 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         }
     }
 
+    public async setScreenNameAndLoad(screen: string) {
+        if (this._screenName != screen) {
+            this._screenName = screen;
+            await this._loadScreen()
+        }
+    }
+
     public objects: any;
 
     private _useStyleFromScreenForViewer: boolean;
@@ -120,8 +127,8 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
     override _getDomElements<T extends Element>(selectors: string): T[] {
         return <T[]><unknown>this._rootShadow.querySelectorAll(selectors);
-    }  
-  
+    }
+
     ready() {
         this._parseAttributesToProperties();
         if (this._screenName)
@@ -141,10 +148,10 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
                 await iobrokerHandler.waitForReady();
                 this._loading = false;
                 this.removeBindings();
+                const screen = await iobrokerHandler.getWebuiObject('screen', this.screenName);
                 DomHelper.removeAllChildnodes(this._rootShadow);
-                const screen = await iobrokerHandler.getWebuiObject('screen', this.screenName)
                 if (screen) {
-                    this.loadScreenData(screen.html, screen.style, screen.script, screen.settings, screen.properties);
+                    await this.loadScreenData(screen.html, screen.style, screen.script, screen.settings, screen.properties);
                 }
             }
         }

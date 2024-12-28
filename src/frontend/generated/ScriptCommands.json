@@ -541,9 +541,6 @@
                 "additionalData": {
                     "type": "string"
                 },
-                "closeable": {
-                    "type": "boolean"
-                },
                 "noHistory": {
                     "type": "boolean"
                 },
@@ -565,12 +562,68 @@
                 }
             },
             "propertyOrder": [
+                "title",
+                "screen",
+                "type",
+                "relativeSignalsPath",
+                "noHistory",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "OpenScreenInScreenViewer": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "noHistory": {
+                    "type": "boolean"
+                },
+                "parentIndex": {
+                    "default": 0,
+                    "description": "wich parent, 0 = current, 1 = first parent, 2 = ...\nof the targetSelectorTarget",
+                    "type": "number"
+                },
+                "relativeSignalsPath": {
+                    "description": "If signals in screen are defined relative (starting with a '.'), this will be prepended",
+                    "type": "string"
+                },
+                "screen": {
+                    "description": "Name of the Screen",
+                    "format": "screen",
+                    "type": "string"
+                },
+                "targetSelector": {
+                    "default": "iobroker-webui-screen-viewer",
+                    "description": "css selector to find elements on targetSelectorTarget, if empty the targetSelectorTarget directly is used",
+                    "type": "string"
+                },
+                "targetSelectorTarget": {
+                    "default": "container",
+                    "description": "where to search for the elements (used as a start)\nelement = currentElement\ncontainer = screen or customControl",
+                    "enum": [
+                        "container",
+                        "element"
+                    ],
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "OpenScreenInScreenViewer",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
                 "type",
                 "screen",
                 "title",
                 "relativeSignalsPath",
                 "noHistory",
-                "closeable",
+                "targetSelectorTarget",
+                "parentIndex",
+                "targetSelector",
                 "additionalData"
             ],
             "type": "object"
@@ -631,109 +684,6 @@
                 "additionalData"
             ],
             "type": "object"
-        },
-        "ScriptCommands": {
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/Comment"
-                },
-                {
-                    "$ref": "#/definitions/OpenScreen"
-                },
-                {
-                    "$ref": "#/definitions/OpenUrl"
-                },
-                {
-                    "$ref": "#/definitions/OpenDialog"
-                },
-                {
-                    "$ref": "#/definitions/CloseDialog"
-                },
-                {
-                    "$ref": "#/definitions/ToggleSignalValue"
-                },
-                {
-                    "$ref": "#/definitions/SetSignalValue"
-                },
-                {
-                    "$ref": "#/definitions/IncrementSignalValue"
-                },
-                {
-                    "$ref": "#/definitions/DecrementSignalValue"
-                },
-                {
-                    "$ref": "#/definitions/SetBitInSignal"
-                },
-                {
-                    "$ref": "#/definitions/ClearBitInSignal"
-                },
-                {
-                    "$ref": "#/definitions/ToggleBitInSignal"
-                },
-                {
-                    "$ref": "#/definitions/Console"
-                },
-                {
-                    "$ref": "#/definitions/CalculateSignalValue"
-                },
-                {
-                    "$ref": "#/definitions/Javascript"
-                },
-                {
-                    "$ref": "#/definitions/SetElementProperty"
-                },
-                {
-                    "$ref": "#/definitions/Delay"
-                },
-                {
-                    "$ref": "#/definitions/SwitchLanguage"
-                },
-                {
-                    "$ref": "#/definitions/Login"
-                },
-                {
-                    "$ref": "#/definitions/Logout"
-                },
-                {
-                    "$ref": "#/definitions/SubscribeSignal"
-                },
-                {
-                    "$ref": "#/definitions/UnsubscribeSignal"
-                },
-                {
-                    "$ref": "#/definitions/WriteSignalsInGroup"
-                },
-                {
-                    "$ref": "#/definitions/ClearSiganlsInGroup"
-                },
-                {
-                    "$ref": "#/definitions/Condition"
-                },
-                {
-                    "$ref": "#/definitions/Exit"
-                },
-                {
-                    "$ref": "#/definitions/Label"
-                },
-                {
-                    "$ref": "#/definitions/RunScript"
-                },
-                {
-                    "$ref": "#/definitions/Goto"
-                },
-                {
-                    "$ref": "#/definitions/CopySignalValuesFromFolder"
-                },
-                {
-                    "$ref": "#/definitions/ShowMessageBox"
-                },
-                {
-                    "$ref": "#/definitions/ExportSignalValuesAsJson"
-                },
-                {
-                    "$ref": "#/definitions/ImportSignalValuesFromJson"
-                }
-            ]
         },
         "SetBitInSignal": {
             "properties": {
@@ -1037,6 +987,112 @@
                 "additionalData"
             ],
             "type": "object"
+        },
+        "WebuiScriptCommands": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/Comment"
+                },
+                {
+                    "$ref": "#/definitions/OpenUrl"
+                },
+                {
+                    "$ref": "#/definitions/OpenDialog"
+                },
+                {
+                    "$ref": "#/definitions/CloseDialog"
+                },
+                {
+                    "$ref": "#/definitions/ToggleSignalValue"
+                },
+                {
+                    "$ref": "#/definitions/SetSignalValue"
+                },
+                {
+                    "$ref": "#/definitions/IncrementSignalValue"
+                },
+                {
+                    "$ref": "#/definitions/DecrementSignalValue"
+                },
+                {
+                    "$ref": "#/definitions/SetBitInSignal"
+                },
+                {
+                    "$ref": "#/definitions/ClearBitInSignal"
+                },
+                {
+                    "$ref": "#/definitions/ToggleBitInSignal"
+                },
+                {
+                    "$ref": "#/definitions/Console"
+                },
+                {
+                    "$ref": "#/definitions/CalculateSignalValue"
+                },
+                {
+                    "$ref": "#/definitions/Javascript"
+                },
+                {
+                    "$ref": "#/definitions/SetElementProperty"
+                },
+                {
+                    "$ref": "#/definitions/Delay"
+                },
+                {
+                    "$ref": "#/definitions/SwitchLanguage"
+                },
+                {
+                    "$ref": "#/definitions/Login"
+                },
+                {
+                    "$ref": "#/definitions/Logout"
+                },
+                {
+                    "$ref": "#/definitions/SubscribeSignal"
+                },
+                {
+                    "$ref": "#/definitions/UnsubscribeSignal"
+                },
+                {
+                    "$ref": "#/definitions/WriteSignalsInGroup"
+                },
+                {
+                    "$ref": "#/definitions/ClearSiganlsInGroup"
+                },
+                {
+                    "$ref": "#/definitions/Condition"
+                },
+                {
+                    "$ref": "#/definitions/Exit"
+                },
+                {
+                    "$ref": "#/definitions/Label"
+                },
+                {
+                    "$ref": "#/definitions/RunScript"
+                },
+                {
+                    "$ref": "#/definitions/Goto"
+                },
+                {
+                    "$ref": "#/definitions/CopySignalValuesFromFolder"
+                },
+                {
+                    "$ref": "#/definitions/ShowMessageBox"
+                },
+                {
+                    "$ref": "#/definitions/ExportSignalValuesAsJson"
+                },
+                {
+                    "$ref": "#/definitions/ImportSignalValuesFromJson"
+                },
+                {
+                    "$ref": "#/definitions/OpenScreen"
+                },
+                {
+                    "$ref": "#/definitions/OpenScreenInScreenViewer"
+                }
+            ]
         },
         "WriteSignalsInGroup": {
             "properties": {
