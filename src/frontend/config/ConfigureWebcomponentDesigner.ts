@@ -21,12 +21,14 @@ import { IobrokerWebuiScreenContextMenu } from "../services/IobrokerWebuiScreenC
 import { IobrokerWebuiEventsService } from "../services/IobrokerWebuiEventsService.js";
 import { IobrokerWebuiCustomControlEventsService } from "../services/IobrokerWebuiCustomControlEventsService.js";
 import { IobrokerWebuiBindableObjectsForPropertiesService } from "../services/IobrokerWebuiBindableObjectsForPropertiesService.js";
+import { IobrokerWebuiBindableLocalObjectsService } from "../services/IobrokerWebuiBindableLocalObjectsService.js";
 
 export function configureDesigner(bindingsHelper: BindingsHelper) {
     const serviceContainer = createDefaultServiceContainer();
     serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
     serviceContainer.register("htmlParserService", new NodeHtmlParserService());
     serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableObjectsService());
+    serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableLocalObjectsService());
     serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableObjectsForPropertiesService());
     serviceContainer.register("bindableObjectDragDropService", new BindableObjectDragDropService(bindingsHelper, iobrokerHandler));
     serviceContainer.register("bindingService", new VisualizationBindingsService(bindingsHelper));

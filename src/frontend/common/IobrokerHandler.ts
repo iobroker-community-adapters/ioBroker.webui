@@ -390,6 +390,10 @@ export class IobrokerHandler implements VisualizationHandler {
     #localSubscriptions = new Map<string, ioBroker.StateChangeHandler[]>;
     #localValues = new Map<string, any>;
 
+    getLocalStateNames() : string[] {
+        return Array.from(this.#localSubscriptions.keys());
+    }
+
     async subscribeState(id: string, cb: ioBroker.StateChangeHandler): Promise<void> {
         if (id.startsWith('local_')) {
             let arr = this.#localSubscriptions.get(id);

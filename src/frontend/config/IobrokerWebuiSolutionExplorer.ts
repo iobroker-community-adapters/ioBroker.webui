@@ -98,7 +98,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 this._createAdditionalFilesNode(),
                 this._createChartsNode(),
                 this._createIconsFolderNode(),
-                this._createObjectsNode()
+                this._createBindablesNode()
             ]);
         return result.map(x => x.status == 'fulfilled' ? x.value : null);
     }
@@ -779,6 +779,19 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         return controlsNode;
     }
 
+    private async _createBindablesNode() {
+        const node: TreeNodeData = {
+            title: 'Bindables',
+            folder: true,
+            lazy: true,
+            children: [
+                await this._createObjectsNode(),
+                await this._createLocalsNode()
+            ]
+        }
+        return node;
+    }
+
     private async _createObjectsNode() {
         const s = this.serviceContainer.bindableObjectsServices[0];
         const objectsNode: TreeNodeData = {
@@ -831,6 +844,48 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             lazy: x.children !== false,
             lazyload: (event, data) => this._lazyLoadObjectNodes(event, data)
         }));
+    }
+
+    private async _createLocalsNode() {
+        //Todo: reset lazy load on colapse in local nodes view
+        const s = this.serviceContainer.bindableObjectsServices[1];
+        const objectsNode: TreeNodeData = {
+            title: 'Locals',
+            data: { service: s },
+            folder: true,
+            lazy: true,
+            key: 'locals',
+            lazyload: (event, data) => this._lazyLoadObjectNodes(event, data),
+            contextMenu: (event) => {
+                ContextMenu.show([{
+                    title: 'Refresh', action: async () => {
+                        (<IobrokerWebuiBindableObjectsService>s).clearCache();
+                        const objectsNode = this._tree.findKey('locals');
+                        if (objectsNode) {
+                            objectsNode.resetLazy();
+                            await sleep(50);
+                            objectsNode.setExpanded(true);
+                        }
+                    }
+                }, {
+                    title: 'Add local', action: async () => {
+                        let nm = prompt('new local variable name (without local_ prefix) :');
+                        if (nm) {
+                            if (!nm.startsWith('local_'))
+                                nm = "local_" + nm;
+                            const cb = () => { };
+                            iobrokerHandler.subscribeState(nm, cb);
+                            iobrokerHandler.unsubscribeState(nm, cb)
+                            const objectsNode = this._tree.findKey('locals');
+                            objectsNode.resetLazy();
+                            await sleep(50);
+                            objectsNode.setExpanded(true);
+                        }
+                    }
+                }], event);
+            },
+        }
+        return objectsNode;
     }
 
     #activeLazyLoads = new Set<WunderbaumNode>();

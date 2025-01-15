@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- local signals browser
+
 ### 1.21.0 (2024-12-28)
 - fix scripts with empty names on css
 - css props with only bindings are not shown
