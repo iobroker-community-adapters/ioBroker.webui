@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.21.0",
+    "version": "1.22.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.22.0": {
+        "en": "local signals browser\nstyle completition fixes\nspecial bindings for \"ring\" cameras",
+        "de": "lokale signale browser\nstil completition fixes\nspezielle bindungen für \"ring\"-kameras",
+        "ru": "браузер местных сигналов\nстиль комплектации\nспециальные привязки для «кольцовых» камер",
+        "pt": "navegador de sinais locais\ncorreções de conclusão de estilo\nligações especiais para câmeras \"ring\"",
+        "nl": "lokale signalenbrowser\nstijl completitie fixes\nspeciale bindingen voor \"ring\"-camera's",
+        "fr": "navigateur de signaux locaux\ncorrectifs de complétion de style\nfixations spéciales pour caméras \"ring\"",
+        "it": "browser segnali locali\nstile correzioni di completamento\nattacchi speciali per telecamere \"ring\"",
+        "es": "navegador de señales locales\nestilo completition fixes\nencuadernaciones especiales para cámaras \"ring\"",
+        "pl": "przeglądarka lokalnych sygnałów\npoprawki zakończenia stylu\nspecjalne wiązania do kamer \"ring\"",
+        "uk": "веб камера\nфіксація стилів\nспеціальні прив'язки для камер \"обручка\"",
+        "zh-cn": "本地信号浏览器\n样式补丁修正\n“环”相机的特殊装订"
+      },
       "1.21.0": {
         "en": "fix scripts with empty names on css\ncss props with only bindings are not shown\nremove of css prop should remove binding?\nOpen Screen in sub screen command",
         "de": "skripte mit leeren namen auf css fixieren\ncss props mit nur bindungen sind nicht dargestellt\nentfernen css prop sollte bindung entfernen?\nBildschirm im Sub-Bildschirm-Befehl öffnen",
@@ -106,19 +119,6 @@
         "pl": "użyj nazwy na liście klas",
         "uk": "ім'я користувача в класі",
         "zh-cn": "使用分类列表中的名称"
-      },
-      "1.19.1": {
-        "en": "copy path for screens/controls",
-        "de": "kopierpfad für bildschirme/steuerungen",
-        "ru": "путь копирования для экранов/контролей",
-        "pt": "caminho de cópia para telas / controles",
-        "nl": "pad voor schermen/besturing kopiëren",
-        "fr": "chemin de copie pour les écrans/contrôles",
-        "it": "copiare il percorso per schermi/controlli",
-        "es": "copy path para pantallas/controles",
-        "pl": "ścieżka kopiowania ekranów / urządzeń sterujących",
-        "uk": "копіювання шляху до екранів/контролів",
-        "zh-cn": "屏幕/控件复制路径"
       }
     },
     "icon": "logo.png",
