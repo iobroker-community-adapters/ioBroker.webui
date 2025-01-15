@@ -135,6 +135,8 @@ runtime.html?screenName=screen2
 -->
 ### __WORK IN PROGRESS__
 - local signals browser
+- style completition fixes
+- special bindings for "ring" cameras
 
 ### 1.21.0 (2024-12-28)
 - fix scripts with empty names on css

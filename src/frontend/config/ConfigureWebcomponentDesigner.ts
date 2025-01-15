@@ -2,7 +2,7 @@ import { BaseCustomWebcomponentBindingsService, EventsService, IElementsJson, Js
 import { NodeHtmlParserService } from '@node-projects/web-component-designer-htmlparserservice-nodehtmlparser';
 import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
 import { CssToolsStylesheetService } from '@node-projects/web-component-designer-stylesheetservice-css-tools';
-import { BindableObjectDragDropService, BindingsEditor, VisualizationBindingsService, PropertyGridDragDropService, ScriptRefactorService, BindingsHelper, VisualizationBindingsRefactorService } from "@node-projects/web-component-designer-visualization-addons";
+import { BindingsEditor, VisualizationBindingsService, PropertyGridDragDropService, ScriptRefactorService, BindingsHelper, VisualizationBindingsRefactorService } from "@node-projects/web-component-designer-visualization-addons";
 import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
 import { IobrokerWebuiDemoProviderService } from "../services/IobrokerWebuiDemoProviderService.js";
 import { IobrokerWebuiConfirmationWrapper } from "./IobrokerWebuiConfirmationWrapper.js";
@@ -22,6 +22,7 @@ import { IobrokerWebuiEventsService } from "../services/IobrokerWebuiEventsServi
 import { IobrokerWebuiCustomControlEventsService } from "../services/IobrokerWebuiCustomControlEventsService.js";
 import { IobrokerWebuiBindableObjectsForPropertiesService } from "../services/IobrokerWebuiBindableObjectsForPropertiesService.js";
 import { IobrokerWebuiBindableLocalObjectsService } from "../services/IobrokerWebuiBindableLocalObjectsService.js";
+import { IobrokerWebuiBindableObjectDragDropService } from "../services/IobrokerWebuiBindableObjectDragDropService.js";
 
 export function configureDesigner(bindingsHelper: BindingsHelper) {
     const serviceContainer = createDefaultServiceContainer();
@@ -30,7 +31,7 @@ export function configureDesigner(bindingsHelper: BindingsHelper) {
     serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableObjectsService());
     serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableLocalObjectsService());
     serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableObjectsForPropertiesService());
-    serviceContainer.register("bindableObjectDragDropService", new BindableObjectDragDropService(bindingsHelper, iobrokerHandler));
+    serviceContainer.register("bindableObjectDragDropService", new IobrokerWebuiBindableObjectDragDropService(bindingsHelper, iobrokerHandler));
     serviceContainer.register("bindingService", new VisualizationBindingsService(bindingsHelper));
     serviceContainer.register("demoProviderService", new IobrokerWebuiDemoProviderService());
     serviceContainer.register("externalDragDropService", new IobrokerWebuiExternalDragDropService());
