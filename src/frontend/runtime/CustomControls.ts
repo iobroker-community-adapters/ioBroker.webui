@@ -3,6 +3,7 @@ import { IControl } from "../interfaces/IControl.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { PropertiesHelper } from "@node-projects/web-component-designer/dist/elements/services/propertiesService/services/PropertiesHelper.js";
 import { ICustomControlScript } from "../interfaces/ICustomControlScript.js";
+import { SpecialValueHandler } from "@node-projects/web-component-designer-visualization-addons";
 
 export const webuiCustomControlPrefix = 'webui-';
 export const webuiCustomControlSymbol = Symbol('webuiCustomControlSymbol');
@@ -16,33 +17,63 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     #scriptObject: ICustomControlScript;
     #bindings: (() => void)[];
     #eventListeners: [name: string, callback: (...args) => void][] = [];
+    #resizeObserver: ResizeObserver;
+    #specialValueHandler: SpecialValueHandler;
 
     constructor() {
         super();
         this._bindingsParse(null, true);
         if ((<IControl>(<CustomControlInfo>(<any>this.constructor)[webuiCustomControlSymbol]).control).settings.useGlobalStyle)
-            this.shadowRoot.adoptedStyleSheets = [iobrokerHandler.globalStylesheet, ...this.shadowRoot.adoptedStyleSheets]
+            this.shadowRoot.adoptedStyleSheets = [iobrokerHandler.globalStylesheet, ...this.shadowRoot.adoptedStyleSheets];
+        if ((<IControl>(<CustomControlInfo>(<any>this.constructor)[webuiCustomControlSymbol]).control).settings.bindToSize) {
+            this.#resizeObserver = new ResizeObserver((entries) => {
+                let cbs = this.#specialValueHandler.valueChangedCallbacks.get('width');
+                if (cbs) {
+                    for (const c of cbs)
+                        c();
+                }
+                cbs = this.#specialValueHandler.valueChangedCallbacks.get('height');
+                if (cbs) {
+                    for (const c of cbs)
+                        c();
+                }
+            });
+        }
     }
 
     async connectedCallback() {
         this._parseAttributesToProperties();
         this._bindingsRefresh();
-        this.#bindings = window.appShell.bindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this);
+        this.#specialValueHandler = {
+            valueProvider: (specialValueName) => {
+                switch (specialValueName) {
+                    case 'width':
+                        return this.getBoundingClientRect().width;
+                    case 'height':
+                        return this.getBoundingClientRect().height;
+                }
+                return null;
+            },
+            valueChangedCallbacks: new Map()
+        };
+        this.#bindings = window.appShell.bindingsHelper.applyAllBindings(this.shadowRoot, this._getRelativeSignalsPath(), this, this.#specialValueHandler);
         this.#scriptObject = await window.appShell.scriptSystem.assignAllScripts('customControl ' + (<CustomControlInfo>(<any>this.constructor)[webuiCustomControlSymbol]).name, (<IControl>(<CustomControlInfo>(<any>this.constructor)[webuiCustomControlSymbol]).control).script, this.shadowRoot, this, iobrokerHandler);
-        this.#scriptObject?.connectedCallback?.(this);
+        this.#scriptObject?.connectedCallback?.(this, this.shadowRoot);
         for (let e of this.#eventListeners) {
             this.addEventListener(e[0], e[1]);
         }
+        this.#resizeObserver.observe(this);
     }
 
     disconnectedCallback() {
         for (let e of this.#eventListeners) {
             this.removeEventListener(e[0], e[1]);
         }
-        this.#scriptObject?.disconnectedCallback?.(this);
+        this.#scriptObject?.disconnectedCallback?.(this, this.shadowRoot);
         for (const b of this.#bindings)
             b();
         this.#bindings = null;
+        this.#resizeObserver.unobserve(this);
     }
 
     _assignEvent(event: string, callback: (...args) => void): { remove: () => void } {
@@ -119,7 +150,8 @@ export function generateCustomControl(name: string, control: IControl) {
             //@ts-ignore
             let instance = Reflect.construct(BaseCustomControl, [], window['IobrokerWebuiCustomControl' + name]);
 
-            for (let p in control.properties) {
+            let currControl = (<CustomControlInfo>window['IobrokerWebuiCustomControl' + name][webuiCustomControlSymbol]).control
+            for (let p in currControl.properties) {
                 Object.defineProperty(instance, p, {
                     get() {
                         return this['_' + p];
@@ -134,8 +166,8 @@ export function generateCustomControl(name: string, control: IControl) {
                     enumerable: true,
                     configurable: true,
                 });
-                if (control.properties[p].default) {
-                    instance['_' + p] = control.properties[p].default;
+                if (currControl.properties[p].default) {
+                    instance['_' + p] = currControl.properties[p].default;
                 }
             }
             return instance;

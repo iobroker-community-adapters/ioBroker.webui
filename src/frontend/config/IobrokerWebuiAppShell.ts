@@ -10,7 +10,7 @@ LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
 
 import '@node-projects/web-component-designer'
 import { PropertyGridWithHeader, RefactorView, ServiceContainer, ValueType } from '@node-projects/web-component-designer';
-import { TreeViewExtended } from '@node-projects/web-component-designer-widgets-wunderbaum';
+import { BindableObjectsBrowser, TreeViewExtended } from '@node-projects/web-component-designer-widgets-wunderbaum';
 
 import type { IDisposable } from 'monaco-editor';
 import { PanelContainer } from 'dock-spawn-ts/lib/js/PanelContainer.js';
@@ -41,10 +41,10 @@ import { IobrokerWebuiControlPropertiesEditor } from './IobrokerWebuiControlProp
 import { IobrokerWebuiPropertyGrid } from './IobrokerWebuiPropertyGrid.js';
 import { typeInfoFromJsonSchema } from '@node-projects/propertygrid.webcomponent';
 import { IobrokerWebuiScriptSystem } from '../scripting/IobrokerWebuiScriptSystem.js';
-import { BindingsHelper } from '@node-projects/web-component-designer-visualization-addons';
+import { BindingsHelper, VisualizationShell } from '@node-projects/web-component-designer-visualization-addons';
 
 
-export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend {
+export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend implements VisualizationShell {
   activeElement: HTMLElement;
   mainPage = 'designer';
 
@@ -150,6 +150,10 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     this.scriptSystem = scriptSystem;
     this.bindingsHelper = bindingsHelper;
   }
+
+  createBindableObjectBrowser() {
+    return new BindableObjectsBrowser();
+  };
 
   async ready() {
     this._dock = this._getDomElement('dock');

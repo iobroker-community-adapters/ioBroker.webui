@@ -576,14 +576,6 @@
                 "additionalData": {
                     "type": "string"
                 },
-                "noHistory": {
-                    "type": "boolean"
-                },
-                "parentIndex": {
-                    "default": 0,
-                    "description": "wich parent, 0 = current, 1 = first parent, 2 = ...\nof the targetSelectorTarget",
-                    "type": "number"
-                },
                 "relativeSignalsPath": {
                     "description": "If signals in screen are defined relative (starting with a '.'), this will be prepended",
                     "type": "string"
@@ -595,16 +587,7 @@
                 },
                 "targetSelector": {
                     "default": "iobroker-webui-screen-viewer",
-                    "description": "css selector to find elements on targetSelectorTarget, if empty the targetSelectorTarget directly is used",
-                    "type": "string"
-                },
-                "targetSelectorTarget": {
-                    "default": "container",
-                    "description": "where to search for the elements (used as a start)\nelement = currentElement\ncontainer = screen or customControl",
-                    "enum": [
-                        "container",
-                        "element"
-                    ],
+                    "description": "css selector to find the screenviewer in the root screen",
                     "type": "string"
                 },
                 "title": {
@@ -620,9 +603,6 @@
                 "screen",
                 "title",
                 "relativeSignalsPath",
-                "noHistory",
-                "targetSelectorTarget",
-                "parentIndex",
                 "targetSelector",
                 "additionalData"
             ],
@@ -991,9 +971,6 @@
         "WebuiScriptCommands": {
             "anyOf": [
                 {
-                    "$ref": "#/definitions/Comment"
-                },
-                {
                     "$ref": "#/definitions/OpenUrl"
                 },
                 {
@@ -1060,19 +1037,7 @@
                     "$ref": "#/definitions/ClearSiganlsInGroup"
                 },
                 {
-                    "$ref": "#/definitions/Condition"
-                },
-                {
-                    "$ref": "#/definitions/Exit"
-                },
-                {
-                    "$ref": "#/definitions/Label"
-                },
-                {
                     "$ref": "#/definitions/RunScript"
-                },
-                {
-                    "$ref": "#/definitions/Goto"
                 },
                 {
                     "$ref": "#/definitions/CopySignalValuesFromFolder"
@@ -1085,6 +1050,21 @@
                 },
                 {
                     "$ref": "#/definitions/ImportSignalValuesFromJson"
+                },
+                {
+                    "$ref": "#/definitions/Comment"
+                },
+                {
+                    "$ref": "#/definitions/Condition"
+                },
+                {
+                    "$ref": "#/definitions/Exit"
+                },
+                {
+                    "$ref": "#/definitions/Label"
+                },
+                {
+                    "$ref": "#/definitions/Goto"
                 },
                 {
                     "$ref": "#/definitions/OpenScreen"

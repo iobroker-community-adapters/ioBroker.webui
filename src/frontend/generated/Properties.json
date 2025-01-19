@@ -39,7 +39,7 @@
                 "arguments",
                 "caller",
                 "name",
-                "__@hasInstance@2369"
+                "__@hasInstance@5144"
             ],
             "type": "object"
         },
@@ -78,6 +78,9 @@
                     },
                     "type": "array"
                 },
+                "bindToSize": {
+                    "type": "boolean"
+                },
                 "height": {
                     "type": "string"
                 },
@@ -93,7 +96,8 @@
                 "width",
                 "height",
                 "useGlobalStyle",
-                "addoptedStyles"
+                "addoptedStyles",
+                "bindToSize"
             ],
             "type": "object"
         },

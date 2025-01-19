@@ -1,6 +1,6 @@
 export interface ICustomControlScript {
-    init?(instance: HTMLElement);
+    init?(instance: HTMLElement, shadowRoot: ShadowRoot);
 
-    connectedCallback?(instance: HTMLElement);
-    disconnectedCallback?(instance: HTMLElement);
+    connectedCallback?(instance: HTMLElement, shadowRoot: ShadowRoot);
+    disconnectedCallback?(instance: HTMLElement, shadowRoot: ShadowRoot);
 }

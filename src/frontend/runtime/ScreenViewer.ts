@@ -301,7 +301,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             if (this._screenName)
                 this._loadScreen();
         });
-        this._scriptObject?.connectedCallback?.(this);
+        this._scriptObject?.connectedCallback?.(this, this._rootShadow);
         for (let e of this.#eventListeners) {
             this.addEventListener(e[0], e[1]);
         }
@@ -316,7 +316,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         }
         this._refreshViewSubscription?.dispose();
         this._screensChangedSubscription?.dispose()
-        this._scriptObject?.disconnectedCallback?.(this);
+        this._scriptObject?.disconnectedCallback?.(this, this._rootShadow);
 
         if (this._resizeObserver)
             this._resizeObserver.disconnect();

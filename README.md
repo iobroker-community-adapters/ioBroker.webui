@@ -135,6 +135,8 @@ runtime.html?screenName=screen2
 -->
 ### __WORK IN PROGRESS__
 - fix paste in events assignment
+- iobroker Signal Selector
+- binding to width and height in custom controls
 
 ### 1.22.0 (2025-01-15)
 - local signals browser

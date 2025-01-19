@@ -16,4 +16,5 @@ export interface IControlSettings {
      */
     useGlobalStyle?: boolean;
     addoptedStyles?: string[];
+    bindToSize?: boolean;
 }

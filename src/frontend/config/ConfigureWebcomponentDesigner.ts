@@ -2,7 +2,7 @@ import { BaseCustomWebcomponentBindingsService, EventsService, IElementsJson, Js
 import { NodeHtmlParserService } from '@node-projects/web-component-designer-htmlparserservice-nodehtmlparser';
 import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
 import { CssToolsStylesheetService } from '@node-projects/web-component-designer-stylesheetservice-css-tools';
-import { BindingsEditor, VisualizationBindingsService, PropertyGridDragDropService, ScriptRefactorService, BindingsHelper, VisualizationBindingsRefactorService } from "@node-projects/web-component-designer-visualization-addons";
+import { VisualizationBindingsService, PropertyGridDragDropService, ScriptRefactorService, BindingsHelper, VisualizationBindingsRefactorService } from "@node-projects/web-component-designer-visualization-addons";
 import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
 import { IobrokerWebuiDemoProviderService } from "../services/IobrokerWebuiDemoProviderService.js";
 import { IobrokerWebuiConfirmationWrapper } from "./IobrokerWebuiConfirmationWrapper.js";
@@ -23,6 +23,7 @@ import { IobrokerWebuiCustomControlEventsService } from "../services/IobrokerWeb
 import { IobrokerWebuiBindableObjectsForPropertiesService } from "../services/IobrokerWebuiBindableObjectsForPropertiesService.js";
 import { IobrokerWebuiBindableLocalObjectsService } from "../services/IobrokerWebuiBindableLocalObjectsService.js";
 import { IobrokerWebuiBindableObjectDragDropService } from "../services/IobrokerWebuiBindableObjectDragDropService.js";
+import { IobrokerWebuiBindingsEditor } from "./IobrokerWebuiBindingsEditor.js";
 
 export function configureDesigner(bindingsHelper: BindingsHelper) {
     const serviceContainer = createDefaultServiceContainer();
@@ -71,7 +72,7 @@ export function configureDesigner(bindingsHelper: BindingsHelper) {
 
     serviceContainer.config.openBindingsEditor = async (property, designItems, binding, target) => {
         if (!binding || binding.service instanceof VisualizationBindingsService) {
-            let dynEdt = new BindingsEditor(property, <any>binding, target, serviceContainer, designItems[0].instanceServiceContainer, window.appShell);
+            let dynEdt = new IobrokerWebuiBindingsEditor(property, <any>binding, target, serviceContainer, designItems[0].instanceServiceContainer, window.appShell);
             let cw = new IobrokerWebuiConfirmationWrapper();
             cw.title = "Edit Binding of '" + property.name + "' - " + property.propertyType;
             cw.appendChild(dynEdt);

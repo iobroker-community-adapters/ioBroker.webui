@@ -2,8 +2,8 @@ import { BaseCustomWebComponentPropertiesService, IDesignItem, IProperty, Proper
 import { BaseCustomControl, CustomControlInfo, webuiCustomControlSymbol } from "../runtime/CustomControls.js";
 import { IControl } from "../interfaces/IControl.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
-import { SignalPropertyEditor } from "@node-projects/web-component-designer-visualization-addons";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
+import { IobrokerWebuiSignalPropertyEditor } from "../config/IobrokerWebuiSignalPropertyEditor.js";
 
 export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentPropertiesService {
     override isHandledElement(designItem: IDesignItem): boolean {
@@ -43,7 +43,7 @@ export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentProper
                     let property: IProperty = { name: name, type: "list", values: prp.values, service: this, propertyType: PropertyType.propertyAndAttribute };
                     properties.push(property);
                 } else if (prp.type == 'signal') {
-                    let property: IProperty = { name: name, type: "signal", service: this, propertyType: PropertyType.propertyAndAttribute, createEditor: p => new SignalPropertyEditor(p, window.appShell) };
+                    let property: IProperty = { name: name, type: "signal", service: this, propertyType: PropertyType.propertyAndAttribute, createEditor: p => new IobrokerWebuiSignalPropertyEditor(p, window.appShell) };
                     properties.push(property);
                 } else if (prp.type == 'screen') {
                     const screens = await iobrokerHandler.getAllNames('screen');
