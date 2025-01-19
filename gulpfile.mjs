@@ -47,8 +47,6 @@ function copyNodeModules() {
         "monaco-editor",
         //"tslib"
         //"wunderbaum",
-
-        "iobroker.iobroker-webcomponent-object-selector"
     ]
     runtimeModules = runtimeModules.map(x => './node_modules/' + x + '/**/*')
 
@@ -69,7 +67,10 @@ function copyNodeFiles() {
         "@blockly/zoom-to-fit/dist/index.js",
         "toastify-js/src/toastify-es.js",
         "toastify-js/src/toastify.css",
-        "dayjs/dayjs.min.js"
+        "dayjs/dayjs.min.js",
+        "iobroker.iobroker-webcomponent-object-selector/dist/iobrokerSelectId.es.js",
+        "iobroker.iobroker-webcomponent-object-selector/dist/selectIdHelper.js",
+        "iobroker.iobroker-webcomponent-object-selector/dist/socket.iob.js"
     ]
 
     runtimeModules = runtimeModules.map(x => './node_modules/' + x)
