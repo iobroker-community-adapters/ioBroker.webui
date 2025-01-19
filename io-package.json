@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.24.0",
+    "version": "1.24.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.24.1": {
+        "en": "hopefully fix package upload by changed name",
+        "de": "hoffentlich paket-upload mit geändertem namen beheben",
+        "ru": "надеюсь исправить загрузку пакета измененным именем",
+        "pt": "esperançosamente corrigir o upload do pacote por nome alterado",
+        "nl": "hopelijk pakket uploaden op gewijzigde naam repareren",
+        "fr": "j'espère corriger le téléchargement du paquet par changement de nom",
+        "it": "si spera di risolvere il pacchetto upload con il nome cambiato",
+        "es": "esperemos fijar la carga del paquete por nombre cambiado",
+        "pl": "miejmy nadzieję, że uda się naprawić przesyłkę po zmianie nazwy",
+        "uk": "сподіваємось на те, що завантаження пакету змінено",
+        "zh-cn": "希望用更改的名称修正软件包上传"
+      },
       "1.24.0": {
         "en": "cleanup www dir",
         "de": "reinigung www dr",
@@ -106,19 +119,6 @@
         "pl": "naprawić skrypty z pustymi nazwami na css\npropy css z tylko wiązaniami nie są wyświetlane\nusunięcie rekwizytu css powinno usunąć wiązanie?\nOtwórz ekran w komendzie podekranu",
         "uk": "виправлено сценарії з порожніми іменами на css\ncss пропси з тільки зв'язками не показані\nприбрати css проп слід видалити зв'язок?\nВідкритий екран в командному режимі",
         "zh-cn": "css 上的空名脚本\n未显示只装订的 cs 道具\n删除 css 道具应删除绑定吗 ?\n在子屏幕命令中打开屏幕"
-      },
-      "1.20.1": {
-        "en": "fix in designer with svgs",
-        "de": "fix in designer mit svgs",
-        "ru": "исправить в дизайнере с svgs",
-        "pt": "corrigir no designer com svgs",
-        "nl": "fix in ontwerper met svgs",
-        "fr": "fixer en concepteur avec svgs",
-        "it": "fix in designer con svgs",
-        "es": "fijado en diseñador con svgs",
-        "pl": "fix in designer with svgs",
-        "uk": "фіксація в дизайнеру з кс",
-        "zh-cn": "使用 svgs 在设计器中固定"
       }
     },
     "icon": "logo.png",

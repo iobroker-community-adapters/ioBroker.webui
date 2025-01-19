@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.24.1 (2025-01-19)
 - hopefully fix package upload by changed name
 
 ### 1.24.0 (2025-01-19)
