@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.23.1 (2025-01-19)
 - fix gulp should work again
 
 ### 1.23.0 (2025-01-19)

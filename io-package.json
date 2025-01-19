@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.23.0",
+    "version": "1.23.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.23.1": {
+        "en": "fix gulp should work again",
+        "de": "gulp sollte wieder funktionieren",
+        "ru": "исправить gulp должно работать снова",
+        "pt": "corrigir gulp deve funcionar novamente",
+        "nl": "fix gulp moet weer werken",
+        "fr": "réparer gulp devrait fonctionner à nouveau",
+        "it": "fissare gulp dovrebbe funzionare di nuovo",
+        "es": "arreglar golp debe trabajar de nuevo",
+        "pl": "fix gulp powinien działać ponownie",
+        "uk": "закріпити гельпом потрібно знову",
+        "zh-cn": "修补 gulp 应再次工作"
+      },
       "1.23.0": {
         "en": "fix paste in events assignment\niobroker Signal Selector\nbinding to width and height in custom controls",
         "de": "fixieren sie paste in der ereigniszuordnung\niobroker Signal Selektor\nbindung an breite und höhe in benutzerdefinierten steuerungen",
@@ -106,19 +119,6 @@
         "pl": "kopiowanie i wklejanie zdarzeń",
         "uk": "скопіювати та вставляти події",
         "zh-cn": "复制粘贴事件( p)"
-      },
-      "1.19.3": {
-        "en": "support null value",
-        "de": "unterstützungswert",
-        "ru": "нулевое значение",
-        "pt": "suporte valor nulo",
-        "nl": "steun nulwaarde",
-        "fr": "support valeur null",
-        "it": "supporto valore null",
-        "es": "valor nulo",
-        "pl": "wartość null wsparcia",
-        "uk": "підтримка значення null",
-        "zh-cn": "支持无效值"
       }
     },
     "icon": "logo.png",
