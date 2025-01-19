@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.22.0",
+    "version": "1.23.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.23.0": {
+        "en": "fix paste in events assignment\niobroker Signal Selector\nbinding to width and height in custom controls",
+        "de": "fixieren sie paste in der ereigniszuordnung\niobroker Signal Selektor\nbindung an breite und höhe in benutzerdefinierten steuerungen",
+        "ru": "фиксация пасты в присвоении событий\niobroker Signal Selector\nпривязки к ширине и высоте в пользовательском контроле",
+        "pt": "corrigir pasta na atribuição de eventos\nseletor de Sinal iobroker\nligação à largura e altura em controles personalizados",
+        "nl": "plak plakken in de opdracht van gebeurtenissen\niobroker-signaalkiezer\nbinding aan breedte en hoogte in aangepaste controles",
+        "fr": "fixer coller dans l'affectation des événements\nsélecteur de signal iobroker\nfixation à la largeur et à la hauteur dans les commandes personnalisées",
+        "it": "correzione della pasta nell'assegnazione degli eventi\niobroker Selettore Segnale\nlegare a larghezza e altezza nei controlli personalizzati",
+        "es": "arreglar pasta en la asignación de eventos\niobroker Signal Selector\nunión a ancho y altura en controles personalizados",
+        "pl": "fix pasta w przyporządkowaniu zdarzeń\niobroker Selektor sygnału\nwiązanie do szerokości i wysokości w sterowaniu własnym",
+        "uk": "фіксувати пасту в появі подій\niobroker Signal Вибратор\nобов'язковий для ширини і висоти в користувацьких управліннях",
+        "zh-cn": "在事件任务中固定粘贴\nio 经纪人信号选择器\n绑定自定义控件中的宽度和高度"
+      },
       "1.22.0": {
         "en": "local signals browser\nstyle completition fixes\nspecial bindings for \"ring\" cameras",
         "de": "lokale signale browser\nstil completition fixes\nspezielle bindungen für \"ring\"-kameras",
@@ -106,19 +119,6 @@
         "pl": "wartość null wsparcia",
         "uk": "підтримка значення null",
         "zh-cn": "支持无效值"
-      },
-      "1.19.2": {
-        "en": "use name in classlist",
-        "de": "name in der klassenliste verwenden",
-        "ru": "имя в класслисте",
-        "pt": "use o nome na lista de classes",
-        "nl": "naam gebruiken in klasselijst",
-        "fr": "utiliser le nom dans la liste des classes",
-        "it": "usare il nome in classifica",
-        "es": "nombre de uso en la lista de clases",
-        "pl": "użyj nazwy na liście klas",
-        "uk": "ім'я користувача в класі",
-        "zh-cn": "使用分类列表中的名称"
       }
     },
     "icon": "logo.png",

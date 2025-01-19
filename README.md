@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.23.0 (2025-01-19)
 - fix paste in events assignment
 - iobroker Signal Selector
 - binding to width and height in custom controls
