@@ -82,7 +82,7 @@
     "gulp": "^5.0.0",
     "gulp-git": "^2.11.0",
     "gulp-replace": "^1.1.4",
-    "iobroker.iobroker-webcomponent-object-selector": "file:binary/iobroker.iobroker-webcomponent-object-selector-0.0.1.tgz",
+    "iobroker-webcomponent-object-selector": "file:binary/iobroker-webcomponent-object-selector-0.0.1.tgz",
     "long": "^5.2.4",
     "mobile-drag-drop": "^3.0.0-rc.0",
     "mocha": "^11.0.1",

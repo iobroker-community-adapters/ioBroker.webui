@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- hopefully fix package upload by changed name
+
 ### 1.24.0 (2025-01-19)
 - cleanup www dir
 

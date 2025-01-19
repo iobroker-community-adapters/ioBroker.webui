@@ -68,9 +68,9 @@ function copyNodeFiles() {
         "toastify-js/src/toastify-es.js",
         "toastify-js/src/toastify.css",
         "dayjs/dayjs.min.js",
-        "iobroker.iobroker-webcomponent-object-selector/dist/iobrokerSelectId.es.js",
-        "iobroker.iobroker-webcomponent-object-selector/dist/selectIdHelper.js",
-        "iobroker.iobroker-webcomponent-object-selector/dist/socket.iob.js"
+        "iobroker-webcomponent-object-selector/dist/iobrokerSelectId.es.js",
+        "iobroker-webcomponent-object-selector/dist/selectIdHelper.js",
+        "iobroker-webcomponent-object-selector/dist/socket.iob.js"
     ]
 
     runtimeModules = runtimeModules.map(x => './node_modules/' + x)
