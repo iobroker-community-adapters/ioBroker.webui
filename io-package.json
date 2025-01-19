@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.24.1",
+    "version": "1.24.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.24.2": {
+        "en": "revert back es module shims, leads to errors",
+        "de": "zurückkehren es modul shims, führt zu fehlern",
+        "ru": "возвращать назад эс-модульные шимы, приводит к ошибкам",
+        "pt": "reverter para trás es módulo shims, leva a erros",
+        "nl": "terug te keren es module shims, leidt tot fouten",
+        "fr": "retour du module es shims, conduit à des erreurs",
+        "it": "revert back es modulo shims, conduce a errori",
+        "es": "revert back es module shims, leads to errors",
+        "pl": "revert es module shims, prowadzi do błędów",
+        "uk": "перевернути назад es модуль шімів, призводить до помилок",
+        "zh-cn": "返回 es 模块 shims, 导致错误"
+      },
       "1.24.1": {
         "en": "hopefully fix package upload by changed name",
         "de": "hoffentlich paket-upload mit geändertem namen beheben",
@@ -106,19 +119,6 @@
         "pl": "przeglądarka lokalnych sygnałów\npoprawki zakończenia stylu\nspecjalne wiązania do kamer \"ring\"",
         "uk": "веб камера\nфіксація стилів\nспеціальні прив'язки для камер \"обручка\"",
         "zh-cn": "本地信号浏览器\n样式补丁修正\n“环”相机的特殊装订"
-      },
-      "1.21.0": {
-        "en": "fix scripts with empty names on css\ncss props with only bindings are not shown\nremove of css prop should remove binding?\nOpen Screen in sub screen command",
-        "de": "skripte mit leeren namen auf css fixieren\ncss props mit nur bindungen sind nicht dargestellt\nentfernen css prop sollte bindung entfernen?\nBildschirm im Sub-Bildschirm-Befehl öffnen",
-        "ru": "исправить сценарии с пустыми именами на css\ncss реквизиты только связывания не показаны\nудаление css prop должно удалить связывания?\nОткрытый экран в командном пункте",
-        "pt": "corrigir scripts com nomes vazios no css\ncss adereços com apenas ligações não são mostrados\nremover de css prop deve remover a ligação?\nAbra a tela no comando sub screen",
-        "nl": "scripts herstellen met lege namen op css\ncss rekwisieten met alleen bindingen worden niet getoond\nverwijderen van css prop moet binden verwijderen?\nScherm openen in subschermcommando",
-        "fr": "corriger des scripts avec des noms vides sur css\nles accessoires css avec uniquement des fixations ne sont pas montrés\nenlever de css prop devrait supprimer la liaison?\nOuvre l'écran dans la commande sous-écran",
-        "it": "correggere gli script con nomi vuoti su css\ncss props con solo binding non sono mostrati\nrimuovere di css prop dovrebbe rimuovere il legame?\nSchermo aperto nel comando sotto schermata",
-        "es": "fijar scripts con nombres vacíos en css\ncss props with only bindings are not shown\nremover el css prop debe eliminar la unión?\nPantalla abierta en el comando sub pantalla",
-        "pl": "naprawić skrypty z pustymi nazwami na css\npropy css z tylko wiązaniami nie są wyświetlane\nusunięcie rekwizytu css powinno usunąć wiązanie?\nOtwórz ekran w komendzie podekranu",
-        "uk": "виправлено сценарії з порожніми іменами на css\ncss пропси з тільки зв'язками не показані\nприбрати css проп слід видалити зв'язок?\nВідкритий екран в командному режимі",
-        "zh-cn": "css 上的空名脚本\n未显示只装订的 cs 道具\n删除 css 道具应删除绑定吗 ?\n在子屏幕命令中打开屏幕"
       }
     },
     "icon": "logo.png",

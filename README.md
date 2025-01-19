@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.24.2 (2025-01-19)
 - revert back es module shims, leads to errors
 
 ### 1.24.1 (2025-01-19)
