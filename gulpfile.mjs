@@ -47,19 +47,12 @@ function copyNodeModules() {
         "monaco-editor",
         //"tslib"
         //"wunderbaum",
-        
+
         "iobroker.iobroker-webcomponent-object-selector"
     ]
-
-    /**
-     "/node_modules/blockly/blockly_compressed.js",
-        "/node_modules/blockly/blocks_compressed.js",
-        "/node_modules/blockly/javascript_compressed.js",
-        "/node_modules/blockly/msg/en.js",
-        "/node_modules/@blockly/zoom-to-fit/dist/index.js",
-     */
     runtimeModules = runtimeModules.map(x => './node_modules/' + x + '/**/*')
 
+    runtimeModules = [...runtimeModules, ...addRuntimeMod];
     return src(runtimeModules, { base: './', encoding: false })
         .pipe(dest('./www'));
 }
@@ -116,7 +109,7 @@ function cleanupNodeModules() {
 
 function cleanupMonaco() {
     return deleteAsync([
-        './www/node_modules/monaco-editor/min/vs/basic-languages/**/*', 
+        './www/node_modules/monaco-editor/min/vs/basic-languages/**/*',
         '!./www/node_modules/monaco-editor/min/vs/basic-languages/javascript',
         '!./www/node_modules/monaco-editor/min/vs/basic-languages/typescript',
         '!./www/node_modules/monaco-editor/min/vs/basic-languages/html',
