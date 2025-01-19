@@ -75,7 +75,7 @@
     "dayjs": "^1.11.13",
     "del": "^8.0.0",
     "dock-spawn-ts": "^3.2.1",
-    "es-module-shims": "^2.0.3",
+    "es-module-shims": "1.10.1",
     "eslint": "^9.18.0",
     "esprima-next": "^6.0.3",
     "glob-stream": "^8.0.2",
