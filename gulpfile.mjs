@@ -48,13 +48,16 @@ function copyNodeModules() {
         //"tslib"
         //"wunderbaum",
         
-        "/node_modules/blockly/blockly_compressed.js",
+        "iobroker.iobroker-webcomponent-object-selector"
+    ]
+
+    /**
+     "/node_modules/blockly/blockly_compressed.js",
         "/node_modules/blockly/blocks_compressed.js",
         "/node_modules/blockly/javascript_compressed.js",
         "/node_modules/blockly/msg/en.js",
         "/node_modules/@blockly/zoom-to-fit/dist/index.js",
-    ]
-
+     */
     runtimeModules = runtimeModules.map(x => './node_modules/' + x + '/**/*')
 
     return src(runtimeModules, { base: './', encoding: false })
