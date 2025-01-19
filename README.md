@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.24.0 (2025-01-19)
 - cleanup www dir
 
 ### 1.23.2 (2025-01-19)
