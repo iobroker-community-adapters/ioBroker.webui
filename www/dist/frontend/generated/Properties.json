@@ -39,7 +39,7 @@
                 "arguments",
                 "caller",
                 "name",
-                "__@hasInstance@2369"
+                "__@hasInstance@5144"
             ],
             "type": "object"
         },
@@ -49,7 +49,7 @@
                     "type": "string"
                 },
                 "properties": {
-                    "$ref": "#/definitions/Record<string,{type:string;values?:string[]|undefined;default?:any;}>"
+                    "$ref": "#/definitions/Record<string,{type:string;values?:string[]|undefined;default?:any;internal?:boolean|undefined;}>"
                 },
                 "script": {
                     "type": "string"
@@ -78,6 +78,9 @@
                     },
                     "type": "array"
                 },
+                "bindToSize": {
+                    "type": "boolean"
+                },
                 "height": {
                     "type": "string"
                 },
@@ -93,7 +96,8 @@
                 "width",
                 "height",
                 "useGlobalStyle",
-                "addoptedStyles"
+                "addoptedStyles",
+                "bindToSize"
             ],
             "type": "object"
         },
@@ -189,6 +193,9 @@
                 "html": {
                     "type": "string"
                 },
+                "properties": {
+                    "$ref": "#/definitions/Record<string,{type:string;values?:string[]|undefined;default?:any;internal?:boolean|undefined;}>_1"
+                },
                 "script": {
                     "type": "string"
                 },
@@ -203,6 +210,7 @@
                 "html",
                 "style",
                 "script",
+                "properties",
                 "settings"
             ],
             "type": "object"
@@ -247,10 +255,11 @@
                     "type": "string"
                 },
                 "source": {
-                    "description": "signal - read the value from a Signal\nproperty - read the value from a property of the customControl (not usable in screens)\nevent - read the value of a property of the event object\nparameter - a parameter you hand over\ncomplexString - a string with signals (contained in {})\ncomplexSignal - read the value from a signal wich name is build here (it can contain other signals in {})\nexpression - js expression, 'ctx' is context object",
+                    "description": "signal - read the value from a Signal\nproperty - read the value from a property of the customControl (not usable in screens)\nevent - read the value of a property of the event object\nparameter - a parameter you hand over\ncontext - a value of the context\ncomplexString - a string with signals (contained in {})\ncomplexSignal - read the value from a signal wich name is build here (it can contain other signals in {})\nexpression - js expression, 'ctx' is context object",
                     "enum": [
                         "complexSignal",
                         "complexString",
+                        "context",
                         "event",
                         "expression",
                         "parameter",
@@ -293,7 +302,11 @@
             "propertyOrder": [],
             "type": "object"
         },
-        "Record<string,{type:string;values?:string[]|undefined;default?:any;}>": {
+        "Record<string,{type:string;values?:string[]|undefined;default?:any;internal?:boolean|undefined;}>": {
+            "propertyOrder": [],
+            "type": "object"
+        },
+        "Record<string,{type:string;values?:string[]|undefined;default?:any;internal?:boolean|undefined;}>_1": {
             "propertyOrder": [],
             "type": "object"
         }

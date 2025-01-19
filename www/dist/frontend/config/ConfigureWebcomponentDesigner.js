@@ -1,8 +1,8 @@
-import { BaseCustomWebcomponentBindingsService, BindingsRefactorService, EventsService, JsonFileElementsService, PreDefinedElementsService, SeperatorContextMenu, TextRefactorService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
+import { BaseCustomWebcomponentBindingsService, EventsService, JsonFileElementsService, PreDefinedElementsService, SeperatorContextMenu, TextRefactorService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
 import { NodeHtmlParserService } from '@node-projects/web-component-designer-htmlparserservice-nodehtmlparser';
 import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
 import { CssToolsStylesheetService } from '@node-projects/web-component-designer-stylesheetservice-css-tools';
-import { BindableObjectDragDropService, BindingsEditor, VisualizationBindingsService, PropertyGridDragDropService, ScriptRefactorService } from "@node-projects/web-component-designer-visualization-addons";
+import { VisualizationBindingsService, PropertyGridDragDropService, ScriptRefactorService, VisualizationBindingsRefactorService } from "@node-projects/web-component-designer-visualization-addons";
 import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
 import { IobrokerWebuiDemoProviderService } from "../services/IobrokerWebuiDemoProviderService.js";
 import { IobrokerWebuiConfirmationWrapper } from "./IobrokerWebuiConfirmationWrapper.js";
@@ -19,12 +19,18 @@ import { ExpandCollapseContextMenu } from "@node-projects/web-component-designer
 import { IobrokerWebuiScreenContextMenu } from "../services/IobrokerWebuiScreenContextMenu.js";
 import { IobrokerWebuiEventsService } from "../services/IobrokerWebuiEventsService.js";
 import { IobrokerWebuiCustomControlEventsService } from "../services/IobrokerWebuiCustomControlEventsService.js";
+import { IobrokerWebuiBindableObjectsForPropertiesService } from "../services/IobrokerWebuiBindableObjectsForPropertiesService.js";
+import { IobrokerWebuiBindableLocalObjectsService } from "../services/IobrokerWebuiBindableLocalObjectsService.js";
+import { IobrokerWebuiBindableObjectDragDropService } from "../services/IobrokerWebuiBindableObjectDragDropService.js";
+import { IobrokerWebuiBindingsEditor } from "./IobrokerWebuiBindingsEditor.js";
 export function configureDesigner(bindingsHelper) {
     const serviceContainer = createDefaultServiceContainer();
     serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
     serviceContainer.register("htmlParserService", new NodeHtmlParserService());
     serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableObjectsService());
-    serviceContainer.register("bindableObjectDragDropService", new BindableObjectDragDropService(bindingsHelper, iobrokerHandler));
+    serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableLocalObjectsService());
+    serviceContainer.register("bindableObjectsService", new IobrokerWebuiBindableObjectsForPropertiesService());
+    serviceContainer.register("bindableObjectDragDropService", new IobrokerWebuiBindableObjectDragDropService(bindingsHelper, iobrokerHandler));
     serviceContainer.register("bindingService", new VisualizationBindingsService(bindingsHelper));
     serviceContainer.register("demoProviderService", new IobrokerWebuiDemoProviderService());
     serviceContainer.register("externalDragDropService", new IobrokerWebuiExternalDragDropService());
@@ -32,7 +38,7 @@ export function configureDesigner(bindingsHelper) {
     serviceContainer.register("eventsService", new EventsService());
     serviceContainer.register("eventsService", new IobrokerWebuiCustomControlEventsService());
     serviceContainer.register("propertyGridDragDropService", new PropertyGridDragDropService());
-    serviceContainer.register("refactorService", new BindingsRefactorService());
+    serviceContainer.register("refactorService", new VisualizationBindingsRefactorService());
     serviceContainer.register("refactorService", new TextRefactorService());
     serviceContainer.register("refactorService", new ScriptRefactorService());
     serviceContainer.register("refactorService", new IobrokerWebuiRefactorService());
@@ -57,38 +63,43 @@ export function configureDesigner(bindingsHelper) {
         }
     }
     serviceContainer.config.openBindingsEditor = async (property, designItems, binding, target) => {
-        let dynEdt = new BindingsEditor(property, binding, target, serviceContainer, window.appShell);
-        let cw = new IobrokerWebuiConfirmationWrapper();
-        cw.title = "Edit Binding of '" + property.name + "' - " + property.propertyType;
-        cw.appendChild(dynEdt);
-        let dlg = window.appShell.openDialog(cw, { x: 200, y: 200, width: 700, height: 460 });
-        cw.cancelClicked.on((e) => {
-            dlg.close();
-        });
-        cw.okClicked.on((e) => {
-            dlg.close();
-            let bnd = { signal: dynEdt.objectNames, target };
-            bnd.inverted = dynEdt.invert;
-            bnd.twoWay = dynEdt.twoWay;
-            bnd.expression = dynEdt.expression;
-            bnd.expressionTwoWay = dynEdt.expressionTwoWay;
-            bnd.historic = dynEdt.historic;
-            if (dynEdt.objectValueType)
-                bnd.type = dynEdt.objectValueType;
-            if (dynEdt.converters.length > 0) {
-                let cObj = {};
-                for (let c of dynEdt.converters) {
-                    cObj[c.key] = c.value;
+        if (!binding || binding.service instanceof VisualizationBindingsService) {
+            let dynEdt = new IobrokerWebuiBindingsEditor(property, binding, target, serviceContainer, designItems[0].instanceServiceContainer, window.appShell);
+            let cw = new IobrokerWebuiConfirmationWrapper();
+            cw.title = "Edit Binding of '" + property.name + "' - " + property.propertyType;
+            cw.appendChild(dynEdt);
+            let dlg = window.appShell.openDialog(cw, { x: 200, y: 200, width: 700, height: 460 });
+            cw.cancelClicked.on((e) => {
+                dlg.close();
+            });
+            cw.okClicked.on((e) => {
+                dlg.close();
+                let bnd = { signal: dynEdt.objectNames, target };
+                bnd.inverted = dynEdt.invert;
+                bnd.twoWay = dynEdt.twoWay;
+                bnd.expression = dynEdt.expression;
+                bnd.expressionTwoWay = dynEdt.expressionTwoWay;
+                bnd.historic = dynEdt.historic;
+                if (dynEdt.objectValueType)
+                    bnd.type = dynEdt.objectValueType;
+                if (dynEdt.converters.length > 0) {
+                    let cObj = {};
+                    for (let c of dynEdt.converters) {
+                        cObj[c.key] = c.value;
+                    }
+                    bnd.converter = cObj;
                 }
-                bnd.converter = cObj;
-            }
-            if (dynEdt.events)
-                bnd.events = dynEdt.events.split(';');
-            let serializedBnd = bindingsHelper.serializeBinding(designItems[0].element, property.name, bnd);
-            let group = designItems[0].openGroup('edit_binding');
-            designItems[0].setAttribute(serializedBnd[0], serializedBnd[1]);
-            group.commit();
-        });
+                if (dynEdt.events)
+                    bnd.events = dynEdt.events.split(';');
+                let serializedBnd = bindingsHelper.serializeBinding(designItems[0].element, property.name, bnd);
+                let group = designItems[0].openGroup('edit_binding');
+                designItems[0].setAttribute(serializedBnd[0], serializedBnd[1]);
+                group.commit();
+            });
+        }
+        else {
+            alert('no bindings editor for base custom webcomponent bindings');
+        }
     };
     //LazyLoader.LoadJavascript(window.iobrokerWebRootUrl + 'webui.0.widgets/importmap.js');
     import(window.iobrokerWebRootUrl + 'webui.0.widgets/configWidgets.js').then(x => {

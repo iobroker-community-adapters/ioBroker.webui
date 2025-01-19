@@ -5,8 +5,19 @@ export class Runtime {
     static openDialog(config) {
         return window.appShell.scriptSystem.runScriptCommand({ type: 'OpenDialog', ...config }, null);
     }
-    static getParentScreen(screen) {
-        return screen.getRootNode().host.getRootNode().host;
+    static async runSimpleScriptCommand(scriptCommand) {
+        await window.appShell.scriptSystem.runScriptCommand(scriptCommand, null); //TODO context
+    }
+    static getParentScreen(screen, parentLevel = 1) {
+        let el = screen;
+        for (let i = 0; i < parentLevel; i++) {
+            let rootDiv = el.getRootNode().host;
+            if (rootDiv instanceof BaseCustomControl)
+                el = rootDiv;
+            else
+                el = rootDiv.getRootNode().host;
+        }
+        return el;
     }
     static findParent(element, type, predicate) {
         let current = element;

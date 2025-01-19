@@ -10,6 +10,7 @@ import wunderbaumStyle from 'wunderbaum/dist/wunderbaum.css' with { type: 'css' 
 import { defaultNewStyle } from "./IobrokerWebuiScreenEditor.js";
 import { IobrokerWebuiIconsView } from "./IobrokerWebuiIconsView.js";
 import { IobrokerWebuiScreensView } from "./IobrokerWebuiScreensView.js";
+import { convertToXml, parseXml } from "../helper/XmlHelper.js";
 export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstructorAppend {
     static template = html `
         <div id="treeDiv" class="" style="overflow: auto; width:100%; height: 100%;">
@@ -73,7 +74,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             this._createAdditionalFilesNode(),
             this._createChartsNode(),
             this._createIconsFolderNode(),
-            this._createObjectsNode()
+            this._createBindablesNode()
         ]);
         return result.map(x => x.status == 'fulfilled' ? x.value : null);
     }
@@ -95,11 +96,21 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     try {
                         let files = await openFileDialog('.' + type, true, 'text');
                         for (let f of files) {
-                            let data = JSON.parse(f.data);
+                            let data = null;
+                            if (f.data[0] === '<') {
+                                data = parseXml(f.data);
+                            }
+                            else {
+                                data = JSON.parse(f.data);
+                            }
                             let nm = f.name;
-                            if (nm.endsWith('.' + type))
+                            if (nm.endsWith('.' + type)) {
                                 nm = nm.substring(0, nm.length - type.length - 1);
-                            await iobrokerHandler.saveObject(type, (dir ?? '') + '/' + nm, data);
+                            }
+                            nm = prompt('Import as:', nm);
+                            if (nm) {
+                                await iobrokerHandler.saveObject(type, (dir ?? '') + '/' + nm, data);
+                            }
                         }
                     }
                     catch (err) {
@@ -175,15 +186,10 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             ContextMenu.show([{
                     title: 'Export ' + type, action: async () => {
                         let data = await iobrokerHandler.getWebuiObject(type, (dir ?? '') + '/' + name);
-                        await exportData(JSON.stringify(data), name + '.' + type);
+                        let xml = convertToXml(type, data);
+                        await exportData(xml, name + '.' + type);
                     }
-                }, /*{
-                    title: 'Export Screen as XML', action: async () => {
-                        let data = await iobrokerHandler.getScreen(name);
-                        await exportData(screenToXml(data), name + '.screen')
-                    }
-                },*/
-                {
+                }, {
                     title: 'Copy ' + type, action: async () => {
                         let newName = prompt("New Name", name);
                         if (newName && newName != name) {
@@ -204,6 +210,10 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                         if (confirm("are you sure?"))
                             iobrokerHandler.removeObject(type, (dir ?? '') + '/' + name);
                     }
+                }, {
+                    title: 'copy path to clipboard', action: async () => {
+                        copyTextToClipboard((dir ?? '') + '/' + name);
+                    }
                 }], event);
         };
         let subFolders = await iobrokerHandler.getSubFolders(type, dir);
@@ -219,7 +229,7 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                     nm = nm.substring(1);
                 iobrokerHandler.getWebuiObject(type, nm).then(s => {
                     if (type == 'screen') {
-                        window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings);
+                        window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings, s.properties);
                     }
                     else if (type == 'control') {
                         window.appShell.openScreenEditor(nm, type, s.html, s.style, s.script, s.settings, s.properties);
@@ -716,6 +726,18 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
         }
         return controlsNode;
     }
+    async _createBindablesNode() {
+        const node = {
+            title: 'Bindables',
+            folder: true,
+            lazy: true,
+            children: [
+                await this._createObjectsNode(),
+                await this._createLocalsNode()
+            ]
+        };
+        return node;
+    }
     async _createObjectsNode() {
         const s = this.serviceContainer.bindableObjectsServices[0];
         const objectsNode = {
@@ -767,6 +789,47 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
             lazy: x.children !== false,
             lazyload: (event, data) => this._lazyLoadObjectNodes(event, data)
         }));
+    }
+    async _createLocalsNode() {
+        //Todo: reset lazy load on colapse in local nodes view
+        const s = this.serviceContainer.bindableObjectsServices[1];
+        const objectsNode = {
+            title: 'Locals',
+            data: { service: s },
+            folder: true,
+            lazy: true,
+            key: 'locals',
+            lazyload: (event, data) => this._lazyLoadObjectNodes(event, data),
+            contextMenu: (event) => {
+                ContextMenu.show([{
+                        title: 'Refresh', action: async () => {
+                            s.clearCache();
+                            const objectsNode = this._tree.findKey('locals');
+                            if (objectsNode) {
+                                objectsNode.resetLazy();
+                                await sleep(50);
+                                objectsNode.setExpanded(true);
+                            }
+                        }
+                    }, {
+                        title: 'Add local', action: async () => {
+                            let nm = prompt('new local variable name (without local_ prefix) :');
+                            if (nm) {
+                                if (!nm.startsWith('local_'))
+                                    nm = "local_" + nm;
+                                const cb = () => { };
+                                iobrokerHandler.subscribeState(nm, cb);
+                                iobrokerHandler.unsubscribeState(nm, cb);
+                                const objectsNode = this._tree.findKey('locals');
+                                objectsNode.resetLazy();
+                                await sleep(50);
+                                objectsNode.setExpanded(true);
+                            }
+                        }
+                    }], event);
+            },
+        };
+        return objectsNode;
     }
     #activeLazyLoads = new Set();
     async _loadTree() {

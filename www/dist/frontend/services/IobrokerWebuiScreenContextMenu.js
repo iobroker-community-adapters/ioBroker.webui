@@ -10,7 +10,7 @@ export class IobrokerWebuiScreenContextMenu {
                 title: 'edit screen', action: () => {
                     let nm = designItem.element.screenName;
                     iobrokerHandler.getWebuiObject('screen', nm).then(s => {
-                        window.appShell.openScreenEditor(nm, 'screen', s.html, s.style, s.script, s.settings, null);
+                        window.appShell.openScreenEditor(nm, 'screen', s.html, s.style, s.script, s.settings, s.properties);
                     });
                 }, shortCut: 'Ctrl + E'
             },

@@ -3,6 +3,9 @@
     "definitions": {
         "CalculateSignalValue": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "formula": {
                     "description": "A formula to calculate the new signal value, can contain other signals in angle brackets: {}\nExample: {adapter.0.level} * 100 + 30",
                     "type": "string"
@@ -20,13 +23,18 @@
             "propertyOrder": [
                 "type",
                 "targetSignal",
-                "formula"
+                "formula",
+                "additionalData"
             ],
             "type": "object"
         },
         "ClearBitInSignal": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "bitNumber": {
+                    "default": 0,
                     "type": "number"
                 },
                 "signal": {
@@ -42,12 +50,16 @@
             "propertyOrder": [
                 "type",
                 "signal",
-                "bitNumber"
+                "bitNumber",
+                "additionalData"
             ],
             "type": "object"
         },
         "ClearSiganlsInGroup": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "group": {
                     "description": "Name of the Group",
                     "type": "string"
@@ -59,19 +71,26 @@
             },
             "propertyOrder": [
                 "type",
-                "group"
+                "group",
+                "additionalData"
             ],
             "type": "object"
         },
         "CloseDialog": {
             "properties": {
+                "additionalData": {
+                    "description": "A dialogId. If empty the parent dialog will be closed",
+                    "format": "signal",
+                    "type": "string"
+                },
                 "type": {
                     "const": "CloseDialog",
                     "type": "string"
                 }
             },
             "propertyOrder": [
-                "type"
+                "type",
+                "additionalData"
             ],
             "type": "object"
         },
@@ -93,6 +112,9 @@
         },
         "Condition": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "comparisonType": {
                     "enum": [
                         "!=",
@@ -118,6 +140,7 @@
                     "type": "string"
                 },
                 "trueGotoLabel": {
+                    "description": "Name of the label to jumpe to when condition is true",
                     "type": "string"
                 },
                 "trueScriptName": {
@@ -130,7 +153,10 @@
                     "const": "Condition",
                     "type": "string"
                 },
-                "value1": {},
+                "value1": {
+                    "description": "Name of the value1",
+                    "format": "complex"
+                },
                 "value2": {}
             },
             "propertyOrder": [
@@ -143,17 +169,22 @@
                 "trueScriptType",
                 "falseGotoLabel",
                 "falseScriptName",
-                "falseScriptType"
+                "falseScriptType",
+                "additionalData"
             ],
             "type": "object"
         },
         "Console": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "message": {
                     "description": "console message",
                     "type": "string"
                 },
                 "target": {
+                    "default": "log",
                     "description": "target where to log",
                     "enum": [
                         "debug",
@@ -172,12 +203,42 @@
             "propertyOrder": [
                 "type",
                 "target",
-                "message"
+                "message",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "CopySignalValuesFromFolder": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "destinationFolder": {
+                    "description": "name of destination folder",
+                    "type": "number"
+                },
+                "sourceFolder": {
+                    "description": "name of the source folder",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "CopySignalValuesFromFolder",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "sourceFolder",
+                "destinationFolder",
+                "additionalData"
             ],
             "type": "object"
         },
         "DecrementSignalValue": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "signal": {
                     "description": "Name of the signal",
                     "format": "signal",
@@ -194,41 +255,85 @@
             "propertyOrder": [
                 "type",
                 "signal",
-                "value"
+                "value",
+                "additionalData"
             ],
             "type": "object"
         },
         "Delay": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "type": {
                     "const": "Delay",
                     "type": "string"
                 },
                 "value": {
+                    "default": 500,
                     "description": "miliseconds to delay",
                     "type": "number"
                 }
             },
             "propertyOrder": [
                 "type",
-                "value"
+                "value",
+                "additionalData"
             ],
             "type": "object"
         },
         "Exit": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "type": {
                     "const": "Exit",
                     "type": "string"
                 }
             },
             "propertyOrder": [
-                "type"
+                "type",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "ExportSignalValuesAsJson": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "fileName": {
+                    "description": "download filename",
+                    "type": "string"
+                },
+                "regex": {
+                    "description": "regex to select the signals (every matching one)",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "ExportSignalValuesAsJson",
+                    "type": "string"
+                },
+                "waitForUpdatedValues": {
+                    "description": "wait for updated values from the connection",
+                    "type": "boolean"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "regex",
+                "waitForUpdatedValues",
+                "fileName",
+                "additionalData"
             ],
             "type": "object"
         },
         "Goto": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "label": {
                     "type": "string"
                 },
@@ -239,12 +344,37 @@
             },
             "propertyOrder": [
                 "type",
-                "label"
+                "label",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "ImportSignalValuesFromJson": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "data": {
+                    "description": "json data with the values",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "ImportSignalValuesFromJson",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "data",
+                "additionalData"
             ],
             "type": "object"
         },
         "IncrementSignalValue": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "signal": {
                     "description": "Name of the signal",
                     "format": "signal",
@@ -261,12 +391,16 @@
             "propertyOrder": [
                 "type",
                 "signal",
-                "value"
+                "value",
+                "additionalData"
             ],
             "type": "object"
         },
         "Javascript": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "script": {
                     "description": "Usable objects in Script:\ncontext : {event : Event, element: Element, shadowRoot: ShadowRoot, instance: Element }",
                     "format": "script",
@@ -279,12 +413,16 @@
             },
             "propertyOrder": [
                 "type",
-                "script"
+                "script",
+                "additionalData"
             ],
             "type": "object"
         },
         "Label": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "label": {
                     "type": "string"
                 },
@@ -295,12 +433,16 @@
             },
             "propertyOrder": [
                 "type",
-                "label"
+                "label",
+                "additionalData"
             ],
             "type": "object"
         },
         "Login": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "password": {
                     "description": "password",
                     "type": "string"
@@ -318,24 +460,32 @@
             "propertyOrder": [
                 "type",
                 "username",
-                "password"
+                "password",
+                "additionalData"
             ],
             "type": "object"
         },
         "Logout": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "type": {
                     "const": "Logout",
                     "type": "string"
                 }
             },
             "propertyOrder": [
-                "type"
+                "type",
+                "additionalData"
             ],
             "type": "object"
         },
         "OpenDialog": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "closeable": {
                     "type": "boolean"
                 },
@@ -381,12 +531,16 @@
                 "width",
                 "height",
                 "left",
-                "top"
+                "top",
+                "additionalData"
             ],
             "type": "object"
         },
         "OpenScreen": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "noHistory": {
                     "type": "boolean"
                 },
@@ -399,21 +553,66 @@
                     "format": "screen",
                     "type": "string"
                 },
+                "title": {
+                    "type": "string"
+                },
                 "type": {
                     "const": "OpenScreen",
                     "type": "string"
                 }
             },
             "propertyOrder": [
+                "title",
+                "screen",
+                "type",
+                "relativeSignalsPath",
+                "noHistory",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "OpenScreenInScreenViewer": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "relativeSignalsPath": {
+                    "description": "If signals in screen are defined relative (starting with a '.'), this will be prepended",
+                    "type": "string"
+                },
+                "screen": {
+                    "description": "Name of the Screen",
+                    "format": "screen",
+                    "type": "string"
+                },
+                "targetSelector": {
+                    "default": "iobroker-webui-screen-viewer",
+                    "description": "css selector to find the screenviewer in the root screen",
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "OpenScreenInScreenViewer",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
                 "type",
                 "screen",
+                "title",
                 "relativeSignalsPath",
-                "noHistory"
+                "targetSelector",
+                "additionalData"
             ],
             "type": "object"
         },
         "OpenUrl": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "openInDialog": {
                     "type": "boolean"
                 },
@@ -433,12 +632,16 @@
                 "type",
                 "url",
                 "target",
-                "openInDialog"
+                "openInDialog",
+                "additionalData"
             ],
             "type": "object"
         },
         "RunScript": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "name": {
                     "const": "string",
                     "description": "Name of the Script",
@@ -457,18 +660,316 @@
             "propertyOrder": [
                 "type",
                 "name",
-                "scriptType"
+                "scriptType",
+                "additionalData"
             ],
             "type": "object"
         },
-        "ScriptCommands": {
+        "SetBitInSignal": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "bitNumber": {
+                    "default": 0,
+                    "type": "number"
+                },
+                "signal": {
+                    "description": "Name of the signal",
+                    "format": "signal",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "SetBitInSignal",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "signal",
+                "bitNumber",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "SetElementProperty": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "mode": {
+                    "default": "toggle",
+                    "description": "only for target: class",
+                    "enum": [
+                        "add",
+                        "remove",
+                        "toggle"
+                    ],
+                    "type": "string"
+                },
+                "name": {
+                    "description": "name of property/attribute or css value you want to set",
+                    "type": "string"
+                },
+                "parentIndex": {
+                    "default": 0,
+                    "description": "wich parent, 0 = current, 1 = first parent, 2 = ...\nof the targetSelectorTarget",
+                    "type": "number"
+                },
+                "target": {
+                    "default": "property",
+                    "description": "what of the elements do you want to set",
+                    "enum": [
+                        "attribute",
+                        "class",
+                        "css",
+                        "property"
+                    ],
+                    "type": "string"
+                },
+                "targetSelector": {
+                    "description": "css selector to find elements on targetSelectorTarget, if empty the targetSelectorTarget directly is used",
+                    "type": "string"
+                },
+                "targetSelectorTarget": {
+                    "default": "container",
+                    "description": "where to search for the elements (used as a start)\nelement = currentElement\ncontainer = screen or customControl",
+                    "enum": [
+                        "container",
+                        "element"
+                    ],
+                    "type": "string"
+                },
+                "type": {
+                    "const": "SetElementProperty",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "value you want to set"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "target",
+                "targetSelectorTarget",
+                "parentIndex",
+                "targetSelector",
+                "name",
+                "mode",
+                "value",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "SetSignalValue": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "signal": {
+                    "description": "Name of the signal",
+                    "format": "signal",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "SetSignalValue",
+                    "type": "string"
+                },
+                "value": {}
+            },
+            "propertyOrder": [
+                "type",
+                "signal",
+                "value",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "ShowMessageBox": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "buttons": {
+                    "default": "ok",
+                    "description": "message text",
+                    "enum": [
+                        "abortRetryIgnore",
+                        "cancelTryContinue",
+                        "ok",
+                        "okCancel",
+                        "retryCancel",
+                        "yesNo",
+                        "yesNoCancel"
+                    ],
+                    "type": "string"
+                },
+                "height": {
+                    "type": "string"
+                },
+                "message": {
+                    "description": "message text",
+                    "type": "string"
+                },
+                "messageType": {
+                    "default": "info",
+                    "description": "message type",
+                    "enum": [
+                        "error",
+                        "info",
+                        "warning"
+                    ],
+                    "type": "string"
+                },
+                "resultSignal": {
+                    "description": "number of the clicked button, starting with 1",
+                    "format": "signal",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "title text",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "ShowMessageBox",
+                    "type": "string"
+                },
+                "width": {
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "title",
+                "message",
+                "messageType",
+                "buttons",
+                "resultSignal",
+                "width",
+                "height",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "SubscribeSignal": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "oneTime": {
+                    "type": "boolean"
+                },
+                "signal": {
+                    "description": "Name of the signal",
+                    "format": "signal",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "SubscribeSignal",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "signal",
+                "oneTime",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "SwitchLanguage": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "SwitchLanguage",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "language",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "ToggleBitInSignal": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "bitNumber": {
+                    "default": 0,
+                    "type": "number"
+                },
+                "signal": {
+                    "description": "Name of the signal",
+                    "format": "signal",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "ToggleBitInSignal",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "signal",
+                "bitNumber",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "ToggleSignalValue": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "signal": {
+                    "description": "Name of the signal",
+                    "format": "signal",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "ToggleSignalValue",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "signal",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "UnsubscribeSignal": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "signal": {
+                    "description": "Name of the signal",
+                    "format": "signal",
+                    "type": "string"
+                },
+                "type": {
+                    "const": "UnsubscribeSignal",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "signal",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "WebuiScriptCommands": {
             "anyOf": [
-                {
-                    "$ref": "#/definitions/Comment"
-                },
-                {
-                    "$ref": "#/definitions/OpenScreen"
-                },
                 {
                     "$ref": "#/definitions/OpenUrl"
                 },
@@ -536,6 +1037,24 @@
                     "$ref": "#/definitions/ClearSiganlsInGroup"
                 },
                 {
+                    "$ref": "#/definitions/RunScript"
+                },
+                {
+                    "$ref": "#/definitions/CopySignalValuesFromFolder"
+                },
+                {
+                    "$ref": "#/definitions/ShowMessageBox"
+                },
+                {
+                    "$ref": "#/definitions/ExportSignalValuesAsJson"
+                },
+                {
+                    "$ref": "#/definitions/ImportSignalValuesFromJson"
+                },
+                {
+                    "$ref": "#/definitions/Comment"
+                },
+                {
                     "$ref": "#/definitions/Condition"
                 },
                 {
@@ -545,211 +1064,21 @@
                     "$ref": "#/definitions/Label"
                 },
                 {
-                    "$ref": "#/definitions/RunScript"
+                    "$ref": "#/definitions/Goto"
                 },
                 {
-                    "$ref": "#/definitions/Goto"
+                    "$ref": "#/definitions/OpenScreen"
+                },
+                {
+                    "$ref": "#/definitions/OpenScreenInScreenViewer"
                 }
             ]
         },
-        "SetBitInSignal": {
-            "properties": {
-                "bitNumber": {
-                    "type": "number"
-                },
-                "signal": {
-                    "description": "Name of the signal",
-                    "format": "signal",
-                    "type": "string"
-                },
-                "type": {
-                    "const": "SetBitInSignal",
-                    "type": "string"
-                }
-            },
-            "propertyOrder": [
-                "type",
-                "signal",
-                "bitNumber"
-            ],
-            "type": "object"
-        },
-        "SetElementProperty": {
-            "properties": {
-                "mode": {
-                    "description": "only for class",
-                    "enum": [
-                        "add",
-                        "remove",
-                        "toggle"
-                    ],
-                    "type": "string"
-                },
-                "name": {
-                    "description": "name of property/attribute or css value you want to set",
-                    "type": "string"
-                },
-                "target": {
-                    "description": "what of the elements do you want to set",
-                    "enum": [
-                        "attribute",
-                        "class",
-                        "css",
-                        "property"
-                    ],
-                    "type": "string"
-                },
-                "targetSelector": {
-                    "description": "css selector to find elements, if empty the targetSelectorTarget is used",
-                    "type": "string"
-                },
-                "targetSelectorTarget": {
-                    "description": "where to search for the elements",
-                    "enum": [
-                        "currentElement",
-                        "currentScreen",
-                        "parentElement",
-                        "parentScreen"
-                    ],
-                    "type": "string"
-                },
-                "type": {
-                    "const": "SetElementProperty",
-                    "type": "string"
-                },
-                "value": {
-                    "description": "value you want to set"
-                }
-            },
-            "propertyOrder": [
-                "type",
-                "target",
-                "targetSelectorTarget",
-                "targetSelector",
-                "name",
-                "mode",
-                "value"
-            ],
-            "type": "object"
-        },
-        "SetSignalValue": {
-            "properties": {
-                "signal": {
-                    "description": "Name of the signal",
-                    "format": "signal",
-                    "type": "string"
-                },
-                "type": {
-                    "const": "SetSignalValue",
-                    "type": "string"
-                },
-                "value": {}
-            },
-            "propertyOrder": [
-                "type",
-                "signal",
-                "value"
-            ],
-            "type": "object"
-        },
-        "SubscribeSignal": {
-            "properties": {
-                "oneTime": {
-                    "type": "boolean"
-                },
-                "signal": {
-                    "description": "Name of the signal",
-                    "format": "signal",
-                    "type": "string"
-                },
-                "type": {
-                    "const": "SubscribeSignal",
-                    "type": "string"
-                }
-            },
-            "propertyOrder": [
-                "type",
-                "signal",
-                "oneTime"
-            ],
-            "type": "object"
-        },
-        "SwitchLanguage": {
-            "properties": {
-                "language": {
-                    "type": "string"
-                },
-                "type": {
-                    "const": "SwitchLanguage",
-                    "type": "string"
-                }
-            },
-            "propertyOrder": [
-                "type",
-                "language"
-            ],
-            "type": "object"
-        },
-        "ToggleBitInSignal": {
-            "properties": {
-                "bitNumber": {
-                    "type": "number"
-                },
-                "signal": {
-                    "description": "Name of the signal",
-                    "format": "signal",
-                    "type": "string"
-                },
-                "type": {
-                    "const": "ToggleBitInSignal",
-                    "type": "string"
-                }
-            },
-            "propertyOrder": [
-                "type",
-                "signal",
-                "bitNumber"
-            ],
-            "type": "object"
-        },
-        "ToggleSignalValue": {
-            "properties": {
-                "signal": {
-                    "description": "Name of the signal",
-                    "format": "signal",
-                    "type": "string"
-                },
-                "type": {
-                    "const": "ToggleSignalValue",
-                    "type": "string"
-                }
-            },
-            "propertyOrder": [
-                "type",
-                "signal"
-            ],
-            "type": "object"
-        },
-        "UnsubscribeSignal": {
-            "properties": {
-                "signal": {
-                    "description": "Name of the signal",
-                    "format": "signal",
-                    "type": "string"
-                },
-                "type": {
-                    "const": "UnsubscribeSignal",
-                    "type": "string"
-                }
-            },
-            "propertyOrder": [
-                "type",
-                "signal"
-            ],
-            "type": "object"
-        },
         "WriteSignalsInGroup": {
             "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
                 "group": {
                     "description": "Name of the Group",
                     "type": "string"
@@ -761,7 +1090,8 @@
             },
             "propertyOrder": [
                 "type",
-                "group"
+                "group",
+                "additionalData"
             ],
             "type": "object"
         }

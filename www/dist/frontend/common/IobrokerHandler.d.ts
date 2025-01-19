@@ -75,6 +75,7 @@ export declare class IobrokerHandler implements VisualizationHandler {
         file: ArrayBuffer;
     }>;
     removeAdditionalFile(name: string): Promise<void>;
+    getLocalStateNames(): string[];
     subscribeState(id: string, cb: ioBroker.StateChangeHandler): Promise<void>;
     unsubscribeState(id: string, cb: ioBroker.StateChangeHandler): void;
     getObjectList(type: ioBroker.ObjectType, id: string): Promise<Record<string, ioBroker.AnyObject & {
@@ -95,8 +96,8 @@ export declare class IobrokerHandler implements VisualizationHandler {
     getSignalInformation(signal: any): SignalInformation;
     getHistoricData(id: string, config: any): Promise<{
         values: ioBroker.GetHistoryResult;
-        sessionId: string;
-        stepIgnore: number;
+        sessionId: number;
+        step: number;
     }>;
 }
 export declare const iobrokerHandler: IobrokerHandler;

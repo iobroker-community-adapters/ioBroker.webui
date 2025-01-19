@@ -4,6 +4,7 @@ import { BaseCustomWebComponentConstructorAppend, css, cssFromString, customElem
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { convertCssUnitToPixel } from "@node-projects/web-component-designer/dist/elements/helper/CssUnitConverter.js";
 import { isFirefox } from "@node-projects/web-component-designer/dist/elements/helper/Browser.js";
+import { PropertiesHelper } from "@node-projects/web-component-designer/dist/elements/services/propertiesService/services/PropertiesHelper.js";
 let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     static { ScreenViewer_1 = this; }
     static style = css `
@@ -75,6 +76,12 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
             this._loadScreen();
         }
     }
+    async setScreenNameAndLoad(screen) {
+        if (this._screenName != screen) {
+            this._screenName = screen;
+            await this._loadScreen();
+        }
+    }
     objects;
     _useStyleFromScreenForViewer;
     get useStyleFromScreenForViewer() {
@@ -95,6 +102,9 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
     _getDomElement(id) {
         return this._rootShadow.getElementById(id);
     }
+    _getDomElements(selectors) {
+        return this._rootShadow.querySelectorAll(selectors);
+    }
     ready() {
         this._parseAttributesToProperties();
         if (this._screenName)
@@ -112,15 +122,37 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
                 await iobrokerHandler.waitForReady();
                 this._loading = false;
                 this.removeBindings();
-                DomHelper.removeAllChildnodes(this._rootShadow);
                 const screen = await iobrokerHandler.getWebuiObject('screen', this.screenName);
+                DomHelper.removeAllChildnodes(this._rootShadow);
                 if (screen) {
-                    this.loadScreenData(screen.html, screen.style, screen.script, screen.settings);
+                    await this.loadScreenData(screen.html, screen.style, screen.script, screen.settings, screen.properties);
                 }
             }
         }
     }
-    async loadScreenData(html, style, script, settings) {
+    async loadScreenData(html, style, script, settings, properties) {
+        if (properties) {
+            for (const p in properties) {
+                const prp = properties[p];
+                Object.defineProperty(this, p, {
+                    get() {
+                        return this['_' + p];
+                    },
+                    set(newValue) {
+                        if (this['_' + p] !== newValue) {
+                            this['_' + p] = newValue;
+                            //this._bindingsRefresh(p);
+                            this.dispatchEvent(new CustomEvent(PropertiesHelper.camelToDashCase(p) + '-changed', { detail: { newValue } }));
+                        }
+                    },
+                    enumerable: true,
+                    configurable: true,
+                });
+                if (prp.default) {
+                    this['_' + p] = prp.default;
+                }
+            }
+        }
         let globalStyle = iobrokerHandler.config?.globalStyle ?? '';
         this._stretchView(settings);
         let parsedStyle = null;
@@ -236,7 +268,7 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
             if (this._screenName)
                 this._loadScreen();
         });
-        this._scriptObject?.connectedCallback?.(this);
+        this._scriptObject?.connectedCallback?.(this, this._rootShadow);
         for (let e of this.#eventListeners) {
             this.addEventListener(e[0], e[1]);
         }
@@ -249,7 +281,7 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
         }
         this._refreshViewSubscription?.dispose();
         this._screensChangedSubscription?.dispose();
-        this._scriptObject?.disconnectedCallback?.(this);
+        this._scriptObject?.disconnectedCallback?.(this, this._rootShadow);
         if (this._resizeObserver)
             this._resizeObserver.disconnect();
     }

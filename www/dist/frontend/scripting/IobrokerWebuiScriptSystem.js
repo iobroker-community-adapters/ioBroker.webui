@@ -3,6 +3,7 @@ import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IoBrokerWebuiDialog } from "../helper/DialogHelper.js";
 import { ScriptSystem } from "@node-projects/web-component-designer-visualization-addons/dist/scripting/ScriptSystem.js";
 export class IobrokerWebuiScriptSystem extends ScriptSystem {
+    //@ts-ignore
     async runScriptCommand(command, context) {
         switch (command.type) {
             case 'CloseDialog': {
@@ -19,6 +20,15 @@ export class IobrokerWebuiScriptSystem extends ScriptSystem {
                     let hash = 'screenName=' + screen;
                     window.location.hash = hash;
                 }
+                break;
+            }
+            case 'OpenScreenInScreenViewer': {
+                const screen = await this.getValue(command.screen, context);
+                const targetSelector = await this.getValue(command.targetSelector ?? 'iobroker-webui-screen-viewer', context);
+                const par = new URLSearchParams(location.hash.substring(1));
+                let startScreen = (par).get('screenName') ?? 'start';
+                let hash = (screen != 'start' ? 'screenName=' + startScreen + '&' : '') + 'subScreen=' + screen + (targetSelector != 'iobroker-webui-screen-viewer' ? '&targetSelector=' + targetSelector : '');
+                window.location.hash = hash;
                 break;
             }
             case 'OpenDialog': {
@@ -41,35 +51,37 @@ export class IobrokerWebuiScriptSystem extends ScriptSystem {
                 break;
             }
             default: {
-                super.runScriptCommand(command, context);
+                await super.runScriptCommand(command, context);
             }
         }
     }
-    getTargetFromTargetSelector(context, targetSelectorTarget, targetSelector) {
-        if (targetSelectorTarget === 'currentScreen') {
-            if (targetSelector) {
-                let sr = context.element.getRootNode();
-                return sr.querySelectorAll(targetSelector);
+    getTarget(context, targetSelectorTarget, parentLevel) {
+        if (targetSelectorTarget == "container") {
+            let el = context.element;
+            for (let i = 0; i <= (parentLevel ?? 0); i++) {
+                let rootDiv = el.getRootNode().host;
+                if (rootDiv instanceof BaseCustomControl)
+                    el = rootDiv;
+                else
+                    el = rootDiv.getRootNode().host;
             }
-            else {
-                let rootDiv = context.element.getRootNode().host;
-                let sr = rootDiv.getRootNode();
-                return [sr.host];
-            }
+            return el;
         }
-        else if (targetSelectorTarget === 'parentScreen') {
-            if (targetSelector) {
-                //@ts-ignore
-                let sr = context.element.getRootNode().host.getRootNode().host.getRootNode();
-                return sr.querySelectorAll(targetSelector);
+        return super.getTarget(context, targetSelectorTarget, parentLevel);
+    }
+    getTargetFromTargetSelector(context, targetSelectorTarget, parentLevel, targetSelector) {
+        const target = this.getTarget(context, targetSelectorTarget, parentLevel);
+        let elements = [target];
+        if (targetSelector) {
+            if (targetSelectorTarget === 'container') {
+                if (target instanceof ScreenViewer)
+                    elements = target._getDomElements(targetSelector);
+                else
+                    elements = target.shadowRoot.querySelectorAll(targetSelector);
             }
-            else {
-                //@ts-ignore
-                let sr = context.element.getRootNode().host.getRootNode().host.getRootNode().host.getRootNode().host;
-                return [sr];
-            }
+            else
+                elements = target.querySelectorAll(targetSelector);
         }
-        else
-            return super.getTargetFromTargetSelector(context, targetSelectorTarget, targetSelector);
+        return elements;
     }
 }

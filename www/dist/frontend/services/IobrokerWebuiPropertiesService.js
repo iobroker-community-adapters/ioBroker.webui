@@ -1,8 +1,8 @@
 import { BaseCustomWebComponentPropertiesService, PropertyType } from "@node-projects/web-component-designer";
 import { BaseCustomControl, webuiCustomControlSymbol } from "../runtime/CustomControls.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
-import { SignalPropertyEditor } from "@node-projects/web-component-designer-visualization-addons";
 import { ScreenViewer } from "../runtime/ScreenViewer.js";
+import { IobrokerWebuiSignalPropertyEditor } from "../config/IobrokerWebuiSignalPropertyEditor.js";
 export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentPropertiesService {
     isHandledElement(designItem) {
         return designItem.element instanceof BaseCustomControl || designItem.element instanceof ScreenViewer;
@@ -16,6 +16,8 @@ export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentProper
             let control = designItem.element.constructor[webuiCustomControlSymbol].control;
             for (const name in control.properties) {
                 let prp = control.properties[name];
+                if (prp.internal)
+                    continue;
                 if (prp.type === 'string') {
                     let property = { name: name, type: "string", service: this, propertyType: PropertyType.propertyAndAttribute };
                     properties.push(property);
@@ -45,7 +47,7 @@ export class IobrokerWebuiPropertiesService extends BaseCustomWebComponentProper
                     properties.push(property);
                 }
                 else if (prp.type == 'signal') {
-                    let property = { name: name, type: "signal", service: this, propertyType: PropertyType.propertyAndAttribute, createEditor: p => new SignalPropertyEditor(p, window.appShell) };
+                    let property = { name: name, type: "signal", service: this, propertyType: PropertyType.propertyAndAttribute, createEditor: p => new IobrokerWebuiSignalPropertyEditor(p, window.appShell) };
                     properties.push(property);
                 }
                 else if (prp.type == 'screen') {

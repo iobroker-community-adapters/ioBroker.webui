@@ -2,6 +2,9 @@ import { BindableObjectType } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 export class IobrokerWebuiBindableObjectsService {
     name = 'iobroker';
+    hasObjectsForInstanceServiceContainer(instanceServiceContainer) {
+        return true;
+    }
     _states;
     async getBindableObject(fullName) {
         let objs = await this.getBindableObjects();
@@ -34,11 +37,11 @@ export class IobrokerWebuiBindableObjectsService {
                 const fldName = splits[0];
                 if (splits.length > 1 && !set.has(fldName)) {
                     set.add(fldName);
-                    folder = { name: fldName, fullName: parent ? parent.fullName + '.' + fldName : fldName, type: BindableObjectType.folder };
+                    folder = { bindabletype: 'signal', name: fldName, fullName: parent ? parent.fullName + '.' + fldName : fldName, type: BindableObjectType.folder };
                     retVal.push(folder);
                 }
                 if (splits.length === 1 && splits[0] && (this._states[k].type != 'channel' && this._states[k].type != 'device')) {
-                    const signal = { name: splits[0], fullName: k, type: BindableObjectType.undefined, originalObject: this._states[k], children: false };
+                    const signal = { bindabletype: 'signal', name: splits[0], fullName: k, type: BindableObjectType.undefined, originalObject: this._states[k], children: false };
                     retVal.push(signal);
                 }
             }

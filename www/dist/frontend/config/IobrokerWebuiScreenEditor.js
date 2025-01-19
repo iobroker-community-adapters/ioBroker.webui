@@ -11,7 +11,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     _name;
     get name() { return this._name; }
     _type;
-    _properties;
+    properties;
     _settings;
     scriptModel;
     _configChangedListener;
@@ -29,9 +29,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         this._type = type;
         this._settings = settings ?? {};
         this.scriptModel = await window.appShell.javascriptEditor.createModel(script ?? '');
-        if (this._type == 'control') {
-            this._properties = properties ? { ...properties } : {};
-        }
+        this.properties = properties ? { ...properties } : {};
         this.documentContainer = new DocumentContainer(serviceContainer);
         this.documentContainer.additionalStylesheets = [
             {
@@ -133,12 +131,15 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
             let html = this.documentContainer.content;
             let style = this.documentContainer.additionalData.model.getValue();
             let script = this.scriptModel.getValue();
+            let prp = this.properties;
+            if (Object.keys(this.properties).length === 0)
+                prp = null;
             if (this._type == 'screen') {
-                let screen = { html, style, script, settings: this._settings };
+                let screen = { html, style, script, settings: this._settings, properties: prp };
                 await iobrokerHandler.saveObject(this._type, this._name, screen);
             }
             else {
-                let control = { html, style, script, settings: this._settings, properties: this._properties };
+                let control = { html, style, script, settings: this._settings, properties: prp };
                 await iobrokerHandler.saveObject(this._type, this._name, control);
             }
         }
@@ -164,7 +165,8 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         window.appShell.treeViewExtended.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
         window.appShell.eventsAssignment.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
         window.appShell.refactorView.instanceServiceContainer = this.documentContainer.instanceServiceContainer;
-        window.appShell.controlpropertiesEditor.setProperties(this._properties);
+        window.appShell.controlpropertiesEditor.setProperties(this.properties);
+        window.appShell.controlpropertiesEditor.defaultInternal = this._type !== 'control';
         window.appShell.settingsEditor.typeName = this._type == 'control' ? 'IControlSettings' : 'IScreenSettings';
         window.appShell.settingsEditor.selectedObject = this._settings;
         this._settingsChanged = window.appShell.settingsEditor.propertyChanged.on(() => {

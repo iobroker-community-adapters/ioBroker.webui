@@ -8,6 +8,7 @@ const bindingsHelper = new BindingsHelper(iobrokerHandler);
 LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
 import '@node-projects/web-component-designer';
 import { ValueType } from '@node-projects/web-component-designer';
+import { BindableObjectsBrowser } from '@node-projects/web-component-designer-widgets-wunderbaum';
 import { PanelContainer } from 'dock-spawn-ts/lib/js/PanelContainer.js';
 import { PanelType } from 'dock-spawn-ts/lib/js/enums/PanelType.js';
 import { configureDesigner } from './ConfigureWebcomponentDesigner.js';
@@ -124,6 +125,10 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         this.scriptSystem = scriptSystem;
         this.bindingsHelper = bindingsHelper;
     }
+    createBindableObjectBrowser() {
+        return new BindableObjectsBrowser();
+    }
+    ;
     async ready() {
         this._dock = this._getDomElement('dock');
         this._solutionExplorer = this._getDomElement('solutionExplorer');

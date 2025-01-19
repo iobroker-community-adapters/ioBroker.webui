@@ -8,6 +8,8 @@ export class IobrokerWebuiCustomControlEventsService {
         const evt = [];
         let control = designItem.element.constructor[webuiCustomControlSymbol].control;
         for (const pname in control.properties) {
+            if (control.properties[pname].internal)
+                continue;
             evt.push({ name: PropertiesHelper.camelToDashCase(pname) + '-changed' });
         }
         return [...evt, ...EventsService._simpleMouseEvents, ...EventsService._pointerEvents, ...EventsService._allElements, ...EventsService._focusableEvents];

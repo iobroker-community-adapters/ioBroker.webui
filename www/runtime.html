@@ -8,7 +8,7 @@
   <script src="./node_modules/blockly/blocks_compressed.js"></script>
   <script src="./node_modules/blockly/javascript_compressed.js"></script>
   <script src="./node_modules/dayjs/dayjs.min.js"></script>
-  
+
   <link rel="stylesheet" href="./assets/main.css">
 
   <title>runtime</title>
@@ -62,14 +62,22 @@
   importShim(iobrokerWebRootUrl + 'webui.0.widgets/importWidgetFilesRuntime.js');
 
   async function checkHash() {
-    let screen = (new URLSearchParams(location.hash.substring(1))).get('screenName');
+    const viewer = document.getElementById('viewer');
+    const par = new URLSearchParams(location.hash.substring(1));
+    let screen = (par).get('screenName');
     if (screen) {
-      const viewer = document.getElementById('viewer');
       await customElements.whenDefined(viewer.localName);
     } else {
       screen = 'start';
     }
-    viewer.screenName = screen;
+    await viewer.setScreenNameAndLoad(screen);
+    let subScreen = (par).get('subScreen');
+    if (subScreen) {
+      const targetSelector =  (par).get('targetSelector') ?? 'iobroker-webui-screen-viewer';
+      const sv = viewer._getDomElements(targetSelector)[0];
+      sv.removeAttribute('screen-name');
+      sv.screenName = subScreen;
+    }
     let imp = await importShim(iobrokerWebuiRootUrl + "dist/frontend/common/IobrokerHandler.js");
     imp.iobrokerHandler.sendCommand("uiChangedView", screen);
   }

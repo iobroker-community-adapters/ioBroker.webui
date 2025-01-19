@@ -336,6 +336,9 @@ export class IobrokerHandler {
     }
     #localSubscriptions = new Map;
     #localValues = new Map;
+    getLocalStateNames() {
+        return Array.from(this.#localSubscriptions.keys());
+    }
     async subscribeState(id, cb) {
         if (id.startsWith('local_')) {
             let arr = this.#localSubscriptions.get(id);

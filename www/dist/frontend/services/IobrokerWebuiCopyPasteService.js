@@ -8,7 +8,7 @@ export class IobrokerWebuiCopyPasteService extends CopyPasteAsJsonService {
                 let imageFmt = items[0].types.find(x => x.startsWith("image/"));
                 if (imageFmt) {
                     let imgData = await items[0].getType(imageFmt);
-                    let name = items[0].name ?? 'image_1';
+                    let name = items[0].name ?? 'image_' + (new Date).toISOString().replaceAll("-", "_").replaceAll("T", "_").replaceAll(":", "_").substring(0, 19);
                     let ext = imageFmt.substring(6);
                     if (ext == 'svg+xml')
                         ext = 'svg';
