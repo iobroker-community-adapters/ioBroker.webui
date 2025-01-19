@@ -52,7 +52,6 @@ function copyNodeModules() {
     ]
     runtimeModules = runtimeModules.map(x => './node_modules/' + x + '/**/*')
 
-    runtimeModules = [...runtimeModules, ...addRuntimeMod];
     return src(runtimeModules, { base: './', encoding: false })
         .pipe(dest('./www'));
 }
