@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.24.3",
+    "version": "1.24.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.24.4": {
+        "en": "switch again to old module shims (error in new one)",
+        "de": "wieder auf alte modul-shimmel wechseln (error in new one)",
+        "ru": "переключение снова на старых модуле shims (ошибка в новом)",
+        "pt": "mudar novamente para os antigos xeques do módulo (erro em novo)",
+        "nl": "weer overschakelen naar oude module shims (fout in nieuwe)",
+        "fr": "passer à nouveau à l'ancien module shims (erreur dans le nouveau)",
+        "it": "passare di nuovo a shims vecchio modulo (error in uno nuovo)",
+        "es": "cambiar de nuevo al viejo módulo shims (error nuevo)",
+        "pl": "przełącz ponownie na stary moduł shims (błąd w nowym)",
+        "uk": "повторно переключіть до старих модулів (error in new)",
+        "zh-cn": "再次切换到旧模块shims( 错误在新模块中)"
+      },
       "1.24.3": {
         "en": "first load of css bindings\nfix get box quads with slots\nfix es module shims",
         "de": "erste belastung von css bindungen\nfix get box quads mit schlitzen\nfix es modul shims",
@@ -106,19 +119,6 @@
         "pl": "fix gulp powinien działać ponownie",
         "uk": "закріпити гельпом потрібно знову",
         "zh-cn": "修补 gulp 应再次工作"
-      },
-      "1.23.0": {
-        "en": "fix paste in events assignment\niobroker Signal Selector\nbinding to width and height in custom controls",
-        "de": "fixieren sie paste in der ereigniszuordnung\niobroker Signal Selektor\nbindung an breite und höhe in benutzerdefinierten steuerungen",
-        "ru": "фиксация пасты в присвоении событий\niobroker Signal Selector\nпривязки к ширине и высоте в пользовательском контроле",
-        "pt": "corrigir pasta na atribuição de eventos\nseletor de Sinal iobroker\nligação à largura e altura em controles personalizados",
-        "nl": "plak plakken in de opdracht van gebeurtenissen\niobroker-signaalkiezer\nbinding aan breedte en hoogte in aangepaste controles",
-        "fr": "fixer coller dans l'affectation des événements\nsélecteur de signal iobroker\nfixation à la largeur et à la hauteur dans les commandes personnalisées",
-        "it": "correzione della pasta nell'assegnazione degli eventi\niobroker Selettore Segnale\nlegare a larghezza e altezza nei controlli personalizzati",
-        "es": "arreglar pasta en la asignación de eventos\niobroker Signal Selector\nunión a ancho y altura en controles personalizados",
-        "pl": "fix pasta w przyporządkowaniu zdarzeń\niobroker Selektor sygnału\nwiązanie do szerokości i wysokości w sterowaniu własnym",
-        "uk": "фіксувати пасту в появі подій\niobroker Signal Вибратор\nобов'язковий для ширини і висоти в користувацьких управліннях",
-        "zh-cn": "在事件任务中固定粘贴\nio 经纪人信号选择器\n绑定自定义控件中的宽度和高度"
       }
     },
     "icon": "logo.png",
