@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.24.2",
+    "version": "1.24.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.24.3": {
+        "en": "first load of css bindings\nfix get box quads with slots\nfix es module shims",
+        "de": "erste belastung von css bindungen\nfix get box quads mit schlitzen\nfix es modul shims",
+        "ru": "первая нагрузка css связывания\nисправление получить коробка квады с слотами\nфиксация эс модуль shims",
+        "pt": "primeira carga de ligações css\ncorrigir get box quads com slots\ncorrigir es módulo shims",
+        "nl": "eerste belasting van css bindingen\nfix box quads met slots\nfix es module shims",
+        "fr": "première charge de fixations css\nfixer obtenir des quads de boîte avec des fentes\nfixer les shims du module es",
+        "it": "primo carico di attacchi css\nfix ottenere scatola quads con slot\nfix es modulo shims",
+        "es": "primera carga de fijación de css\nfijar conseguir cuádruples de caja con ranuras\nfijar es módulo shims",
+        "pl": "pierwsze obciążenie wiązania css\nfix get box quads with slots\nfix es module shims",
+        "uk": "перше навантаження css зв'язування\nзакріпити ящик квадроцикли з слотами\nзакріпити es модуль шім",
+        "zh-cn": "首先装入 css 绑定\n固定带插槽的框形\n修补 e 模块 shims"
+      },
       "1.24.2": {
         "en": "revert back es module shims, leads to errors",
         "de": "zurückkehren es modul shims, führt zu fehlern",
@@ -106,19 +119,6 @@
         "pl": "fix pasta w przyporządkowaniu zdarzeń\niobroker Selektor sygnału\nwiązanie do szerokości i wysokości w sterowaniu własnym",
         "uk": "фіксувати пасту в появі подій\niobroker Signal Вибратор\nобов'язковий для ширини і висоти в користувацьких управліннях",
         "zh-cn": "在事件任务中固定粘贴\nio 经纪人信号选择器\n绑定自定义控件中的宽度和高度"
-      },
-      "1.22.0": {
-        "en": "local signals browser\nstyle completition fixes\nspecial bindings for \"ring\" cameras",
-        "de": "lokale signale browser\nstil completition fixes\nspezielle bindungen für \"ring\"-kameras",
-        "ru": "браузер местных сигналов\nстиль комплектации\nспециальные привязки для «кольцовых» камер",
-        "pt": "navegador de sinais locais\ncorreções de conclusão de estilo\nligações especiais para câmeras \"ring\"",
-        "nl": "lokale signalenbrowser\nstijl completitie fixes\nspeciale bindingen voor \"ring\"-camera's",
-        "fr": "navigateur de signaux locaux\ncorrectifs de complétion de style\nfixations spéciales pour caméras \"ring\"",
-        "it": "browser segnali locali\nstile correzioni di completamento\nattacchi speciali per telecamere \"ring\"",
-        "es": "navegador de señales locales\nestilo completition fixes\nencuadernaciones especiales para cámaras \"ring\"",
-        "pl": "przeglądarka lokalnych sygnałów\npoprawki zakończenia stylu\nspecjalne wiązania do kamer \"ring\"",
-        "uk": "веб камера\nфіксація стилів\nспеціальні прив'язки для камер \"обручка\"",
-        "zh-cn": "本地信号浏览器\n样式补丁修正\n“环”相机的特殊装订"
       }
     },
     "icon": "logo.png",
