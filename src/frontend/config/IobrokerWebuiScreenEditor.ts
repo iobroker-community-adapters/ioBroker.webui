@@ -98,6 +98,17 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
             disableTextChangedEvent = false;
         });
         this.documentContainer.additionalStyleString = iobrokerHandler.config?.globalStyle ?? '';
+        if (style) {
+            try {
+                const ret = await window.appShell.bindingsHelper.parseCssBindings(style, this.documentContainer.designerView.designerCanvas.rootDesignItem.element, this.relativeBindingsPrefix, <HTMLElement>this.documentContainer.designerView.designerCanvas.rootDesignItem.element);
+                this._styleBindings = ret[1];
+                const sr = this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot;
+                sr.adoptedStyleSheets = [...sr.adoptedStyleSheets, ret[0]];
+            }
+            catch (err) {
+                console.error(err);
+            }
+        }
 
         if (html) {
             this.documentContainer.content = html;
