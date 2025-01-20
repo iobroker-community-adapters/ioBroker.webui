@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- switch again to old module shims (error in new one)
+
 ### 1.24.3 (2025-01-20)
 - first load of css bindings
 - fix get box quads with slots
