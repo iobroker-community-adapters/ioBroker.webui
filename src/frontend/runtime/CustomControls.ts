@@ -62,7 +62,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
         for (let e of this.#eventListeners) {
             this.addEventListener(e[0], e[1]);
         }
-        this.#resizeObserver.observe(this);
+        this.#resizeObserver?.observe(this);
     }
 
     disconnectedCallback() {
@@ -73,7 +73,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
         for (const b of this.#bindings)
             b();
         this.#bindings = null;
-        this.#resizeObserver.unobserve(this);
+        this.#resizeObserver?.unobserve(this);
     }
 
     _assignEvent(event: string, callback: (...args) => void): { remove: () => void } {
@@ -152,6 +152,11 @@ export function generateCustomControl(name: string, control: IControl) {
 
             let currControl = (<CustomControlInfo>window['IobrokerWebuiCustomControl' + name][webuiCustomControlSymbol]).control
             for (let p in currControl.properties) {
+                let backup = undefined;
+                if (p in instance) {
+                    backup = instance[p];
+                    delete instance[p];
+                }
                 Object.defineProperty(instance, p, {
                     get() {
                         return this['_' + p];
@@ -166,7 +171,9 @@ export function generateCustomControl(name: string, control: IControl) {
                     enumerable: true,
                     configurable: true,
                 });
-                if (currControl.properties[p].default) {
+                if (backup !== undefined) {
+                    instance[p] = backup;
+                } else if (currControl.properties[p].default) {
                     instance['_' + p] = currControl.properties[p].default;
                 }
             }
