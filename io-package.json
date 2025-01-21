@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.24.4",
+    "version": "1.25.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.25.0": {
+        "en": "fix bindings in custom controls",
+        "de": "fixe bindungen in benutzerdefinierten steuerungen",
+        "ru": "фиксации в пользовательском контроле",
+        "pt": "corrigir ligações em controles personalizados",
+        "nl": "fix bindingen in aangepaste controles",
+        "fr": "fixer les fixations dans les contrôles personnalisés",
+        "it": "fissare i binding nei controlli personalizzati",
+        "es": "fijaciones en controles personalizados",
+        "pl": "naprawić wiązania w niestandardowych kontrolach",
+        "uk": "фіксувати прив'язки в користувацьких управліннях",
+        "zh-cn": "定制控制中的固定绑定"
+      },
       "1.24.4": {
         "en": "switch again to old module shims (error in new one)",
         "de": "wieder auf alte modul-shimmel wechseln (error in new one)",
@@ -106,19 +119,6 @@
         "pl": "jeszcze jeden fix w gulpfile",
         "uk": "ще одна фіксація в gulpfile",
         "zh-cn": "再加一个固醇"
-      },
-      "1.23.1": {
-        "en": "fix gulp should work again",
-        "de": "gulp sollte wieder funktionieren",
-        "ru": "исправить gulp должно работать снова",
-        "pt": "corrigir gulp deve funcionar novamente",
-        "nl": "fix gulp moet weer werken",
-        "fr": "réparer gulp devrait fonctionner à nouveau",
-        "it": "fissare gulp dovrebbe funzionare di nuovo",
-        "es": "arreglar golp debe trabajar de nuevo",
-        "pl": "fix gulp powinien działać ponownie",
-        "uk": "закріпити гельпом потрібно знову",
-        "zh-cn": "修补 gulp 应再次工作"
       }
     },
     "icon": "logo.png",
