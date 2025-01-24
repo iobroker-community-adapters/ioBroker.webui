@@ -31,6 +31,6 @@ declare const importMapConfig: {
         wunderbaum: string;
         "wunderbaum/": string;
         "toastify-js": string;
-        "iobroker-webcomponent-object-selector/": string;
+        "@iobroker/webcomponent-selectid-dialog/": string;
     };
 };

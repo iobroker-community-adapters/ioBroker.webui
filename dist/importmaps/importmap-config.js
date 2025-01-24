@@ -32,7 +32,7 @@ const importMapConfig = {
         "wunderbaum": "./node_modules/wunderbaum/dist/wunderbaum.esm.min.js",
         "wunderbaum/": "./node_modules/wunderbaum/",
         "toastify-js": "./node_modules/toastify-js/src/toastify-es.js",
-        "iobroker-webcomponent-object-selector/": "./node_modules/iobroker-webcomponent-object-selector/"
+        "@iobroker/webcomponent-selectid-dialog/": "./node_modules/@iobroker/webcomponent-selectid-dialog/"
     }
 };
 //@ts-ignore

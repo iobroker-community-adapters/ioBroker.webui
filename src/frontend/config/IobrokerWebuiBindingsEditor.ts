@@ -1,6 +1,6 @@
 import { BindingTarget, IBinding, InstanceServiceContainer, IProperty, ServiceContainer } from "@node-projects/web-component-designer";
 import { BindingsEditor, VisualizationShell } from "@node-projects/web-component-designer-visualization-addons";
-import { openSelectIdDialog } from "iobroker-webcomponent-object-selector/dist/selectIdHelper.js"
+import { openSelectIdDialog } from "@iobroker/webcomponent-selectid-dialog/dist/selectIdHelper.js"
 
 //@ts-ignore
 export class IobrokerWebuiBindingsEditor extends BindingsEditor {
