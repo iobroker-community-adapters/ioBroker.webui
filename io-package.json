@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.25.0",
+    "version": "1.25.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.25.1": {
+        "en": "escape xml\nswitch to official selector package",
+        "de": "entkommen xml\nwechsel zum offiziellen auswahlpaket",
+        "ru": "xml\nпереход на официальный пакет селектора",
+        "pt": "escapar xml\nmudar para o pacote seletor oficial",
+        "nl": "ontsnappen xml\nschakel over op officiële selectiepakket",
+        "fr": "évasion xml\npasser au sélecteur officiel",
+        "it": "fuga xml\npassare al pacchetto selettore ufficiale",
+        "es": "escape xml\ncambiar al paquete oficial selector",
+        "pl": "escape xml\nprzełączanie na oficjalny pakiet wyboru",
+        "uk": "втеча xml\nвимикач на офіційному пакеті selector",
+        "zh-cn": "越狱 xml\n切换到正式选择软件包"
+      },
       "1.25.0": {
         "en": "fix bindings in custom controls",
         "de": "fixe bindungen in benutzerdefinierten steuerungen",
@@ -106,19 +119,6 @@
         "pl": "czyszczenie dir www",
         "uk": "очищувач www dir",
         "zh-cn": "清理 www dir"
-      },
-      "1.23.2": {
-        "en": "one more fix in gulpfile",
-        "de": "noch eine fix in gulpfile",
-        "ru": "еще одно исправление в gulpfile",
-        "pt": "mais uma correção no gulpfile",
-        "nl": "nog een fix in gulpfile",
-        "fr": "une autre correction dans gulpfile",
-        "it": "un altro fix in gulpfile",
-        "es": "uno más se fijan en el archivo del gulp",
-        "pl": "jeszcze jeden fix w gulpfile",
-        "uk": "ще одна фіксація в gulpfile",
-        "zh-cn": "再加一个固醇"
       }
     },
     "icon": "logo.png",
