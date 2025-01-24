@@ -134,6 +134,7 @@ runtime.html?screenName=screen2
 	### __WORK IN PROGRESS__
 -->
 ### __WORK IN PROGRESS__
+- escape xml
 - switch to official selector package
 
 ### 1.25.0 (2025-01-21)

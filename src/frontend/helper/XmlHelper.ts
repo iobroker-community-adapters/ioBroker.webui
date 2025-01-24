@@ -5,6 +5,19 @@ export function escapeCData(text: string) {
     return text.replaceAll("]]>", "]]]]><![CDATA[>");
 }
 
+export function escapeXml(text: string) {
+    return text.replace(/[<>&'"]/g, c => {
+        switch (c) {
+            case '<': return '&lt;';
+            case '>': return '&gt;';
+            case '&': return '&amp;';
+            case '\'': return '&apos;';
+            case '"': return '&quot;';
+        }
+        return null;
+    });
+}
+
 export function parseXml(xml: string) {
     let doc = new DOMParser().parseFromString(xml, "text/xml");
     let obj: any = {};
@@ -71,7 +84,7 @@ export function convertToXml(type: 'screen' | 'control', screen: IScreen | ICont
             if (screen.properties[p].type)
                 xml += ` type="${screen.properties[p].type}"`;
             if (screen.properties[p].default)
-                xml += ` default="${screen.properties[p].default}"`;
+                xml += ` default="${escapeXml(screen.properties[p].default)}"`;
             if (screen.properties[p].values)
                 xml += ` values="${screen.properties[p].values.join('|')}"`;
             if (screen.properties[p].internal)
