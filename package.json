@@ -53,7 +53,7 @@
     "@alcalzone/release-script-plugin-license": "^3.7.0",
     "@blockly/zoom-to-fit": "^6.0.12",
     "@iobroker/socket-client": "^4.0.0",
-    "@iobroker/testing": "^5.0.0",
+    "@iobroker/testing": "^5.0.3",
     "@iobroker/webcomponent-selectid-dialog": "^1.0.3",
     "@node-projects/base-custom-webcomponent": "0.27.8",
     "@node-projects/lean-he-esm": "^3.3.0",
