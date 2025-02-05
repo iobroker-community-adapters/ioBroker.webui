@@ -314,17 +314,18 @@ export class IobrokerHandler implements VisualizationHandler {
                 control = await this._getObjectFromFile<IControl>(this.configPath + "controls/" + name + '.control');
 
                 //TODO: remove in a later version, fixes old props
-                let k = Object.keys(control.properties);
-                if (k.length && typeof control.properties[k[0]] == 'string') {
-                    for (let p in control.properties) {
-                        let prp = <string><any>control.properties[p];
-                        if (prp.startsWith("[")) {
-                            control.properties[p] = { type: 'enum', values: JSON.parse(prp) };
-                        } else {
-                            control.properties[p] = { type: prp };
+                if (control.properties) {
+                    let k = Object.keys(control.properties);
+                    if (k.length && typeof control.properties[k[0]] == 'string') {
+                        for (let p in control.properties) {
+                            let prp = <string><any>control.properties[p];
+                            if (prp.startsWith("[")) {
+                                control.properties[p] = { type: 'enum', values: JSON.parse(prp) };
+                            } else {
+                                control.properties[p] = { type: prp };
+                            }
                         }
                     }
-
                 }
             }
             catch (err) {
@@ -390,7 +391,7 @@ export class IobrokerHandler implements VisualizationHandler {
     #localSubscriptions = new Map<string, ioBroker.StateChangeHandler[]>;
     #localValues = new Map<string, any>;
 
-    getLocalStateNames() : string[] {
+    getLocalStateNames(): string[] {
         return Array.from(this.#localSubscriptions.keys());
     }
 
