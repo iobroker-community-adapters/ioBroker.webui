@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.25.1",
+    "version": "1.25.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.25.2": {
+        "en": "fix null error on props",
+        "de": "nullfehler auf requisiten beheben",
+        "ru": "исправить ошибку null на реквизитов",
+        "pt": "corrigir erro nulo em adereços",
+        "nl": "fix null-fout op rekwisieten",
+        "fr": "correction de l'erreur null sur les accessoires",
+        "it": "correzione di errore null su oggetti",
+        "es": "solucionar error null en props",
+        "pl": "naprawić błąd null na rekwizytach",
+        "uk": "виправити помилку null на пропсах",
+        "zh-cn": "修复道具上的无效错误"
+      },
       "1.25.1": {
         "en": "escape xml\nswitch to official selector package",
         "de": "entkommen xml\nwechsel zum offiziellen auswahlpaket",
@@ -106,19 +119,6 @@
         "pl": "miejmy nadzieję, że uda się naprawić przesyłkę po zmianie nazwy",
         "uk": "сподіваємось на те, що завантаження пакету змінено",
         "zh-cn": "希望用更改的名称修正软件包上传"
-      },
-      "1.24.0": {
-        "en": "cleanup www dir",
-        "de": "reinigung www dr",
-        "ru": "очистка www dir",
-        "pt": "limpeza www dir",
-        "nl": "opruimen www dir",
-        "fr": "nettoyage www dir",
-        "it": "pulizia www dir",
-        "es": "cleanup www dir",
-        "pl": "czyszczenie dir www",
-        "uk": "очищувач www dir",
-        "zh-cn": "清理 www dir"
       }
     },
     "icon": "logo.png",

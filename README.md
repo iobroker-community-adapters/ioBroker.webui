@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.25.2 (2025-02-05)
 - fix null error on props
 
 ### 1.25.1 (2025-01-24)
