@@ -47,7 +47,7 @@
     "@types/node": "^22.10.7"
   },
   "devDependencies": {
-    "@adobe/css-tools": "4.4.1",
+    "@adobe/css-tools": "4.4.2",
     "@alcalzone/release-script": "^3.8.0",
     "@alcalzone/release-script-plugin-iobroker": "^3.7.2",
     "@alcalzone/release-script-plugin-license": "^3.7.0",
