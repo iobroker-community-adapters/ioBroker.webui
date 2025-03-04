@@ -1,11 +1,18 @@
-import { OpenScreen as OpenScreenDef, ScriptCommands } from "@node-projects/web-component-designer-visualization-addons";
+import { OpenScreen as OpenScreenDef, OpenDialog as OpenDialogDef, ScriptCommands } from "@node-projects/web-component-designer-visualization-addons";
 
 //This class is used from script 
 //reflection-scripts
 
-export declare type WebuiScriptCommands = Exclude<ScriptCommands, OpenScreenDef> | OpenScreen | OpenScreenInScreenViewer; 
+export declare type WebuiScriptCommands = Exclude<Exclude<ScriptCommands, OpenScreenDef>, OpenDialogDef> | OpenScreen | OpenDialog | OpenScreenInScreenViewer;
 
 export interface OpenScreen extends Omit<OpenScreenDef, 'closeable'> { }
+
+export interface OpenDialog extends OpenDialogDef {
+  /**
+   * css class to apply to dialog
+   */
+  cssClass: string;
+}
 
 export interface OpenScreenInScreenViewer {
   type: 'OpenScreenInScreenViewer';

@@ -38,6 +38,7 @@ export class IobrokerWebuiScriptSystem extends ScriptSystem {
                 const title = await this.getValue(command.title, context);
                 const moveable = await this.getValue(command.moveable, context);
                 const closeable = await this.getValue(command.closeable, context);
+                const cssClass = await this.getValue(command.cssClass, context);
 
                 let width = await this.getValue(command.width, context);
                 let height = await this.getValue(command.height, context);
@@ -52,7 +53,7 @@ export class IobrokerWebuiScriptSystem extends ScriptSystem {
                     width = await (await iobrokerHandler.getWebuiObject('screen', screen)).settings.width;
                 if (!height)
                     height = await (await iobrokerHandler.getWebuiObject('screen', screen)).settings.height
-                IoBrokerWebuiDialog.openDialog({ title, content: sv, moveable, closeable, width, height, top, left });
+                IoBrokerWebuiDialog.openDialog({ title, content: sv, moveable, closeable, width, height, top, left, cssClass });
                 break;
             }
 
