@@ -1,4 +1,4 @@
-import type { OpenDialog, OpenScreen, ScriptCommands } from "@node-projects/web-component-designer-visualization-addons";
+import type { OpenDialog, OpenScreen, WebuiScriptCommands } from "../scripting/IobrokerWebuiScriptCommands.js";
 
 export class Runtime {
     public static openScreen(config: Omit<OpenScreen, 'type'>): Promise<void> {
@@ -9,7 +9,7 @@ export class Runtime {
         return window.appShell.scriptSystem.runScriptCommand({ type: 'OpenDialog', ...config }, null);
     }
 
-    public static async runSimpleScriptCommand<T extends ScriptCommands>(scriptCommand: T): Promise<void> {
+    public static async runSimpleScriptCommand<T extends WebuiScriptCommands>(scriptCommand: T): Promise<void> {
         await window.appShell.scriptSystem.runScriptCommand(scriptCommand, null); //TODO context
     }
 

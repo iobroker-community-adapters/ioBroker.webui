@@ -82,7 +82,7 @@ var RUNTIME: {
     }): Promise<void>
 
     
-    runSimpleScriptCommand<T extends import('@node-projects/web-component-designer-visualization-addons').ScriptCommands>(scriptCommand: T): Promise<void>;
+    runSimpleScriptCommand<T extends import('../scripting/IobrokerWebuiScriptCommands.js').WebuiScriptCommands>(scriptCommand: T): Promise<void>;
 
     getParentScreen(screen: BaseScreenViewerAndControl, parentlevel?: number): BaseScreenViewerAndControl;
 
