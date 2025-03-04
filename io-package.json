@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.25.2",
+    "version": "1.26.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.26.0": {
+        "en": "fix error in screenviewer\nupdate npms\nrename global styles\nallow styling of dialog",
+        "de": "fehler in screenviewer beheben\naktualisierung von npms\numbenennen global styles\ndie gestaltung des dialogs ermöglichen",
+        "ru": "исправить ошибку screenviewer\nобновление npms\nпереименовать глобальные стили\nразрешить стилизацию диалога",
+        "pt": "corrigir erro no screenviewer\natualização npms\nrenomear estilos globais\npermitir o estilo de diálogo",
+        "nl": "fix error in screenviewer\nnpms bijwerken\nglobale stijlen hernoemen\nstyling van dialoogvenster toestaan",
+        "fr": "correction d'erreur dans screenviewer\nmettre à jour npms\nrenommer les styles globaux\npermettre le style de dialogue",
+        "it": "errore di correzione in screenviewer\naggiornamento npm\nrinominare gli stili globali\nconsentire lo styling di dialogo",
+        "es": "corregir error en screenviewer\nactualización npms\nrenombrar estilos globales\npermitir el estilo de diálogo",
+        "pl": "naprawić błąd w przeglądarce\nupdate npms\nzmienić nazwę stylów globalnych\numożliwić stylizację okna dialogowego",
+        "uk": "виправлено помилку в екрані\nоновлення npms\nперейменувати глобальні стилі\nдозволяє укладати діалогове вікно",
+        "zh-cn": "在屏幕查看器中修正错误\n更新 npms\n重命名全局样式\n允许对话框的样式"
+      },
       "1.25.2": {
         "en": "fix null error on props",
         "de": "nullfehler auf requisiten beheben",
@@ -106,19 +119,6 @@
         "pl": "revert es module shims, prowadzi do błędów",
         "uk": "перевернути назад es модуль шімів, призводить до помилок",
         "zh-cn": "返回 es 模块 shims, 导致错误"
-      },
-      "1.24.1": {
-        "en": "hopefully fix package upload by changed name",
-        "de": "hoffentlich paket-upload mit geändertem namen beheben",
-        "ru": "надеюсь исправить загрузку пакета измененным именем",
-        "pt": "esperançosamente corrigir o upload do pacote por nome alterado",
-        "nl": "hopelijk pakket uploaden op gewijzigde naam repareren",
-        "fr": "j'espère corriger le téléchargement du paquet par changement de nom",
-        "it": "si spera di risolvere il pacchetto upload con il nome cambiato",
-        "es": "esperemos fijar la carga del paquete por nombre cambiado",
-        "pl": "miejmy nadzieję, że uda się naprawić przesyłkę po zmianie nazwy",
-        "uk": "сподіваємось на те, що завантаження пакету змінено",
-        "zh-cn": "希望用更改的名称修正软件包上传"
       }
     },
     "icon": "logo.png",

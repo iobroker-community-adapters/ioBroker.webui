@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.26.0 (2025-03-04)
 - fix error in screenviewer
 - update npms
 - rename global styles
