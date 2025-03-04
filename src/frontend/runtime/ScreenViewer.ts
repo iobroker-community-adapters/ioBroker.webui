@@ -20,6 +20,19 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         display: none !important;
     }`
 
+    static styleIfFromScreen = css`
+    :host {
+        background: transparent;
+        border: none;
+        transform: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    *[node-projects-hide-at-run-time] {
+        display: none !important;
+    }`
+
     static template = html`<div id="root"></div>`
 
     private _iobBindings: (() => void)[];
@@ -208,21 +221,7 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
             this._rootShadow.adoptedStyleSheets = [ScreenViewer.style];
 
         if (this._useStyleFromScreenForViewer) {
-            this.shadowRoot.adoptedStyleSheets = this._rootShadow.adoptedStyleSheets;
-            this._root.style.setProperty('background', 'transparent', 'important');
-            this._root.style.setProperty('border', 'none', 'important');
-            this._root.style.setProperty('transform', 'none', 'important');
-            this._root.style.setProperty('padding', '0', 'important');
-            this._root.style.setProperty('margin', '0', 'important');
-            this.style.setProperty('display', 'block', 'important');
-        } else {
-            this.shadowRoot.adoptedStyleSheets = [];
-            this._root.style.removeProperty('background');
-            this._root.style.removeProperty('border');
-            this._root.style.removeProperty('transform');
-            this._root.style.removeProperty('padding');
-            this._root.style.removeProperty('margin');
-            this.style.removeProperty('display');
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer.styleIfFromScreen, ...this._rootShadow.adoptedStyleSheets];
         }
 
         let myDocument: Document;
