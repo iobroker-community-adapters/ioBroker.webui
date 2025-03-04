@@ -79,6 +79,8 @@ var RUNTIME: {
 
         left?: string;
         top?: string;
+
+        cssClass?: string;
     }): Promise<void>
 
     
