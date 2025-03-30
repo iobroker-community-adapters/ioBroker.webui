@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.26.0",
+    "version": "1.27.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.27.0": {
+        "en": "edit string in visu property grid\nbindings to properties did not work (in designer)\nhtml setting did not work sometimes",
+        "de": "string in visu-eigenschaftsgitter bearbeiten\nbindungen an eigenschaften funktionierten nicht (im designer)\nhtml einstellung funktioniert nicht manchmal",
+        "ru": "редактировать строки в сетке свойств visu\nпривязка к свойствам не сработала (в конструкторе)\nhtml-настройка иногда не работает",
+        "pt": "edit string in visu property grid\nligações a propriedades não funcionou (em designer)\nconfiguração html não funcionou às vezes",
+        "nl": "tekenreeks bewerken in visu eigenschap raster\nbindingen aan eigenschappen werkten niet (in ontwerper)\nhtml-instelling werkte soms niet",
+        "fr": "modifier la chaîne dans la grille de propriétés visu\nles fixations aux propriétés ne fonctionnaient pas (en designer)\nle réglage html ne fonctionnait pas parfois",
+        "it": "modifica stringa nella griglia di proprietà visu\nleganti a proprietà non ha funzionato (in progettista)\nhtml impostazione non ha funzionato a volte",
+        "es": "cadena de edición en la red de propiedades visu\nvinculantes para propiedades no funcionaron (en diseñador)\nhtml setting did not work sometimes",
+        "pl": "edytuj ciąg w siatce właściwości visu\nwiązania do nieruchomości nie działa (w projektancie)\nustawienia html nie działały czasami",
+        "uk": "редагувати рядок в мережі visu\nобов’язки до властивостей не працювали (у дизайнеру)\nналаштування html не працює іноді",
+        "zh-cn": "在粘着属性网格中编辑字符串\n约束属性无效( 设计者)\nhtml 设置有时行不通"
+      },
       "1.26.0": {
         "en": "fix error in screenviewer\nupdate npms\nrename global styles\nallow styling of dialog",
         "de": "fehler in screenviewer beheben\naktualisierung von npms\numbenennen global styles\ndie gestaltung des dialogs ermöglichen",
@@ -106,19 +119,6 @@
         "pl": "pierwsze obciążenie wiązania css\nfix get box quads with slots\nfix es module shims",
         "uk": "перше навантаження css зв'язування\nзакріпити ящик квадроцикли з слотами\nзакріпити es модуль шім",
         "zh-cn": "首先装入 css 绑定\n固定带插槽的框形\n修补 e 模块 shims"
-      },
-      "1.24.2": {
-        "en": "revert back es module shims, leads to errors",
-        "de": "zurückkehren es modul shims, führt zu fehlern",
-        "ru": "возвращать назад эс-модульные шимы, приводит к ошибкам",
-        "pt": "reverter para trás es módulo shims, leva a erros",
-        "nl": "terug te keren es module shims, leidt tot fouten",
-        "fr": "retour du module es shims, conduit à des erreurs",
-        "it": "revert back es modulo shims, conduce a errori",
-        "es": "revert back es module shims, leads to errors",
-        "pl": "revert es module shims, prowadzi do błędów",
-        "uk": "перевернути назад es модуль шімів, призводить до помилок",
-        "zh-cn": "返回 es 模块 shims, 导致错误"
       }
     },
     "icon": "logo.png",
