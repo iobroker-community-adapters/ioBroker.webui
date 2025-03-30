@@ -225,20 +225,19 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
         }
 
         let myDocument: Document;
-        //@ts-ignore
         if (Document.parseHTMLUnsafe && !isFirefox) {
-            //@ts-ignore
-            myDocument = Document.parseHTMLUnsafe(html)
+            this._rootShadow.setHTMLUnsafe(html);
         } else {
             //@ts-ignore
             myDocument = new DOMParser().parseFromString(html, 'text/html', { includeShadowRoots: true });
+            const fragment = document.createDocumentFragment();
+            for (const n of myDocument.head.childNodes)
+                fragment.appendChild(n);
+            for (const n of myDocument.body.childNodes)
+                fragment.appendChild(n);
+            this._rootShadow.appendChild(fragment);
         }
-        const fragment = document.createDocumentFragment();
-        for (const n of myDocument.head.childNodes)
-            fragment.appendChild(n);
-        for (const n of myDocument.body.childNodes)
-            fragment.appendChild(n);
-        this._rootShadow.appendChild(fragment);
+
         const res = window.appShell.bindingsHelper.applyAllBindings(this._rootShadow, this.relativeSignalsPath, this);
         if (this._iobBindings)
             this._iobBindings.push(...res);
