@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix xml import
+
 ### 1.27.0 (2025-03-30)
 - edit string in visu property grid
 - bindings to properties did not work (in designer)

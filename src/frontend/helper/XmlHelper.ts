@@ -48,7 +48,7 @@ export function parseXml(xml: string) {
         } else {
             let tx = childNode.textContent;
             if (tx[0] === '\n' && tx.endsWith('\n'))
-                tx = tx.substring(1, tx.length - 2);
+                tx = tx.substring(1, tx.length - 1);
             else if (tx[0] === '\n')
                 tx = tx.substring(1);
             else if (tx.endsWith('\n'))
