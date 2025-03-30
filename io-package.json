@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.27.0",
+    "version": "1.27.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.27.1": {
+        "en": "fix xml import",
+        "de": "xml importieren",
+        "ru": "xml импортировать",
+        "pt": "corrigir a importação xml",
+        "nl": "xml-import herstellen",
+        "fr": "correction de l'importation de xml",
+        "it": "correzione xml importazione",
+        "es": "fijar importación xml",
+        "pl": "fix import xml",
+        "uk": "виправлено імпорт xml",
+        "zh-cn": "修正 xml 导入"
+      },
       "1.27.0": {
         "en": "edit string in visu property grid\nbindings to properties did not work (in designer)\nhtml setting did not work sometimes",
         "de": "string in visu-eigenschaftsgitter bearbeiten\nbindungen an eigenschaften funktionierten nicht (im designer)\nhtml einstellung funktioniert nicht manchmal",
@@ -106,19 +119,6 @@
         "pl": "przełącz ponownie na stary moduł shims (błąd w nowym)",
         "uk": "повторно переключіть до старих модулів (error in new)",
         "zh-cn": "再次切换到旧模块shims( 错误在新模块中)"
-      },
-      "1.24.3": {
-        "en": "first load of css bindings\nfix get box quads with slots\nfix es module shims",
-        "de": "erste belastung von css bindungen\nfix get box quads mit schlitzen\nfix es modul shims",
-        "ru": "первая нагрузка css связывания\nисправление получить коробка квады с слотами\nфиксация эс модуль shims",
-        "pt": "primeira carga de ligações css\ncorrigir get box quads com slots\ncorrigir es módulo shims",
-        "nl": "eerste belasting van css bindingen\nfix box quads met slots\nfix es module shims",
-        "fr": "première charge de fixations css\nfixer obtenir des quads de boîte avec des fentes\nfixer les shims du module es",
-        "it": "primo carico di attacchi css\nfix ottenere scatola quads con slot\nfix es modulo shims",
-        "es": "primera carga de fijación de css\nfijar conseguir cuádruples de caja con ranuras\nfijar es módulo shims",
-        "pl": "pierwsze obciążenie wiązania css\nfix get box quads with slots\nfix es module shims",
-        "uk": "перше навантаження css зв'язування\nзакріпити ящик квадроцикли з слотами\nзакріпити es модуль шім",
-        "zh-cn": "首先装入 css 绑定\n固定带插槽的框形\n修补 e 模块 shims"
       }
     },
     "icon": "logo.png",
