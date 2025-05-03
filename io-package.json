@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.27.1",
+    "version": "1.28.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.28.0": {
+        "en": "update packages",
+        "de": "update-pakete",
+        "ru": "обновление пакетов",
+        "pt": "pacotes de atualização",
+        "nl": "pakketten bijwerken",
+        "fr": "mettre à jour les paquets",
+        "it": "pacchetti di aggiornamento",
+        "es": "actualizar paquetes",
+        "pl": "aktualizacja pakietów",
+        "uk": "оновлення пакетів",
+        "zh-cn": "更新软件包"
+      },
       "1.27.1": {
         "en": "fix xml import",
         "de": "xml importieren",
@@ -106,19 +119,6 @@
         "pl": "naprawić wiązania w niestandardowych kontrolach",
         "uk": "фіксувати прив'язки в користувацьких управліннях",
         "zh-cn": "定制控制中的固定绑定"
-      },
-      "1.24.4": {
-        "en": "switch again to old module shims (error in new one)",
-        "de": "wieder auf alte modul-shimmel wechseln (error in new one)",
-        "ru": "переключение снова на старых модуле shims (ошибка в новом)",
-        "pt": "mudar novamente para os antigos xeques do módulo (erro em novo)",
-        "nl": "weer overschakelen naar oude module shims (fout in nieuwe)",
-        "fr": "passer à nouveau à l'ancien module shims (erreur dans le nouveau)",
-        "it": "passare di nuovo a shims vecchio modulo (error in uno nuovo)",
-        "es": "cambiar de nuevo al viejo módulo shims (error nuevo)",
-        "pl": "przełącz ponownie na stary moduł shims (błąd w nowym)",
-        "uk": "повторно переключіть до старих модулів (error in new)",
-        "zh-cn": "再次切换到旧模块shims( 错误在新模块中)"
       }
     },
     "icon": "logo.png",
