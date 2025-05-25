@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.28.0",
+    "version": "1.29.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.29.0": {
+        "en": "complexer indirect bindings",
+        "de": "komplexe indirekte bindungen",
+        "ru": "более сложные косвенные связывания",
+        "pt": "ligações indiretas mais complexas",
+        "nl": "complexere indirecte bindingen",
+        "fr": "des liaisons indirectes plus complexes",
+        "it": "leganti indiretti più complessi",
+        "es": "más complejas uniones indirectas",
+        "pl": "złożone wiązania pośrednie",
+        "uk": "складні непрямі зв'язки",
+        "zh-cn": "较复杂的间接约束"
+      },
       "1.28.0": {
         "en": "update packages",
         "de": "update-pakete",
@@ -106,19 +119,6 @@
         "pl": "escape xml\nprzełączanie na oficjalny pakiet wyboru",
         "uk": "втеча xml\nвимикач на офіційному пакеті selector",
         "zh-cn": "越狱 xml\n切换到正式选择软件包"
-      },
-      "1.25.0": {
-        "en": "fix bindings in custom controls",
-        "de": "fixe bindungen in benutzerdefinierten steuerungen",
-        "ru": "фиксации в пользовательском контроле",
-        "pt": "corrigir ligações em controles personalizados",
-        "nl": "fix bindingen in aangepaste controles",
-        "fr": "fixer les fixations dans les contrôles personnalisés",
-        "it": "fissare i binding nei controlli personalizzati",
-        "es": "fijaciones en controles personalizados",
-        "pl": "naprawić wiązania w niestandardowych kontrolach",
-        "uk": "фіксувати прив'язки в користувацьких управліннях",
-        "zh-cn": "定制控制中的固定绑定"
       }
     },
     "icon": "logo.png",
