@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.29.0",
+    "version": "1.30.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.30.0": {
+        "en": "starting indirect binding fix",
+        "de": "start indirekter bindungsfix",
+        "ru": "начало косвенного связывания",
+        "pt": "correção de ligação indireta",
+        "nl": "beginnen met indirecte bindingsfix",
+        "fr": "début de la fixation indirecte",
+        "it": "start indirect binding fix",
+        "es": "inicio de fijación indirecta",
+        "pl": "początkowy łącznik pośredni",
+        "uk": "від непрямої фіксації",
+        "zh-cn": "开始间接绑定"
+      },
       "1.29.0": {
         "en": "complexer indirect bindings",
         "de": "komplexe indirekte bindungen",
@@ -106,19 +119,6 @@
         "pl": "naprawić błąd null na rekwizytach",
         "uk": "виправити помилку null на пропсах",
         "zh-cn": "修复道具上的无效错误"
-      },
-      "1.25.1": {
-        "en": "escape xml\nswitch to official selector package",
-        "de": "entkommen xml\nwechsel zum offiziellen auswahlpaket",
-        "ru": "xml\nпереход на официальный пакет селектора",
-        "pt": "escapar xml\nmudar para o pacote seletor oficial",
-        "nl": "ontsnappen xml\nschakel over op officiële selectiepakket",
-        "fr": "évasion xml\npasser au sélecteur officiel",
-        "it": "fuga xml\npassare al pacchetto selettore ufficiale",
-        "es": "escape xml\ncambiar al paquete oficial selector",
-        "pl": "escape xml\nprzełączanie na oficjalny pakiet wyboru",
-        "uk": "втеча xml\nвимикач на офіційному пакеті selector",
-        "zh-cn": "越狱 xml\n切换到正式选择软件包"
       }
     },
     "icon": "logo.png",

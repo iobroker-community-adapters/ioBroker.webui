@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.30.0 (2025-05-25)
 - starting indirect binding fix
 
 ### 1.29.0 (2025-05-25)
