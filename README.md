@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- complexer indirect bindings
+
 ### 1.28.0 (2025-05-03)
 - update packages
 
