@@ -133,6 +133,11 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+
+### __WORK IN PROGRESS__
+- update packages
+- script support for properties
+
 ### 1.30.0 (2025-05-25)
 - starting indirect binding fix
 
