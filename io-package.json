@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.30.0",
+    "version": "1.31.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.31.0": {
+        "en": "update packages\nscript support for properties",
+        "de": "update-pakete\nscript-unterstützung für eigenschaften",
+        "ru": "обновление пакетов\nподдержка скриптов для свойств",
+        "pt": "atualizar pacotes\nsuporte de script para propriedades",
+        "nl": "pakketten bijwerken\nscriptondersteuning voor eigenschappen",
+        "fr": "mettre à jour les paquets\nsupport de script pour les propriétés",
+        "it": "pacchetti di aggiornamento\nsupporto script per le proprietà",
+        "es": "actualizar paquetes\nsoporte de script para propiedades",
+        "pl": "aktualizacja pakietów\nobsługa skryptów dla właściwości",
+        "uk": "оновлення пакетів\nпідтримка сценаріїв властивостей",
+        "zh-cn": "更新软件包\n属性的脚本支持"
+      },
       "1.30.0": {
         "en": "starting indirect binding fix",
         "de": "start indirekter bindungsfix",
@@ -106,19 +119,6 @@
         "pl": "naprawić błąd w przeglądarce\nupdate npms\nzmienić nazwę stylów globalnych\numożliwić stylizację okna dialogowego",
         "uk": "виправлено помилку в екрані\nоновлення npms\nперейменувати глобальні стилі\nдозволяє укладати діалогове вікно",
         "zh-cn": "在屏幕查看器中修正错误\n更新 npms\n重命名全局样式\n允许对话框的样式"
-      },
-      "1.25.2": {
-        "en": "fix null error on props",
-        "de": "nullfehler auf requisiten beheben",
-        "ru": "исправить ошибку null на реквизитов",
-        "pt": "corrigir erro nulo em adereços",
-        "nl": "fix null-fout op rekwisieten",
-        "fr": "correction de l'erreur null sur les accessoires",
-        "it": "correzione di errore null su oggetti",
-        "es": "solucionar error null en props",
-        "pl": "naprawić błąd null na rekwizytach",
-        "uk": "виправити помилку null на пропсах",
-        "zh-cn": "修复道具上的无效错误"
       }
     },
     "icon": "logo.png",

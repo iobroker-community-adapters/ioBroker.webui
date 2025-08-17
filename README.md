@@ -133,8 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-
-### __WORK IN PROGRESS__
+### 1.31.0 (2025-08-17)
 - update packages
 - script support for properties
 
