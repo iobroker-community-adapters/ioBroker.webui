@@ -173,7 +173,7 @@ export function generateCustomControl(name: string, control: IControl) {
                 });
                 if (backup !== undefined) {
                     instance[p] = backup;
-                } else if (currControl.properties[p].default) {
+                } else if (currControl.properties[p].default != null) {
                     instance['_' + p] = currControl.properties[p].default;
                 }
             }
