@@ -7,7 +7,7 @@ export class IobrokerWebuiBindingsEditor extends BindingsEditor {
     static readonly is = 'iobroker-webui-bindings-editor';
 
     constructor(property: IProperty, binding: IBinding & { converter: Record<string, any> }, bindingTarget: BindingTarget, serviceContainer: ServiceContainer, instanceServiceContainer: InstanceServiceContainer, shell: VisualizationShell) {
-        super(property, binding, bindingTarget, serviceContainer, instanceServiceContainer, shell);
+        super(property, binding, bindingTarget, serviceContainer, instanceServiceContainer, shell, { namedConverters: false });
 
         let groupObjectNameControl = this._getDomElement<HTMLDivElement>('groupObjectName');
         let btn = document.createElement('button');
