@@ -43,7 +43,7 @@
     "node": ">=18"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.3.1",
+    "@iobroker/adapter-core": "^3.3.2",
     "@types/node": "^24.3.0"
   },
   "devDependencies": {
@@ -69,7 +69,7 @@
     "@types/json-schema": "^7.0.15",
     "@web/dev-server": "^0.4.6",
     "blockly": "^12.2.0",
-    "chai": "^5.2.1",
+    "chai": "^5.3.1",
     "chai-as-promised": "^8.0.1",
     "construct-style-sheets-polyfill": "^3.1.0",
     "cross-env": "^10.0.0",
