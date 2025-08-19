@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.31.5",
+    "version": "1.31.6",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.31.6": {
+        "en": "Test one more release",
+        "de": "Testen Sie eine weitere Freigabe",
+        "ru": "Проверить еще один выпуск",
+        "pt": "Teste mais uma versão",
+        "nl": "Test nog een keer",
+        "fr": "Tester une dernière libération",
+        "it": "Prova un'altra versione",
+        "es": "Prueba una versión más",
+        "pl": "Przetestuj jeszcze jedno wydanie",
+        "uk": "Тестувати ще один реліз",
+        "zh-cn": "再试一次"
+      },
       "1.31.5": {
         "en": "Fix setting Props with simple scripts",
         "de": "Reparieren Sie Props mit einfachen Skripten",
@@ -106,19 +119,6 @@
         "pl": "aktualizacja pakietów\nobsługa skryptów dla właściwości",
         "uk": "оновлення пакетів\nпідтримка сценаріїв властивостей",
         "zh-cn": "更新软件包\n属性的脚本支持"
-      },
-      "1.30.0": {
-        "en": "starting indirect binding fix",
-        "de": "start indirekter bindungsfix",
-        "ru": "начало косвенного связывания",
-        "pt": "correção de ligação indireta",
-        "nl": "beginnen met indirecte bindingsfix",
-        "fr": "début de la fixation indirecte",
-        "it": "start indirect binding fix",
-        "es": "inicio de fijación indirecta",
-        "pl": "początkowy łącznik pośredni",
-        "uk": "від непрямої фіксації",
-        "zh-cn": "开始间接绑定"
       }
     },
     "icon": "logo.png",
