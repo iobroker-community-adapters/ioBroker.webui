@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.31.2",
+    "version": "1.31.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.31.3": {
+        "en": "NaN not NaN",
+        "de": "NaN nicht NaN",
+        "ru": "Нан не нан",
+        "pt": "NaN não NaN",
+        "nl": "NaN niet NaN",
+        "fr": "NaN pas NaN",
+        "it": "NaN non NaN",
+        "es": "Nan no Nan",
+        "pl": "Nie",
+        "uk": "Не NaN",
+        "zh-cn": "纳恩不纳恩"
+      },
       "1.31.2": {
         "en": "update npms",
         "de": "aktualisierung von npms",
@@ -106,19 +119,6 @@
         "pl": "aktualizacja pakietów",
         "uk": "оновлення пакетів",
         "zh-cn": "更新软件包"
-      },
-      "1.27.1": {
-        "en": "fix xml import",
-        "de": "xml importieren",
-        "ru": "xml импортировать",
-        "pt": "corrigir a importação xml",
-        "nl": "xml-import herstellen",
-        "fr": "correction de l'importation de xml",
-        "it": "correzione xml importazione",
-        "es": "fijar importación xml",
-        "pl": "fix import xml",
-        "uk": "виправлено імпорт xml",
-        "zh-cn": "修正 xml 导入"
       }
     },
     "icon": "logo.png",
