@@ -162,7 +162,7 @@ export function generateCustomControl(name: string, control: IControl) {
                         return this['_' + p];
                     },
                     set(newValue) {
-                        if (this['_' + p] !== newValue) {
+                        if (this['_' + p] !== newValue && (!isNaN(this['_' + p]) || !isNaN(newValue))) {
                             this['_' + p] = newValue;
                             this._bindingsRefresh(p);
                             instance.dispatchEvent(new CustomEvent(PropertiesHelper.camelToDashCase(p) + '-changed', { detail: { newValue } }));

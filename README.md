@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- NaN not NaN
+
 ### 1.31.2 (2025-08-18)
 - update npms
 
