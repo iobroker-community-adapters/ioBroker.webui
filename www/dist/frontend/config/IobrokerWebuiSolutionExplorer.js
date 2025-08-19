@@ -295,20 +295,20 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 }], event);
         };
         return {
-            title: 'Style',
+            title: 'Screens Style',
             folder: false,
             contextMenu: (e, data) => ctxMenu(e),
             dblclick: (e, data) => {
-                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.globalStyle ?? '', 'global style', 'globalStyle');
+                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.globalStyle ?? '', 'screens style', 'globalStyle');
             }
         };
     }
     _createFontDeclarationsNode() {
         return {
-            title: 'Font Declaration Style',
+            title: 'Global Style',
             folder: false,
             dblclick: (e, data) => {
-                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.fontDeclarations ?? '', 'font declarations style', 'fontDeclarations');
+                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.fontDeclarations ?? '', 'global style', 'fontDeclarations');
             }
         };
     }

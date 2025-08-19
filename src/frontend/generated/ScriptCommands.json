@@ -10,6 +10,9 @@
                     "description": "A formula to calculate the new signal value, can contain other signals in angle brackets: {}\nExample: {adapter.0.level} * 100 + 30",
                     "type": "string"
                 },
+                "target": {
+                    "$ref": "#/definitions/signalTarget"
+                },
                 "targetSignal": {
                     "description": "Name of the signal",
                     "format": "signal",
@@ -24,6 +27,7 @@
                 "type",
                 "targetSignal",
                 "formula",
+                "target",
                 "additionalData"
             ],
             "type": "object"
@@ -34,13 +38,16 @@
                     "type": "string"
                 },
                 "bitNumber": {
-                    "default": 0,
                     "type": "number"
                 },
                 "signal": {
                     "description": "Name of the signal",
                     "format": "signal",
                     "type": "string"
+                },
+                "target": {
+                    "$ref": "#/definitions/signalTarget",
+                    "default": 0
                 },
                 "type": {
                     "const": "ClearBitInSignal",
@@ -50,12 +57,13 @@
             "propertyOrder": [
                 "type",
                 "signal",
+                "target",
                 "bitNumber",
                 "additionalData"
             ],
             "type": "object"
         },
-        "ClearSiganlsInGroup": {
+        "ClearSignalsInGroup": {
             "properties": {
                 "additionalData": {
                     "type": "string"
@@ -65,7 +73,7 @@
                     "type": "string"
                 },
                 "type": {
-                    "const": "ClearSiganlsInGroup",
+                    "const": "ClearSignalsInGroup",
                     "type": "string"
                 }
             },
@@ -215,7 +223,7 @@
                 },
                 "destinationFolder": {
                     "description": "name of destination folder",
-                    "type": "number"
+                    "type": "string"
                 },
                 "sourceFolder": {
                     "description": "name of the source folder",
@@ -244,6 +252,9 @@
                     "format": "signal",
                     "type": "string"
                 },
+                "target": {
+                    "$ref": "#/definitions/signalTarget"
+                },
                 "type": {
                     "const": "DecrementSignalValue",
                     "type": "string"
@@ -256,6 +267,7 @@
                 "type",
                 "signal",
                 "value",
+                "target",
                 "additionalData"
             ],
             "type": "object"
@@ -380,6 +392,9 @@
                     "format": "signal",
                     "type": "string"
                 },
+                "target": {
+                    "$ref": "#/definitions/signalTarget"
+                },
                 "type": {
                     "const": "IncrementSignalValue",
                     "type": "string"
@@ -392,6 +407,7 @@
                 "type",
                 "signal",
                 "value",
+                "target",
                 "additionalData"
             ],
             "type": "object"
@@ -489,6 +505,10 @@
                 "closeable": {
                     "type": "boolean"
                 },
+                "cssClass": {
+                    "description": "css class to apply to dialog",
+                    "type": "string"
+                },
                 "height": {
                     "type": "string"
                 },
@@ -522,6 +542,7 @@
                 }
             },
             "propertyOrder": [
+                "cssClass",
                 "type",
                 "screen",
                 "title",
@@ -671,13 +692,16 @@
                     "type": "string"
                 },
                 "bitNumber": {
-                    "default": 0,
                     "type": "number"
                 },
                 "signal": {
                     "description": "Name of the signal",
                     "format": "signal",
                     "type": "string"
+                },
+                "target": {
+                    "$ref": "#/definitions/signalTarget",
+                    "default": 0
                 },
                 "type": {
                     "const": "SetBitInSignal",
@@ -687,6 +711,7 @@
             "propertyOrder": [
                 "type",
                 "signal",
+                "target",
                 "bitNumber",
                 "additionalData"
             ],
@@ -771,6 +796,9 @@
                     "format": "signal",
                     "type": "string"
                 },
+                "target": {
+                    "$ref": "#/definitions/signalTarget"
+                },
                 "type": {
                     "const": "SetSignalValue",
                     "type": "string"
@@ -780,6 +808,7 @@
             "propertyOrder": [
                 "type",
                 "signal",
+                "target",
                 "value",
                 "additionalData"
             ],
@@ -903,13 +932,16 @@
                     "type": "string"
                 },
                 "bitNumber": {
-                    "default": 0,
                     "type": "number"
                 },
                 "signal": {
                     "description": "Name of the signal",
                     "format": "signal",
                     "type": "string"
+                },
+                "target": {
+                    "$ref": "#/definitions/signalTarget",
+                    "default": 0
                 },
                 "type": {
                     "const": "ToggleBitInSignal",
@@ -919,6 +951,7 @@
             "propertyOrder": [
                 "type",
                 "signal",
+                "target",
                 "bitNumber",
                 "additionalData"
             ],
@@ -934,6 +967,9 @@
                     "format": "signal",
                     "type": "string"
                 },
+                "target": {
+                    "$ref": "#/definitions/signalTarget"
+                },
                 "type": {
                     "const": "ToggleSignalValue",
                     "type": "string"
@@ -942,6 +978,7 @@
             "propertyOrder": [
                 "type",
                 "signal",
+                "target",
                 "additionalData"
             ],
             "type": "object"
@@ -972,9 +1009,6 @@
             "anyOf": [
                 {
                     "$ref": "#/definitions/OpenUrl"
-                },
-                {
-                    "$ref": "#/definitions/OpenDialog"
                 },
                 {
                     "$ref": "#/definitions/CloseDialog"
@@ -1034,7 +1068,7 @@
                     "$ref": "#/definitions/WriteSignalsInGroup"
                 },
                 {
-                    "$ref": "#/definitions/ClearSiganlsInGroup"
+                    "$ref": "#/definitions/ClearSignalsInGroup"
                 },
                 {
                     "$ref": "#/definitions/RunScript"
@@ -1070,6 +1104,9 @@
                     "$ref": "#/definitions/OpenScreen"
                 },
                 {
+                    "$ref": "#/definitions/OpenDialog"
+                },
+                {
                     "$ref": "#/definitions/OpenScreenInScreenViewer"
                 }
             ]
@@ -1094,6 +1131,16 @@
                 "additionalData"
             ],
             "type": "object"
+        },
+        "signalTarget": {
+            "description": "signal - a signal (the default)\nproperty - a property defined in the current screen/control\nelementProperty - a property defined on the elment raising the event\nrootProperty - a property defined on the root element",
+            "enum": [
+                "elementProperty",
+                "property",
+                "rootProperty",
+                "signal"
+            ],
+            "type": "string"
         }
     }
 }

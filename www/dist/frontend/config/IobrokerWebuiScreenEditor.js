@@ -1,5 +1,5 @@
 import { BaseCustomWebComponentConstructorAppend, css, html } from "@node-projects/base-custom-webcomponent";
-import { DocumentContainer, } from "@node-projects/web-component-designer";
+import { DocumentContainer, PropertiesHelper, } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 export const defaultNewStyle = `:host {
 }
@@ -79,6 +79,17 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
             disableTextChangedEvent = false;
         });
         this.documentContainer.additionalStyleString = iobrokerHandler.config?.globalStyle ?? '';
+        if (style) {
+            try {
+                const ret = await window.appShell.bindingsHelper.parseCssBindings(style, this.documentContainer.designerView.designerCanvas.rootDesignItem.element, this.relativeBindingsPrefix, this.documentContainer.designerView.designerCanvas.rootDesignItem.element);
+                this._styleBindings = ret[1];
+                const sr = this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot;
+                sr.adoptedStyleSheets = [...sr.adoptedStyleSheets, ret[0]];
+            }
+            catch (err) {
+                console.error(err);
+            }
+        }
         if (html) {
             this.documentContainer.content = html;
             this.handlePropertyChanges();
@@ -106,19 +117,43 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
         if (this.#bindingsEnabled != value) {
             this.#bindingsEnabled == value;
             if (value) {
-                this._webuiBindings = window.appShell.bindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot, this.relativeBindingsPrefix, null);
+                this.applyBindings();
             }
             else {
-                this._webuiBindings?.forEach(x => x());
-                this._styleBindings?.forEach(x => x());
+                this.removeBindings();
             }
         }
     }
     relativeBindingsPrefix = '';
     applyBindings() {
         this.removeBindings();
-        if (this.bindingsEnabled)
-            this._webuiBindings = window.appShell.bindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot, this.relativeBindingsPrefix, null);
+        if (this.bindingsEnabled) {
+            try {
+                for (let p in this.properties) {
+                    Object.defineProperty(this.documentContainer.designerView.designerCanvas.rootDesignItem.element, p, {
+                        get() {
+                            return this['_' + p];
+                        },
+                        set(newValue) {
+                            if (this['_' + p] !== newValue) {
+                                this['_' + p] = newValue;
+                                this._bindingsRefresh(p);
+                                this.documentContainer.designerView.designerCanvas.rootDesignItem.element.dispatchEvent(new CustomEvent(PropertiesHelper.camelToDashCase(p) + '-changed', { detail: { newValue } }));
+                            }
+                        },
+                        enumerable: true,
+                        configurable: true,
+                    });
+                    if (this.properties[p].default) {
+                        this.documentContainer.designerView.designerCanvas.rootDesignItem.element['_' + p] = this.properties[p].default;
+                    }
+                }
+            }
+            catch (err) {
+                console.warn("applyBindings()", err);
+            }
+            this._webuiBindings = window.appShell.bindingsHelper.applyAllBindings(this.documentContainer.designerView.designerCanvas.rootDesignItem.element.shadowRoot, this.relativeBindingsPrefix, this.documentContainer.designerView.designerCanvas.rootDesignItem.element);
+        }
     }
     removeBindings() {
         this._webuiBindings?.forEach(x => x());

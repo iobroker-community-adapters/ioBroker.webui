@@ -17,6 +17,18 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
     *[node-projects-hide-at-run-time] {
         display: none !important;
     }`;
+    static styleIfFromScreen = css `
+    :host {
+        background: transparent;
+        border: none;
+        transform: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    *[node-projects-hide-at-run-time] {
+        display: none !important;
+    }`;
     static template = html `<div id="root"></div>`;
     _iobBindings;
     _loading;
@@ -179,39 +191,22 @@ let ScreenViewer = class ScreenViewer extends BaseCustomWebComponentConstructorA
         else
             this._rootShadow.adoptedStyleSheets = [ScreenViewer_1.style];
         if (this._useStyleFromScreenForViewer) {
-            this.shadowRoot.adoptedStyleSheets = this._rootShadow.adoptedStyleSheets;
-            this._root.style.setProperty('background', 'transparent', 'important');
-            this._root.style.setProperty('border', 'none', 'important');
-            this._root.style.setProperty('transform', 'none', 'important');
-            this._root.style.setProperty('padding', '0', 'important');
-            this._root.style.setProperty('margin', '0', 'important');
-            this.style.setProperty('display', 'block', 'important');
-        }
-        else {
-            this.shadowRoot.adoptedStyleSheets = [];
-            this._root.style.removeProperty('background');
-            this._root.style.removeProperty('border');
-            this._root.style.removeProperty('transform');
-            this._root.style.removeProperty('padding');
-            this._root.style.removeProperty('margin');
-            this.style.removeProperty('display');
+            this.shadowRoot.adoptedStyleSheets = [ScreenViewer_1.styleIfFromScreen, ...this._rootShadow.adoptedStyleSheets];
         }
         let myDocument;
-        //@ts-ignore
         if (Document.parseHTMLUnsafe && !isFirefox) {
-            //@ts-ignore
-            myDocument = Document.parseHTMLUnsafe(html);
+            this._rootShadow.setHTMLUnsafe(html);
         }
         else {
             //@ts-ignore
             myDocument = new DOMParser().parseFromString(html, 'text/html', { includeShadowRoots: true });
+            const fragment = document.createDocumentFragment();
+            for (const n of myDocument.head.childNodes)
+                fragment.appendChild(n);
+            for (const n of myDocument.body.childNodes)
+                fragment.appendChild(n);
+            this._rootShadow.appendChild(fragment);
         }
-        const fragment = document.createDocumentFragment();
-        for (const n of myDocument.head.childNodes)
-            fragment.appendChild(n);
-        for (const n of myDocument.body.childNodes)
-            fragment.appendChild(n);
-        this._rootShadow.appendChild(fragment);
         const res = window.appShell.bindingsHelper.applyAllBindings(this._rootShadow, this.relativeSignalsPath, this);
         if (this._iobBindings)
             this._iobBindings.push(...res);

@@ -1,10 +1,10 @@
 import { BindingsEditor } from "@node-projects/web-component-designer-visualization-addons";
-import { openSelectIdDialog } from "iobroker-webcomponent-object-selector/dist/selectIdHelper.js";
+import { openSelectIdDialog } from "@iobroker/webcomponent-selectid-dialog/dist/selectIdHelper.js";
 //@ts-ignore
 export class IobrokerWebuiBindingsEditor extends BindingsEditor {
     static is = 'iobroker-webui-bindings-editor';
     constructor(property, binding, bindingTarget, serviceContainer, instanceServiceContainer, shell) {
-        super(property, binding, bindingTarget, serviceContainer, instanceServiceContainer, shell);
+        super(property, binding, bindingTarget, serviceContainer, instanceServiceContainer, shell, { namedConverters: false });
         let groupObjectNameControl = this._getDomElement('groupObjectName');
         let btn = document.createElement('button');
         btn.textContent = 'IOB';

@@ -51,7 +51,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
         for (let e of this.#eventListeners) {
             this.addEventListener(e[0], e[1]);
         }
-        this.#resizeObserver.observe(this);
+        this.#resizeObserver?.observe(this);
     }
     disconnectedCallback() {
         for (let e of this.#eventListeners) {
@@ -61,7 +61,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
         for (const b of this.#bindings)
             b();
         this.#bindings = null;
-        this.#resizeObserver.unobserve(this);
+        this.#resizeObserver?.unobserve(this);
     }
     _assignEvent(event, callback) {
         const arrayEl = [event, callback];
@@ -133,12 +133,17 @@ export function generateCustomControl(name, control) {
             let instance = Reflect.construct(BaseCustomControl, [], window['IobrokerWebuiCustomControl' + name]);
             let currControl = window['IobrokerWebuiCustomControl' + name][webuiCustomControlSymbol].control;
             for (let p in currControl.properties) {
+                let backup = undefined;
+                if (p in instance) {
+                    backup = instance[p];
+                    delete instance[p];
+                }
                 Object.defineProperty(instance, p, {
                     get() {
                         return this['_' + p];
                     },
                     set(newValue) {
-                        if (this['_' + p] !== newValue) {
+                        if (this['_' + p] !== newValue && (!isNaN(this['_' + p]) || !isNaN(newValue))) {
                             this['_' + p] = newValue;
                             this._bindingsRefresh(p);
                             instance.dispatchEvent(new CustomEvent(PropertiesHelper.camelToDashCase(p) + '-changed', { detail: { newValue } }));
@@ -147,7 +152,10 @@ export function generateCustomControl(name, control) {
                     enumerable: true,
                     configurable: true,
                 });
-                if (currControl.properties[p].default) {
+                if (backup !== undefined) {
+                    instance[p] = backup;
+                }
+                else if (currControl.properties[p].default != null) {
                     instance['_' + p] = currControl.properties[p].default;
                 }
             }

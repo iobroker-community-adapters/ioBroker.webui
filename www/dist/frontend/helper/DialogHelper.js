@@ -3,10 +3,10 @@ export class IoBrokerWebuiDialog extends BaseCustomWebComponentConstructorAppend
     container;
     uniqueId;
     static template = html `
-        <div id="root" class="dialog-box">
-            <h3 id="head" class="dialog-title">&nbsp;</h3>
-            <a id="close" href="javascript:;" class="dialog-close" title="Close">&times;</a>
-            <div id="content" class="dialog-content"></div>
+        <div id="root" part="box" class="dialog-box">
+            <h3 id="head" part="head" class="dialog-title">&nbsp;</h3>
+            <a id="close" part="close" href="javascript:;" class="dialog-close" title="Close">&times;</a>
+            <div id="content" part="content" class="dialog-content"></div>
         </div>`;
     static style = css `
             #root {
@@ -145,6 +145,9 @@ export class IoBrokerWebuiDialog extends BaseCustomWebComponentConstructorAppend
         }
         if (options.closeable === false || options.closeable === true) {
             dlg.closeable = options.closeable;
+        }
+        if (options.cssClass) {
+            dlg.className = options.cssClass;
         }
         document.getElementById('overlayLayer').appendChild(dlg);
         return uniqueId;

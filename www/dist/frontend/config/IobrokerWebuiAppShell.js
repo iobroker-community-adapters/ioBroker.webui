@@ -160,7 +160,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         this.serviceContainer = serviceContainer;
         new CommandHandling(this._dockManager, this, serviceContainer);
         this._dockManager.addLayoutListener({
-            onActiveDocumentChange: (manager, panel, previousPanel) => {
+            onActiveDocumentChange: async (manager, panel, previousPanel) => {
                 if (previousPanel) {
                     let element = this._dock.getElementInSlot(previousPanel.elementContent);
                     if (element?.deactivated)
