@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.31.3",
+    "version": "1.31.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.31.4": {
+        "en": "SimpleScripts should be able to set Properties",
+        "de": "SimpleScripts sollten in der Lage sein, Eigenschaften festzulegen",
+        "ru": "SimpleScripts должен уметь устанавливать свойства",
+        "pt": "SimpleScripts deve ser capaz de definir Propriedades",
+        "nl": "SimpleScripts moet eigenschappen kunnen instellen",
+        "fr": "SimpleScripts devrait pouvoir définir Propriétés",
+        "it": "SimpleScripts dovrebbe essere in grado di impostare Proprietà",
+        "es": "SimpleScripts debe ser capaz de establecer Propiedades",
+        "pl": "Scenariusze powinny być w stanie ustawić właściwości",
+        "uk": "Прості скрипти повинні бути в змозі встановити властивості",
+        "zh-cn": "简单脚本应该能够设置属性"
+      },
       "1.31.3": {
         "en": "NaN not NaN",
         "de": "NaN nicht NaN",
@@ -106,19 +119,6 @@
         "pl": "złożone wiązania pośrednie",
         "uk": "складні непрямі зв'язки",
         "zh-cn": "较复杂的间接约束"
-      },
-      "1.28.0": {
-        "en": "update packages",
-        "de": "update-pakete",
-        "ru": "обновление пакетов",
-        "pt": "pacotes de atualização",
-        "nl": "pakketten bijwerken",
-        "fr": "mettre à jour les paquets",
-        "it": "pacchetti di aggiornamento",
-        "es": "actualizar paquetes",
-        "pl": "aktualizacja pakietów",
-        "uk": "оновлення пакетів",
-        "zh-cn": "更新软件包"
       }
     },
     "icon": "logo.png",
