@@ -1133,11 +1133,10 @@
             "type": "object"
         },
         "signalTarget": {
-            "description": "signal - a signal (the default)\nproperty - a property defined in the current screen/control\nelementProperty - a property defined on the elment raising the event\nrootProperty - a property defined on the root element",
+            "description": "signal - a signal (the default)\nproperty - a property defined in the current screen/control\nelementProperty - a property defined on the element raising the event",
             "enum": [
                 "elementProperty",
                 "property",
-                "rootProperty",
                 "signal"
             ],
             "type": "string"
