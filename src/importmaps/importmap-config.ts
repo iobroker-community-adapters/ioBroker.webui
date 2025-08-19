@@ -3,7 +3,7 @@ const importMapConfig = {
         "monaco-editor/": "./node_modules/monaco-editor/",
         "@node-projects/web-component-designer": "./node_modules/@node-projects/web-component-designer/dist/index.js",
         "@node-projects/web-component-designer/": "./node_modules/@node-projects/web-component-designer/",
-        "@adobe/css-tools": "./node_modules/@adobe/css-tools/dist/index.mjs",
+        "@adobe/css-tools": "./node_modules/@adobe/css-tools/dist/esm/adobe-css-tools.mjs",
         "dock-spawn-ts/": "./node_modules/dock-spawn-ts/",
         "esprima-next": "./node_modules/esprima-next/dist/esprima.js",
         "@node-projects/base-custom-webcomponent/": "./node_modules/@node-projects/base-custom-webcomponent/",
