@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.31.4",
+    "version": "1.31.5",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.31.5": {
+        "en": "Fix setting Props with simple scripts",
+        "de": "Reparieren Sie Props mit einfachen Skripten",
+        "ru": "Исправить настройку Props с помощью простых скриптов",
+        "pt": "Corrigir a configuração Props com scripts simples",
+        "nl": "Het instellen van Props met eenvoudige scripts",
+        "fr": "Correction du réglage Props avec des scripts simples",
+        "it": "Fissare le impostazioni Props con semplici script",
+        "es": "Corregir Props con scripts simples",
+        "pl": "Napraw ustawienia Propów za pomocą prostych skryptów",
+        "uk": "Виправлення налаштування пропсів з простими скриптами",
+        "zh-cn": "以简单的脚本修正设置道具"
+      },
       "1.31.4": {
         "en": "SimpleScripts should be able to set Properties",
         "de": "SimpleScripts sollten in der Lage sein, Eigenschaften festzulegen",
@@ -106,19 +119,6 @@
         "pl": "początkowy łącznik pośredni",
         "uk": "від непрямої фіксації",
         "zh-cn": "开始间接绑定"
-      },
-      "1.29.0": {
-        "en": "complexer indirect bindings",
-        "de": "komplexe indirekte bindungen",
-        "ru": "более сложные косвенные связывания",
-        "pt": "ligações indiretas mais complexas",
-        "nl": "complexere indirecte bindingen",
-        "fr": "des liaisons indirectes plus complexes",
-        "it": "leganti indiretti più complessi",
-        "es": "más complejas uniones indirectas",
-        "pl": "złożone wiązania pośrednie",
-        "uk": "складні непрямі зв'язки",
-        "zh-cn": "较复杂的间接约束"
       }
     },
     "icon": "logo.png",
