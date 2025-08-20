@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- Support css prop suggestions
+
 ### 1.31.6 (2025-08-19)
 - Test one more release
 
