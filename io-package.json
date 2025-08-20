@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.31.6",
+    "version": "1.32.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.32.0": {
+        "en": "Support css prop suggestions",
+        "de": "Support css prop Vorschläge",
+        "ru": "Поддержка предложений css",
+        "pt": "Suportar sugestões de suporte para css",
+        "nl": "Ondersteuning css prop suggesties",
+        "fr": "Soutien css prop suggestions",
+        "it": "Support css prop suggerimenti",
+        "es": "Sugerencias de apoyo css",
+        "pl": "Support sugestie css prop",
+        "uk": "Підтримка пропозицій css",
+        "zh-cn": "支持 css 道具建议"
+      },
       "1.31.6": {
         "en": "Test one more release",
         "de": "Testen Sie eine weitere Freigabe",
@@ -106,19 +119,6 @@
         "pl": "usuń nod 18 z działań github",
         "uk": "remove nod 18 від github дії",
         "zh-cn": "从 github 动作中删除点头 18"
-      },
-      "1.31.0": {
-        "en": "update packages\nscript support for properties",
-        "de": "update-pakete\nscript-unterstützung für eigenschaften",
-        "ru": "обновление пакетов\nподдержка скриптов для свойств",
-        "pt": "atualizar pacotes\nsuporte de script para propriedades",
-        "nl": "pakketten bijwerken\nscriptondersteuning voor eigenschappen",
-        "fr": "mettre à jour les paquets\nsupport de script pour les propriétés",
-        "it": "pacchetti di aggiornamento\nsupporto script per le proprietà",
-        "es": "actualizar paquetes\nsoporte de script para propiedades",
-        "pl": "aktualizacja pakietów\nobsługa skryptów dla właściwości",
-        "uk": "оновлення пакетів\nпідтримка сценаріїв властивостей",
-        "zh-cn": "更新软件包\n属性的脚本支持"
       }
     },
     "icon": "logo.png",
