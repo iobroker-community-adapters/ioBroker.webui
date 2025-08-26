@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.32.0",
+    "version": "1.33.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.33.0": {
+        "en": "fix NaN check",
+        "de": "naN-Check",
+        "ru": "проверьте NaN",
+        "pt": "corrigir verificação NaN",
+        "nl": "naN-controle herstellen",
+        "fr": "correction du contrôle NaN",
+        "it": "correzione del controllo NaN",
+        "es": "arreglar NaN",
+        "pl": "fix NaN check",
+        "uk": "виправити NaN перевірити",
+        "zh-cn": "修复NaN 检查"
+      },
       "1.32.0": {
         "en": "Support css prop suggestions",
         "de": "Support css prop Vorschläge",
@@ -106,19 +119,6 @@
         "pl": "update npms",
         "uk": "оновлення npms",
         "zh-cn": "更新 npms"
-      },
-      "1.31.1": {
-        "en": "remove nod 18 from github actions",
-        "de": "nod 18 von github aktionen entfernen",
-        "ru": "удалить кивок 18 из действий github",
-        "pt": "remover aceno 18 das ações do github",
-        "nl": "verwijderen nod 18 uit github acties",
-        "fr": "supprimer le nod 18 des actions github",
-        "it": "rimuovere nd 18 da azioni github",
-        "es": "eliminar nod 18 de las acciones de github",
-        "pl": "usuń nod 18 z działań github",
-        "uk": "remove nod 18 від github дії",
-        "zh-cn": "从 github 动作中删除点头 18"
       }
     },
     "icon": "logo.png",

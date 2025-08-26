@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.33.0 (2025-08-26)
 - fix NaN check
 
 ### 1.32.0 (2025-08-20)
