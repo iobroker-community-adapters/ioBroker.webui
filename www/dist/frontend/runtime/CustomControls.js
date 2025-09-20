@@ -143,7 +143,7 @@ export function generateCustomControl(name, control) {
                         return this['_' + p];
                     },
                     set(newValue) {
-                        if (this['_' + p] !== newValue && (!isNaN(this['_' + p]) || !isNaN(newValue))) {
+                        if (this['_' + p] !== newValue && (!Number.isNaN(this['_' + p]) || !Number.isNaN(newValue))) {
                             this['_' + p] = newValue;
                             this._bindingsRefresh(p);
                             instance.dispatchEvent(new CustomEvent(PropertiesHelper.camelToDashCase(p) + '-changed', { detail: { newValue } }));

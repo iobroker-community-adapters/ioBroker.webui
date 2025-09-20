@@ -127,6 +127,7 @@
                     "enum": [
                         "!=",
                         "!=null",
+                        "&&",
                         "<",
                         "<=",
                         "==",
@@ -134,7 +135,8 @@
                         "==null",
                         "==true",
                         ">",
-                        ">="
+                        ">=",
+                        "||"
                     ],
                     "type": "string"
                 },
@@ -983,6 +985,43 @@
             ],
             "type": "object"
         },
+        "ToggleSignalValueThroughList": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "signal": {
+                    "description": "Name of the signal",
+                    "format": "signal",
+                    "type": "string"
+                },
+                "target": {
+                    "$ref": "#/definitions/signalTarget"
+                },
+                "type": {
+                    "const": "ToggleSignalValueThroughList",
+                    "type": "string"
+                },
+                "valueList": {
+                    "items": {
+                        "type": [
+                            "string",
+                            "number",
+                            "boolean"
+                        ]
+                    },
+                    "type": "array"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "valueList",
+                "signal",
+                "target",
+                "additionalData"
+            ],
+            "type": "object"
+        },
         "UnsubscribeSignal": {
             "properties": {
                 "additionalData": {
@@ -1015,6 +1054,9 @@
                 },
                 {
                     "$ref": "#/definitions/ToggleSignalValue"
+                },
+                {
+                    "$ref": "#/definitions/ToggleSignalValueThroughList"
                 },
                 {
                     "$ref": "#/definitions/SetSignalValue"
