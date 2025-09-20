@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- script command wrong name fix
+
 ### 1.34.0 (2025-09-20)
 - designer and script updates
 
