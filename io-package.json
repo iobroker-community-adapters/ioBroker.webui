@@ -160,7 +160,6 @@
     "serviceStates": false,
     "singleton": true,
     "type": "visualization",
-    "highlight": true,
     "noConfig": true,
     "adminUI": {
       "config": "none"
