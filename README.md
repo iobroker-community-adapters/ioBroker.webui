@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.34.2 (2025-09-21)
 - anaother small fix in signal handling
 
 ### 1.34.1 (2025-09-20)

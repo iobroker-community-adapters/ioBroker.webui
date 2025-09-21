@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.34.1",
+    "version": "1.34.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.34.2": {
+        "en": "anaother small fix in signal handling",
+        "de": "Weitere kleine Korrektur in der Signalerkennung.",
+        "ru": "Еще одно небольшое исправление в обработке сигналов",
+        "pt": "Outro pequeno ajuste no tratamento de sinais.",
+        "nl": "Nog een kleine fix in signaalafhandeling",
+        "fr": "Autre petite correction dans la gestion des signaux",
+        "it": "Un altro piccolo fix nella gestione del segnale",
+        "es": "Otro pequeño arreglo en el manejo de señales",
+        "pl": "kolejna drobna poprawka w obsłudze sygnałów",
+        "uk": "ще один невеликий виправлення у керуванні сигналами",
+        "zh-cn": "信号处理中的另一个小修复"
+      },
       "1.34.1": {
         "en": "script command wrong name fix",
         "de": "Fehler bei der Namensschreibweise des Skriptbefehls behoben",
@@ -106,19 +119,6 @@
         "pl": "Napraw ustawienia Propów za pomocą prostych skryptów",
         "uk": "Виправлення налаштування пропсів з простими скриптами",
         "zh-cn": "以简单的脚本修正设置道具"
-      },
-      "1.31.4": {
-        "en": "SimpleScripts should be able to set Properties",
-        "de": "SimpleScripts sollten in der Lage sein, Eigenschaften festzulegen",
-        "ru": "SimpleScripts должен уметь устанавливать свойства",
-        "pt": "SimpleScripts deve ser capaz de definir Propriedades",
-        "nl": "SimpleScripts moet eigenschappen kunnen instellen",
-        "fr": "SimpleScripts devrait pouvoir définir Propriétés",
-        "it": "SimpleScripts dovrebbe essere in grado di impostare Proprietà",
-        "es": "SimpleScripts debe ser capaz de establecer Propiedades",
-        "pl": "Scenariusze powinny być w stanie ustawić właściwości",
-        "uk": "Прості скрипти повинні бути в змозі встановити властивості",
-        "zh-cn": "简单脚本应该能够设置属性"
       }
     },
     "icon": "logo.png",
