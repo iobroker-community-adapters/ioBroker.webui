@@ -237,7 +237,7 @@ export class IobrokerHandler implements VisualizationHandler {
     }
 
     async saveObject(type: 'screen' | 'control', name: string, data: IScreen | IControl) {
-        this._saveObjectToFile(data, "/" + this.configPath + type + "s/" + name + '.' + type);
+        await this._saveObjectToFile(data, "/" + this.configPath + type + "s/" + name + '.' + type);
         if (this.#cache.has(type))
             this.#cache.get(type).set(name, data);
         if (type == 'control')
@@ -551,6 +551,8 @@ export class IobrokerHandler implements VisualizationHandler {
                     break;
                 case "objectChanged":
                     const d = JSON.parse(data);
+                    if (this.#cache.has(d.type))
+                        this.#cache.get(d.type).delete(d.name);
                     if (d.type == 'control' && d.name)
                         generateCustomControl(d.name, <IControl>await iobrokerHandler.getWebuiObject(d.type, d.name));
                     this.objectsChanged.emit(d);
