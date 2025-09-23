@@ -243,7 +243,7 @@ export class IobrokerHandler implements VisualizationHandler {
         if (type == 'control')
             this._controlNames = null;
         //this.objectsChanged.emit({ type, name });
-        this.sendCommand(<any>"objectChanged", JSON.stringify({ type, name }));
+        this.sendCommand(<any>"objectChanged", JSON.stringify({ type, name }), '*');
     }
 
     async removeObject(type: 'screen' | 'control', name: string) {
@@ -512,10 +512,10 @@ export class IobrokerHandler implements VisualizationHandler {
         await this.connection.writeFile64(this.namespaceFiles, name, await <any>binary.arrayBuffer());
     }
 
-    async sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected' | 'uiChangedView', data?: string): Promise<void> {
+    async sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected' | 'uiChangedView', data?: string, clientId?: string): Promise<void> {
         let p = [
             this.connection.setState(this.namespace + '.control.data', { val: data }),
-            this.connection.setState(this.namespace + '.control.clientIds', { val: this.clientId })
+            this.connection.setState(this.namespace + '.control.clientIds', { val: clientId ?? this.clientId })
         ];
         await Promise.all(p);
         await this.connection.setState(this.namespace + '.control.command', { val: command });
