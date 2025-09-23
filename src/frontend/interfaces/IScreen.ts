@@ -9,6 +9,6 @@ export interface IScreen {
 export interface IScreenSettings {
     width?: string;
     height?: string;
-    addoptedStyles?: string[];
+    adoptedStyles?: string[];
     stretch?: 'none' | 'fill' | 'uniform' | 'uniformToFill';
 }

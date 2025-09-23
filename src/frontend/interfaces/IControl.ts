@@ -15,6 +15,6 @@ export interface IControlSettings {
      * CustomControl does include Global Style in it's shadowroot
      */
     useGlobalStyle?: boolean;
-    addoptedStyles?: string[];
+    adoptedStyles?: string[];
     bindToSize?: boolean;
 }
