@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- forgett to parse bindings
+
 ### 1.35.1 (2025-09-23)
 - fix reload custom controls
 

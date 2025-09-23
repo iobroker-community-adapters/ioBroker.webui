@@ -71,6 +71,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
                 this._rootDocumentFragment = (<any>this.constructor).template.content.cloneNode(true);
                 this.shadowRoot.innerHTML = '';
                 this.shadowRoot.appendChild(this._rootDocumentFragment);
+                this._bindingsParse(null, true);
                 this.connectedCallback();
             }
         });
