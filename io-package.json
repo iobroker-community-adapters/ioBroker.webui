@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.35.1",
+    "version": "1.35.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.35.2": {
+        "en": "forgett to parse bindings",
+        "de": "vergess auf parse bindungen",
+        "ru": "забыли разобрать привязки",
+        "pt": "esquecido de analisar as ligações",
+        "nl": "vergeten om bindingen te ontleden",
+        "fr": "oublier d'analyser les liaisons",
+        "it": "dimenticare di parse bindings",
+        "es": "olvidarse de parse bindings",
+        "pl": "zapominanie o przypisie",
+        "uk": "забути в обв'язках",
+        "zh-cn": "忘记解析绑定"
+      },
       "1.35.1": {
         "en": "fix reload custom controls",
         "de": "reload benutzerdefinierte bedienelemente",
@@ -106,19 +119,6 @@
         "pl": "fix NaN check",
         "uk": "виправити NaN перевірити",
         "zh-cn": "修复NaN 检查"
-      },
-      "1.32.0": {
-        "en": "Support css prop suggestions",
-        "de": "Support css prop Vorschläge",
-        "ru": "Поддержка предложений css",
-        "pt": "Suportar sugestões de suporte para css",
-        "nl": "Ondersteuning css prop suggesties",
-        "fr": "Soutien css prop suggestions",
-        "it": "Support css prop suggerimenti",
-        "es": "Sugerencias de apoyo css",
-        "pl": "Support sugestie css prop",
-        "uk": "Підтримка пропозицій css",
-        "zh-cn": "支持 css 道具建议"
       }
     },
     "icon": "logo.png",
