@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.35.3",
+    "version": "1.35.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.35.4": {
+        "en": "clear cache on reload",
+        "de": "löschen cache auf nachladen",
+        "ru": "чистый кэш на перезагрузке",
+        "pt": "limpar cache ao recarregar",
+        "nl": "cache wissen bij herladen",
+        "fr": "effacer le cache lors du rechargement",
+        "it": "cache chiara su ricarica",
+        "es": "caché transparente en la recarga",
+        "pl": "klarowna pamięć podręczna przy ponownym załadowaniu",
+        "uk": "прозорий кеш на перевантаження",
+        "zh-cn": "重新装入时清除缓存"
+      },
       "1.35.3": {
         "en": "object changed to all clients",
         "de": "objekt geändert für alle kunden",
@@ -106,19 +119,6 @@
         "pl": "naprawiono błąd związany z nieprawidłową nazwą polecenia skryptu",
         "uk": "виправлено неправильну назву команди в скрипті",
         "zh-cn": "脚本命令名称修复"
-      },
-      "1.34.0": {
-        "en": "designer and script updates",
-        "de": "Designer- und Skriptaktualisierungen",
-        "ru": "обновления дизайна и скриптов",
-        "pt": "Atualizações de design e scripts",
-        "nl": "ontwerper- en scriptupdates",
-        "fr": "Mises à jour du designer et du script",
-        "it": "Aggiornamenti del designer e degli script",
-        "es": "Actualizaciones de diseño y guionistas",
-        "pl": "aktualizacje dotyczące projektantów i skryptów",
-        "uk": "оновлення дизайну та скриптів",
-        "zh-cn": "设计师和脚本更新"
       }
     },
     "icon": "logo.png",
