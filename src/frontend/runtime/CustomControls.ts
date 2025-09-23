@@ -1,4 +1,4 @@
-import { BaseCustomWebComponentConstructorAppend, css, cssFromString } from "@node-projects/base-custom-webcomponent";
+import { BaseCustomWebComponentConstructorAppend, css, cssFromString, Disposable } from "@node-projects/base-custom-webcomponent";
 import { IControl } from "../interfaces/IControl.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { PropertiesHelper } from "@node-projects/web-component-designer/dist/elements/services/propertiesService/services/PropertiesHelper.js";
@@ -19,6 +19,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     #eventListeners: [name: string, callback: (...args) => void][] = [];
     #resizeObserver: ResizeObserver;
     #specialValueHandler: SpecialValueHandler;
+    #controlChangedSubscription: Disposable;
 
     constructor() {
         super();
@@ -63,6 +64,16 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
             this.addEventListener(e[0], e[1]);
         }
         this.#resizeObserver?.observe(this);
+        this.#controlChangedSubscription = iobrokerHandler.objectsChanged.on(d => {
+            const ctlName = (<CustomControlInfo>(<any>this.constructor)[webuiCustomControlSymbol]).name
+            if (d.type == 'control' && d.name === ctlName) {
+                this.disconnectedCallback();
+                this._rootDocumentFragment = (<any>this.constructor).template.content.cloneNode(true);
+                this.shadowRoot.innerHTML = '';
+                this.shadowRoot.appendChild(this._rootDocumentFragment);
+                this.connectedCallback();
+            }
+        });
     }
 
     disconnectedCallback() {
@@ -74,6 +85,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
             b();
         this.#bindings = null;
         this.#resizeObserver?.unobserve(this);
+        this.#controlChangedSubscription.dispose();
     }
 
     _assignEvent(event: string, callback: (...args) => void): { remove: () => void } {

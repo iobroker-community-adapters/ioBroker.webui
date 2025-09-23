@@ -36,7 +36,7 @@ export class IobrokerHandler implements VisualizationHandler {
     fontDeclarationsStylesheet: CSSStyleSheet;
     globalScriptInstance: IGlobalScript;
 
-    objectsChanged = new TypedEvent<{ type: string, name: string }>();
+    objectsChanged = new TypedEvent<{ type: 'screen'|'control', name: string }>();
     imagesChanged = new TypedEvent<void>();
     additionalFilesChanged = new TypedEvent<void>();
     configChanged = new TypedEvent<void>();
@@ -241,7 +241,8 @@ export class IobrokerHandler implements VisualizationHandler {
             this.#cache.get(type).set(name, data);
         if (type == 'control')
             this._controlNames = null;
-        this.objectsChanged.emit({ type, name });
+        //this.objectsChanged.emit({ type, name });
+        this.sendCommand(<any>"objectChanged", JSON.stringify({ type, name }));
     }
 
     async removeObject(type: 'screen' | 'control', name: string) {
@@ -519,7 +520,7 @@ export class IobrokerHandler implements VisualizationHandler {
         await this.connection.setState(this.namespace + '.control.command', { val: command });
     }
 
-    async handleCommand(command: "uiReloadPackages" | "uiReload" | "uiRefresh" | "uiChangeView" | "uiChangedView" | "uiOpenDialog" | "uiOpenedDialog" | "uiPlaySound" | "uiRunScript" | "uiAlert", data: string, clientId: string = ''): Promise<void> {
+    async handleCommand(command: "uiReloadPackages" | "uiReload" | "uiRefresh" | "uiChangeView" | "uiChangedView" | "uiOpenDialog" | "uiOpenedDialog" | "uiPlaySound" | "uiRunScript" | "uiAlert" | "objectChanged", data: string, clientId: string = ''): Promise<void> {
         if (clientId == '' || clientId == '*' || clientId == this.clientId) {
             switch (command) {
                 case "uiReload":
@@ -546,6 +547,10 @@ export class IobrokerHandler implements VisualizationHandler {
                     break;
                 case "uiAlert":
                     alert(data);
+                    break;
+                case "objectChanged":
+                    const d = JSON.parse(data);
+                    this.objectsChanged.emit(d);
                     break;
             }
         }

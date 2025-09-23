@@ -295,8 +295,8 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
 
     connectedCallback() {
         this._refreshViewSubscription = iobrokerHandler.refreshView.on(() => this._loadScreen());
-        this._screensChangedSubscription = iobrokerHandler.objectsChanged.on(() => {
-            if (this._screenName)
+        this._screensChangedSubscription = iobrokerHandler.objectsChanged.on(d => {
+            if (this._screenName && d.type == 'screen' && d.name === this._screenName)
                 this._loadScreen();
         });
         this._scriptObject?.connectedCallback?.(this, this._rootShadow);
