@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.35.0",
+    "version": "1.35.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.35.1": {
+        "en": "fix reload custom controls",
+        "de": "reload benutzerdefinierte bedienelemente",
+        "ru": "исправить пользовательские элементы управления",
+        "pt": "corrigir recarga de controles personalizados",
+        "nl": "repareren herladen aangepaste controles",
+        "fr": "fixer les contrôles personnalisés de recharge",
+        "it": "correzione dei controlli personalizzati di ricarica",
+        "es": "recargar controles personalizados",
+        "pl": "naprawiać sterowanie niestandardowe",
+        "uk": "виправити перевантаження користувальницьких контрольів",
+        "zh-cn": "固定重装自定义控制"
+      },
       "1.35.0": {
         "en": "better nameing\nchanged object notification",
         "de": "besser benennen\nänderung der objektbenachrichtigung",
@@ -106,19 +119,6 @@
         "pl": "Support sugestie css prop",
         "uk": "Підтримка пропозицій css",
         "zh-cn": "支持 css 道具建议"
-      },
-      "1.31.6": {
-        "en": "Test one more release",
-        "de": "Testen Sie eine weitere Freigabe",
-        "ru": "Проверить еще один выпуск",
-        "pt": "Teste mais uma versão",
-        "nl": "Test nog een keer",
-        "fr": "Tester une dernière libération",
-        "it": "Prova un'altra versione",
-        "es": "Prueba una versión más",
-        "pl": "Przetestuj jeszcze jedno wydanie",
-        "uk": "Тестувати ще один реліз",
-        "zh-cn": "再试一次"
       }
     },
     "icon": "logo.png",
