@@ -4,8 +4,7 @@ import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
 import { exportData, openFileDialog } from "../helper/Helper.js";
 import { IScreen } from "../interfaces/IScreen.js";
-import { IControl } from "../interfaces/IControl.js";
-import { generateCustomControl, getCustomControlName, webuiCustomControlPrefix } from "../runtime/CustomControls.js";
+import { getCustomControlName, webuiCustomControlPrefix } from "../runtime/CustomControls.js";
 import { defaultOptions, defaultStyle } from "@node-projects/web-component-designer-widgets-wunderbaum";
 import { Wunderbaum } from 'wunderbaum';
 //@ts-ignore
@@ -71,8 +70,6 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     async initialize(serviceContainer: ServiceContainer) {
         this.serviceContainer = serviceContainer;
         iobrokerHandler.objectsChanged.on(async (x) => {
-            if (x.type == 'control' && x.name)
-                generateCustomControl(x.name, <IControl>await iobrokerHandler.getWebuiObject(x.type, x.name));
             this._refreshNode(x.type, true)
         });
         iobrokerHandler.imagesChanged.on(() => this._refreshNode('images'));

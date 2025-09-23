@@ -6,6 +6,7 @@ import { IControl } from "../interfaces/IControl.js";
 import { sleep } from "../helper/Helper.js";
 import { IGlobalScript } from "../interfaces/IGlobalScript.js";
 import type { SignalInformation, VisualizationHandler } from "@node-projects/web-component-designer-visualization-addons";
+import { generateCustomControl } from "../runtime/CustomControls.js";
 
 declare global {
     interface Window {
@@ -36,7 +37,7 @@ export class IobrokerHandler implements VisualizationHandler {
     fontDeclarationsStylesheet: CSSStyleSheet;
     globalScriptInstance: IGlobalScript;
 
-    objectsChanged = new TypedEvent<{ type: 'screen'|'control', name: string }>();
+    objectsChanged = new TypedEvent<{ type: 'screen' | 'control', name: string }>();
     imagesChanged = new TypedEvent<void>();
     additionalFilesChanged = new TypedEvent<void>();
     configChanged = new TypedEvent<void>();
@@ -550,6 +551,8 @@ export class IobrokerHandler implements VisualizationHandler {
                     break;
                 case "objectChanged":
                     const d = JSON.parse(data);
+                    if (d.type == 'control' && d.name)
+                        generateCustomControl(d.name, <IControl>await iobrokerHandler.getWebuiObject(d.type, d.name));
                     this.objectsChanged.emit(d);
                     break;
             }

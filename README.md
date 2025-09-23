@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix reload custom controls
+
 ### 1.35.0 (2025-09-23)
 - better nameing
 - changed object notification
