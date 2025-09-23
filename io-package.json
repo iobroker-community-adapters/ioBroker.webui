@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.35.2",
+    "version": "1.35.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.35.3": {
+        "en": "object changed to all clients",
+        "de": "objekt geändert für alle kunden",
+        "ru": "измененный объект для всех клиентов",
+        "pt": "objeto alterado para todos os clientes",
+        "nl": "object veranderd naar alle clients",
+        "fr": "objet changé à tous les clients",
+        "it": "oggetto cambiato in tutti i client",
+        "es": "objeto cambiado a todos los clientes",
+        "pl": "obiekt zmieniony na wszystkich klientów",
+        "uk": "об’єкт змінився для всіх клієнтів",
+        "zh-cn": "对象更改为全部客户端"
+      },
       "1.35.2": {
         "en": "forgett to parse bindings",
         "de": "vergess auf parse bindungen",
@@ -106,19 +119,6 @@
         "pl": "aktualizacje dotyczące projektantów i skryptów",
         "uk": "оновлення дизайну та скриптів",
         "zh-cn": "设计师和脚本更新"
-      },
-      "1.33.0": {
-        "en": "fix NaN check",
-        "de": "naN-Check",
-        "ru": "проверьте NaN",
-        "pt": "corrigir verificação NaN",
-        "nl": "naN-controle herstellen",
-        "fr": "correction du contrôle NaN",
-        "it": "correzione del controllo NaN",
-        "es": "arreglar NaN",
-        "pl": "fix NaN check",
-        "uk": "виправити NaN перевірити",
-        "zh-cn": "修复NaN 检查"
       }
     },
     "icon": "logo.png",
