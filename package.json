@@ -62,7 +62,7 @@
     "@node-projects/splitview.webcomponent": "^1.0.1",
     "@node-projects/web-component-designer": "^0.1.265",
     "@node-projects/web-component-designer-codeview-monaco": "^0.1.33",
-    "@node-projects/web-component-designer-htmlparserservice-nodehtmlparser": "^0.1.11",
+    "@node-projects/web-component-designer-htmlparserservice-nodehtmlparser": "^0.1.12",
     "@node-projects/web-component-designer-stylesheetservice-css-tools": "^0.1.11",
     "@node-projects/web-component-designer-visualization-addons": "^0.1.133",
     "@node-projects/web-component-designer-widgets-wunderbaum": "^0.1.33",
