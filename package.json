@@ -55,7 +55,7 @@
     "@iobroker/socket-client": "^5.0.2",
     "@iobroker/testing": "^5.1.1",
     "@iobroker/webcomponent-selectid-dialog": "^1.0.12",
-    "@node-projects/base-custom-webcomponent": "0.34.0",
+    "@node-projects/base-custom-webcomponent": "0.36.0",
     "@node-projects/lean-he-esm": "^3.3.0",
     "@node-projects/node-html-parser-esm": "^6.2.0",
     "@node-projects/propertygrid.webcomponent": "^1.4.1",
