@@ -72,7 +72,7 @@
     "chai": "^5.3.1",
     "chai-as-promised": "^8.0.2",
     "construct-style-sheets-polyfill": "^3.1.0",
-    "cross-env": "^10.0.0",
+    "cross-env": "^10.1.0",
     "dayjs": "^1.11.18",
     "del": "^8.0.1",
     "dock-spawn-ts": "^3.7.0",
