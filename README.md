@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix some boxQuads edge cases
+
 ### 1.35.4 (2025-09-23)
 - clear cache on reload
 

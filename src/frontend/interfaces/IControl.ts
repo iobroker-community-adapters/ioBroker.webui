@@ -16,5 +16,8 @@ export interface IControlSettings {
      */
     useGlobalStyle?: boolean;
     adoptedStyles?: string[];
+    /**
+     * In bindings the properties §width and §height could be used
+     */
     bindToSize?: boolean;
 }
