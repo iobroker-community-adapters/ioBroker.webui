@@ -69,7 +69,7 @@
     "@types/json-schema": "^7.0.15",
     "@web/dev-server": "^0.4.6",
     "blockly": "^12.3.1",
-    "chai": "^5.3.1",
+    "chai": "^6.2.0",
     "chai-as-promised": "^8.0.2",
     "construct-style-sheets-polyfill": "^3.1.0",
     "cross-env": "^10.1.0",
