@@ -39,7 +39,7 @@
                 "arguments",
                 "caller",
                 "name",
-                "__@hasInstance@2402"
+                "__@hasInstance@2404"
             ],
             "type": "object"
         },
@@ -72,13 +72,14 @@
         },
         "IControlSettings": {
             "properties": {
-                "addoptedStyles": {
+                "adoptedStyles": {
                     "items": {
                         "type": "string"
                     },
                     "type": "array"
                 },
                 "bindToSize": {
+                    "description": "In bindings the properties §width and §height could be used",
                     "type": "boolean"
                 },
                 "height": {
@@ -96,7 +97,7 @@
                 "width",
                 "height",
                 "useGlobalStyle",
-                "addoptedStyles",
+                "adoptedStyles",
                 "bindToSize"
             ],
             "type": "object"
@@ -217,7 +218,7 @@
         },
         "IScreenSettings": {
             "properties": {
-                "addoptedStyles": {
+                "adoptedStyles": {
                     "items": {
                         "type": "string"
                     },
@@ -242,7 +243,7 @@
             "propertyOrder": [
                 "width",
                 "height",
-                "addoptedStyles",
+                "adoptedStyles",
                 "stretch"
             ],
             "type": "object"

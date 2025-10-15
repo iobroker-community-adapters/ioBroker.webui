@@ -2,7 +2,7 @@ import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from "
 import { dragDropFormatNameBindingObject, dragDropFormatNameElementDefinition, ContextMenu, sleep, dragDropFormatNamePropertyGrid, PropertiesHelper, copyTextToClipboard, NamedTools } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { exportData, openFileDialog } from "../helper/Helper.js";
-import { generateCustomControl, getCustomControlName, webuiCustomControlPrefix } from "../runtime/CustomControls.js";
+import { getCustomControlName, webuiCustomControlPrefix } from "../runtime/CustomControls.js";
 import { defaultOptions, defaultStyle } from "@node-projects/web-component-designer-widgets-wunderbaum";
 import { Wunderbaum } from 'wunderbaum';
 //@ts-ignore
@@ -51,8 +51,6 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
     async initialize(serviceContainer) {
         this.serviceContainer = serviceContainer;
         iobrokerHandler.objectsChanged.on(async (x) => {
-            if (x.type == 'control' && x.name)
-                generateCustomControl(x.name, await iobrokerHandler.getWebuiObject(x.type, x.name));
             this._refreshNode(x.type, true);
         });
         iobrokerHandler.imagesChanged.on(() => this._refreshNode('images'));
@@ -295,20 +293,20 @@ export class IobrokerWebuiSolutionExplorer extends BaseCustomWebComponentConstru
                 }], event);
         };
         return {
-            title: 'Screens Style',
+            title: 'Global Screens/Control Style',
             folder: false,
             contextMenu: (e, data) => ctxMenu(e),
             dblclick: (e, data) => {
-                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.globalStyle ?? '', 'screens style', 'globalStyle');
+                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.globalStyle ?? '', 'Global Screens/Control style', 'globalStyle');
             }
         };
     }
     _createFontDeclarationsNode() {
         return {
-            title: 'Global Style',
+            title: 'Root Style (for fonts...)',
             folder: false,
             dblclick: (e, data) => {
-                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.fontDeclarations ?? '', 'global style', 'fontDeclarations');
+                window.appShell.openGlobalStyleEditor(iobrokerHandler.config.fontDeclarations ?? '', 'Root Style', 'fontDeclarations');
             }
         };
     }

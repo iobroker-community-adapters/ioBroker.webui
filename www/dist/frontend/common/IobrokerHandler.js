@@ -1,6 +1,7 @@
 import { Connection } from "@iobroker/socket-client";
 import { TypedEvent, cssFromString } from "@node-projects/base-custom-webcomponent";
 import { sleep } from "../helper/Helper.js";
+import { generateCustomControl } from "../runtime/CustomControls.js";
 export class IobrokerHandler {
     static instance = new IobrokerHandler();
     host;
@@ -196,12 +197,13 @@ export class IobrokerHandler {
         return screen;
     }
     async saveObject(type, name, data) {
-        this._saveObjectToFile(data, "/" + this.configPath + type + "s/" + name + '.' + type);
+        await this._saveObjectToFile(data, "/" + this.configPath + type + "s/" + name + '.' + type);
         if (this.#cache.has(type))
             this.#cache.get(type).set(name, data);
         if (type == 'control')
             this._controlNames = null;
-        this.objectsChanged.emit({ type, name });
+        //this.objectsChanged.emit({ type, name });
+        this.sendCommand("objectChanged", JSON.stringify({ type, name }), '*');
     }
     async removeObject(type, name) {
         await this.connection.deleteFile(this.namespaceFiles, "/" + this.configPath + type + "s/" + name + '.' + type);
@@ -450,10 +452,10 @@ export class IobrokerHandler {
     async _saveBinaryToFile(binary, name) {
         await this.connection.writeFile64(this.namespaceFiles, name, await binary.arrayBuffer());
     }
-    async sendCommand(command, data) {
+    async sendCommand(command, data, clientId) {
         let p = [
             this.connection.setState(this.namespace + '.control.data', { val: data }),
-            this.connection.setState(this.namespace + '.control.clientIds', { val: this.clientId })
+            this.connection.setState(this.namespace + '.control.clientIds', { val: clientId ?? this.clientId })
         ];
         await Promise.all(p);
         await this.connection.setState(this.namespace + '.control.command', { val: command });
@@ -485,6 +487,14 @@ export class IobrokerHandler {
                     break;
                 case "uiAlert":
                     alert(data);
+                    break;
+                case "objectChanged":
+                    const d = JSON.parse(data);
+                    if (this.#cache.has(d.type))
+                        this.#cache.get(d.type).delete(d.name);
+                    if (d.type == 'control' && d.name)
+                        generateCustomControl(d.name, await iobrokerHandler.getWebuiObject(d.type, d.name));
+                    this.objectsChanged.emit(d);
                     break;
             }
         }

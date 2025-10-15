@@ -30,7 +30,7 @@ export declare class IobrokerHandler implements VisualizationHandler {
     fontDeclarationsStylesheet: CSSStyleSheet;
     globalScriptInstance: IGlobalScript;
     objectsChanged: TypedEvent<{
-        type: string;
+        type: "screen" | "control";
         name: string;
     }>;
     imagesChanged: TypedEvent<void>;
@@ -91,8 +91,8 @@ export declare class IobrokerHandler implements VisualizationHandler {
     private _getObjectFromFile;
     private _saveObjectToFile;
     private _saveBinaryToFile;
-    sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected' | 'uiChangedView', data?: string): Promise<void>;
-    handleCommand(command: "uiReloadPackages" | "uiReload" | "uiRefresh" | "uiChangeView" | "uiChangedView" | "uiOpenDialog" | "uiOpenedDialog" | "uiPlaySound" | "uiRunScript" | "uiAlert", data: string, clientId?: string): Promise<void>;
+    sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected' | 'uiChangedView', data?: string, clientId?: string): Promise<void>;
+    handleCommand(command: "uiReloadPackages" | "uiReload" | "uiRefresh" | "uiChangeView" | "uiChangedView" | "uiOpenDialog" | "uiOpenedDialog" | "uiPlaySound" | "uiRunScript" | "uiAlert" | "objectChanged", data: string, clientId?: string): Promise<void>;
     getSignalInformation(signal: any): SignalInformation;
     getHistoricData(id: string, config: any): Promise<{
         values: ioBroker.GetHistoryResult;

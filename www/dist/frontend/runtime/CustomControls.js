@@ -10,6 +10,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     #eventListeners = [];
     #resizeObserver;
     #specialValueHandler;
+    #controlChangedSubscription;
     constructor() {
         super();
         this._bindingsParse(null, true);
@@ -52,6 +53,17 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
             this.addEventListener(e[0], e[1]);
         }
         this.#resizeObserver?.observe(this);
+        this.#controlChangedSubscription = iobrokerHandler.objectsChanged.on(d => {
+            const ctlName = this.constructor[webuiCustomControlSymbol].name;
+            if (d.type == 'control' && d.name === ctlName) {
+                this.disconnectedCallback();
+                this._rootDocumentFragment = this.constructor.template.content.cloneNode(true);
+                this.shadowRoot.innerHTML = '';
+                this.shadowRoot.appendChild(this._rootDocumentFragment);
+                this._bindingsParse(null, true);
+                this.connectedCallback();
+            }
+        });
     }
     disconnectedCallback() {
         for (let e of this.#eventListeners) {
@@ -62,6 +74,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
             b();
         this.#bindings = null;
         this.#resizeObserver?.unobserve(this);
+        this.#controlChangedSubscription.dispose();
     }
     _assignEvent(event, callback) {
         const arrayEl = [event, callback];
