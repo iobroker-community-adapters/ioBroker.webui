@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.35.4",
+    "version": "1.36.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.36.0": {
+        "en": "fix some boxQuads edge cases",
+        "de": "befestigen Sie einige BoxQuads Randgehäuse",
+        "ru": "исправьте некоторые случаи BoxQuads edge",
+        "pt": "corrigir algumas caixasQuads edge cases",
+        "nl": "fix sommige doosQuads rand gevallen",
+        "fr": "fixer quelques cas de bord de boxQuads",
+        "it": "risolvere alcuni casi di bordo boxQuads",
+        "es": "arreglar algunas cajas de borde Cuads",
+        "pl": "naprawić kilka skrzynek boxQuads krawędzi",
+        "uk": "закріпити якусь коробкуШвидких крайових випадків",
+        "zh-cn": "修补一些框 Quads 边框"
+      },
       "1.35.4": {
         "en": "clear cache on reload",
         "de": "löschen cache auf nachladen",
@@ -106,19 +119,6 @@
         "pl": "kolejna drobna poprawka w obsłudze sygnałów",
         "uk": "ще один невеликий виправлення у керуванні сигналами",
         "zh-cn": "信号处理中的另一个小修复"
-      },
-      "1.34.1": {
-        "en": "script command wrong name fix",
-        "de": "Fehler bei der Namensschreibweise des Skriptbefehls behoben",
-        "ru": "Исправлена ошибка в неправильном названии команды скрипта",
-        "pt": "Corrigido nome incorreto do comando de script",
-        "nl": "Script command foutieve naam opgelost",
-        "fr": "Correction du nom erroné de la commande de script",
-        "it": "Correzione del nome errato del comando di script",
-        "es": "comando de script con nombre incorrecto corregido",
-        "pl": "naprawiono błąd związany z nieprawidłową nazwą polecenia skryptu",
-        "uk": "виправлено неправильну назву команди в скрипті",
-        "zh-cn": "脚本命令名称修复"
       }
     },
     "icon": "logo.png",
