@@ -133,6 +133,10 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix bug in bundled code
+- use minified code for config
+
 ### 1.36.0 (2025-10-15)
 - fix some boxQuads edge cases
 

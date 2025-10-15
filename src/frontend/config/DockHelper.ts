@@ -1,4 +1,4 @@
-import { PanelContainer } from "dock-spawn-ts/lib/js/PanelContainer";
+import { PanelContainer } from "dock-spawn-ts";
 
 function findPanelContainerElement(element: Element): Element & { _dockSpawnPanelContainer?: PanelContainer; _result?: any } {
     if (!element) return null;

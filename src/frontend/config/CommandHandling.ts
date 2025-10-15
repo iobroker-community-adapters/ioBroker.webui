@@ -1,5 +1,5 @@
 import { IUiCommandHandler, ServiceContainer } from '@node-projects/web-component-designer';
-import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js'
+import { DockManager } from 'dock-spawn-ts'
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
 import { IobrokerWebuiAppShell } from './IobrokerWebuiAppShell.js';
 import { IobrokerWebuiScreenEditor, defaultNewStyle } from './IobrokerWebuiScreenEditor.js';

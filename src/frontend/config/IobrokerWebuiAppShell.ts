@@ -13,13 +13,10 @@ import { PropertyGridWithHeader, RefactorView, ServiceContainer, ValueType } fro
 import { BindableObjectsBrowser, TreeViewExtended } from '@node-projects/web-component-designer-widgets-wunderbaum';
 
 import type { IDisposable } from 'monaco-editor';
-import { PanelContainer } from 'dock-spawn-ts/lib/js/PanelContainer.js';
-import { PanelType } from 'dock-spawn-ts/lib/js/enums/PanelType.js';
+import { DockManager, DockSpawnTsWebcomponent, PanelContainer, PanelType } from 'dock-spawn-ts';
 import { configureDesigner } from './ConfigureWebcomponentDesigner.js';
 const serviceContainer = configureDesigner(bindingsHelper);
 
-import { DockSpawnTsWebcomponent } from 'dock-spawn-ts/lib/js/webcomponent/DockSpawnTsWebcomponent.js';
-import { DockManager } from 'dock-spawn-ts/lib/js/DockManager.js';
 import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from '@node-projects/base-custom-webcomponent';
 import { CommandHandling } from './CommandHandling.js'
 import propertiesTypeInfo from "../generated/Properties.json" with { type: 'json' };
