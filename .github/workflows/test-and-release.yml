@@ -63,6 +63,11 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    # Write permissions are required to create Github releases
+    permissions:
+      id-token: write
+      contents: write
+
     steps:
       - uses: ioBroker/testing-action-deploy@v1
         with:
@@ -70,7 +75,6 @@ jobs:
           # Uncomment the following line if your adapter cannot be installed using 'npm ci'
           # install-command: 'npm install'
           build: true
-          npm-token: ${{ secrets.NPM_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
 #          # When using Sentry for error reporting, Sentry can be informed about new releases
