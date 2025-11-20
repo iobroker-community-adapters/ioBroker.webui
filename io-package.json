@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.37.0",
+    "version": "1.38.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.38.0": {
+        "en": "update npms",
+        "de": "aktualisierung von npms",
+        "ru": "обновление npms",
+        "pt": "atualizar npms",
+        "nl": "npms bijwerken",
+        "fr": "mettre à jour npms",
+        "it": "aggiornamento npm",
+        "es": "actualización npms",
+        "pl": "update npms",
+        "uk": "оновлення npms",
+        "zh-cn": "更新 npms"
+      },
       "1.37.0": {
         "en": "fix bug in bundled code\nuse minified code for config",
         "de": "fehler in gebündeltem code beheben\nminified code für config",
@@ -106,19 +119,6 @@
         "pl": "naprawiać sterowanie niestandardowe",
         "uk": "виправити перевантаження користувальницьких контрольів",
         "zh-cn": "固定重装自定义控制"
-      },
-      "1.35.0": {
-        "en": "better nameing\nchanged object notification",
-        "de": "besser benennen\nänderung der objektbenachrichtigung",
-        "ru": "лучшее название\nизменено уведомление об объекте",
-        "pt": "melhor nome\nnotificação de objeto alterada",
-        "nl": "betere naamgeving\nobjectnotificatie gewijzigd",
-        "fr": "mieux nommer\nnotification d'objet modifiée",
-        "it": "nome migliore\nnotifica dell'oggetto modificato",
-        "es": "mejor nombre\nnotificación de objeto cambiado",
-        "pl": "lepsze nazwanie\nzmienione powiadomienie obiektu",
-        "uk": "краще ім'я\nзмінено повідомлення про об’єкт",
-        "zh-cn": "更好的名称\n更改对象通知"
       }
     },
     "icon": "logo.png",
