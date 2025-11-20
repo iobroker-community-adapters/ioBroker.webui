@@ -13,7 +13,6 @@ declare const importMapConfig: {
         "a_@node-projects/node-html-parser-esm": string;
         "a_dock-spawn-ts": string;
         "monaco-editor/": string;
-        "@node-projects/web-component-designer/": string;
         "@adobe/css-tools": string;
         "esprima-next": string;
         "@node-projects/": string;

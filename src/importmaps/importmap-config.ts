@@ -15,7 +15,6 @@ const importMapConfig = {
         "a_dock-spawn-ts": "./node_modules/dock-spawn-ts/lib/js/index-webcomponent.js",
 
         "monaco-editor/": "./node_modules/monaco-editor/",
-        "@node-projects/web-component-designer/": "./node_modules/@node-projects/web-component-designer/",
         "@adobe/css-tools": "./node_modules/@adobe/css-tools/dist/esm/adobe-css-tools.mjs",
         "esprima-next": "./node_modules/esprima-next/dist/esprima.js",
         "@node-projects/": "./node_modules/@node-projects/",

@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- update npms
+
 ### 1.37.0 (2025-10-15)
 - fix bug in bundled code
 - use minified code for config
