@@ -84,7 +84,7 @@ export class IobrokerHandler implements VisualizationHandler {
         }
 
         this.connection = new Connection({
-            protocol: 'ws',
+            protocol: 'ws:',
             host: window.iobrokerHost,
             port: window.iobrokerPort,
             admin5only: false,
