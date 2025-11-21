@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.38.0",
+    "version": "1.38.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.38.1": {
+        "en": "fix after connection changes",
+        "de": "fix nach verbindungsänderungen",
+        "ru": "исправление после изменения соединения",
+        "pt": "corrigir após as alterações da ligação",
+        "nl": "repareren na de verbinding wijzigingen",
+        "fr": "correction après changement de connexion",
+        "it": "correzione dopo le modifiche della connessione",
+        "es": "arreglar después de cambios de conexión",
+        "pl": "naprawić po zmianie połączenia",
+        "uk": "фіксувати після змін з'єднання",
+        "zh-cn": "连接更改后修复"
+      },
       "1.38.0": {
         "en": "update npms",
         "de": "aktualisierung von npms",
@@ -106,19 +119,6 @@
         "pl": "zapominanie o przypisie",
         "uk": "забути в обв'язках",
         "zh-cn": "忘记解析绑定"
-      },
-      "1.35.1": {
-        "en": "fix reload custom controls",
-        "de": "reload benutzerdefinierte bedienelemente",
-        "ru": "исправить пользовательские элементы управления",
-        "pt": "corrigir recarga de controles personalizados",
-        "nl": "repareren herladen aangepaste controles",
-        "fr": "fixer les contrôles personnalisés de recharge",
-        "it": "correzione dei controlli personalizzati di ricarica",
-        "es": "recargar controles personalizados",
-        "pl": "naprawiać sterowanie niestandardowe",
-        "uk": "виправити перевантаження користувальницьких контрольів",
-        "zh-cn": "固定重装自定义控制"
       }
     },
     "icon": "logo.png",
