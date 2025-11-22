@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.38.2",
+    "version": "1.38.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.38.3": {
+        "en": "update npm packges (fixes box quads)",
+        "de": "update npm packges (fixes box quads)",
+        "ru": "обновление npm пакетов (fixes box quads)",
+        "pt": "atualizar pacotes npm (fixes quads)",
+        "nl": "npm-pakketten bijwerken (fixeert doos quads)",
+        "fr": "mettre à jour npm packges (fixe les quads de la boîte)",
+        "it": "aggiornamento npm packges (fixes box quads)",
+        "es": "actualización npm packges (cuartos de caja de carga)",
+        "pl": "update npm packges (fixed box quads)",
+        "uk": "оновлення npm packges (фіксує квадроцикли)",
+        "zh-cn": "更新 npm 包( 固定框四)"
+      },
       "1.38.2": {
         "en": "update npm packges",
         "de": "update npm packs",
@@ -106,19 +119,6 @@
         "pl": "klarowna pamięć podręczna przy ponownym załadowaniu",
         "uk": "прозорий кеш на перевантаження",
         "zh-cn": "重新装入时清除缓存"
-      },
-      "1.35.3": {
-        "en": "object changed to all clients",
-        "de": "objekt geändert für alle kunden",
-        "ru": "измененный объект для всех клиентов",
-        "pt": "objeto alterado para todos os clientes",
-        "nl": "object veranderd naar alle clients",
-        "fr": "objet changé à tous les clients",
-        "it": "oggetto cambiato in tutti i client",
-        "es": "objeto cambiado a todos los clientes",
-        "pl": "obiekt zmieniony na wszystkich klientów",
-        "uk": "об’єкт змінився для всіх клієнтів",
-        "zh-cn": "对象更改为全部客户端"
       }
     },
     "icon": "logo.png",
