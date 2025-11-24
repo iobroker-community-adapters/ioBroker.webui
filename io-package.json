@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.38.4",
+    "version": "1.38.5",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.38.5": {
+        "en": "fix package.lock",
+        "de": "paket reparieren.lock",
+        "ru": "исправить упаковку",
+        "pt": "corrigir pacote.lock",
+        "nl": "fix pakket.lock",
+        "fr": "réparer paquet.lock",
+        "it": "fix package.lock",
+        "es": "arreglar paquete.lock",
+        "pl": "fix package.lock",
+        "uk": "засупу 10 ток",
+        "zh-cn": "固定软件包.lock"
+      },
       "1.38.4": {
         "en": "update npm packages again (for fixes in box quads)",
         "de": "npm pakete erneut aktualisieren (für fixes in box quads)",
@@ -106,19 +119,6 @@
         "pl": "fix błąd w kodzie pakietowym\nużyj minionego kodu dla konfiguracji",
         "uk": "виправлення помилок в коді\nвикористовуйте норифікований код для налаштування",
         "zh-cn": "在捆绑的代码中修复错误\n配置使用已修改的代码"
-      },
-      "1.36.0": {
-        "en": "fix some boxQuads edge cases",
-        "de": "befestigen Sie einige BoxQuads Randgehäuse",
-        "ru": "исправьте некоторые случаи BoxQuads edge",
-        "pt": "corrigir algumas caixasQuads edge cases",
-        "nl": "fix sommige doosQuads rand gevallen",
-        "fr": "fixer quelques cas de bord de boxQuads",
-        "it": "risolvere alcuni casi di bordo boxQuads",
-        "es": "arreglar algunas cajas de borde Cuads",
-        "pl": "naprawić kilka skrzynek boxQuads krawędzi",
-        "uk": "закріпити якусь коробкуШвидких крайових випадків",
-        "zh-cn": "修补一些框 Quads 边框"
       }
     },
     "icon": "logo.png",
