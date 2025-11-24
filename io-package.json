@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.38.3",
+    "version": "1.38.4",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.38.4": {
+        "en": "update npm packages again (for fixes in box quads)",
+        "de": "npm pakete erneut aktualisieren (für fixes in box quads)",
+        "ru": "обновление пакетов npm (для исправлений в квадратах коробки)",
+        "pt": "atualizar pacotes npm novamente (para correções em quads de caixa)",
+        "nl": "npm-pakketten opnieuw bijwerken (voor fixes in box quads)",
+        "fr": "mettre à jour à nouveau les paquets npm (pour les corrections dans la case quads)",
+        "it": "aggiornamento npm pacchetti di nuovo (per correzioni in box quads)",
+        "es": "actualizar paquetes npm de nuevo (para correcciones en cuádruples de caja)",
+        "pl": "aktualizacja pakietów npm ponownie (dla poprawek w kwadratach pola)",
+        "uk": "оновлення npm пакетів знову (для фіксації в квадроциклах коробки)",
+        "zh-cn": "再次更新 npm 包( 用于在框四区修正)"
+      },
       "1.38.3": {
         "en": "update npm packges (fixes box quads)",
         "de": "update npm packges (fixes box quads)",
@@ -106,19 +119,6 @@
         "pl": "naprawić kilka skrzynek boxQuads krawędzi",
         "uk": "закріпити якусь коробкуШвидких крайових випадків",
         "zh-cn": "修补一些框 Quads 边框"
-      },
-      "1.35.4": {
-        "en": "clear cache on reload",
-        "de": "löschen cache auf nachladen",
-        "ru": "чистый кэш на перезагрузке",
-        "pt": "limpar cache ao recarregar",
-        "nl": "cache wissen bij herladen",
-        "fr": "effacer le cache lors du rechargement",
-        "it": "cache chiara su ricarica",
-        "es": "caché transparente en la recarga",
-        "pl": "klarowna pamięć podręczna przy ponownym załadowaniu",
-        "uk": "прозорий кеш на перевантаження",
-        "zh-cn": "重新装入时清除缓存"
       }
     },
     "icon": "logo.png",
