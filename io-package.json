@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.38.6",
+    "version": "1.38.7",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.38.7": {
+        "en": "upgrade designer once more",
+        "de": "upgrade-designer noch einmal",
+        "ru": "обновление дизайнера снова",
+        "pt": "atualizar o designer mais uma vez",
+        "nl": "upgrade ontwerper opnieuw",
+        "fr": "upgrade designer une fois de plus",
+        "it": "aggiornamento designer ancora una volta",
+        "es": "diseñador de actualización una vez más",
+        "pl": "upgrade designer jeszcze raz",
+        "uk": "модернізація дизайнера",
+        "zh-cn": "再次升级设计器"
+      },
       "1.38.6": {
         "en": "fix package.lock",
         "de": "paket reparieren.lock",
@@ -106,19 +119,6 @@
         "pl": "naprawić po zmianie połączenia",
         "uk": "фіксувати після змін з'єднання",
         "zh-cn": "连接更改后修复"
-      },
-      "1.38.0": {
-        "en": "update npms",
-        "de": "aktualisierung von npms",
-        "ru": "обновление npms",
-        "pt": "atualizar npms",
-        "nl": "npms bijwerken",
-        "fr": "mettre à jour npms",
-        "it": "aggiornamento npm",
-        "es": "actualización npms",
-        "pl": "update npms",
-        "uk": "оновлення npms",
-        "zh-cn": "更新 npms"
       }
     },
     "icon": "logo.png",
