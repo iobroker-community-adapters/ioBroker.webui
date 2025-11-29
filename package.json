@@ -86,7 +86,7 @@
     "long": "^5.3.2",
     "mobile-drag-drop": "^3.0.0-rc.0",
     "mocha": "^11.7.5",
-    "monaco-editor": "^0.50.0",
+    "monaco-editor": "^0.55.1",
     "nyc": "^17.1.0",
     "sinon-chai": "^4.0.1",
     "toastify-js": "^1.12.0",
