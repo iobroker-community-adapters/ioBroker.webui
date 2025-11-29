@@ -93,7 +93,7 @@
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
     "typescript": "^5.9.3",
-    "typescript-json-schema": "^0.66.0",
+    "typescript-json-schema": "^0.67.0",
     "wunderbaum": "0.13.0"
   }
 }
