@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- upgrade designer once more
+
 ### 1.38.6 (2025-11-24)
 - fix package.lock
 
