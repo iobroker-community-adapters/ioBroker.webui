@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.38.7",
+    "version": "1.39.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.39.0": {
+        "en": "npm upgrades for firefox fixes",
+        "de": "npm upgrades für firefox fixes",
+        "ru": "npm обновления для firefox",
+        "pt": "atualizações npm para correções firefox",
+        "nl": "npm upgrades voor firefox fixes",
+        "fr": "npm mises à jour pour les corrections firefox",
+        "it": "npm aggiornamenti per correzioni antincendio",
+        "es": "actualizaciones de npm para fijaciones de firefox",
+        "pl": "npm aktualizacje firefox poprawki",
+        "uk": "npm оновлення для фіксаторів протипожежних",
+        "zh-cn": "npm 火狐修复的升级"
+      },
       "1.38.7": {
         "en": "upgrade designer once more",
         "de": "upgrade-designer noch einmal",
@@ -106,19 +119,6 @@
         "pl": "aktualizacja pakietów npm",
         "uk": "оновлення npm packges",
         "zh-cn": "更新 npm 包"
-      },
-      "1.38.1": {
-        "en": "fix after connection changes",
-        "de": "fix nach verbindungsänderungen",
-        "ru": "исправление после изменения соединения",
-        "pt": "corrigir após as alterações da ligação",
-        "nl": "repareren na de verbinding wijzigingen",
-        "fr": "correction après changement de connexion",
-        "it": "correzione dopo le modifiche della connessione",
-        "es": "arreglar después de cambios de conexión",
-        "pl": "naprawić po zmianie połączenia",
-        "uk": "фіксувати після змін з'єднання",
-        "zh-cn": "连接更改后修复"
       }
     },
     "icon": "logo.png",
