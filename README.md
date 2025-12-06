@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- npm upgrades for firefox fixes
+
 ### 1.38.7 (2025-11-29)
 - upgrade designer once more
 
