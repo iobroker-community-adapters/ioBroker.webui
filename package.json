@@ -75,7 +75,7 @@
     "cross-env": "^10.1.0",
     "dayjs": "^1.11.19",
     "del": "^8.0.1",
-    "dock-spawn-ts": "^3.11.2",
+    "dock-spawn-ts": "^3.12.0",
     "es-module-shims": "2.7.0",
     "eslint": "^9.39.1",
     "esprima-next": "^6.0.3",
