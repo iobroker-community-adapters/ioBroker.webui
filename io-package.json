@@ -139,7 +139,8 @@
     ],
     "readme": "https://github.com/iobroker-community-adapters/ioBroker.webui/blob/master/README.md",
     "authors": [
-      "jogibear9988 <jochen.kuehner@gmx.de>"
+      "jogibear9988 <jochen.kuehner@gmx.de>",
+      "iobroker-community-adapters <iobroker-community-adapters@gmx.de>"
     ],
     "localLinks": {
       "_default": "%web_protocol%://%ip%:%web_port%/webui/runtime.html"
@@ -150,7 +151,7 @@
     },
     "dependencies": [
       {
-        "js-controller": ">=5.0.19"
+        "js-controller": ">=6.0.11"
       },
       {
         "web": ">=3.4.16"
@@ -174,7 +175,12 @@
       "img": "admin/logo.png",
       "color": "#c8ffe1",
       "order": 1
-    }
+    },
+    "globalDependencies": [
+      {
+        "admin": ">=7.6.17"
+      }
+    ]
   },
   "native": {},
   "instanceObjects": [
