@@ -29,6 +29,9 @@
     "url": "git+https://github.com/iobroker-community-adapters/ioBroker.webui.git"
   },
   "author": "jochen.kuehner@gmx.de",
+  "contributors": [
+    "iobroker-community-adapters <iobroker-community-adapters@gmx.de>"
+  ],
   "license": "MIT",
   "keywords": [
     "ioBroker",
