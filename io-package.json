@@ -68,32 +68,6 @@
         "uk": "засупу 10 ток",
         "zh-cn": "固定软件包.lock"
       },
-      "1.38.5": {
-        "en": "fix package.lock",
-        "de": "paket reparieren.lock",
-        "ru": "исправить упаковку",
-        "pt": "corrigir pacote.lock",
-        "nl": "fix pakket.lock",
-        "fr": "réparer paquet.lock",
-        "it": "fix package.lock",
-        "es": "arreglar paquete.lock",
-        "pl": "fix package.lock",
-        "uk": "засупу 10 ток",
-        "zh-cn": "固定软件包.lock"
-      },
-      "1.38.4": {
-        "en": "update npm packages again (for fixes in box quads)",
-        "de": "npm pakete erneut aktualisieren (für fixes in box quads)",
-        "ru": "обновление пакетов npm (для исправлений в квадратах коробки)",
-        "pt": "atualizar pacotes npm novamente (para correções em quads de caixa)",
-        "nl": "npm-pakketten opnieuw bijwerken (voor fixes in box quads)",
-        "fr": "mettre à jour à nouveau les paquets npm (pour les corrections dans la case quads)",
-        "it": "aggiornamento npm pacchetti di nuovo (per correzioni in box quads)",
-        "es": "actualizar paquetes npm de nuevo (para correcciones en cuádruples de caja)",
-        "pl": "aktualizacja pakietów npm ponownie (dla poprawek w kwadratach pola)",
-        "uk": "оновлення npm пакетів знову (для фіксації в квадроциклах коробки)",
-        "zh-cn": "再次更新 npm 包( 用于在框四区修正)"
-      },
       "1.38.3": {
         "en": "update npm packges (fixes box quads)",
         "de": "update npm packges (fixes box quads)",
