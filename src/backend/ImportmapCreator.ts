@@ -1,6 +1,6 @@
 import path from 'path/posix';
 import fs from 'fs/promises';
-import fsSync from 'fs';
+import fsSync from 'node:fs';
 import type { AdapterInstance } from '@iobroker/adapter-core';
 const packageHacks = JSON.parse(fsSync.readFileSync(new URL('./NpmPackageHacks.json', import.meta.url)).toString());
 

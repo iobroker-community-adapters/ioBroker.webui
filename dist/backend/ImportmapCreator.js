@@ -1,6 +1,6 @@
 import path from 'path/posix';
 import fs from 'fs/promises';
-import fsSync from 'fs';
+import fsSync from 'node:fs';
 const packageHacks = JSON.parse(fsSync.readFileSync(new URL('./NpmPackageHacks.json', import.meta.url)).toString());
 let skipPackages = ['@node-projects/base-custom-webcomponent', 'tslib', 'long'];
 function removeTrailing(text, char) {

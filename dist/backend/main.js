@@ -1,8 +1,8 @@
 import * as utils from '@iobroker/adapter-core';
-import { spawn } from 'child_process';
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
+import { spawn } from 'node:child_process';
+import path from 'node:path';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { Uploadhelper } from './UploadHelper.js';
 import { ImportmapCreator } from './ImportmapCreator.js';
 import url from "node:url";
