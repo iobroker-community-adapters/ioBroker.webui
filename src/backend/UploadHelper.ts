@@ -1,7 +1,7 @@
 import { AdapterInstance } from '@iobroker/adapter-core';
-import fs from 'fs';
+import fs from 'node:fs';
 import fsAsync from 'fs/promises';
-import path from 'path';
+import path from 'node:path';
 
 export function sleep(ms): Promise<unknown> {
     return new Promise(resolve => setTimeout(resolve, ms));

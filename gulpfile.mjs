@@ -3,7 +3,7 @@ const { src, dest, series } = gulp;
 import { deleteAsync } from 'del';
 import git from 'gulp-git'
 import replace from 'gulp-replace';
-import fs from 'fs';
+import fs from 'node:fs';
 
 const pkg = JSON.parse(fs.readFileSync('package.json'));
 
