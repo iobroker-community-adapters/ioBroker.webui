@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.39.0",
+    "version": "1.40.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.40.0": {
+        "en": "many many fixes in designer\ncss nesting supported\nsvg path editor",
+        "de": "viele viele fixes in designer\ncss nesting unterstützt\nsvg path editor",
+        "ru": "множество фишек в дизайне\ncss гнездование поддерживается\nsvg path editor",
+        "pt": "muitas correções no designer\naninhamento css suportado\neditor de localização svg",
+        "nl": "veel fixes in designer\ncss nesting ondersteund\nsvg padeditor",
+        "fr": "de nombreuses corrections dans le concepteur\ncss nichant soutenu\néditeur de chemin svg",
+        "it": "moltissime correzioni nel designer\ncss nesting supportato\neditor di percorso",
+        "es": "muchos arreglos en diseñador\ncss anidación compatible\nsvg editor de ruta",
+        "pl": "wiele poprawek w projektancie\nobsługa gniazda css\nedytor ścieżki svg",
+        "uk": "багато виправлень в дизайнера\ncss nesting підтримується\nредактор шляху",
+        "zh-cn": "设计器中的许多修正\n支持 css 筑巢\nsvg 路径编辑器"
+      },
       "1.39.0": {
         "en": "npm upgrades for firefox fixes",
         "de": "npm upgrades für firefox fixes",
