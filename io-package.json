@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.40.0",
+    "version": "1.40.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.40.1": {
+        "en": "fix build script",
+        "de": "erstellen von skripten",
+        "ru": "сценарий fix build",
+        "pt": "corrigir script de compilação",
+        "nl": "fix build script",
+        "fr": "correction du script de construction",
+        "it": "correzione dello script di build",
+        "es": "script de compilación",
+        "pl": "naprawić skrypt build",
+        "uk": "фіксувати скрипт побудови",
+        "zh-cn": "修复构建脚本"
+      },
       "1.40.0": {
         "en": "many many fixes in designer\ncss nesting supported\nsvg path editor",
         "de": "viele viele fixes in designer\ncss nesting unterstützt\nsvg path editor",

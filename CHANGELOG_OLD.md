@@ -1,4 +1,7 @@
 # Older changes
+## 1.38.5 (2025-11-24)
+- fix package.lock
+
 ## 1.38.4 (2025-11-24)
 - update npm packages again (for fixes in box quads)
 
