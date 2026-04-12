@@ -2,6 +2,7 @@ import { ScreenViewer } from "../runtime/ScreenViewer.js";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IoBrokerWebuiDialog } from "../helper/DialogHelper.js";
 import { ScriptSystem } from "@node-projects/web-component-designer-visualization-addons/dist/scripting/ScriptSystem.js";
+import { BaseCustomControl } from "../runtime/CustomControls.js";
 export class IobrokerWebuiScriptSystem extends ScriptSystem {
     //@ts-ignore
     async runScriptCommand(command, context) {

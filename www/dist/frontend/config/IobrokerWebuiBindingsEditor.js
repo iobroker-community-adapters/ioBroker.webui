@@ -1,4 +1,5 @@
 import { BindingsEditor } from "@node-projects/web-component-designer-visualization-addons";
+//@ts-ignore
 import { openSelectIdDialog } from "@iobroker/webcomponent-selectid-dialog/dist/selectIdHelper.js";
 //@ts-ignore
 export class IobrokerWebuiBindingsEditor extends BindingsEditor {

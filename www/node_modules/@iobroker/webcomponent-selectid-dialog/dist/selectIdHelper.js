@@ -10,17 +10,17 @@ export async function openSelectIdDialog(config) {
     return new Promise(async resolve => {
         storedResolve = resolve;
         if (!codeLoaded) {
-            await import('./iobrokerFile.es.js');
+            await import('./iobrokerSelectId.es.js');
             codeLoaded = true;
         }
-        let selectDialog = document.getElementById('iobroker-select-id');
+        let selectDialog = document.querySelector('iobroker-select-id');
         if (selectDialog) {
             selectDialog.remove();
         }
 
         selectDialog = document.createElement('iobroker-select-id');
         window._iobSelectIdDialogOnSelected = (newId) => {
-            const _selectDialog = document.getElementById('iobroker-select-id');
+            const _selectDialog = document.querySelector('iobroker-select-id');
             _selectDialog.setAttribute('open', 'false');
             storedResolve(newId);
             _selectDialog.remove();

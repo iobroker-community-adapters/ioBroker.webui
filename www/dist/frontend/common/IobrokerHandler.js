@@ -53,7 +53,7 @@ export class IobrokerHandler {
             ci.innerHTML = 'connecting...';
         }
         this.connection = new Connection({
-            protocol: 'ws',
+            protocol: 'ws:',
             host: window.iobrokerHost,
             port: window.iobrokerPort,
             admin5only: false,
@@ -512,4 +512,5 @@ export class IobrokerHandler {
     }
 }
 export const iobrokerHandler = IobrokerHandler.instance;
+//@ts-ignore
 window.IOB = iobrokerHandler;

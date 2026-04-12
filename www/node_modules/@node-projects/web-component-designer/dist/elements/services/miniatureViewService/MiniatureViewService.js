@@ -1,0 +1,10 @@
+export class MiniatureViewService {
+    async provideMiniatureView(designerCanvas) {
+        let el = document.createDocumentFragment();
+        for (const e of designerCanvas.rootDesignItem.children()) {
+            el.appendChild(e.element.cloneNode(true));
+        }
+        return el;
+    }
+}
+//# sourceMappingURL=MiniatureViewService.js.map

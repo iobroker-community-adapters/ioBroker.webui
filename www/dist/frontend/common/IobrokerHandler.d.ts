@@ -84,8 +84,8 @@ export declare class IobrokerHandler implements VisualizationHandler {
     getObject(id: string): ioBroker.GetObjectPromise<string> & Promise<{
         "$type": 'Signal';
     }>;
-    getState(id: string): Promise<State>;
-    setState(id: string, val: State | StateValue, ack?: boolean): Promise<void>;
+    getState(id: string): Promise<ioBroker.State>;
+    setState(id: string, val: ioBroker.State | ioBroker.StateValue, ack?: boolean): Promise<void>;
     private _getConfig;
     saveConfig(): Promise<void>;
     private _getObjectFromFile;

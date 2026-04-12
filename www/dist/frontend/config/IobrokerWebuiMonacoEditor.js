@@ -1,6 +1,6 @@
 import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from "@node-projects/base-custom-webcomponent";
-import { sleep } from "@node-projects/web-component-designer";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
+import { CodeViewMonaco } from "@node-projects/web-component-designer-codeview-monaco";
 export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructorAppend {
     static style = css `
         :host {
@@ -22,9 +22,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
         value: String
     };
     async createModel(text) {
-        await IobrokerWebuiMonacoEditor.initMonacoEditor();
-        //@ts-ignore
-        return monaco.editor.createModel(text, this.getLanguageName());
+        return CodeViewMonaco.monacoLib.editor.createModel(text, this.getLanguageName());
     }
     _model;
     get model() {
@@ -68,40 +66,45 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
         super();
     }
     static initMonacoEditor() {
-        return new Promise(async (resolve) => {
-            if (!IobrokerWebuiMonacoEditor._initalized) {
-                await sleep(500);
-                //@ts-ignore
-                require.config({ paths: { 'vs': 'node_modules/monaco-editor/min/vs', 'vs/css': { disabled: true } } });
-                //@ts-ignore
-                require(['vs/editor/editor.main'], () => {
-                    resolve(undefined);
-                    IobrokerWebuiMonacoEditor._initalized = true;
-                    import('./importDescriptions.json', { with: { type: 'json' } }).then(async (json) => {
-                        let files = json.default;
-                        const chunkSize = 500;
-                        let libs = [];
-                        for (let i = 0; i < files.length; i += chunkSize) {
-                            const chunk = files.slice(i, i + chunkSize);
-                            let promises = [];
-                            chunk.forEach((f) => {
-                                promises.push(LazyLoader.LoadText(f.file).then(content => {
-                                    libs.push({ content, filePath: f.name });
-                                }));
-                            });
-                            await Promise.allSettled(promises);
-                        }
-                        //@ts-ignore
-                        monaco.languages.typescript.typescriptDefaults.setExtraLibs(libs);
-                        //@ts-ignore
-                        monaco.languages.typescript.javascriptDefaults.setExtraLibs(libs);
+        if (!IobrokerWebuiMonacoEditor._initalized) {
+            IobrokerWebuiMonacoEditor._initalized = true;
+            //@ts-ignore
+            import('./importDescriptions.json', { with: { type: 'json' } }).then(async (jsonImport) => {
+                let files = jsonImport.default;
+                const chunkSize = 500;
+                let libs = [];
+                for (let i = 0; i < files.length; i += chunkSize) {
+                    const chunk = files.slice(i, i + chunkSize);
+                    let promises = [];
+                    chunk.forEach((file) => {
+                        promises.push(LazyLoader.LoadText(file.file).then(content => {
+                            libs.push({ content, filePath: 'file://' + file.name });
+                        }));
                     });
+                    await Promise.allSettled(promises);
+                }
+                //@ts-ignore
+                CodeViewMonaco.monacoLib.languages.typescript.typescriptDefaults.setExtraLibs(libs);
+                //@ts-ignore
+                CodeViewMonaco.monacoLib.languages.typescript.typescriptDefaults.setCompilerOptions({
+                    //@ts-ignore
+                    target: CodeViewMonaco.monacoLib.languages.typescript.ScriptTarget.ESNext,
+                    //@ts-ignore
+                    module: 99,
+                    removeComments: false,
+                    allowNonTsExtensions: true,
+                    //@ts-ignore
+                    moduleResolution: 99,
+                    baseUrl: "/"
                 });
-            }
-            else {
-                resolve(undefined);
-            }
-        });
+                //@ts-ignore
+                CodeViewMonaco.monacoLib.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+                    noSemanticValidation: false,
+                    noSyntaxValidation: false,
+                    noSuggestionDiagnostics: false
+                });
+            });
+        }
     }
     async ready() {
         this._parseAttributesToProperties();
@@ -110,7 +113,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
         //@ts-ignore
         this.shadowRoot.adoptedStyleSheets = [style.default, this.constructor.style];
         this._container = this._getDomElement('container');
-        await IobrokerWebuiMonacoEditor.initMonacoEditor();
+        IobrokerWebuiMonacoEditor.initMonacoEditor();
         let options = {
             automaticLayout: true,
             language: this.getLanguageName(),
@@ -128,8 +131,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
             options.lineDecorationsWidth = 0;
             options.lineNumbersMinChars = 0;
         }
-        //@ts-ignore
-        this._editor = monaco.editor.create(this._container, options);
+        this._editor = CodeViewMonaco.monacoLib.editor.create(this._container, options);
         if (this._model)
             this._editor.setModel(this._model);
         if (this.#value)

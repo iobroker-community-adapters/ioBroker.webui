@@ -1,4 +1,5 @@
 import { SignalPropertyEditor } from "@node-projects/web-component-designer-visualization-addons";
+//@ts-ignore
 import { openSelectIdDialog } from "@iobroker/webcomponent-selectid-dialog/dist/selectIdHelper.js";
 export class IobrokerWebuiSignalPropertyEditor extends SignalPropertyEditor {
     constructor(property, shell) {

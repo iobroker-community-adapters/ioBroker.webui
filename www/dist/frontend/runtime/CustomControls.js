@@ -92,6 +92,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
         return this.getRootNode()?.host?._getRelativeSignalsPath?.() ?? '';
     }
 }
+//@ts-ignore
 window.BaseCustomControl = BaseCustomControl;
 export function getCustomControlName(name) {
     if (name[0] == '/')

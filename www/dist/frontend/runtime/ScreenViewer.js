@@ -315,4 +315,5 @@ ScreenViewer = ScreenViewer_1 = __decorate([
     customElement("iobroker-webui-screen-viewer")
 ], ScreenViewer);
 export { ScreenViewer };
+//@ts-ignore
 window.ScreenViewer = ScreenViewer;

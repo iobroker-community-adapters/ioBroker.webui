@@ -1,3 +1,4 @@
+import { BaseCustomControl } from "../runtime/CustomControls.js";
 export class Runtime {
     static openScreen(config) {
         return window.appShell.scriptSystem.runScriptCommand({ type: 'OpenScreen', ...config }, null);
@@ -34,4 +35,5 @@ export class Runtime {
         return null;
     }
 }
+//@ts-ignore
 window.RUNTIME = Runtime;
