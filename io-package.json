@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.40.1",
+    "version": "1.40.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.40.2": {
+        "en": "fix build scripts",
+        "de": "erstellen von skripten",
+        "ru": "настройка скриптов",
+        "pt": "corrigir scripts de compilação",
+        "nl": "fix build scripts",
+        "fr": "correction des scripts de construction",
+        "it": "correzione script di build",
+        "es": "fijar scripts de compilación",
+        "pl": "naprawić skrypty build",
+        "uk": "виправити створення сценаріїв",
+        "zh-cn": "修复构建脚本"
+      },
       "1.40.1": {
         "en": "fix build script",
         "de": "erstellen von skripten",
@@ -106,19 +119,6 @@
         "pl": "update npm packges (fixed box quads)",
         "uk": "оновлення npm packges (фіксує квадроцикли)",
         "zh-cn": "更新 npm 包( 固定框四)"
-      },
-      "1.38.2": {
-        "en": "update npm packges",
-        "de": "update npm packs",
-        "ru": "обновление npm пакетов",
-        "pt": "atualizar pacotes npm",
-        "nl": "npm-pakketten bijwerken",
-        "fr": "mettre à jour npm packges",
-        "it": "aggiornamento npm packges",
-        "es": "actualización npm packges",
-        "pl": "aktualizacja pakietów npm",
-        "uk": "оновлення npm packges",
-        "zh-cn": "更新 npm 包"
       }
     },
     "icon": "logo.png",
