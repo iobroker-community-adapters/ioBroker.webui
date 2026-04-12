@@ -139,6 +139,11 @@ runtime.html?screenName=screen2
 - (copilot) Adapter requires js-controller >= 6.0.11 now
 - (copilot) Adapter requires admin >= 7.6.17 now
 
+### __WORK IN PROGRESS__
+- many many fixes in designer
+- css nesting supported
+- svg path editor
+
 ### 1.39.0 (2025-12-06)
 - npm upgrades for firefox fixes
 
