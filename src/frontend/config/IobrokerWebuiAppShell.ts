@@ -6,11 +6,11 @@ iobrokerHandler.init();
 const scriptSystem = new IobrokerWebuiScriptSystem(iobrokerHandler);
 const bindingsHelper = new BindingsHelper(iobrokerHandler);
 
-LazyLoader.LoadJavascript('./node_modules/monaco-editor/min/vs/loader.js');
-
-import '@node-projects/web-component-designer'
 import { PropertyGridWithHeader, RefactorView, ServiceContainer, ValueType } from '@node-projects/web-component-designer';
 import { BindableObjectsBrowser, TreeViewExtended } from '@node-projects/web-component-designer-widgets-wunderbaum';
+import '@node-projects/web-component-designer'
+
+await CodeViewMonaco.loadMonacoEditorViaImport();
 
 import type { IDisposable } from 'monaco-editor';
 import { DockManager, DockSpawnTsWebcomponent, PanelContainer, PanelType } from 'dock-spawn-ts';
@@ -39,6 +39,7 @@ import { IobrokerWebuiPropertyGrid } from './IobrokerWebuiPropertyGrid.js';
 import { typeInfoFromJsonSchema } from '@node-projects/propertygrid.webcomponent';
 import { IobrokerWebuiScriptSystem } from '../scripting/IobrokerWebuiScriptSystem.js';
 import { BindingsHelper, VisualizationShell } from '@node-projects/web-component-designer-visualization-addons';
+import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
 
 
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend implements VisualizationShell {

@@ -1,4 +1,4 @@
-import { IGlobalConfig } from "./IGlobalConfig";
+import { IGlobalConfig } from "./IGlobalConfig.js";
 
 export interface IWebUiConfig {
     globalStyle: string;

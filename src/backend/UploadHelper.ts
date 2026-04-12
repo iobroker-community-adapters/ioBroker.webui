@@ -107,7 +107,7 @@ export class Uploadhelper {
 
                         _dirs = _dirs.concat(result.dirs);
                     } catch (err) {
-                        this._adapter.log.warn(`Cannot delete folder "${this._adapter}${newPath}/": ${err.message}`);
+                        this._adapter.log.warn(`Cannot delete folder "${this._adapter}${newPath}/": ${(err as any).message}`);
                     }
                 } else if (!_files.find(e => e.path === newPath)) {
                     _files.push(newPath);
@@ -165,7 +165,7 @@ export class Uploadhelper {
             try {
                 await this._uploadFile(file, attName);
             } catch (e) {
-                this._adapter.log.error(`Error: Cannot upload ${file}: ${e.message}`);
+                this._adapter.log.error(`Error: Cannot upload ${file}: ${(e as any).message}`);
             }
         }
         return;

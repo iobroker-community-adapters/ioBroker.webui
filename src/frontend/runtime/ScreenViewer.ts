@@ -334,4 +334,5 @@ export class ScreenViewer extends BaseCustomWebComponentConstructorAppend {
     }
 }
 
+//@ts-ignore
 window.ScreenViewer = ScreenViewer;

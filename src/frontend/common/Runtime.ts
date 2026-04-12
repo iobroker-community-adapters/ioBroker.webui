@@ -1,4 +1,7 @@
 import type { OpenDialog, OpenScreen, WebuiScriptCommands } from "../scripting/IobrokerWebuiScriptCommands.js";
+import { BaseCustomControl } from "../runtime/CustomControls.js";
+import type { ScreenViewer } from "../runtime/ScreenViewer.js";
+type BaseScreenViewerAndControl = ScreenViewer | BaseCustomControl;
 
 export class Runtime {
     public static openScreen(config: Omit<OpenScreen, 'type'>): Promise<void> {
@@ -40,4 +43,6 @@ export class Runtime {
         return null;
     }
 }
+
+//@ts-ignore
 window.RUNTIME = Runtime;

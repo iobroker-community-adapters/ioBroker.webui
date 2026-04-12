@@ -1,24 +1,33 @@
 declare const importMapConfig: {
     imports: {
+        "monaco-editor": string;
         "@node-projects/base-custom-webcomponent": string;
+        "@node-projects/css-parser": string;
         "@node-projects/web-component-designer": string;
         "@node-projects/web-component-designer-widgets-wunderbaum": string;
         "@node-projects/lean-he-esm": string;
         "@node-projects/node-html-parser-esm": string;
+        "@node-projects/pickr-webcomponent": string;
+        "@node-projects/layout2vector": string;
         "dock-spawn-ts": string;
+        "toastify-js": string;
+        "a_monaco-editor": string;
         "a_@node-projects/base-custom-webcomponent": string;
+        "a_@node-projects/css-parser": string;
         "a_@node-projects/web-component-designer": string;
         "a_@node-projects/web-component-designer-widgets-wunderbaum": string;
         "a_@node-projects/lean-he-esm": string;
         "a_@node-projects/node-html-parser-esm": string;
+        "a_@node-projects/pickr-webcomponent": string;
+        "a_@node-projects/layout2vector": string;
         "a_dock-spawn-ts": string;
+        "a_toastify-js": string;
         "monaco-editor/": string;
-        "@adobe/css-tools": string;
         "esprima-next": string;
         "@node-projects/": string;
         "@node-projects/web-component-designer-htmlparserservice-nodehtmlparser": string;
         "@node-projects/web-component-designer-codeview-monaco": string;
-        "@node-projects/web-component-designer-stylesheetservice-css-tools": string;
+        "@node-projects/web-component-designer-stylesheetservice-css-parser": string;
         "@node-projects/web-component-designer-visualization-addons": string;
         "@node-projects/propertygrid.webcomponent": string;
         "@node-projects/splitview.webcomponent": string;
@@ -28,7 +37,6 @@ declare const importMapConfig: {
         long: string;
         wunderbaum: string;
         "wunderbaum/": string;
-        "toastify-js": string;
         "@iobroker/webcomponent-selectid-dialog/": string;
     };
 };

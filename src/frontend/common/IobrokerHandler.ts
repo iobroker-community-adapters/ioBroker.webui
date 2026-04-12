@@ -434,14 +434,14 @@ export class IobrokerHandler implements VisualizationHandler {
         return <any>this.connection.getObject(id);
     }
 
-    public getState(id: string): Promise<State> {
+    public getState(id: string): Promise<ioBroker.State> {
         if (id.startsWith('local_')) {
             return Promise.resolve(this.#localValues.get(id));
         } else
             return this.connection.getState(id);
     }
 
-    public setState(id: string, val: State | StateValue, ack?: boolean): Promise<void> {
+    public setState(id: string, val: ioBroker.State | ioBroker.StateValue, ack?: boolean): Promise<void> {
         if (id.startsWith('local_')) {
             if (typeof val != 'object') {
                 //@ts-ignore
@@ -578,4 +578,5 @@ export class IobrokerHandler implements VisualizationHandler {
 }
 
 export const iobrokerHandler = IobrokerHandler.instance;
+//@ts-ignore
 window.IOB = iobrokerHandler;

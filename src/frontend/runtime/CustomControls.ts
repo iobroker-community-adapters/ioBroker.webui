@@ -107,6 +107,7 @@ export class BaseCustomControl extends BaseCustomWebComponentConstructorAppend {
     }
 }
 
+//@ts-ignore
 window.BaseCustomControl = BaseCustomControl;
 
 export function getCustomControlName(name: string) {

@@ -1,7 +1,7 @@
 import { BaseCustomWebcomponentBindingsService, EventsService, IElementsJson, JsonFileElementsService, PreDefinedElementsService, SeperatorContextMenu, TextRefactorService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
 import { NodeHtmlParserService } from '@node-projects/web-component-designer-htmlparserservice-nodehtmlparser';
 import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
-import { CssToolsStylesheetService } from '@node-projects/web-component-designer-stylesheetservice-css-tools';
+import { CssParserStylesheetService } from '@node-projects/web-component-designer-stylesheetservice-css-parser';
 import { VisualizationBindingsService, PropertyGridDragDropService, ScriptRefactorService, BindingsHelper, VisualizationBindingsRefactorService } from "@node-projects/web-component-designer-visualization-addons";
 import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
 import { IobrokerWebuiDemoProviderService } from "../services/IobrokerWebuiDemoProviderService.js";
@@ -44,7 +44,7 @@ export function configureDesigner(bindingsHelper: BindingsHelper) {
     serviceContainer.register("refactorService", new TextRefactorService());
     serviceContainer.register("refactorService", new ScriptRefactorService());
     serviceContainer.register("refactorService", new IobrokerWebuiRefactorService());
-    serviceContainer.register("stylesheetService", designerCanvas => new CssToolsStylesheetService(designerCanvas));
+    serviceContainer.register("stylesheetService", designerCanvas => new CssParserStylesheetService(designerCanvas));
     serviceContainer.config.codeViewWidget = CodeViewMonaco;
 
     serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/frontend/elements-webui.json'));

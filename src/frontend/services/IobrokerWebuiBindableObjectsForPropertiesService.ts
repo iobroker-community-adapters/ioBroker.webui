@@ -1,5 +1,5 @@
 import { IBindableObjectsService, IBindableObject, InstanceServiceContainer, BindableObjectType } from "@node-projects/web-component-designer";
-import { IobrokerWebuiScreenEditor } from "../config/IobrokerWebuiScreenEditor";
+import { IobrokerWebuiScreenEditor } from "../config/IobrokerWebuiScreenEditor.js";
 
 export class IobrokerWebuiBindableObjectsForPropertiesService implements IBindableObjectsService {
   name: string = 'properties';

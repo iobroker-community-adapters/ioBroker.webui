@@ -1,5 +1,5 @@
-import { IControl } from "../interfaces/IControl";
-import { IScreen } from "../interfaces/IScreen";
+import { IControl } from "../interfaces/IControl.js";
+import { IScreen } from "../interfaces/IScreen.js";
 
 export function escapeCData(text: string) {
     return text.replaceAll("]]>", "]]]]><![CDATA[>");

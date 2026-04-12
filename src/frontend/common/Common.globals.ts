@@ -39,6 +39,7 @@ type iobObjectType =
     | 'schedule'
     | 'design';
 
+//@ts-ignore
 var IOB: {
     getState(id: string): Promise<State>;
     setState(id: string, val: State | StateValue, ack?: boolean): Promise<void>;
@@ -49,6 +50,7 @@ var IOB: {
     sendCommand(command: 'addNpm' | 'removeNpm' | 'updateNpm' | 'uiConnected' | 'uiChangedView', data?: string): Promise<void>;
 };
 
+//@ts-ignore
 var RUNTIME: {
     openScreen(config: {
         /**
@@ -83,7 +85,7 @@ var RUNTIME: {
         cssClass?: string;
     }): Promise<void>
 
-    
+
     runSimpleScriptCommand<T extends import('../scripting/IobrokerWebuiScriptCommands.js').WebuiScriptCommands>(scriptCommand: T): Promise<void>;
 
     getParentScreen(screen: BaseScreenViewerAndControl, parentlevel?: number): BaseScreenViewerAndControl;
