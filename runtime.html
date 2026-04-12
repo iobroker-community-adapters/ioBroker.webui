@@ -79,6 +79,7 @@
       sv.screenName = subScreen;
     }
     let imp = await importShim(iobrokerWebuiRootUrl + "dist/frontend/common/IobrokerHandler.js");
+    await imp.iobrokerHandler.init();
     imp.iobrokerHandler.sendCommand("uiChangedView", screen);
   }
   checkHash();

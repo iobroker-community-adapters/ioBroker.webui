@@ -87,16 +87,12 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
                 let files = jsonImport.default;
                 const chunkSize = 500;
                 let libs: { content: string, filePath?: string }[] = [];
-                let paths: Record<string, string[]> = {};
                 for (let i = 0; i < files.length; i += chunkSize) {
                     const chunk = files.slice(i, i + chunkSize);
                     let promises: Promise<void>[] = [];
                     chunk.forEach((file) => {
                         promises.push(LazyLoader.LoadText(file.file).then(content => {
                             libs.push({ content, filePath: 'file://' + file.name });
-                            if (file.path) {
-                                paths[file.path] = ['file://' + file.name];
-                            }
                         }));
                     });
                     await Promise.allSettled(promises);
@@ -114,8 +110,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
                     allowNonTsExtensions: true,
                     //@ts-ignore
                     moduleResolution: 99,
-                    baseUrl: "/",
-                    paths
+                    baseUrl: "/"
                 });
 
                 //@ts-ignore
