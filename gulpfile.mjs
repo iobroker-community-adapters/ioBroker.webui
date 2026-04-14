@@ -50,6 +50,7 @@ function copyNodeFiles() {
         "blockly/msg/en.js",
         "@blockly/zoom-to-fit/dist/index.js",
         "toastify-js/src/toastify-es.js",
+        "toastify-js/src/toastify-es-min.js",
         "toastify-js/src/toastify.css",
         "dayjs/dayjs.min.js",
         "@iobroker/webcomponent-selectid-dialog/dist/iobrokerSelectId.es.js",
@@ -66,7 +67,7 @@ function copyNodeFiles() {
 function cleanupNodeModules() {
     let notUsed = [
         "./www/node_modules/monaco-editor/dev",
-        "./www/node_modules/monaco-editor/esm",
+        "./www/node_modules/monaco-editor/min/**/*.js",
         "./www/node_modules/monaco-editor/min-maps",
         "./www/**/*.ts",
         "!./www/node_modules/@node-projects/base-custom-webcomponent/dist/BaseCustomWebComponent.d.ts",
@@ -93,14 +94,8 @@ function cleanupNodeModules() {
 
 function cleanupMonaco() {
     return deleteAsync([
-        './www/node_modules/monaco-editor/min/vs/basic-languages/**/*',
-        '!./www/node_modules/monaco-editor/min/vs/basic-languages/javascript',
-        '!./www/node_modules/monaco-editor/min/vs/basic-languages/typescript',
-        '!./www/node_modules/monaco-editor/min/vs/basic-languages/html',
-        '!./www/node_modules/monaco-editor/min/vs/basic-languages/css',
-        './www/node_modules/monaco-editor/min/vs/editor/*.js',
-        '!./www/node_modules/monaco-editor/min/vs/editor/editor.main.js',
-        '!./www/node_modules/monaco-editor/min/vs/editor/editor.main.nls.js',
+        './www/node_modules/monaco-editor/esm/**/*.js',
+        '!./www/node_modules/monaco-editor/esm/vs/editor/*.js',
     ]);
 }
 
