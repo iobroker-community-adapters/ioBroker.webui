@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.41.1 (2026-04-14)
 - try to fix build
 
 ### 1.41.0 (2026-04-14)
@@ -149,9 +149,6 @@ runtime.html?screenName=screen2
 - many many fixes in designer
 - css nesting supported
 - svg path editor
-
-### 1.39.0 (2025-12-06)
-- npm upgrades for firefox fixes
 
 ## License
 The MIT License (MIT)

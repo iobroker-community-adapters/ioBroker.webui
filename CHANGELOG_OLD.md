@@ -1,4 +1,7 @@
 # Older changes
+## 1.39.0 (2025-12-06)
+- npm upgrades for firefox fixes
+
 ## 1.38.7 (2025-11-29)
 - upgrade designer once more
 
