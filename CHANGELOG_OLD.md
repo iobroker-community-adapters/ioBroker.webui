@@ -1,4 +1,7 @@
 # Older changes
+## 1.40.1 (2026-04-12)
+- fix build script
+
 ## 1.40.0 (2026-04-12)
 - many many fixes in designer
 - css nesting supported

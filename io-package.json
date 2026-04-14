@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.41.2",
+    "version": "1.41.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.41.3": {
+        "en": "need css parser at runtime",
+        "de": "brauchen css parser bei laufzeit",
+        "ru": "нужен css parser во время выполнения",
+        "pt": "precisa do analisador css no tempo de execução",
+        "nl": "nodig css parser op runtime",
+        "fr": "besoin d'analyse css à l'exécution",
+        "it": "bisogno css parser a runtime",
+        "es": "necesita parser de css en tiempo de ejecución",
+        "pl": "potrzeba css parser w runtime",
+        "uk": "потрібен css parser в runtime",
+        "zh-cn": "运行时需要 css 解析器"
+      },
       "1.41.2": {
         "en": "fix init",
         "de": "reparatur init",
@@ -106,19 +119,6 @@
         "pl": "wiele poprawek w projektancie\nobsługa gniazda css\nedytor ścieżki svg",
         "uk": "багато виправлень в дизайнера\ncss nesting підтримується\nредактор шляху",
         "zh-cn": "设计器中的许多修正\n支持 css 筑巢\nsvg 路径编辑器"
-      },
-      "1.39.0": {
-        "en": "npm upgrades for firefox fixes",
-        "de": "npm upgrades für firefox fixes",
-        "ru": "npm обновления для firefox",
-        "pt": "atualizações npm para correções firefox",
-        "nl": "npm upgrades voor firefox fixes",
-        "fr": "npm mises à jour pour les corrections firefox",
-        "it": "npm aggiornamenti per correzioni antincendio",
-        "es": "actualizaciones de npm para fijaciones de firefox",
-        "pl": "npm aktualizacje firefox poprawki",
-        "uk": "npm оновлення для фіксаторів протипожежних",
-        "zh-cn": "npm 火狐修复的升级"
       }
     },
     "icon": "logo.png",
