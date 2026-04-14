@@ -10,7 +10,7 @@
     "start": "web-dev-server --open",
     "startwww": "cd www && web-dev-server --node-resolve --open",
     "prepublishOnly": "npm run build",
-    "build": "npm i && npm run reflection && gulp delAll && tsc && gulp",
+    "build": "npm i && npm run bundleMonaco && npm run bundleToastify && npm run reflection && gulp delAll && tsc && gulp",
     "test:ts": "mocha --config test/mocharc.custom.json test/tests/*.js",
     "test:package": "mocha test/package --exit",
     "test:unit": "mocha test/unit --exit",
@@ -24,8 +24,7 @@
     "reflection-props": "cp ./node_modules/@node-projects/web-component-designer-visualization-addons/dist/interfaces/IScriptMultiplexValue.d.ts ./src/frontend/interfaces/ && cross-env typescript-json-schema './src/frontend/interfaces/*.ts' '*' --ignoreErrors --strictNullChecks --propOrder > ./src/frontend/generated/Properties.json",
     "release": "release-script",
     "bundleMonaco": "node _patchAndMinifyMonaco.js",
-    "bundleToastify": "esbuild ./node_modules/toastify-js/src/toastify-es.js --format=esm --minify --platform=neutral --bundle --outfile=./node_modules/toastify-js/src/toastify-es-min.js",
-    "postinstall": "npm run bundleMonaco && npm run bundleToastify"
+    "bundleToastify": "esbuild ./node_modules/toastify-js/src/toastify-es.js --format=esm --minify --platform=neutral --bundle --outfile=./node_modules/toastify-js/src/toastify-es-min.js"
   },
   "repository": {
     "type": "git",
