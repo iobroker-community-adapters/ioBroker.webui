@@ -96,6 +96,7 @@ function cleanupMonaco() {
     return deleteAsync([
         './www/node_modules/monaco-editor/esm/**/*.js',
         '!./www/node_modules/monaco-editor/esm/vs/editor/*.js',
+        './www/node_modules/monaco-editor/esm/**/*.js',
     ]);
 }
 
