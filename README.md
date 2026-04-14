@@ -134,7 +134,7 @@ runtime.html?screenName=screen2
 	### __WORK IN PROGRESS__
 -->
 ### __WORK IN PROGRESS__
-- fix release
+- fix release & upd package
 
 ### 1.40.2 (2026-04-12)
 - fix build scripts
