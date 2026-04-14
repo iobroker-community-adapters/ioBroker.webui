@@ -1,4 +1,7 @@
 # Older changes
+## 1.38.7 (2025-11-29)
+- upgrade designer once more
+
 ## 1.38.6 (2025-11-24)
 - fix package.lock
 

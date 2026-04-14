@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.40.2",
+    "version": "1.41.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.41.0": {
+        "en": "fix release & upd package",
+        "de": "release & upd paket",
+        "ru": "обновление и выпуск пакета",
+        "pt": "corrigir o pacote de lançamento & upd",
+        "nl": "fix release & upd pakket",
+        "fr": "correction du paquet de sortie & mise à jour",
+        "it": "fix release & upd package",
+        "es": "arreglar la liberación \" paquete upd",
+        "pl": "naprawić pakiet & upd",
+        "uk": "фіксувати випуск і пакет оновлень",
+        "zh-cn": "固定上放软件包( u)"
+      },
       "1.40.2": {
         "en": "fix build scripts",
         "de": "erstellen von skripten",
@@ -106,19 +119,6 @@
         "pl": "fix package.lock",
         "uk": "засупу 10 ток",
         "zh-cn": "固定软件包.lock"
-      },
-      "1.38.3": {
-        "en": "update npm packges (fixes box quads)",
-        "de": "update npm packges (fixes box quads)",
-        "ru": "обновление npm пакетов (fixes box quads)",
-        "pt": "atualizar pacotes npm (fixes quads)",
-        "nl": "npm-pakketten bijwerken (fixeert doos quads)",
-        "fr": "mettre à jour npm packges (fixe les quads de la boîte)",
-        "it": "aggiornamento npm packges (fixes box quads)",
-        "es": "actualización npm packges (cuartos de caja de carga)",
-        "pl": "update npm packges (fixed box quads)",
-        "uk": "оновлення npm packges (фіксує квадроцикли)",
-        "zh-cn": "更新 npm 包( 固定框四)"
       }
     },
     "icon": "logo.png",
