@@ -46,6 +46,7 @@ export class IobrokerHandler implements VisualizationHandler {
     refreshView = new TypedEvent<string>();
 
     _readyPromises: (() => void)[] = [];
+    _init = false;
 
     language: string;
     languageChanged = new TypedEvent<string>();
@@ -74,86 +75,89 @@ export class IobrokerHandler implements VisualizationHandler {
     }
 
     async init() {
-        //@ts-ignore
-        while (!window.io)
-            await sleep(5);
+        if (!this._init) {
+            this._init = true;
+            //@ts-ignore
+            while (!window.io)
+                await sleep(5);
 
-        let ci = document.getElementById('connectionInfo');
-        if (ci) {
-            ci.innerHTML = 'connecting...';
-        }
-
-        this.connection = new Connection({
-            protocol: 'ws:',
-            host: window.iobrokerHost,
-            port: window.iobrokerPort,
-            admin5only: false,
-            autoSubscribes: [],
-            onError: (err) => {
-                let ci = document.getElementById('connectionInfo');
-                if (ci) {
-                    ci.innerHTML = err;
-                }
-                let cs = document.getElementById('connectionState');
-                if (cs) {
-                    cs.style.background = 'red';
-                }
-            },
-            onReady: () => {
-                let ci = document.getElementById('connectionInfo');
-                if (ci) {
-                    ci.innerHTML = 'ready';
-                }
-                let cs = document.getElementById('connectionState');
-                if (cs) {
-                    cs.style.background = 'lightgreen';
-                }
+            let ci = document.getElementById('connectionInfo');
+            if (ci) {
+                ci.innerHTML = 'connecting...';
             }
-        });
-        await this.connection.startSocket();
-        await this.connection.waitForFirstConnection();
 
-        let cfg = await this._getConfig();
-        this.config = cfg ?? { globalStyle: null, globalScript: null, globalConfig: null, fontDeclarations: null };
-        if (this.config.globalConfig == null) {
-            this.config.globalConfig = {
-                headerTags: `<meta name="apple-mobile-web-app-capable" content="yes" />
+            this.connection = new Connection({
+                protocol: 'ws:',
+                host: window.iobrokerHost,
+                port: window.iobrokerPort,
+                admin5only: false,
+                autoSubscribes: [],
+                onError: (err) => {
+                    let ci = document.getElementById('connectionInfo');
+                    if (ci) {
+                        ci.innerHTML = err;
+                    }
+                    let cs = document.getElementById('connectionState');
+                    if (cs) {
+                        cs.style.background = 'red';
+                    }
+                },
+                onReady: () => {
+                    let ci = document.getElementById('connectionInfo');
+                    if (ci) {
+                        ci.innerHTML = 'ready';
+                    }
+                    let cs = document.getElementById('connectionState');
+                    if (cs) {
+                        cs.style.background = 'lightgreen';
+                    }
+                }
+            });
+            await this.connection.startSocket();
+            await this.connection.waitForFirstConnection();
+
+            let cfg = await this._getConfig();
+            this.config = cfg ?? { globalStyle: null, globalScript: null, globalConfig: null, fontDeclarations: null };
+            if (this.config.globalConfig == null) {
+                this.config.globalConfig = {
+                    headerTags: `<meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">`
+                }
             }
-        }
-        if (this.config.globalConfig.headerTags) {
-            const fragment = document.createRange().createContextualFragment(this.config.globalConfig.headerTags);
-            document.head.appendChild(fragment);
-        }
-        if (this.config.globalStyle)
-            this.globalStylesheet = cssFromString(this.config.globalStyle);
-        if (this.config.fontDeclarations) {
-            this.fontDeclarationsStylesheet = cssFromString(this.config.fontDeclarations);
-            document.adoptedStyleSheets = [this.fontDeclarationsStylesheet];
-        }
-        if (this.config.globalScript) {
-            const scriptUrl = URL.createObjectURL(new Blob([this.config.globalScript], { type: 'application/javascript' }));
-            this.globalScriptInstance = await importShim(scriptUrl);
-            if (this.globalScriptInstance.init)
-                this.globalScriptInstance.init();
-        }
+            if (this.config.globalConfig.headerTags) {
+                const fragment = document.createRange().createContextualFragment(this.config.globalConfig.headerTags);
+                document.head.appendChild(fragment);
+            }
+            if (this.config.globalStyle)
+                this.globalStylesheet = cssFromString(this.config.globalStyle);
+            if (this.config.fontDeclarations) {
+                this.fontDeclarationsStylesheet = cssFromString(this.config.fontDeclarations);
+                document.adoptedStyleSheets = [this.fontDeclarationsStylesheet];
+            }
+            if (this.config.globalScript) {
+                const scriptUrl = URL.createObjectURL(new Blob([this.config.globalScript], { type: 'application/javascript' }));
+                this.globalScriptInstance = await importShim(scriptUrl);
+                if (this.globalScriptInstance.init)
+                    this.globalScriptInstance.init();
+            }
 
-        for (let p of this._readyPromises)
-            p();
-        this._readyPromises = null;
-        console.log("ioBroker handler ready.");
+            for (let p of this._readyPromises)
+                p();
+            this._readyPromises = null;
+            console.log("ioBroker handler ready.");
 
-        let commandData;
-        let commandClientIds;
-        await this.connection.subscribeState(this.namespace + '.control.data', (id, state) => { commandData = state?.val });
-        await this.connection.subscribeState(this.namespace + '.control.clientIds', (id, state) => { commandClientIds = state?.val });
-        let v = await this.connection.getState(this.namespace + '.control.command')
-        this.connection.subscribeState(this.namespace + '.control.command', (id, state) => {
-            if (state?.ack && state?.ts != v?.ts)
-                this.handleCommand(<any>state?.val, commandData, commandClientIds);
-        });
+            let commandData;
+            let commandClientIds;
+            await this.connection.subscribeState(this.namespace + '.control.data', (id, state) => { commandData = state?.val });
+            await this.connection.subscribeState(this.namespace + '.control.clientIds', (id, state) => { commandClientIds = state?.val });
+            let v = await this.connection.getState(this.namespace + '.control.command')
+            this.connection.subscribeState(this.namespace + '.control.command', (id, state) => {
+                if (state?.ack && state?.ts != v?.ts)
+                    this.handleCommand(<any>state?.val, commandData, commandClientIds);
+            });
 
-        this.sendCommand("uiConnected", "");
+            this.sendCommand("uiConnected", "");
+        }
     }
 
     async getIconAdapterFoldernames() {
