@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.41.1",
+    "version": "1.41.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.41.2": {
+        "en": "fix init",
+        "de": "reparatur init",
+        "ru": "фиксировать",
+        "pt": "fixar init",
+        "nl": "fix init",
+        "fr": "réparer init",
+        "it": "fix init",
+        "es": "arréglalo",
+        "pl": "fix init",
+        "uk": "фіксувати init",
+        "zh-cn": "固定内置"
+      },
       "1.41.1": {
         "en": "try to fix build",
         "de": "versuchen, build zu beheben",
@@ -106,19 +119,6 @@
         "pl": "npm aktualizacje firefox poprawki",
         "uk": "npm оновлення для фіксаторів протипожежних",
         "zh-cn": "npm 火狐修复的升级"
-      },
-      "1.38.7": {
-        "en": "upgrade designer once more",
-        "de": "upgrade-designer noch einmal",
-        "ru": "обновление дизайнера снова",
-        "pt": "atualizar o designer mais uma vez",
-        "nl": "upgrade ontwerper opnieuw",
-        "fr": "upgrade designer une fois de plus",
-        "it": "aggiornamento designer ancora una volta",
-        "es": "diseñador de actualización una vez más",
-        "pl": "upgrade designer jeszcze raz",
-        "uk": "модернізація дизайнера",
-        "zh-cn": "再次升级设计器"
       }
     },
     "icon": "logo.png",

@@ -1,4 +1,9 @@
 # Older changes
+## 1.40.0 (2026-04-12)
+- many many fixes in designer
+- css nesting supported
+- svg path editor
+
 ## 1.39.0 (2025-12-06)
 - npm upgrades for firefox fixes
 
