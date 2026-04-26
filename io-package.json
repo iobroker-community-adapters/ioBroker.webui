@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.41.3",
+    "version": "1.42.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.42.0": {
+        "en": "update designer",
+        "de": "update designer",
+        "ru": "обновление дизайнера",
+        "pt": "atualizar designer",
+        "nl": "update ontwerper",
+        "fr": "concepteur de mise à jour",
+        "it": "aggiornamento designer",
+        "es": "actualización diseñador",
+        "pl": "designer aktualizacji",
+        "uk": "оновлення дизайнера",
+        "zh-cn": "更新设计器"
+      },
       "1.41.3": {
         "en": "need css parser at runtime",
         "de": "brauchen css parser bei laufzeit",

@@ -1,4 +1,7 @@
 # Older changes
+## 1.40.2 (2026-04-12)
+- fix build scripts
+
 ## 1.40.1 (2026-04-12)
 - fix build script
 
