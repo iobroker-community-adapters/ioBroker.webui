@@ -126,7 +126,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
             this.setWidth(this._settings.width);
             this.setHeight(this._settings.height);
             this.documentContainer.designerView.zoomToFit();
-            this.documentContainer.designerView.designerCanvas.onContentChanged.on(() => {
+            this.documentContainer.designerView.designerCanvas.instanceServiceContainer.onContentChanged.on(() => {
                 this.applyBindings();
             });
         }, 50);
