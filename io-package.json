@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.42.0",
+    "version": "1.42.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.42.1": {
+        "en": "fix missing mopnaco font",
+        "de": "fehlende mopnaco schriftarten",
+        "ru": "исправить недостающий шрифт mopnaco",
+        "pt": "corrigir falta de fonte mopnaco",
+        "nl": "ontbrekende mopnaco-lettertype herstellen",
+        "fr": "correction de la police mopnaco manquante",
+        "it": "correzione del carattere mopnaco mancante",
+        "es": "solución faltante fuente mopnaco",
+        "pl": "fix brakująca czcionka mopnaco",
+        "uk": "виправити відсутні шрифти mopnaco",
+        "zh-cn": "修补缺失的 whonnaco 字体"
+      },
       "1.42.0": {
         "en": "update designer",
         "de": "update designer",
