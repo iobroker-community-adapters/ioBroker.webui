@@ -93,32 +93,6 @@
         "pl": "naprawić skrypty build",
         "uk": "виправити створення сценаріїв",
         "zh-cn": "修复构建脚本"
-      },
-      "1.40.1": {
-        "en": "fix build script",
-        "de": "erstellen von skripten",
-        "ru": "сценарий fix build",
-        "pt": "corrigir script de compilação",
-        "nl": "fix build script",
-        "fr": "correction du script de construction",
-        "it": "correzione dello script di build",
-        "es": "script de compilación",
-        "pl": "naprawić skrypt build",
-        "uk": "фіксувати скрипт побудови",
-        "zh-cn": "修复构建脚本"
-      },
-      "1.40.0": {
-        "en": "many many fixes in designer\ncss nesting supported\nsvg path editor",
-        "de": "viele viele fixes in designer\ncss nesting unterstützt\nsvg path editor",
-        "ru": "множество фишек в дизайне\ncss гнездование поддерживается\nsvg path editor",
-        "pt": "muitas correções no designer\naninhamento css suportado\neditor de localização svg",
-        "nl": "veel fixes in designer\ncss nesting ondersteund\nsvg padeditor",
-        "fr": "de nombreuses corrections dans le concepteur\ncss nichant soutenu\néditeur de chemin svg",
-        "it": "moltissime correzioni nel designer\ncss nesting supportato\neditor di percorso",
-        "es": "muchos arreglos en diseñador\ncss anidación compatible\nsvg editor de ruta",
-        "pl": "wiele poprawek w projektancie\nobsługa gniazda css\nedytor ścieżki svg",
-        "uk": "багато виправлень в дизайнера\ncss nesting підтримується\nредактор шляху",
-        "zh-cn": "设计器中的许多修正\n支持 css 筑巢\nsvg 路径编辑器"
       }
     },
     "icon": "logo.png",
