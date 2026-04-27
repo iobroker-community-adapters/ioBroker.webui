@@ -1,4 +1,7 @@
 # Older changes
+## 1.41.1 (2026-04-14)
+- try to fix build
+
 ## 1.41.0 (2026-04-14)
 - fix release & upd package
 

@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.43.0 (2026-04-27)
 - fix script system after upgrade
 
 ### 1.42.1 (2026-04-26)
@@ -147,9 +147,6 @@ runtime.html?screenName=screen2
 
 ### 1.41.2 (2026-04-14)
 - fix init
-
-### 1.41.1 (2026-04-14)
-- try to fix build
 
 ## License
 The MIT License (MIT)

@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.42.1",
+    "version": "1.43.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.43.0": {
+        "en": "fix script system after upgrade",
+        "de": "skriptsystem nach dem upgrade",
+        "ru": "исправьте скриптовую систему после обновления",
+        "pt": "corrigir o sistema de script após a atualização",
+        "nl": "fix script systeem na upgrade",
+        "fr": "correction du système de script après mise à jour",
+        "it": "correzione del sistema di script dopo l'aggiornamento",
+        "es": "sistema de script de fijación después de actualización",
+        "pl": "naprawić system skryptu po aktualizacji",
+        "uk": "виправити систему скриптів після оновлення",
+        "zh-cn": "升级后修正脚本系统"
+      },
       "1.42.1": {
         "en": "fix missing mopnaco font",
         "de": "fehlende mopnaco schriftarten",
@@ -106,19 +119,6 @@
         "pl": "naprawić pakiet & upd",
         "uk": "фіксувати випуск і пакет оновлень",
         "zh-cn": "固定上放软件包( u)"
-      },
-      "1.40.2": {
-        "en": "fix build scripts",
-        "de": "erstellen von skripten",
-        "ru": "настройка скриптов",
-        "pt": "corrigir scripts de compilação",
-        "nl": "fix build scripts",
-        "fr": "correction des scripts de construction",
-        "it": "correzione script di build",
-        "es": "fijar scripts de compilación",
-        "pl": "naprawić skrypty build",
-        "uk": "виправити створення сценаріїв",
-        "zh-cn": "修复构建脚本"
       }
     },
     "icon": "logo.png",
