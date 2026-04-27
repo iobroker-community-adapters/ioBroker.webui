@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix script system after upgrade
+
 ### 1.42.1 (2026-04-26)
 - fix missing mopnaco font
 

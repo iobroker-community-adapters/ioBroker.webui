@@ -59,9 +59,11 @@ export class IobrokerWebuiScriptSystem extends ScriptSystem {
             }
 
             default: {
-                await super.runScriptCommand(command, context);
+                return await super.runScriptCommand(command, context);
             }
         }
+
+        return true;
     }
 
     override getTarget(context: contextType, targetSelectorTarget: 'element' | 'container', parentLevel: number) {
