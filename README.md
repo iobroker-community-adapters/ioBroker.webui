@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.44.0 (2026-04-28)
 - fix designer errors
 
 ### 1.43.1 (2026-04-28)
@@ -147,9 +147,6 @@ runtime.html?screenName=screen2
 
 ### 1.42.0 (2026-04-26)
 - update designer
-
-### 1.41.3 (2026-04-14)
-- need css parser at runtime
 
 ## License
 The MIT License (MIT)

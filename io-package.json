@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.43.1",
+    "version": "1.44.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.44.0": {
+        "en": "fix designer errors",
+        "de": "designer fehler beheben",
+        "ru": "исправьте ошибки дизайнера",
+        "pt": "corrigir erros de desenhador",
+        "nl": "fix designer fouten",
+        "fr": "correction des erreurs du concepteur",
+        "it": "correggere gli errori del progettista",
+        "es": "corregir errores de diseñador",
+        "pl": "naprawić błędy projektanta",
+        "uk": "виправлення помилок дизайнера",
+        "zh-cn": "固定设计器错误"
+      },
       "1.43.1": {
         "en": "bugfix release",
         "de": "fehlerbehebung",
@@ -106,19 +119,6 @@
         "pl": "fix init",
         "uk": "фіксувати init",
         "zh-cn": "固定内置"
-      },
-      "1.41.1": {
-        "en": "try to fix build",
-        "de": "versuchen, build zu beheben",
-        "ru": "попробуйте исправить сборку",
-        "pt": "tentar corrigir a compilação",
-        "nl": "proberen te repareren",
-        "fr": "essayer de réparer la construction",
-        "it": "cercare di risolvere la costruzione",
-        "es": "tratar de arreglar construcción",
-        "pl": "spróbuj naprawić budowę",
-        "uk": "спробувати виправити будівництво",
-        "zh-cn": "尝试修复构建"
       }
     },
     "icon": "logo.png",

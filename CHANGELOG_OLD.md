@@ -1,4 +1,7 @@
 # Older changes
+## 1.41.3 (2026-04-14)
+- need css parser at runtime
+
 ## 1.41.2 (2026-04-14)
 - fix init
 
