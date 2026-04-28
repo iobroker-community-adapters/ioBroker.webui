@@ -4,11 +4,11 @@ import type { ScreenViewer } from "../runtime/ScreenViewer.js";
 type BaseScreenViewerAndControl = ScreenViewer | BaseCustomControl;
 
 export class Runtime {
-    public static openScreen(config: Omit<OpenScreen, 'type'>): Promise<void> {
+    public static openScreen(config: Omit<OpenScreen, 'type'>): Promise<boolean> {
         return window.appShell.scriptSystem.runScriptCommand({ type: 'OpenScreen', ...config }, null);
     }
 
-    public static openDialog(config: Omit<OpenDialog, 'type'>): Promise<void> {
+    public static openDialog(config: Omit<OpenDialog, 'type'>): Promise<boolean> {
         return window.appShell.scriptSystem.runScriptCommand({ type: 'OpenDialog', ...config }, null);
     }
 
