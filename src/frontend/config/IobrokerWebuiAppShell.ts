@@ -10,7 +10,7 @@ import { PropertyGridWithHeader, RefactorView, ServiceContainer, ValueType } fro
 import { BindableObjectsBrowser, TreeViewExtended } from '@node-projects/web-component-designer-widgets-wunderbaum';
 import '@node-projects/web-component-designer'
 
-await CodeViewMonaco.loadMonacoEditorViaImport();
+await CodeViewMonaco.getMonacoLib();
 
 import type { IDisposable } from 'monaco-editor';
 import { DockManager, DockSpawnTsWebcomponent, PanelContainer, PanelType } from 'dock-spawn-ts';
