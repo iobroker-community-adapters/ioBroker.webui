@@ -1,4 +1,7 @@
 # Older changes
+## 1.41.2 (2026-04-14)
+- fix init
+
 ## 1.41.1 (2026-04-14)
 - try to fix build
 
