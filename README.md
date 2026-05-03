@@ -148,6 +148,8 @@ runtime.html?screenName=screen2
 ### 1.42.0 (2026-04-26)
 - update designer
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 The MIT License (MIT)
 
