@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.45.0",
+    "version": "1.45.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.45.1": {
+        "en": "fix release",
+        "de": "zurück zur übersicht",
+        "ru": "исправление",
+        "pt": "corrigir a libertação",
+        "nl": "fix release",
+        "fr": "corriger la libération",
+        "it": "rilascio corretto",
+        "es": "corrección de liberación",
+        "pl": "fix release",
+        "uk": "фіксувати реліз",
+        "zh-cn": "固定释放"
+      },
       "1.45.0": {
         "en": "update designer with new features",
         "de": "update-designer mit neuen features",
@@ -106,19 +119,6 @@
         "pl": "designer aktualizacji",
         "uk": "оновлення дизайнера",
         "zh-cn": "更新设计器"
-      },
-      "1.41.3": {
-        "en": "need css parser at runtime",
-        "de": "brauchen css parser bei laufzeit",
-        "ru": "нужен css parser во время выполнения",
-        "pt": "precisa do analisador css no tempo de execução",
-        "nl": "nodig css parser op runtime",
-        "fr": "besoin d'analyse css à l'exécution",
-        "it": "bisogno css parser a runtime",
-        "es": "necesita parser de css en tiempo de ejecución",
-        "pl": "potrzeba css parser w runtime",
-        "uk": "потрібен css parser в runtime",
-        "zh-cn": "运行时需要 css 解析器"
       }
     },
     "icon": "logo.png",

@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.45.1 (2026-05-07)
 - fix release
 
 ### 1.45.0 (2026-05-07)
@@ -147,9 +147,6 @@ runtime.html?screenName=screen2
 
 ### 1.43.0 (2026-04-27)
 - fix script system after upgrade
-
-### 1.42.1 (2026-04-26)
-- fix missing mopnaco font
 
 ## License
 The MIT License (MIT)

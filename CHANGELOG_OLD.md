@@ -1,4 +1,7 @@
 # Older changes
+## 1.42.1 (2026-04-26)
+- fix missing mopnaco font
+
 ## 1.42.0 (2026-04-26)
 - update designer
 
