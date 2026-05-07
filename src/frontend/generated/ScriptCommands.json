@@ -660,6 +660,39 @@
             ],
             "type": "object"
         },
+        "Repeat": {
+            "properties": {
+                "count": {
+                    "default": 0,
+                    "description": "Number of times the script repeats itself. If 0, it repeats indefinitly",
+                    "type": "number"
+                },
+                "label": {
+                    "description": "Name of the Label to jump to, if empty it jumps to the start.",
+                    "type": "string"
+                },
+                "mode": {
+                    "default": "eventValid",
+                    "description": "always: script repeats until count is 0 or indefinitly when count is 0\neventValid: script repeats until event is no longer active",
+                    "enum": [
+                        "always",
+                        "eventValid"
+                    ],
+                    "type": "string"
+                },
+                "type": {
+                    "const": "Repeat",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "label",
+                "count",
+                "mode"
+            ],
+            "type": "object"
+        },
         "RunScript": {
             "properties": {
                 "additionalData": {
@@ -835,6 +868,9 @@
                     ],
                     "type": "string"
                 },
+                "exitScriptOnCancel": {
+                    "type": "boolean"
+                },
                 "height": {
                     "type": "string"
                 },
@@ -878,7 +914,8 @@
                 "resultSignal",
                 "width",
                 "height",
-                "additionalData"
+                "additionalData",
+                "exitScriptOnCancel"
             ],
             "type": "object"
         },
@@ -890,6 +927,10 @@
                 "default": {
                     "description": "default value",
                     "type": "string"
+                },
+                "exitScriptOnCancel": {
+                    "description": "if true the script execution will be stopped when the user clicks a button that is considered negative (cancel, no, retry, abort)",
+                    "type": "boolean"
                 },
                 "height": {
                     "type": "string"
@@ -921,6 +962,7 @@
                 "message",
                 "default",
                 "resultSignal",
+                "exitScriptOnCancel",
                 "width",
                 "height",
                 "additionalData"
@@ -1176,6 +1218,9 @@
                 },
                 {
                     "$ref": "#/definitions/ImportSignalValuesFromJson"
+                },
+                {
+                    "$ref": "#/definitions/Repeat"
                 },
                 {
                     "$ref": "#/definitions/Comment"
