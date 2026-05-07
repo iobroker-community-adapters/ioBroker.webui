@@ -53,9 +53,10 @@ export class IobrokerWebuiScriptSystem extends ScriptSystem {
                 break;
             }
             default: {
-                await super.runScriptCommand(command, context);
+                return await super.runScriptCommand(command, context);
             }
         }
+        return true;
     }
     getTarget(context, targetSelectorTarget, parentLevel) {
         if (targetSelectorTarget == "container") {

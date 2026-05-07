@@ -1,0 +1,34 @@
+import { TransformOriginExtension } from './TransformOriginExtension.js';
+import { css } from "@node-projects/base-custom-webcomponent";
+import { getBoundingClientRectAlsoForDisplayContents } from '../../../../helper/ElementHelper.js';
+export class TransformOriginExtensionProvider {
+    showOnlyWhenSet;
+    constructor(showOnlyWhenSet = true) {
+        this.showOnlyWhenSet = showOnlyWhenSet;
+    }
+    shouldExtend(extensionManager, designerView, designItem) {
+        if (!designItem.isRootItem && designItem.node instanceof HTMLElement || (designItem.node instanceof SVGElement && designItem.node.localName === 'svg')) {
+            if (!this.showOnlyWhenSet)
+                return true;
+            if (designItem.hasStyle('transformOrigin'))
+                return true;
+            const cs = getComputedStyle(designItem.element);
+            if (cs.display != 'inline' && designItem.element.getBoundingClientRect) {
+                const r = getBoundingClientRectAlsoForDisplayContents(designItem.element);
+                const pr = cs.transformOrigin.split(' ');
+                const x = parseFloat(pr[0]) - r.width / 2;
+                const y = parseFloat(pr[1]) - r.height / 2;
+                if (x > 0.5 || x < -0.5 || y > 0.5 || y < -0.5)
+                    return true;
+            }
+        }
+        return false;
+    }
+    getExtension(extensionManager, designerView, designItem) {
+        return new TransformOriginExtension(extensionManager, designerView, designItem);
+    }
+    static style = css `
+    .svg-transform-origin { stroke: #3899ec; fill: black; pointer-events: auto; }
+  `;
+}
+//# sourceMappingURL=TransformOriginExtensionProvider.js.map

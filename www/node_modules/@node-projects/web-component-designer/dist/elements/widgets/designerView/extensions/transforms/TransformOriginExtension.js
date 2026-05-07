@@ -1,0 +1,124 @@
+import { EventNames } from '../../../../../enums/EventNames.js';
+import { convertCssUnit, getCssUnit } from '../../../../helper/CssUnitConverter.js';
+import { getBoundingClientRectAlsoForDisplayContents } from '../../../../helper/ElementHelper.js';
+import { clearCache, getResultingTransformationBetweenElementAndAllAncestors } from '../../../../helper/getBoxQuads.js';
+import { roundValue } from '../../../../helper/LayoutHelper.js';
+import { AbstractExtension } from '../AbstractExtension.js';
+export class TransformOriginExtension extends AbstractExtension {
+    _startPos;
+    _circle;
+    _circle2;
+    _oldValue;
+    _offsetInControl;
+    constructor(extensionManager, designerView, extendedItem) {
+        super(extensionManager, designerView, extendedItem);
+    }
+    _getTransformOriginCanvasPoint() {
+        const computed = getComputedStyle(this.extendedItem.element);
+        const to = computed.transformOrigin.split(' ');
+        const transform = getResultingTransformationBetweenElementAndAllAncestors(this.extendedItem.element, this.designerCanvas.canvas, this.designerCanvas.iframes);
+        return transform.transformPoint(new DOMPoint(parseFloat(to[0]), parseFloat(to[1])));
+    }
+    refresh(cache, event) {
+        const toDOMPoint = this._getTransformOriginCanvasPoint();
+        if (this._valuesHaveChanges(toDOMPoint.x, toDOMPoint.y, this.designerCanvas.zoomFactor)) {
+            this._removeAllOverlays();
+            this._circle = this._drawCircle(toDOMPoint.x, toDOMPoint.y, 5 / this.designerCanvas.zoomFactor, 'svg-transform-origin');
+            this._circle.style.strokeWidth = (1 / this.designerCanvas.zoomFactor).toString();
+            this._circle.style.cursor = 'pointer';
+            this._circle2 = this._drawCircle(toDOMPoint.x, toDOMPoint.y, 1 / this.designerCanvas.zoomFactor, 'svg-transform-origin');
+            this._circle2.style.strokeWidth = (1 / this.designerCanvas.zoomFactor).toString();
+            this._circle2.style.pointerEvents = 'none';
+            this._circle.addEventListener(EventNames.PointerDown, event => this.pointerEvent(event));
+            this._circle.addEventListener(EventNames.PointerMove, event => this.pointerEvent(event));
+            this._circle.addEventListener(EventNames.PointerUp, event => this.pointerEvent(event));
+        }
+    }
+    extend(cache, event) {
+        const toDOMPoint = this._getTransformOriginCanvasPoint();
+        if (isNaN(toDOMPoint.x) || isNaN(toDOMPoint.y)) {
+            this.remove();
+            return;
+        }
+        else {
+            let old = this.extendedItem.getStyleFromSheetOrLocal('transform-origin');
+            if (old) {
+                this._oldValue = old;
+            }
+            this.refresh(cache, event);
+        }
+    }
+    pointerEvent(event) {
+        event.stopPropagation();
+        const computed = getComputedStyle(this.extendedItem.element);
+        const to = computed.transformOrigin.split(' ');
+        const toInPercentage = [];
+        toInPercentage[0] = parseFloat(to[0]) / parseFloat(this.extendedItem.element.style.width);
+        toInPercentage[1] = parseFloat(to[1]) / parseFloat(this.extendedItem.element.style.height);
+        const toDOMPoint = this._getTransformOriginCanvasPoint();
+        const mp = this.designerCanvas.getNormalizedEventCoordinates(event);
+        const evPoint = this.extendedItem.element.convertPointFromNode(mp, this.designerCanvas.canvas);
+        const normalized = this.designerCanvas.getNormalizedEventCoordinates(event);
+        switch (event.type) {
+            case EventNames.PointerDown:
+                event.target.setPointerCapture(event.pointerId);
+                const rect = getBoundingClientRectAlsoForDisplayContents(event.target);
+                this._offsetInControl = { x: rect.width / 2 + (rect.x - event.x), y: rect.height / 2 + (rect.y - event.y) };
+                this._startPos = { x: normalized.x, y: normalized.y };
+                break;
+            case EventNames.PointerMove:
+                if (this._startPos && event.buttons > 0) {
+                    const dx = normalized.x - this._startPos.x;
+                    const dy = normalized.y - this._startPos.y;
+                    this._circle.setAttribute('cx', (toDOMPoint.x + dx));
+                    this._circle.setAttribute('cy', (toDOMPoint.y + dy));
+                    this._circle2.setAttribute('cx', (toDOMPoint.x + dx));
+                    this._circle2.setAttribute('cy', (toDOMPoint.y + dy));
+                }
+                break;
+            case EventNames.PointerUp:
+                event.target.releasePointerCapture(event.pointerId);
+                if (this._startPos) {
+                    evPoint.x += this._offsetInControl.x;
+                    evPoint.y += this._offsetInControl.y;
+                    const cg = this.extendedItem.openGroup('change transform-origin');
+                    const quadsOld = this.extendedItem.element.getBoxQuads({ relativeTo: this.designerCanvas.rootDesignItem.element })[0];
+                    if (this._oldValue) {
+                        try {
+                            const oldSplit = this._oldValue.split(' ');
+                            let newXs = convertCssUnit(evPoint.x, this.extendedItem.element, 'width', getCssUnit(oldSplit[0]), (nr) => roundValue(this.extendedItem, nr));
+                            let newYs = convertCssUnit(evPoint.x, this.extendedItem.element, 'width', getCssUnit(oldSplit[0]), (nr) => roundValue(this.extendedItem, nr));
+                            if (oldSplit.length > 1) {
+                                newYs = convertCssUnit(evPoint.y, this.extendedItem.element, 'height', getCssUnit(oldSplit[1]), (nr) => roundValue(this.extendedItem, nr));
+                            }
+                            this.extendedItem.updateStyleInSheetOrLocal('transform-origin', newXs + ' ' + newYs);
+                        }
+                        catch (err) {
+                            this.extendedItem.updateStyleInSheetOrLocal('transform-origin', roundValue(this.extendedItem, evPoint.x) + 'px' + ' ' + roundValue(this.extendedItem, evPoint.y) + 'px');
+                        }
+                    }
+                    else
+                        this.extendedItem.updateStyleInSheetOrLocal('transform-origin', roundValue(this.extendedItem, evPoint.x) + 'px' + ' ' + roundValue(this.extendedItem, evPoint.y) + 'px');
+                    clearCache(); //clear box quads cache to make sure we get the new quads with the updated transform origin
+                    const quadsNew = this.extendedItem.element.getBoxQuads({ relativeTo: this.designerCanvas.rootDesignItem.element })[0];
+                    const translateP = { x: quadsOld.p1.x - quadsNew.p1.x, y: quadsOld.p1.y - quadsNew.p1.y };
+                    if (computed.translate && computed.translate !== 'none') {
+                        translateP.x += parseFloat(computed.translate.split(' ')[0]);
+                        if (computed.translate.split(' ').length === 1)
+                            translateP.y += parseFloat(computed.translate.split(' ')[0]);
+                        else
+                            translateP.y += parseFloat(computed.translate.split(' ')[1]);
+                    }
+                    this.extendedItem.updateStyleInSheetOrLocal('translate', roundValue(this.extendedItem, translateP.x) + 'px' + ' ' + roundValue(this.extendedItem, translateP.y) + 'px');
+                    cg.commit();
+                    this.refresh(null, null);
+                    this._startPos = null;
+                }
+                break;
+        }
+    }
+    dispose() {
+        this._removeAllOverlays();
+    }
+}
+//# sourceMappingURL=TransformOriginExtension.js.map

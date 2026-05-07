@@ -22,7 +22,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
         value: String
     };
     async createModel(text) {
-        return CodeViewMonaco.monacoLib.editor.createModel(text, this.getLanguageName());
+        return (await CodeViewMonaco.getMonacoLib()).editor.createModel(text, this.getLanguageName());
     }
     _model;
     get model() {
@@ -84,11 +84,11 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
                     await Promise.allSettled(promises);
                 }
                 //@ts-ignore
-                CodeViewMonaco.monacoLib.languages.typescript.typescriptDefaults.setExtraLibs(libs);
+                (await CodeViewMonaco.getMonacoLib()).languages.typescript.typescriptDefaults.setExtraLibs(libs);
                 //@ts-ignore
-                CodeViewMonaco.monacoLib.languages.typescript.typescriptDefaults.setCompilerOptions({
+                (await CodeViewMonaco.getMonacoLib()).languages.typescript.typescriptDefaults.setCompilerOptions({
                     //@ts-ignore
-                    target: CodeViewMonaco.monacoLib.languages.typescript.ScriptTarget.ESNext,
+                    target: (await CodeViewMonaco.getMonacoLib()).languages.typescript.ScriptTarget.ESNext,
                     //@ts-ignore
                     module: 99,
                     removeComments: false,
@@ -98,7 +98,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
                     baseUrl: "/"
                 });
                 //@ts-ignore
-                CodeViewMonaco.monacoLib.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+                (await CodeViewMonaco.getMonacoLib()).languages.typescript.typescriptDefaults.setDiagnosticsOptions({
                     noSemanticValidation: false,
                     noSyntaxValidation: false,
                     noSuggestionDiagnostics: false
@@ -131,7 +131,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
             options.lineDecorationsWidth = 0;
             options.lineNumbersMinChars = 0;
         }
-        this._editor = CodeViewMonaco.monacoLib.editor.create(this._container, options);
+        this._editor = (await CodeViewMonaco.getMonacoLib()).editor.create(this._container, options);
         if (this._model)
             this._editor.setModel(this._model);
         if (this.#value)

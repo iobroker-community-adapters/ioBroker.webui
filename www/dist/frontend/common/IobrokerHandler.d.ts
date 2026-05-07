@@ -39,6 +39,7 @@ export declare class IobrokerHandler implements VisualizationHandler {
     changeView: TypedEvent<string>;
     refreshView: TypedEvent<string>;
     _readyPromises: (() => void)[];
+    _init: boolean;
     language: string;
     languageChanged: TypedEvent<string>;
     _controlNames: string[];

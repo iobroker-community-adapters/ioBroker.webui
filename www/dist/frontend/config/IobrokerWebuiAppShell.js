@@ -8,7 +8,7 @@ const bindingsHelper = new BindingsHelper(iobrokerHandler);
 import { ValueType } from '@node-projects/web-component-designer';
 import { BindableObjectsBrowser } from '@node-projects/web-component-designer-widgets-wunderbaum';
 import '@node-projects/web-component-designer';
-await CodeViewMonaco.loadMonacoEditorViaImport();
+await CodeViewMonaco.getMonacoLib();
 import { PanelContainer, PanelType } from 'dock-spawn-ts';
 import { configureDesigner } from './ConfigureWebcomponentDesigner.js';
 const serviceContainer = configureDesigner(bindingsHelper);

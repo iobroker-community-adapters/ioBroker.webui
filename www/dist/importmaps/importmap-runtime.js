@@ -3,6 +3,7 @@ const importMapRuntime = {
     "imports": {
         "@node-projects/": "./node_modules/@node-projects/",
         "@node-projects/base-custom-webcomponent": "./node_modules/@node-projects/base-custom-webcomponent/dist/index.js",
+        "@node-projects/css-parser": "./node_modules/@node-projects/css-parser/dist/index-min.js",
         "@node-projects/web-component-designer-visualization-addons": "./node_modules/@node-projects/web-component-designer-visualization-addons/dist/index.js",
         "@iobroker/socket-client/": "./node_modules/@iobroker/socket-client/",
         "@iobroker/socket-client": "./node_modules/@iobroker/socket-client/build/esm/index.js",
