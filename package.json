@@ -20,8 +20,8 @@
     "coverage": "nyc npm run test:ts",
     "lint": "eslint --ext .ts src/",
     "reflection": "npm run reflection-scripts && npm run reflection-props",
-    "reflection-scripts": "node ./scripts/typescript-json-schema.cjs './dist/frontend/scripting/IobrokerWebuiScriptCommands.d.ts' '*' --ignoreErrors --strictNullChecks --propOrder --out ./src/frontend/generated/ScriptCommands.json",
-    "reflection-props": "node ./scripts/copy-script-multiplex-value.cjs && node ./scripts/typescript-json-schema.cjs './src/frontend/interfaces/*.ts' '*' --ignoreErrors --strictNullChecks --propOrder --out ./src/frontend/generated/Properties.json",
+    "reflection-scripts": "node ./scripts/typescript-json-schema.cjs './dist/frontend/scripting/IobrokerWebuiScriptCommands.d.ts' \"*\" --ignoreErrors --strictNullChecks --propOrder --out ./src/frontend/generated/ScriptCommands.json",
+    "reflection-props": "node ./scripts/copy-script-multiplex-value.cjs && node ./scripts/typescript-json-schema.cjs './src/frontend/interfaces/*.ts' \"*\" --ignoreErrors --strictNullChecks --propOrder --out ./src/frontend/generated/Properties.json",
     "release": "release-script",
     "bundleMonaco": "node _patchAndMinifyMonaco.js",
     "bundleToastify": "esbuild ./node_modules/toastify-js/src/toastify-es.js --format=esm --minify --platform=neutral --bundle --outfile=./node_modules/toastify-js/src/toastify-es-min.js"
