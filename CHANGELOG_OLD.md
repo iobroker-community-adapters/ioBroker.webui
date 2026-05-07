@@ -1,4 +1,7 @@
 # Older changes
+## 1.43.0 (2026-04-27)
+- fix script system after upgrade
+
 ## 1.42.1 (2026-04-26)
 - fix missing mopnaco font
 

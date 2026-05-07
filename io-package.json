@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.45.1",
+    "version": "1.45.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.45.2": {
+        "en": "fix build",
+        "de": "fehlerbehebung",
+        "ru": "строить",
+        "pt": "corrigir compilação",
+        "nl": "fix build",
+        "fr": "réparer la construction",
+        "it": "fix build",
+        "es": "fijar",
+        "pl": "fix build",
+        "uk": "кріплення будівлі",
+        "zh-cn": "固定构建"
+      },
       "1.45.1": {
         "en": "fix release",
         "de": "zurück zur übersicht",
@@ -106,19 +119,6 @@
         "pl": "fix brakująca czcionka mopnaco",
         "uk": "виправити відсутні шрифти mopnaco",
         "zh-cn": "修补缺失的 whonnaco 字体"
-      },
-      "1.42.0": {
-        "en": "update designer",
-        "de": "update designer",
-        "ru": "обновление дизайнера",
-        "pt": "atualizar designer",
-        "nl": "update ontwerper",
-        "fr": "concepteur de mise à jour",
-        "it": "aggiornamento designer",
-        "es": "actualización diseñador",
-        "pl": "designer aktualizacji",
-        "uk": "оновлення дизайнера",
-        "zh-cn": "更新设计器"
       }
     },
     "icon": "logo.png",
