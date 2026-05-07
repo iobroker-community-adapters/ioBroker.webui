@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.44.0",
+    "version": "1.45.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.45.0": {
+        "en": "update designer with new features",
+        "de": "update-designer mit neuen features",
+        "ru": "дизайнер обновлений с новыми функциями",
+        "pt": "atualizar designer com novas funcionalidades",
+        "nl": "update ontwerper met nieuwe functies",
+        "fr": "update designer avec de nouvelles fonctionnalités",
+        "it": "aggiornamento designer con nuove funzionalità",
+        "es": "diseñador de actualización con nuevas características",
+        "pl": "aktualizacja projektant z nowymi funkcjami",
+        "uk": "оновлення дизайнера з новими функціями",
+        "zh-cn": "具有新特性的更新设计器"
+      },
       "1.44.0": {
         "en": "fix designer errors",
         "de": "designer fehler beheben",
@@ -106,19 +119,6 @@
         "pl": "potrzeba css parser w runtime",
         "uk": "потрібен css parser в runtime",
         "zh-cn": "运行时需要 css 解析器"
-      },
-      "1.41.2": {
-        "en": "fix init",
-        "de": "reparatur init",
-        "ru": "фиксировать",
-        "pt": "fixar init",
-        "nl": "fix init",
-        "fr": "réparer init",
-        "it": "fix init",
-        "es": "arréglalo",
-        "pl": "fix init",
-        "uk": "фіксувати init",
-        "zh-cn": "固定内置"
       }
     },
     "icon": "logo.png",

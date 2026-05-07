@@ -1,4 +1,7 @@
 # Older changes
+## 1.42.0 (2026-04-26)
+- update designer
+
 ## 1.41.3 (2026-04-14)
 - need css parser at runtime
 
