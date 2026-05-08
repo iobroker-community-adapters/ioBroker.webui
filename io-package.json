@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.46.0",
+    "version": "1.46.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.46.1": {
+        "en": "fix runtime",
+        "de": "die laufzeit",
+        "ru": "исправить runtime",
+        "pt": "corrigir o tempo de execução",
+        "nl": "fix runtime",
+        "fr": "fixer l'exécution",
+        "it": "correzione di runtime",
+        "es": "corrección",
+        "pl": "fix runtime",
+        "uk": "фіксувати runtime",
+        "zh-cn": "固定运行时间"
+      },
       "1.46.0": {
         "en": "update designer once more",
         "de": "update designer noch einmal",
@@ -106,19 +119,6 @@
         "pl": "uwolnienie bugfix",
         "uk": "реліз",
         "zh-cn": "错误修正释放"
-      },
-      "1.43.0": {
-        "en": "fix script system after upgrade",
-        "de": "skriptsystem nach dem upgrade",
-        "ru": "исправьте скриптовую систему после обновления",
-        "pt": "corrigir o sistema de script após a atualização",
-        "nl": "fix script systeem na upgrade",
-        "fr": "correction du système de script après mise à jour",
-        "it": "correzione del sistema di script dopo l'aggiornamento",
-        "es": "sistema de script de fijación después de actualización",
-        "pl": "naprawić system skryptu po aktualizacji",
-        "uk": "виправити систему скриптів після оновлення",
-        "zh-cn": "升级后修正脚本系统"
       }
     },
     "icon": "logo.png",

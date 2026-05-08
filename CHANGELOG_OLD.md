@@ -1,4 +1,7 @@
 # Older changes
+## 1.44.0 (2026-04-28)
+- fix designer errors
+
 ## 1.43.1 (2026-04-28)
 - bugfix release
 
