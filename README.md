@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 1.46.0 (2026-05-08)
 - update designer once more
 
 ### 1.45.2 (2026-05-07)
@@ -147,9 +147,6 @@ runtime.html?screenName=screen2
 
 ### 1.44.0 (2026-04-28)
 - fix designer errors
-
-### 1.43.1 (2026-04-28)
-- bugfix release
 
 ## License
 The MIT License (MIT)

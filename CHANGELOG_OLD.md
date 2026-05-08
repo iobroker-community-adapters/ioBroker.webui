@@ -1,4 +1,7 @@
 # Older changes
+## 1.43.1 (2026-04-28)
+- bugfix release
+
 ## 1.43.0 (2026-04-27)
 - fix script system after upgrade
 

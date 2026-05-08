@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.45.2",
+    "version": "1.46.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.46.0": {
+        "en": "update designer once more",
+        "de": "update designer noch einmal",
+        "ru": "дизайнер обновлений снова",
+        "pt": "atualizar o designer mais uma vez",
+        "nl": "update ontwerper opnieuw",
+        "fr": "mise à jour designer une fois de plus",
+        "it": "aggiornamento designer ancora una volta",
+        "es": "diseñador de actualización una vez más",
+        "pl": "aktualizacja projektanta jeszcze raz",
+        "uk": "оновлений дизайнер",
+        "zh-cn": "再次更新设计器"
+      },
       "1.45.2": {
         "en": "fix build",
         "de": "fehlerbehebung",
@@ -106,19 +119,6 @@
         "pl": "naprawić system skryptu po aktualizacji",
         "uk": "виправити систему скриптів після оновлення",
         "zh-cn": "升级后修正脚本系统"
-      },
-      "1.42.1": {
-        "en": "fix missing mopnaco font",
-        "de": "fehlende mopnaco schriftarten",
-        "ru": "исправить недостающий шрифт mopnaco",
-        "pt": "corrigir falta de fonte mopnaco",
-        "nl": "ontbrekende mopnaco-lettertype herstellen",
-        "fr": "correction de la police mopnaco manquante",
-        "it": "correzione del carattere mopnaco mancante",
-        "es": "solución faltante fuente mopnaco",
-        "pl": "fix brakująca czcionka mopnaco",
-        "uk": "виправити відсутні шрифти mopnaco",
-        "zh-cn": "修补缺失的 whonnaco 字体"
       }
     },
     "icon": "logo.png",
