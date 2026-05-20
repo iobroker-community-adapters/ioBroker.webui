@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.46.1",
+    "version": "1.47.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "1.47.0": {
+        "en": "package uprades",
+        "de": "paket uprades",
+        "ru": "упаковочный апрад",
+        "pt": "pacote uprades",
+        "nl": "pakketupraden",
+        "fr": "uprades de colis",
+        "it": "pacchetto uprade",
+        "es": "paquete uprades",
+        "pl": "uparcia opakowań",
+        "uk": "пакетні оновлення",
+        "zh-cn": "软件包升空"
+      },
       "1.46.1": {
         "en": "fix runtime",
         "de": "die laufzeit",
@@ -106,19 +119,6 @@
         "pl": "naprawić błędy projektanta",
         "uk": "виправлення помилок дизайнера",
         "zh-cn": "固定设计器错误"
-      },
-      "1.43.1": {
-        "en": "bugfix release",
-        "de": "fehlerbehebung",
-        "ru": "релиз bugfix",
-        "pt": "lançamento do bugfix",
-        "nl": "bugfix release",
-        "fr": "bugfix version",
-        "it": "bugfix rilascio",
-        "es": "bugfix liberación",
-        "pl": "uwolnienie bugfix",
-        "uk": "реліз",
-        "zh-cn": "错误修正释放"
       }
     },
     "icon": "logo.png",
