@@ -70,6 +70,7 @@
     "@node-projects/web-component-designer-stylesheetservice-css-parser": "^0.1.5",
     "@node-projects/web-component-designer-visualization-addons": "^0.1.144",
     "@node-projects/web-component-designer-widgets-wunderbaum": "^0.2.1",
+    "@tsconfig/node20": "^20.1.9",
     "@types/json-schema": "^7.0.15",
     "@types/node": "^25.9.1",
     "@web/dev-server": "^0.4.6",
