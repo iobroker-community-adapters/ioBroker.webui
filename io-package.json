@@ -69,32 +69,6 @@
         "zh-cn": "再次更新设计器"
       },
       "1.45.2": {
-        "en": "fix build",
-        "de": "fehlerbehebung",
-        "ru": "строить",
-        "pt": "corrigir compilação",
-        "nl": "fix build",
-        "fr": "réparer la construction",
-        "it": "fix build",
-        "es": "fijar",
-        "pl": "fix build",
-        "uk": "кріплення будівлі",
-        "zh-cn": "固定构建"
-      },
-      "1.45.1": {
-        "en": "fix release",
-        "de": "zurück zur übersicht",
-        "ru": "исправление",
-        "pt": "corrigir a libertação",
-        "nl": "fix release",
-        "fr": "corriger la libération",
-        "it": "rilascio corretto",
-        "es": "corrección de liberación",
-        "pl": "fix release",
-        "uk": "фіксувати реліз",
-        "zh-cn": "固定释放"
-      },
-      "1.45.0": {
         "en": "update designer with new features",
         "de": "update-designer mit neuen features",
         "ru": "дизайнер обновлений с новыми функциями",
