@@ -138,7 +138,6 @@
     "adminUI": {
       "config": "none"
     },
-    "materialize": true,
     "onlyWWW": false,
     "nogit": false,
     "mode": "daemon",
