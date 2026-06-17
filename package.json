@@ -83,7 +83,7 @@
     "dock-spawn-ts": "^3.22.0",
     "es-module-shims": "2.8.1",
     "esbuild": "^0.28.0",
-    "eslint": "^10.4.0",
+    "eslint": "^10.4.1",
     "esprima-next": "^6.0.3",
     "glob-stream": "^8.0.3",
     "gulp": "^5.0.1",
