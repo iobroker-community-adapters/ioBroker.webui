@@ -1,4 +1,7 @@
 # Older changes
+## 1.45.2 (2026-05-07)
+- fix build
+
 ## 1.45.1 (2026-05-07)
 - fix release
 

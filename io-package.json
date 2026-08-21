@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "2.0.1": {
+        "en": "fix node version",
+        "de": "Node-Version korrigieren",
+        "ru": "исправление версии Node.",
+        "pt": "corrigir versão do nó",
+        "nl": "fix node-versie",
+        "fr": "version de nœud corrigée",
+        "it": "correggere la versione del nodo",
+        "es": "Corregir la versión del nodo",
+        "pl": "napraw wersję węzła",
+        "uk": "виправити версію вузла",
+        "zh-cn": "修复节点版本"
+      },
       "2.0.0": {
         "en": "package updates\ncode fixes\nfix of github issue\nfix monaco workers\nblockly update",
         "de": "Paketaktualisierungen\nCodekorrekturen\nBehebung des GitHub-Problems\nMonaco-Arbeiter reparieren\nBlockly-Update",
