@@ -28,7 +28,7 @@ function copyNodeModules() {
         "esprima-next",
         "long",
         "mobile-drag-drop",
-        "monaco-editor",
+        "@node-projects/monaco-editor-esm",
         //"tslib"
         //"wunderbaum",
     ]
@@ -53,9 +53,9 @@ function copyNodeFiles() {
         "toastify-js/src/toastify-es-min.js",
         "toastify-js/src/toastify.css",
         "dayjs/dayjs.min.js",
-        "@iobroker/webcomponent-selectid-dialog/dist/iobrokerSelectId.es.js",
-        "@iobroker/webcomponent-selectid-dialog/dist/selectIdHelper.js",
-        "@iobroker/webcomponent-selectid-dialog/dist/socket.iob.js"
+        "@iobroker/webcomponent-selectid-dialog/build/iobrokerSelectId.es.js",
+        "@iobroker/webcomponent-selectid-dialog/build/selectIdHelper.js",
+        "@iobroker/webcomponent-selectid-dialog/build/socket.iob.js"
     ]
 
     runtimeModules = runtimeModules.map(x => './node_modules/' + x)
@@ -66,9 +66,6 @@ function copyNodeFiles() {
 
 function cleanupNodeModules() {
     let notUsed = [
-        "./www/node_modules/monaco-editor/dev",
-        "./www/node_modules/monaco-editor/min/**/*.js",
-        "./www/node_modules/monaco-editor/min-maps",
         "./www/**/*.ts",
         "!./www/node_modules/@node-projects/base-custom-webcomponent/dist/BaseCustomWebComponent.d.ts",
         "!./www/dist/frontend/common/*.d.ts",
@@ -90,14 +87,6 @@ function cleanupNodeModules() {
     ]
 
     return deleteAsync(notUsed);
-}
-
-function cleanupMonaco() {
-    return deleteAsync([
-        './www/node_modules/monaco-editor/esm/**/*.js',
-        '!./www/node_modules/monaco-editor/esm/vs/editor/*.js',
-        './www/node_modules/monaco-editor/esm/**/*.js',
-    ]);
 }
 
 function copyDist() {
@@ -154,4 +143,4 @@ function saveGitCommitHash(done) {
 }
 
 //git rev-parse HEAD
-export default series(copyNodeModules, copyNodeFiles, copyDist, cleanupNodeModules, cleanupDist, copyAssets, copyHtml, copyManifest, copyConfigJs, cleanupMonaco, saveGitCommitHash);
+export default series(copyNodeModules, copyNodeFiles, copyDist, cleanupNodeModules, cleanupDist, copyAssets, copyHtml, copyManifest, copyConfigJs, saveGitCommitHash);

@@ -363,6 +363,88 @@
             ],
             "type": "object"
         },
+        "If": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "elseCommands": {
+                    "description": "Commands executed when the formula evaluates to false",
+                    "items": {
+                        "$ref": "#/definitions/ScriptCommands"
+                    },
+                    "type": "array"
+                },
+                "formula": {
+                    "description": "Boolean formula, e.g. (__0 == true || __1 == true) && __2 == false",
+                    "format": "formula",
+                    "type": "string"
+                },
+                "signals": {
+                    "description": "Values referenced in the formula, either positionally as __0, __1, __2, ... (in listed\norder) or, if varName is set, by that name. Each entry works like Condition.value1\n(source: signal/property/elementProperty/signalInProperty/event/parameter/context/\ncomplexString/complexSignal/expression)",
+                    "format": "signalList",
+                    "items": {
+                        "$ref": "#/definitions/IfSignal"
+                    },
+                    "type": "array"
+                },
+                "trueCommands": {
+                    "description": "Commands executed when the formula evaluates to true",
+                    "items": {
+                        "$ref": "#/definitions/ScriptCommands"
+                    },
+                    "type": "array"
+                },
+                "type": {
+                    "const": "If",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "signals",
+                "formula",
+                "trueCommands",
+                "elseCommands",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "IfSignal": {
+            "properties": {
+                "name": {
+                    "description": "Name of the signal, the property of the component or the parameter of the script\nor for example in a event : srcElement.value to get the value of a input wich raises the event",
+                    "format": "signal",
+                    "type": "string"
+                },
+                "source": {
+                    "description": "signal - read the value from a Signal\nproperty - read the value from a property of the customControl (not usable in screens)\nsignalInProperty - read the value from a Signal (wich name is in the Property)\nevent - read the value of a property of the event object\nparameter - a parameter you hand over\ncontext - a value of the context\ncomplexString - a string with signals (contained in {})\ncomplexSignal - read the value from a signal wich name is build here (it can contain other signals in {})\nexpression - js expression, 'ctx' is context object\nelementProperty - a property defined on the element raising the event",
+                    "enum": [
+                        "complexSignal",
+                        "complexString",
+                        "context",
+                        "elementProperty",
+                        "event",
+                        "expression",
+                        "parameter",
+                        "property",
+                        "signal",
+                        "signalInProperty"
+                    ],
+                    "type": "string"
+                },
+                "varName": {
+                    "description": "Optional variable name to reference this value in the formula (e.g. \"isOn\").\nIf empty, the value is referenced positionally as __0, __1, __2, ... (in listed order).",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "varName",
+                "source",
+                "name"
+            ],
+            "type": "object"
+        },
         "ImportSignalValuesFromJson": {
             "properties": {
                 "additionalData": {
@@ -507,6 +589,61 @@
                 "closeable": {
                     "type": "boolean"
                 },
+                "height": {
+                    "type": "string"
+                },
+                "left": {
+                    "type": "string"
+                },
+                "moveable": {
+                    "type": "boolean"
+                },
+                "relativeSignalsPath": {
+                    "description": "If signals in screen are defined relative (starting with a '.'), this will be prepended",
+                    "type": "string"
+                },
+                "screen": {
+                    "description": "Name of the Screen",
+                    "format": "screen",
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "top": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "OpenDialog",
+                    "type": "string"
+                },
+                "width": {
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "type",
+                "screen",
+                "title",
+                "relativeSignalsPath",
+                "moveable",
+                "closeable",
+                "width",
+                "height",
+                "left",
+                "top",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "OpenDialog_1": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "closeable": {
+                    "type": "boolean"
+                },
                 "cssClass": {
                     "description": "css class to apply to dialog",
                     "type": "string"
@@ -564,6 +701,9 @@
                 "additionalData": {
                     "type": "string"
                 },
+                "closeable": {
+                    "type": "boolean"
+                },
                 "noHistory": {
                     "type": "boolean"
                 },
@@ -585,11 +725,12 @@
                 }
             },
             "propertyOrder": [
-                "title",
-                "screen",
                 "type",
+                "screen",
+                "title",
                 "relativeSignalsPath",
                 "noHistory",
+                "closeable",
                 "additionalData"
             ],
             "type": "object"
@@ -627,6 +768,41 @@
                 "title",
                 "relativeSignalsPath",
                 "targetSelector",
+                "additionalData"
+            ],
+            "type": "object"
+        },
+        "OpenScreen_1": {
+            "properties": {
+                "additionalData": {
+                    "type": "string"
+                },
+                "noHistory": {
+                    "type": "boolean"
+                },
+                "relativeSignalsPath": {
+                    "description": "If signals in screen are defined relative (starting with a '.'), this will be prepended",
+                    "type": "string"
+                },
+                "screen": {
+                    "description": "Name of the Screen",
+                    "format": "screen",
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "OpenScreen",
+                    "type": "string"
+                }
+            },
+            "propertyOrder": [
+                "title",
+                "screen",
+                "type",
+                "relativeSignalsPath",
+                "noHistory",
                 "additionalData"
             ],
             "type": "object"
@@ -720,6 +896,121 @@
                 "additionalData"
             ],
             "type": "object"
+        },
+        "ScriptCommands": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/OpenScreen"
+                },
+                {
+                    "$ref": "#/definitions/OpenUrl"
+                },
+                {
+                    "$ref": "#/definitions/OpenDialog"
+                },
+                {
+                    "$ref": "#/definitions/CloseDialog"
+                },
+                {
+                    "$ref": "#/definitions/ToggleSignalValue"
+                },
+                {
+                    "$ref": "#/definitions/ToggleSignalValueThroughList"
+                },
+                {
+                    "$ref": "#/definitions/SetSignalValue"
+                },
+                {
+                    "$ref": "#/definitions/IncrementSignalValue"
+                },
+                {
+                    "$ref": "#/definitions/DecrementSignalValue"
+                },
+                {
+                    "$ref": "#/definitions/SetBitInSignal"
+                },
+                {
+                    "$ref": "#/definitions/ClearBitInSignal"
+                },
+                {
+                    "$ref": "#/definitions/ToggleBitInSignal"
+                },
+                {
+                    "$ref": "#/definitions/Console"
+                },
+                {
+                    "$ref": "#/definitions/CalculateSignalValue"
+                },
+                {
+                    "$ref": "#/definitions/Javascript"
+                },
+                {
+                    "$ref": "#/definitions/SetElementProperty"
+                },
+                {
+                    "$ref": "#/definitions/Delay"
+                },
+                {
+                    "$ref": "#/definitions/SwitchLanguage"
+                },
+                {
+                    "$ref": "#/definitions/Login"
+                },
+                {
+                    "$ref": "#/definitions/Logout"
+                },
+                {
+                    "$ref": "#/definitions/SubscribeSignal"
+                },
+                {
+                    "$ref": "#/definitions/UnsubscribeSignal"
+                },
+                {
+                    "$ref": "#/definitions/WriteSignalsInGroup"
+                },
+                {
+                    "$ref": "#/definitions/ClearSignalsInGroup"
+                },
+                {
+                    "$ref": "#/definitions/RunScript"
+                },
+                {
+                    "$ref": "#/definitions/CopySignalValuesFromFolder"
+                },
+                {
+                    "$ref": "#/definitions/ShowMessageBox"
+                },
+                {
+                    "$ref": "#/definitions/ShowPrompt"
+                },
+                {
+                    "$ref": "#/definitions/ExportSignalValuesAsJson"
+                },
+                {
+                    "$ref": "#/definitions/ImportSignalValuesFromJson"
+                },
+                {
+                    "$ref": "#/definitions/Repeat"
+                },
+                {
+                    "$ref": "#/definitions/Comment"
+                },
+                {
+                    "$ref": "#/definitions/Condition"
+                },
+                {
+                    "$ref": "#/definitions/If"
+                },
+                {
+                    "$ref": "#/definitions/Exit"
+                },
+                {
+                    "$ref": "#/definitions/Label"
+                },
+                {
+                    "$ref": "#/definitions/Goto"
+                }
+            ]
         },
         "SetBitInSignal": {
             "properties": {
@@ -1229,6 +1520,9 @@
                     "$ref": "#/definitions/Condition"
                 },
                 {
+                    "$ref": "#/definitions/If"
+                },
+                {
                     "$ref": "#/definitions/Exit"
                 },
                 {
@@ -1238,10 +1532,10 @@
                     "$ref": "#/definitions/Goto"
                 },
                 {
-                    "$ref": "#/definitions/OpenScreen"
+                    "$ref": "#/definitions/OpenScreen_1"
                 },
                 {
-                    "$ref": "#/definitions/OpenDialog"
+                    "$ref": "#/definitions/OpenDialog_1"
                 },
                 {
                     "$ref": "#/definitions/OpenScreenInScreenViewer"

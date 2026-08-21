@@ -8,7 +8,6 @@ const bindingsHelper = new BindingsHelper(iobrokerHandler);
 
 import { PropertyGridWithHeader, RefactorView, ServiceContainer, ValueType } from '@node-projects/web-component-designer';
 import { BindableObjectsBrowser, TreeViewExtended } from '@node-projects/web-component-designer-widgets-wunderbaum';
-import '@node-projects/web-component-designer'
 
 await CodeViewMonaco.getMonacoLib();
 
@@ -23,24 +22,22 @@ import propertiesTypeInfo from "../generated/Properties.json" with { type: 'json
 
 import "../runtime/controls.js";
 import "./IobrokerWebuiSolutionExplorer.js";
-import "./IobrokerWebuiMonacoEditor.js";
 import "./IobrokerWebuiEventAssignment.js";
-import "./IobrokerWebuiPropertyGrid.js";
 import "./IobrokerWebuiControlPropertiesEditor.js";
 
-import { IobrokerWebuiSolutionExplorer } from './IobrokerWebuiSolutionExplorer.js';
 import { IobrokerWebuiMonacoEditor } from './IobrokerWebuiMonacoEditor.js';
 import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
-import { IobrokerWebuiEventAssignment } from './IobrokerWebuiEventAssignment.js';
 import { IobrokerWebuiConfirmationWrapper } from './IobrokerWebuiConfirmationWrapper.js';
 import { getPanelContainerForElement } from './DockHelper.js';
-import { IobrokerWebuiControlPropertiesEditor } from './IobrokerWebuiControlPropertiesEditor.js';
 import { IobrokerWebuiPropertyGrid } from './IobrokerWebuiPropertyGrid.js';
 import { typeInfoFromJsonSchema } from '@node-projects/propertygrid.webcomponent';
 import { IobrokerWebuiScriptSystem } from '../scripting/IobrokerWebuiScriptSystem.js';
 import { BindingsHelper, VisualizationShell } from '@node-projects/web-component-designer-visualization-addons';
 import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
 
+type IobrokerWebuiSolutionExplorer = import('./IobrokerWebuiSolutionExplorer.js').IobrokerWebuiSolutionExplorer;
+type IobrokerWebuiEventAssignment = import('./IobrokerWebuiEventAssignment.js').IobrokerWebuiEventAssignment;
+type IobrokerWebuiControlPropertiesEditor = import('./IobrokerWebuiControlPropertiesEditor.js').IobrokerWebuiControlPropertiesEditor;
 
 export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppend implements VisualizationShell {
   activeElement: HTMLElement;
@@ -166,7 +163,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     this.refactorView = this._getDomElement<RefactorView>('refactorView');
 
     this.settingsEditor = this._getDomElement<IobrokerWebuiPropertyGrid>('settingsEditor');
-    this.settingsEditor.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
+    this.settingsEditor.getTypeInfo = async (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
     this.settingsEditor.propertyChanged.on((prp) => {
       if (prp.property == 'width') {
         if (this._dockManager.activeDocument instanceof IobrokerWebuiScreenEditor)
@@ -354,26 +351,66 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     return { close: () => container.close() };
   }
 
-  openConfirmation(element: HTMLElement, options: { x: number, y: number, width: number, height: number, parent?: HTMLElement, abortSignal?: AbortSignal, disableResize?: boolean, additional?: { okText?: string, cancelText?: string } }): Promise<boolean> {
+  openConfirmation(element: HTMLElement, options: { title?: string, x?: number, y?: number, width?: number, height?: number, parent?: HTMLElement, abortSignal?: AbortSignal, disableResize?: boolean, confirmText?: string, cancelText?: string }): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
-      let cw = new IobrokerWebuiConfirmationWrapper(options.additional);
-      cw.title = element.title;
+      let cw = new IobrokerWebuiConfirmationWrapper({ okText: options.confirmText, cancelText: options.cancelText });
+      cw.title = options.title ?? element.title;
       cw.appendChild(element);
-      if (options.abortSignal) {
-        options.abortSignal.onabort = () => {
-          dlg.close();
-          resolve(false);
-        }
-      }
-      let dlg = window.appShell.openDialog(cw, options);
-      cw.okClicked.on(() => {
+      let settled = false;
+      const finish = (result: boolean) => {
+        if (settled)
+          return;
+        settled = true;
         dlg.close();
-        resolve(true);
+        resolve(result);
+      };
+      if (options.abortSignal) {
+        options.abortSignal.addEventListener('abort', () => finish(false), { once: true });
+      }
+      let dlg = window.appShell.openDialog(cw, {
+        x: options.x ?? 100,
+        y: options.y ?? 100,
+        width: options.width ?? 500,
+        height: options.height ?? 400,
+        parent: options.parent,
+        disableResize: options.disableResize
+      });
+      cw.okClicked.on(() => {
+        finish(true);
       });
       cw.cancelClicked.on(() => {
-        dlg.close();
-        resolve(false);
+        finish(false);
       });
+    });
+  }
+
+  openModal(element: HTMLElement, options: { title?: string, x?: number, y?: number, width?: number, height?: number, parent?: HTMLElement, abortSignal?: AbortSignal, disableResize?: boolean }): Promise<void> {
+    return new Promise<void>((resolve) => {
+      if (options.title)
+        element.title = options.title;
+
+      const container = new PanelContainer(element, this._dock.dockManager, element.title, PanelType.panel);
+      element.title = '';
+      const dialog = this._dock.dockManager.floatDialog(
+        container,
+        options.x ?? 100,
+        options.y ?? 100,
+        getPanelContainerForElement(options.parent),
+        options.disableResize ?? false
+      );
+      dialog.resize(options.width ?? 500, options.height ?? 400);
+      dialog.noDocking = true;
+
+      const listener = {
+        onClosePanel: (_manager: DockManager, panel: PanelContainer) => {
+          if (panel !== container)
+            return;
+          this._dock.dockManager.removeLayoutListener(listener);
+          resolve();
+        }
+      };
+      this._dock.dockManager.addLayoutListener(listener);
+      options.abortSignal?.addEventListener('abort', () => container.close(), { once: true });
     });
   }
 
@@ -407,7 +444,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       let pg = new IobrokerWebuiPropertyGrid();
       pg.visualizationShell = this;
       pg.id = id;
-      pg.getTypeInfo = (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
+      pg.getTypeInfo = async (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
       pg.typeName = 'IGlobalConfig'
       pg.selectedObject = iobrokerHandler.config?.globalConfig ?? {};
       pg.saveCallback = async (data) => {

@@ -4,6 +4,15 @@ import type * as monaco from 'monaco-editor';
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { CodeViewMonaco } from "@node-projects/web-component-designer-codeview-monaco";
 
+type MonacoTypeScriptApi = {
+    ScriptTarget: { ESNext: number };
+    typescriptDefaults: {
+        setExtraLibs(libs: { content: string, filePath?: string }[]): void;
+        setCompilerOptions(options: Record<string, unknown>): void;
+        setDiagnosticsOptions(options: Record<string, boolean>): void;
+    };
+};
+
 export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructorAppend implements IUiCommandHandler {
 
     static readonly style = css`
@@ -97,13 +106,13 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
                     });
                     await Promise.allSettled(promises);
                 }
-                //@ts-ignore
-                (await CodeViewMonaco.getMonacoLib()).languages.typescript.typescriptDefaults.setExtraLibs(libs);
+                const monacoLib = await CodeViewMonaco.getMonacoLib() as Awaited<ReturnType<typeof CodeViewMonaco.getMonacoLib>> & {
+                    typescript: MonacoTypeScriptApi;
+                };
+                monacoLib.typescript.typescriptDefaults.setExtraLibs(libs);
 
-                //@ts-ignore
-                (await CodeViewMonaco.getMonacoLib()).languages.typescript.typescriptDefaults.setCompilerOptions({
-                    //@ts-ignore
-                    target: (await CodeViewMonaco.getMonacoLib()).languages.typescript.ScriptTarget.ESNext,
+                monacoLib.typescript.typescriptDefaults.setCompilerOptions({
+                    target: monacoLib.typescript.ScriptTarget.ESNext,
                     //@ts-ignore
                     module: 99,
                     removeComments: false,
@@ -113,8 +122,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
                     baseUrl: "/"
                 });
 
-                //@ts-ignore
-                (await CodeViewMonaco.getMonacoLib()).languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+                monacoLib.typescript.typescriptDefaults.setDiagnosticsOptions({
                     noSemanticValidation: false,
                     noSyntaxValidation: false,
                     noSuggestionDiagnostics: false
@@ -128,7 +136,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
         this._parseAttributesToProperties();
 
         //@ts-ignore
-        const style = await import("monaco-editor/min/vs/editor/editor.main.css", { with: { type: 'css' } });
+        const style = await import("@node-projects/monaco-editor-esm/min/vs/editor/editor.main.css", { with: { type: 'css' } });
         //@ts-ignore
         this.shadowRoot.adoptedStyleSheets = [style.default, this.constructor.style];
 

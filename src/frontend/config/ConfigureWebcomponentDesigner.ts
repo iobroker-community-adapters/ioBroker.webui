@@ -1,4 +1,4 @@
-import { BaseCustomWebcomponentBindingsService, EventsService, IElementsJson, JsonFileElementsService, PreDefinedElementsService, SeperatorContextMenu, TextRefactorService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
+import { BaseCustomWebcomponentBindingsService, BindingTarget, EventsService, IElementsJson, JsonFileElementsService, PreDefinedElementsService, PropertiesHelper, SeperatorContextMenu, TextRefactorService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
 import { NodeHtmlParserService } from '@node-projects/web-component-designer-htmlparserservice-nodehtmlparser';
 import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
 import { CssParserStylesheetService } from '@node-projects/web-component-designer-stylesheetservice-css-parser';
@@ -72,7 +72,13 @@ export function configureDesigner(bindingsHelper: BindingsHelper) {
 
     serviceContainer.config.openBindingsEditor = async (property, designItems, binding, target) => {
         if (!binding || binding.service instanceof VisualizationBindingsService) {
-            let dynEdt = new IobrokerWebuiBindingsEditor(property, <any>binding, target, serviceContainer, designItems[0].instanceServiceContainer, window.appShell);
+            const existingBinding = Array.from(bindingsHelper.getBindings(designItems[0].element)).find(([name, value]) => {
+                const targetName = value.target === BindingTarget.css || value.target === BindingTarget.attribute
+                    ? PropertiesHelper.camelToDashCase(name)
+                    : name;
+                return value.target === target && targetName === binding?.targetName;
+            });
+            let dynEdt = new IobrokerWebuiBindingsEditor(property, <any>binding, target, serviceContainer, designItems[0].instanceServiceContainer, window.appShell, existingBinding?.[1].type);
             let cw = new IobrokerWebuiConfirmationWrapper();
             cw.title = "Edit Binding of '" + property.name + "' - " + property.propertyType;
             cw.appendChild(dynEdt);

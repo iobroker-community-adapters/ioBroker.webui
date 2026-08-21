@@ -5,7 +5,6 @@ import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { Uploadhelper } from './UploadHelper.js';
 import { ImportmapCreator } from './ImportmapCreator.js';
-import url from "node:url";
 const __dirname = path.normalize(path.join(path.dirname(fileURLToPath(import.meta.url)), "../.."));
 const pkg = JSON.parse(fs.readFileSync(new URL('../../package.json', import.meta.url)).toString());
 const adapterName = pkg.name.split('.').pop();
@@ -210,7 +209,7 @@ class WebUi extends utils.Adapter {
         this._unloaded = true;
     }
 }
-const modulePath = url.fileURLToPath(import.meta.url);
+const modulePath = fileURLToPath(import.meta.url);
 if (process.argv[1] === modulePath) {
     new WebUi();
 }
