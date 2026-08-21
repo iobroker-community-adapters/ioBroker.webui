@@ -68,7 +68,7 @@
     "@node-projects/web-component-designer-codeview-monaco": "^0.2.1",
     "@node-projects/web-component-designer-htmlparserservice-nodehtmlparser": "^0.1.15",
     "@node-projects/web-component-designer-stylesheetservice-css-parser": "^0.1.5",
-    "@node-projects/web-component-designer-visualization-addons": "^0.1.149",
+    "@node-projects/web-component-designer-visualization-addons": "^0.1.150",
     "@node-projects/web-component-designer-widgets-wunderbaum": "^0.2.1",
     "@types/json-schema": "^7.0.15",
     "@types/node": "^26.2.0",

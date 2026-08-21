@@ -32,3 +32,7 @@ This note describes the dependency-upgrade working state introduced in the curre
 
 - `@iobroker/webcomponent-selectid-dialog@2.0.2` moved its runtime artifacts from `dist/` to `build/`.
 - `gulpfile.mjs` copy paths and frontend imports use `build/iobrokerSelectId.es.js`, `build/selectIdHelper.js`, and `build/socket.iob.js`.
+
+## Blockly compatibility
+
+- `@node-projects/web-component-designer-visualization-addons@0.1.150` removes obsolete document-level Blockly stylesheet lookups. Blockly 13 injects its common and renderer styles directly into the editor shadow root; older add-on code failed with `Cannot read properties of null (reading 'innerText')` when opening a Blockly event editor.
