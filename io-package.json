@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "1.47.0",
+    "version": "2.0.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "2.0.0": {
+        "en": "package updates\ncode fixes\nfix of github issue\nfix monaco workers\nblockly update",
+        "de": "Paketaktualisierungen\nCodekorrekturen\nBehebung des GitHub-Problems\nMonaco-Arbeiter reparieren\nBlockly-Update",
+        "ru": "обновления пакетов\nисправления кода\nИсправлена ошибка на GitHub.\nисправить положение работников Монако\nобновление блокли",
+        "pt": "atualizações de pacotes\ncorreções de código\nCorreção de problema no GitHub\nconsertar trabalhadores de Mônaco\natualização do Blockly",
+        "nl": "pakketupdates\ncodecorrecties\nOplossing voor een GitHub-probleem\nrepareer de werknemers van Monaco\nBlockly-update",
+        "fr": "mises à jour du package\ncorrections de code\nCorrection d'un problème GitHub\nréparer les travailleurs de Monaco\nmise à jour de Blockly",
+        "it": "aggiornamenti del pacchetto\ncorrezioni del codice\nCorrezione del problema su GitHub\nriparare i lavoratori di Monaco\naggiornamento di Blockly",
+        "es": "actualizaciones de paquetes\ncorrecciones de código\nSolución del problema de GitHub\narreglar los trabajadores de Mónaco\nactualización de bloques",
+        "pl": "aktualizacje pakietów\npoprawki kodu\nnaprawa problemu z githubem\nnapraw pracowników Monako\naktualizacja blokowa",
+        "uk": "оновлення пакетів\nвиправлення коду\nвиправлення проблеми з github\nвиправити робітників Монако\nблокове оновлення",
+        "zh-cn": "软件包更新\n代码修复\n修复 GitHub 问题\n修复摩纳哥工人\nBlockly 更新"
+      },
       "1.47.0": {
         "en": "package uprades",
         "de": "paket uprades",

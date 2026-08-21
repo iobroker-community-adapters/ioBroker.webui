@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 2.0.0 (2026-08-21)
 - package updates
 - code fixes
 - fix of github issue
@@ -151,9 +151,6 @@ runtime.html?screenName=screen2
 
 ### 1.45.2 (2026-05-07)
 - fix build
-
-### 1.45.1 (2026-05-07)
-- fix release
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 
