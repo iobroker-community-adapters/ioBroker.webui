@@ -8,6 +8,7 @@ This note describes the dependency-upgrade working state introduced in the curre
 
 - Direct packages were updated to their latest compatible releases at the time of the upgrade.
 - TypeScript is intentionally pinned to `~6.0.3`: `typescript-eslint@8.67.0` supports TypeScript `<6.1`, so TypeScript 7 is not currently compatible.
+- The minimum supported Node.js version is 22. Current `@web/dev-server@1` / `@web/config-loader@1` and Blockly 13 require Node 22, so the CI matrix tests Node 22 and 24 and no longer includes Node 20.
 - ESLint 10 requires flat configuration; the repository now uses `eslint.config.js`.
 - `package.json` contains security/compatibility overrides for:
   - `@alcalzone/esbuild-register` → `esbuild@0.28.2`
