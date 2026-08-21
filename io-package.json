@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "2.0.3": {
+        "en": "fix help dlg pos",
+        "de": "fix help dlg pos",
+        "ru": "fix help dlg pos",
+        "pt": "corrigir ajuda dlg pos",
+        "nl": "fix help dlg pos",
+        "fr": "aide à la réparation dlg pos",
+        "it": "correzione aiuto dlg pos",
+        "es": "Ayuda para solucionar problemas de DLG POS",
+        "pl": "napraw pomoc dlg pos",
+        "uk": "виправити довідку DLG POS",
+        "zh-cn": "修复帮助 dlg pos"
+      },
       "2.0.2": {
         "en": "welcome screen array",
         "de": "Willkommensbildschirm-Array",
@@ -106,19 +119,6 @@
         "pl": "aktualizacja projektanta jeszcze raz",
         "uk": "оновлений дизайнер",
         "zh-cn": "再次更新设计器"
-      },
-      "1.45.2": {
-        "en": "update designer with new features",
-        "de": "update-designer mit neuen features",
-        "ru": "дизайнер обновлений с новыми функциями",
-        "pt": "atualizar designer com novas funcionalidades",
-        "nl": "update ontwerper met nieuwe functies",
-        "fr": "update designer avec de nouvelles fonctionnalités",
-        "it": "aggiornamento designer con nuove funzionalità",
-        "es": "diseñador de actualización con nuevas características",
-        "pl": "aktualizacja projektant z nowymi funkcjami",
-        "uk": "оновлення дизайнера з новими функціями",
-        "zh-cn": "具有新特性的更新设计器"
       }
     },
     "icon": "logo.png",

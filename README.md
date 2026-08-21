@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 2.0.3 (2026-08-21)
 - fix help dlg pos
 
 ### 2.0.2 (2026-08-21)
@@ -151,9 +151,6 @@ runtime.html?screenName=screen2
 
 ### 1.47.0 (2026-05-20)
 - package uprades
-
-### 1.46.1 (2026-05-08)
-- fix runtime
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 
