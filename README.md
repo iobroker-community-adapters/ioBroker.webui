@@ -133,6 +133,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- fix help dlg pos
+
 ### 2.0.2 (2026-08-21)
 - welcome screen array
 
