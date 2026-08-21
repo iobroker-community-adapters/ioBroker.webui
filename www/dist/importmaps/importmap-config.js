@@ -1,7 +1,7 @@
 "use strict";
 const importMapConfig = {
     "imports": {
-        "monaco-editor": "./node_modules/monaco-editor/esm/vs/editor/editor.main.min.js",
+        "monaco-editor": "./node_modules/@node-projects/monaco-editor-esm/esm/vs/editor/editor.main.min.js",
         "@node-projects/base-custom-webcomponent": "./node_modules/@node-projects/base-custom-webcomponent/dist/index-min.js",
         "@node-projects/css-parser": "./node_modules/@node-projects/css-parser/dist/index-min.js",
         "@node-projects/web-component-designer": "./node_modules/@node-projects/web-component-designer/dist/index-min.js",
@@ -12,7 +12,7 @@ const importMapConfig = {
         "@node-projects/layout2vector": "./node_modules/@node-projects/layout2vector/dist/index-min.js",
         "dock-spawn-ts": "./node_modules/dock-spawn-ts/lib/js/index-webcomponent-min.js",
         "toastify-js": "./node_modules/toastify-js/src/toastify-es-min.js",
-        "a_monaco-editor": "./node_modules/monaco-editor/esm/vs/editor/editor.main.js",
+        "a_monaco-editor": "./node_modules/@node-projects/monaco-editor-esm/esm/vs/editor/editor.main.js",
         "a_@node-projects/base-custom-webcomponent": "./node_modules/@node-projects/base-custom-webcomponent/dist/index.js",
         "a_@node-projects/css-parser": "./node_modules/@node-projects/css-parser/dist/index.js",
         "a_@node-projects/web-component-designer": "./node_modules/@node-projects/web-component-designer/dist/index.js",
@@ -23,7 +23,7 @@ const importMapConfig = {
         "a_@node-projects/layout2vector": "./node_modules/@node-projects/layout2vector/dist/index.js",
         "a_dock-spawn-ts": "./node_modules/dock-spawn-ts/lib/js/index-webcomponent.js",
         "a_toastify-js": "./node_modules/toastify-js/src/toastify-es.js",
-        "monaco-editor/": "./node_modules/monaco-editor/",
+        "monaco-editor/": "./node_modules/@node-projects/monaco-editor-esm/",
         "esprima-next": "./node_modules/esprima-next/dist/esprima.js",
         "@node-projects/": "./node_modules/@node-projects/",
         "@node-projects/web-component-designer-htmlparserservice-nodehtmlparser": "./node_modules/@node-projects/web-component-designer-htmlparserservice-nodehtmlparser/dist/service/htmlParserService/NodeHtmlParserService.js",

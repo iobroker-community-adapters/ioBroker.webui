@@ -83,12 +83,10 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
                     });
                     await Promise.allSettled(promises);
                 }
-                //@ts-ignore
-                (await CodeViewMonaco.getMonacoLib()).languages.typescript.typescriptDefaults.setExtraLibs(libs);
-                //@ts-ignore
-                (await CodeViewMonaco.getMonacoLib()).languages.typescript.typescriptDefaults.setCompilerOptions({
-                    //@ts-ignore
-                    target: (await CodeViewMonaco.getMonacoLib()).languages.typescript.ScriptTarget.ESNext,
+                const monacoLib = await CodeViewMonaco.getMonacoLib();
+                monacoLib.typescript.typescriptDefaults.setExtraLibs(libs);
+                monacoLib.typescript.typescriptDefaults.setCompilerOptions({
+                    target: monacoLib.typescript.ScriptTarget.ESNext,
                     //@ts-ignore
                     module: 99,
                     removeComments: false,
@@ -97,8 +95,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
                     moduleResolution: 99,
                     baseUrl: "/"
                 });
-                //@ts-ignore
-                (await CodeViewMonaco.getMonacoLib()).languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+                monacoLib.typescript.typescriptDefaults.setDiagnosticsOptions({
                     noSemanticValidation: false,
                     noSyntaxValidation: false,
                     noSuggestionDiagnostics: false
@@ -109,7 +106,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
     async ready() {
         this._parseAttributesToProperties();
         //@ts-ignore
-        const style = await import("monaco-editor/min/vs/editor/editor.main.css", { with: { type: 'css' } });
+        const style = await import("@node-projects/monaco-editor-esm/min/vs/editor/editor.main.css", { with: { type: 'css' } });
         //@ts-ignore
         this.shadowRoot.adoptedStyleSheets = [style.default, this.constructor.style];
         this._container = this._getDomElement('container');

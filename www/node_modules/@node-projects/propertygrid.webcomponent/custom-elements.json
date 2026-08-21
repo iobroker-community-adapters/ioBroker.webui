@@ -49,7 +49,7 @@
                             "kind": "field",
                             "name": "getTypeInfo",
                             "type":  {
-                                "text": "object"
+                                "text": "(obj: any, type: string) => Promise<ITypeInfo>"
                             }
                         },
                         {

@@ -1,26 +1,50 @@
 import { BindingsEditor } from "@node-projects/web-component-designer-visualization-addons";
 //@ts-ignore
-import { openSelectIdDialog } from "@iobroker/webcomponent-selectid-dialog/dist/selectIdHelper.js";
+import { openSelectIdDialog } from "@iobroker/webcomponent-selectid-dialog/build/selectIdHelper.js";
 //@ts-ignore
 export class IobrokerWebuiBindingsEditor extends BindingsEditor {
     static is = 'iobroker-webui-bindings-editor';
-    constructor(property, binding, bindingTarget, serviceContainer, instanceServiceContainer, shell) {
+    objectValueType;
+    constructor(property, binding, bindingTarget, serviceContainer, instanceServiceContainer, shell, objectValueType) {
         super(property, binding, bindingTarget, serviceContainer, instanceServiceContainer, shell, { namedConverters: false });
-        let groupObjectNameControl = this._getDomElement('groupObjectName');
+        this.objectValueType = objectValueType ?? '';
+        const typeRow = document.createElement('div');
+        typeRow.className = 'row';
+        const typeLabel = document.createElement('label');
+        typeLabel.textContent = 'type :';
+        typeLabel.title = 'If set, the value is converted to this type before the binding is applied';
+        typeLabel.style.cssText = 'white-space: nowrap; margin-right: 4px;';
+        const typeSelect = document.createElement('select');
+        for (const [value, label] of [['', 'ignore'], ['number', 'number'], ['boolean', 'boolean'], ['string', 'string']]) {
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = label;
+            typeSelect.appendChild(option);
+        }
+        typeSelect.value = this.objectValueType;
+        typeSelect.onchange = () => this.objectValueType = typeSelect.value;
+        typeRow.append(typeLabel, typeSelect);
+        this._getDomElement('groupinvert').before(typeRow);
+        let groupObjectNameControl = this._getDomElement('addSignalBtn');
         let btn = document.createElement('button');
-        btn.textContent = 'IOB';
+        btn.className = 'add-signal-btn';
+        btn.textContent = '+ Add ioBroker signal';
         btn.title = "iobroker signal selector";
-        btn.style.height = '22px';
         btn.onclick = async () => {
             var res = await openSelectIdDialog({ host: window.iobrokerHost, port: window.iobrokerPort, protocol: window.location.protocol, language: 'en', selected: '', allowAll: true });
             if (res) {
-                if (this.objectNames.length > 1)
-                    this.objectNames += ";";
-                this.objectNames += res;
-                this._bindingsRefresh();
+                let signalInput = Array.from(this.shadowRoot.querySelectorAll('.signal-path-input')).find(input => !input.value);
+                if (!signalInput) {
+                    this._addSignal();
+                    signalInput = Array.from(this.shadowRoot.querySelectorAll('.signal-path-input')).at(-1);
+                }
+                if (signalInput) {
+                    signalInput.value = res;
+                    signalInput.dispatchEvent(new Event('input', { bubbles: true }));
+                }
             }
         };
-        groupObjectNameControl.appendChild(btn);
+        groupObjectNameControl.after(btn);
     }
 }
 customElements.define(IobrokerWebuiBindingsEditor.is, IobrokerWebuiBindingsEditor);

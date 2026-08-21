@@ -1,8 +1,8 @@
 export function escapeCData(text) {
     return text.replaceAll("]]>", "]]]]><![CDATA[>");
 }
-export function escapeXml(text) {
-    return text.replace(/[<>&'"]/g, c => {
+export function escapeXml(value) {
+    return String(value).replace(/[<>&'"]/g, c => {
         switch (c) {
             case '<': return '&lt;';
             case '>': return '&gt;';
@@ -78,7 +78,7 @@ export function convertToXml(type, screen) {
             xml += `        <property name="${p}"`;
             if (screen.properties[p].type)
                 xml += ` type="${screen.properties[p].type}"`;
-            if (screen.properties[p].default)
+            if (screen.properties[p].default !== undefined && screen.properties[p].default !== null)
                 xml += ` default="${escapeXml(screen.properties[p].default)}"`;
             if (screen.properties[p].values)
                 xml += ` values="${screen.properties[p].values.join('|')}"`;

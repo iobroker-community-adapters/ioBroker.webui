@@ -133,6 +133,13 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- package updates
+- code fixes
+- fix of github issue
+- fix monaco workers
+- blockly update
+
 ### 1.47.0 (2026-05-20)
 - package uprades
 
