@@ -28,3 +28,6 @@ Missing the solution-explorer side-effect import caused the runtime failure `thi
 - The ioBroker bindings editor preserves the ioBroker value-type selector by reading the raw binding and rendering its custom UI.
 - The custom signal selector integrates ioBroker signals through the designer's newer signal-row/input-event flow.
 
+## XML export constraint
+
+- Custom-control property defaults are typed JSON values. `XmlHelper.convertToXml` must use nullish presence checks rather than truthiness so `0` and `false` are exported, and `escapeXml` must stringify primitive values before escaping them. This is covered by `test/tests/xml-helper.test.js` (GitHub issue #551).

@@ -1,12 +1,12 @@
-import { IControl } from "../interfaces/IControl.js";
-import { IScreen } from "../interfaces/IScreen.js";
+import type { IControl } from "../interfaces/IControl.js";
+import type { IScreen } from "../interfaces/IScreen.js";
 
 export function escapeCData(text: string) {
     return text.replaceAll("]]>", "]]]]><![CDATA[>");
 }
 
-export function escapeXml(text: string) {
-    return text.replace(/[<>&'"]/g, c => {
+export function escapeXml(value: string | number | boolean) {
+    return String(value).replace(/[<>&'"]/g, c => {
         switch (c) {
             case '<': return '&lt;';
             case '>': return '&gt;';
@@ -83,7 +83,7 @@ export function convertToXml(type: 'screen' | 'control', screen: IScreen | ICont
             xml += `        <property name="${p}"`;
             if (screen.properties[p].type)
                 xml += ` type="${screen.properties[p].type}"`;
-            if (screen.properties[p].default)
+            if (screen.properties[p].default !== undefined && screen.properties[p].default !== null)
                 xml += ` default="${escapeXml(screen.properties[p].default)}"`;
             if (screen.properties[p].values)
                 xml += ` values="${screen.properties[p].values.join('|')}"`;
