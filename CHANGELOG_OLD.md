@@ -1,4 +1,7 @@
 # Older changes
+## 1.46.0 (2026-05-08)
+- update designer once more
+
 ## 1.45.2 (2026-05-07)
 - fix build
 

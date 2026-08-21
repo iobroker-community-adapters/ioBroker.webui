@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "2.0.2": {
+        "en": "welcome screen array",
+        "de": "Willkommensbildschirm-Array",
+        "ru": "приветственный экран массив",
+        "pt": "matriz da tela de boas-vindas",
+        "nl": "welkomstscherm",
+        "fr": "écran d'accueil",
+        "it": "matrice della schermata di benvenuto",
+        "es": "Conjunto de pantallas de bienvenida",
+        "pl": "tablica ekranów powitalnych",
+        "uk": "масив екрана привітання",
+        "zh-cn": "欢迎屏幕阵列"
+      },
       "2.0.1": {
         "en": "fix node version",
         "de": "Node-Version korrigieren",
@@ -106,19 +119,6 @@
         "pl": "aktualizacja projektant z nowymi funkcjami",
         "uk": "оновлення дизайнера з новими функціями",
         "zh-cn": "具有新特性的更新设计器"
-      },
-      "1.44.0": {
-        "en": "fix designer errors",
-        "de": "designer fehler beheben",
-        "ru": "исправьте ошибки дизайнера",
-        "pt": "corrigir erros de desenhador",
-        "nl": "fix designer fouten",
-        "fr": "correction des erreurs du concepteur",
-        "it": "correggere gli errori del progettista",
-        "es": "corregir errores de diseñador",
-        "pl": "naprawić błędy projektanta",
-        "uk": "виправлення помилок дизайнера",
-        "zh-cn": "固定设计器错误"
       }
     },
     "icon": "logo.png",
