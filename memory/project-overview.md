@@ -25,6 +25,7 @@ Missing the solution-explorer side-effect import caused the runtime failure `thi
 
 - Current designer/property-grid type-info callbacks are asynchronous.
 - The visualization shell expects an `openModal(...)` implementation; `IobrokerWebuiAppShell` supplies it.
+- Visualization-addons help dialogs currently request negative absolute coordinates. `IobrokerWebuiAppShell.openModal(...)` must fit requested dialog positions into the dock bounds or the Bindings Editor and Simple Script Editor help windows are created completely off-screen.
 - The ioBroker bindings editor preserves the ioBroker value-type selector by reading the raw binding and rendering its custom UI.
 - The custom signal selector integrates ioBroker signals through the designer's newer signal-row/input-event flow.
 

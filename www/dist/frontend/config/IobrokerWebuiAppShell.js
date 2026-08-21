@@ -23,6 +23,7 @@ import { IobrokerWebuiMonacoEditor } from './IobrokerWebuiMonacoEditor.js';
 import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
 import { IobrokerWebuiConfirmationWrapper } from './IobrokerWebuiConfirmationWrapper.js';
 import { getPanelContainerForElement } from './DockHelper.js';
+import { fitDialogPosition } from '../helper/DialogPositionHelper.js';
 import { IobrokerWebuiPropertyGrid } from './IobrokerWebuiPropertyGrid.js';
 import { typeInfoFromJsonSchema } from '@node-projects/propertygrid.webcomponent';
 import { IobrokerWebuiScriptSystem } from '../scripting/IobrokerWebuiScriptSystem.js';
@@ -347,10 +348,14 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         return new Promise((resolve) => {
             if (options.title)
                 element.title = options.title;
+            const width = options.width ?? 500;
+            const height = options.height ?? 400;
+            const dockBounds = this._dock.getBoundingClientRect();
+            const position = fitDialogPosition(options.x, options.y, width, height, dockBounds);
             const container = new PanelContainer(element, this._dock.dockManager, element.title, PanelType.panel);
             element.title = '';
-            const dialog = this._dock.dockManager.floatDialog(container, options.x ?? 100, options.y ?? 100, getPanelContainerForElement(options.parent), options.disableResize ?? false);
-            dialog.resize(options.width ?? 500, options.height ?? 400);
+            const dialog = this._dock.dockManager.floatDialog(container, position.x, position.y, getPanelContainerForElement(options.parent), options.disableResize ?? false);
+            dialog.resize(width, height);
             dialog.noDocking = true;
             const listener = {
                 onClosePanel: (_manager, panel) => {
