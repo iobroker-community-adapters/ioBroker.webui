@@ -168,13 +168,15 @@
     "onlyWWW": false,
     "nogit": false,
     "mode": "daemon",
-    "welcomeScreen": {
-      "link": "webui/index.html",
-      "name": "webui editor",
-      "img": "admin/logo.png",
-      "color": "#c8ffe1",
-      "order": 1
-    },
+    "welcomeScreen": [
+      {
+        "link": "webui/index.html",
+        "name": "webui editor",
+        "img": "admin/logo.png",
+        "color": "#c8ffe1",
+        "order": 1
+      }
+    ],
     "globalDependencies": [
       {
         "admin": ">=7.7.22"
