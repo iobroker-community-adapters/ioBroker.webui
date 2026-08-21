@@ -9,6 +9,8 @@ const bindingsHelper = new BindingsHelper(iobrokerHandler);
 import { PropertyGridWithHeader, RefactorView, ServiceContainer, ValueType } from '@node-projects/web-component-designer';
 import { BindableObjectsBrowser, TreeViewExtended } from '@node-projects/web-component-designer-widgets-wunderbaum';
 
+import './ConfigureMonacoEnvironment.js';
+
 await CodeViewMonaco.getMonacoLib();
 
 import type { IDisposable } from 'monaco-editor';

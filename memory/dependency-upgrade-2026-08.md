@@ -25,10 +25,10 @@ This note describes the dependency-upgrade working state introduced in the curre
 - Monaco CSS is loaded from `@node-projects/monaco-editor-esm/min/vs/editor/editor.main.css`.
 - `gulpfile.mjs` copies the scoped ESM package. It no longer copies the official `monaco-editor` package into `www`; that package can still exist transitively for dependencies/types.
 - In the new module API, TypeScript defaults are exposed at top-level `monaco.typescript`, not `monaco.languages.typescript`. `IobrokerWebuiMonacoEditor.ts` uses the new location with a local structural type.
+- Direct browser delivery must configure `globalThis.MonacoEnvironment.getWorker` before Monaco is imported. `ConfigureMonacoEnvironment.ts` routes editor and language labels to the package's native module-worker entry points; otherwise Monaco uses its bundler-oriented blob/dynamic-import fallback and the editor worker can fail to load.
 - A browser smoke test verified that the module loads, TypeScript defaults exist, and an editor/model can be created with the expected content.
 
 ## Select-ID package migration
 
 - `@iobroker/webcomponent-selectid-dialog@2.0.2` moved its runtime artifacts from `dist/` to `build/`.
 - `gulpfile.mjs` copy paths and frontend imports use `build/iobrokerSelectId.es.js`, `build/selectIdHelper.js`, and `build/socket.iob.js`.
-
