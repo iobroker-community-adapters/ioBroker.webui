@@ -1,7 +1,107 @@
-.panel-titlebar-text {
+:host .panel-titlebar-text {
   padding-top: 3px;
 }
 
-.dockspan-tab-handle-text {
+:host .dockspan-tab-handle-text {
   margin-top: 0;
+}
+
+/* Loaded inside dock-spawn-ts; the palette is inherited from the editor page. */
+:host .dock-container,
+:host .document-manager {
+  background: var(--webui-workspace);
+}
+
+:host .panel-titlebar,
+:host .dockspan-tab-handle-list-container,
+:host .dockspan-tab-host,
+:host .dockspan-tab-content,
+:host .dockspan-tab-content > *,
+:host .panel-element-content-container {
+  background: var(--webui-surface);
+  color: var(--webui-text);
+}
+
+:host .panel-titlebar {
+  box-shadow: inset 0 -1px var(--webui-border);
+}
+
+:host .panel-titlebar-text,
+:host .panel-titlebar-button-close,
+:host .dockspan-tab-handle-close-button {
+  color: var(--webui-text);
+}
+
+:host .dockspan-panel-active {
+  background: var(--webui-dock-active);
+  box-shadow: inset 0 -1px var(--webui-border);
+}
+
+:host .dockspan-panel-titlebar-text-active {
+  color: var(--webui-accent-text);
+}
+
+:host .dockspan-tab-handle {
+  color: var(--webui-text);
+  background: var(--webui-subtle);
+  box-shadow: none;
+}
+
+:host .dockspan-tab-handle:hover {
+  color: var(--webui-text);
+  background: var(--webui-hover);
+}
+
+:host .dockspan-tab-handle-selected,
+:host .dockspan-tab-handle-selected:hover {
+  color: var(--webui-accent-text);
+  background: var(--webui-selected);
+  box-shadow: none;
+}
+
+:host .splitbar-horizontal,
+:host .splitbar-vertical {
+  background: var(--webui-border);
+}
+
+:host .dockspan-tab-handle-active,
+:host .dockspan-tab-handle-active:hover {
+  color: var(--webui-accent-text);
+  background: var(--webui-dock-active);
+  box-shadow: none;
+}
+
+/* Dock focus uses a tint; reserve accent lines for the editor's inner tabs.
+   Keep the separator's layout height, but draw only a thin neutral divider. */
+:host .dockspan-tab-handle-content-seperator,
+:host .dockspan-tab-handle-content-seperator-active {
+  background: var(--webui-surface);
+  box-shadow: inset 0 1px var(--webui-border);
+}
+
+:host .splitbar-horizontal:hover,
+:host .splitbar-vertical:hover,
+:host .splitbar-horizontal:active,
+:host .splitbar-vertical:active,
+:host .splitbar-horizontal-ghoust,
+:host .splitbar-vertical-ghoust {
+  background: var(--webui-accent);
+}
+
+:host .dialog-floating {
+  box-shadow: 0 8px 28px #253f3a26;
+}
+
+:host .dock-wheel-panel-preview {
+  background: #47977c40;
+}
+
+:host .dockspab-tab-handle-context-menu {
+  color: var(--webui-text);
+  background: var(--webui-surface);
+  border: 1px solid var(--webui-border);
+}
+
+:host .dockspab-tab-handle-context-menu > div:hover {
+  background: var(--webui-hover);
 }

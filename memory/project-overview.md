@@ -32,3 +32,11 @@ Missing the solution-explorer side-effect import caused the runtime failure `thi
 ## XML export constraint
 
 - Custom-control property defaults are typed JSON values. `XmlHelper.convertToXml` must use nullish presence checks rather than truthiness so `0` and `false` are exported, and `escapeXml` must stringify primitive values before escaping them. This is covered by `test/tests/xml-helper.test.js` (GitHub issue #551).
+
+## Designer color scheme — 2026-09-16
+
+- `assets/designer-theme.css` defines the light ZPL Studio palette (white surfaces, gray-green workspace, `#47977c` accent) and maps it to the designer's `--wcd-*` properties. Only `index.html` loads it; keep it out of runtime pages and the shared `assets/main.css`.
+- Dock colors live in `assets/dockspawn.css`, loaded inside the dock's shadow root. Selectors need the `:host` prefix to outrank the dependency's adopted stylesheets.
+- Active dock headers/tabs use the stronger `--webui-dock-active` green tint (`#c5e3d6`) and green text, with neutral dividers. Reserve green indicator lines for inner editor tabs so nested dock/tab levels do not produce stacked green stripes. Keep dock separator heights intact because the docking library uses them for layout.
+- `IobrokerWebuiAppShell.treeStyle` applies the same colors inside the project/outline trees; the upstream outline toolbar has inline colors requiring explicit overrides. Do not edit vendored dependencies for theme changes.
+- Packaged copies under `www/assets`, `www/index.html`, and `www/dist/frontend/config` must stay in sync with their source/build output.

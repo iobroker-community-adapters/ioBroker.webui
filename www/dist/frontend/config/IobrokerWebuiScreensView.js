@@ -9,7 +9,7 @@ export class IobrokerWebuiScreensView extends BaseCustomWebComponentConstructorA
     static style = css `
         :host {
             box-sizing: border-box;
-            background: rgb(44, 46, 53);
+            background: var(--webui-surface, #fff);
         }
         * {
             box-sizing: border-box;
@@ -32,13 +32,13 @@ export class IobrokerWebuiScreensView extends BaseCustomWebComponentConstructorA
                 height: 100px;
                 user-drag: none;
                 overflow: hidden;
-                border: 1px solid lightgray;
+                border: 1px solid var(--webui-border, #e0e6e6);
                 pointer-events: none;
             }
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: white;
+            color: var(--webui-text, #354348);
             font-size: 10px;
             width: 200px;
             overflow: hidden;

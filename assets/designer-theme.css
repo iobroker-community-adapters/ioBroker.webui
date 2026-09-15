@@ -1,0 +1,80 @@
+/* Editor-only palette shared with ZPL Studio. Runtime pages do not load this file. */
+:root {
+  color-scheme: light;
+  --webui-text: #354348;
+  --webui-muted: #859195;
+  --webui-surface: #fff;
+  --webui-workspace: #f3f6f6;
+  --webui-subtle: #f7f9f9;
+  --webui-border: #e0e6e6;
+  --webui-input-border: #d7dfe0;
+  --webui-accent: #47977c;
+  --webui-accent-text: #327d65;
+  --webui-hover: #edf5f2;
+  --webui-selected: #f1f7f4;
+  --webui-pressed: #dcefe6;
+  --webui-dock-active: #c5e3d6;
+
+  --dialog-text-color: var(--webui-text);
+  --dialog-border-color: var(--webui-border);
+  --dialog-background-color: var(--webui-surface);
+
+  /* Designer custom properties cross the components' shadow boundaries. */
+  --canvas-background: var(--webui-surface);
+  --almost-black: var(--webui-text);
+  --dark-grey: var(--webui-subtle);
+  --medium-grey: var(--webui-surface);
+  --light-grey: var(--webui-hover);
+  --input-border-color: var(--webui-input-border);
+  --wcd-color-text: var(--webui-text);
+  --wcd-color-text-muted: var(--webui-muted);
+  --wcd-color-surface: var(--webui-surface);
+  --wcd-color-surface-raised: var(--webui-surface);
+  --wcd-color-surface-hover: var(--webui-hover);
+  --wcd-color-border: var(--webui-input-border);
+  --wcd-color-border-strong: var(--webui-input-border);
+  --wcd-color-accent: var(--webui-accent);
+  --wcd-color-accent-text: var(--webui-accent-text);
+  --wcd-color-focus: var(--webui-accent);
+  --wcd-tab-header-background: var(--webui-surface);
+  --wcd-tab-panel-background: var(--webui-surface);
+  --wcd-tab-selected-background: var(--webui-selected);
+  --wcd-tab-selected-indicator-color: var(--webui-accent);
+  --wcd-tab-header-hover-background: var(--webui-hover);
+  --wcd-property-grid-background: var(--webui-surface);
+  --wcd-property-grid-header-highlight-color: var(--webui-accent-text);
+  --wcd-property-grid-unset-value-color: var(--webui-muted);
+  --wcd-property-grid-select-option-color: var(--webui-text);
+  --wcd-property-grid-tab-indicator-color: var(--webui-accent);
+  --wcd-property-grid-tab-indicator-inactive-color: #dce6e1;
+  --wcd-input-border-color: var(--webui-input-border);
+  --wcd-input-background-color: var(--webui-surface);
+  --wcd-designer-view-toolbar-background: var(--webui-surface);
+  --wcd-designer-view-statusbar-background: var(--webui-subtle);
+  --wcd-designer-view-statusbar-color: var(--webui-text);
+  --wcd-designer-view-tool-selected-background: var(--webui-pressed);
+  --wcd-designer-view-tool-hover-background: var(--webui-hover);
+  --wcd-designer-view-corner-background: var(--webui-subtle);
+  --wcd-palette-item-hover-background: var(--webui-hover);
+}
+
+nav button {
+  border-radius: 4px;
+}
+
+nav button:enabled:hover {
+  background: var(--webui-hover);
+}
+
+nav button:enabled:active {
+  background: var(--webui-pressed);
+}
+
+nav button:focus-visible {
+  outline: 2px solid var(--webui-accent);
+  outline-offset: -2px;
+}
+
+#load {
+  background: var(--webui-surface);
+}

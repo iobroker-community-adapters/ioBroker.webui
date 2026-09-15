@@ -11,7 +11,7 @@ export class IobrokerWebuiIconsView extends BaseCustomWebComponentConstructorApp
     static readonly style = css`
         :host {
             box-sizing: border-box;
-            background: rgb(44, 46, 53);
+            background: var(--webui-surface, #fff);
         }
         
         #root {
@@ -34,7 +34,7 @@ export class IobrokerWebuiIconsView extends BaseCustomWebComponentConstructorApp
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: white;
+            color: var(--webui-text, #354348);
             font-size: 10px;
             width: 40px;
             overflow: hidden;

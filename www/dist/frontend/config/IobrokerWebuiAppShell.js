@@ -53,16 +53,8 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       box-sizing: border-box;
       position: relative;
 
-      /* Default colour scheme */
-      --canvas-background: white;
-      --almost-black: #141720;
-      --dark-grey: #232733;
-      --medium-grey: #2f3545;
-      --light-grey: #383f52;
-      --highlight-pink: #e91e63;
-      --highlight-blue: #2196f3;
-      --highlight-green: #99ff33;
-      --input-border-color: #596c7a;
+      color: var(--webui-text, #354348);
+      background: var(--webui-workspace, #f3f6f6);
     }
 
     .app-body {
@@ -76,6 +68,38 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       height: 100%;
     }
     `;
+    static treeStyle = css `
+    div.wunderbaum {
+      --wb-node-text-color: var(--webui-text);
+      --wb-background-color: var(--webui-surface);
+      --wb-border-color: var(--webui-border);
+      --wb-focus-border-color: var(--webui-accent);
+      --wb-hover-color: var(--webui-hover);
+      --wb-hover-border-color: var(--webui-hover);
+      --wb-active-color: var(--webui-pressed);
+      --wb-active-border-color: var(--webui-accent);
+      --wb-active-hover-color: var(--webui-hover);
+      --wb-active-hover-border-color: var(--webui-accent);
+      --wb-active-color-grayscale: var(--webui-selected);
+      --wb-active-border-color-grayscale: var(--webui-border);
+      --wb-active-hover-color-grayscale: var(--webui-hover);
+      --wb-alternate-row-color: var(--webui-subtle);
+      --wb-alternate-row-color-hover: var(--webui-hover);
+    }
+
+    #input {
+      color: var(--webui-text);
+      background: var(--webui-surface);
+      border: 1px solid var(--webui-input-border);
+    }
+
+    /* The upstream outline toolbar uses inline colors. */
+    #input + div {
+      background: var(--webui-subtle) !important;
+      border-color: var(--webui-border) !important;
+      fill: var(--webui-text);
+    }
+  `;
     static template = html `
       <div class="app-body">
         <dock-spawn-ts id="dock" style="width: 100%; height: 100%; position: relative;">
@@ -132,6 +156,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         this._dock = this._getDomElement('dock');
         this._solutionExplorer = this._getDomElement('solutionExplorer');
         this.treeViewExtended = this._getDomElement('treeViewExtended');
+        for (const tree of [this._solutionExplorer, this.treeViewExtended]) {
+            tree.shadowRoot.adoptedStyleSheets = [...tree.shadowRoot.adoptedStyleSheets, IobrokerWebuiAppShell.treeStyle];
+        }
         this.propertyGrid = this._getDomElement('propertyGrid');
         this.styleEditor = this._getDomElement('styleEditor');
         this.javascriptEditor = this._getDomElement('javascriptEditor');

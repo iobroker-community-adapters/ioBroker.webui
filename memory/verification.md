@@ -20,6 +20,11 @@ The integration test can take about five minutes because it provisions a tempora
 
 A standalone static `web-dev-server` does not provide a real ioBroker adapter backend. In that setup, a 404 for `/webui.0.widgets/importWidgetFiles.js` and a generic connection `Event` are expected environment limitations and do not by themselves prove an application regression.
 
+### Designer palette — 2026-09-16
+
+- Verified with `npm run tsc`, `npm run lint`, and `git -c core.whitespace=cr-at-eol diff --check` (existing HTML/TypeScript files contain CRLF line endings).
+- Local preview command: `./node_modules/.bin/web-dev-server --port 8099`. With the repository's development backend configuration reachable, the project tree and a saved screen loaded for visual checking of the toolbar, dock headers/tabs, property grid, and canvas controls. Cross-origin widget imports and some screen images still produced pre-existing missing-resource errors in this local setup.
+
 ## Blockly runtime regression — 2026-09-16
 
 - `test/tests/blockly-runtime.test.js` executes the browser bundles selected by `runtime.html` and `www/runtime.html` in isolated VM contexts, then loads and generates a saved event with a variable. Importing Blockly's Node entry would implicitly load English messages and conceal the missing-browser-locale bug.
