@@ -37,3 +37,4 @@ This note describes the dependency-upgrade working state introduced in the curre
 ## Blockly compatibility
 
 - `@node-projects/web-component-designer-visualization-addons@0.1.150` removes obsolete document-level Blockly stylesheet lookups. Blockly 13 injects its common and renderer styles directly into the editor shadow root; older add-on code failed with `Cannot read properties of null (reading 'innerText')` when opening a Blockly event editor.
+- Verified 2026-09-16: both `index.html` and `runtime.html` must load `blockly/msg/en.js`, including for headless runtime code generation. With Blockly 13, loading a saved `start_event` variable without locale messages throws at `Blockly.Msg.RENAME_VARIABLE.replace(...)` before its handler can run. Fixed the runtime entry point and its tracked `www/` copy; no visualization-addons change is needed for this failure (forum post 1354485).
