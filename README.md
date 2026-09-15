@@ -135,6 +135,7 @@ runtime.html?screenName=screen2
 -->
 ### __WORK IN PROGRESS__
 - fix blockly scripts
+- add dark/light mode
 
 ### 2.0.3 (2026-08-21)
 - fix help dlg pos
