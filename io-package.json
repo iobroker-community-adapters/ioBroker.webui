@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "2.0.3",
+    "version": "2.1.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "2.1.0": {
+        "en": "fix blockly scripts\nadd dark/light mode",
+        "de": "Fix Blockly Scripts\nDunkel-/Hellmodus",
+        "ru": "исправить блочные скрипты\nдобавить темный/светлый режим",
+        "pt": "fix block scripts\nadicionar modo claro/escuro",
+        "nl": "blokkerende scripts repareren\nvoeg de donker/lichte modus toe",
+        "fr": "fix blockly scripts\najouter le mode foncé/clair",
+        "it": "aggiusta script\naggiunga chiaro/buio",
+        "es": "arreglar guiones\nañadir modo claro/oscuro",
+        "pl": "naprawiać skrypty blokowe\ndodaj tryb ciemny/jasny",
+        "uk": "виправлення блокових скриптів\nдодати темний/світлий режим",
+        "zh-cn": "修复块状脚本\n添加深色/浅色模式"
+      },
       "2.0.3": {
         "en": "fix help dlg pos",
         "de": "fix help dlg pos",
@@ -106,19 +119,6 @@
         "pl": "fix runtime",
         "uk": "фіксувати runtime",
         "zh-cn": "固定运行时间"
-      },
-      "1.46.0": {
-        "en": "update designer once more",
-        "de": "update designer noch einmal",
-        "ru": "дизайнер обновлений снова",
-        "pt": "atualizar o designer mais uma vez",
-        "nl": "update ontwerper opnieuw",
-        "fr": "mise à jour designer une fois de plus",
-        "it": "aggiornamento designer ancora una volta",
-        "es": "diseñador de actualización una vez más",
-        "pl": "aktualizacja projektanta jeszcze raz",
-        "uk": "оновлений дизайнер",
-        "zh-cn": "再次更新设计器"
       }
     },
     "icon": "logo.png",

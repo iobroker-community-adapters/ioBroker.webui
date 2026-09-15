@@ -133,7 +133,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 2.1.0 (2026-09-15)
 - fix blockly scripts
 - add dark/light mode
 
@@ -152,9 +152,6 @@ runtime.html?screenName=screen2
 - fix of github issue
 - fix monaco workers
 - blockly update
-
-### 1.47.0 (2026-05-20)
-- package uprades
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 
