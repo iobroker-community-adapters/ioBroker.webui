@@ -89,11 +89,11 @@
 }
 
 :host .dialog-floating {
-  box-shadow: 0 8px 28px #253f3a26;
+  box-shadow: 0 8px 28px var(--webui-dialog-shadow);
 }
 
 :host .dock-wheel-panel-preview {
-  background: #47977c40;
+  background: var(--webui-dock-preview);
 }
 
 :host .dockspab-tab-handle-context-menu {

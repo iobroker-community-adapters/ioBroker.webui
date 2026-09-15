@@ -1,6 +1,7 @@
 import { BaseCustomWebComponentConstructorAppend, LazyLoader, css, html } from "@node-projects/base-custom-webcomponent";
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { CodeViewMonaco } from "@node-projects/web-component-designer-codeview-monaco";
+import { getMonacoTheme } from './DesignerTheme.js';
 export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructorAppend {
     static style = css `
         :host {
@@ -113,6 +114,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
         IobrokerWebuiMonacoEditor.initMonacoEditor();
         let options = {
             automaticLayout: true,
+            theme: getMonacoTheme(),
             language: this.getLanguageName(),
             fixedOverflowWidgets: true,
             minimap: {

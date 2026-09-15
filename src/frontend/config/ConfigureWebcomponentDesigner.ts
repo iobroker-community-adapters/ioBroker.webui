@@ -1,6 +1,6 @@
 import { BaseCustomWebcomponentBindingsService, BindingTarget, EventsService, IElementsJson, JsonFileElementsService, PreDefinedElementsService, PropertiesHelper, SeperatorContextMenu, TextRefactorService, createDefaultServiceContainer } from "@node-projects/web-component-designer";
 import { NodeHtmlParserService } from '@node-projects/web-component-designer-htmlparserservice-nodehtmlparser';
-import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
+import { DesignerCodeView } from './DesignerTheme.js';
 import { CssParserStylesheetService } from '@node-projects/web-component-designer-stylesheetservice-css-parser';
 import { VisualizationBindingsService, PropertyGridDragDropService, ScriptRefactorService, BindingsHelper, VisualizationBindingsRefactorService } from "@node-projects/web-component-designer-visualization-addons";
 import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
@@ -45,7 +45,7 @@ export function configureDesigner(bindingsHelper: BindingsHelper) {
     serviceContainer.register("refactorService", new ScriptRefactorService());
     serviceContainer.register("refactorService", new IobrokerWebuiRefactorService());
     serviceContainer.register("stylesheetService", designerCanvas => new CssParserStylesheetService(designerCanvas));
-    serviceContainer.config.codeViewWidget = CodeViewMonaco;
+    serviceContainer.config.codeViewWidget = DesignerCodeView;
 
     serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/frontend/elements-webui.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));

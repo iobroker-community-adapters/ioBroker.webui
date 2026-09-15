@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <link rel="manifest" href="./manifest.json">
+  <script src="./assets/designer-theme.js"></script>
 
   <script src="./node_modules/blockly/blockly_compressed.js"></script>
   <script src="./node_modules/blockly/blocks_compressed.js"></script>
@@ -242,6 +243,10 @@
         style="font-family: monospace; font-size: 8px; position: relative; top: -8px; cursor: pointer;">(0/0)</span>
     </div>
     <button style="margin-left: 10px;" data-command="runtime" title="runtime"><img src="./assets/icons/play.svg"></button>
+    <button id="themeToggle" type="button" role="switch" aria-label="Dark mode" aria-checked="false" title="Switch to dark mode">
+      <svg class="theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+      <svg class="theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg>
+    </button>
   </nav>
   <iobroker-webui-app-shell id="shell">
   </iobroker-webui-app-shell>

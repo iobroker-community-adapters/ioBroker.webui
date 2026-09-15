@@ -4,6 +4,8 @@ import type * as monaco from 'monaco-editor';
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { CodeViewMonaco } from "@node-projects/web-component-designer-codeview-monaco";
 
+import { getMonacoTheme } from './DesignerTheme.js';
+
 type MonacoTypeScriptApi = {
     ScriptTarget: { ESNext: number };
     typescriptDefaults: {
@@ -146,6 +148,7 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
 
         let options: monaco.editor.IStandaloneEditorConstructionOptions = {
             automaticLayout: true,
+            theme: getMonacoTheme(),
             language: this.getLanguageName(),
             fixedOverflowWidgets: true,
             minimap: {

@@ -14,6 +14,8 @@
   --webui-selected: #f1f7f4;
   --webui-pressed: #dcefe6;
   --webui-dock-active: #c5e3d6;
+  --webui-dock-preview: #47977c40;
+  --webui-dialog-shadow: #253f3a26;
 
   --dialog-text-color: var(--webui-text);
   --dialog-border-color: var(--webui-border);
@@ -77,4 +79,81 @@ nav button:focus-visible {
 
 #load {
   background: var(--webui-surface);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --webui-text: #ececec;
+  --webui-muted: #a5a5a5;
+  --webui-surface: #212121;
+  --webui-workspace: #171717;
+  --webui-subtle: #1b1b1b;
+  --webui-border: #383838;
+  --webui-input-border: #585858;
+  --webui-accent: #c7c7c7;
+  --webui-accent-text: #f0f0f0;
+  --webui-hover: #303030;
+  --webui-selected: #343434;
+  --webui-pressed: #404040;
+  --webui-dock-active: #494949;
+  --webui-dock-preview: #ffffff26;
+  --webui-dialog-shadow: #0008;
+  --webui-icon-filter: invert(1);
+  --wcd-property-grid-tab-indicator-inactive-color: #505050;
+}
+
+nav button img {
+  filter: var(--webui-icon-filter, none);
+}
+
+/* A sliding sun/moon switch; its accessible name stays stable in both modes. */
+nav #themeToggle {
+  margin-left: auto;
+  align-self: center;
+  flex: 0 0 58px;
+  width: 58px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--webui-input-border);
+  border-radius: 20px;
+  background: var(--webui-subtle);
+  color: var(--webui-accent-text);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+#themeToggle::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--webui-dock-active);
+  box-shadow: 0 1px 3px #0002;
+  transition: transform 350ms cubic-bezier(.22, 1, .36, 1), background-color 250ms;
+}
+
+#themeToggle svg {
+  position: absolute;
+  top: 5px;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 400ms cubic-bezier(.22, 1, .36, 1), opacity 250ms;
+}
+
+#themeToggle .theme-sun { left: 5px; }
+#themeToggle .theme-moon { right: 5px; opacity: .45; transform: rotate(-25deg) scale(.8); }
+#themeToggle[aria-checked="true"]::before { transform: translateX(30px); }
+#themeToggle[aria-checked="true"] .theme-sun { opacity: .45; transform: rotate(90deg) scale(.8); }
+#themeToggle[aria-checked="true"] .theme-moon { opacity: 1; transform: rotate(0) scale(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  #themeToggle::before, #themeToggle svg { transition: none; }
 }

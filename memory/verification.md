@@ -24,6 +24,7 @@ A standalone static `web-dev-server` does not provide a real ioBroker adapter ba
 
 - Verified with `npm run tsc`, `npm run lint`, and `git -c core.whitespace=cr-at-eol diff --check` (existing HTML/TypeScript files contain CRLF line endings).
 - Local preview command: `./node_modules/.bin/web-dev-server --port 8099`. With the repository's development backend configuration reachable, the project tree and a saved screen loaded for visual checking of the toolbar, dock headers/tabs, property grid, and canvas controls. Cross-origin widget imports and some screen images still produced pre-existing missing-resource errors in this local setup.
+- Dark-mode follow-up: `npm run test:ts` passes 12 tests, including saved/system theme precedence, manual preference persistence, accessible switch state, and blocked storage. `npm run tsc` and `npm run lint` pass. Browser checks cover dark/light Monaco rendering and Space-key activation of the theme switch.
 
 ## Blockly runtime regression — 2026-09-16
 

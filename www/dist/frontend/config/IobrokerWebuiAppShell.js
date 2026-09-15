@@ -87,6 +87,16 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       --wb-alternate-row-color-hover: var(--webui-hover);
     }
 
+    .cmd {
+      background: var(--webui-surface);
+    }
+
+    .cmd img,
+    .wb-icon,
+    .wb-expander {
+      filter: var(--webui-icon-filter, none);
+    }
+
     #input {
       color: var(--webui-text);
       background: var(--webui-surface);
