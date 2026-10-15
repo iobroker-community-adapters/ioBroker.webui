@@ -69,7 +69,7 @@
     "@node-projects/web-component-designer-htmlparserservice-nodehtmlparser": "^0.1.15",
     "@node-projects/web-component-designer-stylesheetservice-css-parser": "^0.1.5",
     "@node-projects/web-component-designer-visualization-addons": "^0.1.152",
-    "@node-projects/web-component-designer-widgets-wunderbaum": "^0.2.3",
+    "@node-projects/web-component-designer-widgets-wunderbaum": "^0.3.0",
     "@types/json-schema": "^7.0.15",
     "@types/node": "^26.2.0",
     "@web/dev-server": "^1.0.0",
