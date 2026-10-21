@@ -55,7 +55,7 @@
     "@alcalzone/release-script-plugin-license": "^5.2.2",
     "@blockly/zoom-to-fit": "^13.3.0",
     "@iobroker/socket-client": "^5.2.3",
-    "@iobroker/testing": "^6.2.2",
+    "@iobroker/testing": "^6.3.1",
     "@iobroker/webcomponent-selectid-dialog": "^2.0.2",
     "@node-projects/base-custom-webcomponent": "0.46.0",
     "@node-projects/css-parser": "^5.2.0",
