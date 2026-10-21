@@ -79,7 +79,7 @@
     "construct-style-sheets-polyfill": "^3.1.0",
     "cross-env": "^10.1.0",
     "dayjs": "^1.11.23",
-    "del": "^8.0.1",
+    "del": "^9.0.1",
     "dock-spawn-ts": "^3.22.0",
     "es-module-shims": "2.8.4",
     "esbuild": "^0.28.2",
