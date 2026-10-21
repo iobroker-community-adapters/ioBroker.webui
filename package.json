@@ -57,7 +57,7 @@
     "@iobroker/socket-client": "^5.2.3",
     "@iobroker/testing": "^6.3.1",
     "@iobroker/webcomponent-selectid-dialog": "^2.0.2",
-    "@node-projects/base-custom-webcomponent": "0.46.0",
+    "@node-projects/base-custom-webcomponent": "0.47.0",
     "@node-projects/css-parser": "^5.2.0",
     "@node-projects/lean-he-esm": "^3.4.1",
     "@node-projects/monaco-editor-esm": "^0.56.1",
