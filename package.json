@@ -74,7 +74,7 @@
     "@types/node": "^26.2.0",
     "@web/dev-server": "^1.0.0",
     "blockly": "^13.3.0",
-    "chai": "^6.2.2",
+    "chai": "^6.3.0",
     "chai-as-promised": "^8.0.2",
     "construct-style-sheets-polyfill": "^3.1.0",
     "cross-env": "^10.1.0",
