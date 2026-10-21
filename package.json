@@ -85,7 +85,7 @@
     "esbuild": "^0.28.2",
     "eslint": "^10.10.0",
     "esprima-next": "^6.0.3",
-    "glob-stream": "^8.0.3",
+    "glob-stream": "^8.0.4",
     "globals": "^17.12.0",
     "gulp": "^5.0.1",
     "gulp-git": "^2.11.0",
