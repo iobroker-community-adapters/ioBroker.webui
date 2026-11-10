@@ -32,6 +32,8 @@ export interface AiWorkspace {
     selectedDocument(): { type: DocumentType; name: string } | null;
     globalContext(): unknown;
     elements(): Promise<unknown>;
+    installedPackages(): Promise<Record<string, string>>;
+    addPackage(name: string): Promise<unknown>;
     searchObjects(type: string, query: string, offset: number, limit: number): Promise<unknown>;
     readObject(id: string): Promise<unknown>;
     readState(id: string): Promise<unknown>;

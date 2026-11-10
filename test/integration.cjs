@@ -44,6 +44,12 @@ tests.integration(path.join(__dirname, '..'), {
                 assert.deepEqual(received[0].messages, messages);
                 assert.deepEqual(received[0].tools, tools);
             });
+            it('rejects unlisted npm requests through the AI endpoint', async () => {
+                for (const name of ['@vanillawc/wc-json', 'react', '--ignore-scripts', 'vanilla-colorful@latest']) {
+                    const answer = await send('ai:addPackage', { name });
+                    assert.match(answer.error, /exact package name/);
+                }
+            });
             it('rejects an unknown provider without contacting the endpoint', async () => {
                 const answer = await send('ai:chat', { provider: 'unknown', model: 'fixture-vision', messages: [{ role: 'user', content: 'hello' }] });
                 assert.ok(answer.error);

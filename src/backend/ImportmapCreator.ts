@@ -64,7 +64,7 @@ export class ImportmapCreator {
 
         let fileConfigWidgets = `import { ServiceContainer, WebcomponentManifestEventsService, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
 
-export function registerNpmWidgets(serviceContainer) {
+export function registerNpmWidgets(serviceContainer, registeredPackages = []) {
 `
         fileConfigWidgets += this.designerServicesCode;
         fileConfigWidgets += '\n}';
@@ -72,7 +72,7 @@ export function registerNpmWidgets(serviceContainer) {
 
         let fileDesignerAddons = `import { ServiceContainer, WebcomponentManifestEventsService, WebcomponentManifestElementsService, WebcomponentManifestPropertiesService } from "@node-projects/web-component-designer";
 
-export async function registerDesignerAddons(serviceContainer) {
+export async function registerDesignerAddons(serviceContainer, registeredPackages = []) {
     let classDefinition;
 `
         fileDesignerAddons += this.designerAddonsCode;
@@ -83,7 +83,7 @@ export async function registerDesignerAddons(serviceContainer) {
 
         importWidgetFiles += this.importFiles.map(x => "p.push(import('" + x + "').catch(err => console.error('error during import of " + x + "', err)));").join('\n');
         importWidgetFiles += '\nawait Promise.allSettled(p)\n\n';
-        importWidgetFiles += this.importUndefinedElementFiles.map(x => "observer.setCurrentLib('" + x[0] + "');\ntry {\nawait import('" + x[1] + "');\n}catch (err) { console.error('error during import of " + x + "', err); }\nobserver.finishedCurrentLib();").join('\n');
+        importWidgetFiles += this.importUndefinedElementFiles.map(x => "if (!observer.getElements().has('" + x[0] + "')) {\nobserver.setCurrentLib('" + x[0] + "');\ntry {\nawait import('" + x[1] + "');\n}catch (err) { console.error('error during import of " + x + "', err); }\nobserver.finishedCurrentLib();\n}").join('\n');
         await fs.writeFile(path.join(this._packageBaseDirectory, 'importWidgetFiles.js'), importWidgetFiles);
 
         let importWidgetFilesRuntime = '';
@@ -135,9 +135,10 @@ export async function registerDesignerAddons(serviceContainer) {
         if (fsSync.existsSync(customElementsPath))
             customElementsJson = await fs.readFile(customElementsPath, 'utf-8');
 
-        fs.readFile(webComponentDesignerPath, 'utf-8').then(async x => {
+        await fs.readFile(webComponentDesignerPath, 'utf-8').then(async x => {
             const webComponentDesignerJson = await JSON.parse(x);
             if (webComponentDesignerJson.services) {
+                this.designerAddonsCode += `if (!registeredPackages.includes(${JSON.stringify(packageJsonObj.name)})) {\n`;
                 for (let o in webComponentDesignerJson.services) {
                     for (let s of webComponentDesignerJson.services[o]) {
                         if (s.startsWith('./'))
@@ -147,16 +148,19 @@ export async function registerDesignerAddons(serviceContainer) {
 `
                     }
                 }
+                this.designerAddonsCode += '}\n';
             }
 
         }).catch(_ => { });
 
         if (customElementsJson) {
             let nm = (<string>packageJsonObj.name).replaceAll(' ', '_').replaceAll('@', '_').replaceAll('-', '_').replaceAll('/', '_').replaceAll('.', '_');
-            this.designerServicesCode += `let ${nm} = ${customElementsJson};
+            this.designerServicesCode += `if (!registeredPackages.includes(${JSON.stringify(packageJsonObj.name)})) {
+    let ${nm} = ${customElementsJson};
     serviceContainer.register('elementsService', new WebcomponentManifestElementsService('${packageJsonObj.name}', '${elementsRootPathWeb}', ${nm}));
     serviceContainer.register('eventsService', new WebcomponentManifestEventsService('${packageJsonObj.name}', ${nm}));
-    serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm}));`
+    serviceContainer.register('propertyService', new WebcomponentManifestPropertiesService('${packageJsonObj.name}', ${nm}));
+    }`
 
             let manifest = JSON.parse(customElementsJson);
             for (let m of manifest.modules) {

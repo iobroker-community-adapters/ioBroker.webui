@@ -59,6 +59,7 @@ window.iobrokerSocketScriptUrl = '/test/browser/socket-stub.js';
     handler.init = () => {};
     handler._readyPromises = null;
     handler.connection = fixtureConnection;
+    if (new URLSearchParams(location.search).has('packageFixture')) handler.namespaceWidgets = 'test/browser/npm-widgets';
     handler.config = { globalStyle: '', globalScript: '', globalConfig: {}, fontDeclarations: '' };
     await importShim('./dist/frontend/config/IobrokerWebuiAppShell.js');
     document.getElementById('fixture-status').textContent = 'Fixture ready — no real backend or provider is used';

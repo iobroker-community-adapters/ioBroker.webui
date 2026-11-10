@@ -1,3 +1,7 @@
+import { PreDefinedElementsService } from '@node-projects/web-component-designer';
+import observer from '../widgets/customElementsObserver.js';
+import { allowedPackageName, describePackage } from '../npm/PackageCatalog.js';
+import { loadInstalledPackages } from '../npm/LoadInstalledPackages.js';
 import { iobrokerHandler } from '../common/IobrokerHandler.js';
 import type { IobrokerWebuiAppShell } from '../config/IobrokerWebuiAppShell.js';
 import { sameDocument, type AiWorkspace, type AiProposal, type DocumentType } from './AiTypes.js';
@@ -36,6 +40,38 @@ export class AiWorkspaceAdapter implements AiWorkspace {
             elements: (await service.getElements()).map(({ tag, name, description, defaultAttributes, defaultStyles, defaultContent }) => ({ tag, name, description, defaultAttributes, defaultStyles, defaultContent }))
         })));
         return result;
+    }
+    async installedPackages(): Promise<Record<string, string>> {
+        try {
+            const result = await iobrokerHandler.connection.readFile(iobrokerHandler.namespaceWidgets, 'package.json', false);
+            return JSON.parse(String(result.file)).dependencies ?? {};
+        } catch (error) {
+            // A fresh installation has no widget package.json yet.
+            if (/not exist|not found|ENOENT|no such file/i.test(String(error))) return {};
+            throw error;
+        }
+    }
+    async addPackage(value: string) {
+        const name = allowedPackageName(value);
+        let timer: ReturnType<typeof setTimeout>;
+        const result = await Promise.race([
+            iobrokerHandler.connection.sendTo<{ name: string; status: string; version: string; error?: string }>(iobrokerHandler.namespace, 'ai:addPackage', { name }),
+            new Promise<never>((_, reject) => { timer = setTimeout(() => reject(new Error('Package request timed out. Installation may still be running; check npm status before retrying.')), 300_000); })
+        ]).finally(() => clearTimeout(timer));
+        if (!result || result.error) throw new Error(result?.error ?? 'The adapter did not report a package result. Update/restart the adapter.');
+        if (result.name !== name || !['installed', 'already-installed'].includes(result.status) || typeof result.version !== 'string') throw new Error('The adapter returned an invalid package result.');
+        try {
+            const container = this.shell.serviceContainer;
+            const registered = container.elementsServices.map(service => service.name);
+            await loadInstalledPackages(window.iobrokerWebRootUrl + iobrokerHandler.namespaceWidgets + '/', { widgets: config => config.registerNpmWidgets(container, registered), addons: config => config.registerDesignerAddons(container, registered) });
+            for (const [library, tags] of observer.getElements()) {
+                if (tags.length && !container.elementsServices.some(service => service.name === library)) container.register('elementsService', new PreDefinedElementsService(library, { elements: tags }));
+            }
+            const tags = describePackage(name).components.map(component => component.tag).filter(tag => !!customElements.get(tag));
+            return { ...result, editorReady: tags.length > 0, registeredTags: tags, message: tags.length ? 'Package available in this editor. Screen files are unchanged.' : 'Installed, but no catalog component tags registered. Check the adapter/browser log before using the package.' };
+        } catch (error) {
+            return { ...result, editorReady: false, message: `Installed, but browser activation failed: ${String(error)}. Preserve unsaved work before manually reloading.` };
+        }
     }
     async searchObjects(type: string, query: string, offset: number, limit: number) {
         const objects = await iobrokerHandler.connection.getObjectViewSystem(type as ioBroker.ObjectType);

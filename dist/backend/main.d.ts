@@ -1,6 +1,8 @@
 import * as utils from '@iobroker/adapter-core';
 declare class WebUi extends utils.Adapter {
     private readonly ai;
+    private manualPackageRunning;
+    private readonly aiPackages;
     _unloaded: boolean;
     _instanceName: string;
     _npmNamespace: string;
@@ -18,12 +20,13 @@ declare class WebUi extends utils.Adapter {
     creatWidgetsDirAndRestorePackageJsonIfneeded(): Promise<void>;
     backupPackageJson(): Promise<void>;
     checkPackageName(name: string): boolean;
-    installNpm(name: any): Promise<unknown>;
+    installNpm(name: string): Promise<number>;
     removeNpm(name: any): Promise<unknown>;
     states: {};
     stateChange(id: any, state: any): Promise<void>;
     createImportMapAndLoaderFiles(): Promise<void>;
     runCommand(command: any, parameter: any): Promise<void>;
+    private executeCommand;
     main(): Promise<void>;
     onUnload(callback: () => void): void;
 }

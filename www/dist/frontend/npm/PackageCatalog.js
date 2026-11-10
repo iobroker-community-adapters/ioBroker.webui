@@ -1,12 +1,11 @@
+import { validateAllowedPackage } from '../../shared/NpmPackagePolicy.js';
 import names from './usable-packages.json' with { type: 'json' };
 import descriptions from './package-catalog.json' with { type: 'json' };
 export const packageCatalog = descriptions;
 const allowed = new Set(names);
 /** Exact allowlist membership excludes URLs, versions, flags and shell fragments. */
 export function allowedPackageName(name) {
-    if (typeof name !== 'string' || !allowed.has(name))
-        throw new Error('Choose an exact package name from list_packages; versions, URLs and other packages are not supported.');
-    return name;
+    return validateAllowedPackage(name, allowed);
 }
 export function describePackage(name, tag) {
     const entry = packageCatalog.find(entry => entry.name === allowedPackageName(name));

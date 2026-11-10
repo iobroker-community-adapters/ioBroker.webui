@@ -5,6 +5,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { Uploadhelper } from './UploadHelper.js';
+import { AiPackageService } from './AiPackageService.js';
 import { ImportmapCreator } from './ImportmapCreator.js';
 
 const __dirname = path.normalize(path.join(path.dirname(fileURLToPath(import.meta.url)), "../.."));
@@ -24,6 +25,19 @@ class WebUi extends utils.Adapter {
         },
     });
 
+    private manualPackageRunning = false;
+    private readonly aiPackages = new AiPackageService({
+        busy: () => this.manualPackageRunning || this.npmRunning || this._unloaded,
+        installed: async () => {
+            await this.creatWidgetsDirAndRestorePackageJsonIfneeded();
+            const manifest = JSON.parse(await fs.promises.readFile(path.join(this.widgetsDir, 'package.json'), 'utf8'));
+            return manifest.dependencies ?? {};
+        },
+        install: name => this.installNpm(name),
+        publish: async () => { await this.createImportMapAndLoaderFiles(); await this.refreshWWW(); },
+        status: async value => { await this.setState(this._stateNpm, { val: value, ack: true }); }
+    });
+
     _unloaded: boolean;
     _instanceName = 'webui.0'
     _npmNamespace = this._instanceName + '.widgets'
@@ -41,7 +55,15 @@ class WebUi extends utils.Adapter {
             uiClientSubscribe: info => this.ai.onUiClientSubscribe(info) ?? { accepted: false },
             uiClientUnsubscribe: info => this.ai.onUiClientUnsubscribe(info),
         });
-        this.on('message', obj => { this.ai.handleMessage(obj); });
+        this.on('message', obj => {
+            if (obj.command === 'ai:addPackage') {
+                if (!obj.callback) return;
+                void this.aiPackages.add(obj.message?.name).then(
+                    result => this.sendTo(obj.from, obj.command, result, obj.callback),
+                    error => this.sendTo(obj.from, obj.command, { error: String(error.message ?? error) }, obj.callback)
+                );
+            } else this.ai.handleMessage(obj);
+        });
         this.on('ready', this.main.bind(this));
         this.on('stateChange', this.stateChange.bind(this));
         this.on('unload', this.onUnload.bind(this));
@@ -93,36 +115,22 @@ class WebUi extends utils.Adapter {
         return /[a-z@\-_\/]/.test(name);
     }
 
-    installNpm(name) {
-        return new Promise(async resolve => {
-            if (!this.checkPackageName(name)) {
-                this.log.error(`Invalid NPM Package Name: ${name}`);
-                resolve(null);
-            }
-            if (this.npmRunning) {
-                this.log.info(`NPM already running`);
-                resolve(null);
-            }
-            if (this._unloaded) {
-                this.log.info(`unloaded`);
-                resolve(null);
-            }
-            this.npmRunning = true;
-            this.log.info(`Install NPM package (${name}), check dirs...`);
+    async installNpm(name: string): Promise<number> {
+        if (!this.checkPackageName(name)) throw new Error('Invalid NPM package name');
+        if (this.npmRunning || this._unloaded) throw new Error('NPM is busy or the adapter is stopping');
+        this.npmRunning = true;
+        try {
             await this.creatWidgetsDirAndRestorePackageJsonIfneeded();
-            this.log.info(`Install NPM package (${name})...`);
-            const child = spawn('npm', ['install', '--omit=dev', '--ignore-scripts', name], { cwd: this.widgetsDir, shell: process.platform == 'win32' });
-            child.stdout.on('data', data => {
-                this.log.debug(data.toString().replace('\n', ''));
+            const exitCode = await new Promise<number>((resolve, reject) => {
+                const child = spawn('npm', ['install', '--omit=dev', '--ignore-scripts', name], { cwd: this.widgetsDir, shell: process.platform == 'win32' });
+                child.stdout.on('data', data => this.log.debug(data.toString().trim()));
+                child.stderr.on('data', data => this.log.error(data.toString().trim()));
+                child.once('error', reject);
+                child.once('exit', code => resolve(code ?? -1));
             });
-            child.stderr.on('data', data => this.log.error(data.toString().replace('\n', '')));
-            child.on('exit', async exitCode => {
-                this.log.info(`Installed NPM packge (${name}). ${exitCode ? 'Exit - ' + exitCode : ''}`);
-                this.npmRunning = false;
-                await this.backupPackageJson();
-                resolve(exitCode);
-            });
-        });
+            await this.backupPackageJson();
+            return exitCode;
+        } finally { this.npmRunning = false; }
     }
 
     removeNpm(name) {
@@ -184,10 +192,24 @@ class WebUi extends utils.Adapter {
         }
         catch (err) {
             this.log.error(`createImportMapAndLoaderFiles(): ` + err);
+            throw err;
         }
     }
 
     async runCommand(command, parameter) {
+        const packageCommand = ['addNpm', 'updateNpm', 'removeNpm', 'createImportmap'].includes(command);
+        if (packageCommand && (this.manualPackageRunning || this.aiPackages.running)) {
+            this.log.warn('Another npm operation is running'); return;
+        }
+        if (packageCommand) this.manualPackageRunning = true;
+        try { await this.executeCommand(command, parameter); }
+        catch (error) { this.log.error(String(error)); }
+        finally {
+            if (packageCommand) { this.manualPackageRunning = false; await this.setState(this._stateNpm, { val: 'idle', ack: true }); }
+        }
+    }
+
+    private async executeCommand(command, parameter) {
         this.log.info(`runCommand: ${command}, parameter: ${parameter}`);
 
         switch (command) {

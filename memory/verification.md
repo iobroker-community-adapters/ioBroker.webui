@@ -66,3 +66,10 @@ A standalone static `web-dev-server` does not provide a real ioBroker adapter ba
 
 - Passed compilation, lint, packaged copy build, and 38 frontend/helper tests (three new async picker-routing tests).
 - Browser fixture verified light/dark button styling and exactly one IOB control per row after initial render, Add, Duplicate and Remove. Picker selection dispatch is covered by unit tests; no live ioBroker server selection was exercised.
+
+## AI npm catalog / installation — 2026-11-10
+
+- Passed compilation, lint, packaged copy build, 50 frontend/helper + 46 package checks, and five adapter integration checks. Integration tests include actual messagebox rejection of removed/unlisted/versioned npm requests, alongside startup and the local provider transport tests.
+- New unit checks cover catalog/list parity and repository attribution, capability search, manifest API detail, strict input validation, install→publish completion, concurrent work, failed npm/upload recovery, import ordering and duplicate-registration prevention. Generated registration code is executed in a VM against temporary package manifests.
+- `/test/browser/designer-smoke.html?packageFixture=1` explicitly enables test-only npm responses/glue. Browser verified list_packages → describe_package → add_package → list_elements, returning editorReady true without page reload. This fixture never installs real packages, contacts providers, saves screens or persists chats. It validates activation plumbing, not third-party widget behavior.
+- Registry availability was checked during catalog creation. wc-json was removed per user request; Luma is retained for its forthcoming publication. Real third-party npm installation on the user's controller and paid-provider decisions were not exercised.
