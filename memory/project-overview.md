@@ -56,3 +56,8 @@ Missing the solution-explorer side-effect import caused the runtime failure `thi
 - The pre-existing designer light/dark switch continues to use `--wcd-*` tokens and Monaco theme synchronization; frontend theme regression tests pass after the major upgrades. Runtime screens retain their authored appearance.
 
 - The AI assistant is a separate right dock with an always-available toolbar command. `activateDock` can reopen an auto-hidden panel through `autoHideManager.show`. `DockManager.activeDocument` is a panel container; resolve `resolvedElementContent` before accessing the screen editor.
+
+## Tool popup contrast — 2026-11-10
+
+- Map `--wcd-tool-popup-background`, `--wcd-tool-popup-border-color` and `--wcd-tool-popup-title-background` to the editor palette in `assets/designer-theme.css`. The new SVG shape library has a hard-coded light fallback background but inherits the statusbar foreground; without the background token its icons/text are almost invisible in dark mode.
+- Verified the drawing/shape popup in both themes, including computed shape fill matching the foreground. This is a host-token fix, not a vendored component edit.

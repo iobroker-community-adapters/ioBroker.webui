@@ -51,6 +51,9 @@
   --wcd-property-grid-tab-indicator-inactive-color: #dce6e1;
   --wcd-input-border-color: var(--webui-input-border);
   --wcd-input-background-color: var(--webui-surface);
+  --wcd-tool-popup-background: var(--webui-surface);
+  --wcd-tool-popup-border-color: var(--webui-input-border);
+  --wcd-tool-popup-title-background: var(--webui-subtle);
   --wcd-designer-view-toolbar-background: var(--webui-surface);
   --wcd-designer-view-statusbar-background: var(--webui-subtle);
   --wcd-designer-view-statusbar-color: var(--webui-text);
