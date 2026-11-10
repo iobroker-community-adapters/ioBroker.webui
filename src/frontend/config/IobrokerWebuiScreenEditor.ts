@@ -3,6 +3,8 @@ import { DocumentContainer, IUiCommand, IUiCommandHandler, PropertiesHelper, Ser
 import { iobrokerHandler } from "../common/IobrokerHandler.js";
 import { IScreen } from "../interfaces/IScreen.js";
 import { IControl } from "../interfaces/IControl.js";
+import { sameDocument } from "../ai/AiTypes.js";
+import { AiSnapshotTransaction } from "../ai/AiSnapshotTransaction.js";
 import type { editor } from "monaco-editor";
 
 export const defaultNewStyle = `:host {
@@ -266,19 +268,38 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
 
     async applyAiSnapshot(data: IScreen) {
         await this.documentContainer.whenReady();
-        await this.documentContainer.setContentAsync(data.html);
-        for (const [model, value] of [[this.documentContainer.additionalData.model, data.style], [this.scriptModel, data.script]] as [editor.ITextModel, string][]) {
-            model.pushStackElement();
-            model.pushEditOperations([], [{ range: model.getFullModelRange(), text: value, forceMoveMarkers: true }], () => null);
-            model.pushStackElement();
-        }
-        this._settings = structuredClone(data.settings ?? {});
-        this.properties = structuredClone(data.properties ?? {});
-        this.documentContainer.additionalStylesheets = [{ name: 'stylesheet.css', content: data.style }];
-        this.handlePropertyChanges();
-        this.applyBindings();
-        this._settingsChanged?.dispose();
-        this.activated();
+        const before = await this.getSnapshot();
+        const document = this.documentContainer.editingDocument;
+        const container = this.documentContainer.instanceServiceContainer;
+        // Parse before opening a transaction: a parser failure cannot change the document/history.
+        const items = await document.serviceContainer.htmlParserService.parse(data.html, document.serviceContainer, container, false);
+        document.assertAlive();
+        if (!sameDocument(before, await this.getSnapshot())) throw new Error('Document changed while preparing AI changes. Review and apply a fresh proposal.');
+        const previousItems = [...document.rootDesignItem.children()];
+        container.undoService.execute(new AiSnapshotTransaction(
+            { data: before, items: previousItems }, { data: structuredClone(data), items },
+            state => {
+                const snapshot = state.data;
+                this._settings = structuredClone(snapshot.settings ?? {});
+                this.properties = structuredClone(snapshot.properties ?? {});
+                // Framework replay source prevents a second CSS undo entry from stylesheet events.
+                void container.stylesheetService.updateCompleteStylesheetWithoutUndo('stylesheet.css', snapshot.style);
+                // These model changes belong to this document transaction, not independent Monaco entries.
+                for (const [model, value] of [[this.documentContainer.additionalData.model, snapshot.style], [this.scriptModel, snapshot.script]] as [editor.ITextModel, string][]) {
+                    if (model.getValue() !== value)
+                        model.applyEdits([{ range: model.getFullModelRange(), text: value, forceMoveMarkers: true }]);
+                }
+                this.documentContainer.additionalStylesheets = [{ name: 'stylesheet.css', content: snapshot.style }];
+                this.handlePropertyChanges();
+                document.replaceItems(state.items);
+                this.applyBindings();
+                // Applying to a background editor must not take over the active property docks.
+                if (window.appShell.getActiveScreenEditor() === this) {
+                    this._settingsChanged?.dispose();
+                    this.activated();
+                }
+            }
+        ));
     }
 
     dispose() {
