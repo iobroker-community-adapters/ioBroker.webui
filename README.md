@@ -63,6 +63,18 @@ You can include Javascript in your CustomControl or Screen.
 In addition, you can export a function `init(instance)` wich will be called when your CustomControl will be instantiated.
 Finally, `connected()` and `disconnected()` functions can be defined to be called when ...
 
+## AI screen assistant
+
+Open **AI** in the designer toolbar. Configure a provider in **ioBroker Admin → System settings → AI**, then choose its model in the assistant. The adapter uses the same [`@iobroker/ai-core`](https://github.com/ioBroker/ai-core) backend as vis-2; provider credentials stay on the server. A local ai-server/Ollama endpoint can be selected through the system AI configuration. Node.js 22.19 or newer is required; AI chat also needs a current controller/web adapter with instance-message subscriptions.
+
+Create separate chats for different screens or tasks. Chats show their running/error status and are stored in this browser for the current installation and ioBroker user. Reloading interrupts running turns. **Stop** prevents further tool calls after the current provider response; it does not cancel a request already being processed by the provider.
+
+The assistant can inspect saved screens and controls, unsaved open editors, HTML/CSS/JavaScript, global styles/scripts, installed palette elements, and searchable ioBroker object metadata/current values. It has documentation for bindings, event handlers and the actual generated simple-script command schemas. Object native configuration is excluded, and there is no live-state write tool. Source and object context requested by the assistant is sent to the provider selected in ioBroker.
+
+Use **Attach files** for text/source files and PNG/JPEG/WebP/GIF images, or paste screenshots into the message box. Choose a vision-capable model for images. Limits are eight attachments and 10 MB per message. The current ioBroker Anthropic bridge supports text only; screenshot chats must use an OpenAI-compatible vision provider (for example OpenAI, Gemini, OpenRouter or a suitable local model).
+
+Changes appear as proposals with the original and proposed source. **Apply to editor** updates the screen without saving it. Review it in the designer and use the normal **Save** command to persist it. If the source changed after the assistant read it, Apply refuses to overwrite it; ask the assistant to read it again and make a fresh proposal. New screens are created through the same proposal workflow.
+
 ## Sponsoring
 
 If you want to help the development, sponsor this project at https://github.com/sponsors/jogibear9988

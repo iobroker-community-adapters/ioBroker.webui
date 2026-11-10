@@ -23,6 +23,8 @@ import { IobrokerWebuiMonacoEditor } from './IobrokerWebuiMonacoEditor.js';
 import { IobrokerWebuiScreenEditor } from './IobrokerWebuiScreenEditor.js';
 import { IobrokerWebuiConfirmationWrapper } from './IobrokerWebuiConfirmationWrapper.js';
 import { getPanelContainerForElement } from './DockHelper.js';
+import '../ai/IobrokerWebuiAiPanel.js';
+import { AiWorkspaceAdapter } from '../ai/AiWorkspaceAdapter.js';
 import { fitDialogPosition } from '../helper/DialogPositionHelper.js';
 import { IobrokerWebuiPropertyGrid } from './IobrokerWebuiPropertyGrid.js';
 import { typeInfoFromJsonSchema } from '@node-projects/propertygrid.webcomponent';
@@ -123,6 +125,10 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             <node-projects-tree-view-extended name="tree" id="treeViewExtended"></node-projects-tree-view-extended>
           </div>
       
+          <div id="aiDock" title="AI assistant" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.32" dock-spawn-hide-close-button style="overflow: hidden; width: 100%;">
+            <iobroker-webui-ai-panel id="aiPanel"></iobroker-webui-ai-panel>
+          </div>
+
           <div id="attributeDock" title="Properties" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.2">
             <node-projects-web-component-designer-property-grid-with-header id="propertyGrid"></node-projects-web-component-designer-property-grid-with-header>
           </div>
@@ -179,12 +185,10 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         this.settingsEditor.getTypeInfo = async (obj, type) => typeInfoFromJsonSchema(propertiesTypeInfo, obj, type);
         this.settingsEditor.propertyChanged.on((prp) => {
             if (prp.property == 'width') {
-                if (this._dockManager.activeDocument instanceof IobrokerWebuiScreenEditor)
-                    this._dockManager.activeDocument.setWidth(prp.newValue);
+                this.getActiveScreenEditor()?.setWidth(prp.newValue);
             }
             else if (prp.property == 'height') {
-                if (this._dockManager.activeDocument instanceof IobrokerWebuiScreenEditor)
-                    this._dockManager.activeDocument.setHeight(prp.newValue);
+                this.getActiveScreenEditor()?.setHeight(prp.newValue);
             }
         });
         await customElements.whenDefined('dock-spawn-ts');
@@ -220,6 +224,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             }
         });
         await this._setupServiceContainer();
+        void iobrokerHandler.waitForReady().then(() => this._getDomElement('aiPanel').initialize(iobrokerHandler.connection, iobrokerHandler.namespace, new AiWorkspaceAdapter(this))).catch(error => console.error('Could not initialize AI assistant', error));
         let stateElement = document.getElementById('npmState');
         iobrokerHandler.waitForReady().then(async (x) => {
             iobrokerHandler.connection.subscribeState('webui.0.state.npm', (id, value) => {
@@ -317,8 +322,13 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         this.activateDock(this._getDomElement(name));
     }
     activateDock(element) {
+        const panel = this._dockManager.getPanels().find(panel => panel.resolvedElementContent === element);
+        if (panel?.isAutoHidden) {
+            this._dockManager.autoHideManager.show(panel);
+            return;
+        }
         const nd = this._dockManager.getNodeByElement(element);
-        nd.parent.container.setActiveChild(nd.container);
+        nd?.parent?.container.setActiveChild(nd.container);
     }
     isDockOpenAndActivate(id) {
         let panels = this._dock.dockManager.getPanels();
@@ -409,6 +419,15 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             options.abortSignal?.addEventListener('abort', () => container.close(), { once: true });
         });
     }
+    getScreenEditors() {
+        return this._dock.dockManager.getPanels()
+            .map(panel => panel.resolvedElementContent)
+            .filter((element) => element instanceof IobrokerWebuiScreenEditor);
+    }
+    getActiveScreenEditor() {
+        const element = this._dock.dockManager.activeDocument?.resolvedElementContent;
+        return element instanceof IobrokerWebuiScreenEditor ? element : null;
+    }
     async openScreenEditor(name, type, html, style, script, settings, properties) {
         let id = type + "_" + name;
         if (!this.isDockOpenAndActivate(id)) {
@@ -416,7 +435,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             screenEditor.id = id;
             await screenEditor.initialize(name, type, html, style, script, settings, properties, serviceContainer);
             this.openDock(screenEditor);
+            return screenEditor;
         }
+        return this.getScreenEditors().find(editor => editor.id === id);
     }
     async openGlobalStyleEditor(style, title, editPart) {
         let id = "global_styleEditor";

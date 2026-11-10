@@ -167,7 +167,8 @@
       {
         "admin": ">=7.7.22"
       }
-    ]
+    ],
+    "messagebox": true
   },
   "native": {},
   "instanceObjects": [

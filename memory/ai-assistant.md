@@ -1,0 +1,16 @@
+# AI assistant
+
+Implemented 2026-11-10. Sources inspected: ioBroker.vis-2 `src/lib/ai.ts`, `src/main.ts`, and `src-vis/src/AiChat/*`; ioBroker/ai-core 0.0.6; ioBroker/ai-gui 0.0.5; ioBroker.ai-server main.
+
+- vis-2 uses `@iobroker/ai-core` and its React `ai-gui` frontend, rather than directly depending on ai-server. webui uses the same AiBackend, system.ai settings and push-answer protocol, with a native webcomponent UI to avoid introducing React/MUI into the designer.
+- ai-core 0.0.6 requires a manager credential for model listing even on keyless custom endpoints. The backend normalizes a system custom provider without a credential ID to manual/no-key mode, retaining its saved endpoint. This matches the core chat path and is covered by the local-provider integration test.
+- `src/backend/main.ts` wires messagebox, AI lifecycle and UI subscription callbacks. System credentials/endpoints stay server-side. No adapter-specific credential fields are added. Node minimum is 22.19.0.
+- Client IDs use getRandomValues when randomUUID is unavailable: plain HTTP LAN origins are common in ioBroker and do not expose randomUUID.
+- `src/frontend/ai/AiClient.ts` registers pending requests before sending (answers can beat acknowledgement), correlates concurrent turns, and rejects pending requests on disconnect. Instance-message subscriptions are required; older controller/web versions show an update message.
+- ai-core ships CommonJS. `scripts/ai-shared-entry.mjs` explicitly re-exports `runToolLoop`; `npm run bundleAi` creates a browser ESM bundle. Copy only that shared bundle into www and map its exact import in importmap-config. Bundling the CommonJS index directly exposes only a default export and breaks browser startup.
+- The AI panel needs an explicit side-effect registration import in the shell. A class import used only as a generic type is erased by TypeScript.
+- Tools inspect saved/open documents, global config, palette definitions and generated script/property schemas; ioBroker object search returns selected common metadata only, excluding native/custom/ACL data. State reads use the logged-in socket; no write-state or script-execution tool is exposed.
+- Turns stage proposals. Apply compares the current complete snapshot with the read snapshot and opens/updates an editor; Save remains explicit. A later turn reading a changed document discards its stale pending proposal and rebases on current source. HTML edits use document APIs, CSS/JS edits use Monaco undo operations. Undo stacks are separate for HTML, CSS and JavaScript.
+- IndexedDB stores chats (including attachments/source context) per origin, adapter instance and ioBroker user. Storage errors leave chats usable in memory. Reload marks running turns stopped. Stop prevents further tools but cannot cancel an already-running provider request in ai-core 0.0.6.
+- Text/source and PNG/JPEG/WebP/GIF attachments: eight files, 10 MB per message. OpenAI-compatible multimodal messages are forwarded unchanged. ai-core 0.0.6's Anthropic translator handles text only: the panel explicitly rejects screenshot chats for that provider.
+- Live paid-provider behavior was not exercised. Browser fixtures and a passing local HTTP provider integration test cover the UI/protocol without contacting user services.

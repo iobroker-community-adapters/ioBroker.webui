@@ -40,6 +40,7 @@ function copyNodeModules() {
 
 function copyNodeFiles() {
     let runtimeModules = [
+        "@iobroker/ai-core/shared-esm.js",
         "tslib/tslib.es6.mjs",
         "es-module-shims/dist/es-module-shims.js",
         "wunderbaum/dist/wunderbaum.css",

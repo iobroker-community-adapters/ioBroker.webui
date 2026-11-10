@@ -1,11 +1,11 @@
 # Project overview
 
-Last updated: 2026-08-21
+Last updated: 2026-11-10
 
 ## Baseline
 
-- Package: `iobroker.webui`, version `1.47.0` at the time of this note.
-- Runtime: ESM TypeScript with Node.js `>=20`.
+- Package: `iobroker.webui`, version `2.1.0`.
+- Runtime: ESM TypeScript with Node.js `>=22.19.0` (required by the shared ioBroker AI backend).
 - Build orchestration lives in `gulpfile.mjs`.
 - `dist/` and `www/` contain generated and vendored build output. Dependency upgrades and builds can therefore produce large tracked diffs under `www/node_modules/`; do not assume those changes are unrelated without checking the build inputs.
 
@@ -54,3 +54,5 @@ Missing the solution-explorer side-effect import caused the runtime failure `thi
 - `ConfigureWebcomponentDesigner.ts` explicitly enables `ClassBindingsPropertyGridExtensionProvider` (the optional visualization class-binding UI) and registers CSS parsing as a document-owned service.
 - Screen Save awaits `DocumentContainer.commitPendingChanges()` so debounced source edits are committed. The existing bindings toggle now assigns its backing field correctly.
 - The pre-existing designer light/dark switch continues to use `--wcd-*` tokens and Monaco theme synchronization; frontend theme regression tests pass after the major upgrades. Runtime screens retain their authored appearance.
+
+- The AI assistant is a separate right dock with an always-available toolbar command. `activateDock` can reopen an auto-hidden panel through `autoHideManager.show`. `DockManager.activeDocument` is a panel container; resolve `resolvedElementContent` before accessing the screen editor.

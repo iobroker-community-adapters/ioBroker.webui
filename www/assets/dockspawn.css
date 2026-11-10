@@ -131,3 +131,18 @@
 :host .dock-auto-hide-overlay {
   box-shadow: 0 3px 12px var(--webui-dialog-shadow), 0 0 0 1px var(--webui-border);
 }
+
+:host .dockspan-tab-strip-controls > *,
+:host .dockspan-tab-strip-controls option {
+  color: var(--webui-text);
+  background: var(--webui-subtle);
+}
+
+:host .dockspan-tab-strip-controls > :hover {
+  background: var(--webui-hover);
+}
+
+:host .dockspan-tab-strip-controls > [aria-pressed="true"] {
+  color: var(--webui-accent-text);
+  background: var(--webui-selected);
+}

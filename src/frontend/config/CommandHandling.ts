@@ -19,7 +19,9 @@ export class CommandHandling {
     let commandName = button.dataset['command'];
     let commandParameter = button.dataset['commandParameter'];
 
-    if (commandName === 'runtime') {
+    if (commandName === 'ai') {
+      this.iobrokerWebuiAppShell.activateDockById('aiDock');
+    } else if (commandName === 'runtime') {
       let target: any = this.dockManager?.activeDocument?.resolvedElementContent;
       if (target instanceof IobrokerWebuiScreenEditor) {
         window.open("runtime.html#screenName=" + target.name);
@@ -134,7 +136,7 @@ export class CommandHandling {
       let commandParameter = b.dataset['commandParameter'];
       if (command === 'new')
         b.disabled = false;
-      else if (command === 'runtime')
+      else if (command === 'runtime' || command === 'ai')
         b.disabled = false;
       else
         b.disabled = !target ? true : !target.canExecuteCommand({ type: <any>command, parameter: commandParameter });

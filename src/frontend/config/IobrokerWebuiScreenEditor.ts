@@ -18,6 +18,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     public get name() { return this._name; }
 
     private _type: 'screen' | 'control';
+    public get documentType() { return this._type; }
 
     public properties: Record<string, { type: string, values?: string[], default?: any }>;
 
@@ -250,6 +251,34 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     handlePropertyChanges() {
         this.documentContainer.designerView.designerWidth = this._settings.width ?? '';
         this.documentContainer.designerView.designerHeight = this._settings.height ?? '';
+    }
+
+    async getSnapshot(): Promise<IScreen> {
+        await this.documentContainer.commitPendingChanges();
+        return structuredClone({
+            html: await this.documentContainer.editingDocument.serialize(),
+            style: this.documentContainer.additionalData.model.getValue(),
+            script: this.scriptModel.getValue(),
+            settings: this._settings,
+            properties: this.properties
+        });
+    }
+
+    async applyAiSnapshot(data: IScreen) {
+        await this.documentContainer.whenReady();
+        await this.documentContainer.setContentAsync(data.html);
+        for (const [model, value] of [[this.documentContainer.additionalData.model, data.style], [this.scriptModel, data.script]] as [editor.ITextModel, string][]) {
+            model.pushStackElement();
+            model.pushEditOperations([], [{ range: model.getFullModelRange(), text: value, forceMoveMarkers: true }], () => null);
+            model.pushStackElement();
+        }
+        this._settings = structuredClone(data.settings ?? {});
+        this.properties = structuredClone(data.properties ?? {});
+        this.documentContainer.additionalStylesheets = [{ name: 'stylesheet.css', content: data.style }];
+        this.handlePropertyChanges();
+        this.applyBindings();
+        this._settingsChanged?.dispose();
+        this.activated();
     }
 
     dispose() {

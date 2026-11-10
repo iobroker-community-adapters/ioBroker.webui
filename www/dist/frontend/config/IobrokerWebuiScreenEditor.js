@@ -11,6 +11,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     _name;
     get name() { return this._name; }
     _type;
+    get documentType() { return this._type; }
     properties;
     _settings;
     scriptModel;
@@ -218,6 +219,32 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     handlePropertyChanges() {
         this.documentContainer.designerView.designerWidth = this._settings.width ?? '';
         this.documentContainer.designerView.designerHeight = this._settings.height ?? '';
+    }
+    async getSnapshot() {
+        await this.documentContainer.commitPendingChanges();
+        return structuredClone({
+            html: await this.documentContainer.editingDocument.serialize(),
+            style: this.documentContainer.additionalData.model.getValue(),
+            script: this.scriptModel.getValue(),
+            settings: this._settings,
+            properties: this.properties
+        });
+    }
+    async applyAiSnapshot(data) {
+        await this.documentContainer.whenReady();
+        await this.documentContainer.setContentAsync(data.html);
+        for (const [model, value] of [[this.documentContainer.additionalData.model, data.style], [this.scriptModel, data.script]]) {
+            model.pushStackElement();
+            model.pushEditOperations([], [{ range: model.getFullModelRange(), text: value, forceMoveMarkers: true }], () => null);
+            model.pushStackElement();
+        }
+        this._settings = structuredClone(data.settings ?? {});
+        this.properties = structuredClone(data.properties ?? {});
+        this.documentContainer.additionalStylesheets = [{ name: 'stylesheet.css', content: data.style }];
+        this.handlePropertyChanges();
+        this.applyBindings();
+        this._settingsChanged?.dispose();
+        this.activated();
     }
     dispose() {
         this.removeBindings();

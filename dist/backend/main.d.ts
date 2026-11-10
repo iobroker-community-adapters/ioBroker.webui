@@ -1,5 +1,6 @@
 import * as utils from '@iobroker/adapter-core';
 declare class WebUi extends utils.Adapter {
+    private readonly ai;
     _unloaded: boolean;
     _instanceName: string;
     _npmNamespace: string;
@@ -24,7 +25,7 @@ declare class WebUi extends utils.Adapter {
     createImportMapAndLoaderFiles(): Promise<void>;
     runCommand(command: any, parameter: any): Promise<void>;
     main(): Promise<void>;
-    onUnload(): void;
+    onUnload(callback: () => void): void;
 }
 export default function startAdapter(options: Partial<utils.AdapterOptions> | undefined): WebUi;
 export {};

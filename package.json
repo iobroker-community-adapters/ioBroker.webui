@@ -10,7 +10,7 @@
     "start": "web-dev-server --open",
     "startwww": "cd www && web-dev-server --node-resolve --open",
     "prepublishOnly": "npm run build",
-    "build": "npm i && npm run bundleToastify && npm run reflection && gulp delAll && tsc && gulp",
+    "build": "npm i && npm run bundleToastify && npm run bundleAi && npm run reflection && gulp delAll && tsc && gulp",
     "test:ts": "mocha --config test/mocharc.custom.json test/tests/*.js",
     "test:package": "mocha test/package --exit",
     "test:unit": "mocha test/unit --exit",
@@ -23,7 +23,8 @@
     "reflection-scripts": "node ./scripts/typescript-json-schema.cjs './dist/frontend/scripting/IobrokerWebuiScriptCommands.d.ts' \"*\" --ignoreErrors --strictNullChecks --propOrder --out ./src/frontend/generated/ScriptCommands.json",
     "reflection-props": "node ./scripts/copy-script-multiplex-value.cjs && node ./scripts/typescript-json-schema.cjs './src/frontend/interfaces/*.ts' \"*\" --ignoreErrors --strictNullChecks --propOrder --out ./src/frontend/generated/Properties.json",
     "release": "release-script",
-    "bundleToastify": "esbuild ./node_modules/toastify-js/src/toastify-es.js --format=esm --minify --platform=neutral --bundle --outfile=./node_modules/toastify-js/src/toastify-es-min.js"
+    "bundleToastify": "esbuild ./node_modules/toastify-js/src/toastify-es.js --format=esm --minify --platform=neutral --bundle --outfile=./node_modules/toastify-js/src/toastify-es-min.js",
+    "bundleAi": "esbuild ./scripts/ai-shared-entry.mjs --bundle --format=esm --platform=browser --outfile=./node_modules/@iobroker/ai-core/shared-esm.js"
   },
   "repository": {
     "type": "git",
@@ -47,7 +48,8 @@
     "node": ">=22.19.0"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.4.3"
+    "@iobroker/adapter-core": "^3.4.3",
+    "@iobroker/ai-core": "^0.0.6"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^5.2.1",

@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en" style="height: 100%;">
+
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <link rel="manifest" href="./manifest.json">
+  <script src="./assets/designer-theme.js"></script>
+
+  <script src="./node_modules/blockly/blockly_compressed.js"></script>
+  <script src="./node_modules/blockly/blocks_compressed.js"></script>
+  <script src="./node_modules/blockly/javascript_compressed.js"></script>
+  <script src="./node_modules/blockly/msg/en.js"></script>
+  <script src="./node_modules/@blockly/zoom-to-fit/dist/index.js"></script>
+  <script src="./node_modules/dayjs/dayjs.min.js"></script>
+
+  <!-- Drag/Drop support on touch devices -->
+  <link rel="stylesheet" href="./node_modules/mobile-drag-drop/default.css">
+  <link rel="stylesheet" href="./node_modules/dock-spawn-ts/lib/css/dock-manager.css">
+  <link rel="stylesheet" href="./assets/main.css">
+  <link rel="stylesheet" href="./assets/designer-theme.css">
+  <link rel="stylesheet" href="./node_modules/toastify-js/src/toastify.css">
+  <link rel="stylesheet" href="./node_modules/@node-projects/monaco-editor-esm/min/vs/editor/editor.main.css">
+
+  <title>iobroker-webui designer</title>
+
+  <script src="./node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js"></script>
+
+  <script>
+    let storedParentUrl;
+    window.esmsInitOptions = {
+      shimMode: true,
+      mapOverrides: true,
+      resolve: (id, parentUrl, resolve) => {
+        if (!storedParentUrl)
+          storedParentUrl = parentUrl;
+        if (parentUrl.startsWith('blob:'))
+          parentUrl = storedParentUrl;
+        return resolve(id, parentUrl)
+      }
+    }
+  </script>
+  <script src="./node_modules/es-module-shims/dist/es-module-shims.js"></script>
+  
+  <script src="./dist/importmaps/importmap-config.js"></script>
+
+  <script>
+window.iobrokerHost = location.hostname;
+window.iobrokerPort = location.port;
+window.iobrokerWebRootUrl = location.origin + '/';
+window.iobrokerSocketScriptUrl = '/test/browser/socket-stub.js';
+</script>
+
+  <script src="./node_modules/mobile-drag-drop/index.js"></script>
+
+  <script type="module">
+    const { iobrokerHandler: handler } = await importShim('./dist/frontend/common/IobrokerHandler.js');
+    const { fixtureConnection } = await import('./test/browser/fixture-connection.js');
+    handler.init = () => {};
+    handler._readyPromises = null;
+    handler.connection = fixtureConnection;
+    handler.config = { globalStyle: '', globalScript: '', globalConfig: {}, fontDeclarations: '' };
+    await importShim('./dist/frontend/config/IobrokerWebuiAppShell.js');
+    document.getElementById('fixture-status').textContent = 'Fixture ready — no real backend or provider is used';
+    document.getElementById('fixture-ai').onclick = () => window.appShell.activateDockById('aiDock');
+    document.getElementById('fixture-edit').onclick = () => window.appShell.getActiveScreenEditor().documentContainer.setContentAsync('<h1>Manual edit</h1>');
+    document.getElementById('fixture-screen').onclick = () => window.appShell.openScreenEditor('smoke-screen', 'screen', '<h1>Hello designer</h1>', ':host { display:block; padding:20px; }', '', {width:'640px', height:'480px'});
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', 'Noto', sans-serif;
+      line-height: 1.5;
+      background-color: var(--webui-workspace);
+      color: var(--webui-text);
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    .lds-facebook {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+      position: absolute;
+      left: calc(50% - 40px);
+      top: calc(50% - 40px);
+    }
+
+    .lds-facebook div {
+      animation-duration: 1s !important;
+      animation-iteration-count: infinite !important;
+      display: inline-block;
+      position: absolute;
+      left: 8px;
+      width: 16px;
+      background: var(--webui-accent);
+      animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+    }
+
+    .lds-facebook div:nth-child(1) {
+      left: 8px;
+      animation-delay: -0.24s;
+    }
+
+    .lds-facebook div:nth-child(2) {
+      left: 32px;
+      animation-delay: -0.12s;
+    }
+
+    .lds-facebook div:nth-child(3) {
+      left: 56px;
+      animation-delay: 0;
+    }
+
+    @keyframes lds-facebook {
+      0% {
+        top: 8px;
+        height: 64px;
+      }
+
+      50%,
+      100% {
+        top: 24px;
+        height: 32px;
+      }
+    }
+
+    html {
+      --heightTop: 38px;
+      --heightStatus: 20px;
+    }
+
+    #shell {
+      height: calc(100% - var(--heightTop) - var(--heightStatus));
+      width: 100%;
+      position: absolute;
+    }
+
+    #statusbar {
+      display: flex;
+      height: var(--heightStatus);
+      background: var(--webui-surface);
+      color: var(--webui-text);
+      border-top: 1px solid var(--webui-border);
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+    }
+
+    #statusbar {
+      padding-left: 10px;
+      font-size: 14px;
+      font-family: sans-serif;
+    }
+
+
+    #statusbar>div {
+      font-size: 14px;
+      font-family: sans-serif;
+    }
+
+    .blocklyDropDownDiv {
+      z-index: 99999;
+    }
+  </style>
+   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    nav {
+      background: var(--webui-surface);
+      border-bottom: 1px solid var(--webui-border);
+      display: flex;
+      height: var(--heightTop);
+      padding: 5px;
+      gap: 0;
+      color: var(--webui-text);
+    }
+    nav div {
+      display: flex;
+      align-items: center;
+      font-family: monospace;
+    }
+
+    nav button {
+      border: none;
+      background: transparent;
+      position: relative;
+    }
+
+    /* Dark icons remain readable on the light toolbar. */
+    nav button img {
+      height: 24px;
+      opacity: .75;
+      user-select: none;
+    }
+
+    nav button[disabled] img {
+      opacity: .25;
+    }
+
+    nav button:not([disabled]) img:hover {
+      opacity: 1;
+    }
+
+    nav button:not([disabled]) img:active {
+      opacity: 1;
+    }
+
+    /* iobroker select object dialog */
+    .MuiDialog-root {
+      z-index: 100000 !important; 
+    }
+  </style>
+</head>
+
+<body style="height: 100%;">
+<div style="position:absolute;bottom:0;right:0;z-index:99999;background:var(--webui-surface)"><span id="fixture-status">Loading fixture</span><button id="fixture-ai">Show AI</button><button id="fixture-screen">Open sample screen</button><button id="fixture-edit">Manual change</button></div>
+  <nav>
+    <button data-command="new" title="new"><img src="./node_modules/@node-projects/web-component-designer/assets/icons/file.svg"></button>
+    <button data-command="new" data-command-parameter="grid" title="new grid">
+      <img src="./node_modules/@node-projects/web-component-designer/assets/icons/file.svg">
+      <img style="height: 16px; position: absolute; right: 6px; bottom: 2px;" src="./assets/icons/grid.svg">
+    </button>
+    <button data-command="new" data-command-parameter="control" title="new control">
+      <img src="./node_modules/@node-projects/web-component-designer/assets/icons/file.svg">
+      <img style="height: 16px; position: absolute; right: 6px; bottom: 2px;" src="./assets/icons/control.svg">
+    </button>
+    <button data-command="save" title="save" disabled><img src="./node_modules/@node-projects/web-component-designer/assets/icons/save.svg"></button>
+    <div style="margin-left: 30px;">
+      webui - {{VERSION}} - {{COMMIT_HASH}}
+    </div>
+    <button style="margin-left: 30px;" data-command="paste" title="paste" disabled><img
+        src="./node_modules/@node-projects/web-component-designer/assets/icons/paste.svg"></button>
+    <button data-command="cut" title="cut" disabled><img src="./node_modules/@node-projects/web-component-designer/assets/icons/cut.svg"></button>
+    <button data-command="copy" title="copy" disabled><img src="./node_modules/@node-projects/web-component-designer/assets/icons/copy.svg"></button>
+    <button data-command="delete" title="delete" disabled><img src="./node_modules/@node-projects/web-component-designer/assets/icons/delete.svg"></button>
+    <div style="margin-left: 10px; flex-direction: column;">
+      <button ondragstart="return false;" data-command="undo" disabled title="click and hold to see the undo list"><img
+          src="./node_modules/@node-projects/web-component-designer/assets/icons/undo.svg"></button>
+      <span id="undoCount" data-command="undo" disabled
+        style="font-family: monospace; font-size: 8px; position: relative; top: -8px; cursor: pointer;">(0/0)</span>
+    </div>
+    <div style="margin-left: 10px; flex-direction: column;">
+      <button ondragstart="return false;" data-command="redo" disabled title="click and hold to see the redo list"><img
+          src="./node_modules/@node-projects/web-component-designer/assets/icons/redo.svg"></button>
+      <span id="redoCount" data-command="redo" disabled
+        style="font-family: monospace; font-size: 8px; position: relative; top: -8px; cursor: pointer;">(0/0)</span>
+    </div>
+    <button style="margin-left: 10px;" data-command="runtime" title="runtime"><img src="./assets/icons/play.svg"></button>
+    <button id="themeToggle" type="button" role="switch" aria-label="Dark mode" aria-checked="false" title="Switch to dark mode">
+      <svg class="theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+      <svg class="theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg>
+    </button>
+  </nav>
+  <iobroker-webui-app-shell id="shell">
+  </iobroker-webui-app-shell>
+  <div id="statusbar">
+    <div>npm status:&nbsp;&nbsp;</div>
+    <div id="npmState"></div>
+    <div style="margin-left: 15px; display: flex; align-items: center;">
+      <div id="connectionState"
+        style="background-color: yellow; margin-right: 5px; border-radius: 50%; border: 1px solid gray; height: 70%;aspect-ratio: 1;">
+      </div> Connection: <div style="margin-left: 3px;" id="connectionInfo"></div>
+    </div>
+  </div>
+  <div id="load"
+    style="position: absolute; width: 100%; height: 100%; z-index: 9999999999; top: 0; left: 0;">
+    <div class="lds-facebook">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <div id="overlayLayer"></div>
+</body>
+
+<script>
+  window.onload = () => {
+    document.getElementById('load').style.display = 'none';
+  }
+  window.appShell = document.getElementById('shell');
+</script>
+
+</html>

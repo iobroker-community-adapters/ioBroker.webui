@@ -1,3 +1,4 @@
+import { AiBackend, readSystemAiSettings } from '@iobroker/ai-core';
 import * as utils from '@iobroker/adapter-core';
 import { spawn } from 'node:child_process';
 import path from 'node:path';
@@ -11,6 +12,17 @@ const pkg = JSON.parse(fs.readFileSync(new URL('../../package.json', import.meta
 const adapterName = pkg.name.split('.').pop();
 
 class WebUi extends utils.Adapter {
+
+    private readonly ai = new AiBackend(this, {
+        getSettings: async () => {
+            const settings = await readSystemAiSettings(this);
+            // ai-core 0.0.6's model-list path requires a credential in manager mode,
+            // even for keyless local endpoints. Keep the endpoint from system.ai.
+            if (settings.defaultProvider === 'custom' && !settings.credentialIds.custom)
+                settings.credentialType = 'manual';
+            return settings;
+        },
+    });
 
     _unloaded: boolean;
     _instanceName = 'webui.0'
@@ -26,7 +38,10 @@ class WebUi extends utils.Adapter {
         super({
             ...options,
             name: adapterName,
+            uiClientSubscribe: info => this.ai.onUiClientSubscribe(info) ?? { accepted: false },
+            uiClientUnsubscribe: info => this.ai.onUiClientUnsubscribe(info),
         });
+        this.on('message', obj => { this.ai.handleMessage(obj); });
         this.on('ready', this.main.bind(this));
         this.on('stateChange', this.stateChange.bind(this));
         this.on('unload', this.onUnload.bind(this));
@@ -219,14 +234,16 @@ class WebUi extends utils.Adapter {
     }
 
     async main() {
+        await this.ai.start();
         this.log.info(`dirName: ` + __dirname);
         await this.setState(this._stateNpm, { val: 'idle', ack: true });
         await this.subscribeStatesAsync('*', {});
         this.log.info(`adapter ready`);
     }
 
-    onUnload() {
+    onUnload(callback: () => void) {
         this._unloaded = true;
+        void this.ai.stop().finally(callback);
     }
 }
 

@@ -1,5 +1,6 @@
 declare const importMapConfig: {
     imports: {
+        "@iobroker/ai-core/build/shared/index.js": string;
         "monaco-editor": string;
         "@node-projects/base-custom-webcomponent": string;
         "@node-projects/css-parser": string;
