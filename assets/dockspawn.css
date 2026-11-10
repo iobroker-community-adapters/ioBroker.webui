@@ -105,3 +105,29 @@
 :host .dockspab-tab-handle-context-menu > div:hover {
   background: var(--webui-hover);
 }
+
+/* New overflow controls and auto-hide rails inherit the designer palette. */
+:host .dockspan-tab-strip-controls,
+:host .dock-auto-hide-rail,
+:host .dock-auto-hide-tab {
+  background: var(--webui-subtle);
+  color: var(--webui-text);
+}
+
+:host .dockspan-tab-strip-controls button,
+:host .panel-titlebar-button-auto-hide {
+  color: var(--webui-text);
+  background: transparent;
+}
+
+:host .dockspan-tab-strip-controls button:hover,
+:host .panel-titlebar-button-auto-hide:hover,
+:host .dock-auto-hide-tab:hover,
+:host .dock-auto-hide-tab[aria-expanded="true"] {
+  color: var(--webui-accent-text);
+  background: var(--webui-hover);
+}
+
+:host .dock-auto-hide-overlay {
+  box-shadow: 0 3px 12px var(--webui-dialog-shadow), 0 0 0 1px var(--webui-border);
+}

@@ -42,3 +42,8 @@ Missing the solution-explorer side-effect import caused the runtime failure `thi
 - Active dock headers/tabs use `--webui-dock-active` (green `#c5e3d6` in light mode, gray `#494949` in dark mode), with neutral dividers. Reserve accent indicator lines for inner editor tabs so nested dock/tab levels do not produce stacked stripes. Keep dock separator heights intact because the docking library uses them for layout.
 - `IobrokerWebuiAppShell.treeStyle` applies the same colors inside the project/outline trees; the upstream outline toolbar has inline colors requiring explicit overrides. Do not edit vendored dependencies for theme changes.
 - Packaged copies under `www/assets`, `www/index.html`, and `www/dist/frontend/config` must stay in sync with their source/build output.
+
+## Docking — 2026-11-10
+
+- `IobrokerWebuiAppShell.ready()` opts into dock-spawn-ts 4's `tabStripMode = 'wrap'` and `enableAutoHide = true` before the dock webcomponent's deferred panel initialization. Each tab strip still offers the upstream row-mode toggle and overflow list.
+- Pin buttons collapse tool panels to edge rails; documents do not have auto-hide pins. New controls/rails/overlays inherit both designer palettes through `assets/dockspawn.css`.

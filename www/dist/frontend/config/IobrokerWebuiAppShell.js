@@ -193,6 +193,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         linkElement.href = "./assets/dockspawn.css";
         this._dock.shadowRoot.appendChild(linkElement);
         this._dockManager = this._dock.dockManager;
+        // Configure before the webcomponent builds its initial panels (deferred initialization).
+        this._dockManager.config.tabStripMode = 'wrap';
+        this._dockManager.config.enableAutoHide = true;
         this.serviceContainer = serviceContainer;
         new CommandHandling(this._dockManager, this, serviceContainer);
         this._dockManager.addLayoutListener({
