@@ -66,7 +66,7 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
             article[data-role=assistant] { margin-left:auto; background:var(--webui-subtle); border:1px solid var(--webui-border); }
             .speaker { display:block; font-size:10px; font-weight:600; color:var(--webui-muted); margin-bottom:4px; }
             .work { color:var(--webui-muted); font-size:11px; margin:8px 0; border-left:2px solid var(--webui-border); padding:5px 8px; }
-            .work p { margin:5px 0; } .proposal { color:var(--webui-text); padding:8px 0; } .proposal button { border:1px solid var(--webui-border); margin:5px 5px 0 0; }
+            .work p { margin:5px 0; } .proposal { color:var(--webui-text); padding:8px 0; margin:0 0 12px 10%; } .proposal button { border:1px solid var(--webui-border); margin:5px 5px 0 0; }
             article[data-role=error] { border-left:2px solid #b55454; padding-left:8px; }
             article p { white-space:pre-wrap; margin:0; } article small { display:block; color:var(--webui-muted); font-size:10px; }
             #activity { display:flex; flex-shrink:0; gap:7px; align-items:center; padding:5px 12px; font-size:12px; color:var(--webui-muted); }
@@ -378,6 +378,18 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         }
         const linked = new Set();
         const latestStage = new Map(this.session.entries.map((entry, index) => [entry.proposalKey, index]));
+        const proposalsAfterAnswer = new Map();
+        for (const proposal of this.session.proposals) {
+            const stage = latestStage.get(`${proposal.type}:${proposal.name}`);
+            if (stage === undefined)
+                continue;
+            const answer = this.session.entries.findIndex((entry, index) => index > stage && entry.role === 'assistant');
+            if (answer < 0)
+                continue;
+            const proposals = proposalsAfterAnswer.get(answer) ?? [];
+            proposals.push(proposal);
+            proposalsAfterAnswer.set(answer, proposals);
+        }
         let work;
         for (const [index, entry] of this.session.entries.entries()) {
             if (entry.role === 'tool') {
@@ -401,13 +413,6 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
                 const text = document.createElement('p');
                 text.textContent = entry.text;
                 work.append(text);
-                if (entry.proposalKey && latestStage.get(entry.proposalKey) === index) {
-                    const proposal = this.session.proposals.find(item => `${item.type}:${item.name}` === entry.proposalKey);
-                    if (proposal && !linked.has(entry.proposalKey)) {
-                        this.appendProposal(work, proposal);
-                        linked.add(entry.proposalKey);
-                    }
-                }
                 continue;
             }
             work = null;
@@ -427,18 +432,15 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
                 article.append(state);
             }
             container.append(article);
+            for (const proposal of proposalsAfterAnswer.get(index) ?? []) {
+                this.appendProposal(container, proposal);
+                linked.add(`${proposal.type}:${proposal.name}`);
+            }
         }
         const remaining = this.session.proposals.filter(item => !linked.has(`${item.type}:${item.name}`));
-        if (remaining.length) {
-            const details = document.createElement('details');
-            details.className = 'work';
-            const summary = document.createElement('summary');
-            summary.textContent = 'Proposed changes';
-            details.append(summary);
-            for (const proposal of remaining)
-                this.appendProposal(details, proposal);
-            container.append(details);
-        }
+        // Keep pending/legacy proposals visible even if the turn has no final answer (Stop/error).
+        for (const proposal of remaining)
+            this.appendProposal(container, proposal);
         if (nearBottom)
             container.scrollTop = container.scrollHeight;
     }

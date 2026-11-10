@@ -45,7 +45,7 @@ export const fixtureConnection = {
             const next = sequence[previousCalls];
             tool_calls = next ? [{ id: 'package-fixture-' + ++toolId, type: 'function', function: { name: next[0], arguments: JSON.stringify(next[1]) } }] : undefined;
         }
-        let answer = 'The proposed screen is ready. Expand AI work to review it, then apply it to the editor.';
+        let answer = 'The proposed screen is ready. Review the changes below, then apply them to the editor.';
         if (fixtureOptions.has('packageFixture')) {
             const result = request.messages.filter(message => message.role === 'tool').find(message => String(message.content).includes('editorReady'));
             const ready = result && JSON.parse(result.content).editorReady;
