@@ -2,7 +2,7 @@ import { BaseCustomWebcomponentBindingsService, BindingTarget, EventsService, Js
 import { NodeHtmlParserService } from '@node-projects/web-component-designer-htmlparserservice-nodehtmlparser';
 import { DesignerCodeView } from './DesignerTheme.js';
 import { CssParserStylesheetService } from '@node-projects/web-component-designer-stylesheetservice-css-parser';
-import { VisualizationBindingsService, PropertyGridDragDropService, ScriptRefactorService, VisualizationBindingsRefactorService } from "@node-projects/web-component-designer-visualization-addons";
+import { ClassBindingsPropertyGridExtensionProvider, VisualizationBindingsService, PropertyGridDragDropService, ScriptRefactorService, VisualizationBindingsRefactorService } from "@node-projects/web-component-designer-visualization-addons";
 import { IobrokerWebuiBindableObjectsService } from "../services/IobrokerWebuiBindableObjectsService.js";
 import { IobrokerWebuiDemoProviderService } from "../services/IobrokerWebuiDemoProviderService.js";
 import { IobrokerWebuiConfirmationWrapper } from "./IobrokerWebuiConfirmationWrapper.js";
@@ -42,7 +42,9 @@ export function configureDesigner(bindingsHelper) {
     serviceContainer.register("refactorService", new TextRefactorService());
     serviceContainer.register("refactorService", new ScriptRefactorService());
     serviceContainer.register("refactorService", new IobrokerWebuiRefactorService());
-    serviceContainer.register("stylesheetService", designerCanvas => new CssParserStylesheetService(designerCanvas));
+    // Document-owned services survive source/design switches in designer 1.x.
+    serviceContainer.registerDocumentService("stylesheetService", container => new CssParserStylesheetService(container));
+    serviceContainer.propertyGridExtensions.push(new ClassBindingsPropertyGridExtensionProvider());
     serviceContainer.config.codeViewWidget = DesignerCodeView;
     serviceContainer.register('elementsService', new JsonFileElementsService('webui', './dist/frontend/elements-webui.json'));
     serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));

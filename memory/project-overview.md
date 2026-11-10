@@ -47,3 +47,10 @@ Missing the solution-explorer side-effect import caused the runtime failure `thi
 
 - `IobrokerWebuiAppShell.ready()` opts into dock-spawn-ts 4's `tabStripMode = 'wrap'` and `enableAutoHide = true` before the dock webcomponent's deferred panel initialization. Each tab strip still offers the upstream row-mode toggle and overflow list.
 - Pin buttons collapse tool panels to edge rails; documents do not have auto-hide pins. New controls/rails/overlays inherit both designer palettes through `assets/dockspawn.css`.
+
+## Designer 1.x integration — 2026-11-10
+
+- Default designer services already enable the new SVG editing toolbar/shape library, layout toolbars, spacing tools, source maps, and grid/flex helpers. No duplicate registration is needed.
+- `ConfigureWebcomponentDesigner.ts` explicitly enables `ClassBindingsPropertyGridExtensionProvider` (the optional visualization class-binding UI) and registers CSS parsing as a document-owned service.
+- Screen Save awaits `DocumentContainer.commitPendingChanges()` so debounced source edits are committed. The existing bindings toggle now assigns its backing field correctly.
+- The pre-existing designer light/dark switch continues to use `--wcd-*` tokens and Monaco theme synchronization; frontend theme regression tests pass after the major upgrades. Runtime screens retain their authored appearance.

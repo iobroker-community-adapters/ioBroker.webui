@@ -115,7 +115,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     }
     set bindingsEnabled(value) {
         if (this.#bindingsEnabled != value) {
-            this.#bindingsEnabled == value;
+            this.#bindingsEnabled = value;
             if (value) {
                 this.applyBindings();
             }
@@ -163,6 +163,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
     }
     async executeCommand(command) {
         if (command.type == 'save') {
+            await this.documentContainer.commitPendingChanges();
             let html = this.documentContainer.content;
             let style = this.documentContainer.additionalData.model.getValue();
             let script = this.scriptModel.getValue();
