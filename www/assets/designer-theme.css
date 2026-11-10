@@ -51,6 +51,14 @@
   --wcd-property-grid-tab-indicator-inactive-color: #dce6e1;
   --wcd-input-border-color: var(--webui-input-border);
   --wcd-input-background-color: var(--webui-surface);
+  --wcd-context-menu-color: var(--webui-text);
+  --wcd-context-menu-background: var(--webui-surface);
+  --wcd-context-menu-hover-background: var(--webui-hover);
+  --wcd-context-menu-marked-background: var(--webui-selected);
+  --wcd-context-menu-disabled-color: var(--webui-muted);
+  --wcd-context-menu-divider-color: var(--webui-border);
+  --wcd-context-menu-border: 1px solid var(--webui-input-border);
+  --wcd-context-menu-shadow: 0 3px 12px var(--webui-dialog-shadow);
   --wcd-tool-popup-background: var(--webui-surface);
   --wcd-tool-popup-border-color: var(--webui-input-border);
   --wcd-tool-popup-title-background: var(--webui-subtle);
@@ -159,4 +167,10 @@ nav #themeToggle {
 
 @media (prefers-reduced-motion: reduce) {
   #themeToggle::before, #themeToggle svg { transition: none; }
+}
+
+/* Native submenu popovers have their own UA CanvasText color. Set the
+   foreground explicitly instead of inheriting it from the outer menu. */
+.context_menu ul {
+  color: var(--webui-text);
 }
