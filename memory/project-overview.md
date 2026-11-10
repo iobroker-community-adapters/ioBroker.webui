@@ -46,6 +46,7 @@ Missing the solution-explorer side-effect import caused the runtime failure `thi
 ## Docking — 2026-11-10
 
 - `IobrokerWebuiAppShell.ready()` opts into dock-spawn-ts 4's `tabStripMode = 'wrap'` and `enableAutoHide = true` before the dock webcomponent's deferred panel initialization. Each tab strip still offers the upstream row-mode toggle and overflow list.
+- Startup column widths are applied once after AI auto-hide and dock resize settle: project/outline 18%, document/style 60%, properties/events 22%. Initial sequential docking ratios are redistributed when AI is removed from the split, so changing template ratios alone does not produce reliable final widths. `applyDefaultDockWidths()` sizes the three root branches by identity; later user resizing is untouched. Verified at 1280px in both themes on 2026-11-10.
 - Pin buttons collapse tool panels to edge rails; documents do not have auto-hide pins. New controls/rails/overlays inherit both designer palettes through `assets/dockspawn.css`.
 
 ## Designer 1.x integration — 2026-11-10

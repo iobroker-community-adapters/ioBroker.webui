@@ -14,7 +14,7 @@ import './ConfigureMonacoEnvironment.js';
 await CodeViewMonaco.getMonacoLib();
 
 import type { IDisposable } from 'monaco-editor';
-import { DockManager, DockSpawnTsWebcomponent, PanelContainer, PanelType } from 'dock-spawn-ts';
+import { DockManager, DockSpawnTsWebcomponent, PanelContainer, PanelType, SplitterDockContainer, type DockNode } from 'dock-spawn-ts';
 import { configureDesigner } from './ConfigureWebcomponentDesigner.js';
 const serviceContainer = configureDesigner(bindingsHelper);
 
@@ -315,7 +315,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       //}
     };
 
-    setTimeout(() => {
+    setTimeout(async () => {
       const aiPanel = this._dockManager.getPanels().find(panel => panel.resolvedElementContent === this._aiDockElement);
       if (aiPanel) { this.configureAiPanel(aiPanel); aiPanel.setAutoHide(true, 'right'); }
       this.activateDockById('attributeDock');
@@ -323,7 +323,24 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       this.activateDockById('styleDock');
       this._getDomElement<HTMLElement>('javascriptDock').title = '';
       this._getDomElement<HTMLElement>('styleDock').title = '';
+      await this.applyDefaultDockWidths();
     }, 150);
+  }
+
+  private async applyDefaultDockWidths() {
+    // Auto-hiding AI removes a sibling and redistributes the initial docking ratios.
+    // Size the completed layout once; subsequent user resizing remains untouched.
+    await this._dock.resize();
+    const root = this._dockManager.context.model.rootNode;
+    if (!(root.container instanceof SplitterDockContainer) || root.container.stackedVertical || root.children.length !== 3) return;
+    const branch = (node: DockNode) => {
+      while (node?.parent && node.parent !== root) node = node.parent;
+      return node;
+    };
+    const project = branch(this._dockManager.getNodeByElement(this._getDomElement('treeUpper')));
+    const properties = branch(this._dockManager.getNodeByElement(this._getDomElement('attributeDock')));
+    if (!root.children.includes(project) || !root.children.includes(properties) || project === properties) return;
+    await root.container.setRatios(root.children.map(child => child === project ? 0.18 : child === properties ? 0.22 : 0.60));
   }
 
   private jumpToCss(styleDeclaration, stylesheet) {
