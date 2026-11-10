@@ -1,7 +1,7 @@
 const importMapConfig = {
     "imports": {
         "@iobroker/ai-core/build/shared/index.js": "./node_modules/@iobroker/ai-core/shared-esm.js",
-        "monaco-editor": "./node_modules/@node-projects/monaco-editor-esm/esm/vs/editor/editor.main.min.js",
+        "monaco-editor": "./node_modules/@node-projects/monaco-editor-esm/esm/vs/editor/webui/editor.main.js",
         "@node-projects/base-custom-webcomponent": "./node_modules/@node-projects/base-custom-webcomponent/dist/index-min.js",
         "@node-projects/css-parser": "./node_modules/@node-projects/css-parser/dist/index-min.js",
         "@node-projects/web-component-designer": "./node_modules/@node-projects/web-component-designer/dist/index-min.js",

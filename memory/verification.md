@@ -35,7 +35,7 @@ A standalone static `web-dev-server` does not provide a real ioBroker adapter ba
 
 ## November dependency/designer/AI work — 2026-11-10
 
-- Passed `npm run check`, `npm run lint`, `npm run build`, `npm test` (26 frontend/helper tests + 46 package checks), and `npm run test:unit`.
+- Passed `npm run check`, `npm run lint`, `npm run build`, `npm test` (27 frontend/helper tests + 46 package checks), and `npm run test:unit`.
 - `npm run test:integration` passes four checks: adapter startup plus a local HTTP AI provider's discovery/models, multimodal/tool forwarding, and invalid-provider rejection. The provider test uses an isolated temporary ioBroker database and never contacts paid providers or the user's controller. Audit output from the harness's independently provisioned controller is distinct from the repository dependency audit.
 - Repository audit: `npm audit --omit=dev` reports zero; full audit retains four low findings in the development-server chain (see `dependency-upgrade-2026-11.md`). `npm outdated` lists only the intentional TypeScript 6 compatibility pin.
 - Browser fixture: run `npm run build`, start `./node_modules/.bin/web-dev-server --port 8099`, then open `/test/browser/designer-smoke.html`. It supplies deterministic ioBroker/AI responses, an example screen and a manual-edit button; it is not shipped in `www/`.

@@ -67,6 +67,11 @@ function copyNodeFiles() {
 
 function cleanupNodeModules() {
     let notUsed = [
+        // The active Monaco ESM bundle is rebuilt under editor/webui with current DOMPurify.
+        // Keep native source workers and CSS/fonts, omit obsolete hashed/AMD browser bundles.
+        "./www/node_modules/@node-projects/monaco-editor-esm/esm/vs/editor/*-????????.js",
+        "./www/node_modules/@node-projects/monaco-editor-esm/esm/vs/editor/editor.main.min.js",
+        "./www/node_modules/@node-projects/monaco-editor-esm/min/**/*.js",
         "./www/**/*.ts",
         "!./www/node_modules/@node-projects/base-custom-webcomponent/dist/BaseCustomWebComponent.d.ts",
         "!./www/dist/frontend/common/*.d.ts",
