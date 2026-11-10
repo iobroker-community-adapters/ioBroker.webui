@@ -151,7 +151,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### **WORK IN PROGRESS**
+### 2.2.0 (2026-11-10)
 - (copilot) Adapter requires node.js >= 22.19.0 now
 * (GermanBluefox) Repochecker warnings fixed (#563)
 - new features, AI, new designer, ...
@@ -168,13 +168,6 @@ runtime.html?screenName=screen2
 
 ### 2.0.1 (2026-08-21)
 - fix node version
-
-### 2.0.0 (2026-08-21)
-- package updates
-- code fixes
-- fix of github issue
-- fix monaco workers
-- blockly update
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 

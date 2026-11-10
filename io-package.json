@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "2.2.0": {
+        "en": "Adapter requires node.js >= 22.19.0 now\nRepochecker warnings fixed (#563)\nnew features, AI, new designer, ...",
+        "de": "Adapter benötigt jetzt node.js >= 22.19.0\nRepochecker behoben (#563)\nNeue Features, KI, neuer Designer,...",
+        "ru": "Теперь для адаптера требуется файл node.js >= 22.19.0\nИсправлены предупреждения Repochecker (#563)\nновые функции, искусственный интеллект, новый дизайнер,...",
+        "pt": "O adaptador exige node.js >= 22.19.0\nAvisos do Repochecker fixos (#563)\nnovidades, IA, novo designer,...",
+        "nl": "Voor de adapter is nu node.js >= 22.19.0 nodig\nRepochecker-waarschuwingen opgelost (#563)\nnieuwe functies, AI, nieuwe ontwerper,...",
+        "fr": "Adapter nécessite node.js >= 22.19.0\nAlertes Repochecker corrigées (#563)\nnouveautés, IA, nouveau design,...",
+        "it": "Adapter richiede node.js >= 22.19.0 ora\nAvvisi Repochecker corretti (#563)\nnuove funzioni, AI, nuovo designer,...",
+        "es": "El adaptador ahora necesita node.js >= 22.19.0\nAvisos de Repochecker fijos (#563)\nnuevas funciones, IA, nuevo diseñador,...",
+        "pl": "Adapter wymaga teraz node.js >= 22.19.0\nNaprawiono ostrzeżenia repochecker (#563)\nnowe funkcje, sztuczna inteligencja, nowy projektant,...",
+        "uk": "Адаптер вимагає node.js >= 22.19.0 зараз\nВиправлено попередження Repochecker (#563)\nнові функції, AI, новий дизайнер,...",
+        "zh-cn": "适配器现在需要 node.js >= 22.19.0\nRepochecker 警告已修复 (#563)\n新功能，人工智能，新设计师，..."
+      },
       "2.1.0": {
         "en": "fix blockly scripts\nadd dark/light mode",
         "de": "Fix Blockly Scripts\nDunkel-/Hellmodus",
