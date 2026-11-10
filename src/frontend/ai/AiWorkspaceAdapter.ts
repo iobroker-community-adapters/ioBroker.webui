@@ -1,3 +1,6 @@
+import { textChunk } from './AiDocumentEditing.js';
+import { IobrokerWebuiScreenEditor } from '../config/IobrokerWebuiScreenEditor.js';
+import { IobrokerWebuiMonacoEditor } from '../config/IobrokerWebuiMonacoEditor.js';
 import { PreDefinedElementsService } from '@node-projects/web-component-designer';
 import observer from '../widgets/customElementsObserver.js';
 import { allowedPackageName, describePackage } from '../npm/PackageCatalog.js';
@@ -28,6 +31,37 @@ export class AiWorkspaceAdapter implements AiWorkspace {
         const editor = await this.shell.openScreenEditor(proposal.name, proposal.type, proposal.data.html, proposal.data.style, proposal.data.script, proposal.data.settings, proposal.data.properties);
         if (!editor) throw new Error('The screen editor did not open.');
         await editor.applyAiSnapshot(proposal.data);
+    }
+    listWindows() { return this.shell.getAiWindows(); }
+    async readWindow(id: string, offset = 0, limit = 12000) {
+        const element = this.shell.getAiWindowElement(id);
+        if (!element) throw new Error('This window is no longer open.');
+        if (element instanceof IobrokerWebuiScreenEditor) return { id, document: { type: element.documentType, name: element.name }, message: 'Use read_document or read_document_field for its authored source and properties.' };
+        const code = element instanceof IobrokerWebuiMonacoEditor ? element : element.querySelector<IobrokerWebuiMonacoEditor>('iobroker-webui-monaco-editor');
+        if (code) return { id, kind: 'code', language: code.language, ...textChunk(code.model?.getValue() ?? '', offset, limit) };
+        return { id, kind: 'tool', message: 'Tool window. Use get_editor_context for its associated document and selection.' };
+    }
+    async editorContext() {
+        const windows = this.shell.getAiWindows();
+        const editor = this.shell.getActiveScreenEditor();
+        if (!editor) return { currentWindow: windows.find(window => window.current) ?? null, activeWindow: windows.find(window => window.active) ?? null, document: null, selection: [] };
+        await editor.documentContainer.commitPendingChanges();
+        const instance = editor.documentContainer.instanceServiceContainer;
+        const root = editor.documentContainer.editingDocument.rootDesignItem;
+        const selection = instance.selectionService.selectedElements.slice(0, 30).map(item => {
+            const path: number[] = [];
+            let current = item;
+            while (current && current !== root && current.parent) {
+                const siblings = [...current.parent.children()].filter(child => child.node.nodeType === 1);
+                path.unshift(siblings.indexOf(current)); current = current.parent;
+            }
+            return { tag: item.name, id: item.id, path: current === root && path.length ? path : null, host: item === root,
+                attributes: Object.fromEntries([...item.attributes()].filter(([name]) => name !== 'style').slice(0, 30).map(([name, value]) => [name, String(value).slice(0, 1024)])),
+                inlineStyles: Object.fromEntries([...item.styles()].slice(0, 30).map(([name, value]) => [name, String(value).slice(0, 512)])), text: String(item.content ?? '').slice(0, 500) };
+        });
+        return { currentWindow: windows.find(window => window.current) ?? null, activeWindow: windows.find(window => window.active) ?? null,
+            document: { type: editor.documentType, name: editor.name, view: editor.documentContainer.currentView }, selection, selectionTruncated: instance.selectionService.selectedElements.length > 30,
+            fields: { html: 'Authored fragment', style: 'Separate document CSS/style dock', script: 'Separate ES module JavaScript dock', settings: 'Dimensions, adopted styles, screen/control settings', properties: 'Typed screen/control properties with defaults and internal flags' } };
     }
     selectedDocument() {
         const editor = this.shell.getActiveScreenEditor();

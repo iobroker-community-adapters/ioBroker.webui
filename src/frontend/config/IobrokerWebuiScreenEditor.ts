@@ -171,7 +171,7 @@ export class IobrokerWebuiScreenEditor extends BaseCustomWebComponentConstructor
                         enumerable: true,
                         configurable: true,
                     });
-                    if (this.properties[p].default) {
+                    if (this.properties[p].default !== undefined) {
                         this.documentContainer.designerView.designerCanvas.rootDesignItem.element['_' + p] = this.properties[p].default;
                     }
                 }

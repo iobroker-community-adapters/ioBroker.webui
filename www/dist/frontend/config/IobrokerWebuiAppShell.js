@@ -47,6 +47,9 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     eventsAssignment;
     settingsEditor;
     refactorView;
+    lastContentPanel;
+    aiWindowIds = new WeakMap();
+    nextAiWindowId = 0;
     npmState;
     scriptSystem;
     bindingsHelper;
@@ -205,6 +208,10 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         this.serviceContainer = serviceContainer;
         new CommandHandling(this._dockManager, this, serviceContainer);
         this._dockManager.addLayoutListener({
+            onActivePanelChange: (_manager, panel) => {
+                if (panel?.resolvedElementContent?.id !== 'aiDock')
+                    this.lastContentPanel = panel;
+            },
             onActiveDocumentChange: async (manager, panel, previousPanel) => {
                 if (previousPanel) {
                     let element = this._dock.getElementInSlot(previousPanel.elementContent);
@@ -466,6 +473,25 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             this._dock.dockManager.addLayoutListener(listener);
             options.abortSignal?.addEventListener('abort', () => container.close(), { once: true });
         });
+    }
+    getAiWindows() {
+        const panels = this._dockManager.getPanels();
+        const active = this._dockManager.activePanel;
+        const content = panels.includes(this.lastContentPanel) ? this.lastContentPanel : this._dockManager.activeDocument;
+        return panels.map(panel => {
+            const element = panel.resolvedElementContent;
+            if (!this.aiWindowIds.has(panel))
+                this.aiWindowIds.set(panel, element.id || `window-${++this.nextAiWindowId}`);
+            const screen = element instanceof IobrokerWebuiScreenEditor ? element : null;
+            const code = element instanceof IobrokerWebuiMonacoEditor ? element : element.querySelector('iobroker-webui-monaco-editor');
+            const owner = screen ?? (code ? this.getScreenEditors().find(editor => editor.scriptModel === code.model || editor.documentContainer.additionalData?.model === code.model) : null);
+            return { id: this.aiWindowIds.get(panel), title: panel.title, tag: element.localName, kind: screen ? 'document' : code ? 'code' : 'tool', active: panel === active, current: panel === content, autoHidden: panel.isAutoHidden,
+                document: owner ? { type: owner.documentType, name: owner.name } : null };
+        });
+    }
+    getAiWindowElement(id) {
+        this.getAiWindows();
+        return this._dockManager.getPanels().find(panel => this.aiWindowIds.get(panel) === id)?.resolvedElementContent;
     }
     getScreenEditors() {
         return this._dock.dockManager.getPanels()

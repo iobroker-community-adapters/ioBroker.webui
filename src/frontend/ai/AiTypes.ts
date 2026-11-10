@@ -29,6 +29,9 @@ export interface AiWorkspace {
     listDocuments(type: DocumentType): Promise<string[]>;
     readDocument(type: DocumentType, name: string): Promise<IScreen | null>;
     applyProposal(proposal: AiProposal): Promise<void>;
+    editorContext(): Promise<unknown>;
+    listWindows(): unknown;
+    readWindow(id: string, offset?: number, limit?: number): Promise<unknown>;
     selectedDocument(): { type: DocumentType; name: string } | null;
     globalContext(): unknown;
     elements(): Promise<unknown>;

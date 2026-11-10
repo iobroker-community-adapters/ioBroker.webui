@@ -626,7 +626,7 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
                 runTool: async (call, args) => {
                     const label = call.function.name.replaceAll('_', ' ');
                     this.activity.set(session.id, label + '…');
-                    session.entries.push({ role: 'tool', text: label + '…', pendingId: call.id, proposalKey: call.function.name === 'stage_document' ? `${args.type}:${args.name}` : undefined });
+                    session.entries.push({ role: 'tool', text: label + '…', pendingId: call.id, proposalKey: ['stage_document', 'stage_element_attributes'].includes(call.function.name) ? `${args.type}:${args.name}` : undefined });
                     refresh();
                     return context.run(call.function.name, args);
                 },
