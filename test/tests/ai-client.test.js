@@ -41,6 +41,17 @@ describe('AI push transport', () => {
         catch (error) { expect(error.message).to.contain('Connection lost'); }
         finally { client.dispose(); }
     });
+    it('stops waiting immediately and ignores late provider answers', async () => {
+        const { socket } = socketFixture();
+        socket.sendTo = async () => ({ accepted: true });
+        const client = new AiClient(socket, 'webui.0');
+        const controller = new AbortController();
+        const job = client.ask('custom', 'slow-model', [], undefined, controller.signal);
+        setTimeout(() => controller.abort(), 0);
+        try { await job; expect.fail('should abort'); }
+        catch (error) { expect(error.name).to.equal('AbortError'); }
+        finally { client.dispose(); }
+    });
     it('surfaces provider failures', async () => {
         const { socket } = socketFixture(); socket.sendTo = async () => ({ error: 'Model unavailable' });
         const client = new AiClient(socket, 'webui.0');

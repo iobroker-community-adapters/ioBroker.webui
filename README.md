@@ -67,7 +67,13 @@ Finally, `connected()` and `disconnected()` functions can be defined to be calle
 
 Open **AI** in the designer toolbar. Configure a provider in **ioBroker Admin → System settings → AI**, then choose its model in the assistant. The adapter uses the same [`@iobroker/ai-core`](https://github.com/ioBroker/ai-core) backend as vis-2; provider credentials stay on the server. A local ai-server/Ollama endpoint can be selected through the system AI configuration. Node.js 22.19 or newer is required; AI chat also needs a current controller/web adapter with instance-message subscriptions.
 
-Create separate chats for different screens or tasks. Chats show their running/error status and are stored in this browser for the current installation and ioBroker user. Reloading interrupts running turns. **Stop** prevents further tool calls after the current provider response; it does not cancel a request already being processed by the provider.
+The assistant starts as a collapsed tab on the right edge. Open it from that tab or the **AI** toolbar command. Its Close button hides the dock without losing drafts or running chats; the toolbar command reopens it.
+
+Type and press **Enter** to create a chat automatically. **Shift+Enter** inserts a new line. Click a chat tab to continue it; click the selected tab again to return to your fresh draft. Right-click a tab to rename or delete that chat. Provider/model selectors sit below the message box; right-click the composer controls to reload them. Chats and the unsent fresh draft are stored in this browser for the current installation and ioBroker user. Reloading interrupts running turns.
+
+While the assistant works, keep typing and send with **Steer** to redirect its next safe step, or select **Queue** to send a follow-up after the current turn. Pending messages can be edited or removed above the composer. **Stop** immediately ends the local turn, skips subsequent tools and clears unsent pending messages; an already-sent provider request may still finish in the background. Running tabs and the conversation show activity indicators.
+
+The microphone button dictates into the message field without submitting it. It uses browser speech recognition and needs microphone permission; availability depends on the browser. Stop dictation with the same button. Closing the AI dock stops dictation.
 
 The assistant can inspect saved screens and controls, unsaved open editors, HTML/CSS/JavaScript, global styles/scripts, installed palette elements, and searchable ioBroker object metadata/current values. It has documentation for bindings, event handlers and the actual generated simple-script command schemas. Object native configuration is excluded, and there is no live-state write tool. Source and object context requested by the assistant is sent to the provider selected in ioBroker.
 

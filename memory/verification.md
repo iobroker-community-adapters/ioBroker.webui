@@ -41,3 +41,9 @@ A standalone static `web-dev-server` does not provide a real ioBroker adapter ba
 - Browser fixture: run `npm run build`, start `./node_modules/.bin/web-dev-server --port 8099`, then open `/test/browser/designer-smoke.html`. It supplies deterministic ioBroker/AI responses, an example screen and a manual-edit button; it is not shipped in `www/`.
 - Verified in the browser: both themes, wrapped strips, AI auto-hide/re-pin/reopen, pasted screenshot preview, simultaneous running sessions, chat persistence across reload, existing/new screen Apply, source conflict refusal and rebase recovery. A plain HTTP LAN origin also completes a turn and applies a new screen, exercising the randomUUID fallback.
 - Live paid-provider quality, real ai-server installation, and a full authenticated production installation were not exercised. The configured development backend was unreachable from this environment; the fixture and isolated controller tests cover the implementation paths instead.
+
+## AI composer / docking follow-up — 2026-11-10
+
+- Passed production build, type-checking, lint, and tests (34 frontend/helper + 46 package checks). New tests cover local AbortSignal cancellation, steering at request boundaries/final answers, queued ordering, Stop skipping tools/queued work, and speech result/permission/error handling.
+- Browser fixture verified: default right-edge AI rail, accessible Close/reopen with draft intact, first-Send chat creation, right-click deletion, editable running composer, steering/queue activity, immediate Stop, and fresh-draft persistence across reload. Shape popup foreground/background and icons were inspected in light and dark themes.
+- Speech UI was exercised with the opt-in simulated recognizer (`speechFixture=1`); no physical microphone was recorded. Live recognition remains dependent on browser support/permission. Fixture controls are collapsed and are not packaged in production.

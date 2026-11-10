@@ -3,9 +3,15 @@ import type { Connection } from '@iobroker/socket-client';
 import type { AiProvider, OpenAIMessage, OpenAITool } from '@iobroker/ai-core/build/shared/types.js';
 import type { AiChatResponse, AiProvidersResponse, AiSubscribeResponse } from '@iobroker/ai-core/build/shared/protocol.js';
 
-function timeout<T>(job: Promise<T>, ms: number): Promise<T> {
+function timeout<T>(job: Promise<T>, ms: number, signal?: AbortSignal): Promise<T> {
+    if (signal?.aborted) return Promise.reject(signal.reason);
     let timer: ReturnType<typeof setTimeout>;
-    return Promise.race([job, new Promise<never>((_, reject) => { timer = setTimeout(() => reject(new Error('The AI adapter did not answer in time.')), ms); })]).finally(() => clearTimeout(timer));
+    let abort: () => void;
+    return Promise.race([job, new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error('The AI adapter did not answer in time.')), ms);
+        abort = () => reject(signal.reason);
+        signal?.addEventListener('abort', abort, { once: true });
+    })]).finally(() => { clearTimeout(timer); signal?.removeEventListener('abort', abort); });
 }
 
 /** Same ai-core push protocol as vis-2, without a React dependency. */
@@ -50,9 +56,10 @@ export class AiClient {
             this.token = result.session;
         })().catch(err => { this.subscription = null; throw err; });
     }
-    async ask(provider: AiProvider, model: string, messages: OpenAIMessage[], tools?: OpenAITool[]) {
+    async ask(provider: AiProvider, model: string, messages: OpenAIMessage[], tools?: OpenAITool[], signal?: AbortSignal) {
         if (this.disposed) throw new Error('AI client closed');
-        await this.subscribe();
+        await timeout(this.subscribe(), 10_000, signal);
+        signal?.throwIfAborted();
         const requestId = createAiId();
         let resolve: (answer: AiChatResponse) => void, reject: (error: Error) => void;
         const pushed = new Promise<AiChatResponse>((res, rej) => { resolve = res; reject = rej; });
@@ -63,7 +70,7 @@ export class AiClient {
                 provider, model, messages, tools, uiSession: this.token, requestId, timeout: 600_000
             }), 30_000);
             return ack?.accepted ? pushed : ack;
-        })(), 610_000);
+        })(), 610_000, signal);
         // A lost connection may reject the push before the sendTo acknowledgement arrives.
         void pushed.catch(() => { });
         try {

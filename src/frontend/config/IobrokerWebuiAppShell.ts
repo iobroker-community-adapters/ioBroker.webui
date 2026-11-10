@@ -52,6 +52,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   serviceContainer: ServiceContainer
 
   private _dock: DockSpawnTsWebcomponent;
+  private _aiDockElement: HTMLElement;
   private _dockManager: DockManager;
   _solutionExplorer: IobrokerWebuiSolutionExplorer
 
@@ -147,7 +148,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
             <node-projects-tree-view-extended name="tree" id="treeViewExtended"></node-projects-tree-view-extended>
           </div>
       
-          <div id="aiDock" title="AI assistant" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.32" dock-spawn-hide-close-button style="overflow: hidden; width: 100%;">
+          <div id="aiDock" title="AI assistant" dock-spawn-dock-type="right" dock-spawn-dock-ratio="0.32" style="overflow: hidden; width: 100%;">
             <iobroker-webui-ai-panel id="aiPanel"></iobroker-webui-ai-panel>
           </div>
 
@@ -197,6 +198,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
 
   async ready() {
     this._dock = this._getDomElement('dock');
+    this._aiDockElement = this._getDomElement('aiDock');
     this._solutionExplorer = this._getDomElement<IobrokerWebuiSolutionExplorer>('solutionExplorer');
 
     this.treeViewExtended = this._getDomElement<TreeViewExtended>('treeViewExtended');
@@ -249,6 +251,12 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       onClosePanel: (manager, panel) => {
         if (panel) {
           let element = this._dock.getElementInSlot((<HTMLSlotElement><any>panel.elementContent));
+          if (element === this._aiDockElement) {
+            // Park the live chat outside the dock so closing it preserves running sessions.
+            element.querySelector<IobrokerWebuiAiPanel>('#aiPanel')?.stopSpeechInput();
+            this.appendChild(element);
+            return;
+          }
           if ((<IDisposable><any>element)?.dispose)
             (<IDisposable><any>element)?.dispose();
         }
@@ -257,7 +265,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
 
     await this._setupServiceContainer();
     void iobrokerHandler.waitForReady().then(() =>
-      this._getDomElement<IobrokerWebuiAiPanel>('aiPanel').initialize(iobrokerHandler.connection, iobrokerHandler.namespace, new AiWorkspaceAdapter(this))
+      this._aiDockElement.querySelector<IobrokerWebuiAiPanel>('#aiPanel').initialize(iobrokerHandler.connection, iobrokerHandler.namespace, new AiWorkspaceAdapter(this))
     ).catch(error => console.error('Could not initialize AI assistant', error));
 
     let stateElement = <HTMLDivElement>document.getElementById('npmState');
@@ -302,6 +310,8 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     };
 
     setTimeout(() => {
+      const aiPanel = this._dockManager.getPanels().find(panel => panel.resolvedElementContent === this._aiDockElement);
+      if (aiPanel) { this.configureAiPanel(aiPanel); aiPanel.setAutoHide(true, 'right'); }
       this.activateDockById('attributeDock');
       this.activateDockById('eventsDock');
       this.activateDockById('styleDock');
@@ -360,7 +370,31 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   /* Move to a Dock Spawn Helper */
 
   activateDockById(name: string) {
+    if (name === 'aiDock') { this.showAiAssistant(); return; }
     this.activateDock(this._getDomElement(name));
+  }
+
+  private configureAiPanel(panel: PanelContainer) {
+    panel.elementButtonClose.setAttribute('role', 'button');
+    panel.elementButtonClose.setAttribute('aria-label', 'Close AI assistant');
+    panel.elementButtonClose.tabIndex = 0;
+    panel.elementButtonClose.onkeydown = event => {
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); panel.close(); }
+    };
+  }
+
+  public showAiAssistant() {
+    const element = this._aiDockElement;
+    if (!element) return;
+    if (element.parentElement !== this._dock) {
+      this._dock.appendChild(element);
+      // The dock observes appended children and creates the new panel in this microtask.
+      queueMicrotask(() => {
+        const panel = this._dockManager.getPanels().find(panel => panel.resolvedElementContent === element);
+        if (panel) { this.configureAiPanel(panel); panel.setAutoHide(true, 'right'); }
+        if (panel) this._dockManager.autoHideManager.show(panel);
+      });
+    } else this.activateDock(element);
   }
 
   activateDock(element: Element) {

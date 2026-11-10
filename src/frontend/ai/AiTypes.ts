@@ -8,7 +8,8 @@ export interface AiProposal extends AiDocument {
     status: 'pending' | 'applied' | 'discarded';
 }
 export interface AiAttachment { name: string; type: string; content: string; }
-export interface AiEntry { role: 'user' | 'assistant' | 'tool' | 'error'; text: string; }
+export interface AiEntry { role: 'user' | 'assistant' | 'tool' | 'error'; text: string; pendingId?: string; delivery?: 'steer' | 'queue' | 'cancelled'; }
+export interface AiPendingMessage { id: string; message: OpenAIMessage; text: string; mode: 'steer' | 'queue'; draft?: string; attachments?: AiAttachment[]; }
 export interface AiSession {
     id: string;
     title: string;
@@ -20,6 +21,7 @@ export interface AiSession {
     proposals: AiProposal[];
     attachments: AiAttachment[];
     draft: string;
+    pendingMessages?: AiPendingMessage[];
 }
 
 export interface AiWorkspace {

@@ -55,7 +55,7 @@ Missing the solution-explorer side-effect import caused the runtime failure `thi
 - Screen Save awaits `DocumentContainer.commitPendingChanges()` so debounced source edits are committed. The existing bindings toggle now assigns its backing field correctly.
 - The pre-existing designer light/dark switch continues to use `--wcd-*` tokens and Monaco theme synchronization; frontend theme regression tests pass after the major upgrades. Runtime screens retain their authored appearance.
 
-- The AI assistant is a separate right dock with an always-available toolbar command. `activateDock` can reopen an auto-hidden panel through `autoHideManager.show`. `DockManager.activeDocument` is a panel container; resolve `resolvedElementContent` before accessing the screen editor.
+- The AI assistant starts auto-hidden on the right rail, with an always-available toolbar command and a close/reopen lifecycle that preserves its connected content. `activateDock` can reopen an auto-hidden panel through `autoHideManager.show`. `DockManager.activeDocument` is a panel container; resolve `resolvedElementContent` before accessing the screen editor.
 
 ## Tool popup contrast — 2026-11-10
 

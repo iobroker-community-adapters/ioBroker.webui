@@ -1,6 +1,16 @@
 // Deterministic ioBroker + AI protocol fixture for browser smoke tests.
 const answerCallbacks = new Set();
 let toolId = 0;
+const fixtureOptions = new URLSearchParams(location.search);
+const responseDelay = Math.min(10000, Math.max(50, Number(fixtureOptions.get('aiDelay')) || 350));
+// Opt-in speech fixture: exercises the microphone UI without recording real audio.
+if (fixtureOptions.get('speechFixture') === '1') {
+    window.SpeechRecognition = class {
+        start() { this.timer = setTimeout(() => this.onresult?.({ results: [[{ transcript: 'Design a spoken dashboard' }]] }), 400); }
+        stop() { clearTimeout(this.timer); this.onend?.(); }
+        abort() { clearTimeout(this.timer); this.onend?.(); }
+    };
+}
 const state = { val: 21, ack: true, ts: Date.now(), lc: Date.now(), from: 'fixture' };
 const objects = { 'fixture.0.temperature': { _id: 'fixture.0.temperature', type: 'state', common: { name: 'Temperature', type: 'number', role: 'value.temperature', read: true, write: false, unit: '°C' }, native: {} } };
 export const fixtureConnection = {
@@ -23,11 +33,11 @@ export const fixtureConnection = {
         const previousCalls = request.messages.filter(x => x.role === 'tool').length;
         const turn = request.messages.filter(x => x.role === 'user').length;
         let tool_calls;
-        if (previousCalls < turn * 2 - 1) tool_calls = [{ id: 'fixture-tool-' + ++toolId, type: 'function', function: { name: 'read_document', arguments: '{"type":"screen","name":"smoke-screen"}' } }];
-        else if (previousCalls < turn * 2) tool_calls = [{ id: 'fixture-tool-' + ++toolId, type: 'function', function: { name: 'stage_document', arguments: JSON.stringify({ type: 'screen', name: 'smoke-screen', html: '<h1>AI designed screen</h1><p bind-content:text="fixture.0.temperature"></p>', style: ':host { display:block; padding:24px; color:teal; }' }) } }];
+        if (previousCalls < turn * 2 - 1) tool_calls = [{ id: 'fixture-tool-' + Date.now() + '-' + ++toolId, type: 'function', function: { name: 'read_document', arguments: '{"type":"screen","name":"smoke-screen"}' } }];
+        else if (previousCalls < turn * 2) tool_calls = [{ id: 'fixture-tool-' + Date.now() + '-' + ++toolId, type: 'function', function: { name: 'stage_document', arguments: JSON.stringify({ type: 'screen', name: 'smoke-screen', html: '<h1>AI designed screen</h1><p bind-content:text="fixture.0.temperature"></p>', style: ':host { display:block; padding:24px; color:teal; }' }) } }];
         setTimeout(() => {
             for (const callback of answerCallbacks) callback({ type: 'aiChatAnswer', requestId: request.requestId, success: true, content: tool_calls ? '' : 'The proposed screen is ready. Review it below, then apply it to the editor.', ...(tool_calls ? { tool_calls } : {}) });
-        }, 350);
+        }, responseDelay);
         return { accepted: true, requestId: request.requestId };
     }
 };

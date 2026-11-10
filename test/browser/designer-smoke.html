@@ -218,7 +218,10 @@ window.iobrokerSocketScriptUrl = '/test/browser/socket-stub.js';
 </head>
 
 <body style="height: 100%;">
-<div style="position:absolute;bottom:0;right:0;z-index:99999;background:var(--webui-surface)"><span id="fixture-status">Loading fixture</span><button id="fixture-ai">Show AI</button><button id="fixture-screen">Open sample screen</button><button id="fixture-edit">Manual change</button></div>
+<details style="position:absolute;bottom:0;right:0;z-index:99999;background:var(--webui-surface);font-size:11px">
+  <summary>Demo · Test controls</summary>
+  <div><span id="fixture-status">Loading fixture</span><button id="fixture-ai">Show AI</button><button id="fixture-screen">Open sample screen</button><button id="fixture-edit">Manual change</button></div>
+</details>
   <nav>
     <button data-command="new" title="new"><img src="./node_modules/@node-projects/web-component-designer/assets/icons/file.svg"></button>
     <button data-command="new" data-command-parameter="grid" title="new grid">
@@ -251,6 +254,7 @@ window.iobrokerSocketScriptUrl = '/test/browser/socket-stub.js';
         style="font-family: monospace; font-size: 8px; position: relative; top: -8px; cursor: pointer;">(0/0)</span>
     </div>
     <button style="margin-left: 10px;" data-command="runtime" title="runtime"><img src="./assets/icons/play.svg"></button>
+    <button data-command="ai" title="AI assistant" aria-label="AI assistant">AI</button>
     <button id="themeToggle" type="button" role="switch" aria-label="Dark mode" aria-checked="false" title="Switch to dark mode">
       <svg class="theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
       <svg class="theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg>

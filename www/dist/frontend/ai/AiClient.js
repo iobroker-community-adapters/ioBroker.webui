@@ -1,7 +1,14 @@
 import { createAiId } from './AiTypes.js';
-function timeout(job, ms) {
+function timeout(job, ms, signal) {
+    if (signal?.aborted)
+        return Promise.reject(signal.reason);
     let timer;
-    return Promise.race([job, new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('The AI adapter did not answer in time.')), ms); })]).finally(() => clearTimeout(timer));
+    let abort;
+    return Promise.race([job, new Promise((_, reject) => {
+            timer = setTimeout(() => reject(new Error('The AI adapter did not answer in time.')), ms);
+            abort = () => reject(signal.reason);
+            signal?.addEventListener('abort', abort, { once: true });
+        })]).finally(() => { clearTimeout(timer); signal?.removeEventListener('abort', abort); });
 }
 /** Same ai-core push protocol as vis-2, without a React dependency. */
 export class AiClient {
@@ -54,10 +61,11 @@ export class AiClient {
             this.token = result.session;
         })().catch(err => { this.subscription = null; throw err; });
     }
-    async ask(provider, model, messages, tools) {
+    async ask(provider, model, messages, tools, signal) {
         if (this.disposed)
             throw new Error('AI client closed');
-        await this.subscribe();
+        await timeout(this.subscribe(), 10_000, signal);
+        signal?.throwIfAborted();
         const requestId = createAiId();
         let resolve, reject;
         const pushed = new Promise((res, rej) => { resolve = res; reject = rej; });
@@ -68,7 +76,7 @@ export class AiClient {
                 provider, model, messages, tools, uiSession: this.token, requestId, timeout: 600_000
             }), 30_000);
             return ack?.accepted ? pushed : ack;
-        })(), 610_000);
+        })(), 610_000, signal);
         // A lost connection may reject the push before the sendTo acknowledgement arrives.
         void pushed.catch(() => { });
         try {
