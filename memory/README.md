@@ -6,6 +6,7 @@ This directory is the durable, repository-scoped memory for `ioBroker.webui`. Fu
 
 - `project-overview.md` — stable project structure, build behavior, and recurring constraints.
 - `dependency-upgrade-2026-08.md` — decisions and compatibility findings from the August 2026 dependency upgrade.
+- `dependency-upgrade-2026-11.md` — current dependency versions, compatibility pins, and audit status.
 - `verification.md` — useful verification commands and known test-environment behavior.
 
 ## Maintenance rules

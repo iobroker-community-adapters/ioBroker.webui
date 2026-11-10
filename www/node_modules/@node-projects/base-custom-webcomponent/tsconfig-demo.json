@@ -6,6 +6,7 @@
     "declaration": true,                   /* Generates corresponding '.d.ts' file. */
     "sourceMap": false,                     /* Generates corresponding '.map' file. */
     "outDir": "./sample/dist",                        /* Redirect output structure to the directory. */
+    "rootDir": "./sample/src",
     "noImplicitThis": true,                /* Raise error on 'this' expressions with an implied 'any' type. */
     "alwaysStrict": true,                  /* Parse in strict mode and emit "use strict" for each source file. */
     "resolveJsonModule": true,
@@ -13,7 +14,7 @@
     "noUnusedLocals": true,                /* Report errors on unused locals. */
     "noImplicitReturns": true,             /* Report error when not all code paths in function return a value. */
     "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
-    "moduleResolution": "node",            /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
+    "moduleResolution": "bundler",
 
     "esModuleInterop": true,                   /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
     "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */

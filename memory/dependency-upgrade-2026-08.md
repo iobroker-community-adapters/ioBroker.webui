@@ -1,6 +1,6 @@
 # Dependency upgrade — August 2026
 
-Last verified: 2026-08-21
+Historical upgrade: 2026-08-21. Current dependency status: see `dependency-upgrade-2026-11.md`.
 
 This note describes the dependency-upgrade working state introduced in the current change set. Recheck it after future package upgrades.
 
