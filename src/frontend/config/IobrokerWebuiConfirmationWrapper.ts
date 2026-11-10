@@ -2,6 +2,11 @@ import { BaseCustomWebComponentConstructorAppend, TypedEvent, css, html } from "
 
 export class IobrokerWebuiConfirmationWrapper extends BaseCustomWebComponentConstructorAppend {
     static override readonly style = css`
+        :host { color:var(--webui-text); background:var(--webui-surface); }
+        #lower { background:var(--webui-subtle); border-top:1px solid var(--webui-border); }
+        button { color:var(--webui-text); background:var(--webui-surface); border:1px solid var(--webui-input-border); border-radius:4px; }
+        button:hover { background:var(--webui-hover); }
+        button:focus-visible { outline:2px solid var(--webui-accent); outline-offset:1px; }
         #upper {
             height: calc(100% - 35px);
             position: relative;

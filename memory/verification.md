@@ -53,3 +53,11 @@ A standalone static `web-dev-server` does not provide a real ioBroker adapter ba
 - Type-check, lint, compiled packaging, and tests pass (35 frontend/helper + 46 package checks). Temporary-session regression test runs without IndexedDB and verifies no fixture history is accessed.
 - Browser checks cover list → conversation → Back, concurrent activity rings, unread dots and clearing on open, collapsed inline tool/proposal review, and context-menu chat actions. Test chats are now temporary; reload starts clean.
 - The real development backend at the configured LAN address remains unreachable (HTTP connection timeout); browser verification uses an explicitly labelled isolated mock backend, never a replacement in the real app.
+
+## Editor theme sweep — 2026-11-10
+
+- Passed TypeScript compilation, lint, tests (35 frontend/helper + 46 package), packaged copy build (`npx gulp`), and whitespace checks.
+- Opt-in `/test/browser/designer-smoke.html?themeReview=1` loads `test/browser/theme-review.js` controls for actual binding/history/parameter/signal/script components and floating CSS tools. All data is local test input; neither helper is shipped in `www/`.
+- Browser checks in both themes: shell/toolbars/docks, AI open/close and hints, settings/collection editor, refactor, script editor Code/Visual mode, Add/Close picker actions, syntax preview, command properties, bindings, history, parameters, signal browser, box/text shadow, gradient and border-radius tools. Verified native collection dialog foreground/background, enabled complex-property buttons at full opacity, gradient Repeating label, and border-radius Close inside the 1280×720 viewport.
+- Context-menu images were verified separately (light filter none; dark invert(1), disabled opacity 0.45).
+- These checks exercise real components with the isolated browser fixture. Live backend/provider flows and the external ioBroker object-selector service were not verified by this sweep. Runtime screen styling is outside the editor theme changes.

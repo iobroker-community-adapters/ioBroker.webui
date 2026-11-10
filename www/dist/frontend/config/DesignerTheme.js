@@ -1,4 +1,6 @@
 import './ConfigureMonacoEnvironment.js';
+import './DesignerComponentTheme.js';
+import './DesignerToolWindowPosition.js';
 import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
 import { DesignerCanvas, DesignerToolbarButton } from '@node-projects/web-component-designer';
 export function getMonacoTheme() {
