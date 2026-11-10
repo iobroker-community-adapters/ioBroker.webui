@@ -154,6 +154,7 @@ runtime.html?screenName=screen2
 ### **WORK IN PROGRESS**
 - (copilot) Adapter requires node.js >= 22.19.0 now
 * (GermanBluefox) Repochecker warnings fixed (#563)
+- new features, AI, new designer, ...
 
 ### 2.1.0 (2026-09-15)
 - fix blockly scripts
