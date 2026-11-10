@@ -27,6 +27,15 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
     saveTimer;
     modelLoad = 0;
     menuCleanup;
+    markRead = () => {
+        if (this.session.unread && this.viewing(this.session)) {
+            this.session.unread = false;
+            this.changed();
+            this.renderSessions();
+        }
+    };
+    visibilityObserver = new IntersectionObserver(() => this.markRead());
+    expandedWork = new Set();
     $(selector) { return this.shadowRoot.querySelector(selector); }
     get session() { return this.sessions.find(session => session.id === this.selected) ?? this.draftSession; }
     createDraft(previous) {
@@ -41,22 +50,28 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
             button:disabled { cursor:default; opacity:.4; } button:hover { background:var(--webui-hover); }
             button:focus-visible,textarea:focus-visible,select:focus-visible { outline:2px solid var(--webui-accent); outline-offset:1px; }
             button { border:0; border-radius:4px; background:transparent; padding:5px; } button svg { display:block; width:17px; height:17px; }
-            #sessions { display:flex; flex-shrink:0; overflow:auto; padding:3px 6px; gap:2px; border-bottom:1px solid var(--webui-border); min-height:30px; }
-            #sessions:empty { display:none; } #sessions button { display:flex; align-items:center; gap:5px; flex-shrink:0; max-width:180px; font-size:11px; padding:5px 7px; }
-            #sessions button .name { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-            #sessions button[aria-pressed=true] { background:var(--webui-selected); box-shadow:inset 0 -1px var(--webui-accent); }
-            .dot { width:6px; height:6px; border-radius:50%; background:currentColor; flex-shrink:0; animation:pulse 1.2s ease-in-out infinite; }
+            #sessions { flex:1; min-height:0; overflow:auto; padding:8px; }
+            #sessions button { display:flex; align-items:center; gap:9px; width:100%; text-align:left; padding:10px 8px; border-bottom:1px solid var(--webui-border); border-radius:0; }
+            #sessions .name { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1; }
+            #sessions .status { font-size:10px; color:var(--webui-muted); }
+            .indicator { width:12px; height:12px; flex-shrink:0; display:grid; place-items:center; }
+            .dot { width:6px; height:6px; border-radius:50%; background:var(--webui-accent); display:inline-block; }
+            #chat-header { display:flex; align-items:center; gap:8px; padding:6px 8px; border-bottom:1px solid var(--webui-border); flex-shrink:0; }
+            #chat-title { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:500; }
             #notice:empty { display:none; } #notice { flex-shrink:0; max-height:65px; overflow:auto; margin:6px 10px; color:var(--webui-muted); font-size:12px; white-space:pre-wrap; }
             #messages { overflow:auto; flex:1; min-height:55px; padding:0 12px 8px; }
             .empty { padding:36px 5px; color:var(--webui-muted); } .empty h3 { color:var(--webui-text); font-size:15px; font-weight:500; margin:0 0 8px; } .empty p { line-height:1.6; margin:0; }
-            article { margin:12px 0; line-height:1.5; overflow-wrap:anywhere; } article[data-role=user] { padding:8px 10px; border-radius:8px; background:var(--webui-selected); }
-            article[data-role=tool] { margin:5px 0; color:var(--webui-muted); font-size:11px; } article[data-role=error] { border-left:2px solid #b55454; padding-left:8px; }
+            article { margin:12px 0; line-height:1.5; overflow-wrap:anywhere; width:fit-content; max-width:90%; padding:9px 12px; border-radius:10px; }
+            article[data-role=user] { margin-right:auto; background:var(--webui-selected); }
+            article[data-role=assistant] { margin-left:auto; background:var(--webui-subtle); border:1px solid var(--webui-border); }
+            .speaker { display:block; font-size:10px; font-weight:600; color:var(--webui-muted); margin-bottom:4px; }
+            .work { color:var(--webui-muted); font-size:11px; margin:8px 0; border-left:2px solid var(--webui-border); padding:5px 8px; }
+            .work p { margin:5px 0; } .proposal { color:var(--webui-text); padding:8px 0; } .proposal button { border:1px solid var(--webui-border); margin:5px 5px 0 0; }
+            article[data-role=error] { border-left:2px solid #b55454; padding-left:8px; }
             article p { white-space:pre-wrap; margin:0; } article small { display:block; color:var(--webui-muted); font-size:10px; }
             #activity { display:flex; flex-shrink:0; gap:7px; align-items:center; padding:5px 12px; font-size:12px; color:var(--webui-muted); }
             .spinner { border:1.5px solid var(--webui-border); border-top-color:var(--webui-accent); border-radius:50%; width:12px; height:12px; animation:spin 1s linear infinite; }
-            #proposals:empty { display:none; } #proposals { flex-shrink:0; min-height:32px; max-height:35%; overflow:auto; padding:0 12px; border-top:1px solid var(--webui-border); font-size:12px; }
             details { padding:7px 0; } summary { cursor:pointer; } pre { white-space:pre-wrap; overflow-wrap:anywhere; font:11px monospace; margin:6px 0; max-height:180px; overflow:auto; }
-            #proposals button { border:1px solid var(--webui-border); margin:0 5px 5px 0; }
             footer { flex-shrink:0; padding:8px; } .composer { border:1px solid var(--webui-input-border); border-radius:8px; background:var(--webui-subtle); }
             .composer:focus-within { border-color:var(--webui-accent); }
             textarea { display:block; width:100%; border:0; outline:none; background:transparent; padding:10px; resize:vertical; min-height:76px; max-height:200px; line-height:1.5; }
@@ -74,14 +89,14 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
             #state { min-height:14px; margin-top:4px; color:var(--webui-muted); font-size:10px; }
             #menu { position:fixed; z-index:100000; min-width:160px; max-width:230px; padding:4px; border:1px solid var(--webui-input-border); border-radius:5px; background:var(--webui-surface); box-shadow:0 4px 16px var(--webui-dialog-shadow); }
             #menu button { display:block; width:100%; text-align:left; font-size:12px; }
-            @keyframes spin { to { transform:rotate(360deg); } } @keyframes pulse { 50% { opacity:.35; } }
+            @keyframes spin { to { transform:rotate(360deg); } }
             @media(prefers-reduced-motion:reduce) { .spinner,.dot { animation:none; } }
         </style>
-        <div id="sessions" role="group" aria-label="AI sessions" title="Click a selected chat to return to a fresh draft. Right-click for chat actions."></div>
+        <div id="chat-header" hidden><button id="back" type="button" aria-label="Back to chats" title="Back to chats">${icon('<path d="m14 6-6 6 6 6"/>')}</button><span id="chat-title"></span></div>
         <div id="notice" role="status">Connecting to ioBroker AI…</div>
+        <div id="sessions" role="group" aria-label="Chats"></div>
         <div id="messages" role="log" aria-label="Conversation" aria-live="polite"></div>
         <div id="activity" role="status" hidden><span class="spinner" aria-hidden="true"></span><span id="activity-text"></span></div>
-        <div id="proposals" aria-label="Proposed screen changes"></div>
         <footer><div id="pending" aria-label="Pending messages"></div><div class="composer">
           <div id="attachments"></div><textarea id="prompt" rows="3" aria-label="Message to AI" placeholder="Describe your screen…"></textarea>
           <div class="controls"><button id="attach" type="button" title="Attach files" aria-label="Attach files">${icon('<path d="m8 13 6-6a3 3 0 0 1 4 4l-8 8a5 5 0 0 1-7-7l9-9a2 2 0 0 1 3 3l-8 8a1 1 0 0 1-2-2l7-7"/>')}</button>
@@ -95,6 +110,7 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         this.$('#provider').onchange = () => { this.session.provider = this.$('#provider').value; this.session.model = ''; this.changed(); void this.loadModels(); };
         this.$('#model').onchange = () => { this.session.model = this.$('#model').value; this.$('#model').title = this.session.model; this.changed(); };
         this.$('#delivery').onchange = () => this.renderState();
+        this.$('#back').onclick = () => this.selectSession();
         this.$('#send').onclick = () => void this.send();
         this.$('#stop').onclick = () => this.stop();
         this.$('#mic').onclick = () => this.dictate();
@@ -129,9 +145,11 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
             event.preventDefault();
             this.showMenu(event.clientX, event.clientY);
         };
+        this.visibilityObserver.observe(this);
+        document.addEventListener('visibilitychange', this.markRead);
         this.render();
     }
-    async initialize(socket, instance, workspace) {
+    async initialize(socket, instance, workspace, persistSessions = true) {
         if (this.initialized)
             return;
         this.initialized = true;
@@ -144,7 +162,7 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         catch {
             this.storageError = true;
         }
-        this.store = new AiSessionStore(`${location.origin}:${instance}:${user}`);
+        this.store = new AiSessionStore(`${location.origin}:${instance}:${user}`, persistSessions);
         try {
             const [saved, draft] = await Promise.all([this.store.load(), this.store.loadDraft()]);
             if (draft)
@@ -174,15 +192,16 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
     selectSession(id) {
         this.speech.cancel();
         this.closeMenu();
-        if (!id || id === this.selected) {
-            if (!this.draftSession.provider)
-                this.draftSession = this.createDraft(this.session);
-            this.selected = null;
+        if (!id && !this.draftSession.provider)
+            this.draftSession = this.createDraft(this.session);
+        this.selected = id ?? null;
+        if (id) {
+            this.session.unread = false;
+            this.changed();
         }
-        else
-            this.selected = id;
         this.notice('');
         this.render();
+        this.$('#messages').scrollTop = this.$('#messages').scrollHeight;
         void this.loadModels();
         this.$('#prompt').focus();
     }
@@ -206,7 +225,8 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
             button.onclick = () => { this.closeMenu(); action(); };
             menu.append(button);
         };
-        item('Start a fresh draft', () => this.selectSession());
+        if (this.selected)
+            item('Back to chats', () => this.selectSession());
         if (session) {
             item('Rename chat…', () => { const name = prompt('Chat name', session.title); if (name?.trim()) {
                 session.title = name.trim();
@@ -289,18 +309,22 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         container.replaceChildren();
         for (const session of this.sessions) {
             const button = document.createElement('button');
-            if (session.status === 'running') {
-                const dot = document.createElement('span');
-                dot.className = 'dot';
-                dot.setAttribute('aria-hidden', 'true');
-                button.append(dot);
+            const indicator = document.createElement('span');
+            indicator.className = 'indicator';
+            if (session.status === 'running' || session.unread) {
+                const mark = document.createElement('span');
+                mark.className = session.status === 'running' ? 'spinner' : 'dot';
+                mark.setAttribute('aria-hidden', 'true');
+                indicator.append(mark);
             }
             const name = document.createElement('span');
             name.className = 'name';
-            name.textContent = (session.status === 'error' ? '⚠ ' : '') + session.title;
-            button.append(name);
-            button.title = `${session.title} — ${session.status}. Right-click for actions.`;
-            button.setAttribute('aria-pressed', String(session.id === this.selected));
+            name.textContent = session.title;
+            const status = document.createElement('span');
+            status.className = 'status';
+            status.textContent = session.status === 'running' ? 'Running' : session.unread ? 'Unread' : session.status === 'error' ? 'Error' : '';
+            button.append(indicator, name, status);
+            button.title = `${session.title} — ${session.status}${session.unread ? ', unread' : ''}. Right-click for actions.`;
             button.onclick = () => this.selectSession(session.id);
             button.oncontextmenu = event => { event.preventDefault(); event.stopPropagation(); this.showMenu(event.clientX, event.clientY, session); };
             button.onkeydown = event => { if (event.key === 'ContextMenu' || (event.shiftKey && event.key === 'F10')) {
@@ -312,6 +336,10 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         }
     }
     renderState() {
+        this.$('#chat-header').hidden = !this.selected;
+        this.$('#chat-title').textContent = this.session.title;
+        this.$('#sessions').hidden = !!this.selected || !this.sessions.length;
+        this.$('#messages').hidden = !this.selected && !!this.sessions.length;
         const running = this.runs.has(this.session.id), hasDraft = !!this.session.draft.trim() || !!this.session.attachments.length;
         const send = this.$('#send');
         send.disabled = !this.session.model || !this.client || !hasDraft;
@@ -335,7 +363,6 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         this.renderProvider();
         this.renderModels();
         this.renderMessages();
-        this.renderProposals();
         this.renderAttachments();
         this.renderPending();
     }
@@ -346,13 +373,51 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         if (!this.session.entries.length) {
             const empty = document.createElement('div');
             empty.className = 'empty';
-            empty.innerHTML = '<h3>What would you like to build?</h3><p>Describe a screen, attach a reference, or dictate a message.</p><p>Select a chat above to continue it. Click the selected chat again for a fresh draft.</p>';
+            empty.innerHTML = '<h3>What would you like to build?</h3><p>Describe a screen, attach a reference, or dictate a message.</p>';
             container.append(empty);
         }
-        for (const entry of this.session.entries) {
+        const linked = new Set();
+        const latestStage = new Map(this.session.entries.map((entry, index) => [entry.proposalKey, index]));
+        let work;
+        for (const [index, entry] of this.session.entries.entries()) {
+            if (entry.role === 'tool') {
+                if (!work) {
+                    work = document.createElement('details');
+                    work.className = 'work';
+                    const key = `${this.session.id}:${index}`;
+                    work.open = this.expandedWork.has(key);
+                    const group = work;
+                    work.ontoggle = () => { if (group.isConnected) {
+                        if (group.open)
+                            this.expandedWork.add(key);
+                        else
+                            this.expandedWork.delete(key);
+                    } };
+                    const summary = document.createElement('summary');
+                    summary.textContent = 'AI work';
+                    work.append(summary);
+                    container.append(work);
+                }
+                const text = document.createElement('p');
+                text.textContent = entry.text;
+                work.append(text);
+                if (entry.proposalKey && latestStage.get(entry.proposalKey) === index) {
+                    const proposal = this.session.proposals.find(item => `${item.type}:${item.name}` === entry.proposalKey);
+                    if (proposal && !linked.has(entry.proposalKey)) {
+                        this.appendProposal(work, proposal);
+                        linked.add(entry.proposalKey);
+                    }
+                }
+                continue;
+            }
+            work = null;
             const article = document.createElement('article');
             article.dataset.role = entry.role;
             article.setAttribute('aria-label', entry.role);
+            const speaker = document.createElement('span');
+            speaker.className = 'speaker';
+            speaker.textContent = entry.role === 'user' ? 'You' : entry.role === 'assistant' ? 'AI' : 'Error';
+            article.append(speaker);
             const content = document.createElement('p');
             content.textContent = entry.text;
             article.append(content);
@@ -362,6 +427,17 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
                 article.append(state);
             }
             container.append(article);
+        }
+        const remaining = this.session.proposals.filter(item => !linked.has(`${item.type}:${item.name}`));
+        if (remaining.length) {
+            const details = document.createElement('details');
+            details.className = 'work';
+            const summary = document.createElement('summary');
+            summary.textContent = 'Proposed changes';
+            details.append(summary);
+            for (const proposal of remaining)
+                this.appendProposal(details, proposal);
+            container.append(details);
         }
         if (nearBottom)
             container.scrollTop = container.scrollHeight;
@@ -385,41 +461,45 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
             container.append(row);
         }
     }
-    renderProposals() {
-        const container = this.$('#proposals');
-        container.replaceChildren();
-        for (const proposal of this.session?.proposals ?? []) {
-            const details = document.createElement('details');
-            const title = document.createElement('summary');
-            title.textContent = `${proposal.type}: ${proposal.name} — ${proposal.status}`;
-            const before = document.createElement('pre');
-            before.textContent = 'BEFORE\n' + JSON.stringify(proposal.before, null, 2);
-            const after = document.createElement('pre');
-            after.textContent = 'PROPOSED\n' + JSON.stringify(proposal.data, null, 2);
-            const apply = document.createElement('button');
-            apply.textContent = 'Apply to editor';
-            apply.disabled = proposal.status !== 'pending' || this.session?.status === 'running';
-            apply.onclick = async () => {
-                apply.disabled = true;
-                try {
-                    await this.workspace.applyProposal(proposal);
-                    proposal.status = 'applied';
-                    this.notice('Applied to editor. Review the screen, then use Save to persist it.');
-                    this.changed();
-                    this.renderProposals();
-                }
-                catch (error) {
-                    this.notice(String(error));
-                    apply.disabled = false;
-                }
-            };
-            const discard = document.createElement('button');
-            discard.textContent = 'Discard';
-            discard.disabled = proposal.status !== 'pending' || this.session?.status === 'running';
-            discard.onclick = () => { proposal.status = 'discarded'; this.changed(); this.renderProposals(); };
-            details.append(title, before, after, apply, discard);
-            container.append(details);
-        }
+    appendProposal(container, proposal) {
+        const section = document.createElement('div');
+        section.className = 'proposal';
+        const title = document.createElement('div');
+        title.textContent = `${proposal.type}: ${proposal.name} — ${proposal.status}`;
+        const details = document.createElement('details');
+        const summary = document.createElement('summary');
+        summary.textContent = 'Review source changes';
+        const before = document.createElement('pre');
+        before.textContent = 'BEFORE\n' + JSON.stringify(proposal.before, null, 2);
+        const after = document.createElement('pre');
+        after.textContent = 'PROPOSED\n' + JSON.stringify(proposal.data, null, 2);
+        details.append(summary, before, after);
+        const apply = document.createElement('button');
+        apply.textContent = 'Apply to editor';
+        apply.disabled = proposal.status !== 'pending' || this.session.status === 'running';
+        apply.onclick = async () => {
+            apply.disabled = true;
+            try {
+                await this.workspace.applyProposal(proposal);
+                proposal.status = 'applied';
+                this.notice('Applied to editor. Review the screen, then use Save to persist it.');
+                this.changed();
+                this.renderMessages();
+            }
+            catch (error) {
+                this.notice(String(error));
+                apply.disabled = false;
+            }
+        };
+        const discard = document.createElement('button');
+        discard.textContent = 'Discard';
+        discard.disabled = proposal.status !== 'pending' || this.session.status === 'running';
+        discard.onclick = () => { proposal.status = 'discarded'; this.changed(); this.renderMessages(); };
+        section.append(title, details, apply, discard);
+        container.append(section);
+    }
+    viewing(session) {
+        return session.id === this.selected && document.visibilityState === 'visible' && this.checkVisibility({ visibilityProperty: true });
     }
     async attach(files) {
         const session = this.session;
@@ -534,7 +614,6 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
             this.renderState();
             if (session === this.session) {
                 this.renderMessages();
-                this.renderProposals();
                 this.renderPending();
             }
         };
@@ -547,12 +626,13 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
                 runTool: async (call, args) => {
                     const label = call.function.name.replaceAll('_', ' ');
                     this.activity.set(session.id, label + '…');
-                    session.entries.push({ role: 'tool', text: label + '…', pendingId: call.id });
+                    session.entries.push({ role: 'tool', text: label + '…', pendingId: call.id, proposalKey: call.function.name === 'stage_document' ? `${args.type}:${args.name}` : undefined });
                     refresh();
                     return context.run(call.function.name, args);
                 },
                 onAnswer: answer => { if (answer.content) {
                     session.entries.push({ role: 'assistant', text: answer.content });
+                    session.unread = !this.viewing(session);
                     refresh();
                 } },
                 onToolResult: (call, result) => {
@@ -571,6 +651,8 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
                 session.entries.push({ role: 'error', text: String(error) });
         }
         finally {
+            if (!this.viewing(session))
+                session.unread = true;
             this.runs.delete(session.id);
             this.activity.delete(session.id);
             refresh();
@@ -580,6 +662,8 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
     disconnectedCallback() { queueMicrotask(() => { if (!this.isConnected)
         this.dispose(); }); }
     dispose() {
+        this.visibilityObserver.disconnect();
+        document.removeEventListener('visibilitychange', this.markRead);
         this.disposed = true;
         this.speech.cancel();
         this.closeMenu();

@@ -36,7 +36,7 @@ export const fixtureConnection = {
         if (previousCalls < turn * 2 - 1) tool_calls = [{ id: 'fixture-tool-' + Date.now() + '-' + ++toolId, type: 'function', function: { name: 'read_document', arguments: '{"type":"screen","name":"smoke-screen"}' } }];
         else if (previousCalls < turn * 2) tool_calls = [{ id: 'fixture-tool-' + Date.now() + '-' + ++toolId, type: 'function', function: { name: 'stage_document', arguments: JSON.stringify({ type: 'screen', name: 'smoke-screen', html: '<h1>AI designed screen</h1><p bind-content:text="fixture.0.temperature"></p>', style: ':host { display:block; padding:24px; color:teal; }' }) } }];
         setTimeout(() => {
-            for (const callback of answerCallbacks) callback({ type: 'aiChatAnswer', requestId: request.requestId, success: true, content: tool_calls ? '' : 'The proposed screen is ready. Review it below, then apply it to the editor.', ...(tool_calls ? { tool_calls } : {}) });
+            for (const callback of answerCallbacks) callback({ type: 'aiChatAnswer', requestId: request.requestId, success: true, content: tool_calls ? '' : 'The proposed screen is ready. Expand AI work to review it, then apply it to the editor.', ...(tool_calls ? { tool_calls } : {}) });
         }, responseDelay);
         return { accepted: true, requestId: request.requestId };
     }

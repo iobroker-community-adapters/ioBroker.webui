@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="./node_modules/toastify-js/src/toastify.css">
   <link rel="stylesheet" href="./node_modules/@node-projects/monaco-editor-esm/min/vs/editor/editor.main.css">
 
-  <title>iobroker-webui designer</title>
+  <title>webui — automated test fixture (mock backend)</title>
 
   <script src="./node_modules/construct-style-sheets-polyfill/dist/adoptedStyleSheets.js"></script>
 
@@ -219,7 +219,7 @@ window.iobrokerSocketScriptUrl = '/test/browser/socket-stub.js';
 
 <body style="height: 100%;">
 <details style="position:absolute;bottom:0;right:0;z-index:99999;background:var(--webui-surface);font-size:11px">
-  <summary>Demo · Test controls</summary>
+  <summary>Test fixture · Mock backend</summary>
   <div><span id="fixture-status">Loading fixture</span><button id="fixture-ai">Show AI</button><button id="fixture-screen">Open sample screen</button><button id="fixture-edit">Manual change</button></div>
 </details>
   <nav>
@@ -260,7 +260,7 @@ window.iobrokerSocketScriptUrl = '/test/browser/socket-stub.js';
       <svg class="theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg>
     </button>
   </nav>
-  <iobroker-webui-app-shell id="shell">
+  <iobroker-webui-app-shell id="shell" temporary-ai-sessions>
   </iobroker-webui-app-shell>
   <div id="statusbar">
     <div>npm status:&nbsp;&nbsp;</div>

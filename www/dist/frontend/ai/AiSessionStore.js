@@ -1,9 +1,11 @@
 /** Browser-local, per-installation conversations. Storage errors leave the chat usable in memory. */
 export class AiSessionStore {
     scope;
+    persistent;
     database;
-    constructor(scope) {
+    constructor(scope, persistent = true) {
         this.scope = scope;
+        this.persistent = persistent;
     }
     open() {
         return this.database ??= new Promise((resolve, reject) => {
@@ -14,6 +16,8 @@ export class AiSessionStore {
         });
     }
     async loadDraft() {
+        if (!this.persistent)
+            return null;
         const db = await this.open();
         return new Promise((resolve, reject) => {
             const request = db.transaction('sessions').objectStore('sessions').get(this.scope + ':draft');
@@ -22,6 +26,8 @@ export class AiSessionStore {
         });
     }
     async load() {
+        if (!this.persistent)
+            return [];
         const db = await this.open();
         return new Promise((resolve, reject) => {
             const request = db.transaction('sessions').objectStore('sessions').get(this.scope);
@@ -30,6 +36,8 @@ export class AiSessionStore {
         });
     }
     async save(sessions, draft) {
+        if (!this.persistent)
+            return;
         const db = await this.open();
         return new Promise((resolve, reject) => {
             const transaction = db.transaction('sessions', 'readwrite');

@@ -265,7 +265,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
 
     await this._setupServiceContainer();
     void iobrokerHandler.waitForReady().then(() =>
-      this._aiDockElement.querySelector<IobrokerWebuiAiPanel>('#aiPanel').initialize(iobrokerHandler.connection, iobrokerHandler.namespace, new AiWorkspaceAdapter(this))
+      this._aiDockElement.querySelector<IobrokerWebuiAiPanel>('#aiPanel').initialize(iobrokerHandler.connection, iobrokerHandler.namespace, new AiWorkspaceAdapter(this), !this.hasAttribute('temporary-ai-sessions'))
     ).catch(error => console.error('Could not initialize AI assistant', error));
 
     let stateElement = <HTMLDivElement>document.getElementById('npmState');

@@ -1,6 +1,6 @@
 # Verification
 
-Last verified: 2026-08-21
+Last verified: 2026-11-10
 
 ## Commands
 
@@ -39,7 +39,7 @@ A standalone static `web-dev-server` does not provide a real ioBroker adapter ba
 - `npm run test:integration` passes four checks: adapter startup plus a local HTTP AI provider's discovery/models, multimodal/tool forwarding, and invalid-provider rejection. The provider test uses an isolated temporary ioBroker database and never contacts paid providers or the user's controller. Audit output from the harness's independently provisioned controller is distinct from the repository dependency audit.
 - Repository audit: `npm audit --omit=dev` reports zero; full audit retains four low findings in the development-server chain (see `dependency-upgrade-2026-11.md`). `npm outdated` lists only the intentional TypeScript 6 compatibility pin.
 - Browser fixture: run `npm run build`, start `./node_modules/.bin/web-dev-server --port 8099`, then open `/test/browser/designer-smoke.html`. It supplies deterministic ioBroker/AI responses, an example screen and a manual-edit button; it is not shipped in `www/`.
-- Verified in the browser: both themes, wrapped strips, AI auto-hide/re-pin/reopen, pasted screenshot preview, simultaneous running sessions, chat persistence across reload, existing/new screen Apply, source conflict refusal and rebase recovery. A plain HTTP LAN origin also completes a turn and applies a new screen, exercising the randomUUID fallback.
+- Verified in the browser: both themes, wrapped strips, AI auto-hide/re-pin/reopen, pasted screenshot preview, simultaneous running sessions, chat persistence across reload (before switching fixtures to temporary storage), existing/new screen Apply, source conflict refusal and rebase recovery. A plain HTTP LAN origin also completes a turn and applies a new screen, exercising the randomUUID fallback.
 - Live paid-provider quality, real ai-server installation, and a full authenticated production installation were not exercised. The configured development backend was unreachable from this environment; the fixture and isolated controller tests cover the implementation paths instead.
 
 ## AI composer / docking follow-up — 2026-11-10
@@ -47,3 +47,9 @@ A standalone static `web-dev-server` does not provide a real ioBroker adapter ba
 - Passed production build, type-checking, lint, and tests (34 frontend/helper + 46 package checks). New tests cover local AbortSignal cancellation, steering at request boundaries/final answers, queued ordering, Stop skipping tools/queued work, and speech result/permission/error handling.
 - Browser fixture verified: default right-edge AI rail, accessible Close/reopen with draft intact, first-Send chat creation, right-click deletion, editable running composer, steering/queue activity, immediate Stop, and fresh-draft persistence across reload. Shape popup foreground/background and icons were inspected in light and dark themes.
 - Speech UI was exercised with the opt-in simulated recognizer (`speechFixture=1`); no physical microphone was recorded. Live recognition remains dependent on browser support/permission. Fixture controls are collapsed and are not packaged in production.
+
+## AI chat list — 2026-11-10
+
+- Type-check, lint, compiled packaging, and tests pass (35 frontend/helper + 46 package checks). Temporary-session regression test runs without IndexedDB and verifies no fixture history is accessed.
+- Browser checks cover list → conversation → Back, concurrent activity rings, unread dots and clearing on open, collapsed inline tool/proposal review, and context-menu chat actions. Test chats are now temporary; reload starts clean.
+- The real development backend at the configured LAN address remains unreachable (HTTP connection timeout); browser verification uses an explicitly labelled isolated mock backend, never a replacement in the real app.

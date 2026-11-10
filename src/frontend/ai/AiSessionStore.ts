@@ -3,7 +3,7 @@ import type { AiSession } from './AiTypes.js';
 /** Browser-local, per-installation conversations. Storage errors leave the chat usable in memory. */
 export class AiSessionStore {
     private database: Promise<IDBDatabase>;
-    constructor(private readonly scope: string) { }
+    constructor(private readonly scope: string, private readonly persistent = true) { }
     private open() {
         return this.database ??= new Promise<IDBDatabase>((resolve, reject) => {
             const request = indexedDB.open('webui-ai-sessions', 1);
@@ -13,6 +13,7 @@ export class AiSessionStore {
         });
     }
     async loadDraft(): Promise<AiSession | null> {
+        if (!this.persistent) return null;
         const db = await this.open();
         return new Promise((resolve, reject) => {
             const request = db.transaction('sessions').objectStore('sessions').get(this.scope + ':draft');
@@ -21,6 +22,7 @@ export class AiSessionStore {
         });
     }
     async load(): Promise<AiSession[]> {
+        if (!this.persistent) return [];
         const db = await this.open();
         return new Promise((resolve, reject) => {
             const request = db.transaction('sessions').objectStore('sessions').get(this.scope);
@@ -29,6 +31,7 @@ export class AiSessionStore {
         });
     }
     async save(sessions: AiSession[], draft?: AiSession) {
+        if (!this.persistent) return;
         const db = await this.open();
         return new Promise<void>((resolve, reject) => {
             const transaction = db.transaction('sessions', 'readwrite');
