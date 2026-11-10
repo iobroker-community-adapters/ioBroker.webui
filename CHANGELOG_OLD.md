@@ -1,4 +1,7 @@
 # Older changes
+## 2.0.1 (2026-08-21)
+- fix node version
+
 ## 2.0.0 (2026-08-21)
 - package updates
 - code fixes

@@ -151,7 +151,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 2.3.0 (2026-11-10)
 - Expand AI context with current/open editors, selected screen elements, separate CSS/JavaScript, settings and component properties.
 - Add paged discovery of components, installed component APIs, signals, images, icons and chart presets, with on-demand image/icon previews for vision models.
 - Improve AI guidance for CSS bindings, converters and simple scripts, preferring the separate CSS/JavaScript fields.
@@ -176,9 +176,6 @@ runtime.html?screenName=screen2
 
 ### 2.0.2 (2026-08-21)
 - welcome screen array
-
-### 2.0.1 (2026-08-21)
-- fix node version
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 
