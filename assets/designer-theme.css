@@ -174,3 +174,12 @@ nav #themeToggle {
 .context_menu ul {
   color: var(--webui-text);
 }
+
+/* Menu actions use the same monochrome image assets as the toolbar. */
+.context_menu .context_menu_icon_span img {
+  filter: var(--webui-icon-filter, none);
+}
+
+.context_menu li[disabled] .context_menu_icon_span img {
+  opacity: .45;
+}
