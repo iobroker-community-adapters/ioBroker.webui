@@ -151,6 +151,17 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- Expand AI context with current/open editors, selected screen elements, separate CSS/JavaScript, settings and component properties.
+- Add paged discovery of components, installed component APIs, signals, images, icons and chart presets, with on-demand image/icon previews for vision models.
+- Improve AI guidance for CSS bindings, converters and simple scripts, preferring the separate CSS/JavaScript fields.
+- Apply AI proposals as one Undo/Redo step covering HTML, CSS, JavaScript, settings and properties while preserving earlier manual history.
+- Show proposal review and Apply/Discard actions below AI answers, outside collapsed work outputs.
+- Add chat message timestamps, elapsed thinking time and cost totals in the chat list/footer when explicitly reported.
+- Balance the default dock column widths and fix document context-menu colors in light/dark mode.
+- Keep detached screens, AI chats and tool/global-editor windows editable, including component drops, shared models, Save and Undo/Redo. Closing a popup returns its unsaved panel to the main editor.
+- Fix missing script command details, including SetSignalValue signal/target fields, by resolving scalar schema aliases.
+
 ### 2.2.0 (2026-11-10)
 - (copilot) Adapter requires node.js >= 22.19.0 now
 * (GermanBluefox) Repochecker warnings fixed (#563)
