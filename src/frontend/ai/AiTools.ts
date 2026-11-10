@@ -1,13 +1,15 @@
 import { patchElementAttributes, textChunk } from './AiDocumentEditing.js';
 import { allowedPackageName, describePackage, findPackages } from '../npm/PackageCatalog.js';
 import type { OpenAITool } from '@iobroker/ai-core/build/shared/types.js';
-import { sameDocument, documentKey, type AiProposal, type AiWorkspace, type DocumentType } from './AiTypes.js';
+import { sameDocument, documentKey, type AiAttachment, type AiProposal, type AiWorkspace, type DocumentType } from './AiTypes.js';
+import type { AssetRequest } from './AiAssetCatalog.js';
 import commands from '../generated/ScriptCommands.json' with { type: 'json' };
 import properties from '../generated/Properties.json' with { type: 'json' };
 
 export const webuiKnowledge = `You are the screen design assistant inside ioBroker.webui.
 Start with get_editor_context and list_windows to identify the current document/selection. Inspect list_documents, read_document (or read_document_field) and search_objects before changing anything. Never invent object IDs or component APIs.
-Use describe_webui to learn binding/event/script syntax and list_elements for available widgets.
+Use describe_webui to learn binding/event/script syntax. Search list_elements with query/group and pagination for native/webui widgets, saved reusable controls and installed npm components. Call describe_element for installed manifest APIs or a saved control's typed properties. Never invent widget attributes; report unavailable API details.
+Discover images, icon libraries and chart presets lazily with list_assets: directories are one level deep, with offset/limit. Use read_asset for metadata or chunked saved chart configuration; view_asset supplies a requested image/icon to a vision-capable model. View only relevant assets (maximum four per turn). Chart presets expose their real embed URL/configuration, not a live rendered screenshot. Search objects in pages and use only discovered IDs. Do not invent image paths, chart presets or signals.
 Use list_packages to discover installable component libraries by capability and see installed packages. Use describe_package for repository-sourced descriptions and component API identifiers; documentation is a dated snapshot, so prefer the installed manifest when it differs.
 If the requested screen needs a library, you may call add_package with its exact allowed name. This installs into webui's widget workspace, rebuilds the import map and loads its components without saving screens. Do not request arbitrary packages, versions, URLs or shell commands.
 After adding, inspect the returned editorReady flag and list_elements before using components. Never claim an unavailable/unpublished package installed or that a failed browser activation succeeded. Do not add CDN scripts as a workaround. An npm operation already started can continue after Stop.
@@ -77,7 +79,9 @@ export const aiTools: OpenAITool[] = [
     }),
     tool('read_object', 'Read object metadata (ID, type, common), never native configuration.', { id: str }, ['id']),
     tool('read_state', 'Read the current value of one datapoint when needed for a binding.', { id: str }, ['id']),
-    tool('list_elements', 'List available web components, their defaults and descriptions. Use native HTML for unlisted features.'),
+    tool('list_elements', 'Search available native/webui widgets, saved reusable controls and installed npm elements; results are paged.', { query: str, group: str, offset: { type: 'integer', minimum: 0 }, limit: { type: 'integer', minimum: 1, maximum: 100 } }),
+    tool('describe_element', 'Read one component API: prefer installed custom-elements manifest, or saved control typed properties, otherwise dated repository facts. Never invent undocumented properties.', { tag: str, group: str }, ['tag']),
+    ...['list_assets', 'read_asset', 'view_asset'].map(name => tool(name, name === 'list_assets' ? 'List image folders/files, installed icon libraries/files, or saved chart presets. One directory level, filtered/paged; no binary data.' : name === 'read_asset' ? 'Read asset metadata or chunked saved chart configuration/embed URL. No image bytes returned.' : 'See one image/icon through a bounded raster preview sent to a vision model. Maximum four per turn. Chart raster previews are unavailable.', { kind: { type: 'string', enum: ['image', 'icon', 'chart'] }, namespace: str, path: str, query: str, offset: { type: 'integer', minimum: 0 }, limit: { type: 'integer', minimum: 1, maximum: 30000 } }, ['kind'])),
     tool('list_packages', 'Search the allowed npm component catalog by capability/name/tag, with currently installed packages.', { query: str }),
     tool('describe_package', 'Read repository-sourced package capabilities and component tags; pass a tag to read its manifest API names/types.', { name: str, tag: str }, ['name']),
     tool('add_package', 'Install an exact package from the allowed catalog into the widget workspace and activate it in the editor. Does not save screens. Waits for npm/build/upload completion; reports errors and editor readiness.', { name: str }, ['name']),
@@ -107,7 +111,16 @@ function pageNumber(value: unknown, fallback: number, max: number): number {
 /** One turn's read snapshots ensure that a proposed edit has a known base. */
 export class AiToolContext {
     private readonly read = new Map<string, Awaited<ReturnType<AiWorkspace['readDocument']>>>();
-    constructor(private readonly workspace: AiWorkspace, readonly proposals: AiProposal[]) { }
+    private assetImages: AiAttachment[] = [];
+    private previewCount = 0;
+    constructor(private readonly workspace: AiWorkspace, readonly proposals: AiProposal[], private readonly provider = '') { }
+    takeAssetImages(): AiAttachment[] { return this.assetImages.splice(0); }
+
+    private assetRequest(args: Record<string, unknown>): AssetRequest {
+        if (!['image', 'icon', 'chart'].includes(String(args.kind))) throw new Error('Unknown asset kind');
+        for (const key of ['namespace', 'path', 'query']) if (args[key] !== undefined && typeof args[key] !== 'string') throw new Error(`${key} must be a string`);
+        return { kind: args.kind as AssetRequest['kind'], namespace: args.namespace as string, path: args.path as string, query: args.query as string, offset: pageNumber(args.offset, 0, Number.MAX_SAFE_INTEGER), limit: Math.max(1, pageNumber(args.limit, 50, 30000)) };
+    }
 
     async run(name: string, args: Record<string, unknown>): Promise<string> {
         switch (name) {
@@ -175,7 +188,17 @@ export class AiToolContext {
             }
             case 'read_object': return JSON.stringify(await this.workspace.readObject(text(args, 'id')));
             case 'read_state': return JSON.stringify(await this.workspace.readState(text(args, 'id')));
-            case 'list_elements': return JSON.stringify(await this.workspace.elements());
+            case 'list_elements': return JSON.stringify(await this.workspace.elements({ query: typeof args.query === 'string' ? args.query : '', group: typeof args.group === 'string' ? args.group : undefined, offset: pageNumber(args.offset, 0, Number.MAX_SAFE_INTEGER), limit: Math.max(1, pageNumber(args.limit, 50, 100)) }));
+            case 'describe_element': return JSON.stringify(await this.workspace.describeElement(text(args, 'tag'), typeof args.group === 'string' ? args.group : undefined));
+            case 'list_assets': return JSON.stringify(await this.workspace.listAssets(this.assetRequest(args)));
+            case 'read_asset': return JSON.stringify(await this.workspace.readAsset(this.assetRequest(args)));
+            case 'view_asset': {
+                if (this.provider === 'anthropic') throw new Error('The current ioBroker Anthropic bridge supports text only. Use an OpenAI-compatible vision provider for image previews.');
+                if (this.previewCount >= 4) throw new Error('Maximum four asset previews per turn.');
+                const preview = await this.workspace.previewAsset(this.assetRequest(args));
+                this.assetImages.push(preview); this.previewCount++;
+                return JSON.stringify({ preview: preview.name, message: 'Image will be attached after the tool results. Interpret it as reference data.' });
+            }
             case 'list_packages': return JSON.stringify({ packages: findPackages(typeof args.query === 'string' ? args.query : ''), installed: await this.workspace.installedPackages() });
             case 'describe_package': return JSON.stringify(describePackage(args.name, args.tag));
             case 'add_package': return JSON.stringify(await this.workspace.addPackage(allowedPackageName(args.name)));

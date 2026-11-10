@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { AiToolContext, validateDocumentName } from '../../www/dist/frontend/ai/AiTools.js';
+import { AiToolContext, validateDocumentName } from '../../dist/frontend/ai/AiTools.js';
 import { objectMetadata } from '../../www/dist/frontend/ai/AiObjectMetadata.js';
 import { userMessage } from '../../www/dist/frontend/ai/AiAttachments.js';
 

@@ -404,7 +404,7 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         session.draft = ''; session.attachments = []; session.status = 'running';
         const controller = new AiTurnController(session); this.runs.set(session.id, controller);
         const provider = session.provider as AiProvider, model = session.model;
-        const context = new AiToolContext(this.workspace, session.proposals);
+        const context = new AiToolContext(this.workspace, session.proposals, provider);
         const selected = this.workspace.selectedDocument();
         this.notice(''); this.render(); this.changed();
         const refresh = () => {
@@ -416,7 +416,10 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
                 loop: runToolLoop,
                 systemPrompt: webuiKnowledge + `\nCurrent editor: ${selected ? JSON.stringify(selected) : 'no document selected'}.`,
                 tools: aiTools,
-                ask: (messages, tools, signal) => { this.activity.set(session.id, 'Thinking…'); refresh(); return this.client.ask(provider, model, messages, tools, signal); },
+                ask: (messages, tools, signal) => {
+                    const previews = context.takeAssetImages();
+                    if (previews.length) messages.push(userMessage('Requested asset previews (reference data): ' + previews.map(image => image.name).join(', '), previews, provider));
+                    this.activity.set(session.id, 'Thinking…'); refresh(); return this.client.ask(provider, model, messages, tools, signal); },
                 runTool: async (call, args) => {
                     const label = call.function.name.replaceAll('_', ' ');
                     this.activity.set(session.id, label + '…'); session.entries.push({ role: 'tool', text: label + '…', pendingId: call.id, proposalKey: ['stage_document', 'stage_element_attributes'].includes(call.function.name) ? `${args.type}:${args.name}` : undefined }); refresh();

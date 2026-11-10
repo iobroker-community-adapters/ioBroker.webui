@@ -1,4 +1,5 @@
 import type { OpenAIMessage, AiProvider } from '@iobroker/ai-core/build/shared/types.js';
+import type { AssetRequest } from './AiAssetCatalog.js';
 import type { IScreen } from '../interfaces/IScreen.js';
 
 export type DocumentType = 'screen' | 'control';
@@ -34,7 +35,11 @@ export interface AiWorkspace {
     readWindow(id: string, offset?: number, limit?: number): Promise<unknown>;
     selectedDocument(): { type: DocumentType; name: string } | null;
     globalContext(): unknown;
-    elements(): Promise<unknown>;
+    elements(options?: { query?: string; group?: string; offset?: number; limit?: number }): Promise<unknown>;
+    describeElement(tag: string, group?: string): Promise<unknown>;
+    listAssets(request: AssetRequest): Promise<unknown>;
+    readAsset(request: AssetRequest): Promise<unknown>;
+    previewAsset(request: AssetRequest): Promise<AiAttachment>;
     installedPackages(): Promise<Record<string, string>>;
     addPackage(name: string): Promise<unknown>;
     searchObjects(type: string, query: string, offset: number, limit: number): Promise<unknown>;
