@@ -35,3 +35,14 @@ for (const [label, Component] of [['box shadow', BoxShadowEditorWindow], ['text 
     const button = document.createElement('button'); button.textContent = 'Review ' + label;
     button.onclick = () => Component.showWindow(new Component()); controls.append(button);
 }
+
+review('Review command details', async (shell, instance) => {
+    const editor = new SimpleScriptEditor();
+    editor.serviceContainer = shell.serviceContainer; editor.instanceServiceContainer = instance; editor.visualizationShell = shell;
+    const { iobrokerHandler } = await importShim('./dist/frontend/common/IobrokerHandler.js');
+    editor.visualizationHandler = iobrokerHandler;
+    editor.scriptCommandsTypeInfo = await (await fetch('./dist/frontend/generated/ScriptCommands.json')).json();
+    editor.propertiesTypeInfo = await (await fetch('./dist/frontend/generated/Properties.json')).json();
+    editor.loadScript({ commands: [{type:'SetSignalValue',signal:'fixture.0.temperature',target:'signal',value:22},{type:'Delay',value:500}] });
+    return editor;
+}, 900, 650);

@@ -11,7 +11,13 @@
                     "type": "string"
                 },
                 "target": {
-                    "$ref": "#/definitions/signalTarget"
+                    "description": "signal - a signal (the default)\nproperty - a property defined in the current screen/control\nelementProperty - a property defined on the element raising the event",
+                    "enum": [
+                        "elementProperty",
+                        "property",
+                        "signal"
+                    ],
+                    "type": "string"
                 },
                 "targetSignal": {
                     "description": "Name of the signal",
@@ -46,7 +52,13 @@
                     "type": "string"
                 },
                 "target": {
-                    "$ref": "#/definitions/signalTarget",
+                    "description": "signal - a signal (the default)\nproperty - a property defined in the current screen/control\nelementProperty - a property defined on the element raising the event",
+                    "enum": [
+                        "elementProperty",
+                        "property",
+                        "signal"
+                    ],
+                    "type": "string",
                     "default": 0
                 },
                 "type": {
@@ -255,7 +267,13 @@
                     "type": "string"
                 },
                 "target": {
-                    "$ref": "#/definitions/signalTarget"
+                    "description": "signal - a signal (the default)\nproperty - a property defined in the current screen/control\nelementProperty - a property defined on the element raising the event",
+                    "enum": [
+                        "elementProperty",
+                        "property",
+                        "signal"
+                    ],
+                    "type": "string"
                 },
                 "type": {
                     "const": "DecrementSignalValue",
@@ -477,7 +495,13 @@
                     "type": "string"
                 },
                 "target": {
-                    "$ref": "#/definitions/signalTarget"
+                    "description": "signal - a signal (the default)\nproperty - a property defined in the current screen/control\nelementProperty - a property defined on the element raising the event",
+                    "enum": [
+                        "elementProperty",
+                        "property",
+                        "signal"
+                    ],
+                    "type": "string"
                 },
                 "type": {
                     "const": "IncrementSignalValue",
@@ -1026,7 +1050,13 @@
                     "type": "string"
                 },
                 "target": {
-                    "$ref": "#/definitions/signalTarget",
+                    "description": "signal - a signal (the default)\nproperty - a property defined in the current screen/control\nelementProperty - a property defined on the element raising the event",
+                    "enum": [
+                        "elementProperty",
+                        "property",
+                        "signal"
+                    ],
+                    "type": "string",
                     "default": 0
                 },
                 "type": {
@@ -1123,7 +1153,13 @@
                     "type": "string"
                 },
                 "target": {
-                    "$ref": "#/definitions/signalTarget"
+                    "description": "signal - a signal (the default)\nproperty - a property defined in the current screen/control\nelementProperty - a property defined on the element raising the event",
+                    "enum": [
+                        "elementProperty",
+                        "property",
+                        "signal"
+                    ],
+                    "type": "string"
                 },
                 "type": {
                     "const": "SetSignalValue",
@@ -1320,7 +1356,13 @@
                     "type": "string"
                 },
                 "target": {
-                    "$ref": "#/definitions/signalTarget",
+                    "description": "signal - a signal (the default)\nproperty - a property defined in the current screen/control\nelementProperty - a property defined on the element raising the event",
+                    "enum": [
+                        "elementProperty",
+                        "property",
+                        "signal"
+                    ],
+                    "type": "string",
                     "default": 0
                 },
                 "type": {
@@ -1348,7 +1390,13 @@
                     "type": "string"
                 },
                 "target": {
-                    "$ref": "#/definitions/signalTarget"
+                    "description": "signal - a signal (the default)\nproperty - a property defined in the current screen/control\nelementProperty - a property defined on the element raising the event",
+                    "enum": [
+                        "elementProperty",
+                        "property",
+                        "signal"
+                    ],
+                    "type": "string"
                 },
                 "type": {
                     "const": "ToggleSignalValue",
@@ -1374,7 +1422,13 @@
                     "type": "string"
                 },
                 "target": {
-                    "$ref": "#/definitions/signalTarget"
+                    "description": "signal - a signal (the default)\nproperty - a property defined in the current screen/control\nelementProperty - a property defined on the element raising the event",
+                    "enum": [
+                        "elementProperty",
+                        "property",
+                        "signal"
+                    ],
+                    "type": "string"
                 },
                 "type": {
                     "const": "ToggleSignalValueThroughList",
@@ -1574,4 +1628,3 @@
         }
     }
 }
-

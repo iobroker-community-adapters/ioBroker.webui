@@ -38,7 +38,14 @@ if (positional.length < 2) {
   throw new Error("Usage: typescript-json-schema.cjs <path-to-typescript-files-or-tsconfig> <type>");
 }
 
-exec(positional[0], positional[1], args).catch((error) => {
+exec(positional[0], positional[1], args).then(async () => {
+  if (args.out) {
+    const fs = require("node:fs/promises");
+    const { inlineSchemaScalars } = await import("./inline-schema-scalars.mjs");
+    const schema = JSON.parse(await fs.readFile(args.out, "utf8"));
+    await fs.writeFile(args.out, JSON.stringify(inlineSchemaScalars(schema), null, 4) + "\n");
+  }
+}).catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });

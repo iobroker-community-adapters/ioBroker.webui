@@ -163,7 +163,18 @@
                     "type": "string"
                 },
                 "target": {
-                    "$ref": "#/definitions/BindingTarget"
+                    "enum": [
+                        "explicitProperty",
+                        "property",
+                        "attribute",
+                        "class",
+                        "css",
+                        "cssvar",
+                        "event",
+                        "content",
+                        "visible"
+                    ],
+                    "type": "string"
                 },
                 "twoWay": {
                     "type": "boolean"
