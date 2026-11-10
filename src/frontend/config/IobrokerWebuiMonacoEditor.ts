@@ -204,7 +204,13 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
     }
 
     async executeCommand(command: Omit<IUiCommand, 'type'> & { type: string }) {
+        if (['undo', 'redo', 'copy', 'paste', 'cut', 'delete'].includes(command.type)) {
+            this[command.type as 'undo' | 'redo' | 'copy' | 'paste' | 'cut' | 'delete']();
+            return;
+        }
         if (command.type == 'save') {
+            const owner = window.appShell.getScreenEditors().find(editor => editor.scriptModel === this.model || editor.documentContainer.additionalData?.model === this.model);
+            if (owner) { await owner.executeCommand(command as IUiCommand); return; }
             if (this.language === 'css') {
                 if (this.editPart === 'globalStyle')
                     iobrokerHandler.config.globalStyle = this.model.getValue();
@@ -218,8 +224,8 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
     }
 
     canExecuteCommand(command: Omit<IUiCommand, 'type'> & { type: string }): boolean {
-        if (command.type == 'save')
-            return true;
+        if (['save', 'undo', 'redo', 'copy', 'paste', 'cut', 'delete'].includes(command.type))
+            return !!this._editor && !!this.model;
         return false;
     }
 

@@ -223,7 +223,7 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         const menu = this.$('#menu');
         menu.replaceChildren();
         const item = (text, action) => {
-            const button = document.createElement('button');
+            const button = this.ownerDocument.createElement('button');
             button.setAttribute('role', 'menuitem');
             button.textContent = text;
             button.onclick = () => { this.closeMenu(); action(); };
@@ -242,12 +242,13 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         item('Reload providers and models', () => void this.refresh());
         menu.hidden = false;
         const bounds = menu.getBoundingClientRect();
-        menu.style.left = Math.max(4, Math.min(x, innerWidth - bounds.width - 4)) + 'px';
-        menu.style.top = Math.max(4, Math.min(y, innerHeight - bounds.height - 4)) + 'px';
+        menu.style.left = Math.max(4, Math.min(x, this.ownerDocument.defaultView.innerWidth - bounds.width - 4)) + 'px';
+        menu.style.top = Math.max(4, Math.min(y, this.ownerDocument.defaultView.innerHeight - bounds.height - 4)) + 'px';
         const dismiss = (event) => { if (!event.composedPath().includes(menu))
             this.closeMenu(); };
         const key = (event) => { if (event.key === 'Escape')
             this.closeMenu(); };
+        const document = this.ownerDocument;
         document.addEventListener('pointerdown', dismiss, true);
         document.addEventListener('keydown', key, true);
         this.menuCleanup = () => { document.removeEventListener('pointerdown', dismiss, true); document.removeEventListener('keydown', key, true); };
@@ -312,27 +313,27 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         const container = this.$('#sessions');
         container.replaceChildren();
         for (const session of this.sessions) {
-            const button = document.createElement('button');
-            const indicator = document.createElement('span');
+            const button = this.ownerDocument.createElement('button');
+            const indicator = this.ownerDocument.createElement('span');
             indicator.className = 'indicator';
             if (session.status === 'running' || session.unread) {
-                const mark = document.createElement('span');
+                const mark = this.ownerDocument.createElement('span');
                 mark.className = session.status === 'running' ? 'spinner' : 'dot';
                 mark.setAttribute('aria-hidden', 'true');
                 indicator.append(mark);
             }
-            const name = document.createElement('span');
+            const name = this.ownerDocument.createElement('span');
             name.className = 'name';
             name.textContent = session.title;
-            const status = document.createElement('span');
+            const status = this.ownerDocument.createElement('span');
             status.className = 'status';
             status.textContent = session.status === 'running' ? 'Running' : session.unread ? 'Unread' : session.status === 'error' ? 'Error' : '';
-            const info = document.createElement('span');
+            const info = this.ownerDocument.createElement('span');
             info.className = 'session-info';
             info.append(name);
             const cost = costSummary(session);
             if (cost) {
-                const label = document.createElement('span');
+                const label = this.ownerDocument.createElement('span');
                 label.className = 'cost';
                 label.textContent = cost;
                 info.append(label);
@@ -388,7 +389,7 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         const nearBottom = container.scrollHeight - container.clientHeight - container.scrollTop < 60;
         container.replaceChildren();
         if (!this.session.entries.length) {
-            const empty = document.createElement('div');
+            const empty = this.ownerDocument.createElement('div');
             empty.className = 'empty';
             empty.innerHTML = '<h3>What would you like to build?</h3><p>Describe a screen, attach a reference, or dictate a message.</p>';
             container.append(empty);
@@ -411,7 +412,7 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         for (const [index, entry] of this.session.entries.entries()) {
             if (entry.role === 'tool') {
                 if (!work) {
-                    work = document.createElement('details');
+                    work = this.ownerDocument.createElement('details');
                     work.className = 'work';
                     const key = `${this.session.id}:${index}`;
                     work.open = this.expandedWork.has(key);
@@ -422,36 +423,36 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
                         else
                             this.expandedWork.delete(key);
                     } };
-                    const summary = document.createElement('summary');
+                    const summary = this.ownerDocument.createElement('summary');
                     summary.textContent = 'AI work';
                     work.append(summary);
                     container.append(work);
                 }
-                const text = document.createElement('p');
+                const text = this.ownerDocument.createElement('p');
                 text.textContent = entry.text;
                 work.append(text);
                 continue;
             }
             work = null;
-            const article = document.createElement('article');
+            const article = this.ownerDocument.createElement('article');
             article.dataset.role = entry.role;
             article.setAttribute('aria-label', entry.role);
-            const speaker = document.createElement('span');
+            const speaker = this.ownerDocument.createElement('span');
             speaker.className = 'speaker';
             speaker.textContent = entry.role === 'user' ? 'You' : entry.role === 'assistant' ? 'AI' : 'Error';
             article.append(speaker);
-            const content = document.createElement('p');
+            const content = this.ownerDocument.createElement('p');
             content.textContent = entry.text;
             article.append(content);
             if (entry.delivery) {
-                const state = document.createElement('small');
+                const state = this.ownerDocument.createElement('small');
                 state.textContent = entry.delivery === 'steer' ? 'Steering · next safe step' : entry.delivery === 'queue' ? 'Queued · after this turn' : 'Not sent';
                 article.append(state);
             }
-            const metadata = document.createElement('small');
+            const metadata = this.ownerDocument.createElement('small');
             metadata.className = 'metadata';
             if (Number.isFinite(entry.timestamp) && Number.isFinite(new Date(entry.timestamp).getTime())) {
-                const date = new Date(entry.timestamp), time = document.createElement('time');
+                const date = new Date(entry.timestamp), time = this.ownerDocument.createElement('time');
                 time.dateTime = date.toISOString();
                 time.textContent = date.toLocaleString();
                 time.title = date.toLocaleString();
@@ -478,14 +479,14 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         const container = this.$('#pending');
         container.replaceChildren();
         for (const message of this.session.pendingMessages ?? []) {
-            const row = document.createElement('div');
+            const row = this.ownerDocument.createElement('div');
             row.className = 'pending';
-            const edit = document.createElement('button');
+            const edit = this.ownerDocument.createElement('button');
             edit.className = 'edit';
             edit.textContent = `${message.mode === 'steer' ? 'Steer' : 'Queued'} · ${message.text}`;
             edit.title = 'Edit pending message';
             edit.onclick = () => { this.runs.get(this.session.id)?.remove(message.id); this.session.draft = message.draft ?? message.text; this.session.attachments = structuredClone(message.attachments ?? []); this.$('#prompt').value = this.session.draft; this.changed(); this.renderPending(); this.renderAttachments(); this.renderMessages(); this.renderState(); };
-            const remove = document.createElement('button');
+            const remove = this.ownerDocument.createElement('button');
             remove.textContent = '×';
             remove.ariaLabel = 'Remove pending message';
             remove.onclick = () => { this.runs.get(this.session.id)?.remove(message.id); this.changed(); this.renderPending(); this.renderMessages(); };
@@ -494,19 +495,19 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         }
     }
     appendProposal(container, proposal) {
-        const section = document.createElement('div');
+        const section = this.ownerDocument.createElement('div');
         section.className = 'proposal';
-        const title = document.createElement('div');
+        const title = this.ownerDocument.createElement('div');
         title.textContent = `${proposal.type}: ${proposal.name} — ${proposal.status}`;
-        const details = document.createElement('details');
-        const summary = document.createElement('summary');
+        const details = this.ownerDocument.createElement('details');
+        const summary = this.ownerDocument.createElement('summary');
         summary.textContent = 'Review source changes';
-        const before = document.createElement('pre');
+        const before = this.ownerDocument.createElement('pre');
         before.textContent = 'BEFORE\n' + JSON.stringify(proposal.before, null, 2);
-        const after = document.createElement('pre');
+        const after = this.ownerDocument.createElement('pre');
         after.textContent = 'PROPOSED\n' + JSON.stringify(proposal.data, null, 2);
         details.append(summary, before, after);
-        const apply = document.createElement('button');
+        const apply = this.ownerDocument.createElement('button');
         apply.textContent = 'Apply to editor';
         apply.disabled = proposal.status !== 'pending' || this.session.status === 'running';
         apply.onclick = async () => {
@@ -523,7 +524,7 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
                 apply.disabled = false;
             }
         };
-        const discard = document.createElement('button');
+        const discard = this.ownerDocument.createElement('button');
         discard.textContent = 'Discard';
         discard.disabled = proposal.status !== 'pending' || this.session.status === 'running';
         discard.onclick = () => { proposal.status = 'discarded'; this.changed(); this.renderMessages(); };
@@ -531,7 +532,7 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         container.append(section);
     }
     viewing(session) {
-        return session.id === this.selected && document.visibilityState === 'visible' && this.checkVisibility({ visibilityProperty: true });
+        return session.id === this.selected && this.ownerDocument.visibilityState === 'visible' && this.checkVisibility({ visibilityProperty: true });
     }
     async attach(files) {
         const session = this.session;
@@ -556,15 +557,15 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         const container = this.$('#attachments');
         container.replaceChildren();
         for (const [index, attachment] of this.session.attachments.entries()) {
-            const row = document.createElement('span');
+            const row = this.ownerDocument.createElement('span');
             row.className = 'attachment';
             if (attachment.type.startsWith('image/')) {
-                const image = document.createElement('img');
+                const image = this.ownerDocument.createElement('img');
                 image.src = attachment.content;
                 image.alt = attachment.name;
                 row.append(image);
             }
-            const button = document.createElement('button');
+            const button = this.ownerDocument.createElement('button');
             button.textContent = `${attachment.name} ×`;
             button.title = 'Remove attachment';
             button.onclick = () => { this.session.attachments.splice(index, 1); this.changed(); this.renderAttachments(); this.renderState(); };
@@ -700,11 +701,17 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         }
     }
     stopSpeechInput() { this.speech.cancel(); this.renderState(); }
+    adoptedCallback(oldDocument, newDocument) {
+        oldDocument.removeEventListener('visibilitychange', this.markRead);
+        newDocument.addEventListener('visibilitychange', this.markRead);
+        this.closeMenu();
+        this.speech.cancel();
+    }
     disconnectedCallback() { queueMicrotask(() => { if (!this.isConnected)
         this.dispose(); }); }
     dispose() {
         this.visibilityObserver.disconnect();
-        document.removeEventListener('visibilitychange', this.markRead);
+        this.ownerDocument.removeEventListener('visibilitychange', this.markRead);
         this.disposed = true;
         this.speech.cancel();
         this.closeMenu();

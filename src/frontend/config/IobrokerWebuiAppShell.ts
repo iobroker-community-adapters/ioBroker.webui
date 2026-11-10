@@ -6,7 +6,7 @@ iobrokerHandler.init();
 const scriptSystem = new IobrokerWebuiScriptSystem(iobrokerHandler);
 const bindingsHelper = new BindingsHelper(iobrokerHandler);
 
-import { PropertyGridWithHeader, RefactorView, ServiceContainer, ValueType } from '@node-projects/web-component-designer';
+import { PropertyGridWithHeader, RefactorView, ServiceContainer, ValueType, type IUiCommandHandler } from '@node-projects/web-component-designer';
 import { BindableObjectsBrowser, TreeViewExtended } from '@node-projects/web-component-designer-widgets-wunderbaum';
 
 import './ConfigureMonacoEnvironment.js';
@@ -34,6 +34,7 @@ import { getPanelContainerForElement } from './DockHelper.js';
 import '../ai/IobrokerWebuiAiPanel.js';
 type IobrokerWebuiAiPanel = import('../ai/IobrokerWebuiAiPanel.js').IobrokerWebuiAiPanel;
 import { AiWorkspaceAdapter } from '../ai/AiWorkspaceAdapter.js';
+import { DetachedWindowSupport } from './DetachedWindowSupport.js';
 import { fitDialogPosition } from '../helper/DialogPositionHelper.js';
 import { IobrokerWebuiPropertyGrid } from './IobrokerWebuiPropertyGrid.js';
 import { typeInfoFromJsonSchema } from '@node-projects/propertygrid.webcomponent';
@@ -235,6 +236,15 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     // Configure before the webcomponent builds its initial panels (deferred initialization).
     this._dockManager.config.tabStripMode = 'wrap';
     this._dockManager.config.enableAutoHide = true;
+    this.detachedWindows = new DetachedWindowSupport(this._dockManager, this._dock, element => {
+      const code = element instanceof IobrokerWebuiMonacoEditor ? element : element.querySelector<IobrokerWebuiMonacoEditor>('iobroker-webui-monaco-editor');
+      return code ?? element as HTMLElement & Partial<IUiCommandHandler>;
+    }, element => {
+      if (element === this._aiDockElement) {
+        const panel = this._dockManager.getPanels().find(panel => panel.resolvedElementContent === element);
+        if (panel) { this.configureAiPanel(panel); panel.setAutoHide(true, 'right'); }
+      }
+    });
     this.serviceContainer = serviceContainer;
     new CommandHandling(this._dockManager, this, serviceContainer);
 
@@ -244,19 +254,20 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       },
       onActiveDocumentChange: async (manager, panel, previousPanel) => {
         if (previousPanel) {
-          let element = this._dock.getElementInSlot((<HTMLSlotElement><any>previousPanel.elementContent));
+          let element = previousPanel.resolvedElementContent;
           if ((<any>element)?.deactivated)
             (<any>element)?.deactivated();
         }
         if (panel) {
-          let element = this._dock.getElementInSlot((<HTMLSlotElement><any>panel.elementContent));
+          let element = panel.resolvedElementContent;
           if ((<any>element)?.activated)
             (<any>element)?.activated();
         }
       },
       onClosePanel: (manager, panel) => {
+        if (panel?.undockedToNewBrowserWindow) return;
         if (panel) {
-          let element = this._dock.getElementInSlot((<HTMLSlotElement><any>panel.elementContent));
+          let element = panel.resolvedElementContent;
           if (element === this._aiDockElement) {
             // Park the live chat outside the dock so closing it preserves running sessions.
             element.querySelector<IobrokerWebuiAiPanel>('#aiPanel')?.stopSpeechInput();
@@ -384,6 +395,12 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     }
   }
 
+  private detachedWindows: DetachedWindowSupport;
+
+  private getAllPanels() {
+    return [...new Set([...this._dockManager.getPanels(), ...(this.detachedWindows?.panels.keys() ?? [])])];
+  }
+
   private async _setupServiceContainer() {
     this._solutionExplorer.initialize(serviceContainer);
     this.propertyGrid.serviceContainer = serviceContainer;
@@ -394,6 +411,8 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
 
   activateDockById(name: string) {
     if (name === 'aiDock') { this.showAiAssistant(); return; }
+    const panel = this.getAllPanels().find(panel => panel.resolvedElementContent.id === name);
+    if (panel && this.detachedWindows.focus(panel)) return;
     this.activateDock(this._getDomElement(name));
   }
 
@@ -409,6 +428,8 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   public showAiAssistant() {
     const element = this._aiDockElement;
     if (!element) return;
+    const detached = this.getAllPanels().find(panel => panel.resolvedElementContent === element);
+    if (detached && this.detachedWindows.focus(detached)) return;
     if (element.parentElement !== this._dock) {
       this._dock.appendChild(element);
       // The dock observes appended children and creates the new panel in this microtask.
@@ -431,17 +452,10 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   }
 
   isDockOpenAndActivate(id: string) {
-    let panels = this._dock.dockManager.getPanels();
-    for (let p of panels) {
-      if (p.elementContent instanceof HTMLSlotElement) {
-        let ct = p.elementContent.assignedElements()[0];
-        if (ct?.id == id) {
-          this._dock.dockManager.context.documentManagerView.tabHost.setActiveTab(p);
-          return true;
-        }
-      }
-    }
-    return false;
+    const panel = this.getAllPanels().find(panel => panel.resolvedElementContent.id === id);
+    if (!panel) return false;
+    if (!this.detachedWindows.focus(panel)) this.activateDock(panel.resolvedElementContent);
+    return true;
   }
 
   openDock(element: HTMLElement) {
@@ -534,7 +548,7 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
   }
 
   public getAiWindows() {
-    const panels = this._dockManager.getPanels();
+    const panels = this.getAllPanels();
     const active = this._dockManager.activePanel;
     const content = panels.includes(this.lastContentPanel) ? this.lastContentPanel : this._dockManager.activeDocument;
     return panels.map(panel => {
@@ -543,17 +557,17 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
       const screen = element instanceof IobrokerWebuiScreenEditor ? element : null;
       const code = element instanceof IobrokerWebuiMonacoEditor ? element : element.querySelector<IobrokerWebuiMonacoEditor>('iobroker-webui-monaco-editor');
       const owner = screen ?? (code ? this.getScreenEditors().find(editor => editor.scriptModel === code.model || editor.documentContainer.additionalData?.model === code.model) : null);
-      return { id: this.aiWindowIds.get(panel), title: panel.title, tag: element.localName, kind: screen ? 'document' : code ? 'code' : 'tool', active: panel === active, current: panel === content, autoHidden: panel.isAutoHidden,
+      return { id: this.aiWindowIds.get(panel), title: panel.title, tag: element.localName, kind: screen ? 'document' : code ? 'code' : 'tool', active: panel === active, current: panel === content, autoHidden: panel.isAutoHidden, detached: this.detachedWindows.panels.has(panel),
         document: owner ? { type: owner.documentType, name: owner.name } : null };
     });
   }
   public getAiWindowElement(id: string): HTMLElement {
     this.getAiWindows();
-    return this._dockManager.getPanels().find(panel => this.aiWindowIds.get(panel) === id)?.resolvedElementContent;
+    return this.getAllPanels().find(panel => this.aiWindowIds.get(panel) === id)?.resolvedElementContent;
   }
 
   public getScreenEditors(): IobrokerWebuiScreenEditor[] {
-    return this._dock.dockManager.getPanels()
+    return this.getAllPanels()
       .map(panel => panel.resolvedElementContent)
       .filter((element): element is IobrokerWebuiScreenEditor => element instanceof IobrokerWebuiScreenEditor);
   }

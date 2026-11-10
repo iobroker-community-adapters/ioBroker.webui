@@ -65,6 +65,7 @@ window.iobrokerSocketScriptUrl = '/test/browser/socket-stub.js';
     document.getElementById('fixture-status').textContent = 'Fixture ready — no real backend or provider is used';
     document.getElementById('fixture-ai').onclick = () => window.appShell.activateDockById('aiDock');
     document.getElementById('fixture-edit').onclick = () => window.appShell.getActiveScreenEditor().documentContainer.setContentAsync('<h1>Manual edit</h1>');
+    if (new URLSearchParams(location.search).has('detachReview')) await import('./test/browser/detached-window-review.js');
     if (new URLSearchParams(location.search).has('contextReview')) await import('./test/browser/ai-context-review.js');
     if (new URLSearchParams(location.search).has('themeReview')) await import('./test/browser/theme-review.js');
     document.getElementById('fixture-screen').onclick = () => window.appShell.openScreenEditor('smoke-screen', 'screen', '<h1>Hello designer</h1>', ':host { display:block; padding:20px; }', '', {width:'640px', height:'480px'});

@@ -160,7 +160,16 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
         this._editor.trigger('', 'editor.action.clipboardDeleteAction', null);
     }
     async executeCommand(command) {
+        if (['undo', 'redo', 'copy', 'paste', 'cut', 'delete'].includes(command.type)) {
+            this[command.type]();
+            return;
+        }
         if (command.type == 'save') {
+            const owner = window.appShell.getScreenEditors().find(editor => editor.scriptModel === this.model || editor.documentContainer.additionalData?.model === this.model);
+            if (owner) {
+                await owner.executeCommand(command);
+                return;
+            }
             if (this.language === 'css') {
                 if (this.editPart === 'globalStyle')
                     iobrokerHandler.config.globalStyle = this.model.getValue();
@@ -174,8 +183,8 @@ export class IobrokerWebuiMonacoEditor extends BaseCustomWebComponentConstructor
         }
     }
     canExecuteCommand(command) {
-        if (command.type == 'save')
-            return true;
+        if (['save', 'undo', 'redo', 'copy', 'paste', 'cut', 'delete'].includes(command.type))
+            return !!this._editor && !!this.model;
         return false;
     }
     setSelection(lineStart, columnStart, lineEnd, columnEnd) {

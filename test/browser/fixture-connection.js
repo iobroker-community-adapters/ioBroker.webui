@@ -14,6 +14,7 @@ if (fixtureOptions.get('speechFixture') === '1') {
 }
 const state = { val: 21, ack: true, ts: Date.now(), lc: Date.now(), from: 'fixture' };
 const objects = { 'fixture.0.temperature': { _id: 'fixture.0.temperature', type: 'state', common: { name: 'Temperature', type: 'number', role: 'value.temperature', read: true, write: false, unit: '°C' }, native: {} } };
+export const fixtureWrites = [];
 export const fixtureConnection = {
     waitForFirstConnection: async () => {},
     registerConnectionHandler() {}, unregisterConnectionHandler() {},
@@ -25,7 +26,7 @@ export const fixtureConnection = {
     getState: async id => id.endsWith('npm') ? { ...state, val: 'idle' } : state,
     setState: async () => {}, subscribeState: async () => {}, unsubscribeState() {},
     readDir: async () => [], readFile: async () => ({ file: JSON.stringify({ dependencies: packageInstalled ? { 'vanilla-colorful': '^0.7.2' } : {} }), mimeType: 'application/json' }),
-    writeFile64: async () => {},
+    writeFile64: async (_namespace,path,data) => { if(fixtureOptions.has('detachReview')) fixtureWrites.push({path,data:JSON.parse(new TextDecoder().decode(data))}); },
     subscribeOnInstance: async (instance, type, data, callback) => { answerCallbacks.add(callback); return { accepted: true, session: 'fixture-token' }; },
     unsubscribeFromInstance: async (instance, type, callback) => answerCallbacks.delete(callback),
     sendTo: async (instance, command, request) => {

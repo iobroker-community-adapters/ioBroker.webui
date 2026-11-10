@@ -112,12 +112,11 @@ export class CommandHandling {
                 this.canExecuteCommand(buttons, null);
             }
             const target = this.dockManager.activeDocument?.resolvedElementContent;
-            if (target) {
-                const undoCount = target.documentContainer.instanceServiceContainer.undoService.undoCount;
-                const redoCount = target.documentContainer.instanceServiceContainer.undoService.redoCount;
-                document.getElementById('undoCount').innerText = '(' + undoCount + '/' + (undoCount + redoCount) + ')';
-                document.getElementById('redoCount').innerText = '(' + redoCount + '/' + (undoCount + redoCount) + ')';
-            }
+            const history = target instanceof IobrokerWebuiScreenEditor ? target.documentContainer.instanceServiceContainer.undoService : null;
+            const undoCount = history?.undoCount ?? 0;
+            const redoCount = history?.redoCount ?? 0;
+            document.getElementById('undoCount').innerText = '(' + undoCount + '/' + (undoCount + redoCount) + ')';
+            document.getElementById('redoCount').innerText = '(' + redoCount + '/' + (undoCount + redoCount) + ')';
         }, 100);
     }
     canExecuteCommand(buttons, target) {
