@@ -9,12 +9,15 @@ export interface AiProposal extends AiDocument {
     status: 'pending' | 'applied' | 'discarded';
 }
 export interface AiAttachment { name: string; type: string; content: string; }
-export interface AiEntry { role: 'user' | 'assistant' | 'tool' | 'error'; text: string; pendingId?: string; proposalKey?: string; delivery?: 'steer' | 'queue' | 'cancelled'; }
+export interface AiEntry { timestamp?: number; durationMs?: number; role: 'user' | 'assistant' | 'tool' | 'error'; text: string; pendingId?: string; proposalKey?: string; delivery?: 'steer' | 'queue' | 'cancelled'; }
 export interface AiPendingMessage { id: string; message: OpenAIMessage; text: string; mode: 'steer' | 'queue'; draft?: string; attachments?: AiAttachment[]; }
 export interface AiSession {
     id: string;
     title: string;
     unread?: boolean;
+    costs?: Record<string, number>;
+    responseCount?: number;
+    costResponseCount?: number;
     provider: AiProvider | '';
     model: string;
     status: 'idle' | 'running' | 'error' | 'stopped';

@@ -1,5 +1,6 @@
 import type { AiToolLoopOptions, AiToolLoopResult } from '@iobroker/ai-core/build/shared/toolLoop.js';
 import type { AiChatResult, OpenAIMessage, OpenAITool, OpenAIToolCall } from '@iobroker/ai-core/build/shared/types.js';
+import type { AiAnswerTiming } from './AiChatMetadata.js';
 import type { AiPendingMessage, AiSession } from './AiTypes.js';
 
 export function cancelPendingMessages(session: AiSession) {
@@ -10,7 +11,7 @@ export function cancelPendingMessages(session: AiSession) {
 /** Inject guidance only at provider-request boundaries; finish tool-result groups before continuing. */
 export class AiTurnController {
     readonly abort = new AbortController();
-    constructor(readonly session: AiSession) { session.pendingMessages ??= []; }
+    constructor(readonly session: AiSession, private readonly now: () => number = Date.now) { session.pendingMessages ??= []; }
     add(message: AiPendingMessage) { this.session.pendingMessages.push(message); }
     remove(id: string) {
         this.session.pendingMessages = this.session.pendingMessages.filter(message => message.id !== id);
@@ -29,10 +30,11 @@ export class AiTurnController {
         tools: OpenAITool[];
         ask: (messages: OpenAIMessage[], tools: OpenAITool[] | undefined, signal: AbortSignal) => Promise<AiChatResult>;
         runTool: (call: OpenAIToolCall, args: Record<string, unknown>) => Promise<string>;
-        onAnswer: (answer: AiChatResult) => void;
+        onAnswer: (answer: AiChatResult, timing: AiAnswerTiming) => void;
         onToolResult: (call: OpenAIToolCall, result: string) => void;
         changed: () => void;
     }) {
+        let startedAt = this.now();
         let conversation: OpenAIMessage[] = [{ role: 'system', content: options.systemPrompt }, ...this.session.messages];
         try {
             for (;;) {
@@ -55,7 +57,10 @@ export class AiTurnController {
                         return options.runTool(call, args);
                     },
                     onAnswer: answer => {
-                        if (!this.abort.signal.aborted && !this.session.pendingMessages.some(message => message.mode === 'steer')) options.onAnswer(answer);
+                        if (!this.abort.signal.aborted && !this.session.pendingMessages.some(message => message.mode === 'steer')) {
+                            const timestamp = this.now();
+                            options.onAnswer(answer, { timestamp, durationMs: Math.max(0, timestamp - startedAt) });
+                        }
                     },
                     onToolResult: options.onToolResult
                 });
@@ -64,6 +69,7 @@ export class AiTurnController {
                 if (this.session.pendingMessages.some(message => message.mode === 'steer')) continue;
                 const queued = this.session.pendingMessages.shift();
                 if (!queued) return;
+                startedAt = this.now();
                 this.deliver(queued, conversation);
                 options.changed();
             }

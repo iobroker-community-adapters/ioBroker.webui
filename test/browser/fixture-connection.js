@@ -52,7 +52,7 @@ export const fixtureConnection = {
             answer = ready ? 'Test fixture: package installed, editorReady true; discovery and widget activation completed without reloading.' : 'Test fixture: package activation failed.';
         }
         setTimeout(() => {
-            for (const callback of answerCallbacks) callback({ type: 'aiChatAnswer', requestId: request.requestId, success: true, content: tool_calls ? '' : answer, ...(tool_calls ? { tool_calls } : {}) });
+            for (const callback of answerCallbacks) callback({ type: 'aiChatAnswer', requestId: request.requestId, success: true, ...(fixtureOptions.has('costFixture') ? {estimatedCost:{amount:0.001,currency:'USD'}} : {}), content: tool_calls ? '' : answer, ...(tool_calls ? { tool_calls } : {}) });
         }, responseDelay);
         return { accepted: true, requestId: request.requestId };
     }

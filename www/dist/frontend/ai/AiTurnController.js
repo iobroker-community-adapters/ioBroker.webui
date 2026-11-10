@@ -7,9 +7,11 @@ export function cancelPendingMessages(session) {
 /** Inject guidance only at provider-request boundaries; finish tool-result groups before continuing. */
 export class AiTurnController {
     session;
+    now;
     abort = new AbortController();
-    constructor(session) {
+    constructor(session, now = Date.now) {
         this.session = session;
+        this.now = now;
         session.pendingMessages ??= [];
     }
     add(message) { this.session.pendingMessages.push(message); }
@@ -27,6 +29,7 @@ export class AiTurnController {
             delete entry.delivery;
     }
     async run(options) {
+        let startedAt = this.now();
         let conversation = [{ role: 'system', content: options.systemPrompt }, ...this.session.messages];
         try {
             for (;;) {
@@ -51,8 +54,10 @@ export class AiTurnController {
                         return options.runTool(call, args);
                     },
                     onAnswer: answer => {
-                        if (!this.abort.signal.aborted && !this.session.pendingMessages.some(message => message.mode === 'steer'))
-                            options.onAnswer(answer);
+                        if (!this.abort.signal.aborted && !this.session.pendingMessages.some(message => message.mode === 'steer')) {
+                            const timestamp = this.now();
+                            options.onAnswer(answer, { timestamp, durationMs: Math.max(0, timestamp - startedAt) });
+                        }
                     },
                     onToolResult: options.onToolResult
                 });
@@ -64,6 +69,7 @@ export class AiTurnController {
                 const queued = this.session.pendingMessages.shift();
                 if (!queued)
                     return;
+                startedAt = this.now();
                 this.deliver(queued, conversation);
                 options.changed();
             }

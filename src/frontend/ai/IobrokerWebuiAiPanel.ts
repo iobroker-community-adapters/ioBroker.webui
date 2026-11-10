@@ -1,6 +1,7 @@
 import { runToolLoop } from '@iobroker/ai-core/build/shared/index.js';
 import type { AiProvider } from '@iobroker/ai-core/build/shared/types.js';
 import type { Connection } from '@iobroker/socket-client';
+import { costSummary, formatElapsed, recordResponseCost } from './AiChatMetadata.js';
 import { AiClient } from './AiClient.js';
 import { AiSessionStore } from './AiSessionStore.js';
 import { AiToolContext, aiTools, webuiKnowledge } from './AiTools.js';
@@ -65,6 +66,9 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
             article { margin:12px 0; line-height:1.5; overflow-wrap:anywhere; width:fit-content; max-width:90%; padding:9px 12px; border-radius:10px; }
             article[data-role=user] { margin-right:auto; background:var(--webui-selected); }
             article[data-role=assistant] { margin-left:auto; background:var(--webui-subtle); border:1px solid var(--webui-border); }
+            .metadata, #chat-cost { color:var(--webui-muted); font-size:10px; line-height:1.5; }
+            .metadata { display:block; margin-top:7px; } #chat-cost { padding:3px 0 5px; overflow-wrap:anywhere; }
+            #sessions .session-info { flex:1; min-width:0; display:grid; gap:3px; } #sessions .cost { font-size:10px; color:var(--webui-muted); overflow-wrap:anywhere; }
             .speaker { display:block; font-size:10px; font-weight:600; color:var(--webui-muted); margin-bottom:4px; }
             .work { color:var(--webui-muted); font-size:11px; margin:8px 0; border-left:2px solid var(--webui-border); padding:5px 8px; }
             .work p { margin:5px 0; } .proposal { color:var(--webui-text); padding:8px 0; margin:0 0 12px 10%; } .proposal button { border:1px solid var(--webui-border); margin:5px 5px 0 0; }
@@ -98,7 +102,7 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         <div id="sessions" role="group" aria-label="Chats"></div>
         <div id="messages" role="log" aria-label="Conversation" aria-live="polite"></div>
         <div id="activity" role="status" hidden><span class="spinner" aria-hidden="true"></span><span id="activity-text"></span></div>
-        <footer><div id="pending" aria-label="Pending messages"></div><div class="composer">
+        <footer><div id="chat-cost" hidden></div><div id="pending" aria-label="Pending messages"></div><div class="composer">
           <div id="attachments"></div><textarea id="prompt" rows="3" aria-label="Message to AI" placeholder="Describe your screen…"></textarea>
           <div class="controls"><button id="attach" type="button" title="Attach files" aria-label="Attach files">${icon('<path d="m8 13 6-6a3 3 0 0 1 4 4l-8 8a5 5 0 0 1-7-7l9-9a2 2 0 0 1 3 3l-8 8a1 1 0 0 1-2-2l7-7"/>')}</button>
             <input id="files" type="file" multiple hidden accept="image/png,image/jpeg,image/webp,image/gif,text/*,.json,.screen,.control,.js,.ts,.css,.html,.xml,.svg">
@@ -240,7 +244,10 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
             }
             const name = document.createElement('span'); name.className = 'name'; name.textContent = session.title;
             const status = document.createElement('span'); status.className = 'status'; status.textContent = session.status === 'running' ? 'Running' : session.unread ? 'Unread' : session.status === 'error' ? 'Error' : '';
-            button.append(indicator, name, status);
+            const info = document.createElement('span'); info.className = 'session-info'; info.append(name);
+            const cost = costSummary(session);
+            if (cost) { const label = document.createElement('span'); label.className = 'cost'; label.textContent = cost; info.append(label); }
+            button.append(indicator, info, status);
             button.title = `${session.title} — ${session.status}${session.unread ? ', unread' : ''}. Right-click for actions.`;
             button.onclick = () => this.selectSession(session.id);
             button.oncontextmenu = event => { event.preventDefault(); event.stopPropagation(); this.showMenu(event.clientX, event.clientY, session); };
@@ -249,6 +256,8 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         }
     }
     private renderState() {
+        const cost = this.selected ? costSummary(this.session) : '';
+        this.$('#chat-cost').textContent = cost; this.$('#chat-cost').hidden = !cost;
         this.$('#chat-header').hidden = !this.selected; this.$('#chat-title').textContent = this.session.title;
         this.$('#sessions').hidden = !!this.selected || !this.sessions.length;
         this.$('#messages').hidden = !this.selected && !!this.sessions.length;
@@ -305,6 +314,13 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
             const speaker = document.createElement('span'); speaker.className = 'speaker'; speaker.textContent = entry.role === 'user' ? 'You' : entry.role === 'assistant' ? 'AI' : 'Error'; article.append(speaker);
             const content = document.createElement('p'); content.textContent = entry.text; article.append(content);
             if (entry.delivery) { const state = document.createElement('small'); state.textContent = entry.delivery === 'steer' ? 'Steering · next safe step' : entry.delivery === 'queue' ? 'Queued · after this turn' : 'Not sent'; article.append(state); }
+            const metadata = document.createElement('small'); metadata.className = 'metadata';
+            if (Number.isFinite(entry.timestamp) && Number.isFinite(new Date(entry.timestamp).getTime())) {
+                const date = new Date(entry.timestamp), time = document.createElement('time');
+                time.dateTime = date.toISOString(); time.textContent = date.toLocaleString(); time.title = date.toLocaleString(); metadata.append(time);
+            }
+            if (Number.isFinite(entry.durationMs)) metadata.append(`${metadata.childNodes.length ? ' · ' : ''}Thinking time: ${formatElapsed(entry.durationMs)}`);
+            if (metadata.childNodes.length) article.append(metadata);
             container.append(article);
             for (const proposal of proposalsAfterAnswer.get(index) ?? []) {
                 this.appendProposal(container, proposal); linked.add(`${proposal.type}:${proposal.name}`);
@@ -397,14 +413,14 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         const run = this.runs.get(session.id);
         if (run) {
             const id = createAiId(), mode = this.$<HTMLSelectElement>('#delivery').value as 'steer' | 'queue';
-            run.add({ id, mode, message, text, draft: session.draft, attachments: structuredClone(session.attachments) }); session.entries.push({ role: 'user', text, pendingId: id, delivery: mode });
+            run.add({ id, mode, message, text, draft: session.draft, attachments: structuredClone(session.attachments) }); session.entries.push({ role: 'user', text, timestamp: Date.now(), pendingId: id, delivery: mode });
             session.draft = ''; session.attachments = []; this.render(); this.changed(); return;
         }
         if (!this.sessions.includes(session)) {
             session.title = session.draft.trim().slice(0, 45) || 'Attachments';
             this.sessions.unshift(session); this.selected = session.id; this.draftSession = this.createDraft(session);
         }
-        session.messages.push(message); session.entries.push({ role: 'user', text });
+        session.messages.push(message); session.entries.push({ role: 'user', text, timestamp: Date.now() });
         session.draft = ''; session.attachments = []; session.status = 'running';
         const controller = new AiTurnController(session); this.runs.set(session.id, controller);
         const provider = session.provider as AiProvider, model = session.model;
@@ -420,16 +436,20 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
                 loop: runToolLoop,
                 systemPrompt: webuiKnowledge + `\nCurrent editor: ${selected ? JSON.stringify(selected) : 'no document selected'}.`,
                 tools: aiTools,
-                ask: (messages, tools, signal) => {
+                ask: async (messages, tools, signal) => {
                     const previews = context.takeAssetImages();
                     if (previews.length) messages.push(userMessage('Requested asset previews (reference data): ' + previews.map(image => image.name).join(', '), previews, provider));
-                    this.activity.set(session.id, 'Thinking…'); refresh(); return this.client.ask(provider, model, messages, tools, signal); },
+                    this.activity.set(session.id, 'Thinking…'); refresh();
+                    const answer = await this.client.ask(provider, model, messages, tools, signal);
+                    recordResponseCost(session, answer);
+                    return answer;
+                },
                 runTool: async (call, args) => {
                     const label = call.function.name.replaceAll('_', ' ');
                     this.activity.set(session.id, label + '…'); session.entries.push({ role: 'tool', text: label + '…', pendingId: call.id, proposalKey: ['stage_document', 'stage_element_attributes'].includes(call.function.name) ? `${args.type}:${args.name}` : undefined }); refresh();
                     return context.run(call.function.name, args);
                 },
-                onAnswer: answer => { if (answer.content) { session.entries.push({ role: 'assistant', text: answer.content }); session.unread = !this.viewing(session); refresh(); } },
+                onAnswer: (answer, timing) => { if (answer.content) { session.entries.push({ role: 'assistant', text: answer.content, ...timing }); session.unread = !this.viewing(session); refresh(); } },
                 onToolResult: (call, result) => {
                     const entry = session.entries.find(entry => entry.role === 'tool' && entry.pendingId === call.id);
                     if (entry) entry.text = result.startsWith('Error:') ? result : call.function.name.replaceAll('_', ' ') + ' ✓';
@@ -440,7 +460,7 @@ export class IobrokerWebuiAiPanel extends HTMLElement {
         } catch (error) {
             cancelPendingMessages(session);
             session.status = controller.abort.signal.aborted ? 'stopped' : 'error';
-            if (!controller.abort.signal.aborted) session.entries.push({ role: 'error', text: String(error) });
+            if (!controller.abort.signal.aborted) session.entries.push({ role: 'error', text: String(error), timestamp: Date.now() });
         } finally { if (!this.viewing(session)) session.unread = true; this.runs.delete(session.id); this.activity.delete(session.id); refresh(); }
     }
     public stopSpeechInput() { this.speech.cancel(); this.renderState(); }
