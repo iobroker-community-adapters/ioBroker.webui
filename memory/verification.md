@@ -61,3 +61,8 @@ A standalone static `web-dev-server` does not provide a real ioBroker adapter ba
 - Browser checks in both themes: shell/toolbars/docks, AI open/close and hints, settings/collection editor, refactor, script editor Code/Visual mode, Add/Close picker actions, syntax preview, command properties, bindings, history, parameters, signal browser, box/text shadow, gradient and border-radius tools. Verified native collection dialog foreground/background, enabled complex-property buttons at full opacity, gradient Repeating label, and border-radius Close inside the 1280×720 viewport.
 - Context-menu images were verified separately (light filter none; dark invert(1), disabled opacity 0.45).
 - These checks exercise real components with the isolated browser fixture. Live backend/provider flows and the external ioBroker object-selector service were not verified by this sweep. Runtime screen styling is outside the editor theme changes.
+
+## Binding IOB controls — 2026-11-10
+
+- Passed compilation, lint, packaged copy build, and 38 frontend/helper tests (three new async picker-routing tests).
+- Browser fixture verified light/dark button styling and exactly one IOB control per row after initial render, Add, Duplicate and Remove. Picker selection dispatch is covered by unit tests; no live ioBroker server selection was exercised.
