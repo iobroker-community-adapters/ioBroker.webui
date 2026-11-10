@@ -5,7 +5,6 @@
     "@vanillawc/wc-datepicker",
     "@vanillawc/wc-icon-rule",
     "@vanillawc/wc-marquee",
-    "@vanillawc/wc-json",
     "@vanillawc/wc-markdown",
     "@node-projects/chart-js-webcomponent",
     "@node-projects/tab.webcomponent",
