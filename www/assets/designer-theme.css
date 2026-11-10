@@ -228,3 +228,16 @@ nav #themeToggle {
 .context_menu li[disabled] .context_menu_icon_span img {
   opacity: .45;
 }
+
+/* Dock-spawn appends tab/panel menus to document.body, outside its shadow root. */
+body > .dockspab-tab-handle-context-menu {
+  color: var(--webui-text);
+  background: var(--webui-surface);
+  border: 1px solid var(--webui-input-border);
+  box-shadow: 0 3px 12px var(--webui-dialog-shadow);
+}
+
+body > .dockspab-tab-handle-context-menu > div:hover {
+  color: var(--webui-text);
+  background: var(--webui-hover);
+}

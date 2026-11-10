@@ -64,6 +64,7 @@ Missing the solution-explorer side-effect import caused the runtime failure `thi
 - Verified the drawing/shape popup in both themes, including computed shape fill matching the foreground. This is a host-token fix, not a vendored component edit.
 
 - Context menus also need the `--wcd-context-menu-*` foreground/background/hover/disabled/divider/border/shadow mappings. Native submenu `ul[popover]` elements receive a UA CanvasText color independently of their parent: explicitly set `.context_menu ul` foreground in the editor stylesheet. Otherwise dark color-scheme can produce white text on the default light submenu surface. Browser-verified in both themes on 2026-11-10 (light #354348/#fff, dark #ececec/#212121).
+- Dock-spawn tab/panel context menus (`.dockspab-tab-handle-context-menu`, upstream spelling) are appended to document.body. Their background/foreground/border/shadow/hover rules must also live in global `assets/designer-theme.css`; shadow-root-only `assets/dockspawn.css` rules cannot reach them.
 - Context-menu image icons use `--webui-icon-filter`, matching toolbar assets; disabled menu images additionally use 0.45 opacity. Verified computed filters are none in light mode and invert(1) in dark mode.
 
 ## Editor-wide theme review — 2026-11-10
