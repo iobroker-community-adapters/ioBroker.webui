@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "webui",
-    "version": "2.3.0",
+    "version": "2.4.0",
     "titleLang": {
       "en": "webui",
       "de": "webui",
@@ -29,6 +29,19 @@
       "zh-cn": "使用万维网传送器的高锰用户接口"
     },
     "news": {
+      "2.4.0": {
+        "en": "Use the ioBroker web components of installed adapters (`common.webComponents`, `@iobroker/web-components`) in screens: palette entries, a settings section in the property grid with every setting as a bindable `setting-*` attribute, theme support and `iob-navigate` to screens.\ndark mode changed\ncomponents list",
+        "de": "Verwenden Sie die ioBroker-Webkomponenten installierter Adapter (`common.WebComponents`, `@iobroker /web-components`) auf Bildschirmen: Paletteneinträge, einen Bereich im Eigenschaftenraster mit bindbarem `setting-*`-Attribut, Theme-Unterstützung und `iob-navigate`.\nDark Mode geändert\nBauteilliste",
+        "ru": "Используйте веб-компоненты IOBroker установленных адаптеров (`Common.webcomponents`, `@iobroker /web-components`) на экранах: записи палитры, раздел настроек в таблице свойств, где каждый параметр используется в качестве привязываемого атрибута `setting-*`, поддержка тем и `iob-navigate` к экранам.\nтемный режим изменен\nсписок компонентов",
+        "pt": "Use os componentes web do IOBroker dos adaptadores instalados (`common.webComponents`, `@iobroker /web-components`) nas telas: entradas de paleta, uma seção na grade de propriedades com cada configuração vinculável, suporte a temas e `iob-navigate` às telas.\nmodo escuro mudou\nlista de peças",
+        "nl": "Gebruik de IOBroker-webcomponenten van geïnstalleerde adapters (`Common.WebComponents`, `@iobroker /web-components`) op schermen: paletitems, een instellingensectie in het eigenschappenraster met elke instelling als een binbaar `setting-*` attribuut, thema-ondersteuning en `iob-navigate` naar schermen.\nde donkere modus is gewijzigd\nlijst met componenten",
+        "fr": "Utilisez les composants Web IOBroker des adaptateurs installés (`common.WebComponents`, `@iobroker /web-components`) sur les écrans : entrées de palette, section des paramètres dans la grille des propriétés où chaque réglage est un attribut « setting-* » à lier, gestion des thèmes et « iob-navigation » aux écrans.\nmode sombre changé\nliste des composants",
+        "it": "Usa i componenti web IOBroker degli adattatori installati (`Common.WebComponents`, `@iobroker /web-components`) nelle schermate: voci della palette, una sezione delle impostazioni nella griglia delle proprietà con ogni impostazione associata, supporto per i temi e iob-navigate` alle schermate.\ndark mode è cambiato\nlista componenti",
+        "es": "Utilice los componentes web IOBroker de los adaptadores instalados (`Common.WebComponents`, `@iobroker /web-components`) en las pantallas: entradas de paleta, una sección de ajustes de la cuadrícula de propiedades con cada ajuste como atributo `setting-*` enlazable, soporte de temas e `iob-navigate` a las pantallas.\nmodo oscuro cambió\nlista de componentes",
+        "pl": "Używaj komponentów internetowych ioBroker zainstalowanych adapterów (`common.webcomponents`, `@iobroker /web-components`) na ekranach: wpisy palet, sekcja ustawień w siatce właściwości z każdym ustawieniem jako wiążącym atrybutem `setting-*`, obsługa motywu i `iob-navigate` na ekranach.\ntryb ciemny zmieniony\nlista komponentów",
+        "uk": "Використовуйте веб-компоненти IObroker встановлених адаптерів (`Common.WebComponents`, `@iobroker /web-components`) на екранах: записи палітри, розділ налаштувань у сітці властивостей з кожним параметром як прив'язаний атрибут `setting-*`, підтримка теми та `iob-navigate` до екранів.\nтемний режим змінився\nсписок компонентів",
+        "zh-cn": "在屏幕中使用已安装适配器的 ioBroker 网络组件（`common.webComponents`，`@iobroker /web-components`）：调色板条目、属性网格中的设置部分（将所有设置都作为可绑定的 “setting-*” 属性）、主题支持和 “iob-navigate” 到屏幕。\n黑暗模式已更改\n组件清单"
+      },
       "2.3.0": {
         "en": "Expand AI context with current/open editors, selected screen elements, separate CSS/JavaScript, settings and component properties.\nAdd paged discovery of components, installed component APIs, signals, images, icons and chart presets, with on-demand image/icon previews for vision models.\nImprove AI guidance for CSS bindings, converters and simple scripts, preferring the separate CSS/JavaScript fields.\nApply AI proposals as one Undo/Redo step covering HTML, CSS, JavaScript, settings and properties while preserving earlier manual history.\nShow proposal review and Apply/Discard actions below AI answers, outside collapsed work outputs.\nAdd chat message timestamps, elapsed thinking time and cost totals in the chat list/footer when explicitly reported.\nBalance the default dock column widths and fix document context-menu colors in light/dark mode.\nKeep detached screens, AI chats and tool/global-editor windows editable, including component drops, shared models, Save and Undo/Redo. Closing a popup returns its unsaved panel to the main editor.\nFix missing script command details, including SetSignalValue signal/target fields, by resolving scalar schema aliases.",
         "de": "Erweitern Sie den KI-Kontext mit aktuellen Editoren, ausgewählten Bildschirmelementen, separatem CSS/JavaScript, Einstellungen und Komponenten.\nFügen Sie Seitensuche von Komponenten, APIs, Signalen, Bildern, Icons und Chart-Presets hinzu, mit On-Demand-Bild-/Icon-Vorschauen für Vision-Modelle.\nBessere KI-Anleitung für CSS-Bindungen, Konverter und Scripts, lieber separate CSS/JavaScript-Felder.\nNutzen Sie KI-Vorschläge in einem Schritt für HTML, CSS, JavaScript, Einstellungen und Eigenschaften unter Beibehaltung der Handbuchhistorie.\nZeige Angebotsüberprüfung und Anwenden/Ablehnen unter KI-Antworten, außerhalb von Outputs.\nFügen Sie Zeitstempel, Denkzeit und Gesamtkosten in die Chat-Liste/Fußzeile ein, wenn es explizit gemeldet wird.\nBalancieren Sie die Standardspaltenbreiten und ändern Sie die Farben im Hell- und Dunkelmodus.\nLassen Sie separate Bildschirme, KI-Chats und Tool-/GB-Fenster editierbar, z. B. Component Drops, Shared Models, Save und Undo/Redo. Schließt ein Popup, geht das ungespeicherte Panel zum Haupteditor.\nKorrigieren Sie fehlende Skriptbefehle wie SetSignalValue-Signal/Zielfelder, indem Sie skalare Schema-Aliase auflösen.",
@@ -106,19 +119,6 @@
         "pl": "napraw wersję węzła",
         "uk": "виправити версію вузла",
         "zh-cn": "修复节点版本"
-      },
-      "1.47.0": {
-        "en": "package uprades",
-        "de": "paket uprades",
-        "ru": "упаковочный апрад",
-        "pt": "pacote uprades",
-        "nl": "pakketupraden",
-        "fr": "uprades de colis",
-        "it": "pacchetto uprade",
-        "es": "paquete uprades",
-        "pl": "uparcia opakowań",
-        "uk": "пакетні оновлення",
-        "zh-cn": "软件包升空"
       }
     },
     "icon": "logo.png",

@@ -1,4 +1,7 @@
 # Older changes
+## 2.0.2 (2026-08-21)
+- welcome screen array
+
 ## 2.0.1 (2026-08-21)
 - fix node version
 

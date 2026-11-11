@@ -168,7 +168,7 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
-### __WORK IN PROGRESS__
+### 2.4.0 (2026-11-11)
 - Use the ioBroker web components of installed adapters (`common.webComponents`, `@iobroker/web-components`) in screens: palette entries, a settings section in the property grid with every setting as a bindable `setting-*` attribute, theme support and `iob-navigate` to screens.
 - dark mode changed
 - components list
@@ -195,9 +195,6 @@ runtime.html?screenName=screen2
 
 ### 2.0.3 (2026-08-21)
 - fix help dlg pos
-
-### 2.0.2 (2026-08-21)
-- welcome screen array
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 
