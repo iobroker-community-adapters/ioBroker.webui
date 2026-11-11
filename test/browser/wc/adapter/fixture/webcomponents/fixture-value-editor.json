@@ -1,0 +1,8 @@
+{
+    "manifestVersion": 1,
+    "tag": "fixture-value-editor",
+    "name": "Fixture value editor",
+    "module": "fixture-value-editor.js",
+    "editsValue": true,
+    "settings": { "type": "panel", "items": {} }
+}

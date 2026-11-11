@@ -59,6 +59,7 @@
     "@blockly/zoom-to-fit": "^13.4.0",
     "@iobroker/socket-client": "^5.6.1",
     "@iobroker/testing": "^6.3.2",
+    "@iobroker/web-components": "^0.7.0",
     "@iobroker/webcomponent-selectid-dialog": "^2.0.2",
     "@node-projects/base-custom-webcomponent": "0.47.0",
     "@node-projects/css-parser": "^5.2.0",

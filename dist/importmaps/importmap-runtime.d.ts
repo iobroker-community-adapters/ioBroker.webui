@@ -6,6 +6,7 @@ declare const importMapRuntime: {
         "@node-projects/web-component-designer-visualization-addons": string;
         "@iobroker/socket-client/": string;
         "@iobroker/socket-client": string;
+        "@iobroker/web-components": string;
         tslib: string;
         long: string;
     };

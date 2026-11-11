@@ -41,6 +41,7 @@ const importMapConfig = {
         "wunderbaum": "./node_modules/wunderbaum/dist/wunderbaum.esm.min.js",
         "wunderbaum/": "./node_modules/wunderbaum/",
         "@iobroker/webcomponent-selectid-dialog/": "./node_modules/@iobroker/webcomponent-selectid-dialog/",
+        "@iobroker/web-components": "./node_modules/@iobroker/web-components/build/index.js",
     }
 }
 //@ts-ignore

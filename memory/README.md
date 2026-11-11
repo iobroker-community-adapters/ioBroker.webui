@@ -8,6 +8,7 @@ This directory is the durable, repository-scoped memory for `ioBroker.webui`. Fu
 - `dependency-upgrade-2026-08.md` — decisions and compatibility findings from the August 2026 dependency upgrade.
 - `dependency-upgrade-2026-11.md` — current dependency versions, compatibility pins, and audit status.
 - `ai-assistant.md` — shared ioBroker AI integration, context tools, session storage, and limits.
+- `iobroker-web-components.md` — host for `@iobroker/web-components` (palette, settings attributes, wrapper element).
 - `verification.md` — useful verification commands and known test-environment behavior.
 
 ## Maintenance rules

@@ -56,7 +56,9 @@ function copyNodeFiles() {
         "dayjs/dayjs.min.js",
         "@iobroker/webcomponent-selectid-dialog/build/iobrokerSelectId.es.js",
         "@iobroker/webcomponent-selectid-dialog/build/selectIdHelper.js",
-        "@iobroker/webcomponent-selectid-dialog/build/socket.iob.js"
+        "@iobroker/webcomponent-selectid-dialog/build/socket.iob.js",
+        // host helpers of the ioBroker web component contract (not the React bundles in build/esm)
+        "@iobroker/web-components/build/*.js"
     ]
 
     runtimeModules = runtimeModules.map(x => './node_modules/' + x)

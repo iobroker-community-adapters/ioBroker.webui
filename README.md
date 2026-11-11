@@ -31,6 +31,7 @@ It includes features like:
   - split view editing of layout and html code
   - global stylesheet support
   - usage of npm packages containing webcomponents
+  - usage of the ioBroker web components of installed adapters (the same components vis-2, devices and admin show)
   - screens inside of screens
   - use all icon packages from ioBroker
   - use charts from ioBroker
@@ -62,6 +63,22 @@ In Scripts you can also write to Signals defined in Custom Properties.
 You can include Javascript in your CustomControl or Screen.
 In addition, you can export a function `init(instance)` wich will be called when your CustomControl will be instantiated.
 Finally, `connected()` and `disconnected()` functions can be defined to be called when ...
+
+### ioBroker web components
+
+Adapters can bring [ioBroker web components](https://github.com/ioBroker/web-components): custom elements that every ioBroker UI shows alike. Their adapters list them in `common.webComponents`. The designer shows them in the palette under **Controls → Designer → ioBroker web components**; components that edit a value of their own (`editsValue`) are left out, because webui does not store such values.
+
+A placed component is stored like this:
+
+```html
+<iobroker-webui-web-component adapter="flow" component="flow-diagram" setting-oid="flow.0.diagrams.main" theme="dark"></iobroker-webui-web-component>
+```
+
+- Every setting of the component is an attribute `setting-<name>` (`textTrue` becomes `setting-text-true`). Edit it in the property grid or bind it to an ioBroker state like any other attribute. A checkbox setting works like an HTML boolean attribute: present means true.
+- `theme` is `light` (default), `dark` or `auto` (follows the browser). The CSS custom properties `--iob-primary`, `--iob-paper`, `--iob-text`, ... on or above the element override single colors when the component is shown.
+- In the designer the component gets `editMode` and does not write states. At runtime it gets the socket of webui.
+- The event `iob-navigate` opens the webui screen of that name, if there is one.
+- The components are read once when the page loads: reload the designer after installing an adapter.
 
 ## AI screen assistant
 
@@ -151,6 +168,9 @@ runtime.html?screenName=screen2
 	Placeholder for next versions:
 	### __WORK IN PROGRESS__
 -->
+### __WORK IN PROGRESS__
+- Use the ioBroker web components of installed adapters (`common.webComponents`, `@iobroker/web-components`) in screens: palette entries, a settings section in the property grid with every setting as a bindable `setting-*` attribute, theme support and `iob-navigate` to screens.
+
 ### 2.3.0 (2026-11-10)
 - Expand AI context with current/open editors, selected screen elements, separate CSS/JavaScript, settings and component properties.
 - Add paged discovery of components, installed component APIs, signals, images, icons and chart presets, with on-demand image/icon previews for vision models.
