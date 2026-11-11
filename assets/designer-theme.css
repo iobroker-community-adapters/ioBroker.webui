@@ -1,27 +1,27 @@
-/* Editor-only palette shared with ZPL Studio. Runtime pages do not load this file. */
+/* Editor-only cool slate palette. Runtime pages do not load this file. */
 :root {
   color-scheme: light;
-  --webui-text: #354348;
-  --webui-muted: #657579;
-  --webui-surface: #fff;
-  --webui-workspace: #f3f6f6;
-  --webui-subtle: #f7f9f9;
-  --webui-border: #e0e6e6;
-  --webui-input-border: #d7dfe0;
-  --webui-accent: #47977c;
-  --webui-action-background: #327d65;
+  --webui-text: #334155;
+  --webui-muted: #607187;
+  --webui-surface: #f5f7fa;
+  --webui-workspace: #dce4ed;
+  --webui-subtle: #eaf0f5;
+  --webui-border: #cbd6e2;
+  --webui-input-border: #afbdce;
+  --webui-accent: #258d84;
+  --webui-action-background: #25766f;
   --webui-action-text: #fff;
   --webui-syntax-key: #1c7533;
   --webui-syntax-string: #032f62;
   --webui-syntax-boolean: #b52238;
   --webui-syntax-number: #a34b00;
-  --webui-accent-text: #327d65;
-  --webui-hover: #edf5f2;
-  --webui-selected: #f1f7f4;
-  --webui-pressed: #dcefe6;
-  --webui-dock-active: #c5e3d6;
-  --webui-dock-preview: #47977c40;
-  --webui-dialog-shadow: #253f3a26;
+  --webui-accent-text: #216b65;
+  --webui-hover: #e0e9f0;
+  --webui-selected: #deeeeb;
+  --webui-pressed: #cde5df;
+  --webui-dock-active: #d4e6e3;
+  --webui-dock-preview: #258d8440;
+  --webui-dialog-shadow: #24364b26;
 
   --dialog-text-color: var(--webui-text);
   --dialog-border-color: var(--webui-border);
@@ -77,7 +77,7 @@
   --wcd-color-accent: var(--webui-accent);
   --wcd-color-accent-text: var(--webui-accent-text);
   --wcd-color-focus: var(--webui-accent);
-  --wcd-tab-header-background: var(--webui-surface);
+  --wcd-tab-header-background: var(--webui-subtle);
   --wcd-tab-panel-background: var(--webui-surface);
   --wcd-tab-selected-background: var(--webui-selected);
   --wcd-tab-selected-indicator-color: var(--webui-accent);
@@ -87,7 +87,7 @@
   --wcd-property-grid-unset-value-color: var(--webui-muted);
   --wcd-property-grid-select-option-color: var(--webui-text);
   --wcd-property-grid-tab-indicator-color: var(--webui-accent);
-  --wcd-property-grid-tab-indicator-inactive-color: #dce6e1;
+  --wcd-property-grid-tab-indicator-inactive-color: var(--webui-border);
   --wcd-input-border-color: var(--webui-input-border);
   --wcd-input-background-color: var(--webui-surface);
   --wcd-context-menu-color: var(--webui-text);
@@ -101,7 +101,7 @@
   --wcd-tool-popup-background: var(--webui-surface);
   --wcd-tool-popup-border-color: var(--webui-input-border);
   --wcd-tool-popup-title-background: var(--webui-subtle);
-  --wcd-designer-view-toolbar-background: var(--webui-surface);
+  --wcd-designer-view-toolbar-background: var(--webui-subtle);
   --wcd-designer-view-statusbar-background: var(--webui-subtle);
   --wcd-designer-view-statusbar-color: var(--webui-text);
   --wcd-designer-view-tool-selected-background: var(--webui-pressed);
@@ -133,29 +133,29 @@ nav button:focus-visible {
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --webui-text: #ececec;
-  --webui-muted: #a5a5a5;
-  --webui-surface: #212121;
-  --webui-workspace: #171717;
-  --webui-subtle: #1b1b1b;
-  --webui-border: #383838;
-  --webui-input-border: #585858;
-  --webui-accent: #c7c7c7;
-  --webui-action-background: #c7c7c7;
-  --webui-action-text: #212121;
+  --webui-text: #d6dfe9;
+  --webui-muted: #a0b1c3;
+  --webui-surface: #17232f;
+  --webui-workspace: #263442;
+  --webui-subtle: #1d2b39;
+  --webui-border: #34485b;
+  --webui-input-border: #486177;
+  --webui-accent: #62c6b7;
+  --webui-action-background: #62c6b7;
+  --webui-action-text: #14232c;
   --webui-syntax-key: #8ed99a;
   --webui-syntax-string: #9ac9f9;
   --webui-syntax-boolean: #f599ad;
   --webui-syntax-number: #efb674;
-  --webui-accent-text: #f0f0f0;
-  --webui-hover: #303030;
-  --webui-selected: #343434;
-  --webui-pressed: #404040;
-  --webui-dock-active: #494949;
-  --webui-dock-preview: #ffffff26;
-  --webui-dialog-shadow: #0008;
+  --webui-accent-text: #a6dfd6;
+  --webui-hover: #263b4d;
+  --webui-selected: #23433f;
+  --webui-pressed: #2c554f;
+  --webui-dock-active: #24483f;
+  --webui-dock-preview: #62c6b740;
+  --webui-dialog-shadow: #07111d99;
   --webui-icon-filter: invert(1);
-  --wcd-property-grid-tab-indicator-inactive-color: #505050;
+  --wcd-property-grid-tab-indicator-inactive-color: #486177;
 }
 
 nav button img {

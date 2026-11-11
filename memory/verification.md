@@ -84,3 +84,8 @@ A standalone static `web-dev-server` does not provide a real ioBroker adapter ba
 
 - Passed `npm run check`, `npm run lint`, `npm run tsc`, `npx gulp`, and `npm test` (80 frontend/helper + 46 package checks).
 - Browser fixture (`?webComponentFixture=1`) verified: opening a screen creates a Catalog tab beside project; webui/native/ioBroker component groups load; search narrows tiles and hides empty groups; no-match status; real slider drag/drop produces `input[type=range]`; Close followed by reopening the same screen restores one titled panel with its filter retained. Light/dark tile and filter appearance checked. Components without supplied visual metadata use a tag placeholder.
+
+## Slate palette refresh — 2026-11-11
+
+- Passed `npm run check`, `npm run lint`, `npm run tsc`, `npx gulp`, `npm run test:ts` (80 tests), and whitespace checks.
+- Browser fixture verified both themes across catalog tiles/filter, docks/tabs, outline, property/event fields, AI panel/composer and Monaco. Dark Monaco computed background/foreground match `#17232f`/`#d6dfe9`; light code/editor surfaces use the new gray-blue palette. No browser warnings/errors were recorded during the review. Authored canvas text/native controls retain their existing light appearance.

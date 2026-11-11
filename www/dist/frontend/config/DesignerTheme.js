@@ -4,7 +4,7 @@ import './DesignerToolWindowPosition.js';
 import { CodeViewMonaco } from '@node-projects/web-component-designer-codeview-monaco';
 import { DesignerCanvas, DesignerToolbarButton } from '@node-projects/web-component-designer';
 export function getMonacoTheme() {
-    return document.documentElement.dataset.theme === 'dark' ? 'webui-dark' : 'vs';
+    return document.documentElement.dataset.theme === 'dark' ? 'webui-dark' : 'webui-light';
 }
 const monaco = await CodeViewMonaco.getMonacoLib();
 monaco.editor.defineTheme('webui-dark', {
@@ -12,13 +12,27 @@ monaco.editor.defineTheme('webui-dark', {
     inherit: true,
     rules: [],
     colors: {
-        'editor.background': '#212121',
-        'editor.foreground': '#ececec',
-        'editorLineNumber.foreground': '#a5a5a5',
-        'editor.selectionBackground': '#404040',
-        'editor.inactiveSelectionBackground': '#343434',
-        'editor.lineHighlightBorder': '#383838',
-        'editorCursor.foreground': '#f0f0f0'
+        'editor.background': '#17232f',
+        'editor.foreground': '#d6dfe9',
+        'editorLineNumber.foreground': '#a0b1c3',
+        'editor.selectionBackground': '#2c554f',
+        'editor.inactiveSelectionBackground': '#23433f',
+        'editor.lineHighlightBorder': '#34485b',
+        'editorCursor.foreground': '#a6dfd6'
+    }
+});
+monaco.editor.defineTheme('webui-light', {
+    base: 'vs',
+    inherit: true,
+    rules: [],
+    colors: {
+        'editor.background': '#f5f7fa',
+        'editor.foreground': '#334155',
+        'editorLineNumber.foreground': '#607187',
+        'editor.selectionBackground': '#cde5df',
+        'editor.inactiveSelectionBackground': '#deeeeb',
+        'editor.lineHighlightBorder': '#cbd6e2',
+        'editorCursor.foreground': '#216b65'
     }
 });
 const updateMonacoTheme = () => monaco.editor.setTheme(getMonacoTheme());

@@ -15,11 +15,11 @@ export class IobrokerWebuiComponentCatalog extends BaseCustomWebComponentConstru
         #filter { margin: 8px; padding: 7px; min-width: 0; flex: none;
             color: inherit; background: var(--webui-subtle, #f3f6f6); border: 1px solid var(--webui-border, #ccd5d5); border-radius: 4px; font: inherit; }
         #groups { overflow: auto; flex: 1; min-height: 0; padding: 0 8px 8px; }
-        h2 { font-size: 13px; margin: 14px 4px 8px; color: var(--webui-text-muted, #687778); }
+        h2 { font-size: 13px; margin: 14px 4px 8px; color: var(--webui-muted, #607187); }
         .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; }
         button { min-width: 0; padding: 8px 5px; border: 1px solid var(--webui-border, #ccd5d5); border-radius: 8px;
-            color: inherit; background: transparent; font: inherit; cursor: pointer; }
-        button:hover { background: var(--webui-subtle, #f3f6f6); }
+            color: inherit; background: var(--webui-subtle, #eaf0f5); font: inherit; cursor: pointer; }
+        button:hover { background: var(--webui-hover, #e0e9f0); }
         button:focus-visible, button[aria-pressed="true"] { outline: 2px solid var(--webui-accent, #47977c); outline-offset: -2px; }
         .preview { height: 64px; display: flex; justify-content: center; align-items: center; overflow: hidden; margin-bottom: 6px; pointer-events: none; }
         .preview img { max-width: 100%; max-height: 100%; object-fit: contain; }
