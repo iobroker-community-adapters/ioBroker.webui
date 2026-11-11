@@ -170,6 +170,8 @@ runtime.html?screenName=screen2
 -->
 ### __WORK IN PROGRESS__
 - Use the ioBroker web components of installed adapters (`common.webComponents`, `@iobroker/web-components`) in screens: palette entries, a settings section in the property grid with every setting as a bindable `setting-*` attribute, theme support and `iob-navigate` to screens.
+- dark mode changed
+- components list
 
 ### 2.3.0 (2026-11-10)
 - Expand AI context with current/open editors, selected screen elements, separate CSS/JavaScript, settings and component properties.
