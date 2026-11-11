@@ -1,6 +1,7 @@
 import './ScreenViewer.js';
 import './HabPanelLikeMenu.js';
 import './TranslateableText.js';
+import './IobrokerWebuiWebComponent.js';
 import '../common/Runtime.js';
 //patch input for utc date...
 Object.defineProperty(HTMLInputElement.prototype, "valueAsNumberLocal", {

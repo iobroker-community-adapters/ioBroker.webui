@@ -39,5 +39,6 @@ declare const importMapConfig: {
         wunderbaum: string;
         "wunderbaum/": string;
         "@iobroker/webcomponent-selectid-dialog/": string;
+        "@iobroker/web-components": string;
     };
 };

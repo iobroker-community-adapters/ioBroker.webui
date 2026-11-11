@@ -23,6 +23,8 @@ import { IobrokerWebuiBindableObjectsForPropertiesService } from "../services/Io
 import { IobrokerWebuiBindableLocalObjectsService } from "../services/IobrokerWebuiBindableLocalObjectsService.js";
 import { IobrokerWebuiBindableObjectDragDropService } from "../services/IobrokerWebuiBindableObjectDragDropService.js";
 import { IobrokerWebuiBindingsEditor } from "./IobrokerWebuiBindingsEditor.js";
+import { IobrokerWebuiWebComponentsElementsService } from "../services/IobrokerWebuiWebComponentsElementsService.js";
+import { IobrokerWebuiWebComponentPropertiesService } from "../services/IobrokerWebuiWebComponentPropertiesService.js";
 export function configureDesigner(bindingsHelper) {
     const serviceContainer = createDefaultServiceContainer();
     serviceContainer.register("bindingService", new BaseCustomWebcomponentBindingsService());
@@ -50,6 +52,9 @@ export function configureDesigner(bindingsHelper) {
     serviceContainer.register('elementsService', new JsonFileElementsService('native', './node_modules/@node-projects/web-component-designer/config/elements-native.json'));
     serviceContainer.register('propertyService', new IobrokerWebuiPropertiesService());
     serviceContainer.register('propertyService', new IobrokerWebuiSpecialPropertiesService());
+    // web components of the installed adapters (common.webComponents), shown through <iobroker-webui-web-component>
+    serviceContainer.register('elementsService', new IobrokerWebuiWebComponentsElementsService());
+    serviceContainer.register('propertyService', new IobrokerWebuiWebComponentPropertiesService());
     serviceContainer.designViewConfigButtons.push(new IobrokerWebuiConfigButtonProvider());
     serviceContainer.designerContextMenuExtensions.push(new SeperatorContextMenu());
     serviceContainer.designerContextMenuExtensions.push(new IobrokerWebuiCustomElementContextMenu());

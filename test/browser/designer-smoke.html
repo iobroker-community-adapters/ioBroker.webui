@@ -49,6 +49,8 @@ window.iobrokerHost = location.hostname;
 window.iobrokerPort = location.port;
 window.iobrokerWebRootUrl = location.origin + '/';
 window.iobrokerSocketScriptUrl = '/test/browser/socket-stub.js';
+// ioBroker web component fixture: ../adapter/ of this URL is test/browser/wc/adapter/
+if (new URLSearchParams(location.search).has('webComponentFixture')) window.iobrokerWebuiRootUrl = location.origin + '/test/browser/wc/webui/';
 </script>
 
   <script src="./node_modules/mobile-drag-drop/index.js"></script>

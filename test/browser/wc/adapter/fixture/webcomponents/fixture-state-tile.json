@@ -1,0 +1,20 @@
+{
+    "manifestVersion": 1,
+    "tag": "fixture-state-tile",
+    "name": { "en": "Fixture state tile", "de": "Test-Zustandskachel" },
+    "description": { "en": "Test-only ioBroker web component of the browser fixture" },
+    "icon": "fixture-state-tile.svg",
+    "module": "fixture-state-tile.js",
+    "size": { "width": 180, "height": 110 },
+    "settings": {
+        "type": "panel",
+        "items": {
+            "oid": { "type": "objectId", "label": { "en": "State", "de": "Datenpunkt" } },
+            "decimals": { "type": "number", "label": "Decimals", "min": 0, "max": 6, "default": 1 },
+            "showUnit": { "type": "checkbox", "label": "Show unit", "default": true },
+            "unit": { "type": "text", "label": "Unit", "hidden": "!data.showUnit" },
+            "size": { "type": "select", "label": "Size", "options": [{ "value": "s", "label": "Small" }, { "value": "l", "label": "Large" }], "default": "s" },
+            "view": { "type": "text", "label": "Screen on click" }
+        }
+    }
+}

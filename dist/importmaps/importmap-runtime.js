@@ -7,6 +7,7 @@ const importMapRuntime = {
         "@node-projects/web-component-designer-visualization-addons": "./node_modules/@node-projects/web-component-designer-visualization-addons/dist/index.js",
         "@iobroker/socket-client/": "./node_modules/@iobroker/socket-client/",
         "@iobroker/socket-client": "./node_modules/@iobroker/socket-client/build/esm/index.js",
+        "@iobroker/web-components": "./node_modules/@iobroker/web-components/build/index.js",
         "tslib": "./node_modules/tslib/tslib.es6.mjs",
         "long": "./node_modules/long/index.js"
     }

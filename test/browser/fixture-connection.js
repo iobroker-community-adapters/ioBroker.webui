@@ -14,13 +14,16 @@ if (fixtureOptions.get('speechFixture') === '1') {
 }
 const state = { val: 21, ack: true, ts: Date.now(), lc: Date.now(), from: 'fixture' };
 const objects = { 'fixture.0.temperature': { _id: 'fixture.0.temperature', type: 'state', common: { name: 'Temperature', type: 'number', role: 'value.temperature', read: true, write: false, unit: '°C' }, native: {} } };
+// Opt-in ioBroker web component fixture: an adapter instance listing test/browser/wc/adapter/fixture/webcomponents.
+const instances = fixtureOptions.has('webComponentFixture') ? { 'system.adapter.fixture.0': { _id: 'system.adapter.fixture.0', type: 'instance', common: { name: 'fixture', version: '1.0.0', webComponents: ['webcomponents/fixture-state-tile.json', 'webcomponents/fixture-value-editor.json'] }, native: {} } } : {};
 export const fixtureWrites = [];
 export const fixtureConnection = {
     waitForFirstConnection: async () => {},
     registerConnectionHandler() {}, unregisterConnectionHandler() {},
     getCurrentUser: async () => 'system.user.fixture',
     getObjects: async () => objects,
-    getObjectViewSystem: async type => type === 'state' ? objects : {},
+    systemLang: 'en',
+    getObjectViewSystem: async (type, start = '', end = '\u9999') => type === 'state' ? objects : type === 'instance' ? Object.fromEntries(Object.entries(instances).filter(([id]) => id >= start && id <= end)) : {},
     getObjectViewCustom: async () => ({}),
     getObject: async id => objects[id],
     getState: async id => id.endsWith('npm') ? { ...state, val: 'idle' } : state,
