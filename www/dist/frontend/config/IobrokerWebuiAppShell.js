@@ -8,6 +8,7 @@ const bindingsHelper = new BindingsHelper(iobrokerHandler);
 import { ValueType } from '@node-projects/web-component-designer';
 import { BindableObjectsBrowser } from '@node-projects/web-component-designer-widgets-wunderbaum';
 import './ConfigureMonacoEnvironment.js';
+import { IobrokerWebuiComponentCatalog } from './IobrokerWebuiComponentCatalog.js';
 await CodeViewMonaco.getMonacoLib();
 import { PanelContainer, PanelType, SplitterDockContainer } from 'dock-spawn-ts';
 import { configureDesigner } from './ConfigureWebcomponentDesigner.js';
@@ -38,6 +39,8 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
     serviceContainer;
     _dock;
     _aiDockElement;
+    _catalogDock;
+    _catalog;
     _dockManager;
     _solutionExplorer;
     styleEditor;
@@ -541,7 +544,27 @@ export class IobrokerWebuiAppShell extends BaseCustomWebComponentConstructorAppe
         const element = this._dock.dockManager.activeDocument?.resolvedElementContent;
         return element instanceof IobrokerWebuiScreenEditor ? element : null;
     }
+    showComponentCatalog() {
+        if (!this._catalogDock) {
+            this._catalogDock = document.createElement('div');
+            this._catalogDock.id = 'catalogDock';
+            this._catalogDock.title = 'Catalog';
+            this._catalogDock.setAttribute('dock-spawn-title', 'Catalog');
+            this._catalogDock.setAttribute('dock-spawn-dock-to', 'treeUpper');
+            this._catalogDock.style.cssText = 'overflow: hidden; width: 100%; height: 100%';
+            this._catalog = new IobrokerWebuiComponentCatalog();
+            this._catalogDock.append(this._catalog);
+        }
+        this._catalog.refresh(serviceContainer);
+        const panel = this.getAllPanels().find(panel => panel.resolvedElementContent === this._catalogDock);
+        if (panel && this.detachedWindows.focus(panel))
+            return;
+        if (this._catalogDock.parentElement !== this._dock)
+            this._dock.append(this._catalogDock);
+        queueMicrotask(() => this.activateDock(this._catalogDock));
+    }
     async openScreenEditor(name, type, html, style, script, settings, properties) {
+        this.showComponentCatalog();
         let id = type + "_" + name;
         if (!this.isDockOpenAndActivate(id)) {
             let screenEditor = new IobrokerWebuiScreenEditor();
